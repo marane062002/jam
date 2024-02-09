@@ -1,0 +1,111 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+
+    <!--Begin::Dashboard 5-->
+
+    <!--Begin::Section-->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            ممتلكات الجماعة
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div *ngxPermissionsOnly="['canCreateBienReservation']" class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:; " (click)=" nouvellepp()" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i> إضافة ممتلك للجماعة
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="kt-portlet__body kt-portlet__body--fit">
+
+                    <div class="example-header">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم الممتلك </mat-header-cell>
+                                <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="nom">
+                                <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> الاسم </mat-header-cell>
+                                <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.nom}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="type">
+                                <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> نوع الممتلك </mat-header-cell>
+                                <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.type}} </mat-cell>
+                            </ng-container>
+
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="adresse">
+                                <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> العنوان </mat-header-cell>
+                                <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.adresse}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column
+                <ng-container matColumnDef="arrondissement">
+                  <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                    الدائرة  </mat-header-cell>
+                  <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.arrondissement}} </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="quartier">
+                  <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+
+                    الحي  </mat-header-cell>
+                  <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.quartier}} </mat-cell>
+                </ng-container>-->
+
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canShowBienReservation']" (click)="showbien(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canUpdateBienReservation']" (click)="editbien(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                                    <!----  <a href="javascript:;"(click)=" printpp(row.id)"  class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print" title="Print"><i class="la la-print"></i></a>
+                    <a href="javascript:;" (click)="deletepp(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>-->
+                                </mat-cell>
+                            </ng-container>
+
+
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </mat-table>
+
+                        <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--End::Section-->
+
+        <!--End::Dashboard 5-->
+    </div>

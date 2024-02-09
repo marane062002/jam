@@ -1,0 +1,247 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">
+				Réglement de paiement
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="container-fluid mt-7">
+	<form #f="ngForm" [formGroup]="factureSaveForm">
+		<div class="row">
+			<div class="col-md-4 ">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-card>
+						<mat-card-content>
+							<section class="example-section">
+								<mat-label>Avec Balance :</mat-label>
+								<mat-radio-group aria-label="Select an option" formControlName="balance">
+									<mat-radio-button [value]="true">OUI</mat-radio-button>
+									<mat-radio-button [value]="false">NON</mat-radio-button>
+								</mat-radio-group>
+							</section>
+						</mat-card-content>
+					</mat-card>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Type d'espèce :</label>
+					<mat-form-field formGroupName="espece">
+						<mat-select [compareWith]="selectedValueEspece" required formControlName="id">
+							<mat-option *ngFor="let type of type" [value]="type.id">{{type.espece}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Durée de séjour :</label>
+					<mat-form-field>
+						<input matInput type="number" formControlName="dureeSejour" />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Durée de séjour en frigo :</label>
+					<mat-form-field>
+						<input matInput type="number" required formControlName="dureeSejourFrigo" />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Nombre de têtes :</label>
+					<mat-form-field>
+						<input matInput type="number" formControlName="nombreTetes" required ngModel />
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Nombre de têtes équarraisses :</label>
+					<mat-form-field>
+						<input matInput type="number" formControlName="nombreTetesEquaraisse" required />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Poids net(propre à la consommation) :</label>
+					<mat-form-field>
+
+						<input matInput type="number" formControlName="poidsNConsom" required />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Poids net(impropre à la consommation) :</label>
+					<mat-form-field>
+
+						<input matInput type="number" formControlName="poidsNNonConsom" required />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="form-group">
+					<label>Poids net(cacher) :</label>
+					<mat-form-field>
+						<input matInput type="number" formControlName="poidsNCacher" />
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 ">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-card>
+						<mat-card-content>
+							<section class="example-section">
+								<mat-label class="for">Type d'abattage :</mat-label>
+								<mat-radio-group aria-label="Select an option" formControlName="typeAbattage" ngModel>
+									<mat-radio-button value="NORMAL">Normal</mat-radio-button>
+									<mat-radio-button value="Exceptionnel">Exceptionnel</mat-radio-button>
+								</mat-radio-group>
+							</section>
+						</mat-card-content>
+					</mat-card>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button type="button" (click)="onAdd()" [disabled]="!f.valid"
+					class="action-submit btn btn-success btn-elevate btn-icon-sm">
+					<i class="la la-plus"></i>
+					Ajouter
+				</button>
+			</div>
+		</div>
+	</form>
+	<hr>
+	<div class="table">
+		<table class="table table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th scope="col">Balance</th>
+					<th scope="col">Espèce</th>
+					<th scope="col">Durée de séjour</th>
+					<th scope="col">Durée de séjour en frigo</th>
+					<th scope="col">Nombre de têtes</th>
+					<th scope="col">Nombre de têtes équarraisses</th>
+					<th scope="col">Poids net(propre à la consommation)</th>
+					<th scope="col">Poids net(impropre à la consommation)</th>
+					<th scope="col">Poids net(cacher)</th>
+					<th scope="col">Type d'abattage</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of listFactures">
+					<td scope="row">{{item.balance}}</td>
+					<td scope="row">{{item.espece.id}}</td>
+					<td scope="row">{{item.dureeSejour}}</td>
+					<td scope="row">{{item.dureeSejourFrigo}}</td>
+					<td scope="row">{{item.nombreTetes}}</td>
+					<td scope="row">{{item.nombreTetesEquaraisse}}</td>
+					<td scope="row">{{item.poidsNConsom}}</td>
+					<td scope="row">{{item.poidsNNonConsom}}</td>
+					<td scope="row">{{item.poidsNCacher}}</td>
+					<td scope="row">{{item.typeAbattage}}</td>
+					<td>
+						<button type="button" class="btn btn-success" (click)="onEdit(item)"><i
+								class="fas fa-edit"></i></button>
+						<button type="button" class="btn btn-danger" (click)="onDelete(item)"><i
+								class="far fa-trash-alt"></i></button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button type="button" [disabled]="!fullArreteFiscal" class="btn btn-success btn-elevate btn-icon-sm" data-wizard-type="action-submit"
+					(click)="toggleShowTable()">
+					<i class="la la-plus"></i>
+					Enregistrer
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<table id="exportData" mat-table [dataSource]="dataSourceR" *ngIf="showTable" class="mat-elevation-z8 mt-5 w-100 "
+	matSort>
+	<ng-container matColumnDef="codeNature">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header>
+			Code Nature
+		</th>
+		<td mat-cell *matCellDef="let row">
+			{{row.codeNature}}
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="libelle">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header>
+			Libellé
+		</th>
+		<td mat-cell *matCellDef="let row">
+			{{row.libelle}}
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="espece">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header>
+			Espèce
+		</th>
+		<td mat-cell *matCellDef="let row">
+			{{row.espece.espece}}
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="montant">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header>
+			Montant
+		</th>
+		<td mat-cell *matCellDef="let row">
+			{{row.tarif}}
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="actions">
+		<th mat-header-cell *matHeaderCellDef mat-sort-header class="action">
+			{{ "Actions" | translate }}
+		</th>
+		<td mat-cell *matCellDef="let row" class="actionsBtn action">
+			<input type="checkbox" (change)="getLineChecked(row)" class="example-margin">
+		</td>
+	</ng-container>
+	<tr mat-header-row *matHeaderRowDef="displayedColumnss"></tr>
+	<tr mat-row *matRowDef="let row; columns: displayedColumnss"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5,10,20,50]" #paginator [showFirstLastButtons]="true"></mat-paginator>
+
+<br />
+<div class="row mt-12" style="justify-content:center">
+	<div class="col-md-3">
+		<div class="form-group fv-plugins-icon-container">
+			<label>Montant Total: {{montantTotal}}</label>
+		</div>
+	</div>
+</div>
+<div class="d-flex justify-content-between mt-5 pt-10">
+	<div class="mr-2"></div>
+	<div>
+		<button type="button" class="btn btn-success btn-elevate btn-icon-sm" data-wizard-type="action-submit"
+					(click)="onSubmitAll()">
+					<i class="la la-plus"></i>
+					Valider
+				</button>
+	</div>
+</div>
+

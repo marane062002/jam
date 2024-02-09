@@ -1,0 +1,159 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="form-group">
+        <mat-form-field [hidden]="true" class="example-full-width">
+            <input matInput type="text" class="form-control" id="show">
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            {{ 'PAGES.PRESENCE.TITRE_SHOW' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                            <a *ngxPermissionsOnly="['canCreatePresence']" routerLink="/presence/presence-new" class="btn btn-outline-success btn-bold btn-sm">
+                                <i class="fas fa-user-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                            </a>
+                            <a *ngxPermissionsOnly="['canUpdatePresence']" (click)="update(presence?.id)" href="#" class="btn btn-warning btn-sm btn-bold">
+                                <i class="fas fa-user-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                            </a>
+                            <a *ngxPermissionsOnly="['canDeletePresence']" (click)="delete(presence?.id)" href="#" class="btn btn-danger btn-sm btn-bold">
+                                <i class="fas fa-user-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section  -->
+<div *ngIf="presence" class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                                <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                            </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.PRESENCE.TITRE_SHOW' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.LIBELLE' | translate }} :</th>
+                                        <td>{{presence?.libelle}}</td>
+                                        <th>{{ 'PAGES.GENERAL.DATE' | translate }} :</th>
+                                        <td>{{ presence.date|date:'yyyy-MM-dd'}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.PERIODE' | translate }} :</th>
+                                        <td>{{presence.heuraire?.libelle}}</td>
+
+                                        <th></th>
+                                        <td></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div *ngIf="presence" class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-4">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                                    <i class="far fa-folder-open kt-font-inverse-brand"></i>
+                                </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.PRESENCE.DETAILS' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <table class="table table-bordered" style="text-align:center;">
+                        <thead class="my-auto thead-bg">
+                            <th scope="col">#</th>
+                            <th scope="col">{{ 'PAGES.PERSONNEL.MATRICULE' | translate }}</th>
+                            <th scope="col">{{ 'PAGES.PERSONNEL.NOM' | translate }}</th>
+                            <th scope="col">{{ 'PAGES.PERSONNEL.PRENOM' | translate }}</th>
+                            <th scope="col">{{ 'PAGES.PRESENCE.ABSENT' | translate }}</th>
+                            <th scope="col">{{ 'PAGES.PRESENCE.MOTIF' | translate }}</th>
+                            <th scope="col">{{ 'PAGES.GENERAL.DESCRIPTION' | translate }}</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let ligne of presence.lignesPresence; let i = index">
+                                <td>
+                                    {{ligne.idPersonnel}}
+                                </td>
+                                <td>
+                                    {{personnels[i]?.matricule}}
+                                </td>
+                                <td>
+                                    {{personnels[i]?.nom}}
+                                </td>
+                                <td>
+                                    {{personnels[i]?.prenom}}
+                                </td>
+                                <td>
+                                    {{ligne.absent?'غائب':'حاضر'}}
+                                </td>
+                                <td>
+                                    {{ligne.motif?.libelle}}
+                                </td>
+                                <td>
+                                    {{ligne?.descriptif}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                        <!--  <button *ngxPermissionsOnly="['canPrintPresence']" type="button" class="btn btn-info"><i class="fa fa-print"></i> {{ 'PAGES.GENERAL.PRINT' | translate }}</button> -->
+                        <button *ngxPermissionsOnly="['canReadIndexPresence']" routerLink="/presence/presence-index" class="btn btn-label-dark"><i
+                                    class="flaticon2-list-2"></i>  {{ 'MENU.LISTEPRESENCES' | translate }}</button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

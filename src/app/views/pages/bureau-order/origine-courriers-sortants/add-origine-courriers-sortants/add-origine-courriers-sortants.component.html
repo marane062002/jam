@@ -1,0 +1,102 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-buildings kt-font-inverse-brand"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.TITRE_NEW' | translate }}
+			</h3>
+		</div>
+	</div>
+	<form novalidate [formGroup]="addForm" autocomplete="off">
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="" class="form-control" formControlName="raisonSociale"
+								name="raisonSociale"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.NOM' | translate }} * ">
+							<mat-error *ngIf="isControlHasError('raisonSociale','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="far fa-building"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="" class="form-control" formControlName="tel" name="tel"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.TEL' | translate }}">
+							<!-- <mat-error *ngIf="isControlHasError('tel','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+							<mat-icon matSuffix><i class="fas fa-phone-alt"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="tel" class="form-control" formControlName="fax" name="fax"
+								placeholder="{{ 'PAGES.SUBVENTION.FAX' | translate }}">
+							<mat-icon matSuffix><i class="fa fa-fax"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="email" class="form-control" formControlName="mail" name="mail"
+								placeholder="{{ 'PAGES.SUBVENTION.MAIL' | translate }}">
+							<!-- <mat-error *ngIf="isControlHasError('mail','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+							<mat-icon matSuffix><i class="fa fa-envelope"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="" class="form-control" formControlName="adresse" name="adresse"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.ADRESSE' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- ===== -->
+		</div>
+	</form>
+</div>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onSubmit()"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}"
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+			class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="backList()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

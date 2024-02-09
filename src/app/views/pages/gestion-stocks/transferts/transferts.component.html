@@ -1,0 +1,278 @@
+<div class="main-content container">
+    <div class="breadcrumb">
+        <h1 class="mr-2">Transferts des stocks</h1>
+    </div>
+    <!-- card of depot -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card text-left">
+                <div class="card-body">
+                    <div class="tab-content" id="myIconTabContent">
+                        <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                            <div class="body">
+                        
+                          </div>
+                      </div>
+                      <data-table 
+                            [datasource]="listTransferts" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des transferts'"
+                            [titleButton]="' Ajouter transfert'"
+                            (ajouterElement)="modalAjouterTransfert(ajouterTransfert)"
+                            (detail)="modalDetailTransfert(detailTransfert,$event)"
+                            (selectUpdateElement)="modalModifierTransfert(modifierTransfert,$event)"
+                            (deleteElement)="supprimerTransfert($event)">
+                    </data-table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!--begin: Modal ajouter -->
+  <ng-template #ajouterTransfert let-c="close" let-d="dismiss">
+
+
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter transfert</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+  </div>
+  <div class="modal-body">
+
+ 
+    <form class="" [formGroup]="formTransfer" (ngSubmit)="createTransfert(formTransfer.value)">
+      <div class="row"> 
+        <!-- <div class="col-md-6">
+            <label>N° Transfer :</label>
+            <input class="form-control" type="text" placeholder="N° Transfer"   formControlName="numeroTransfert"/>
+        </div> -->
+        <div class="col-md-4"  formGroupName="magasinlivreur" >
+          <label>N° magasin livreur :</label>
+          <select class="form-control" (change)="SlectedMagasinLivereur($event)" formControlName="id" [disabled]="saveArticleWithQTEList.length > 0" >
+              <option *ngFor=" let m of listMagasins" [value]="m.id">{{m.numeroMagasin}}</option>
+          </select>
+        </div>
+        <div class="col-md-4" formGroupName="magasindestination">
+          <label>N° magasin destination :</label>
+          <select class="form-control"  formControlName="id">
+            <option *ngFor=" let m of listMagasinDestination" [value]="m.id">{{m.numeroMagasin}}</option>
+          </select>
+        </div>
+          <div class="col-md-4 form-group " formGroupName="article">
+              <label>N° d'article :</label>
+              <select class="form-control"  formControlName="id"  (change)="selectArtilce($event)">
+            <option *ngFor="let article of listArtickeStock" [value]="article.article.id">{{article.article.numeroArticle}}</option>
+              </select>
+          </div>
+         <!--  <div class="col-md-4 " >
+            <label>Designation :</label>
+            <input class="form-control" type="text" placeholder="Designation"   formControlName="disignation" readonly/>
+          </div>
+          <div class="col-md-4 ">
+              <label>Unité :</label>
+              <input class="form-control" type="text" placeholder="Unité"  formControlName="unite"   readonly/>
+          </div> -->
+          <div class="col-md-4">
+              <label>Quantité :</label>
+              <input class="form-control" type="number" placeholder="Quantité"   formControlName="quantite" (blur)="checkQuanititeMin($event)"/>
+          </div>
+          <div class="col-md-4">
+            <label>Rayonnage :</label>
+            <input class="form-control" type="text" placeholder="rayonnage"   formControlName="rayannage"/>
+        </div>
+
+      
+          <div class="col-md-4">
+              <label>Date de transfert :</label>
+              <input class="form-control" type="date" placeholder="yyyy-mm-dd"   formControlName="dateTransfet"/>
+          </div>
+   
+      </div>
+      <div class="row"> 
+          <div class="col-md-12">
+              <label>Observations :</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  formControlName="observation"></textarea>
+          </div>
+      </div>
+    
+    <div class="col-md-12 form-group text-right">
+        <button class="btn btn-outline-primary mt-4"  type="submit" [disabled]="!formTransfer.valid"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+     </div>
+    </form>
+
+    
+<div class="row">
+    <div class="col-md-12 col-lg-12 dos">
+      <div class="p-3 mt-3 border-grey background-table br-10">
+        <div>
+          <div class="table-responsive">
+            <span *ngIf=" saveArticleWithQTEList.length ==  0" class="text-danger">Aucun article existe</span>
+            <table class="table text-center mb-0" id="user_table" *ngIf=" saveArticleWithQTEList.length > 0 ">
+              <thead>
+                <tr class="no-border">
+                    <th scope="col">N° magasin livreur </th>
+                    <th scope="col">N° magasin destination</th>
+                  <th scope="col">N° d'article</th>
+                  <th scope="col">Quantité</th>
+                  <th scope="col">Rayonnage</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let article of saveArticleWithQTEList ; let i = index">
+                    <td> {{ article.transfer?.magasinlivreur?.id ?  article.transfer?.magasinlivreur?.id:"-" }}</td>
+                    <th scope="row">{{  article.transfer?.magasindestination?.id ?  article.transfer?.magasindestination?.id:"-" }}</th>
+                  <td>{{ article.article?.id ? article.article?.id :"-" }}</td>
+                  <td>{{ article.quantite ? article.quantite :"-" }}</td>
+                  <td>{{ article.rayonnage}}</td>
+                  <td><button class="btn btn-outline-danger" (click)="supprimerArticle(i)" ><i class="nav-icon i-Close-Window font-weight-bold"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="modal-footer">
+                <button class="btn btn-primary ml-2" (click)="saveArticleTransfer()"><i class="nav-icon i-Right font-weight-bold"></i>&nbsp;Transfert</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  </ng-template>
+  <!--end: Modal ajouter -->
+
+  <!--begin: Modal detail -->
+  <ng-template #detailTransfert let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <div class="p-3  background-color-light border-grey br-10">
+          <h2 class="text-center">Bon de Transfert</h2>
+      </div>
+      <div class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+          <div class="form-group row justify-content-center mb-0">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <div class="row justify-content-center">
+                      <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">N° magasin livreur :</label>
+                      <label class="col-sm-2 col-form-label f-s-13">{{transfer.magasinlivreur.numeroMagasin}}</label>
+
+                      <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">N° magasin destination :</label>
+                      <label class="col-sm-2 col-form-label f-s-13">{{transfer.magasindestination.numeroMagasin}}</label>
+                      <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Date :</label>
+                      <label class="col-sm-2 col-form-label f-s-13">{{transfer.dateTransfet}}</label>
+                  </div>
+              </div>
+          </div>
+      </div>  
+      <div class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+        <div class="form-group row justify-content-center mb-0">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <div class="row justify-content-center" *ngFor="let article of listDetailTransfer" >
+                    <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">N° Article:</label>
+                    <label class="col-sm-2 col-form-label f-s-13">{{article.article.numeroArticle}}</label>
+                    <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Quantité:</label>
+                    <label class="col-sm-2 col-form-label f-s-13">{{article.quantite}}</label>
+                    <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Rayonnage :</label>
+                    <label class="col-sm-2 col-form-label f-s-13">{{article.rayonnage}}</label>
+                </div>
+            </div>
+        </div>
+    </div>  
+      <div class="p-3 mt-2 background-color-light border-grey br-10">
+          <div class="form-group row justify-content-center mb-0">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <div class="row justify-content-center">
+                      <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Signature du livreur :</label>
+                      <label class="col-sm-2 col-form-label f-s-13"><br><br><br></label>
+
+                      <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Signature du demandeur:</label>
+                      <label class="col-sm-2 col-form-label f-s-13"><br><br><br></label>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+      <button class="btn btn-outline-success ml-2" type="button" (click)="telechargeDoucument(transfer.id)"><i class="nav-icon i-Download font-weight-bold"></i>&nbsp;Télécharger</button>
+    </div>
+  </ng-template>
+  <!--end: Modal detail -->
+
+  <!--begin: Modal modifier -->
+  <ng-template #modifierTransfert let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Modifier transfert</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+  </div>
+  <div class="modal-body">
+    <div class="row"> 
+      <div class="col-md-6">
+        <label>N° magasin livreur :</label>
+        <select class="form-control">
+            <option>A511</option>
+            <option>C622</option>
+            <option>E933</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label>N° magasin destination :</label>
+        <select class="form-control">
+            <option>AB11</option>
+            <option>CD22</option>
+            <option>EF33</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group ">
+            <label>N° d'article :</label>
+            <select class="form-control">
+                <option>A123</option>
+                <option>B123</option>
+                <option>C123</option>
+                <option>D123</option>
+                <option>E123</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+          <label>Designation :</label>   
+            
+          <input class="form-control" type="text" placeholder="Designation" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Unité :</label>
+            <input class="form-control" type="text" placeholder="Unité" />
+        </div>
+        <div class="col-md-6">
+            <label>Quantité :</label>
+            <input class="form-control" type="number" placeholder="Quantité" />
+        </div>
+    </div>
+
+    <div class="row"> 
+        <div class="col-md-6">
+            <label>Date de transfert :</label>
+            <input class="form-control" type="text" placeholder="yyyy-mm-dd" />
+        </div>
+    </div>
+
+    <div class="row"> 
+        <div class="col-md-12">
+            <label>Observations :</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button> -->
+      <button class="btn btn-primary ml-2" type="button">Modifier</button>
+  </div>
+  </ng-template>
+  <!--end: Modal modifier -->
+
+</div>

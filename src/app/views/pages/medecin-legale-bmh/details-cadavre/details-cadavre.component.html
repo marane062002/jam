@@ -1,0 +1,161 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter un cadavre :
+				</h2>
+			</div>
+		</div>
+	</div>
+
+    <form *ngIf="info" action="">
+	<div  class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N° deces:</mat-label>
+								<input 
+                                [value]="info.numDeces"
+                                type="text" name="numDeces"  readonly
+                                class="form-control-solid form-control-lg"
+                                matInput>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date  :</mat-label>
+								<input
+                                [value]="info.date" readonly
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Statut :</mat-label>
+								<input 
+                                type="text" readonly
+                                [value]="info.statut"
+                                class="form-control-solid form-control-lg"
+                                matInput>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Observation :</mat-label>
+								<input 
+                                type="text" 
+                                [value]="info.observation" readonly
+                                class="form-control-solid form-control-lg"
+                                matInput>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Autorisation du procureur :</mat-label>
+                                <input 
+                                type="text" 
+                                [value]="info.autorizationProcureur" readonly
+                                class="form-control-solid form-control-lg"
+                                matInput>
+                            </mat-form-field>
+
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                </div>
+				<div class="row">
+					<div class="pb-5" data-wizard-type="step-content">
+						<h4 class="mb-10 font-weight-bold text-dark"></h4>
+						<div class="kt-portlet">
+							<div class="kt-portlet__body">
+								<div class="row">
+									<div
+										class="col-md-12 show_port input-group"
+									>
+										<form
+											enctype="multipart/form-data"
+											method="POST"
+											style="
+												display: -webkit-inline-box;
+												margin-inline-start: 98px;
+											"
+										>
+											<label class="input-group-btn">
+												<span class="btn btn-info">
+													Sélectionner un fichier
+													<input
+														type="file"
+														name="file"
+														formControlName="_file"
+														id="customFile"
+														style="display: none"
+														multiple
+													/>
+												</span>
+											</label>
+											<input
+												type="text"
+												class="form-control"
+												readonly
+											/>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									
+                                    <button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>

@@ -1,0 +1,70 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="fa fa-building"></i>
+			</span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.ACTIVITE.PERSONNE_MORALE.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.RAISONSOCIALE' | translate }} :</th>
+                            <td class="donnee_show">{{details.raisonSociale}}</td>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.CONTACT' | translate }} :</th>
+                            <td class="donnee_show">{{details.contact}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.TELEFIXE' | translate }} :</th>
+                            <td class="donnee_show">{{details.teleFixe}}</td>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.TELEGSM' | translate }} :</th>
+                            <td class="donnee_show">{{details.teleGsm}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.FAX' | translate }} :</th>
+                            <td class="donnee_show">{{details.fax}}</td>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.EMAIL' | translate }} :</th>
+                            <td class="donnee_show">{{details.eMail}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.RC' | translate }} :</th>
+                            <td class="donnee_show">{{details.rc}}</td>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.NUMEROPATENTE' | translate }} :</th>
+                            <td class="donnee_show">{{details.numeroPatente}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.IDENTIFIANTFISCAL' | translate }} :</th>
+                            <td class="donnee_show">{{details.identifiantFiscal}}</td>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.SITEWEB' | translate }} :</th>
+                            <td class="donnee_show">{{details.siteWeb}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.ADRESSE' | translate }} :</th>
+                            <td class="donnee_show" colspan="4">{{details.adresse}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

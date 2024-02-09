@@ -1,0 +1,158 @@
+<!-- begin:: Content -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            {{ 'PAGES.GENERAL.AJOUTER_LOYER' | translate }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- begin:: Content section 2 -->
+ <!--begin::Form-->
+ <form [formGroup]="loyerForm" (submit)="onSubmit()" class="kt-form">
+    <!-- {{ loyerForm.value | json  }} -->
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                       
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.GENERAL.FORM_LOYER' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body"> 
+                    <div class="row">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" formControlName="locataire" placeholder="{{ 'PAGES.GENERAL.LOCATAIRE' | translate }} :">
+                                                    <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---</mat-option>
+                                                    <mat-option *ngFor="let l of locataires" [value]="l">
+                                                            {{l.nom}} {{l.prenom}}
+                                                    </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="isControlHasError('locataire','required')">
+                                                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                        </div>
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="numActeLocation" placeholder="{{ 'PAGES.GENERAL.NUM_ACTE_LOCATION' | translate }} :"   >
+                                        <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control" [matDatepicker]="dateActe"
+                                                placeholder="{{ 'PAGES.GENERAL.DATE_ACTE' | translate }} :"  formControlName="dateActe"   >
+                                            <mat-datepicker-toggle matSuffix matSuffix [for]="dateActe">
+                                                <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                                </mat-icon>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #dateActe></mat-datepicker>
+                                           
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="montantLoyer" placeholder="{{ 'PAGES.GENERAL.MONTANT_LOYER' | translate }} :"   >
+                                        <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('montantLoyer','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                                
+                            </div>
+                            <div class="row">
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                                <mat-select class="form-control" formControlName="anneeDebut"  placeholder="{{ 'PAGES.GENERAL.ANNEE_DEBUT_LOYER' | translate }} :" required>
+                                                   
+                                                        <mat-option *ngFor="let a of annees" [value]="a">
+                                                                {{a}} 
+                                                        </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="isControlHasError('anneeDebut','required')">
+                                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                    </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            
+                                            <mat-select class="form-control" formControlName="moisDebut"  placeholder="{{ 'PAGES.GENERAL.MOIS_DEBUT_LOYER' | translate }} :" required>
+                                                   
+                                                    <mat-option *ngFor="let m of mois" [value]="m.id">
+                                                            {{m.libelle}} 
+                                                    </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="isControlHasError('moisDebut','required')">
+                                                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                            </div>
+                        </div>
+                           <!--  <div class="row">
+                                    <div class="col-md-6 show_port">
+                                        
+                                        <form enctype="multipart/form-data" method="POST" [formGroup]="addActeForm">
+                                            <label class="text-muted">{{ 'PAGES.GENERAL.PJS_ACTE_LOYER' | translate }}</label>
+                                            <div>
+                                                <input type="file" name="file" (change)="fileChange($event)" formControlName="_file"
+                                                    id="customFile" multiple>
+                                            </div>
+                                        </form>
+                                       
+                                    </div>
+                            
+                                </div> -->
+                           
+                            <div class="kt-portlet__body">
+                   
+                                <div class="kt-form__actions">
+                                        <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-success btn-md btn-tall btn-wide">
+                                                {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary btn-md btn-tall btn-wide">
+                                                {{ 'PAGES.GENERAL.RESET' | translate }} <i class="fas fa-times"></i>
+                                        </button>
+                                        <button type="button" *ngxPermissionsOnly="['accessToMarcheComModule']" (click)="back()" class="btn btn-brand btn-md btn-tall btn-wide">
+                                                {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                                        </button>
+                                    </div>
+                            </div>
+                        
+                </div>
+            </div>
+        </div>
+   
+        
+    </div>
+</form>

@@ -1,0 +1,223 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'PAGES.GENERAL.LOYER_SHOW' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a routerLink="/habitation/habitation-new" class="btn btn-outline-success btn-bold btn-sm">
+                            <i class="fas fa-user-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                        </a>
+                        <a (click)="update()" class="btn btn-warning btn-sm btn-bold">
+                            <i class="fas fa-user-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                        </a>
+                        <a href="#" (click)="loyerDelete(loyer?.id)" class="btn btn-danger btn-sm btn-bold">
+                            <i class="fas fa-user-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section  -->
+<div *ngIf="loyer">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.LOCATAIRE_FICHE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NOM' | translate }} :</th>
+                                        <td>{{loyer.locataire?.nom}}</td>
+                                        <th>{{ 'PAGES.GENERAL.PRENOM' | translate }} :</th>
+                                        <td>{{loyer.locataire?.prenom}}</td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <th>{{ 'PAGES.GENERAL.CIN' | translate }} :</th>
+                                        <td>{{loyer.locataire?.cin}}</td>
+                                        <th>{{ 'PAGES.GENERAL.ADRESSE' | translate }} :</th>
+                                        <td>{{loyer.locataire?.adresse}}</td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :</th>
+                                        <td>{{loyer.locataire?.observation}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="fas fa-home kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.MVML_FICHE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NUM_ACTE_LOCATION' | translate }} :</th>
+                                        <td>{{loyer.numActeLocation}}</td>
+                                        <th>{{ 'PAGES.GENERAL.DATE_ACTE' | translate }} :</th>
+                                        <td>{{loyer.dateActe|date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.MONTANT_LOYER' | translate }} :</th>
+                                        <td>{{loyer.montantLoyer}}</td>
+                                        <th>{{ 'PAGES.GENERAL.MONTANT_IMPAYER' | translate }} :</th>
+                                        <td>{{loyer.montantImpaye}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <td></td>
+                                        <th></th>
+                                        <td></td>
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div *ngIf="loyer">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                        <div class="kt-portlet__head kt-bg-portlet-4">
+                                <div class="kt-portlet__head-label">
+                                    <span class="kt-portlet__head-icon">
+                                        <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                                    </span>
+                                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                            {{ 'PAGES.GENERAL.PJS' | translate }}
+                                    </h3>
+                                </div>
+                            </div>
+                  
+                    <div  class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-md-12 show_port">
+                                    <table class="table pj" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <td width= "50%">{{ 'PAGES.GENERAL.PJS_ACTE_LOYER' | translate }}</td>
+                                                    <td>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}</td>
+                                                </tr>
+                                            </thead>
+                                                <tbody *ngIf="acte"> 
+                                                    <tr *ngFor="let item of acte">
+                                                        <td> {{item.name}}</td>
+                                                        <td>
+                                                                <button type="button" class="btn btn_piecejoint_down" (click)="onClickActeName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div> -->
+<div *ngIf="loyer">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <mat-tab-group dynamicHeight [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+                    <mat-tab *ngFor="let tab of asyncTabs | async">
+                        <ng-template mat-tab-label>{{tab.label | translate }}</ng-template>
+                        <!-- {{tab.content}} -->
+
+                        <!-- PRESENCE TAB -->
+                        <div *ngIf="tab.content == 1">
+                            <div *ngIf="selected.value==0">
+                                <kt-tab-ligneloyer></kt-tab-ligneloyer>
+                            </div>
+                        </div>
+
+                        <!-- PERMANENCE TAB -->
+                        <!-- <div *ngIf="tab.content == 2">
+                                <div *ngIf="selected.value==1">
+                                        <kt-tab-mvmtransaction></kt-tab-mvmtransaction>
+                                </div>
+                            </div> -->
+
+
+
+                    </mat-tab>
+                    <!-- <mat-tab label="Grid View">
+                          </mat-tab> -->
+                </mat-tab-group>
+
+                <!-- ************************************************************ -->
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end:: Content -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label" align="right">
+                    <button type="button" class="btn btn-info"><i class="fa fa-print"></i> {{ 'PAGES.GENERAL.PRINT' | translate }}</button>
+                    <button routerLink="/habitation/habitation-index" class="btn btn-label-dark"><i
+                                class="flaticon2-list-2"></i>  {{ 'MENU.LISTEHABITATIONS' | translate }}</button>
+                </div>
+                <div class="espace_bloc"></div>
+            </div>
+        </div>
+    </div>
+</div>

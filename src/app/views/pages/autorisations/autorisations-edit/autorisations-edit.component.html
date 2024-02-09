@@ -1,0 +1,409 @@
+<!-- begin:: Content -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="">
+						رقم طلب الرخصة :
+						{{autorisation.id}}
+					</h3>
+				</div>
+				<div class="kt-portlet__head-label">
+					<h3 class="">
+						وضع طلب الرخصة : <span class="kt-font-brand kt-font-bold">
+							{{autorisation.statutdemandeautorisation.libelle}}
+						</span>
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-6">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-1">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						معلومات عن طلب الرخصة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-6 my-auto">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-select name="ttttt" [(ngModel)]="autorisation.typeAutorisation.id" matInput
+									class="form-control" placeholder=" نوع الترخيص :">
+									<mat-option *ngFor="let item of typesAutorisation" [value]="item.id">
+										{{item.typeAutorisation}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 my-auto">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<textarea matInput [(ngModel)]="autorisation.objet" class="form-control" name="tttttest"
+									placeholder="موضوع الترخيص :"></textarea>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<input matInput class="form-control" [matDatepicker]="picker" name="dateDebutTraitement"
+									[(ngModel)]="autorisation.dateDebut" placeholder="تاريخ بدء الحجز">
+								{{autorisation.dateDebut | date: 'yyyy-MM-dd '}}
+								<mat-datepicker touchUi="true" #picker></mat-datepicker>
+							</mat-form-field>
+						</div>
+
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3 my-auto"><label>ساعة بدء الحجز : </label></div>
+								<div class="col-md-9">
+									<div class="example-full-width">
+										<ngb-timepicker [(ngModel)]="timeDebutAutorisation"></ngb-timepicker>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+								<input matInput class="form-control" [matDatepicker]="picker2" name="dateFinTraitement"
+									[(ngModel)]="autorisation.dateFin" placeholder="تاريخ نهاية الحجز">
+								{{autorisation.dateFin | date: 'yyyy-MM-dd '}}
+								<mat-datepicker touchUi="true" #picker2></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3 my-auto"><label>ساعة الانتهاء : </label></div>
+								<div class="col-md-9">
+									<div class="example-full-width">
+										<ngb-timepicker [(ngModel)]="timeFinAutorisation"></ngb-timepicker>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head kt-bg-portlet-2">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-avatar"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						معلومات عن مقدم الطلب
+					</h3>
+				</div>
+				<div class="kt-portlet__head-toolbar">
+					<div class="kt-portlet__head-actions">
+						<!---   <a routerLink="/PersonnePhysiqueForm" id="btnAddpp" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a routerLink="/PersonnePhysiqueForm" id="btnAddpm" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a id="btnChangepp" id="btnChangepp" class="btn btn-warning btn_rec" style="display:none">
+                                <i class="flaticon-edit"></i>تغيير
+                            </a>
+                            <a id="btnChangepp" id="btnChangepm" style="display:none" class="btn btn-warning btn_rec">
+                                <i class="flaticon-edit"></i>تغيير
+                            </a>-->
+						<!-- <a id="btnAddpm" routerLink="/PersonneMoraleForm" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a id="btnChangepm" (click)="editpp(reclamation.pms.id)" style="display:none" href="#"
+                                class="btn btn-warning btn_rec">
+                                <i class="flaticon-edit"></i>تغيير
+                            </a> -->
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%" id="pppp" style="display:none">
+							<tbody>
+								<tr>
+									<th>الاسم :</th>
+									<td class="kt-font-bold"> {{ppSourceAutorisation.prenom}}</td>
+
+									<th>النسب :</th>
+									<td class="kt-font-bold"> {{ppSourceAutorisation.nom}}</td>
+								</tr>
+								<tr>
+									<th>البطاقة الوطنية :</th>
+									<td class="kt-font-bold">{{ppSourceAutorisation.cin}}</td>
+
+									<th>الهاتف المحمول :</th>
+									<td class="kt-font-bold"> {{ppSourceAutorisation.telephoneGsm}}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table class="table pj" width="100%" id="pmmm" style="display:none">
+							<tbody>
+								<tr>
+									<th> معرف الضريبة: </th>
+									<td> {{pmSourceAutorisation.rc}}</td>
+									<th> السجل التجاري:</th>
+									<td> {{pmSourceAutorisation.identifiantFiscal}}</td>
+								</tr>
+								<tr>
+									<th>Numero Patente: </th>
+									<td>{{pmSourceAutorisation.numeroPatente}}</td>
+									<th>الهاتف المحمول :</th>
+									<td> {{pmSourceAutorisation.teleGsm}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="espace_bloc"></div>
+						<div align="right">
+							<!---- <button id="btnDetailpp" style="display:none" type="button" class="btn btn-brand">التفاصيل</button>
+                                <button id="btnDetailpm" style="display:none" type="button"
+                                    class="btn btn-brand">التفاصيل</button>-->
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- end:: Content -->
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-6">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-1">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						معلومات عن ملكية الجماعة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>نوع الملكية :</th>
+									<td class="donnee_show kt-font-warning kt-font-bold">
+										{{autorisation.objetdemandeautorisation.typeObjetReservation.typeObjetAutorisation}}
+									</td>
+
+									<th> الملكية :</th>
+									<td class="donnee_show kt-font-danger kt-font-bold">
+										{{autorisation.objetdemandeautorisation.objetDemandeAutorisation}}
+									</td>
+								</tr>
+								<tr>
+									<th>الفضاء :</th>
+									<td class="donnee_show">
+										{{autorisation.espace.espace}}
+									</td>
+
+									<th> العنوان :</th>
+									<td class="donnee_show">
+										{{autorisation.objetdemandeautorisation.adresse}}
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+						<div class="espace_bloc"></div>
+						<div align="right">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-1">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						معلومات المعالجة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table pj" width="100%">
+									<tbody>
+										<tr>
+											<th>الوضع :</th>
+											<td class="donnee_show">
+												{{autorisation.statutdemandeautorisation.libelle}}
+											</td>
+
+										</tr>
+										<tr>
+											<th>ملاحظات :</th>
+											<td class="donnee_show">
+												{{autorisation.note}}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- end:: Content -->
+<!-- begin:: Content -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head kt-bg-portlet-5">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-attachment"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						الوثائق المرفقة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="form-group">
+					<div class="input-group">
+						<form>
+							<label class="input-group-btn">
+								<span class="btn btn-brand">
+									اختيار الوثائق المرفقة <input type="file" (change)="save($event)"
+										style="display: none;" multiple>
+								</span>
+							</label>
+							<input type="text" class="form-control" readonly>
+						</form>
+					</div>
+				</div>
+				<!---  <div id="psj">
+                        <form>
+                          <label class="custom-file-upload">
+                            <input type="file" (change)="save($event)" multiple="multiple">
+                            <i class="fa fa-cloud-upload"></i>إضافة وثائق مرفقة
+                        </label>
+
+                          <br>
+
+                        </form>  </div>-->
+				<!--- <div class="row">
+                            <ul >
+                            <li *ngFor="let item of pjs ; index as i" >
+                           {{item.name}} <a  (click)="onClickDeletePj(item.id,i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                          </li>
+                          </ul>
+                        </div>-->
+
+				<div class="row">
+
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<thead>
+								<tr>
+									<td width="50%">الوثائق المرفقة</td>
+									<td>التحميل</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of pjs ; index as i">
+									<td> {{item.name}}</td>
+									<td>
+										<button type="button" class="btn btn_piecejoint_down"
+											(click)="onClickPjName(item.idAlfresco,item.id)"><i
+												class="icon la la-cloud-download"></i></button>
+										<!----    <button type="button" class="btn btn_piecejoint_down"
+                                                (click)="onClickDeletePj(item.id,i)"><i
+                                                    class="la la-remove
+                                                    "></i></button>-->
+
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- end:: Content -->
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label" align="right">
+					<div (click)="onSubmit()"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+						data-ktwizard-type="action-submit">
+						حفظ
+					</div>
+					<!---  <button type="button" class="btn btn-info"><i class="fa fa-print"></i> الطبع</button>-->
+					<button *ngxPermissionsOnly="['accessToIndexAutorisation']" type="button" class="btn btn-label-dark"
+						routerLink="/autorisations/autorisations-list"><i class="flaticon2-list-2"></i>
+						لائحة
+						طلبات التراخيص </button>
+				</div>
+				<div class="espace_bloc"></div>
+			</div>
+		</div>
+	</div>
+</div>

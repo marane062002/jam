@@ -1,0 +1,211 @@
+<div class="kt-portlet portlet-1">
+	<div novalidate autocomplete="off">
+		<!-- {{addForm.value |json}} -->
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-3">
+				<div class="kt-portlet__head-label">
+					<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.CONVENTION.DETAIL_CONVENTION" | translate }}
+					</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="kt-portlet__body">
+			<div class="card card-custom">
+				<div class="card-body p-0">
+					<!--begin::Wizard-->
+					<div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="first"
+						data-wizard-clickable="false">
+						<div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10 mt-4"
+							style="width: 70%; margin-left: 15%">
+							<div class="col-xl-10 col-xxl-6">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.OBJET" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.object}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.OBJET_ARABE" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.objectAr}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.DATE" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.date | date:'dd/MM/yyyy'}}"
+													disabled matInput />
+											</mat-form-field>
+
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.DUREE" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.duree}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.MONTANT" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.montant}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row ex3">
+						<div class="col-md-12 show_port">
+							<table *ngIf="files" class="table pj" width="100%">
+								<thead>
+									<tr>
+										<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+										<td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+										</td>
+										<td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_DISPATCHING' | translate }}</td>
+										<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+										<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of files | async">
+										<td class="file_icon"><img style="height: 25px !important;"
+												src="./assets/media/files/{{FileExtension(item.name)}}"
+												matTooltip="{{FileName(item.name)}}"></td>
+										<td> {{FileName(item.name) | slice:0:20}}</td>
+										<td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+										<td>{{item.fSize/1000}} ko</td>
+										<td>
+											<button type="button" (click)="onClickPjName(item.idAlfresco,item.id)"
+												class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+												matTooltip="{{FileName(item.name)}}"><i
+													class="flaticon-download-1"></i></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- end:: card section 2 -->
+				<hr>
+				<!--Action Section :: begin-->
+				<div class="kt-portlet__head-label" align="right">
+					<button _ngcontent-dkp-c41="" class="btn btn-info btn-md" type="reset" (click)="back()">
+						<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+						{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+				</div>
+				<!--Action Section :: end-->
+			</div>
+
+
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title class="panel-title" style="color: #2a79b1">
+						{{ "PAGES.CONVENTION.DETAIL" | translate }}
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<div class="col-md-12 show_port">
+					<br />
+					<div class="kt-portlet__foot">
+						<mat-tab-group (selectedTabChange)="changeTab($event)">
+							<mat-tab label="{{'PAGES.MARCHE.convention.TAB_360.AUTORISATION' | translate	}}"> </mat-tab>
+							<mat-tab label="{{'PAGES.MARCHE.convention.TAB_360.ENGAGEMENT' | translate	}}"> </mat-tab>
+
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.BUTS'
+									| translate
+							}}">
+							</mat-tab>
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.Contribution'
+									| translate
+							}}">
+							</mat-tab>
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.avance'
+									| translate
+							}}">
+							</mat-tab>
+
+
+
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.COUTESUIVI'
+									| translate
+							}}">
+							</mat-tab>
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.CONFLIT'
+									| translate
+							}}">
+							</mat-tab>
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.AUDIT'
+									| translate
+							}}">
+
+
+							</mat-tab>
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.SUIVICONTRUBITION'
+									| translate
+							}}"></mat-tab>
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.EXECUTIONPROJET'
+									| translate
+							}}"></mat-tab>
+							<mat-tab label="{{
+								'PAGES.MARCHE.convention.TAB_360.CONSISTANCECONVENTION'
+									| translate
+							}}"></mat-tab>
+						</mat-tab-group>
+					</div>
+					<router-outlet></router-outlet>
+				</div>
+			</mat-expansion-panel>
+			<!-- end:: Content -->
+		</div>
+	</div>

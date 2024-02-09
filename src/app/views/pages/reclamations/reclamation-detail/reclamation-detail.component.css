@@ -1,0 +1,22 @@
+li { cursor: pointer; }
+div{
+    word-wrap: break-word !important;
+    color: #212529 !important;
+}
+.form-group label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin-left: 15px !important;
+}
+
+.mat-divider{
+    /*border-top-style: dashed !important;*/
+    margin-bottom: 10px;
+}
+.info-data{
+    margin-bottom: 15px !important;
+}
+
+.kt-font-bold{
+    font-weight: 600 !important;
+}

@@ -1,0 +1,70 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head w-b-5">
+        <div class="kt-portlet__head-label">
+            <h2 class="kt-portlet__head-title">{{ "PAGES.GESTION_PARTS_PAYER.TITLE" | translate }}</h2>
+        </div>
+    </div>
+</div>
+
+
+<form *ngIf="language=='ar'" [formGroup]="partsForm">
+    <div class="row" style="margin-right:-47px;">
+        <label style="margin-right:120px;" for="part1">{{ "PAGES.GESTION_PARTS_PAYER.PART_MONTANT" | translate }} :</label>
+        <input type="number" class="form-control" formControlName="partMontant" id="part1" name="part1" min="0" step="1">
+        <span>&nbsp;&nbsp;%&nbsp;&nbsp;</span>
+        <button mat-icon-button (click)="onEdit()"><mat-icon class="edit-icon">edit</mat-icon></button>
+    </div>
+    <div class="row" style="margin-left:100px;">
+        <label style="margin-right:86px;" for="part2">{{ "PAGES.GESTION_PARTS_PAYER.PART_COMMUNE" | translate }} :</label>
+        <input class="form-control" formControlName="partCommune" type="number" id="part2" name="part2" min="0" step="1">
+        <span>&nbsp;&nbsp;%&nbsp;&nbsp;</span>
+        <button mat-icon-button (click)="onEdit()"><mat-icon class="edit-icon">edit</mat-icon></button>
+    </div>
+    <div class="row" style="margin-right:74px;">
+        <label style="margin-right:-5px;" for="part3">{{ "PAGES.GESTION_PARTS_PAYER.PART_MANDATAIRE" | translate }} :</label>
+        <input style="margin-right:60px" type="number" class="form-control" formControlName="partMondataire" id="part3" name="part3" min="0" step="1">
+        <span>&nbsp;&nbsp;%&nbsp;&nbsp;</span>
+        <button mat-icon-button (click)="onEdit()"><mat-icon class="edit-icon">edit</mat-icon></button>
+    </div>
+</form>
+
+<form *ngIf="language=='fr'" [formGroup]="partsForm">
+    <div class="row" style="margin-left:100px;">
+        <label style="margin-right:120px;" for="part1">{{ "PAGES.GESTION_PARTS_PAYER.PART_MONTANT" | translate }} :</label>
+        <input type="number" class="form-control" formControlName="partMontant" id="part1" name="part1" min="0" step="1">
+        <span>&nbsp;&nbsp;%&nbsp;&nbsp;</span>
+        <button mat-icon-button (click)="onEdit()"><mat-icon class="edit-icon">edit</mat-icon></button>
+    </div>
+    <div class="row" style="margin-left:100px;">
+        <label style="margin-right:86px;" for="part2">{{ "PAGES.GESTION_PARTS_PAYER.PART_COMMUNE" | translate }} :</label>
+        <input class="form-control" formControlName="partCommune" type="number" id="part2" name="part2" min="0" step="1">
+        <span>&nbsp;&nbsp;%&nbsp;&nbsp;</span>
+        <button mat-icon-button (click)="onEdit()"><mat-icon class="edit-icon">edit</mat-icon></button>
+    </div>
+    <div class="row" style="margin-left:100px;">
+        <label style="margin-right:144px;" for="part3">{{ "PAGES.GESTION_PARTS_PAYER.PART_MANDATAIRE" | translate }} :</label>
+        <input type="number" class="form-control" formControlName="partMondataire" id="part3" name="part3" min="0" step="1">
+        <span>&nbsp;&nbsp;%&nbsp;&nbsp;</span>
+        <button mat-icon-button (click)="onEdit()"><mat-icon class="edit-icon">edit</mat-icon></button>
+    </div>
+</form>
+
+
+<div class="kt-portlet__heads">
+    <div *ngIf="language=='fr'" class="kt-portlet__head-label" align="right">
+
+        <button mat-button type="button" (click)="onEdit()" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+            <i class="icon la la-floppy-o"></i>
+        {{ 'PAGES.GENERAL.SAVE' | translate }}
+        </button>
+
+    </div>
+    <div *ngIf="language=='ar'" class="kt-portlet__head-label" align="left">
+
+        <button mat-button type="button" (click)="onEdit()" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+            <i class="icon la la-floppy-o"></i>
+        {{ 'PAGES.GENERAL.SAVE' | translate }}
+        </button>
+
+    </div>
+</div>

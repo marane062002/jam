@@ -1,0 +1,55 @@
+/* EXPORT OPTIONS */
+
+.fixe {
+    text-align: right !important;
+}
+
+.btn-export {
+    color: #ffffff !important;
+    background-color: #3875e7 !important;
+    padding: 5px 20px !important;
+}
+
+.export-align {
+    margin-left: 2% !important;
+}
+
+
+/* HISTRIQUE */
+
+.pj th {
+    width: 17% !important;
+}
+
+
+/* Style expansion panel */
+
+.example-action-buttons {
+    padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.panel-space {
+    padding: 0 3px 0 3px;
+}
+
+.panel-btn-space {
+    padding: 0 0 10px 0;
+}
+
+.panel-title {
+    color: #2786fb;
+}

@@ -1,0 +1,166 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					
+                        Modification dèun fourgon :  
+				</h2>
+			</div>
+		</div>
+	</div>
+
+    <form [formGroup]="FormArticle" action="">
+	<div  class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Matricule :</mat-label>
+								<input
+                                    formControlName="matricule"
+									matNativeControl
+									class="form-control"
+                                    matInput
+								>
+                               
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Type Vehicule :</mat-label>
+								<mat-select
+                                formControlName="vehicule"
+                                [compareWith]="selectedValueVehiculeFunction"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option *ngFor="let v of vehicule" [value]="v">{{v.libelle}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Couleur :</mat-label>
+                                
+								<input
+                                formControlName="couleur"
+									matNativeControl
+									class="form-control"
+								>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Organisme:</mat-label>
+								<mat-select
+                                formControlName="organisme"
+                                [compareWith]="selectedValueOrganismeFunction"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option *ngFor="let o of organisme" [value]="o">{{o.type.libelle}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="pb-5" data-wizard-type="step-content">
+						<h4 class="mb-10 font-weight-bold text-dark"></h4>
+						<div class="kt-portlet">
+							<div class="kt-portlet__body">
+								<div class="row">
+									<div
+										class="col-md-12 show_port input-group"
+									>
+										<form
+											enctype="multipart/form-data"
+											method="POST"
+											style="
+												display: -webkit-inline-box;
+												margin-inline-start: 98px;
+											"
+										>
+											<label class="input-group-btn">
+												<span class="btn btn-info">
+													Sélectionner un fichier
+													<input
+													(change)="onPcJChange($event)"
+														type="file"
+														name="file"
+														formControlName="pcj"
+														id="customFile"
+														style="display: none"
+														multiple
+													/>
+												</span>
+											</label>
+											<input
+											formControlName="pcj"
+												type="text"
+												class="form-control"
+												readonly
+											/>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									
+                                    <button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+									<button
+                                    (click)="update()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dlp-c41
+											class="icon la la-floppy-o"
+										></i>
+										ENREGISTRER
+									</button>
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>

@@ -1,0 +1,161 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="fa fa-university"></i>
+			</span>
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.SUBVENTION.TITRE_SHOW" | translate }}
+			</h3>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<button (click)="showHitory()" type="button" class="btn btn-sm btn-clean btn-icon btn-label-primary btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.INFO' | translate }}">
+						<i class="fas fa-info-circle"></i>
+					</button>
+					<a href="javascript:; " (click)="editSubvention()" *ngxPermissionsOnly="['canUpdateSubvention']" class="btn btn-warning btn-elevate btn-icon-sm" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"> <i class="la la-edit"></i> {{ "PAGES.GENERAL.EDIT" | translate }} </a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div *ngIf="history" class="col-md-12 show_port history">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th style="font-size: 10px; color: #0a447d; border-top: none">{{ "TRANSLATOR.CREATOR" | translate }} :</th>
+							<td style="font-size: 10px; border-top: none" class="donnee_show">{{ details.fullName }}</td>
+							<th style="font-size: 10px; color: #0a447d; border-top: none">{{ "TRANSLATOR.CREATION_DATE" | translate }} :</th>
+							<td style="font-size: 10px; border-top: none" class="donnee_show">
+								{{ details.creationDate | date : "dd/MM/yyyy HH:mm" }}
+							</td>
+							<th style="font-size: 10px; color: #0a447d; border-top: none">{{ "TRANSLATOR.UPDATE_DATE" | translate }} :</th>
+							<td style="font-size: 10px; border-top: none" class="donnee_show">
+								{{ details.updateDate | date : "dd/MM/yyyy HH:mm" }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div *ngIf="history" class="espace_bloc"></div>
+			<div class="col-md-12 show_port">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>{{ "PAGES.SUBVENTION.NUM_SUB" | translate }} :</th>
+							<td class="donnee_show">{{ details.numSubvention }}</td>
+							<th>{{ "PAGES.SUBVENTION.ANNEE" | translate }} :</th>
+							<td class="donnee_show">{{ details.anneeSubvention }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.SUBVENTION.DUREE" | translate }} :</th>
+							<td class="donnee_show">{{ details.durre }}</td>
+							<th>{{ "PAGES.SUBVENTION.NOM_ASSOCIATION" | translate }} :</th>
+							<td class="donnee_show">{{ details.nomAssociation }}</td>
+							<!-- <td class="donnee_show">
+								<span *ngIf="details.statutProjet == 1">{{ "PAGES.SUBVENTION.EXUCUTE" | translate }}</span>
+								<span *ngIf="details.statutProjet == 2"> {{ "PAGES.SUBVENTION.EnCOURSEXUCUTE" | translate }} </span>
+								<span *ngIf="details.statutProjet == 3">{{ "PAGES.SUBVENTION.NONEXUCUTE" | translate }} </span>
+							</td> -->
+						</tr>
+						<tr>
+							<th>{{ "PAGES.SUBVENTION.DATE" | translate }} :</th>
+							<td class="donnee_show">{{ details.date | date : "dd/MM/yyyy" }}</td>
+							<th>{{ "PAGES.SUBVENTION.NOM_PROJEt" | translate }} :</th>
+							<td class="donnee_show">{{ details.nomProjet }}</td>
+						</tr>
+
+						<tr>
+							<th>{{ "PAGES.ACTIVITE.TYPE_ACTIVITE" | translate }} :</th>
+							<td class="donnee_show">{{ details.natureActivite }}</td>
+							<th>{{ "PAGES.SUBVENTION.CIBLE" | translate }} :</th>
+							<td class="donnee_show">{{ details.cible }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.SUBVENTION.LOCALISATION" | translate }} :</th>
+							<td class="donnee_show">{{ details.local }}</td>
+							<th>{{ "PAGES.SUBVENTION.DATE_DD" | translate }} :</th>
+							<td class="donnee_show">{{ details.dateDepotDemande | date : "dd/MM/yyyy" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.LOGISTIQUE.CHAMPACT" | translate }} :</th>
+							<td class="donnee_show">{{ details.champActivite }}</td>
+							<th>{{ "PAGES.SUBVENTION.MONTANT_SUB" | translate }} :</th>
+							<td class="donnee_show">{{ details.montantDemande }}</td>
+						</tr>
+
+						<tr>
+							<th>{{ "PAGES.ACQUISITION.RAYONNEMENT" | translate }} :</th>
+							<td class="donnee_show">{{ details.activite_de_rayonnement }}</td>
+							<th>{{ "PAGES.SUBVENTION.MONTANT_SUB_ass" | translate }} :</th>
+							<td class="donnee_show">{{ details.montantSubvention }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.LOGISTIQUE.MONTANT_SUB_AUTRE" | translate }} :</th>
+							<td class="donnee_show">{{ details.montantSubventionAutre }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.INTERVENTION_RAPIDE.PJ" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table *ngIf="files" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+							<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.DATE_DISPATCHING" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of files | async">
+							<td><img class="file_icon" style="width: 10%" src="./assets/media/files/{{ FileExtension(item.name) }}" matTooltip="{{ FileName(item.name) }}" /></td>
+							<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+							<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
+							<td>{{ item.fSize / 1000 }} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco, item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

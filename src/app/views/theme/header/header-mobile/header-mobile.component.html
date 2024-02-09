@@ -1,0 +1,150 @@
+<!-- begin:: Header Mobile -->
+<div id="kt_header_mobile" class="kt-header-mobile">
+	<div class="kt-header-mobile__brand">
+		<a class="kt-header-mobile__logo" routerLink="/">
+			<img alt="logo" [attr.src]="headerLogo"/>
+		</a>
+	</div>
+	<div class="kt-header__brand-nav">
+        <div ngbDropdown class="dropdown">
+            <button class="btn btn-default dropdown-toggle" id="ddlDashboard" ngbDropdownToggle type="button">
+				{{ 'MENU.PRINCIPAL' | translate }}
+			</button>
+            <!-- **************************ADIL********************************************************** -->
+
+            <div ngbDropdownMenu class="dropdown-menu dropdown-menu-md" aria-labelledby="ddlDashboard">
+                <ul class="kt-nav kt-nav--bold kt-nav--md-space kt-nav--v3">
+                    <perfect-scrollbar style="height: 400px;">
+						<li ngbDropdownItem *ngxPermissionsOnly="['accessToRHModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(1)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-profile"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.RH' | translate }}</span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToGPModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(2)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-app"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.PROJETS' | translate }}</span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToPCModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(3)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-home-2"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.PATRIMOINES_COMMUNAL' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- **************************RACHID********************************************************** -->
+
+                        <!-- begin::Bureau d'ordre -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToBOModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(4)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-mail-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.MODULE_BO' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Bureau d'ordre -->
+
+                        <!-- begin::Insertion publiciatiare -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToIPModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(5)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-digital-marketing"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.MODULE_INSERTION_PUB' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Insertion publiciatiare -->
+
+                        <!-- begin::Immobilisation -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToImmoModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(6)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-open-box"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.MODULE_IMMOBILISATION' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Immobilisation -->
+
+                        <!-- begin::JSCE -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToJSCEModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(7)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-presentation-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.MODULE_JEUNESSE' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::JSCE -->
+
+                        <!-- begin::Travaux communaux -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToTravauxCommunauxModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(8)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-bus-stop"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.MODULE_TRAVAUX_COMMUNAUX' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Travaux communaux -->
+
+                        <!-- **************************NAIMA********************************************************** -->
+                        <!-- begin::Reclamations -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToReclamationModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(9)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-layers"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.RECLAMATIONS' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Reclamations  -->
+                        <!-- begin::Autorisations -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToAutorisationModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(10)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-interface-10"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.AUTORISATIONS' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Autorisations  -->
+                        <!-- begin::Reservations -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToReservationModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(11)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-tabs"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.RESERVATIONS' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Reservations  -->
+                         <!-- begin::AffairesConseil -->
+						 <li ngbDropdownItem *ngxPermissionsOnly="['accessToAffaireConseilModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(12)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-suitcase"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.AFFAIRES_CONSEIL' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::AffairesConseil  -->
+                        <!-- begin::AffairesConseil -->
+                        <li ngbDropdownItem  *ngxPermissionsOnly="['accessToMarcheModule']" class="kt-nav__item">
+                            <a  class="kt-nav__link active" (click)="menuHorService.clickMenu(13)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.MARCHES1' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::AffairesConseil  -->
+                        <!-- **************************END********************************************************** -->
+
+                        <!-- begin::Users -->
+                        <li ngbDropdownItem  *ngxPermissionsOnly="['accessToAccountModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(20)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.USERS' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- begin::Users -->
+                    </perfect-scrollbar>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+	<div class="kt-header-mobile__toolbar">
+		<button [hidden]="!asideDisplay" class="kt-header-mobile__toggler kt-header-mobile__toggler--left" id="kt_aside_mobile_toggler">
+			<span></span>
+		</button>
+		<button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button>
+		<button ktToggle [options]="toggleOptions" class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler">
+			<i class="flaticon2-settings"></i>
+		</button>
+	</div>
+</div>
+<!-- end:: Header Mobile -->

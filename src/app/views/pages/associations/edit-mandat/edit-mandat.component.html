@@ -1,0 +1,163 @@
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-3">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="fas fa-address-card kt-font-inverse-brand"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.MANDAT.TITRE_EDIT' | translate }}
+            </h3>
+        </div>
+    </div>
+
+    <form novalidate [formGroup]="addForm" autocomplete="off">
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="mandat" placeholder="{{ 'PAGES.MANDAT.MANDAT' | translate }} :">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input matInput class="form-control" [matDatepicker]="picker5" placeholder="{{ 'PAGES.MANDAT.DATE_RENOUVELEMENT_BUREAU' | translate }} :" formControlName="dateRenouvelementBureau">
+                                <!-- <mat-error *ngIf="isControlHasError('dateRenouvelementBureau','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error> -->
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker5">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker5></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input matInput class="form-control" [matDatepicker]="picker6" placeholder="{{ 'PAGES.MANDAT.DERNIER_ASSEMBLE_GENE' | translate }} :" formControlName="derniereAssembleeGene">
+                                <!-- <mat-error *ngIf="isControlHasError('derniereAssembleeGene','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error> -->
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker6">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker6></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 2 ======================================================= -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input matInput class="form-control" [matDatepicker]="picker3" placeholder="{{ 'PAGES.MANDAT.DATE_DEBUT_MANDAT' | translate }} :" formControlName="dateDebut" (dateChange)="dateDemarrageChangeDebut()">
+                                <!-- <mat-error *ngIf="isControlHasError('dateDebut','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error> -->
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker3">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker3></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input matInput class="form-control" [matDatepicker]="picker4" placeholder="{{ 'PAGES.MANDAT.DATE_FIN_MANDAT' | translate }} :" formControlName="dateFin" (dateChange)="dateDemarrageChangeFin()" [min]="addForm.controls.dateDebut.value">
+                                <!-- <mat-error *ngIf="isControlHasError('dateFin','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error> -->
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker4">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker4></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="dureeMandat" placeholder="{{ 'PAGES.MANDAT.DUREE_MANDAT' | translate }} :" readonly="readonly">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="president" placeholder="{{ 'PAGES.MEMBRE_BUREAU.PRESIDENT' | translate }} :">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="visePresident" placeholder="{{ 'PAGES.MEMBRE_BUREAU.VICE_PRESIDENT' | translate }} :">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="totalMembre" placeholder="{{ 'PAGES.MEMBRE_BUREAU.TOTAL_MEMBRE' | translate }} :">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="totalMMembre" placeholder="{{ 'PAGES.MEMBRE_BUREAU.NBR_HOMME' | translate }} :">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="totalFMembre" placeholder="{{ 'PAGES.MEMBRE_BUREAU.NBR_FEMME' | translate }} :">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" [disabled]="addForm.invalid" (click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

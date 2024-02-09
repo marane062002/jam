@@ -1,0 +1,780 @@
+<div novalidate autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Ajouter un Obstacle :</h2>
+			</div>
+		</div>
+	</div>
+
+	<mat-horizontal-stepper #stepper>
+		<mat-step  label="Informations défunts">
+            <form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group fv-plugins-icon-container">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Nom</mat-label>
+										<input formControlName="nom" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Prénom</mat-label>
+										<input formControlName="prenom" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>CIN</mat-label>
+										<input formControlName="cin" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Nationalité</mat-label>
+                                        <mat-select
+                                            matNativeControl
+                                            formControlName="nationalite"
+                                            class="form-control"
+                                        >
+                                            <mat-option  value="Marocain">Marocain</mat-option>
+                                            <mat-option  value="Autre">Autre</mat-option>                                    
+                                        </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+                        <div class="row" *ngIf="ajoutForm.value.nationalite === 'Autre'">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Autre Nationalité :</mat-label>
+                                        <input
+                                        formControlName="autreNationalite"
+                                        class="form-control-solid form-control-lg"
+                                        name="address1"
+                                        matInput
+                                    />
+                                	</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+                        </div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Date de naissance</mat-label>
+										<input formControlName="date" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Sexe</mat-label>
+										<mat-select
+										formControlName="sexe"
+											matNativeControl
+											class="form-control"
+										>
+										<mat-option  value="Homme">Homme</mat-option>
+										<mat-option  value="Femme">Femme</mat-option>
+										<mat-option  value="Enfant">Enfant</mat-option>
+										<mat-option  value="NN">NN</mat-option>
+										<mat-option  value="NRS">NRS</mat-option>
+										<mat-option  value="Indeterminé">Indeterminé</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <label> Commune: </label>
+                                        <mat-select
+                                        formControlName="commune"
+                                            matNativeControl
+                                            class="form-control"
+                                        >
+                                        <mat-option *ngFor="let c of commune" [value]="c">{{c.libelle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <label> Arrondissement: </label>
+                                        <mat-select
+                                            matNativeControl 
+                                            class="form-control"
+                                            formControlName="arrondissement"
+                                        >
+                                         <mat-option *ngFor="let arr of arrondissement" [value]="arr">{{arr.libelle}}</mat-option>
+                                            
+                                        </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Quartier: </mat-label>
+                                        <mat-select
+                                        formControlName="quartier"
+                                            matNativeControl
+                                            class="form-control"
+                                        >
+                                        <mat-option *ngFor="let q of quartier" [value]="q">{{q.libelle}}</mat-option>
+                                    </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Lieu de décés</mat-label>
+                                        <input
+                                        formControlName="lieu"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Adresse de résidence</mat-label>
+                                        <input
+                                        formControlName="adresseResidence"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+
+                                    
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Adresse du décés</mat-label>
+                                        <input
+                                            formControlName="adresseDeces"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>N décés</mat-label>
+                                        <input
+                                            formControlName="numDeces"
+                                            type="number"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+
+
+						<mat-expansion-panel [expanded]="true">
+							<mat-expansion-panel-header>
+								<mat-panel-title>
+									<div class="matPanelSceneSymbol"><i class="fas fa-address-card "></i></div>
+									&nbsp;&nbsp;
+									<h4 class="kt-portlet__head-title ">
+										{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+									</h4>
+								</mat-panel-title>
+							</mat-expansion-panel-header>
+							<div class="kt-portlet__body">
+								<div class="row">
+									<div class="col-md-12 show_port">
+										<!-- start section::edit file form -->
+										<div class="row">
+											<div class="col-md-2" >
+												<div class="form-group">
+													<mat-form-field class="example-full-width">
+														<label> Label:
+														</label>
+														<input id="cc" matInput type="text" class="form-control" (change)="labelDef($event)" name="LabelPj"  [(ngModel)]="labelDefunts" placeholder="" >
+							
+													</mat-form-field>
+												</div>
+											</div>
+											<div class="col-md-6 show_port input-group">
+												<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;" formGroupName="pj">
+													<label class="input-group-btn">
+														<span class="btn btn-info">
+															{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" (change)="saveDef($event)" id="customFile" style="display: none;" multiple>
+														</span>
+													</label>
+													<input id="testdef" type="text" formControlName="pcfileDefunts" class="form-control" readonly>
+													
+												</form>
+											</div>
+											<div class="col-md-2" style="padding-top: 27px;">
+												<button class="btn btn-primary" type="button" (click)="validerPjDef()" style="position: absolute;right: 0px;">
+													{{ 'PAGES.GENERAL.SAVE' | translate }}
+												</button>
+											</div>
+										</div>
+										
+										<!-- end section::edit file form -->
+										<hr>
+										<!-- begin::file datasource -->
+										<div   
+										 *ngIf="dataSource2" class="example-container mat-elevation-z8">
+				
+											<mat-table [dataSource]="dataSource2" matSort>
+												<!-- type Column -->
+												<!-- <ng-container matColumnDef="type">
+													<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+														{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+													<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+												</ng-container> -->
+												<!-- label Column -->
+												<ng-container matColumnDef="label">
+													<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+														Label</mat-header-cell>
+													<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.LabelPj?row.LabelPj:"-"}} </mat-cell>
+												</ng-container>
+												<!-- file name Column -->
+												<ng-container matColumnDef="nomDoc">
+													<mat-header-cell *matHeaderCellDef mat-sort-header>
+														{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+													<mat-cell *matCellDef="let row"> {{row.selecetedFile.name}} </mat-cell>
+												</ng-container>
+												<ng-container matColumnDef="actions">
+													<mat-header-cell *matHeaderCellDef mat-sort-header>
+														{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+													</mat-header-cell>
+													<mat-cell *matCellDef="let row; let i=index">
+														<button type="button" (click)="onDeletePjDef(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+															<i class="icon la la-trash"></i>
+														</button>
+													</mat-cell>
+												</ng-container>
+				
+												<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+												<mat-row *matRowDef="let row; columns: displayedColumns1;">
+												</mat-row>
+											</mat-table>
+				
+										</div>
+										<!-- end::file datasource -->
+									</div>
+								</div>
+							</div>
+						</mat-expansion-panel>
+
+
+
+
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group fv-plugins-icon-container">
+									<div class="kt-portlet__heads">
+										<div class="kt-portlet__head-label text-right">
+											<button (click)="RetourEmbalages()" href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+												<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+												Retour
+											</button>
+											<!-- <button (click)="ajouter()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active">
+												<i class="icon la la-floppy-o"></i>
+												Enregistrer
+											</button> -->
+											<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active" matStepperNext>
+												<i _ngcontent-dlp-c41 class="icon la la-plus-circle"></i>
+												Suivant
+											</button>
+										</div>
+									</div>
+									<div class="espace_bloc"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </form>
+		</mat-step>
+		<mat-step label="Informations déclarant">
+			<form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Nom de déclarant :</mat-label>
+							<input   formControlName="nomDeclarent" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Prénom de déclarant :</mat-label>
+							<input formControlName="prenomDeclarent" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>CIN du déclarant:</mat-label>
+							<input formControlName="cinDeclarent" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Observation :</mat-label>
+
+							<input formControlName="observation" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de déclaration :</mat-label>
+							<input formControlName="dateDeclaration" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+			<mat-expansion-panel [expanded]="true">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						<div class="matPanelSceneSymbol"><i class="fas fa-address-card "></i></div>
+						&nbsp;&nbsp;
+						<h4 class="kt-portlet__head-title ">
+							{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+						</h4>
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<!-- start section::edit file form -->
+							<div class="row">
+								<!-- <div class="col-md-2 show_port input-group">
+									<mat-form-field class="example-full-width">
+										<label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+										<mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+											<mat-option *ngFor="let item of unites" [value]="item">{{item.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div> -->
+								<div class="col-md-2" >
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<label> Label:
+											</label>
+											<input id="cc" matInput type="text" class="form-control" (change)="labelDeclarant($event)" name="LabelPj"  [(ngModel)]="labelDeclar" placeholder="" >
+				
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6 show_port input-group">
+									<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;" formGroupName="pj">
+										<label class="input-group-btn">
+											<span class="btn btn-info">
+												{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" (change)="saveDec($event)" id="customFile" style="display: none;" multiple>
+											</span>
+										</label>
+										<input id="testd" type="text" formControlName="pcfileDeclar" class="form-control" readonly>
+									    
+									</form>
+								</div>
+								<div class="col-md-2" style="padding-top: 27px;">
+									<button class="btn btn-primary" type="button" (click)="validerPjDec()" style="position: absolute;right: 0px;">
+										{{ 'PAGES.GENERAL.SAVE' | translate }}
+									</button>
+								</div>
+							</div>
+							
+							<!-- end section::edit file form -->
+							<hr>
+							<!-- begin::file datasource -->
+							<div   
+							 *ngIf="dataSource3" class="example-container mat-elevation-z8">
+	
+								<mat-table [dataSource]="dataSource3" matSort>
+									<!-- type Column -->
+									<!-- <ng-container matColumnDef="type">
+										<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+											{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+										<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+									</ng-container> -->
+									<!-- label Column -->
+									<ng-container matColumnDef="label">
+										<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+											Label</mat-header-cell>
+										<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.LabelPj?row.LabelPj:"-"}} </mat-cell>
+									</ng-container>
+									<!-- file name Column -->
+									<ng-container matColumnDef="nomDoc">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>
+											{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+										<mat-cell *matCellDef="let row"> {{row.selecetedFile.name}} </mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="actions">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>
+											{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+										</mat-header-cell>
+										<mat-cell *matCellDef="let row; let i=index">
+											<button type="button" (click)="onDeletePjDec(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+												<i class="icon la la-trash"></i>
+											</button>
+										</mat-cell>
+									</ng-container>
+	
+									<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+									<mat-row *matRowDef="let row; columns: displayedColumns1;">
+									</mat-row>
+								</mat-table>
+	
+							</div>
+							<!-- end::file datasource -->
+						</div>
+					</div>
+				</div>
+			</mat-expansion-panel>
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label text-right">
+					<button (click)="RetourEmbalages()" href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" matStepperPrevious>
+						<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+						Retour
+					</button>
+					<!-- <button (click)="ajouter()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active">
+						<i class="icon la la-floppy-o"></i>
+						Enregistrer
+					</button> -->
+					<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active" matStepperNext>
+						<i _ngcontent-dlp-c41 class="icon la la-plus-circle"></i>
+						Suivant
+					</button>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
+		</form>
+		</mat-step>
+		<mat-step label="Informations décés et constateur">
+			<form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Constateur: </mat-label>
+							<mat-select
+							formControlName="constateur"
+								matNativeControl
+								class="form-control"
+							>
+							<mat-option *ngFor="let c of constateur" [value]="c">{{c.nom}}</mat-option>
+						</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de constation :</mat-label>
+							<input formControlName="dateConstation" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de décés :</mat-label>
+
+							<input formControlName="dateDeces" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Cause :</mat-label>
+							<mat-select
+							formControlName="causeDeces"
+								matNativeControl
+								class="form-control"
+							>
+							<mat-option  value="Maladie">Maladie</mat-option>
+							<mat-option  value="Accident">Accident</mat-option>
+							<mat-option  value="Suicide">Suicide</mat-option>
+							<mat-option  value="Homicide">Homicide</mat-option>
+							<mat-option  value="intention indeterminée">Intention indeterminée</mat-option>
+							<mat-option  value="inconnues">Inconnues</mat-option>
+						</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Description de deces :</mat-label>
+
+							<input formControlName="observationConst" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>N registre :</mat-label>
+
+							<input formControlName="numRegistre" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="pb-5" data-wizard-type="step-content">
+				<h4 class="mb-10 font-weight-bold text-dark"></h4>
+				<div class="kt-portlet">
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-12 show_port input-group">
+								<form enctype="multipart/form-data" method="POST" style="display: -webkit-inline-box; margin-inline-start: 98px">
+									<label class="input-group-btn">
+										Pièce jointe
+										<span class="btn btn-info">
+											Sélectionner un fichier
+											<input (change)="onPcConstateurChange($event)" type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
+										</span>
+									</label>
+									<input type="text" class="form-control" readonly />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+
+
+
+			
+			<mat-expansion-panel [expanded]="true">
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						<div class="matPanelSceneSymbol"><i class="fas fa-address-card "></i></div>
+						&nbsp;&nbsp;
+						<h4 class="kt-portlet__head-title ">
+							{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+						</h4>
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<!-- start section::edit file form -->
+							<div class="row">
+								<!-- <div class="col-md-2 show_port input-group">
+									<mat-form-field class="example-full-width">
+										<label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+										<mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+											<mat-option *ngFor="let item of unites" [value]="item">{{item.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div> -->
+								<div class="col-md-2" >
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<label> Label:
+											</label>
+											<input id="cc" matInput type="text" class="form-control" (change)="label($event)" name="LabelPj"  [(ngModel)]="labelPj" placeholder="" >
+				
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6 show_port input-group">
+									<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;" formGroupName="pj">
+										<label class="input-group-btn">
+											<span class="btn btn-info">
+												{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" (change)="save($event)" id="customFile" style="display: none;" multiple>
+											</span>
+										</label>
+										<input id="test" type="text" formControlName="pcfile" class="form-control" readonly>
+									    
+									</form>
+								</div>
+								<div class="col-md-2" style="padding-top: 27px;">
+									<button class="btn btn-primary" type="button" (click)="validerPj()" style="position: absolute;right: 0px;">
+										{{ 'PAGES.GENERAL.SAVE' | translate }}
+									</button>
+								</div>
+							</div>
+							
+							<!-- end section::edit file form -->
+							<hr>
+							<!-- begin::file datasource -->
+							<div   
+							 *ngIf="dataSource1" class="example-container mat-elevation-z8">
+	
+								<mat-table [dataSource]="dataSource1" matSort>
+									<!-- type Column -->
+									<!-- <ng-container matColumnDef="type">
+										<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+											{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+										<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+									</ng-container> -->
+									<!-- label Column -->
+									<ng-container matColumnDef="label">
+										<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+											Label</mat-header-cell>
+										<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.LabelPj?row.LabelPj:"-"}} </mat-cell>
+									</ng-container>
+									<!-- file name Column -->
+									<ng-container matColumnDef="nomDoc">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>
+											{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+										<mat-cell *matCellDef="let row"> {{row.selecetedFile.name}} </mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="actions">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>
+											{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+										</mat-header-cell>
+										<mat-cell *matCellDef="let row; let i=index">
+											<button type="button" (click)="onDeletePj(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+												<i class="icon la la-trash"></i>
+											</button>
+										</mat-cell>
+									</ng-container>
+	
+									<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+									<mat-row *matRowDef="let row; columns: displayedColumns1;">
+									</mat-row>
+								</mat-table>
+	
+							</div>
+							<!-- end::file datasource -->
+						</div>
+					</div>
+				</div>
+			</mat-expansion-panel>
+
+
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label text-right">
+					<button (click)="RetourEmbalages()" href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" matStepperPrevious>
+						<i _ngcontent-dkp-c41="" class="la la-recycle" ></i>
+						Retour
+					</button>
+					<button (click)="ajouter()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active">
+						<i class="icon la la-floppy-o"></i>
+						Enregistrer
+					</button>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
+		 </form>
+		</mat-step>
+	</mat-horizontal-stepper>
+</div>

@@ -1,0 +1,181 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-calendar-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						جدول أعمال الدورة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>
+										الرقم :</th>
+									<td class="donnee_show">
+										{{formData.id}}
+									</td>
+									<th>إسم جدول الأعمال :</th>
+									<td class="donnee_show">
+										{{formData.nomOrdreJour  }} </td>
+									<th>
+										الدورة :
+									</th>
+									<td class="donnee_show">
+										{{formData.session.nomSession}} </td>
+								</tr>
+							</tbody>
+						</table>
+						<hr>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="typesession"
+											[(ngModel)]="formData.statut" placeholder="الوضعية :">
+											<mat-option *ngFor="let item of statutOrdreJour" value="{{item}}">
+												{{item}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="espace_bloc"></div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-calendar-1 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						نقاط الدورة
+					</h3>
+				</div>
+				<div class="kt-portlet__head-toolbar">
+					<div class="kt-portlet__head-wrapper">
+						<div class="kt-portlet__head-actions">
+							&nbsp;
+							<a href="javascript:; " (click)="nouveauPoint()"
+								class="btn btn-success btn-elevate btn-icon-sm">
+								<i class="la la-plus"></i>
+
+								إضافة نقطة
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__body kt-portlet__body--fit">
+				<form class="kt-form" autocomplete="off" #form="ngForm" style="padding: 0px 25px 0px 0px;">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" (selectionChange)="onChangeofOptions($event.value)"
+										name="statuutsession" [(ngModel)]="statutPoint" placeholder="وضعية النقطة:">
+										<mat-option *ngFor="let item of statutsPoints" value="{{item.id}}">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</form>
+				<hr>
+				<div class="example-container mat-elevation-z8">
+
+					<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+						style="margin: 0 19px !important;">
+
+						<ng-container matColumnDef="id">
+							<th style="margin-left: 5%;" mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+							<td mat-cell *matCellDef="let row" style="margin-left: 5%;"> {{row.id}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="ordre">
+							<th style="margin-left: 5%;" mat-header-cell *matHeaderCellDef mat-sort-header> الترتيب
+							</th>
+							<td mat-cell *matCellDef="let row ; let element; let i = index" style="margin-left: 5%;">
+								<mat-form-field floatLabel="never" class="mat-form-field-infix2">
+									<input matInput type="text" (change)="onChange($event.target.value ,row.id,i)"
+										name="test" placeholder="المبرر" [value]="row.ordre" [(ngModel)]="row.ordre">
+								</mat-form-field>
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="origine">
+							<th style="margin-left: 5%;" mat-header-cell *matHeaderCellDef mat-sort-header> المصدر </th>
+							<td mat-cell *matCellDef="let row" style="margin-left: 5%;"> {{row.source}}</td>
+						</ng-container>
+
+						<ng-container matColumnDef="statut">
+							<th style="margin-left: 5%;" mat-header-cell *matHeaderCellDef> الوضعية </th>
+							<td mat-cell *matCellDef="let row" style="margin-left: 5%;">
+								<mat-form-field floatLabel="never" class="mat-form-field-infix3">
+									<mat-select [(value)]="row.statut.id" placeholder="
+                            الوضع">
+										<mat-option *ngFor="let item of statutsPoints" [value]="item.id">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="actions">
+							<th style="margin-left: 5%;" *matHeaderCellDef></th>
+							<td mat-cell *matCellDef="let row" style="margin-left: 5%;">
+								<a href="javascript:;" (click)="showPoint(row.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+									matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>
+							</td>
+						</ng-container>
+
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;">
+						</mat-row>
+					</table>
+					<mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" type="button" (click)="valider()"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<!-- <button _ngcontent-dkp-c41=""
+				class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button"
+				(click)="onReset()">
+				<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+				{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+			<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				type="button" (click)="backList()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button> -->
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

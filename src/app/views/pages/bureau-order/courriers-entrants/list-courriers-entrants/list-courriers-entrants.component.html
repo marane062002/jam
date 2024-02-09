@@ -1,0 +1,272 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-multimedia-2"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_INDEX' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <!-- <button (click)="exportExcel()" type="button" class="btn btn-sm btn-icon btn-warning btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}">
+                        <i class="flaticon2-download"></i>
+                    </button> &nbsp; -->
+                    <button (click)="exportExcel()" type="button"
+                        class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                        matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_INDEX' | translate }}">
+                        <i class="flaticon2-download text-success"></i>
+                    </button>
+                    <a href="javascript:; " (click)="addNewCourrierEntrant()"
+                        *ngxPermissionsOnly="['canCreateCourrierEntrant']"
+                        class="btn btn-success btn-elevate btn-icon-sm"
+                        matTooltip="{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_NEW' | translate }}">
+                        <i class="la la-plus"></i> {{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <hr>
+    <div class="export-align">
+        <div class="kt-portlet__head-actions">
+            <button (click)="exportTable()" type="button" class="btn btn-export" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_INDEX' | translate }}">
+                <i class="icon la la-file-excel-o"></i>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}
+            </button>
+            <button (click)="updateProjectsList()" type="button" class="btn btn-refresh" matTooltip="{{ 'PAGES.GENERAL.REFRESHE' | translate }}&nbsp;{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_INDEX' | translate }}">
+                <i class="flaticon-refresh"></i>{{ 'PAGES.GENERAL.REFRESHE' | translate }}
+            </button>
+        </div>
+    </div> -->
+    <div class="example-header col-md-4">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" #inputFile
+                placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+        </mat-form-field>
+        <div class="filter-btn">
+            <button (click)="updateProjectsList()" type="button" class="btn btn-primary search-btn"
+                matTooltip="{{ 'PAGES.GENERAL.REFRESHE' | translate }}&nbsp;{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_INDEX' | translate }}">
+                <i class="flaticon-refresh"></i>{{ 'PAGES.GENERAL.REFRESHE' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+        <!-- numero Column -->
+        <ng-container matColumnDef="numero">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.NUMERO' | translate }} </th>
+            <td mat-cell *matCellDef="let row">
+                <!-- <a href="javascript:void(0);" matTooltip=" {{row?.objet?row.objet:'-'}}"></a> -->
+                {{row?.numero?row.numero:'-'}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="refrence">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.REFERENCE' | translate }} </th>
+            <td mat-cell *matCellDef="let row">
+                <!-- <a href="javascript:void(0);" matTooltip=" {{row?.objet?row.objet:'-'}}"></a> -->
+                {{row?.refOrigine ? row.refOrigine:'-'}}
+            </td>
+        </ng-container>
+
+        <!-- objet Column -->
+        <ng-container matColumnDef="objet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.OBJET' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {{ row.objet? ((row.objet.length>30)? (row.objet | slice:0:30)+ '...':(row.objet)) : "-" }}
+                <a href="javascript:void(0);" *ngIf="row.objet.length>30" matTooltip="{{ row.objet }}"><i
+                        class="fas fa-info-circle"></i></a>
+            </td>
+        </ng-container>
+        <!-- origineCourierEntrant Column -->
+        <ng-container matColumnDef="origineCourierEntrant">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.BUREAU_ORDRE.PERSONNEL_COURRIER.EXPEDITEUR' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.origineCourierEntrant!=null; else elseBlock">
+                    {{ row.origineCourierEntrant? ((row.origineCourierEntrant.length>20)? (row.origineCourierEntrant |
+                    slice:0:20)+ '...':(row.origineCourierEntrant)) : "-" }}
+                    <a href="javascript:void(0);" *ngIf="row.origineCourierEntrant.length>20"
+                        matTooltip="{{ row.origineCourierEntrant }}"><i class="fas fa-info-circle"></i></a>
+                </span>
+                <ng-template #elseBlock>
+                    {{row.service?row.service:row.division}}
+                </ng-template>
+            </td>
+            <td mat-cell *matCellDef="let row">
+                {{ row.objet? ((row.objet.length>40)? (row.objet | slice:0:40)+ '...':(row.objet)) : "-" }}
+                <a href="javascript:void(0);" *ngIf="row.objet.length>40" matTooltip="{{ row.objet }}"><i
+                        class="fas fa-info-circle"></i></a>
+            </td>
+        </ng-container>
+        <!-- dateReception Column -->
+        <ng-container matColumnDef="dateReception">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.DATE_RECEPTION' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row.dateReception | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <!-- criticiteEntr Column -->
+        <ng-container matColumnDef="criticiteEntr">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.PRIORITE' | translate }} </th>
+            <td mat-cell *matCellDef="let row">
+                <div *ngIf="row.criticiteCourrier!=null">
+                    <span *ngIf="row.criticiteCourrier.id==1; else elseBlock">
+                        <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide"
+                            style="background-color: rgb(248, 35, 35) !important;"
+                            *ngIf="language=='fr' && row.criticiteCourrier.libelle=='مستعجل'">Urgent</span>
+
+                        <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide"
+                            style="background-color: rgb(248, 35, 35) !important;"
+                            *ngIf="language=='ar' && row.criticiteCourrier.libelle=='مستعجل'">مستعجل</span>
+                    </span>
+                    <ng-template #elseBlock>
+                        <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
+                            style="background-color: rgba(2, 160, 120, 0.767) !important;"
+                            *ngIf="language=='fr' && row.criticiteCourrier.libelle=='عادي'">Normal</span>
+
+                        <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
+                            style="background-color: rgba(2, 160, 120, 0.767) !important;"
+                            *ngIf="language=='ar' && row.criticiteCourrier.libelle=='عادي'">عادي</span>
+                    </ng-template>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="traite">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.traite' | translate }} </th>
+            <td mat-cell *matCellDef="let row">
+
+                <span *ngIf="row.status===null">
+                    <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--info kt-badge--wide"
+                        style="background-color: rgb(23, 162, 184)important;">
+                        <span *ngIf="language=='fr'">Enregistré</span>
+                        <span *ngIf="language=='ar'">مسجل</span>
+                    </span>
+                </span>
+                <span *ngIf="row.status===2">
+                    <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
+                        style="background-color: rgb(9, 103, 65) !important;">
+                        <span *ngIf="language=='fr'">Oui</span>
+                        <span *ngIf="language=='ar'">نعم</span>
+                    </span>
+                </span>
+                <span *ngIf="row.status===1">
+                    <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--primary kt-badge--wide"
+                        style="background-color: rgba(0, 123, 255) !important;">
+                        <span *ngIf="language=='fr'">En transit</span>
+                        <span *ngIf="language=='ar'">قيد النقل</span>
+                        
+                    </span>
+                </span>
+                <span *ngIf="row.status===3">
+                    <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--secondary kt-badge--wide"
+                        style="background-color: rgba(108, 117, 125) !important;">
+                        <span *ngIf="language=='fr'">Clôturé</span>
+                        <span *ngIf="language=='ar'">منتهي</span>
+                    </span>
+                </span>
+                <span *ngIf="row.status===4">
+                    <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide"
+                        style="background-color: rgba(220, 53, 69) !important;">
+                        <span *ngIf="language=='fr'">Erreur de livraison</span>
+                        <span *ngIf="language=='ar'">بالخطأ في الارسال</span>
+                    </span>
+                </span>
+            </td>
+        </ng-container>
+        <!-- idDispatching Column -->
+        <ng-container matColumnDef="statut">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.BUREAU_ORDRE.STATUT' | translate }} </th>
+            <!-- <td mat-cell *matCellDef="let row">{{row?.statut?row.statut:'-'}} </td> -->
+            <td mat-cell *matCellDef="let row">
+                <div *ngIf="row.statut!=null">
+                    <div *ngIf="row.statut.length>10; else elseBlock">
+                        <p style="display: none;">{{ 'PAGES.BUREAU_ORDRE.ORIGINE_OUT' | translate }}</p>
+                        <i matTooltip="في انتظار التوجيه" class="fas fa-hourglass-start text-warning  mr-5"></i>
+                    </div>
+                    <ng-template #elseBlock>
+                        <p style="display: none;">{{ 'PAGES.BUREAU_ORDRE.ORIGINE_IN' | translate }}</p>
+                        <i matTooltip="مراسلة موجَّهة" class="fas fa-exchange-alt text-primary  mr-5"></i>
+                    </ng-template>
+                </div>
+            </td>
+        </ng-container>
+        <!-- typeOrigine Column -->
+        <ng-container matColumnDef="typeOrigine">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_INTERNE_EXTERNE' | translate }} </th>
+            <td mat-cell *matCellDef="let row">
+                <div *ngIf="row.typeOrigine!=null">
+                    <div *ngIf="row.typeOrigine=='out'; else elseBlock">
+                        <!-- {{ 'PAGES.BUREAU_ORDRE.ORIGINE_OUT' | translate }} -->
+                        <i matTooltip="{{ 'PAGES.BUREAU_ORDRE.ORIGINE_OUT' | translate }}"
+                            class="fas fa-paper-plane text-danger mr-5"></i>
+                    </div>
+                    <ng-template #elseBlock>
+                        <!-- {{ 'PAGES.BUREAU_ORDRE.ORIGINE_IN' | translate }} -->
+                        <i matTooltip="{{ 'PAGES.BUREAU_ORDRE.ORIGINE_IN' | translate }}"
+                            class="fas fa-home text-success mr-5"></i>
+                    </ng-template>
+                </div>
+            </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+                <button *ngxPermissionsOnly="['canShowCourrierEntrant']" type="button"
+                    (click)="detailsCourrierEntrant(row)"
+                    class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                    matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                        class="icon la la-search-plus"></i></button>
+                <button *ngxPermissionsOnly="['canUpdateCourrierEntrant']" type="button"
+                    (click)="editCourrierEntrant(row)"
+                    class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+                    matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button *ngxPermissionsOnly="['canDeleteCourrierEntrant']" type="button"
+                    (click)="deleteCourrierEntrant(row.id)"
+                    class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                    matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+
+                <span *ngIf="row?.statut.length>10; else motif">
+                    <span *ngIf="row.president==false">
+                        <button *ngxPermissionsOnly="['canDispatchingCE']" type="button"
+                            (click)="destinataireCourrierEntrant(row)"
+                            class="btn btn-sm btn-clean btn-icon btn-primary btn-icon-md btn_table_send"
+                            matTooltip="{{ 'PAGES.BUREAU_ORDRE.DISPATCH_ACTION_NO' | translate }}"><i
+                                class="icon la la-paper-plane"></i></button>
+                    </span>
+                </span>
+                <ng-template #motif>
+                    <span *ngIf="row.president==false">
+                        <button *ngxPermissionsOnly="['canDispatchingCE']" type="button"
+                            class="btn btn-sm btn-icon btn-icon-md btn_table_dispatching"
+                            matTooltip="{{ 'PAGES.BUREAU_ORDRE.DISPATCH_ACTION_OK' | translate }}"><i
+                                class="fa fa-toggle-on"></i></button>
+                    </span>
+                </ng-template>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="sizeData == 0 && isLoading == false"
+        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <hr>
+    <kt-custom-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+        (pageSizeEvent)="getPageInNewSize($event)">
+    </kt-custom-pagination>
+    <!-- Spinner -->
+    <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise" [fullScreen]="true">
+        <p style="color: white; direction: ltr"> Loading ... </p>
+    </ngx-spinner> -->
+</div>

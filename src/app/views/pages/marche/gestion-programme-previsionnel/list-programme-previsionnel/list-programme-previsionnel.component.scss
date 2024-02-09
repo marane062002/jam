@@ -1,0 +1,306 @@
+.dashed-line {
+  border: 2px dashed #000; /* Adjust the width and color as needed */
+  height: 0; /* Adjust the height of the element */
+  text-align: center;
+  margin: 20px auto;
+  border-collapse: collapse,
+}
+
+
+.dotted-line {
+  border: 2px dotted #000; /* Adjust the width and color as needed */
+  width: 300px; /* Adjust the width of the element */
+  height: 0; /* Adjust the height of the element */
+  margin: 10px 0; /* Adjust margin as needed */
+}
+
+/* Add these styles in your component's style file or global styles */
+
+.example-full-width {
+width: 100%;
+}
+
+.date-filter-inputs {
+display: flex;
+gap: 16px; /* Adjust the gap according to your preference */
+}
+
+/* Optional: Add more styling as needed */
+
+
+/* Styles for desktop */
+@media (min-width: 768px) {
+/* Desktop styles go here */
+.mobile{
+  display: none; /* hide on desktop */
+}
+}
+
+@media (max-width: 767px) {
+/* Mobile styles go here */
+.desktop {
+  display: none; /* hide on mobile */
+}
+
+.mobile{
+  margin: 0 auto;
+}
+h1 {
+  line-height: 1.5;
+  font-size: 22px;
+}
+.customtable {
+  border: none;
+}
+
+.card-title {
+  line-height: 1.2;
+  font-size:19px;
+  font-weight: bolder;
+  color: #334FA1;
+}
+.card-centent{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.submit-button{
+  border-radius: 10px;
+  background-color: #334FA1;
+  color: white;
+  font-size: 15px;
+}
+.actions{
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  }
+  .table-th{
+    text-align: center;
+  }
+
+
+  .body {
+    position: relative;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+  
+  .wrap {
+    position: absolute;
+    right: 0;
+    top: 40%;
+    width: 350px;
+    left: 0;
+    margin: 0 auto;
+  }
+  
+  /* select starting stylings ------------------------------*/
+  // .select {
+  //   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  //   position: relative;
+  //   width: 350px;
+  // }
+  
+  .select-text {
+    position: relative;
+    font-family: inherit;
+    background-color: transparent;
+    width: 350px;
+    padding: 10px 10px 10px 0;
+    font-size: 18px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Remove focus */
+  .select-text:focus {
+    outline: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+  }
+  
+  /* Use custom arrow */
+  .select .select-text {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  
+  .select:after {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+    /* Styling the down arrow */
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: "";
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+  }
+  
+  /* LABEL ======================================= */
+  .select-label {
+    color: rgba(0, 0, 0, 0.26);
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 0;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+  
+  /* active state */
+  .select-text:focus ~ .select-label,
+  .select-text:valid ~ .select-label {
+    color: #2f80ed;
+    top: -20px;
+    transition: 0.2s ease all;
+    font-size: 14px;
+  }
+  
+  /* BOTTOM BARS ================================= */
+  .select-bar {
+    position: relative;
+    display: block;
+    width: 350px;
+  }
+  
+  .select-bar:before,
+  .select-bar:after {
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: #2f80ed;
+    transition: 0.2s ease all;
+  }
+  
+  .select-bar:before {
+    left: 50%;
+  }
+  
+  .select-bar:after {
+    right: 50%;
+  }
+  
+  /* active state */
+  .select-text:focus ~ .select-bar:before,
+  .select-text:focus ~ .select-bar:after {
+    width: 50%;
+  }
+  
+  /* HIGHLIGHTER ================================== */
+  .select-highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+//   .custom-mat-form-field {
+//     border: 1px solid rgb(228, 225, 225);
+//     background-color: white !important;
+//     width: 100%; /* Adjust the width as needed */
+//     margin-bottom: 10px; /* Add margin at the bottom as needed */
+// }
+.custom-mat-form-field{
+  
+  background-color: white !important;
+}
+.custom-mat-form-field mat-label {
+    color: #df0a0a !important; /* Adjust label color as needed */
+}
+
+.custom-mat-form-field mat-select {
+ 
+    width: 100%; /* Adjust the width as needed */
+}
+
+/* Additional styles as needed */
+
+  
+.custom-mat-form-field {
+  
+  width: 100%; /* Adjust the width as needed */ /* Add margin at the bottom as needed */
+}
+
+.custom-mat-form-field mat-label {
+  color: #333; /* Adjust label color as needed */
+}
+
+.custom-mat-form-field .mat-select-arrow {
+  color: #007bff; /* Adjust arrow color as needed */
+}
+
+.custom-mat-select {
+  width: 100%; /* Adjust the width as needed */
+  color: #333; /* Adjust select text color as needed */
+}
+
+/* Additional styles as needed */
+
+.custom-mat-form-field .mat-form-field-underline {
+color: #df0a0a !important;
+display: none !important; /* Hide the default underline */
+}
+
+.custom-mat-form-field.mat-focused .mat-form-field-underline {
+display: none !important; /* Hide the underline when focused (optional) */
+}
+.example-full-width .mat-form-field-underline {
+display: none !important;
+}
+
+.example-full-width .mat-form-field-ripple {
+display: none !important;
+}
+::ng-deep .mat-input-underline {
+display: none !important;
+}
+
+::ng-deep .mat-form-field-flex {
+border: 1px solid black !important;
+border-radius: 10px;
+}
+
+
+.label-form{
+font-size: 15px;
+font-weight: bolder;
+
+}
+.feild{
+margin-top: 10px;
+
+}
+.ajout-button{
+background-color: #66302A;
+color: white;
+border-radius: 25px;
+font-weight: 600;
+font-size: 13px;
+width: 45%;
+
+}
+.btn-export{
+background-color: #187040;
+color: white;
+border: none;
+border-radius: 25px;
+
+
+}
+.btn-export span{
+font-size: 14px;
+font-weight: 500;
+}
+}

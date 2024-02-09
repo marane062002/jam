@@ -1,0 +1,113 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+    <!-- <button class="close" mat-button (click)="onNoClick()">X</button> -->
+    <h3 mat-dialog-title style="
+	text-align: center;
+    font-size: 15px !important;
+    border-bottom: 1px solid #d0cdcd;
+    color: #0a3552;
+    padding-bottom: 5px;">{{ 'PAGES.MARCHE.VISITE.TITRE_INDEX' | translate }}</h3>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput class="form-control" [matDatepicker]="picker2" name="datePublicationAo" (dateChange)="dateHeureVisite()" [(ngModel)]="formData.datePublication" (ngModelChange)="onDatePublicationChange()" placeholder="{{ 'PAGES.MARCHE.VISITE.DATE_PUBLICATION' | translate }}" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput class="form-control"   [matDatepicker]="picker3" name="dateReceptionAo" [(ngModel)]="formData.dateVisite" placeholder="{{ 'PAGES.MARCHE.VISITE.DATE_VISITE' | translate }}"  required>
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker3 ></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-8  my-auto"><label>{{ 'PAGES.MARCHE.VISITE.HEURE_VISITE' | translate }} : </label></div>
+                        <div class="col-md-4  my-auto">
+                            <div class="example-full-width">
+                                <ngb-timepicker [(ngModel)]="heureVisite" name="time" (ngModelChange)="TimeOnChange($event)">
+                                </ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.VISITE.LIEU_VISITE' | translate }} :" [(ngModel)]="formData.lieuVisite" name="nompp" required>
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        <!--- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" (selectionChange)="onChangeDivision($event)" name="divisionAo" [(ngModel)]="formData.division" placeholder="{{ 'PAGES.MARCHE.VISITE.DIVISION' | translate }}">
+                            <mat-option *ngFor="let d of divisions" [value]="d.id">{{checkLang=='ar'?d.libelle:d.libelleFR}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" name="criticiterec" (selectionChange)="onChangeService($event)" [(ngModel)]="formData.service" placeholder="{{ 'PAGES.MARCHE.VISITE.SERVICE' | translate }} ">
+                            <mat-option *ngFor="let s of services" [value]="s.id">{{checkLang=='ar'?s.libelle:s.libelleFR}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" name="crit" [(ngModel)]="formData.responsable" placeholder="{{ 'PAGES.MARCHE.VISITE.RESPONSABLE' | translate }}">
+                            <mat-option *ngFor="let item of personnels" [value]="item.id">{{item.nom}} {{item.prenom}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="text" class="form-control" [(ngModel)]="formData.note" name="note" placeholder="{{ 'PAGES.MARCHE.VISITE.OBSERVATION' | translate }} :">
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label" align="right">
+                <button [disabled]="form.invalid" type="submit" [mat-dialog-close]="formData" cdkFocusInitial class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i class="icon la la-floppy-o"></i>
+					{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                <button mat-dialog-close type="reset" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onNoClick()">
+					<i class="icon la la-close"></i>
+					{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+            </div>
+        </div>
+        <!-- <button type="reset" mat-button mat-dialog-close (click)="onNoClick()">إلغاء</button>
+		<button [disabled]="form.invalid" type="submit" mat-button [mat-dialog-close]="formData" cdkFocusInitial>حفظ</button> -->
+    </div>
+</form>

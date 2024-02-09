@@ -1,0 +1,135 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Liste des fourgons :</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+                    
+					<a
+						href="javascript:; "
+                        (click)="add()"
+						class="btn btn-outline-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+		>&nbsp;
+		<mat-form-field>
+			<input
+				matInput
+				(keyup)="applyFilter($event.target.value)"
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+			/>
+		</mat-form-field>
+	</div> -->
+	<table
+		ID="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="ID">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				{{row.id}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Matricule">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Matricule
+			</th>
+			<td mat-cell *matCellDef="let row" class="Matricule">
+				{{ row.matricule}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Vehicule">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Type Vehicule
+			</th>
+			<td mat-cell *matCellDef="let row" class="Vehicule">
+				{{row.vehicule
+                 ?row.vehicule.libelle
+                :'-'}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Couleur">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Couleur</th>
+			<td mat-cell *matCellDef="let row" class="couleur">
+				{{row.couleur}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Organisme">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Organisme :
+			</th>
+			<td mat-cell *matCellDef="let row" class="Date">
+				{{row.organisme
+                ?row.organisme.type.libelle
+                :'-'}}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+                <!-- (click)="ModifierAssociation()" -->
+				<button
+                (click)="Details(row.id)"
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+				>
+					<i class="icon la la-search-plus"></i>
+				</button>
+				<button
+                (click)="Modifier(row.id)"
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+				>
+					<i class="icon la la-edit"></i>
+				</button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	>
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<mat-paginator
+	*ngIf="dataSource != undefined && dataSource.data != undefined"
+	[length]="totalRecords"
+	[pageSize]="pageSize"
+	[pageIndex]="currentPage"
+	(page)="onPaginatorChange($event)"
+	[pageSizeOptions]="pageSizeOptions"
+	[showFirstLastButtons]="true"
+  ></mat-paginator>
+	<hr />
+</div>
+

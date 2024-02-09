@@ -1,0 +1,143 @@
+<!-- begin:: Content -->
+<div *ngIf="detailscourrier" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-multimedia-2"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <!-- <th>{{ 'PAGES.BUREAU_ORDRE.NUMERO' | translate }} :</th>
+										<td class="donnee_show">{{detailscourrier?.numero}}</td> -->
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.DATE_REFUSE' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier?.dateRefuse | date:'dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.MOTIF_REFUSE' | translate }} :</th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier?.motif}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.ORGANISATION.DIVISION' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier?.division}}</td>
+                            <th>{{ 'PAGES.ORGANISATION.SERVICE' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier?.service}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}" :</th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier?.personnel}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.CRITICITE' | translate }} :</th>
+                            <td *ngIf="detailscourrier.criticiteCourrier!=null">
+                                <span *ngIf="detailscourrier.criticiteCourrier.id==1; else elseBlock">
+									<span
+										class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide"
+										style="background-color: rgb(248, 35, 35) !important;">
+										{{detailscourrier.criticiteCourrier.libelle}}
+									</span>
+                                </span>
+                                <ng-template #elseBlock>
+                                    <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" style="background-color: rgba(2, 160, 120, 0.767) !important;">
+										{{detailscourrier.criticiteCourrier.libelle}}
+									</span>
+                                </ng-template>
+                            </td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.NOMBRE_COPIES' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier?.nombreCopie}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier?.typeCourrier}}</td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURSIER' | translate }} :</th>
+                            <td class="donnee_show">
+                                {{detailscourrier.coursier!=''?detailscourrier.coursier:'---'}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.LIBELLE' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier?.destinataire}}</td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.STATUT' | translate }} :</th>
+                            <div *ngIf="detailscourrier?.statut">
+                                <div *ngIf="detailscourrier.statut=='Refuser'">
+                                    <td style="color: rgb(252, 32, 32);" class="donnee_show"><i class="fa fa-ban"></i> {{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.STATUT_NO' | translate }}</td>
+                                </div>
+                            </div>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.OBJET' | translate }} :</th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier?.objet}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div class="kt-portlet" *ngIf="detailscourrier">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table *ngIf="files" class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+                            <td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+                            </td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of files | async">
+                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}" matTooltip="{{FileName(item.name)}}"></td>
+                            <td> {{FileName(item.name) | slice:0:20}}</td>
+                            <td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{item.fSize/1000}} ko</td>
+                            <td>
+                                <button type="button" (click)="onClickPjName(item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="start">
+                    <p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+                    <mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end::section actions -->

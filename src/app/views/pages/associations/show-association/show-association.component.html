@@ -1,0 +1,277 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-profile"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.ASSOCIATION.TITRE_SHOW" | translate }}
+			</h3>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<button (click)="showHitory()" type="button" class="btn btn-sm btn-clean btn-icon btn-label-primary btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.INFO' | translate }}">
+						<i class="fas fa-info-circle"></i>
+					</button>
+					<a href="javascript:; " (click)="editAssociation()" *ngxPermissionsOnly="['canUpdateAssociation']" class="btn btn-warning btn-elevate btn-icon-sm" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"> <i class="la la-edit"></i> {{ "PAGES.GENERAL.EDIT" | translate }} </a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div *ngIf="history" class="col-md-12 show_port history">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th style="font-size: 10px; color: #0a447d; border-top: none">{{ "TRANSLATOR.CREATOR" | translate }} :</th>
+							<td style="font-size: 10px; border-top: none" class="donnee_show">{{ details.fullName }}</td>
+							<th style="font-size: 10px; color: #0a447d; border-top: none">{{ "TRANSLATOR.CREATION_DATE" | translate }} :</th>
+							<td style="font-size: 10px; border-top: none" class="donnee_show">{{ details.creationDate | date : "dd/MM/yyyy HH:mm" }}</td>
+							<th style="font-size: 10px; color: #0a447d; border-top: none">{{ "TRANSLATOR.UPDATE_DATE" | translate }} :</th>
+							<td style="font-size: 10px; border-top: none" class="donnee_show">{{ details.updateDate | date : "dd/MM/yyyy HH:mm" }}</td>
+							<th style="font-size: 10px; color: #0a447d; border-top: none">{{ "TRANSLATOR.MODIFICATEUR" | translate }} :</th>
+							<td style="font-size: 10px; border-top: none" class="donnee_show">{{ details.modificateurUser }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div *ngIf="history" class="espace_bloc"></div>
+			<div class="col-md-12 show_port">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.NOM" | translate }} :</th>
+							<td class="donnee_show">{{ details.nom ? details.nom : "-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.PUBLIC_INTEREAT" | translate }} :</th>
+							<td class="donnee_show">{{ details.interest == true ? "Oui" : "Non" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.DATE_CREATION" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.dateCreation != null ? (details.dateCreation | date : "dd/MM/yyyy") : "-" }}
+							</td>
+							<th>{{ "PAGES.ASSOCIATION.VILLE" | translate }} :</th>
+							<td class="donnee_show">{{ details.villeActivite ? details.villeActivite : "-" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.TEL" | translate }} :</th>
+							<td class="donnee_show">{{ details.fax ? details.fax : "-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.EMAIL" | translate }} :</th>
+							<td class="donnee_show">{{ details.email ? details.email : "-" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.ADRESSE" | translate }} :</th>
+							<td colspan="4" class="donnee_show">{{ details.adresseLocal ? details.adresseLocal : "-" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT" | translate }} :</th>
+							<td class="donnee_show">{{ details.communeActivite ? details.communeActivite : "-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.FICHE_DEPOT.ANNEXE_ADMIN" | translate }} :</th>
+							<td class="donnee_show">{{ details.annexeAdministratif ? details.annexeAdministratif : "-" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.OBJECTIF" | translate }} :</th>
+							<td class="donnee_show">{{ details.objectifs ? details.objectifs : "-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.NUM_SEQ" | translate }} :</th>
+							<td class="donnee_show">{{ details.prioriter ? details.prioriter : "-" }}</td>
+						</tr>
+					
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- END DETAILS ASSOCIATION -->
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="panel-btn-space">
+	<div class="kt-portlet__head-label" align="right">
+		<button (click)="openInfo()" type="button" class="btn btn-secondary btn-elevate btn-icon-sm" matTooltip="التفاصيل"><i class="la la-eye"></i>التفاصيل</button>
+	</div>
+</div>
+<!--Action Section :: end-->
+<!-- Start :: Expansion panel -->
+<mat-accordion class="example-headers-align panel-space" multi *ngIf="assocInfo">
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title class="panel-title"> <mat-icon>folder</mat-icon>&nbsp;{{ "PAGES.ASSOCIATION.FICHE_DEPOT.TITRE_SHOW" | translate }} </mat-panel-title>
+		</mat-expansion-panel-header>
+		<table class="table pj" width="100%">
+			<tbody>
+				<tr>
+					<th>{{ "PAGES.ASSOCIATION.FICHE_DEPOT.NATURE_DEPOT" | translate }} :</th>
+					<td class="donnee_show">{{ details.natureFicheDepot ? details.natureFicheDepot : "-" }}</td>
+					<th>{{ "PAGES.ASSOCIATION.FICHE_DEPOT.NUM_DEPOT" | translate }} :</th>
+					<td class="donnee_show">{{ details.numDepot ? details.numDepot : "-" }}</td>
+					<th>{{ "PAGES.ASSOCIATION.FICHE_DEPOT.DATE_FICHE_DEPOT" | translate }} :</th>
+					<td class="donnee_show">
+						{{ details.dateFicheDepot != null ? (details.dateFicheDepot | date : "dd/MM/yyyy") : "-" }}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</mat-expansion-panel>
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title class="panel-title"> <mat-icon>work</mat-icon>&nbsp;{{ "PAGES.MANDAT.TITRE_SHOW" | translate }} </mat-panel-title>
+		</mat-expansion-panel-header>
+		<table class="table pj" width="100%">
+			<tbody>
+				<tr>
+					<th>{{ "PAGES.ASSOCIATION.NOM_PRESIDENT" | translate }} :</th>
+					<td class="donnee_show">{{ details.nomPresident ? details.nomPresident : "-" }}</td>
+					<th>{{ "PAGES.ASSOCIATION.DATE_PV_CHANGEMENT_BUREAU" | translate }} :</th>
+					<td class="donnee_show">
+						{{ details.datePvChangementBureau != null ? (details.datePvChangementBureau | date : "dd/MM/yyyy") : "-" }}
+					</td>
+					<th>{{ "PAGES.ASSOCIATION.PERIODICITE" | translate }} :</th>
+					<td class="donnee_show">{{ details.periodiciteBureau ? details.periodiciteBureau : "-" }} (يوم)</td>
+				</tr>
+			</tbody>
+		</table>
+	</mat-expansion-panel>
+
+	<mat-expansion-panel>
+		<mat-expansion-panel-header>
+			<mat-panel-title class="panel-title"> <mat-icon>info</mat-icon>&nbsp;{{ "PAGES.GENERAL.INFO" | translate }} </mat-panel-title>
+		</mat-expansion-panel-header>
+		<table class="table pj" width="100%">
+			<tbody>
+				<tr>
+					<th>{{ "PAGES.ASSOCIATION.CLASSIFICATION" | translate }} :</th>
+					<td class="donnee_show">{{ details.classification ? details.classification : "-" }}</td>
+					<th>{{ "PAGES.ASSOCIATION.VALORISATION" | translate }} :</th>
+					<td class="donnee_show">{{ details.valorisation ? details.valorisation : "-" }}</td>
+					<th>{{ "PAGES.ASSOCIATION.STATUT" | translate }} :</th>
+					<td class="donnee_show">{{ details.statutAssociation ? details.statutAssociation : "-" }}</td>
+				</tr>
+				<tr>
+					<th>{{ "PAGES.ASSOCIATION.AGENCE_BANQUAIRE" | translate }} :</th>
+					<td class="donnee_show">{{ details.agenceBanquaire ? details.agenceBanquaire : "-" }}</td>
+					<th>{{ "PAGES.ASSOCIATION.N_COMPTE" | translate }} :</th>
+					<td class="donnee_show">{{ details.numeroCompte ? details.numeroCompte : "-" }}</td>
+					<th></th>
+					<td class="donnee_show"></td>
+				</tr>
+				<tr>
+					<th>{{ "PAGES.ASSOCIATION.OBSERVATION" | translate }} :</th>
+					<td colspan="5" class="donnee_show">{{ details.observations ? details.observations : "-" }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</mat-expansion-panel>
+</mat-accordion>
+<!-- End :: Expansion panel -->
+<!-- begin:: mandat bureau -->
+<div class="kt-portlet" *ngIf="details">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-calendar"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.MANDAT.TITRE_INDEX" | translate }}
+			</h3>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper"></div>
+		</div>
+	</div>
+
+	<table class="table pj mt-4" width="100%">
+		<tbody>
+			<tr>
+				<th>{{ "PAGES.MANDAT.DATE_DEBUT_MANDAT" | translate }} :</th>
+				<td class="donnee_show">
+					{{ details.datePvChangementBureau != null ? (details.datePvChangementBureau | date : "dd/MM/yyyy") : "-" }}
+				</td>
+				<th>{{ "PAGES.MANDAT.DATE_FIN_MANDAT" | translate }} :</th>
+				<td class="donnee_show">
+					{{ details.datePvChangementBureau != null ? (details.datePvChangementBureau | date : "dd/MM/yyyy") : "-" }}
+				</td>
+				<th>{{ "PAGES.MANDAT.DUREE_MANDAT" | translate }} :</th>
+				<td class="donnee_show">{{ details.periodiciteBureau ? details.periodiciteBureau : "-" }} (يوم)</td>
+			</tr>
+			<tr>
+				<th>{{ "PAGES.MEMBRE_BUREAU.PRESIDENT" | translate }} :</th>
+				<td class="donnee_show">{{ details.nomPresident ? details.nomPresident : "-" }}</td>
+				<th>{{ "PAGES.ASSOCIATION.TYPE_ACTIVITE" | translate }} :</th>
+				<td class="donnee_show">{{ details.typeActiviteAssociation ? details.typeActiviteAssociation : "-" }}</td>
+				<th>{{ "PAGES.ASSOCIATION.OBSERVATION" | translate }} :</th>
+				<td class="donnee_show">{{ details.observations ? details.observations : "-" }}</td>
+				<th></th>
+				<th></th>
+				<td class="donnee_show"></td>
+			</tr>
+			<tr>
+				<th>{{ "PAGES.MEMBRE_BUREAU.TOTAL_MEMBRE" | translate }} :</th>
+				<td class="donnee_show">{{ details.nbrMembreBureau ? details.nbrMembreBureau : "-" }}</td>
+				<th>{{ "PAGES.MEMBRE_BUREAU.NBR_HOMME" | translate }} :</th>
+				<td class="donnee_show">{{ details.nbrHomme ? details.nbrHomme : "-" }}</td>
+				<th>{{ "PAGES.MEMBRE_BUREAU.NBR_FEMME" | translate }} :</th>
+				<td class="donnee_show">{{ details.nbrFemme ? details.nbrFemme : "-" }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- begin:: Content Piece jointe-->
+<div *ngIf="details" class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.INTERVENTION_RAPIDE.PJ" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table *ngIf="files" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+							<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.DATE_DISPATCHING" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of files | async">
+							<td><img class="file_icon" style="width: 10%" src="./assets/media/files/{{ FileExtension(item.name) }}" matTooltip="{{ FileName(item.name) }}" /></td>
+							<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+							<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
+							<td>{{ item.fSize / 1000 }} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco, item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content Piece jointe -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

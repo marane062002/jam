@@ -1,0 +1,304 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head kt-bg-portlet-4">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="fas fa-align-justify kt-font-inverse-brand"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        الطلبيات
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <!---- <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="text" class="form-control" name="tvaLocal" [(ngModel)]="commande.tva" placeholder=" نسبة ضريبة القيمة المضافة  :" required>
+                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                  </mat-form-field>
+                </div>
+              </div></div>-->
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            &nbsp;
+                            <a href="javascript:; " *ngxPermissionsOnly="['canCreateCommande']" (click)="nouvelleLigne()" class="btn btn-success btn-elevate btn-icon-sm">
+                                <i class="la la-plus"></i> إضافة طلبية </a>
+                        </div>
+                    </div>
+                </div>
+                <form class="kt-form" autocomplete="off" #form="ngForm" id="frmLigne" style="display: none;" (submit)="onSubmit(form)">
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="tvaLocal" [(ngModel)]="formData.tva" placeholder=" نسبة ضريبة القيمة المضافة  :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="unite" (selectionChange)="onChangeofOptionsType($event)" [(ngModel)]="formData.type" placeholder="نوع الطلبية :">
+                                        <mat-option *ngFor="let item of type" value="{{item}}">{{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="showArticleRef" class="col-md-4">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="typelll" (selectionChange)="onChangeofOptions1($event)" placeholder="الغرض">
+                                            <div class="cursor">
+                                                <input class="form-control" name="srch" (keyup)="onKey($event.target.value)" autofocus>
+                                                <i></i> </div>
+                                            <mat-option *ngFor="let item of dataArray" value="{{item.id}}">
+                                                {{item.numRef}} ---- {{item.libelle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="showIntitulService" class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" [(ngModel)]="formData.intituleService" name="objetlignebp" placeholder="الخدمة :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" [(ngModel)]="formData.prixUnitaire" name="prixUnitaire" placeholder="     ثمن الوحدةالمقترح :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="unite" (selectionChange)="onChangeofOptionsUnite($event)" [(ngModel)]="formData.unite" placeholder="الوحدة :">
+                                        <mat-option *ngFor="let item of unites" value="{{item.id}}">{{item.libelle}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div id="qte" style="display:none" class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" [(ngModel)]="formData.quantite" placeholder="الكمية  :" name="qte" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <!--- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="kt-form__actions">
+                        <button type="submit" class="btn btn-success ">
+							حفظ <i class="far fa-save"></i>
+						</button>
+                    </div>
+
+                </form>
+
+                <div class="kt-portlet__body kt-portlet__body--fit">
+
+                    <div class="example-header">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- ID Column -->
+                            <!-- <ng-container matColumnDef="id">
+									<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+										رقم الطلبية </mat-header-cell>
+									<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+								</ng-container> -->
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="type">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> رقم الثمن </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.type}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="article">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> الغرض </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.article.libelle?row.article.libelle:"-"}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="intituleService">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> الخدمة </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.intituleService?row.intituleService:"-"}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="isForfait">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> جزافي؟ </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <div *ngIf="row.isForfait==true"> نعم</div>
+                                    <div *ngIf="row.isForfait==false">لا</div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="prixUnitaire">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    ثمن الوحدة </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.prixUnitaire | macurrency}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="quantite">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    الكمية </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.quantite}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="prixTotal">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    إجمالي دون الضرائب </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.prixTotal | macurrency}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canUpdateCommande']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+											class="la la-edit"></i></a>
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canDeleteCommande']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+											class="la la-trash"></i></a>
+                                </mat-cell>
+                            </ng-container>
+
+
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </mat-table>
+
+                        <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                    </div>
+
+                </div>
+
+                <br>
+                <br>
+                <h4 class="title-style">
+                    الطلبية الإجمالية
+                </h4>
+                <br><br>
+                <div class="kt-portlet__head-label" align="right">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> مبلغ إجمالي دون الضريبة :</label>
+                            <span class="kt-margin-r-15"> {{commande.mntTotal  | macurrency}} </span>
+                        </div>
+                        <div class="col-md-6">
+                            <label> مبلغ شامل الضريبة :</label>
+                            <span class="kt-margin-r-15"> {{commande.mntTtc | macurrency}} </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!---
+              <div class="kt-portlet__body kt-portlet__body--fit">
+
+                <div class="example-header">
+					<i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                  </mat-form-field>
+                </div>
+
+                <div class="example-container mat-elevation-z8">
+
+                  <mat-table [dataSource]="dataSource" matSort>
+
+
+                    <ng-container matColumnDef="id">
+                      <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم خط جدول الأسعار   </mat-header-cell>
+                      <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="numPrix">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> رقم الثمن </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.numPrix}} </mat-cell>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="objet">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> الموضوع </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.objet}} </mat-cell>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="unite">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>   الوحدة  </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.unite}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="prixU">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        ثمن الوحدة  </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.prixU}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="quantite">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        الكمية  </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.quantite}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="totalHt">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        إجمالي دون الضرائب   </mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.totalHt}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
+                      <mat-cell *matCellDef="let row">
+                        <a href="javascript:;" (click)="showReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>
+                        <a href="javascript:;" (click)="editReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                        <a href="javascript:;"(click)=" printReclamation(reclamation)"  class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print" title="Print"><i class="la la-print"></i></a>
+                        <a href="javascript:;" (click)="deleteReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                           </mat-cell>
+                    </ng-container>
+
+
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                  </mat-table>
+
+                  <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                </div>
+
+          </div>-->
+            </div>
+        </div>
+    </div>
+</div>

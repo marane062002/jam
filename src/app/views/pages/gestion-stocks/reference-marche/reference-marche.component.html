@@ -1,0 +1,139 @@
+<div class="main-content container">
+
+  <div class="breadcrumb">
+      <h1 class="mr-2">Gestion des Référentiels</h1>
+  </div>
+<!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                              <form class="">
+                                  <div class="form-group row justify-content-center mb-1">
+                                     
+                                      <div class="col-md-3 form-group ">
+                                          <label>libelle   :</label>
+                                          <input class="form-control" type="text" placeholder="libelle "   [(ngModel)]="inputSearch" [ngModelOptions]="{standalone: true}" >
+                                      </div>
+                                      <div class="col-md-2 col-lg-2 form-group">
+                                          <label>&nbsp;</label>
+                                          <button class="btn btn-primary font-weight-bold btn-block" type="button" (click)="searchBykeyWord($event)"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                      <!-- data table -->
+                      <data-table 
+                          [currentPage]="currentPage"
+                          [totalPages]="totalPages"
+                          [datasource]="liseRefernce" 
+                          [headers]="headerData" 
+                          [actions]="actions" 
+                          [titleTable]="'Liste des Référentiels'"
+                          [titleButton]="' Ajouter un Référentiel'"
+                          (ajouterElement)="modalAjouterEntityMagasin(ajouterCotegorieAticle)"
+                          (detail)="modalDetailFournisseur(detailCotegorieAticle ,$event)"
+                          (selectUpdateElement)="modalModifierRefernce(modifierFournisseur,$event)"
+                          (deleteElement)="deleteRefernce($event)"
+                          (page)="pageCurrentChange($event)"
+                          (size)="sizeCurrentChange($event)"></data-table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+ <!--begin:Modal ajouter -->
+  <ng-template #ajouterCotegorieAticle let-c="close" let-d="dismiss">
+
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter un Référentiel </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="modal-body">
+          <form [formGroup]="FormReference" (ngSubmit)="createEntityMagasin(FormReference.value)">
+                      <div class="form-group row mb-1">
+
+                        
+                          <div class="col-md-4 form-group">
+                              <label>Libelle  :</label>
+                              <input class="form-control" type="text" placeholder="libelle" formControlName="libelle">
+                              <p class="alert alert-danger" *ngIf="FormReference.controls['libelle'].hasError('required') && FormReference.controls['libelle'].dirty">
+                                  Ce champ est  obligatoire 
+                              </p>
+                          </div>
+                     
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn btn-primary ml-2" type="submit"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+                      </div>
+      </form>
+      </div>
+
+
+ </ng-template>
+ <!--end:Modal ajouter -->
+
+ <!--begin:Modal modifier -->
+ <ng-template #modifierFournisseur let-c="close" let-d="dismiss">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Modifier un Référentiel </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup]="FormReference" (ngSubmit)="updateQuantiteReapprovisionnement(FormReference.value)">
+                  <div class="form-group row mb-1">
+
+                    
+                      <div class="col-md-4 form-group">
+                          <label>libelle  :</label>
+                          <input class="form-control" type="text" placeholder="libelle" formControlName="libelle">
+                          <p class="alert alert-danger" *ngIf="FormReference.controls['libelle'].hasError('required') && FormReference.controls['libelle'].dirty">
+                              Ce champ est  obligatoire 
+                          </p>
+                      </div>
+                 
+                  </div>
+                 
+              <div class="modal-footer">
+                  <button class="btn btn-primary ml-2" type="submit">Modifier</button>
+              </div>
+          </form>
+      </div>
+     
+ </ng-template>
+ <!--end:Modal modifier -->
+
+ <!--begin:Modal detail -->
+ <ng-template #detailCotegorieAticle let-c="close" let-d="dismiss">
+      <div class="modal-body">
+          <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+              
+              <div class="form-group row justify-content-center mb-0">
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row justify-content-center">
+                          <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">id:</label>
+                          <label class="col-sm-2 col-form-label f-s-13">{{reference.id}}</label>
+                          <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">libelle:</label>
+                          <label class="col-sm-2 col-form-label f-s-13">{{reference.libelle}}</label>
+                      </div>
+                  </div>
+              </div>
+          </form> 
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+         <!--  <button class="btn btn-outline-success ml-2" type="button"><i class="nav-icon i-Download font-weight-bold"></i>&nbsp;Télécharger</button> -->
+      </div>
+ </ng-template>
+ <!--end:Modal detail -->
+</div>
+
+
+

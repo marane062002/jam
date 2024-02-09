@@ -1,0 +1,157 @@
+<h4 class="kt-portlet__head-title " style="text-align: center;">
+	Les séances
+</h4>
+<div class="kt-portlet__body">
+	<!-- <div class="row">
+		<div class="col-md-12 show_port">
+			<div class="row">
+				<div class="col-md-4 show_port input-group" *ngIf="formData?.seance==true">
+					<mat-form-field class="example-full-width">
+						<label>{{ PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+						<mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+							<mat-option *ngFor="let item of typePjSeance" [value]="item">{{item}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="col-md-4 show_port input-group" *ngIf="formData?.avantDerniereSeance==true">
+					<mat-form-field class="example-full-width">
+						<label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+						<mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+							<mat-option *ngFor="let item of typePjSeanceAvantDerniere" [value]="item">{{item}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="col-md-4 show_port input-group" *ngIf="formData?.derniereSeance==true">
+					<mat-form-field class="example-full-width">
+						<label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+						<mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+							<mat-option *ngFor="let item of typePjSeanceDerniere" [value]="item">{{item}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="col-md-4 show_port input-group">
+					<form class="d-flex" style="margin-top: 27px;">
+                        <label >
+                            <span class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show">
+					<a type="button" (click)="getUpdatedUrl()" target="_blank"  matTooltip="{{ 'PAGES.PRECONTENTIEUX.TELECHARGER' | translate }}">
+						<i class="la la-download"></i></a> </span>
+					</label>
+				   
+				</form>
+					
+				</div>
+
+
+			
+				              
+                <div class="col-md-4 show_port input-group">
+                    <form class="d-flex" style="margin-top: 27px;">
+                        <label >
+                            <span class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show">
+								<i class="la la-upload"><input type="file" (change)="handleFile($event)" id="customFile" style="display: none;" multiple></i>
+                            </span>
+                        </label>
+                       
+                    </form>
+                </div>
+            
+               
+			</div>
+
+			<hr>
+			<div  class="example-container mat-elevation-z8">
+
+				<mat-table [dataSource]="dataSource1" matSort>
+					<ng-container matColumnDef="type">
+						<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type}} </mat-cell>
+					</ng-container>
+					
+					<ng-container matColumnDef="nomDoc">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="actions">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+						</mat-header-cell>
+						<mat-cell *matCellDef="let row; let i=index">
+							<button type="button" (click)="onDeletePj(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+								<i class="icon la la-trash"></i>
+							</button>
+						</mat-cell>
+					</ng-container>
+
+					<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns1;">
+					</mat-row>
+				</mat-table>
+
+			</div>
+
+		
+		</div>
+	</div> -->
+</div>
+<!-- <mat-horizontal-stepper class="" #stepper>
+	<mat-step label="La liste des membres" style="background-color: #f2f2f2;">
+	  <div class="input-group">
+		<label for="nomInput">Nom:</label>
+		<input type="text" id="nomInput" [(ngModel)]="nom" placeholder="Entrez le nom">
+	  </div>
+  
+	  <div class="input-group">
+		<label for="prenomInput">Prénom:</label>
+		<input type="text" id="prenomInput" [(ngModel)]="prenom" placeholder="Entrez le prénom">
+	  </div>
+  
+	  <div class="input-group">
+		<label for="roleInput">Rôle:</label>
+		<input type="text" id="roleInput" [(ngModel)]="role" placeholder="Entrez le rôle">
+	  </div>
+  
+	  <button type="button" class="add-button" (click)="ajouterUnMembre()">
+		<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+		Ajouter Un membre
+	  </button>
+  
+	  <div class="table-container">
+		<table class="member-table">
+		  <thead>
+			<tr>
+			  <th class="boder-table">Nom</th>
+			  <th class="boder-table">Prénom</th>
+			  <th class="boder-table">Rôle</th>
+			  <th class="boder-table">Télécharger</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr *ngFor="let membre of membres">
+			  <td>{{ membre.nom }}</td>
+			  <td>{{ membre.prenom }}</td>
+			  <td>{{ membre.role }}</td>
+			  <td>
+				<button (click)="downloadFile(membre)">Télécharger</button>
+			  </td>
+			</tr>
+		  </tbody>
+		</table>
+	  </div>
+	  <button type="button" (click)="goToNextStep()">Next Step</button>
+
+	</mat-step>
+  
+	<mat-step label="La liste des soumissionnaires">
+	</mat-step>
+  
+	<mat-step label="La liste des membres de la comité technique">
+	</mat-step>
+  </mat-horizontal-stepper> -->
+  
+  
+  

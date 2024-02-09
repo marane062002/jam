@@ -1,0 +1,140 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Listes des visites:</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions"></div>
+			</div>
+		</div>
+	</div>
+	<div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+		>&nbsp;
+		<mat-form-field>
+			<input
+				matInput
+				(keyup)="applyFilter($event.target.value)"
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+			/>
+		</mat-form-field>
+	</div>
+	<table
+		id="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="Id">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.TYPE_ALERT.Id" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="num">{{ row.Id }}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Date">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+			<td mat-cell *matCellDef="let row" class="Date">
+				{{ row.Date }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Heure">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Heure</th>
+			<td mat-cell *matCellDef="let row" class="Heure">
+				{{ row.Heure }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Type">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+			<td mat-cell *matCellDef="let row" class="Type">
+				{{ row.Type }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="SousType">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Sous-Type</th>
+			<td mat-cell *matCellDef="let row" class="SousType">
+				{{ row.SousType }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="etablissement">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Nom de l'établissement
+			</th>
+			<td mat-cell *matCellDef="let row" class="etablissement">
+				{{ row.etablissement }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Status">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Status/Décision
+			</th>
+			<td mat-cell *matCellDef="let row" class="Status">
+				{{ row.Status }}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					(click)="DetailAssociation()"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+					matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"
+				>
+					<i class="icon la la-search-plus"></i>
+				</button>
+				<button
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					(click)="ModifierAssociation()"
+					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"
+				>
+					<i class="icon la la-edit"> </i>
+				</button>
+				<button
+					type="button"
+					(click)="ficheTechnique()"
+					class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+					matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+				>
+					<i class="icon la la-save"></i>
+				</button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	>
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<mat-paginator
+		*ngIf="dataSource != undefined && dataSource.data != undefined"
+		[length]="dataSource.data.length"
+		[pageSize]="5"
+		[pageIndex]="0"
+		[pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons
+	></mat-paginator>
+	<hr />
+</div>

@@ -1,0 +1,71 @@
+<!--begin::Form-->
+<form class="kt-form" [formGroup]="registerForm" (submit)="onSubmit()" autocomplete="off">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-lock"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							<!-- {{ 'PAGES.GENERAL.FORM_USER' | translate }} -->
+							تغيير كلمة السر
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="password"
+										placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}" formControlName="password"
+										autocomplete="off" />
+									<mat-error *ngIf="isControlHasError('password','required')">
+										<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}</mat-label>
+									<input matInput type="password"
+										placeholder="{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}"
+										formControlName="passeConfirmed" autocomplete="off" />
+									<mat-error *ngIf="isControlHasError('passeConfirmed','required')">
+										<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+									</mat-error>
+									<mat-error
+										*ngIf="registerForm.get('passeConfirmed').errors && registerForm.get('passeConfirmed').errors.passeConfirmed">
+										<strong>الرمز السري غير متطابق.</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button type="submit" _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+				class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+				class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+				(click)="backList()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

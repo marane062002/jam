@@ -1,0 +1,192 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">Conventions</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                            <div class="form-group row justify-content-center mb-1">
+                                <div class="col-md-3 form-group ">
+                                    <label>N° de convention :</label>
+                                    <input class="form-control" type="text" placeholder="Numéro de convention">
+                                </div>
+                                <div class="col-md-2 col-lg-2 form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                    <data-table 
+                            [currentPage]="currentPage"
+                            [totalPages]="totalPages"
+                             [datasource]="listeConventions" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des conventions'"
+                            [titleButton]="' Ajouter convention'"
+                            (ajouterElement)="modalAjouterConvention(ajouterConvention)"
+                            (selectUpdateElement)="modalModifierConvention(modifierConvention,$event)"
+                            (deleteElement)="supprimerConvention($event)"
+                            (detail)="modalDetailConvention(detailAvancesConvention,$event)"
+                            (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)">
+                    </data-table>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    <ng-template #ajouterConvention let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle"> Ajouter convention</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+          <form   [formGroup]="formConvention" (ngSubmit)="createConvention(formConvention.value)">
+            <div class="form-group row mb-1">
+        <!--       <div class="col-md-4 form-group ">
+                  <label>Type :</label>
+                  <select class="form-control" formControlName="type">
+                    <option>Nouvelle convention</option>
+                    <option>Report</option>
+                    <option>Echange</option>
+                  </select>
+              </div> -->
+              <div class="col-md-4 form-group">
+                <label>Type :</label>
+                <select class="form-control" formControlName="type">
+                  <option value="" selected disabled>Selectioner type Convention</option>
+                  <option value="C">Carburant</option>
+                  <option value="R">Réparation</option>
+                  <option value="VTT">VTT</option>
+                  <option value="VTA">VTA</option>
+                </select>
+            </div>
+              <div class="col-md-4 form-group ">
+                  <label>Date :</label>
+                  <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateConvention">
+              </div>
+    
+              <div class="col-md-4 form-group">
+                <label>Numéro :</label>
+                <input class="form-control" type="text" placeholder="Numéro" formControlName="numero">
+              </div>
+             
+              <div class="col-md-4 form-group">
+                  <label>Montant en MAD:</label>
+                  <input class="form-control" type="number" placeholder="Montant" formControlName="montant">
+              </div>
+              <div class="col-md-4 form-group">
+                  <label>Année :</label>
+                  <input class="form-control" type="number" placeholder="Année" formControlName="annee">
+              </div>
+            </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary ml-2" [disabled]="!formConvention.valid" type="submit" ><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Ajouter</button>
+            </div>
+         
+          </form>
+        </div>
+     
+    </ng-template>
+
+   <!--  Modal ajouter -->
+   <ng-template #modifierConvention let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">  Modification convention</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <form   [formGroup]="formConvention" (ngSubmit)="updateConvention(formConvention.value)">
+        <div class="form-group row mb-1">
+    <!--       <div class="col-md-4 form-group ">
+              <label>Type :</label>
+              <select class="form-control" formControlName="type">
+                <option>Nouvelle convention</option>
+                <option>Report</option>
+                <option>Echange</option>
+              </select>
+          </div> -->
+          <div class="col-md-4 form-group">
+            <label>Type :</label>
+            <select class="form-control" formControlName="type">
+              <option value="" selected disabled>Selectioner type Convention</option>
+              <option value="C">Carburant</option>
+              <option value="R">Réparation</option>
+              <option value="VTT">VTT</option>
+              <option value="VTA">VTA</option>
+            </select>
+        </div>
+          <div class="col-md-4 form-group ">
+              <label>Date :</label>
+              <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateConvention">
+          </div>
+
+          <div class="col-md-4 form-group">
+            <label>Numéro :</label>
+            <input class="form-control" type="text" placeholder="Numéro" formControlName="numero">
+          </div>
+         
+          <div class="col-md-4 form-group">
+              <label>Montant en MAD:</label>
+              <input class="form-control" type="number" placeholder="Montant" formControlName="montant">
+          </div>
+          <div class="col-md-4 form-group">
+              <label>Année :</label>
+              <input class="form-control" type="number" placeholder="Année" formControlName="annee">
+          </div>
+        </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary ml-2" [disabled]="!formConvention.valid" type="submit" ><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+        </div>
+     
+      </form>
+     
+    </div>
+   </ng-template>
+   <!-- modal detail-->
+   <ng-template #detailAvancesConvention let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5>Detail d'une  convention</h5>
+<!--         <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+ -->    </div>
+    <div class="modal-body">
+        <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+            
+            <div class="form-group row mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Numéro :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{convention.numero}}</label>
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Type :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{convention.type}}</label>
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Montant :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{convention.montant}} MAD</label>
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Année :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{convention.annee}}</label>
+                   
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{convention.dateConvention}}</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-secondary m-1" type="button" data-dismiss="modal" (click)="close()"><i class="nav-icon i-Close font-weight-bold"></i> Annuler</button>
+   <!--      <button class="btn btn-outline-danger m-1" type="button" data-dismiss="modal"><i class="nav-icon i-Close font-weight-bold"></i> Rejeté</button>
+        <button class="btn btn-outline-success ml-2" type="button" data-dismiss="modal"><i class="nav-icon i-Yes font-weight-bold"></i> Valider l'Avance Sur Convention</button>
+    --> </div>
+   </ng-template>
+
+
+</div>
+

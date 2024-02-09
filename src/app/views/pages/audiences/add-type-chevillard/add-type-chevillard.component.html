@@ -1,0 +1,138 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ 'PAGES.GESTION_CHEVILLARDS.AJOUTER_CHEVILLARD' | translate }}
+				</h2>
+			</div>
+		</div>
+	</div>
+	<!-- <p-toast>
+
+		<div class="toast" role="alert" aria-live="assertive" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<img src="" class="rounded me-2" alt="">
+				<strong class="me-auto">Bootstrap</strong>
+				<small>11 mins ago</small>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+				Hello, world! This is a toast message.
+			</div>
+		</div> -->
+
+	<form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form" [formGroup]="chevillardSaveForm">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_CHEVILLARDS.NOM' | translate}} :</label>
+						<input matInput type="text" class="form-control"
+							placeholder="" formControlName="nom" />
+						<mat-error *ngIf="isControlHasError('nom','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate}}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<!-- <div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_CHEVILLARDS.PRENOM' | translate}} :</label>
+						<input matInput type="text" class="form-control"
+							placeholder="" formControlName="prenom" />
+						<mat-error *ngIf="isControlHasError('prenom','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate}}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div> -->
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_CHEVILLARDS.CIN' | translate}} :</label>
+						<input matInput type="text" class="form-control"
+							placeholder="" formControlName="cin" />
+						<mat-error *ngIf="isControlHasError('cin','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate}}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<!-- <div class="col-md-6">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label>{{'PAGES.GESTION_CHEVILLARDS.DATE_NAISSANCE' | translate}} :</label>
+							<input matInput class="form-control" [matDatepicker]="picker1"
+								placeholder=""
+								formControlName="dateNaissance" />
+							<mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+								<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
+								</mat-icon>
+							</mat-datepicker-toggle>
+							<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+							<mat-error *ngIf="isControlHasError('dateNaissance','required')">
+								<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate}}</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div> -->
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_CHEVILLARDS.ADRESSE' | translate}} :</label>
+						<textarea matInput class="form-control"
+							placeholder="" formControlName="adresse">
+						</textarea>
+						<mat-error *ngIf="isControlHasError('adresse','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate}}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{
+								'PAGES.GESTION_CHEVILLARDS.TELEPHONE' | translate
+							}} :</label>
+						<input matInput type="text" class="form-control" placeholder="" formControlName="telephone" />
+						<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						<mat-error *ngIf="isControlHasError('telephone','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate}}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button type="button" (click)="back()" class="btn btn-primary" data-wizard-type="action-prev">
+					<i class="la la-angle-left"></i>
+					{{'PAGES.GENERAL.EXIT' | translate}}
+				</button>
+
+				<button mat-button (click)="onSubmit()" type="button" class="btn btn-success btn-elevate btn-icon-sm"
+					data-wizard-type="action-submit">
+					<i class="la la-plus"></i>
+					{{'PAGES.GENERAL.SAVE' | translate}}
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

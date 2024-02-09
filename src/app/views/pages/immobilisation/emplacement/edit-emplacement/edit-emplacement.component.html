@@ -1,0 +1,106 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-container">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-1">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-placeholder kt-font-inverse-brand"></i>
+						</span>
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							تعديل موقع الممتلك
+						</h3>
+					</div>
+				</div>
+				<form novalidate [formGroup]="editForm">
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<input  matInput type="text" class="form-control" formControlName="designation"
+											name="numero" placeholder="إسم الموقع">
+										<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select matNativeControl  class="form-control"
+										(selectionChange)="selectionChanged($event)"
+											placeholder="القسم">
+											<mat-option>--اختر القسم--</mat-option>
+											<mat-option *ngFor="let div of devisions" [value]="div.id">
+												{{div.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select matNativeControl  class="form-control" formControlName="idService"
+											placeholder="المصلحة">
+											<mat-option>--اختر المصلحة--</mat-option>
+											<mat-option *ngFor="let serv of services" [value]="serv.id">
+												{{serv.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<mat-form-field hintLabel="الحد الأقصى 255 حرفا" class="form-control"
+										class="example-full-width">
+										<textarea rows="4" #input maxlength="255" class="form-control"  formControlName="description"
+											name="description" matInput
+											placeholder="وصف" required></textarea>
+										<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Attachement section-->
+<!--Action Section :: begin-->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label" align="right">
+						<button _ngcontent-dkp-c41=""
+							class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" [disabled]="editForm.invalid"
+							(click)="onSubmit()">
+							<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+							حفظ</button>
+						<button _ngcontent-dkp-c41=""
+							class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+							type="reset" (click)="onReset()">
+							<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+							الغاء</button>
+						<button _ngcontent-dkp-c41=""
+							class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+							(click)="back()">
+							<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+							القائمة</button>
+					</div>
+					<div class="espace_bloc"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Action Section :: end-->

@@ -1,0 +1,120 @@
+
+  
+                        <div class="kt-portlet portlet-3">
+                          
+
+
+                            <div class="kt-portlet__head mb-10">
+                                <div class="kt-portlet__head-label">
+                                    <span class="kt-portlet__head-icon">
+                                        <i class="flaticon2-plus-1"></i>
+                                    </span>
+                                    &nbsp;
+                                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                        {{ 'PAGES.Gestion.Stock.Article.new.title' | translate }}
+                                    </h3>
+                                </div>
+                            </div>
+	            
+                                <form class="mt-4" [formGroup]="FormArticle" (ngSubmit)="createArticle(FormArticle.value)">
+                                    <div class="form-group row mb-1">
+                                       
+                                        <div class="col-md-3 show_port input-group">
+                                            <mat-form-field class="example-full-width"  formGroupName="categorieArticle">
+                                                <mat-select class="form-control" name="unite" formControlName="id" (selectionChange)="selectedCatArticle($event.value)"    placeholder="{{ 'PAGES.Gestion.Stock.Article.categorie' | translate }}">
+                                                    <mat-option *ngFor="let item of unites" [value]="item?.id">
+                                                   <span>{{checkLang=='ar' ? item.libelleAr :item.libelleFr}}</span>
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="numeroArticle" matInput type="text" class="form-control" name="numeroArticle" 
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.numero' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="designation" matInput type="text" class="form-control" name="designation"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.designation' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="unite" matInput type="text" class="form-control" name="unite"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.unite' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="prix" matInput type="text" class="form-control" name="prix"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.prix' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="quantiteMin" matInput type="text" class="form-control" name="quantiteMin"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.quantiteMin' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="longueur" matInput type="text" class="form-control" name="longueur"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.longueur' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="profondeur" matInput type="text" class="form-control" name="profondeur"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.profondeur' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="poid" matInput type="text" class="form-control" name="poid"
+                                                    placeholder="{{ 'PAGES.Gestion.Stock.Article.poid' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width"> 
+                                                    <input matInput class="form-control" [matDatepicker]="picker10" formControlName="datePeremption" name="datePeremption"  placeholder="{{ 'PAGES.Gestion.Stock.Article.datePeremption' | translate }}" />
+                                                    <mat-datepicker-toggle matSuffix matSuffix [for]="picker10">
+                                                        <mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i> </mat-icon>
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker touchUi="true" #picker10></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                  
+                                        <div class="m-1 float-right">
+                                            <button _ngcontent-dkp-c41="" (click)="ajouter()" type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+                                            class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+                                            <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+                                            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+                                            {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+                                        </div>
+                                </form>
+                          
+                   
+  </div>
+  

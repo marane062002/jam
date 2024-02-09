@@ -1,0 +1,178 @@
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-business-time kt-font-inverse-brand"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PHASE_MARCHE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div style="display: none;" class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" id="myCheck" class="form-control" placeholder="Numero ordre :" name="numOP">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div *ngxPermissionsOnly="['canCreatePhaseMarche']" class="kt-portlet__head-actions">
+                            &nbsp;
+                            <a href="javascript:; " (click)="nouvelleLigne()" class="btn btn-success btn-elevate btn-icon-sm">
+                                <i class="la la-plus"></i> {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.TITRE_NEW' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <form class="kt-form" autocomplete="off" #form="ngForm" id="frmLigne" *ngIf="showPhaseForm" (submit)="onSubmit(form)">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" [(ngModel)]="formData.intitule" name="intitule" placeholder="{{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" [(ngModel)]="formData.budget" name="budget" placeholder=" {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.TAUX_PAHSE' | translate }}:">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" [(ngModel)]="formData.duree" name="duree" placeholder="{{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DUREE' | translate }} :">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker" name="dateDebut" [(ngModel)]="formData.dateDebut" placeholder=" {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_DEBUT' | translate }} ">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker1" name="dateEcheance" [(ngModel)]="formData.dateEcheance" placeholder=" {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }} ">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" [(ngModel)]="formData.remarques" name="remarques" placeholder="{{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.OBSERVATION' | translate }} :">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success ">
+                        {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                    </button>
+                    <div class="espace_bloc"></div>
+                </form>
+                <div *ngIf="showPhaseTable">
+                    <div *ngxPermissionsOnly="['accessToIndexPhaseMarche']" class="kt-portlet__body kt-portlet__body--fit">
+
+                        <div class="example-container mat-elevation-z8">
+
+                            <table mat-table [dataSource]="dataSource" matSort>
+
+                                <!-- TAUX -->
+                                <ng-container matColumnDef="budget">
+                                    <th mat-header-cell *matHeaderCellDef class="tauxPhase">
+                                        {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.TAUX_PAHSE' | translate }}
+                                    </th>
+                                    <td mat-cell class="tauxPhase" *matCellDef="let row"> {{row.budget}} % </td>
+                                </ng-container>
+
+                                <!-- DATE DEBUT -->
+                                <ng-container matColumnDef="dateDebut">
+                                    <th mat-header-cell *matHeaderCellDef class="dateDebut">
+                                        {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_DEBUT' | translate }}
+                                    </th>
+                                    <td mat-cell class="dateDebut" *matCellDef="let row"> {{row.dateDebut |date: 'dd/MM/yyyy'}} </td>
+                                </ng-container>
+
+                                <!-- DATE EFFET -->
+                                <ng-container matColumnDef="dateEcheance">
+                                    <th mat-header-cell *matHeaderCellDef class="dateEffet">
+                                        {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }} </th>
+                                    <td mat-cell class="dateEffet" *matCellDef="let row"> {{row.dateEcheance |date: 'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- STATUT -->
+                                <!-- <ng-container matColumnDef="statut">
+                  <th mat-header-cell *matHeaderCellDef class="statut">
+                    {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.STATUT' | translate }} </th>
+                  <td mat-cell class="statut" *matCellDef="let row"> {{row.statut.libelle}} </td>
+                </ng-container> -->
+
+                                <!-- OBJET -->
+                                <ng-container matColumnDef="intitule">
+                                    <th mat-header-cell *matHeaderCellDef class="objet">
+                                        {{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }} </th>
+                                    <td mat-cell class="objet" *matCellDef="let row"> {{row.intitule}} </td>
+                                </ng-container>
+
+                                <!-- OBSERVATION -->
+                                <ng-container matColumnDef="remarques">
+                                    <th mat-header-cell *matHeaderCellDef class="observation">
+                                        {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.OBSERVATION' | translate }}</th>
+                                    <td mat-cell class="observation" *matCellDef="let row"> {{row.remarques}} </td>
+                                </ng-container>
+
+                                <!-- DUREE -->
+                                <ng-container matColumnDef="duree">
+                                    <th mat-header-cell *matHeaderCellDef class="duree">
+                                        {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DUREE' | translate }} </th>
+                                    <td mat-cell class="duree" *matCellDef="let row"> {{row.duree}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef class="actions"></th>
+                                    <td mat-cell class="actions" *matCellDef="let row">
+                                        <a href="javascript:;" (click)="editPhase(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                                class="la la-edit"></i></a>
+                                        <a href="javascript:;" (click)="deletePhase(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                                class="la la-trash"></i></a>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                </tr>
+                            </table>
+                            <div *ngIf="sizeData == 0" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-paginator [length]="sizeData" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

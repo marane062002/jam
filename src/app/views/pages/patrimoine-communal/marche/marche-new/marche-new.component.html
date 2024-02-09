@@ -1,0 +1,439 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'MENU.AJOUTERMARCHE' | translate }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section 2 -->
+<!--begin::Form-->
+<form [formGroup]="marcheForm" (submit)="onSubmit()" class="kt-form">
+    <!-- {{ marcheForm.value | json  }} -->
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="fas fa-address-card kt-font-inverse-brand"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.FORM_MARCHE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="nomMarche" placeholder="{{ 'PAGES.GENERAL.NOM_MARCHE' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('nomMarche','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-lg-6 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="fas fa-store-alt  kt-font-inverse-brand"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.DETAILS_MAGASINS' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions ng-star-inserted">
+                            <a class="btn btn-outline-success btn-bold btn-sm" (click)="addItemMagasin()"><i
+									class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }} </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="kt-portlet__body">
+                    <div *ngIf="marcheForm.get('magasins')['controls'].length > 0" formArrayName="magasins">
+                        <mat-tab-group mat-align-tabs="end" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+                            <mat-tab *ngFor="let item of marcheForm.get('magasins')['controls']; let i = index; ">
+                                <div [formGroupName]="i">
+                                    <ng-template mat-tab-label>
+                                        <span class="kt-portlet__head-icon">
+											<i class="fas fa-store-alt kt-font-inverse-brand"></i>
+										</span>
+                                        <h5 class="kt-portlet__head-title kt-font-inverse-brand mr-1">
+                                            {{ 'PAGES.GENERAL.MAGASIN_TITRE' | translate }} {{i+1}}
+                                        </h5>
+                                        <a class="btn btn-xs btn-clean btn-icon btn-danger btn-icon-md btn_table_delete ng-star-inserted mr-1" (click)="deleteItemMagasin(i)">
+                                            <i class="icon la la-trash"></i>
+                                        </a>
+
+                                    </ng-template>
+
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="numMagasin" placeholder="{{ 'PAGES.GENERAL.NUM_MAG' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="number" class="form-control" formControlName="superficieMag" placeholder="{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="localisation" placeholder="{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="nomLocataireMAG" placeholder="{{ 'PAGES.GENERAL.NOM_LOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="cinLocMag" placeholder="{{ 'PAGES.GENERAL.CIN' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateContratLoc" placeholder="{{ 'PAGES.GENERAL.DATE_CONTRATLOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateEnregContratLoc" placeholder="{{ 'PAGES.GENERAL.DATE_ENREG_CONTRATLOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="number" class="form-control" formControlName="montantLoc" placeholder="{{ 'PAGES.GENERAL.MONTANT_LOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateMajMontantLoc" placeholder="{{ 'PAGES.GENERAL.DATE_MAJ_MONTANT_LOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateFinContratLoc" placeholder="{{ 'PAGES.GENERAL.DATE_FIN_CONTRATLOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                            </mat-tab>
+
+
+                        </mat-tab-group>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="fas fa-map-pin kt-font-inverse-brand"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.DETAIL_SEANCES' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions ng-star-inserted">
+                            <a class="btn btn-outline-success btn-bold btn-sm" (click)="addItemSeances()"><i
+									class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }} </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="kt-portlet__body">
+                    <div *ngIf="marcheForm.get('seances')['controls'].length > 0" formArrayName="seances">
+                        <mat-tab-group mat-align-tabs="end" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+                            <mat-tab *ngFor="let item of marcheForm.get('seances')['controls']; let j = index; ">
+                                <div [formGroupName]="j">
+                                    <ng-template mat-tab-label>
+                                        <span class="kt-portlet__head-icon">
+											<i class="fas fa-store-alt kt-font-inverse-brand"></i>
+										</span>
+                                        <h5 class="kt-portlet__head-title kt-font-inverse-brand mr-1">
+                                            {{ 'PAGES.GENERAL.SEANCE' | translate }} {{j+1}}
+                                        </h5>
+                                        <a class="btn btn-xs btn-clean btn-icon btn-danger btn-icon-md btn_table_delete ng-star-inserted mr-1" (click)="deleteItemSeances(j)">
+                                            <i class="icon la la-trash"></i>
+                                        </a>
+
+                                    </ng-template>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="numSeance" placeholder="{{ 'PAGES.GENERAL.NUM_SEANCE' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="superficieSeance" placeholder="{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="localisation" placeholder="{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="nomLocSeance" placeholder="{{ 'PAGES.GENERAL.NOM_LOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" formControlName="cinLocSeance" placeholder="{{ 'PAGES.GENERAL.CIN' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateContratLocSeance" placeholder="{{ 'PAGES.GENERAL.DATE_CONTRATLOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateEnregContratLocSeance" placeholder="{{ 'PAGES.GENERAL.DATE_ENREG_CONTRATLOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="number" class="form-control" formControlName="montantLocSeance" placeholder="{{ 'PAGES.GENERAL.MONTANT_LOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateMajMontantLocSeance" placeholder="{{ 'PAGES.GENERAL.DATE_MAJ_MONTANT_LOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="date" class="form-control" formControlName="dateFinContratLocSeance" placeholder="{{ 'PAGES.GENERAL.DATE_FIN_CONTRATLOC' | translate }} :">
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+
+
+                        </mat-tab-group>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+ -->
+    <!--Action Section :: begin-->
+
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title class="panel-title" style="color: #2a79b1">
+                {{ "PAGES.CONVENTION.DETAIL" | translate }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="col-md-12 show_port">
+            <br />
+            <div class="kt-portlet__foot">
+                <mat-tab-group (selectedTabChange)="changeTab($event)">
+                    <mat-tab label="{{'PAGES.MARCHE.convention.TAB_360.MAGASIN' | translate	}}"> </mat-tab>
+                    <mat-tab label="{{'PAGES.MARCHE.convention.TAB_360.SEANCE' | translate	}}"> </mat-tab>           
+                </mat-tab-group>
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+    </mat-expansion-panel>
+
+    
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label" align="right">
+            <button type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}" class="btn btn-success" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+				<i class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+            <button matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}" class="btn btn-secondary" type="reset">
+				<i class="la la-recycle"></i>
+				{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+            <button type="button" *ngxPermissionsOnly="['accessToMarcheComModule']" (click)="back()" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info">
+				<i class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        </div>
+    </div>
+    <!--Action Section :: end-->
+</form>

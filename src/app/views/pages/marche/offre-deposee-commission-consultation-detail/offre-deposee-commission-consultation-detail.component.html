@@ -1,0 +1,138 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-1">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fas fa-book-reader kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						عروض المتنافسين
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div *ngIf="idtypeCommission==3">
+					<div class="example-container mat-elevation-z8">
+
+						<mat-table [dataSource]="dataSourceODEvTechnique" matSort>
+
+							<!-- ID Column -->
+							<ng-container matColumnDef="id">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم
+									الطلب </mat-header-cell>
+								<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="NomOrganisme">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> اسم الهيئة المعنية
+								</mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.prestataire.nom}} </mat-cell>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="rc">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> رقم السجل التجاري </mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.prestataire.rc}} </mat-cell>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="tele">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> الهاتف </mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.prestataire.tel}} </mat-cell>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="statut">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> النقطة </mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.noteTechnique}} </mat-cell>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="reserve">
+								<mat-header-cell *matHeaderCellDef> الوضع </mat-header-cell>
+								<mat-cell *matCellDef="let row">
+									<div *ngIf="row.statutTechnique==1">مقبول</div>
+									<div *ngIf="row.statutTechnique==2">مرفوض</div>
+								</mat-cell>
+							</ng-container>
+
+
+
+							<mat-header-row *matHeaderRowDef="displayedColumnsODEvAdmin1"></mat-header-row>
+							<mat-row *matRowDef="let row; columns: displayedColumnsODEvAdmin1;">
+							</mat-row>
+						</mat-table>
+
+						<mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+					</div>
+				</div>
+				<div *ngIf="idtypeCommission==4">
+					<div class="example-container mat-elevation-z8">
+
+						<mat-table [dataSource]="dataSourceODEvFinanciere" matSort>
+
+							<!-- ID Column -->
+							<ng-container matColumnDef="id">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم
+									الطلب </mat-header-cell>
+								<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="NomOrganisme">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> اسم الهيئة المعنية
+								</mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.prestataire.nom}} </mat-cell>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="rc">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> رقم السجل التجاري </mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.prestataire.rc}} </mat-cell>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="tele">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> الهاتف </mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.prestataire.tel}} </mat-cell>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="statut">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> المبلغ المقترح </mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.commande.mntTotal |macurrency}} </mat-cell>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="reserve">
+								<mat-header-cell *matHeaderCellDef> النقطة المالية </mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.noteFinanciere}} </mat-cell>
+							</ng-container>
+
+							<ng-container matColumnDef="actions">
+								<mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+								<mat-cell *matCellDef="let row">
+									<a href="javascript:;" (click)="showoffre(row.id)"
+										class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+										matTooltip="عرض تفاصيل الطلب"><i class="la la-search-plus"></i></a>
+								</mat-cell>
+							</ng-container>
+
+
+							<mat-header-row *matHeaderRowDef="displayedColumnsODEvAdmin"></mat-header-row>
+							<mat-row *matRowDef="let row; columns: displayedColumnsODEvAdmin;">
+							</mat-row>
+						</mat-table>
+
+						<mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>

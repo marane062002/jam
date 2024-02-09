@@ -1,0 +1,36 @@
+<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table *ngIf="files" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+							<td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+							</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_DISPATCHING' | translate }}</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of files | async">
+							<td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}"
+									matTooltip="{{FileName(item.name)}}"></td>
+							<td> {{FileName(item.name)  | slice:0:20}}</td>
+							<td>{{item.dateFile  | date:'dd/MM/yyyy HH:mm'}}</td>
+							<td>{{item.fSize/1000}} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco,item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div *ngIf="start">
+					<p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+					<mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+				</div>
+			</div>
+		</div>
+	</div>

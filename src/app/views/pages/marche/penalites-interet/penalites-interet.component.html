@@ -1,0 +1,193 @@
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-file-invoice-dollar kt-font-inverse-brand"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PENALITES_ET_INTERETS' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-wrapper">
+                                <div class="kt-portlet__head-actions">
+                                    <a href="javascript:; " (click)="nouveauPenalite()" class="btn btn-success btn-elevate btn-icon-sm">
+                                        <i class="la la-plus"></i> {{ 'PAGES.MARCHE.MARCHE.PENALITE_RETARD.TITRE_NEW' | translate }}
+                                    </a>
+                                    <a href="javascript:; " (click)="nouveauInterets()" class="btn btn-success btn-elevate btn-icon-sm">
+                                        <i class="la la-plus"></i> {{ 'PAGES.MARCHE.MARCHE.INTERETS_MORATOIRES.TITRE_NEW' | translate }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FORM :: Penalites pour retard -->
+                <div *ngIf="ShowFormPenalites">
+                    <div class="espace_bloc"></div>
+                    <h4 class="title-style2">
+                        {{ 'PAGES.MARCHE.MARCHE.PENALITE_RETARD.TITRE_NEW' | translate }}
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="nbrJour" placeholder="{{ 'PAGES.MARCHE.MARCHE.PENALITE_RETARD.NBR_JOUR' | translate }} :" [(ngModel)]="penaliteData.nbrJour" />
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="mtPenalite" placeholder="{{ 'PAGES.MARCHE.MARCHE.PENALITE_RETARD.MONTANT' | translate }} :" [(ngModel)]="penaliteData.mtPenalite" />
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary  " type="button" (click)="onClickPenalites($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                </div>
+                <!-- FORM :: Interets moratoires -->
+                <div *ngIf="ShowFormInterets">
+                    <div class="espace_bloc"></div>
+                    <h4 class="title-style2">
+                        {{ 'PAGES.MARCHE.MARCHE.INTERETS_MORATOIRES.TITRE_NEW' | translate }}
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="nbrJourInteret" placeholder="{{ 'PAGES.MARCHE.MARCHE.INTERETS_MORATOIRES.NBR_JOUR' | translate }} :" [(ngModel)]="interetData.nbrJour" />
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="mtPenaliteInteret" placeholder="{{ 'PAGES.MARCHE.MARCHE.INTERETS_MORATOIRES.MONTANT' | translate }} :" [(ngModel)]="interetData.mtPenalite" />
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary  " type="button" (click)="onClickInterets($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                </div>
+                <!-- ****************************************************** -->
+                <!-- datasource :: penalites pour retard -->
+                <div *ngIf="showListePenalites">
+                    <div class="espace_bloc"></div>
+                    <h4 class="title-style">
+                        {{ 'PAGES.MARCHE.MARCHE.PENALITE_RETARD.TITRE_INDEX' | translate }}
+                    </h4>
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table [dataSource]="dataSourcePenalite" matSort>
+
+                            <!-- Purcentage Travaux -->
+                            <ng-container matColumnDef="nbrJour">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.MARCHE.PENALITE_RETARD.NBR_JOUR' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.nbrJour?row.nbrJour:"-"}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Montant Travaux -->
+                            <ng-container matColumnDef="mtPenalite">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.MARCHE.PENALITE_RETARD.MONTANT' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    {{ (row.mtPenalite != 0) ? (row.mtPenalite | macurrency) : "0" }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" (click)="editPenalites(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                            class="la la-edit"></i></a>
+                                    <a href="javascript:;" (click)="deletePenalites(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                            class="la la-trash"></i></a>
+                                    <a (click)="generateOrdreRecette(row.id)"  type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="Ordre Recette">
+                                                <i class="flaticon2-download text-success"></i>
+                                    </a>        
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsPenalite"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumnsPenalite;">
+                            </mat-row>
+                        </mat-table>
+                        <div *ngIf="sizeDataPnt == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="sizeDataPnt" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+                <!-- datasource :: interets moratoire -->
+                <div *ngIf="showListeInterets">
+                    <div class="espace_bloc"></div>
+                    <h4 class="title-style">
+                        {{ 'PAGES.MARCHE.MARCHE.INTERETS_MORATOIRES.TITRE_INDEX' | translate }}
+                    </h4>
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table [dataSource]="dataSourceInterets" matSort>
+
+                            <!-- Purcentage Travaux -->
+                            <ng-container matColumnDef="nbrJour">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.MARCHE.INTERETS_MORATOIRES.NBR_JOUR' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.nbrJour?row.nbrJour:"-"}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Montant Travaux -->
+                            <ng-container matColumnDef="mtPenalite">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.MARCHE.INTERETS_MORATOIRES.MONTANT' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    {{ (row.mtPenalite != 0) ? (row.mtPenalite | macurrency) : "0" }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" (click)="editInteretsMoratoires(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                            class="la la-edit"></i></a>
+                                    <a href="javascript:;" (click)="deleteInteretsMoratoires(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                            class="la la-trash"></i></a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsInteret"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumnsInteret;">
+                            </mat-row>
+                        </mat-table>
+                        <div *ngIf="sizeDataInt == 0 && isLoading2 == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading2" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="sizeDataInt" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+                <!-- ****************************************************** -->
+            </div>
+        </div>
+    </div>
+</div>

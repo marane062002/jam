@@ -1,0 +1,153 @@
+<form class="kt-form" autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-interface-2"></i>
+						</span>
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.CONSULTATION' | translate }}
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NUM' | translate }} :"
+										[(ngModel)]="formData.numConsultation" name="numSucc" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput class="form-control" [matDatepicker]="picker" name="dateDebut"
+										[(ngModel)]="formData.dateDebutConsultation"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DATE_ENGAGEMENT' | translate }}">
+									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.BUDGET_ESTIMATIF' | translate }} :"
+										[(ngModel)]="formData.budgetGlobalPropose" name="nompp" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="prepp"
+										[(ngModel)]="formData.objet"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.OBJET' | translate }} :"
+										required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<textarea matInput type="text" class="form-control" name="cinpp"
+										[(ngModel)]="formData.description"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DESCRIPTION' | translate }} :"></textarea>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="divisionAo"
+										(selectionChange)="onChangeDivision($event)" [(ngModel)]="formData.division"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DIVISION' | translate }}">
+										<mat-option *ngFor="let item of divisions" [value]="item.id">
+											{{checkLang=='ar'?item.libelle:item.libelleFR}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="criticiterec" [(ngModel)]="formData.service"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.SERVICE' | translate }}">
+										<mat-option *ngFor="let item of services" [value]="item.id">{{checkLang=='ar'?item.libelle:item.libelleFR}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="crit" [(ngModel)]="formData.type.id"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TYPE' | translate }}">
+										<mat-option *ngFor="let item of typeConsultationAll" [value]="item.id">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="mdPassation"
+										(selectionChange)="onChangeofModePassation($event)"
+										[(ngModel)]="formData.modePassation"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MODE_PASSATION' | translate }}">
+										<mat-option *ngFor="let item of modePassationAll" [value]="item.id">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div *ngIf="showSeuilMin" class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control"
+										placeholder="{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.SEUIL_MINIMAL' | translate }} :"
+										[(ngModel)]="formData.seuilMinimal" name="seuilMin" required>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button _ngcontent-dkp-c41=""
+				class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				type="button" (click)="backList()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

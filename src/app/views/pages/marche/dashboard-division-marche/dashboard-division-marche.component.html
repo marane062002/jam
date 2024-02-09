@@ -1,0 +1,327 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-1">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-search"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'MENU.STATS.CONTROL.SEARCHE' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <form novalidate [formGroup]="searchForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="type" placeholder="{{ 'AUTH.GENERAL.STATISTISQUE' | translate }} :" >
+                                <mat-option value="1">Nombre de projet par prestation  </mat-option>
+                                <mat-option  value="2"> Nombre de projet par statut de projet </mat-option> 
+                                   <mat-option  value="3">Nombre de projet ayant un retard  </mat-option>
+                                   <mat-option  value="4">Nombre de projet ayant un retard qui dépasse 6 mois   </mat-option>
+                                     <mat-option  value="5"> Nombre de projet ayant des pénalités de retard</mat-option>
+                                     <mat-option  value="6"> Nombre de projet ayant des intérêt moratoires </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            
+                    <!-- DATE DEBUT -->
+               <div class="col-md-3"  *ngIf="searchForm.controls.type.value==='1'  || searchForm.controls.type.value==='2'">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input autocomplete="off" matInput class="form-control" [matDatepicker]="picker1" formControlName="dateDebut" placeholder="{{ 'MENU.STATS.CONTROL.DATE_START' | translate }} :">
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"  *ngIf="searchForm.controls.type.value==='1'  || searchForm.controls.type.value==='2'">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input autocomplete="off" matInput class="form-control" [min]="searchForm.controls.dateDebut.value" [matDatepicker]="picker2" formControlName="dateFin" placeholder="{{ 'MENU.STATS.CONTROL.DATE_END' | translate }} :">
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker2">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"  *ngIf="searchForm.controls.type.value==='2'">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" name="crit" formControlName="typeMarche" placeholder="{{ 'PAGES.MARCHE.AO.TYPE_AO' | translate }}" multiple>
+                                <mat-option *ngFor="let item of typeMarcheAll" [value]="item.id">
+                                    {{item.libelle}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button [disabled]="searchForm.invalid" (click)="onSubmit()" class="btn btn-label-dark w-100 bg-success text-white mb-3 mt-4" > <i class="flaticon-search-1"></i>{{ 'PAGES.GENERAL.FILTER' | translate }}   </button>
+                </div>
+            </div>
+        </form>
+   
+    </div>
+</div>
+<!-- end::row-content-top -->
+<!-- start::row-content -->
+<div class="row">
+    <!-- start::dataTable -->
+    <div class="col-lg-6">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head kt-bg-portlet-2">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-tabs"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'MENU.LISTEMARCHES' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+         <!--    <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <div class="kt-portlet">
+                            <mat-table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                             
+
+                              
+                                <ng-container matColumnDef="Nombre de projet ayant des pénalités">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                        Nombre de projet ayant des pénalités
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column"> {{row.nbrPenalite}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="Nombre de projet ayant des moratoires">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                        Nombre de projet ayant des moratoires
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column"> {{row.nbrMoratoire}}
+                                    </mat-cell>
+                                </ng-container>
+                                 <ng-container matColumnDef="statut de projet">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                      statut de projet
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column"> {{row.typePrestation}}
+                                    </mat-cell>
+                                </ng-container>
+                                  
+                                   <ng-container matColumnDef="prestation">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                      prestation
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column"> {{row.typePrestation}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="Nombre de projet">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                               
+                                      Nombre de projet
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column">{{row.nombre}}
+                                    </mat-cell>
+                                </ng-container>
+                                  <ng-container matColumnDef="Nombre de projet en retard">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                     
+                                      Nombre de projet en retard
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column">{{row}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="Total Budget">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                        Total Budget
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column"> {{row.budget}}</mat-cell>
+                                </ng-container> 
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                            <div *ngIf="sizeData == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                                </mat-progress-spinner>
+                            </mat-card>
+                            <mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+                          
+                        </div>
+
+                    </div>
+                </div>
+            </div> -->
+            <div class="kt-portlet__body">
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                  
+                    <div class="example-container mat-elevation-z8">
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                            <!-- Name Column -->
+                            
+                            <ng-container matColumnDef="NumMarche">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.NUM_MARCHE' | translate }}</th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.numMarche}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="prestation">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }}</th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.ao?.sousTypePrestation?.typePrestation?.libelle}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="mntAdjucataire">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.MONTANT_PROPOSE' | translate }}
+                                </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                    {{ (row.ao.budgetEstimatif !== null) ? (row.ao.budgetEstimatif | macurrency) : 0 }}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="MntEngage">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.MONTANT_ENGAGE' | translate }}
+                                </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                    {{ (row.mntAdjucataire !== null) ? (row.mntAdjucataire | macurrency) : 0 }}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="cautionDefinitive">
+                                <th mat-header-cell class="td_mail" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.CAUTION_DEFINITIVE' | translate }}
+                                </th>
+                                <td mat-cell class="td_mail" *matCellDef="let row">
+                                    {{ (row.cautionDefinitive !== null) ? (row.cautionDefinitive| macurrency) : 0 }}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="dateDebutMarche">
+                                <th mat-header-cell class="td_mail" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.DATE_DEBUT_MARCHE' | translate }}
+                                </th>
+                                <td mat-cell class="td_mail" *matCellDef="let row">
+                                    {{ (row.dateDebutMarche !== null) ? (row.dateDebutMarche| date: 'dd/MM/yyyy') : "-" }}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="modePassation">
+                                <th mat-header-cell class="td_mail" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.MODE_PASSATION' | translate }}
+                                </th>
+                                <td mat-cell class="td_mail" *matCellDef="let row"> {{row.modePassation?.libelle ?row.modePassation?.libelle :"-"}} </td>
+                            </ng-container>
+
+                           
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+                        <!-- <div *ngIf="sizeData == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div> -->
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end::dataTable -->
+    <!-- begin :: statistiques -->
+    <div class="col-lg-6">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-bg-portlet-5">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-graphic-2"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        {{ 'MENU.STATPATRIQUEMARCHE' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            &nbsp;
+                            <a href="javascript:; " (click)="downloadCanvas($event)" class="btn btn-primary btn-icon-sm">
+                                <i class="flaticon2-download"></i> {{ 'MENU.STATS.CONTROL.DOWLOAD_CHART' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <div class="col-md-12 show_port">
+                            <!-- begin::action radio -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <mat-radio-group name="partenariatAssociative" (change)="selectionChanged($event)"  ([ngModel])="chartType">
+                                            <mat-radio-button value="pie" [checked]="chartType==='pie'">
+                                                <i class="flaticon2-pie-chart-1"></i>
+                                            </mat-radio-button>
+                                            <mat-radio-button value="doughnut" [checked]="chartType==='doughnut'">
+                                                <i class="flaticon2-pie-chart-2"></i>
+                                            </mat-radio-button>
+                                            <mat-radio-button  value="bar" [checked]="chartType==='bar'">
+                                                <i class="flaticon2-poll-symbol"></i>
+                                            </mat-radio-button>
+                                            <mat-radio-button value="line" [checked]="chartType==='line'">
+                                                <i class="flaticon2-analytics"></i>
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end::action radio -->
+                            <!-- begin::chart -->
+                            <div Style="pointer-events: none;"> 
+                                <canvas id="canvas"></canvas>
+                            </div>
+                            <!-- end::chart -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: statistiques -->
+
+
+</div>
+<!-- end:: row-content -->

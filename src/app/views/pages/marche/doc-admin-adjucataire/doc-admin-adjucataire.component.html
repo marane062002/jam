@@ -1,0 +1,100 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="fab fa-buffer kt-font-inverse-brand"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_DOC_ADMIN_ADJUCATAIRE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm">
+                    <div style="display: -webkit-box;">
+                        <div class="col-md-4 show_port input-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select class="form-control" name="pj" (selectionChange)="onChangeType($event)" placeholder="{{ 'PAGES.MARCHE.AO.PJ.TYPE' | translate }}" required>
+                                    <mat-option [value]=null>--{{ 'PAGES.MARCHE.AO.PJ.TYPE' | translate }}--
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of typePJ" [value]="item.libelle">{{item.libelle}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-8 show_port input-group" style="top: 26px;">
+                            <label class="input-group-btn">
+								<span class="btn btn-info">
+									{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+										(change)="fileChange($event)" formControlName="_file" id="customFile"
+										style="display: none;" multiple>
+								</span>
+							</label>
+                            <input type="text" #inputFile class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <div style="margin: 25px 0px 0px 9px;display: flex;">
+                        <button class="btn btn-success btn-md btn-tall" [disabled]="activeBtn" (click)="onSubmit()" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}">{{ 'PAGES.GENERAL.SAVE' | translate }}
+						</button>
+                        <button type="reset" class="btn btn-danger btn-md btn-tall" (click)="resetFile()" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}">{{ 'PAGES.GENERAL.RESET' | translate }}
+						</button>
+                    </div>
+                </form>
+                <div *ngIf="ShowSuccessShare" class="alert alert-success">
+                    <strong>{{ 'PAGES.GENERAL.MSG_SAVED_CONFIRMED' | translate }} !</strong>
+                </div>
+
+                <div *ngIf="isLoadingForShare" class="spinner-cercle">
+                    <mat-progress-spinner color="warning" mode="indeterminate" aria-label="Loading...">
+                    </mat-progress-spinner>
+                    <div class="spiner-style">Loading...</div>
+
+                </div>
+
+                <!-- ********************************************************* -->
+                <!-- <form class="kt-form" #form="ngForm">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<div class="input-group">
+									<form style="display: -webkit-inline-box;margin-inline-start: 145px;">
+										<label class="input-group-btn">
+											<span class="btn btn-brand">
+												{{ 'PAGES.MARCHE.MARCHE.PJ_RC' | translate }}<input type="file"
+													style="display: none;">
+											</span>
+										</label>
+										<input type="text" class="form-control piece_demande" readonly>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<div class="input-group">
+									<form style="display: -webkit-inline-box;margin-inline-start: 153px;">
+										<label class="input-group-btn">
+											<span class="btn btn-brand">
+												{{ 'PAGES.MARCHE.MARCHE.PJ_ATTESTATION_FISCALE' | translate }} <input
+													type="file" id="customFile" style="display: none;">
+											</span>
+										</label>
+										<input id="customFile1" type="text" class="form-control piece_demande" readonly>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+					<button class="btn btn-primary  " type="button"
+						(click)="onClickOM($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+				</form> -->
+            </div>
+        </div>
+    </div>
+</div>

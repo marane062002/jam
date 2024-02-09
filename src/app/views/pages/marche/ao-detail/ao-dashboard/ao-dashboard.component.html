@@ -1,0 +1,176 @@
+<!-- start::row-content-top -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-1">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-search"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'MENU.STATS.CONTROL.SEARCHE' | translate }}
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<form novalidate [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+					<div class="row">
+						<!-- DATE DEBUT -->
+						<div class="col-md-3">
+							<div class="form-group">
+								<div class="input-group date">
+									<mat-form-field class="example-full-width">
+										<input autocomplete="off" matInput class="form-control"
+											[matDatepicker]="picker1" formControlName="dateDebut"
+											placeholder="{{ 'MENU.STATS.CONTROL.DATE_START' | translate }} :" required>
+										<mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+											<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+											</mat-icon> 
+										</mat-datepicker-toggle>
+										<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+									</mat-form-field>
+								</div> 
+							</div>
+						</div>
+						<!-- DATE FIN -->
+						<div class="col-md-3">
+							<div class="form-group">
+								<div class="input-group date">
+									<mat-form-field class="example-full-width">
+										<input autocomplete="off" matInput class="form-control"
+											[min]="searchForm.controls.dateDebut.value" [matDatepicker]="picker2"
+											formControlName="dateFin"
+											placeholder="{{ 'MENU.STATS.CONTROL.DATE_END' | translate }} :" required>
+										<mat-datepicker-toggle matSuffix matSuffix [for]="picker2">
+											<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+											</mat-icon>
+										</mat-datepicker-toggle>
+										<mat-datepicker touchUi="true" #picker2></mat-datepicker>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<!-- ORIGINE -->
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select name="typeOrigine" formControlName="typeMarche" class="form-control"
+										placeholder="{{ 'PAGES.MARCHE.AO.DASHBOARD.TYPE_MARCHE' | translate }} :"
+										multiple required> 
+                                        <mat-option *ngFor="let typeMarche of typeMarches; let i = index" [value]="typeMarche.id" >
+											{{typeMarche.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<!-- TYPE -->
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" formControlName="statut"
+										placeholder="{{ 'PAGES.MARCHE.AO.TAB_360.TAB_STATUT' | translate }} :"  required>
+										<mat-option *ngFor="let s of statut; let i = index" [value]="s.id">
+											{{s.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</form>
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <button (click)="onSubmit()" class="btn btn-label-dark w-100 bg-success text-white mb-3 mt-4" ><i class="flaticon-search-1"></i>{{ 'PAGES.GENERAL.FILTER' | translate }}</button>
+
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- end::row-content-top -->
+<!-- start::row-content -->
+
+<div class="row">
+        <!-- start::dataTable -->
+        <div class="col-lg-12">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head kt-bg-portlet-2">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-tabs"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand"> 
+                            {{ 'PAGES.MARCHE.AO.TITRE_INDEX' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                               <!--  <a href="javascript:; " (click)="refresh()" class="btn btn-warning">
+                                    <i class="flaticon-refresh"></i>
+                                    {{ 'MENU.STATS.CONTROL.REFRESH' | translate }}
+                                </a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- mine -->
+                <div class="example-container mat-elevation-z8">
+                    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    
+
+               <!-- Name Column -->
+                        <ng-container matColumnDef="Nombre  d'appel offere">
+                            <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> Nombre  d'appel offere</th>
+                            <td mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.count}} </td>
+                        </ng-container>
+    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="statut">
+                            <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>Statut  </th>
+                            <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                {{ row.statut}}
+                            </td>
+                        </ng-container>
+    
+                        <!-- Name Column -->
+                       <!--  <ng-container matColumnDef="typeMarche">
+                            <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.MARCHE.MARCHE.MONTANT_ENGAGE' | translate }}
+                            </th>
+                            <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                {{ (row[3] !== null) ? (row[3] | macurrency) : 0 }}
+                            </td>
+                        </ng-container> -->
+                        <ng-container matColumnDef="budget">
+                            <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>Budget
+                            </th>
+                            <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                {{ (row.budget !== null) ? (row.budget | macurrency) : 0 }}
+                            </td>
+                        </ng-container>
+    
+    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                    </div>
+                    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                        </mat-progress-spinner>
+                    </mat-card>
+                    <mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                </div>
+                <!-- mine -->
+                
+            </div>
+        </div>
+        <!-- end::dataTable -->
+</div>

@@ -1,0 +1,239 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">Fonctionnaires</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                            <div class="form-group row justify-content-center mb-1">
+                                <div class="col-md-3 form-group ">
+                                    <label>N° Fonctionnaire :</label>
+                                    <input class="form-control" type="text" placeholder="Numéro Fonctionnaire">
+                                </div>
+                                <div class="col-md-2 col-lg-2 form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                    <data-table 
+                            [datasource]="listFonctionnaires" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des Fonctionnaires'"
+                            [titleButton]="' Ajouter Fonctionnaire'"
+                            (ajouterElement)="modalAjouterFonctionnaire(ajouterFonctionnaire)"
+                            (detail)="modalDetailFonctionnaire(detailFonctionnaire,$event)"
+                            (selectUpdateElement)="modalModifierFonctionnaire(modifierFonctionnaire,$event)"
+                            (deleteElement)="supprimerFonctionnaire($event)">
+                    </data-table>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <ng-template #modifierFonctionnaire let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Modification d'un Fonctionnaire</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row mb-1">
+        <div class="col-md-4 form-group ">
+          <label>CIN Fonctionnaire :</label>
+          <input class="form-control" type="text" placeholder="CIN Fonctionnaire">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Nom :</label>
+          <input class="form-control" type="text" placeholder="Nom">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Prénom :</label>
+          <input class="form-control" type="text" placeholder="Prénom">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Adresse :</label>
+          <input class="form-control" type="text" placeholder="Adresse">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Téléphone :</label>
+          <input class="form-control" type="text" placeholder="Téléphone">
+        </div> 
+        
+        <div class="col-md-4 form-group ">
+          <label>Mission :</label>
+          <select class="form-control">
+            <option>Visiteur DRA</option>
+            <option>AAAA</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Affectation :</label>
+          <select class="form-control">
+            <option>affectation 1</option>
+            <option>affectation 2</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Grade :</label>
+          <input class="form-control" type="text" placeholder="grade">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Numéro de permis :</label>
+          <input class="form-control" type="text" placeholder="Numéro de permis">
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary ml-2" type="button" (click)="modifierInfoFonctionnaire()"><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+    </div>
+  </ng-template>
+
+   <!--  Modal ajouter -->
+  <ng-template #ajouterFonctionnaire let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Nouveau fonctionnaire</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row mb-1">
+        <div class="col-md-4 form-group ">
+          <label>CIN Fonctionnaire :</label>
+          <input class="form-control" type="text" placeholder="CIN Fonctionnaire">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Nom :</label>
+          <input class="form-control" type="text" placeholder="Nom">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Prénom :</label>
+          <input class="form-control" type="text" placeholder="Prénom">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Adresse :</label>
+          <input class="form-control" type="text" placeholder="Adresse">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Téléphone :</label>
+          <input class="form-control" type="text" placeholder="Téléphone">
+        </div> 
+        
+        <div class="col-md-4 form-group ">
+          <label>Mission :</label>
+          <select class="form-control">
+            <option>Visiteur DRA</option>
+            <option>AAAA</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Affectation :</label>
+          <select class="form-control">
+            <option>affectation 1</option>
+            <option>affectation 2</option>
+          </select>
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Grade :</label>
+          <input class="form-control" type="text" placeholder="grade">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Numéro de permis :</label>
+          <input class="form-control" type="text" placeholder="Numéro de permis">
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button" (click)="ajouterInfoFonctionnaire()"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+   </ng-template>
+   <!-- modal detail-->
+   <ng-template #detailFonctionnaire let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+        <div class="form-group row mb-0">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="row">
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">CIN Fonctionnaire :</label>
+              <label class="col-sm-3 col-form-label f-s-13">NA123569</label>
+
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Nom :</label>
+              <label class="col-sm-3 col-form-label f-s-13">REUNION</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row mb-0">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="row">
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Prénom :</label>
+              <label class="col-sm-3 col-form-label f-s-13">14/10/2021</label>
+
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Adresse :</label>
+              <label class="col-sm-3 col-form-label f-s-13">14/10/2021</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row mb-0">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="row">
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Téléphone :</label>
+              <label class="col-sm-3 col-form-label f-s-13">Text</label>
+
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Mission :</label>
+              <label class="col-sm-3 col-form-label f-s-13">Text</label>
+            </div>
+          </div>
+        </div> 
+
+        <div class="form-group row mb-0">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="row">
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Affectation :</label>
+              <label class="col-sm-3 col-form-label f-s-13">Text</label>
+
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Numéro de permis :</label>
+              <label class="col-sm-3 col-form-label f-s-13">Text</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group row mb-0">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="row">
+              <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Grade :</label>
+              <label class="col-sm-3 col-form-label f-s-13">Text</label>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+    </div>
+   </ng-template>
+</div>
+

@@ -1,0 +1,348 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ " Details de la journée" | translate }}
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<table
+		id="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8 mt-2 w-100"
+		matSort
+	>
+		<!-- nom Column -->
+		<ng-container matColumnDef="num">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="num">
+				{{ "Id" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				{{ row.num }}
+			</td>
+		</ng-container>
+
+		<!-- nom Column -->
+		<ng-container matColumnDef="nom">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="nom">
+				{{ "Chevillard" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="nom">
+				{{
+					row.nom
+						? row.nom.length > 25
+							? (row.nom | slice: 0:25) + "..."
+							: row.nom
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.nom.length > 25"
+					matTooltip="{{ row.nom }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<!-- email  Column -->
+
+		<ng-container matColumnDef="dateDebut">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="dateDebut"
+			>
+				{{ "Commentaire" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="dateDebut">
+				{{
+					row.tribunal
+						? row.tribunal.length > 10
+							? (row.tribunal | slice: 0:15) + "..."
+							: row.tribunal
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.tribunal.length > 10"
+					matTooltip="{{ row.tribunal }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<!-- typeActiviteAssociation  Column -->
+		<ng-container matColumnDef="typeAffaire">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="typeAffaire"
+			>
+				{{ "Date Du Jour" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="typeAffaire">
+				{{
+					row.dateDebut
+						? row.dateDebut.length > 10
+							? (row.dateDebut | slice: 0:15) + "..."
+							: row.dateDebut
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.dateDebut.length > 10"
+					matTooltip="{{ row.dateDebut }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="demandresse">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="demandresse"
+			>
+				{{ "Sous Espéce" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="demandresse">
+				{{
+					row.tribunal
+						? row.tribunal.length > 10
+							? (row.tribunal | slice: 0:15) + "..."
+							: row.tribunal
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.tribunal.length > 10"
+					matTooltip="{{ row.tribunal }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<!-- Fax / Num Tel Column -->
+		<ng-container matColumnDef="tribunal">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="tribunal"
+			>
+				{{ "Nombre" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="tribunal">
+				{{
+					row.demandresse
+						? row.demandresse.length > 20
+							? (row.demandresse | slice: 0:17) + "..."
+							: row.demandresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.demandresse.length > 20"
+					matTooltip="{{ row.demandresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+			-->
+		</ng-container>
+		<!-- President Column -->
+		>
+
+		<ng-container matColumnDef="defendresse">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="defendresse"
+			>
+				Espéce
+			</th>
+			<td mat-cell *matCellDef="let row" class="defendresse">
+				{{
+					row.defendresse
+						? row.defendresse.length > 20
+							? (row.defendresse | slice: 0:17) + "..."
+							: row.defendresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.defendresse.length > 20"
+					matTooltip="{{ row.defendresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="poids">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="poids">
+				{{ "Poids" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="poids">
+				{{
+					row.defendresse
+						? row.defendresse.length > 20
+							? (row.defendresse | slice: 0:17) + "..."
+							: row.defendresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.defendresse.length > 20"
+					matTooltip="{{ row.defendresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<!-- pour exporter excel -->
+
+		<!-- pour exporter excel -->
+
+		<!-- Action Column -->
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				{{ "Actions" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"
+				>
+					<a href="javascript:; " (click)="addAssociation()">
+						<i class="icon la la-edit"></i>
+					</a>
+				</button>
+				<button
+					type="button"
+					(click)="deleteAssociation(row.id)"
+					class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+					matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"
+				>
+					<i class="icon la la-trash"></i>
+				</button>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	>
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<mat-paginator
+		*ngIf="dataSource != undefined && dataSource.data != undefined"
+		[length]="dataSource.data.length"
+		[pageSize]="5"
+		[pageIndex]="0"
+		[pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons
+	></mat-paginator>
+	<hr />
+
+	<form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>Chevillard</label>
+						<mat-select class="form-control">
+							<mat-option [value]="''">type1</mat-option>
+							<mat-option [value]="''">type2</mat-option>
+							<mat-option [value]="''">type3</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">Date Du Jour</label>
+							<input
+								matInput
+								class="form-control"
+								[matDatepicker]="picker1"
+							/>
+							<mat-datepicker-toggle
+								matSuffix
+								matSuffix
+								[for]="picker1"
+							>
+								<mat-icon matDatepickerToggleIcon
+									><i class="fas fa-calendar-plus"></i>
+								</mat-icon>
+							</mat-datepicker-toggle>
+							<mat-datepicker
+								touchUi="true"
+								#picker1
+							></mat-datepicker>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label for="">Commentaire</label>
+						<textarea matInput class="form-control"> </textarea>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button
+					type="button"
+					(click)="back()"
+					class="btn btn-primary"
+					data-wizard-type="action-prev"
+				>
+					<i class="la la-angle-left"></i>
+					Retour
+				</button>
+
+				<button
+					type="button"
+					class="btn btn-success btn-elevate btn-icon-sm"
+					data-wizard-type="action-submit"
+				>
+					<i class="la la-plus"></i>
+					Enregistrer
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

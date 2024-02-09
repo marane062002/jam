@@ -1,0 +1,81 @@
+<div class="kt-portlet__body">
+    <div class="kt-section">
+        <div>
+            <a (click)="newPhase(id)" class="btn btn-outline-success btn-bold btn-sm">
+                <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.AJOUTER_PHASE' | translate }}
+            </a>
+        </div>
+        <div class="example-header">
+            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+            </mat-form-field>
+        </div>
+
+        <div class="example-container mat-elevation-z8">
+
+            <table mat-table [dataSource]="dataSource" matSort>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> #
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
+                <!-- designation Column -->
+                <ng-container matColumnDef="designation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.DESIGNATION' | translate }}
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.designation}}
+                    </td>
+                </ng-container>
+                <!-- dateDebutPrevue Column -->
+                <ng-container matColumnDef="dateDebutPrevue">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.GENERAL.DATE_DEBUT_PREVUE' | translate }} </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dateDebutPrevue|date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+                <!-- dateFinPrevue Column -->
+                <ng-container matColumnDef="dateFinPrevue">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.GENERAL.DATE_FIN_PREVUE' | translate }} </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dateFinPrevue|date:'dd/MM/yyyy'}} </td>
+                </ng-container>
+                <!-- dureeEstimee Column -->
+                <ng-container matColumnDef="dureeEstimee">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.GENERAL.DURRE_ESTIMEE' | translate }}
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.dureeEstimee}} </td>
+                </ng-container>
+                <!-- budgetPhase Column -->
+                <ng-container matColumnDef="budgetPhase">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.GENERAL.BUDGET_PHASE' | translate }}
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.budgetPhase|macurrency}} </td>
+                </ng-container>
+
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button *ngxPermissionsOnly="['canShowPhase']" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i
+                                class="icon la la-search-plus"></i></button>
+                        <button *ngxPermissionsOnly="['canUpdatePhase']" (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i
+                                class="icon la la-edit"></i></button>
+                        <!-- <button class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"><i class="icon la la-print"></i></button> -->
+                        <button *ngxPermissionsOnly="['canDeletePhase']" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i
+                                class="icon la la-trash"></i></button>
+
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,245 @@
+<!-- Begin :: Spinner -->
+<ngx-spinner size="medium" type="ball-clip-rotate-multiple" [fullScreen]="true">
+    <p class="loading"> Loading... </p>
+</ngx-spinner>
+<!-- End :: Spinner -->
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'PAGES.GENERAL.PROJET_SHOW' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a *ngxPermissionsOnly="['canCreateProjet']" routerLink="/projet/projet-new" class="btn btn-outline-success btn-bold btn-sm">
+                            <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                        </a>
+                        <a *ngxPermissionsOnly="['accessToProjetModule']" (click)="update(projet?.id)" class="btn btn-warning btn-sm btn-bold">
+                            <i class="fas fa-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                        </a>
+                        <a *ngxPermissionsOnly="['accessToProjetModule']" (click)="delete()" class="btn btn-danger btn-sm btn-bold">
+                            <i class="fas fa-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section  -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-bg-portlet-1">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.GENERAL.PROJET_FICHE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.DESIGNATION' | translate }} :</th>
+                                    <td colspan="3">{{projet.designation}}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.NUM_MARCHE' | translate }} :</th>
+                                    <td>{{ projet.numeroMarche}}</td>
+                                    <th>{{ 'PAGES.ORGANISATION.DIVISION' | translate }} :</th>
+                                    <td>{{divisionLibelle}}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.PRESTATAIRE_PROJET' | translate }} :</th>
+                                    <td>{{attributaireLibelle}}</td>
+                                    <th> {{ 'PAGES.GENERAL.RESPONSABLE_PROJET' | translate }} :</th>
+                                    <td>{{personnelLibelle}}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.architecte' | translate }} :</th>
+                                    <td>{{projet?.architecte?projet.architecte:"-"}}</td>
+                                    <th> {{ 'PAGES.GENERAL.bureau_d_etude' | translate }} :</th>
+                                    <td>{{projet?.bureau_d_etude?projet.bureau_d_etude:"-"}}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.laboratoire' | translate }} :</th>
+                                    <td>{{projet?.laboratoire?projet.laboratoire:"-"}}</td>
+                                    <th> {{ 'PAGES.GENERAL.bureau_de_controle' | translate }} :</th>
+                                    <td>{{projet?.bureau_de_controle?projet.bureau_de_controle:"-"}}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.BUDGET_PROJET' | translate }} :</th>
+                                    <td>
+                                        {{ (projet.budgetProjet !== null) ? (projet.budgetProjet | macurrency) : "-" }}
+                                    </td>
+                                    <th> {{ 'PAGES.GENERAL.nature_depence' | translate }} :</th>
+                                    <td>
+                                        {{checkLang=='ar'?projet.natureDepence.libelle:projet.natureDepence.libelleFR}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ 'PAGES.GENERAL.TYPE_PROJET' | translate }} :</th>
+                                    <td>
+                                        {{checkLang=='ar'?projet.sousType.type?.libelle:projet.sousType.type?.libelleFR}}
+                                    </td>
+                                    <th>
+                                        {{ 'PAGES.GENERAL.SOUS_TYPE_PROJET' | translate }} :</th>
+                                    <td>
+                                        {{checkLang=='ar'?projet.sousType?.libelle:projet.sousType?.libelleFR}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ 'PAGES.GENERAL.SOURCE_FINANCEMENT' | translate }} :</th>
+                                    <td>
+                                        {{checkLang=='ar'?projet.souSources.source?.libelle:projet.souSources.source?.libelleFR}}
+                                    </td>
+                                    <th>{{ 'PAGES.GENERAL.SOUS_SOURCE_FINANCEMENT' | translate }} :</th>
+                                    <td>
+                                        <ul class="list-group">
+                                            <li *ngFor="let row of projet.souSources">
+                                                {{checkLang=='ar'?row?.libelle:row?.libelleFR}}
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.arrondiss_comun' | translate }} :</th>
+                                    <td>
+                                        <ul class="list-group">
+                                            <li *ngFor="let row of projet.arrondissements">
+                                                {{checkLang=='ar'?row?.libelle:row?.libelleFR}}
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <th>{{ 'PAGES.GENERAL.STATUT_PROJET' | translate }} :</th>
+                                    <td>
+                                        {{checkLang=='ar'?projet.statut?.libelle:projet.statut?.libelleFR}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="espace_bloc"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-bg-portlet-3">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.GENERAL.DATES' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.DATE_DEBUT_PREVUE' | translate }} :</th>
+                                    <td>{{projet.dateDebutPrevue|date:'dd/MM/yyyy'}}</td>
+
+                                    <th>{{ 'PAGES.GENERAL.DATE_FIN_PREVUE' | translate }} :</th>
+                                    <td>{{projet.dateFinPrevue|date:'dd/MM/yyyy'}}</td>
+                                    <th>{{ 'PAGES.GENERAL.DURRE_ESTIMEE' | translate }} :</th>
+                                    <td>{{projet.dureeEstimee}} (jours)</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.GENERAL.DATE_DEBUT_REELE' | translate }} :</th>
+                                    <td>{{projet.dateDebutReelle|date:'dd/MM/yyyy'}}</td>
+
+                                    <th>{{ 'PAGES.GENERAL.DATE_FIN_PREVUE' | translate }} :</th>
+                                    <td>{{projet.dateFinReelle|date:'dd/MM/yyyy'}}</td>
+
+                                    <th>{{ 'PAGES.GENERAL.DUREE_REELE' | translate }} :</th>
+                                    <td>{{projet.dureeReelle}} (jours)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="espace_bloc"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-bg-portlet-4">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.GENERAL.PROJET_TABS' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+
+
+                    </div>
+                </div>
+            </div>
+            <mat-tab-group dynamicHeight [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+                <mat-tab *ngFor="let tab of asyncTabs | async">
+                    <ng-template mat-tab-label>{{tab.label | translate }}</ng-template>
+                    <!-- {{tab.content}} -->
+
+                    <!-- PRESENCE TAB -->
+                    <div *ngIf="tab.content == 1">
+                        <div *ngIf="selected.value==0">
+                            <kt-tab-phase></kt-tab-phase>
+                        </div>
+                    </div>
+
+                    <!-- PJS TAB -->
+                    <div *ngIf="tab.content == 2">
+                        <div *ngIf="selected.value==1">
+                            <kt-tab-pjs></kt-tab-pjs>
+                        </div>
+                    </div>
+
+
+
+                </mat-tab>
+                <!-- <mat-tab label="Grid View">
+          </mat-tab> -->
+            </mat-tab-group>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- end:: Content -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label" align="right">
+                    <!-- <button type="button" class="btn btn-info"><i class="fa fa-print"></i> {{ 'PAGES.GENERAL.PRINT' | translate }}</button> -->
+                    <button *ngxPermissionsOnly="['accessToIndexProjet']" routerLink="/projet/projet-index" class="btn btn-label-dark"><i class="flaticon2-list-2"></i>
+                        {{ 'MENU.LISTEPROJETS' | translate }}</button>
+                </div>
+                <div class="espace_bloc"></div>
+            </div>
+        </div>
+    </div>
+</div>

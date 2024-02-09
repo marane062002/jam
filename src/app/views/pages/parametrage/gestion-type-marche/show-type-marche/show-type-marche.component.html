@@ -1,0 +1,30 @@
+<div class="kt-ao-show">
+
+	<div class="kt-portlet__body">
+		<!-- Start :: Expansion panel -->
+		<mat-accordion class="example-headers-align panel-space" multi>
+			<mat-expansion-panel [expanded]="true">
+				<mat-expansion-panel-header>
+					<mat-panel-title class="panel-title" style="color: #2a79b1">
+						<mat-icon>info</mat-icon>&nbsp;Détail du Catégorie
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>id :</th>
+							<td>{{typeMarche?.id ? typeMarche?.id: '-'}}</td>
+							<th>Libellé :</th>
+							<td>{{typeMarche?.libelle ? typeMarche?.libelle:'-'}}</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+			</mat-expansion-panel>
+			
+		
+		</mat-accordion>
+		<!-- End :: Expansion panel -->
+	</div>
+</div>

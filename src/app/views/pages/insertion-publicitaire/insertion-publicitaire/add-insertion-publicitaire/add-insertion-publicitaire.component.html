@@ -1,0 +1,295 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon2-digital-marketing"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.INSERT_PUB.TITRE_NEW' | translate }}
+			</h3>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					&nbsp;
+					<a href="javascript:; " (click)="addMedia()" class="btn btn-success btn-elevate btn-icon-sm">
+						<i class="la la-plus"></i>
+						{{ 'PAGES.INSERT_PUB.MEDIA.TITRE_NEW' | translate }}
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- (ngSubmit)="onSubmit()" -->
+	<form novalidate [formGroup]="addForm" autocomplete="off">
+		<div class="kt-portlet__body">
+			<!-- **************************** -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="numEdition" matInput type="text" class="form-control"
+								name="numEdition" placeholder="{{ 'PAGES.INSERT_PUB.NUM_EDITION' | translate }}"
+								required>
+							<mat-error *ngIf="isControlHasError('numEdition','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- **************************** -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input formControlName="dateEdition" matInput class="form-control" name="dateEdition"
+									[matDatepicker]="picker2" [min]="todayDate" (dateChange)="dateDebutchange()"
+									placeholder="{{ 'PAGES.INSERT_PUB.DATE_EDITION' | translate }}" required>
+								<mat-error *ngIf="isControlHasError('dateEdition','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error>
+								<mat-datepicker-toggle matSuffix [for]="picker2">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker2></mat-datepicker>
+							</mat-form-field>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input formControlName="datePublication" matInput class="form-control"
+									name="datePublication" [matDatepicker]="picker1"
+									[min]="addForm.controls.dateEdition.value"
+									placeholder="{{ 'PAGES.INSERT_PUB.DATE_PUBLICATION' | translate }}" required>
+								<mat-error *ngIf="isControlHasError('datePublication','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error>
+								<mat-datepicker-toggle matSuffix [for]="picker1">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+							</mat-form-field>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<!-- **************************** -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="supportPublicitaire"
+								(selectionChange)="supportChanged($event)" class="form-control"
+								placeholder="{{ 'PAGES.INSERT_PUB.SUPPORT' | translate }}" required>
+								<mat-option *ngFor="let support of supports" [value]="support">
+									{{support.nomSupport}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('supportPublicitaire','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="media" class="form-control"
+								placeholder="{{ 'PAGES.INSERT_PUB.MEDIAS' | translate }}" required>
+								<mat-option *ngFor="let media of medias" [value]="media">
+									{{media.nom}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('media','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- **************************** -->
+			<div class="row">
+				<!-- DIVISION -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl class="form-control"
+								(selectionChange)="selectionChanged($event)" formControlName="idDivision"
+								placeholder="{{ 'PAGES.ORGANISATION.DIVISION' | translate }}" required>
+								<mat-option *ngFor="let div of divisions" [value]="div.id">
+									{{div.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('idDivision','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<!-- SERVICE -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl class="form-control" formControlName="idService"
+								placeholder="{{ 'PAGES.ORGANISATION.SERVICE' | translate }}" required>
+								<mat-option *ngFor="let serv of services" [value]="serv.id">
+									{{serv.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('idService','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- **************************** -->
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" name="objet" matInput
+								formControlName="objet" placeholder="{{ 'PAGES.INSERT_PUB.OBJET' | translate }}"
+								required></textarea>
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+							<mat-error *ngIf="isControlHasError('objet','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- End field section-->
+			<div class="row" formGroupName="factureInsertionPublicitaire">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="numeroFacture" matInput type="number" class="form-control"
+								name="numeroFacture" placeholder="{{ 'PAGES.INSERT_PUB.FACTURE.NUM' | translate }}"
+								required>
+							<mat-icon matSuffix><i class="fas fa-money-bill-alt"></i></mat-icon>
+							<mat-error *ngIf="isControlHasError('numeroFacture','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group" formGroupName="statutFacturel">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl class="form-control" formControlName="id"
+								placeholder="{{ 'PAGES.INSERT_PUB.FACTURE.STATUT' | translate }}" required>
+								<mat-option *ngFor="let statut of statuts" [value]="statut.id">
+									{{statut.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('statutFacturel','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="montantHT" matInput type="number" class="form-control" name=""
+								placeholder="{{ 'PAGES.INSERT_PUB.FACTURE.MTHT' | translate }}" required>
+							<mat-icon matSuffix><i class="fas fa-money-bill-alt"></i></mat-icon>
+							<mat-error *ngIf="isControlHasError('montantHT','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="montantTtc" matInput type="number" class="form-control" name=""
+								placeholder="{{ 'PAGES.INSERT_PUB.FACTURE.MTTTC' | translate }}" required>
+							<mat-icon matSuffix><i class="fas fa-money-bill-alt"></i></mat-icon>
+							<mat-error *ngIf="isControlHasError('montantTtc','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- Action section-->
+		</div>
+	</form>
+</div>
+<!-- Attachement section-->
+
+<!-- end section attachements-->
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.GENERAL.ATTACHEMENT' | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-6 show_port input-group">
+				<form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm"
+					style="display: -webkit-inline-box;margin-inline-start: 98px;">
+					<label class="input-group-btn">
+						<span class="btn btn-info">
+							{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+								(change)="fileChange($event)" formControlName="_file" id="customFile"
+								style="display: none;" multiple>
+						</span>
+					</label>
+					<input type="text" class="form-control" readonly>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End attachement section-->
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			(click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="backList()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

@@ -1,0 +1,150 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-1">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-multimedia-2 kt-font-inverse-brand"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.TITRE_NEW' | translate }}
+            </h3>
+        </div>
+    </div>
+    <form novalidate [formGroup]="addForm" autocomplete="off">
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.DATE" | translate }} :</mat-label>
+                            <input type="date" class="form-control-solid form-control-lg" formControlName="date"
+                                matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.HEURE" | translate }} :</mat-label>
+                            <input type="time" class="form-control-solid form-control-lg" formControlName="heure"
+                                matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.LIEU" | translate }} :</mat-label>
+                            <input type="text" class="form-control-solid form-control-lg" formControlName="lieu"
+                                matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.DELAI" | translate }} :</mat-label>
+                            <input type="text" class="form-control-solid form-control-lg" formControlName="delai"
+                                matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ 'PAGES.BUREAU_ORDRE.RESPONSABLE_DISPATCHING' | translate }} :</mat-label>
+                            <mat-select formControlName="responsableDispatching" name="responsableDispatching" class="form-control" placeholder="">
+                                <mat-option value="Responsable chargé du suivi et de cordination de la réunion de la commission">
+                                    <span *ngIf="language=='fr'">Responsable chargé du suivi et de cordination de la réunion de la commission</span>
+                                    <span *ngIf="language=='ar'">المسؤول المكلف بمتابعة وتنسيق اجتماع اللجنة</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.NOM_COMMISSION" | translate }} :</mat-label>
+                            <input type="text" class="form-control-solid form-control-lg" formControlName="nomCommission"
+                                matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.MEMBRES_COMMISSION" | translate }} :</mat-label>
+                            <input type="text" class="form-control-solid form-control-lg" formControlName="membresCommission"
+                                matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <a href="javascript:; " (click)="addMembreCommission()" class="btn btn-sm btn-info btn-elevate btn-icon-sm">
+                        <i style="color:white" class="la la-plus"></i>
+                    </a>
+                </div>
+                <div class="table" *ngIf="tabMembresCommission.length>0" style="width:30%">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" style="text-align: center">{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.MEMBRES_COMMISSION" | translate }}
+                                </th>
+                                <th scope="col" style="text-align:center">{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ACTIONS" | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tabMembresCommission; let i=index">
+                                <td scope="row" style="text-align:center">{{ item }}</td>
+                                <td scope="row" style="text-align:center">
+                                    <button type="button" (click)="deleteMembresCommission(i)"
+                                        class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                                        matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                            class="icon la la-trash"></i></button>
+    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+                            class="example-full-width">
+                            <textarea rows="4" #input maxlength="255" class="form-control" name="ordreJour" matInput
+                                formControlName="ordreJour"
+                                placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ORDRE_JOUR' | translate }} :"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+            class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" [disabled]="loading"
+            (click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+            {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}"
+            class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+            (click)="onReset()">
+            <i _ngcontent-dlp-c41 class="la la-recycle"></i>
+            {{ 'PAGES.GENERAL.RESET' | translate }}</button>
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+            class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+            (click)="backList()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>

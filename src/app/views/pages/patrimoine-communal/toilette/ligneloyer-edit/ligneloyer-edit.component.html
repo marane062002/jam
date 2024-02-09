@@ -1,0 +1,160 @@
+<!-- begin:: Content -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            {{ 'PAGES.GENERAL.EDIT_LOYER' | translate }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- begin:: Content section 2 -->
+ <!--begin::Form-->
+ <form [formGroup]="lloyerForm" (submit)="onSubmit()" class="kt-form">
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                       
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.GENERAL.FORM_LOYER' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div *ngIf="ligneLoyer" class="kt-portlet__body">
+                        <div class="row">
+                                <div class="col-md-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" class="form-control" value="{{ligneLoyer.loyer?.montantLoyer}}"  placeholder="{{ 'PAGES.GENERAL.MONTANT_LOYER' | translate }} :" readonly  >
+                                               
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="text" class="form-control" value="{{ligneLoyer.anneeLoyer}}"  placeholder="{{ 'PAGES.GENERAL.ANNEE' | translate }} :" readonly  >
+                                                   
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <mat-form-field class="example-full-width">
+                                                        <input matInput type="text" class="form-control" value="{{mois[ligneLoyer.moisLoyer].libelle}}"  placeholder="{{ 'PAGES.GENERAL.MOIS_LOYER' | translate }} :" readonly  >
+                                                       
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                        </div>
+                    <div class="row">
+                            <div class="col-md-4">
+                                    <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                
+                                                <mat-select class="form-control" formControlName="etatReglement" (selectionChange)=etatChange()  placeholder="{{ 'PAGES.GENERAL.ETAT_REGLEMENT' | translate }} :">
+                                                       
+                                                        <mat-option value="true">
+                                                                الإجار مدفوع 
+                                                        </mat-option>
+                                                        <mat-option value="false">
+                                                                الإجار غير مدفوع 
+                                                        </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control" [matDatepicker]="datePaiement"
+                                                placeholder="{{ 'PAGES.GENERAL.DATE_PAIEMENT' | translate }} :"  formControlName="datePaiement"   >
+                                            <mat-datepicker-toggle matSuffix matSuffix [for]="datePaiement">
+                                                <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                                </mat-icon>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #datePaiement></mat-datepicker>
+                                           
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="numRecu" placeholder="{{ 'PAGES.GENERAL.NUM_RECU' | translate }} :"   >
+                                        <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                                
+                            </div>
+                    
+                            <div class="kt-portlet__body">
+                                    <div class="row">
+                                        <div class="col-md-4 show_port input-group">
+                                           <!--  file upload :: begin -->
+                                            <form enctype="multipart/form-data" method="POST" [formGroup]="addForm">
+                                                <label class="input-group-btn">
+                                                    <span class="btn btn-brand">
+                                                         {{ 'PAGES.GENERAL.PJS_RECU' | translate }}<input type="file" name="file"
+                                                        (change)="fileChange1($event,'REC')" formControlName="_file" id="customFile"
+                                                            style="display: none;" >
+                                                    </span>
+                                                </label>
+                                                <input type="text" class="form-control" readonly>
+                                                
+                                            </form>
+                                           <!--  file upload :: end -->
+                                        </div>
+                                        <div class="col-md-4 show_port input-group">
+                                            <!-- file upload :: begin -->
+                                            <form enctype="multipart/form-data" method="POST" [formGroup]="addForm2">
+                                                <label class="input-group-btn">
+                                                    <span class="btn btn-brand">
+                                                        {{ 'PAGES.GENERAL.PJS_DOC' | translate }}<input type="file" name="file"
+                                                        (change)="fileChange2($event,'DOC')" formControlName="_file" id="customFile"
+                                                            style="display: none;" multiple>
+                                                    </span>
+                                                </label>
+                                                <input type="text" class="form-control" readonly>
+                                               
+                                            </form>
+                                            <!-- file upload :: end -->
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                        
+                           
+                            <div class="kt-portlet__body">
+                   
+                                <div class="kt-form__actions">
+                                        <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-success btn-md btn-tall btn-wide">
+                                                {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                                        </button>
+                            
+                                        <button type="button" *ngxPermissionsOnly="['accessToToiletteModule']" (click)="back()" class="btn btn-brand btn-md btn-tall btn-wide">
+                                                {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                                        </button>
+                                </div>
+                            </div>
+                        
+                </div>
+            </div>
+        </div>
+   
+        
+    </div>
+</form>

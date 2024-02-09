@@ -1,0 +1,47 @@
+<form [formGroup]="Form">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							{{ "PAGES.MARCHE.DISPONIBITE_FONDS.DISPONIBITE_FONDS" | translate }} :
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="number" class="form-control" formControlName="montant" placeholder="{{ 'PAGES.MARCHE.DISPONIBITE_FONDS.MONTANT' | translate }} :" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+
+						</div>
+                        <div class="col-md-6">
+                            <button type="submit" (click)="onEdit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-success btn-md btn-tall btn-wide">
+                                {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                            </button>
+                        </div>
+                        
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+	<div class="col-md-2"></div>
+	<div class="col-md-8 show_port" >
+		<div Style="pointer-events: none;">
+			<canvas id="canvas1"></canvas>
+		</div>
+	</div>
+
+<div class="col-md-2"></div></div>
+</form>

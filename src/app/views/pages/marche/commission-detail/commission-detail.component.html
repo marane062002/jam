@@ -1,0 +1,65 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fas fa-users kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.MARCHE.COMMISSIONS.TITRE_SHOW' | translate }} 
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<!-- <th>رقم اللجنة :</th>
+									<td class="donnee_show kt-font-warning kt-font-bold"> {{commission.id}}</td> -->
+									<th> {{ 'PAGES.MARCHE.COMMISSIONS.TYPE_COMMISION.TYPE' | translate }}:</th>
+									<td class="donnee_show">
+										{{commission.typeCommission.libelle}}
+									</td>
+									<th> {{ 'PAGES.MARCHE.COMMISSIONS.DATE_DEBUT' | translate }} :</th>
+									<td class="donnee_show">
+										{{commission.dateOuveture  |date: 'dd/MM/yyyy' }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<div class="kt-portlet__foot">
+							<div>
+								<br>
+								<div class="btn-group special" role="group" aria-label="Basic example">
+									<button type="button" (click)="ShowPI()" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.MEMBRE_INTERNE' | translate }}</button>
+									<button type="button" (click)="ShowPE()" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.MEMBRE_EXTERNE' | translate }}</button>
+									<button type="button" (click)="ShowOffreDeposee()" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.OFFRE_PRESTATAIRE' | translate }}</button>
+									<!-- <button type="button" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.DOCUMENTS_ATTACHER' | translate }}</button> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<router-outlet></router-outlet>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="button" (click)="backList(commission.ao.id)">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

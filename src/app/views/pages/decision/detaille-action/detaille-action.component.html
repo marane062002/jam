@@ -1,0 +1,66 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1 col-md-12">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			&nbsp;
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Détails de l'action décision:
+			</h2>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations de l'action décision
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Dénomination :</th>
+								<td class="donnee_show">{{actDecDetails.denomination}}</td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td class="donnee_show">{{actDecDetails.description}}</td>
+							</tr>
+							<tr>
+								<th>Délais de réponse :</th>
+								<td class="donnee_show">{{actDecDetails.delaisReponse}}</td>
+							</tr>
+							<tr>
+								<th>Générer note :</th>
+								<td class="donnee_show">{{actDecDetails.note}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="RetourEmbalages()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+	</div>
+</div>
+<div class="espace_bloc"></div>
+<!-- end:: Content -->

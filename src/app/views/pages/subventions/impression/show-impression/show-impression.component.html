@@ -1,0 +1,200 @@
+
+<!-- end:: Content 1-->
+<!-- begin:: Content 2-->
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="fa fa-print"></i>
+            </span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.IMPRESSION.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button (click)="showHitory()" type="button" class="btn btn-sm btn-clean btn-icon btn-label-primary btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.INFO' | translate }}">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <a href="javascript:; " (click)="editImpression()" *ngxPermissionsOnly="['canUpdateImpression']" class="btn btn-warning btn-elevate btn-icon-sm" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}">
+                        <i class="la la-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.SUBVENTION.FOURNISSEUR_IMPRESSION' | translate }} :</th>
+                            <td class="donnee_show">{{details.fournisseur}}</td>
+                           
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.SUBVENTION.TOTAL_TTC' | translate }} :</th>
+                            <td class="donnee_show">{{details.totalTTC | dirhamsCurrency}}</td>
+                            <th>{{ 'PAGES.SUBVENTION.TOTAL_HT' | translate }} :</th>
+                            <td class="donnee_show">{{details.totalHT | dirhamsCurrency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content 1 -->
+
+<!-- begin:: Content 2-->
+
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="fa fa-print kt-font-inverse-brand"></i>
+            </span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.IMPRESSION.TYPE_IMPRESION.TITRE_INDEX' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button *ngIf="dataSource.data.length > 0" (click)="exportTable()" type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.IMPRESSION.TYPE_IMPRESION.TITRE_INDEX' | translate }}">
+                        <i class="flaticon2-download text-success"></i>
+                    </button>
+                    <a href="javascript:; " (click)="addTypePrint()" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.IMPRESSION.TYPE_IMPRESION.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="example-header">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+        </mat-form-field>
+    </div>
+
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- designation Column -->
+        <ng-container matColumnDef="designation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.SUBVENTION.DESIGNATION' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.designation}} </td>
+        </ng-container>
+        <!-- quantite  Column -->
+        <ng-container matColumnDef="quantite">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.SUBVENTION.QANTITE' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.quantite}} </td>
+        </ng-container>
+        <!-- prixUnitaire  Column -->
+        <ng-container matColumnDef="prixUnitaire">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.SUBVENTION.PRIX_UNITAIRE' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.prixUnitaire}} </td>
+        </ng-container>
+        <!-- totalHT  Column -->
+        <ng-container matColumnDef="totalHT">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.SUBVENTION.TOTAL_HT' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.totalHT}} </td>
+        </ng-container>
+        <!-- totalTTC  Column -->
+        <ng-container matColumnDef="totalTTC">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.SUBVENTION.TOTAL_TTC' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.totalTTC}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" (click)="editTypePrint(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button type="button" (click)="deleteTypePrint(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+
+</div>
+<!-- end:: Content 2-->
+
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-attachment"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table *ngIf="files" class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+                            <td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+                            </td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of files | async">
+                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}" matTooltip="{{FileName(item.name)}}"></td>
+                            <td> {{FileName(item.name) | slice:0:20}}</td>
+                            <td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{item.fSize/1000}} ko</td>
+                            <td>
+                                <button type="button" (click)="onClickPjName(item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="start">
+                    <p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+                    <mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

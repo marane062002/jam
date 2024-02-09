@@ -1,0 +1,80 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.HEBERGEMENT.LIST_ORGANISME' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button (click)="exportTable()" type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.HEBERGEMENT.LIST_ORGANISME' | translate }}">
+						<i class="flaticon2-download text-success"></i>
+					</button>
+                    <a href="javascript:; " (click)="addData()" *ngxPermissionsOnly="['canCreateOrganismeAccueil']" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.HEBERGEMENT.ADD_ORGANISME' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="example-header">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+        </mat-form-field>
+    </div>
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- nom Column -->
+        <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.HEBERGEMENT.Nom_ORGANISME' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.nom?row.nom:"-"}}</td>
+        </ng-container>
+        <!-- mail  Column -->
+        <ng-container matColumnDef="mail">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.SUBVENTION.MAIL' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.mail?row.mail:"-"}} </td>
+        </ng-container>
+        <!-- gsm  Column -->
+        <ng-container matColumnDef="gsm">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.SUBVENTION.GSM' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.gsm?row.gsm:"-"}} </td>
+        </ng-container>
+        <!-- fax  Column -->
+        <ng-container matColumnDef="fax">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.SUBVENTION.FAX' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.fax?row.fax:"-"}} </td>
+        </ng-container>
+        <!-- rc  Column -->
+        <ng-container matColumnDef="rc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.SUBVENTION.RC' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.rc?row.rc:"-"}} </td>
+        </ng-container>
+        <!-- adresse  Column -->
+        <ng-container matColumnDef="adresse">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.SUBVENTION.ADRESSE' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.adresse?row.adresse:"-"}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" (click)="editData(row)" *ngxPermissionsOnly="['canUpdateOrganismeAccueil']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button type="button" (click)="deleteData(row.id)" *ngxPermissionsOnly="['canDeleteOrganismeAccueil']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

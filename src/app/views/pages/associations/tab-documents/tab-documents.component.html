@@ -1,0 +1,88 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-search-magnifier-interface-symbol"></i>
+			</span>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- <div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					&nbsp;
+					<a href="javascript:; " (click)="addDocuments()" class="btn btn-success btn-elevate btn-icon-sm">
+						<i class="la la-plus"></i>
+						{{ 'MENU.DOC_ADMIN' | translate }}
+					</a>
+				</div>
+			</div>
+		</div> -->
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 show_port input-group">
+            <form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm" style="display: -webkit-inline-box;margin-inline-start: 233px;">
+                <label class="input-group-btn">
+					<span class="btn btn-info">
+						{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+							(change)="fileChange($event)" formControlName="_file" id="customFile" style="display: none;"
+							multiple>
+					</span>
+				</label>
+                <input type="text" #inputFile class="form-control" readonly>
+                <button class="btn btn-success btn-md btn-tall" (click)="onSubmit()" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}">{{ 'PAGES.GENERAL.SAVE' | translate }}
+				</button>
+                <button class="btn btn-danger btn-md btn-tall" (click)="resetFile()" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}">{{ 'PAGES.GENERAL.RESET' | translate }}
+				</button>
+            </form>
+        </div>
+    </div>
+    <div _ngcontent-idd-c40="" class="kt-separator kt-separator--dashed"></div>
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- icon Column -->
+        <ng-container matColumnDef="icon">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</th>
+            <td mat-cell *matCellDef="let row"><img class="file_icon" src="./assets/media/files/{{FileExtension(row.name)}}" matTooltip="{{FileName(row.name)}}"></td>
+        </ng-container>
+        <!-- name  Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}</th>
+            <td mat-cell *matCellDef="let row">{{FileName(row.name) | slice:0:20}}</td>
+        </ng-container>
+        <!-- dateFile  Column -->
+        <ng-container matColumnDef="dateFile">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+        </ng-container>
+        <!-- fSize  Column -->
+        <ng-container matColumnDef="fSize">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.fSize/1000}} ko</td>
+        </ng-container>
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" (click)="onClickPjName(row.idAlfresco,row.id)" *ngxPermissionsOnly="['canDowloadAssDocuments']" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(row.name)}}"><i class="flaticon-download-1"></i></button>
+                <button type="button" (click)="onDeleteFile(row.id)" *ngxPermissionsOnly="['canDeleteAssDocuments']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

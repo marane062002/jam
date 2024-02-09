@@ -1,0 +1,87 @@
+
+
+ <!-- begin:: Content section 2 -->
+ <div class="kt-container">
+    <div class="row">
+      <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+          <div class="kt-portlet__head kt-bg-portlet-4">
+            <div class="kt-portlet__head-label">
+              <span class="kt-portlet__head-icon">
+                <i class="fas fa-book-open kt-font-inverse-brand"></i>
+              </span>
+              <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                تفاصيل
+                نقط الاجتماع
+              </h3>
+            </div>
+          </div>
+          <div class="kt-portlet__body">
+            <div class="example-container mat-elevation-z8">
+            
+                <mat-table [dataSource]="dataSource" matSort>
+              
+                  
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="id">
+                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>  رقم النقطة 
+      </mat-header-cell>
+                    <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.id}} </mat-cell>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="session">
+                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>  رقم الدورة </mat-header-cell>
+                    <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.point.session.id}} </mat-cell>
+                  </ng-container>
+            
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="objet">
+                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> 
+                      موضوع النقطة    </mat-header-cell>
+                    <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.point.objet}} </mat-cell>
+                  </ng-container>
+  
+                   <!-- Name Column -->
+                   <ng-container matColumnDef="budget">
+                      <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> 
+                          الميزانية المقدرة
+                      </mat-header-cell>
+                      <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.point.budget | macurrency}} </mat-cell>
+                    </ng-container>
+            
+                      
+                      <!-- Name Column -->
+                      <ng-container matColumnDef="dateRealisation">
+                        <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> 
+                            تاريخ الإنجاز                     </mat-header-cell>
+                        <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.point.dateRealisation |date: 'dd/MM/yyyy'}} </mat-cell>
+                      </ng-container>
+
+                                   <!-- Name Column -->
+                      <ng-container matColumnDef="statut">
+                        <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef >وضعية النقطة    </mat-header-cell>
+                         <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.point.statut.libelle}} </mat-cell>
+                        </ng-container>
+
+                           <!-- Name Column -->
+                           <ng-container matColumnDef="recommandations">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> التوصيات  </mat-header-cell>
+                             <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.point.typeVote}} </mat-cell>
+                           </ng-container>
+               
+                     
+                        
+                        
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;">
+                  </mat-row>
+                </mat-table>
+              
+                <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+              </div>
+          </div>   
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,116 @@
+
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-user kt-font-inverse-brand"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.Stock.fournisseurs.new.title' | translate }}
+            </h3>
+        </div>
+    </div>
+
+        <form class="" [formGroup]="FormFournisseur" (ngSubmit)="createFournisseur(FormFournisseur.value)">
+            <div class="form-group row mb-1">
+               
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="nom" matInput type="text" class="form-control" name="nom"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.nom'| translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="ville" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.ville' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+  
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="adresse" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.adresse' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="email" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.email' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+         
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="telephone" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.telephone' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="siteWeb" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.siteWeb' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="province" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.province' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="infoBancaire" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.codePostal' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+          
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="infoBancaire" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.infoBancaire' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="tauxRemise" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.fournisseurs.tauxRemise' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+           
+        </div>
+        <div class="m-1 float-right">
+            <button _ngcontent-dkp-c41="" type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+            class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+           <!--  [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+            {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+        </div>
+    </form>
+    </div>
+
+
+

@@ -1,0 +1,260 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1 col-md-12">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			&nbsp;
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Détails du nouveau-né:
+			</h2>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-12">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations sur le nouveau-né
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-6 show_port">
+					<table *ngIf="info" class="table">
+						<tbody>
+							<tr>
+								<th>N° d'enregistrement :</th>
+								<td  class="donnee_show">{{info.numEnregistrement}}</td>
+							</tr>
+							<tr>
+								<th>Date d'enregistrement :</th>
+								<td  class="donnee_show">{{info.dateEnregistrement}}</td>
+							</tr>
+							<tr>
+								<th>Nom :</th>
+								<td  class="donnee_show">{{info.nom}}</td>
+							</tr>
+							<tr>
+								<th>Prénom :</th>
+								<td  class="donnee_show">{{info.prenom}}</td>
+							</tr>
+							<tr>
+								<th>Nom de la mére :</th>
+								<td class="donnee_show">{{info.nomMere}}</td>
+							</tr>
+							<tr>
+								<th>Prénom de la mére :</th>
+								<td class="donnee_show">{{info.prenomMere}}</td>
+							</tr>
+							<tr>
+								<th>CIN de la mére :</th>
+								<td class="donnee_show">{{info.cinMere}}</td>
+							</tr>
+							<tr>
+								<th>Tél de la mére :</th>
+								<td class="donnee_show">{{info.telMere}}</td>
+							</tr>
+							<tr>
+								<th>Adresse de résidence de la mére :</th>
+								<td class="donnee_show">{{info.adresseResMere}}</td>
+							</tr>
+							<tr>
+								<th>Nationalité de la mére :</th>
+								<td class="donnee_show">{{info.nationaliteMere}}</td>
+							</tr>
+							<tr>
+								<th>Poids au moment de la déclaration :</th>
+								<td class="donnee_show">{{info.poids}}</td>
+							</tr>
+							<tr>
+								<th>Date d'accouchement :</th>
+								<td class="donnee_show">{{info.dateAccouchement}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-6 show_port">
+					<table *ngIf="info" class="table">
+						<tbody>
+							<tr>
+								<th>Adresse d'accouchement :</th>
+								<td class="donnee_show">{{info.adresseAccouchement}}</td>
+							</tr>
+
+							<tr>
+								<th>Nature d'accouchement :</th>
+								<td class="donnee_show">{{info.natureAccouchement}}</td>
+							</tr>
+							<tr>
+								<th>Observation :</th>
+								<td class="donnee_show">{{info.observation}}</td>
+							</tr>
+							<tr>
+								<th>Nom du pére :</th>
+								<td class="donnee_show">{{info.nomPere}}</td>
+							</tr>
+							<tr>
+								<th>Prénom du pére</th>
+								<td class="donnee_show">{{info.prenomPere}}</td>
+							</tr>
+							<tr>
+								<th>CIN du pére :</th>
+								<td class="donnee_show">{{info.cinPere}}</td>
+							</tr>
+							<tr>
+								<th>Nationalité du pére :</th>
+								<td class="donnee_show">{{info.nationalitePere}}</td>
+							</tr>
+							<tr>
+								<th>Tél du pére :</th>
+								<td class="donnee_show">{{info.telPere}}</td>
+							</tr>
+							<tr>
+								<th>Statut :</th>
+								<td class="donnee_show">{{info.statut}}</td>
+							</tr>
+							<tr>
+								<th>Adresse de résidence du pére :</th>
+								<td class="donnee_show">{{info.adresseResPere}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-6">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations de la sage femme
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table *ngIf="info" class="table">
+						<tbody>
+							<tr>
+								<th>Nom :</th>
+								<td class="donnee_show">{{info.nomSageFemme}}</td>
+							</tr>
+							<tr>
+								<th>Prénom :</th>
+								<td class="donnee_show">{{info.prenomSageFemme}}</td>
+							</tr>
+
+							<tr>
+								<th>CIN :</th>
+								<td class="donnee_show">{{info.cinSageFemme}}</td>
+							</tr>
+							<tr>
+								<th>Date de naissance :</th>
+								<td class="donnee_show">{{info.dateSageFemme}}</td>
+							</tr>
+							<tr>
+								<th>Tél :</th>
+								<td class="donnee_show">{{info.telSageFemme}}</td>
+							</tr>
+							<tr>
+								<th>Adresse :</th>
+								<td class="donnee_show">{{info.adresseSageFemme}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="kt-portlet portlet-1 col-md-6">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations du constateur
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table *ngIf="info" class="table">
+						<tbody>
+							<tr>
+								<th>Nom :</th>
+								<td class="donnee_show">{{info.nomConstateur}}</td>
+							</tr>
+							<tr>
+								<th>Prénom :</th>
+								<td class="donnee_show">{{info.prenomConstateur}}</td>
+							</tr>
+
+							<tr>
+								<th>CIN :</th>
+								<td class="donnee_show">{{info.cinConstateur}}</td>
+							</tr>
+
+							<tr>
+								<th>Sexe :</th>
+								<td class="donnee_show">{{info.sexe}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+
+	<mat-table [dataSource]="dataSource2" matSort>
+		<!-- file name Column -->
+		<ng-container matColumnDef="nomDoc">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+			<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="titre">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+			<mat-cell *matCellDef="let row"> {{row.sousModule}} </mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="dow">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+			<mat-cell *matCellDef="let row">
+				<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]="!row.idAlfresco" [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+					<i class="flaticon-download-1"></i></button>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns2;">
+		</mat-row>
+	</mat-table>
+</div>
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="RetourEmbalages()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+	</div>
+</div>
+<div class="espace_bloc"></div>
+<!-- end:: Content -->

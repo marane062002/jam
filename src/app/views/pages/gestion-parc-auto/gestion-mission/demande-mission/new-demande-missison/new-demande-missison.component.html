@@ -1,0 +1,118 @@
+<div class="kt-portlet portlet-3">
+  <div class="kt-portlet__head kt-bg-portlet-4">
+      <div class="kt-portlet__head-label">
+          <span class="kt-portlet__head-icon">
+              <i class="flaticon-plus kt-font-inverse-brand"></i>
+          </span>
+          &nbsp;
+          <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+              {{ 'PAGES.Gestion.parc.newDemande.title' | translate }}
+          </h3>
+      </div>
+  </div>
+  <form class="" [formGroup]="formDemandeMision" (ngSubmit)="ajouterMission(formDemandeMision.value)">
+      <div class="form-group row mb-1">
+        <div class="col-md-4">
+          <div class="form-group">
+              <mat-form-field class="example-full-width">
+                  <input formControlName="numdemande" matInput type="text" class="form-control" name="numero"
+                      placeholder="{{ 'PAGES.Gestion.parc.newDemande.numdemande' | translate }}" >
+              </mat-form-field>
+          </div>
+      </div>
+    <div class="col-md-4 show_port input-group">
+      <mat-form-field class="example-full-width"  >
+          <mat-select class="form-control" name="unite" formControlName ="moyenTransport"  placeholder="{{ 'PAGES.Gestion.parc.newDemande.moyenTransport' | translate }}" >
+              <mat-option  value="voiture">Voiture  </mat-option>
+              <mat-option  value="camion">camion </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-4 show_port input-group">
+      <mat-form-field class="example-full-width"  >
+          <mat-select class="form-control" name="unite" formControlName ="resbonsable_id"  placeholder="{{ 'PAGES.Gestion.parc.newDemande.resbonsable_id' | translate }}" >
+            <mat-option  *ngFor="let item of listUsers" [value]="item.id">{{item.nom}}  </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+      <div class="col-md-4 show_port input-group">
+        <mat-form-field class="example-full-width"  >
+            <mat-select class="form-control" name="unite" formControlName ="accompagnateurs"  placeholder="{{ 'PAGES.Gestion.parc.newDemande.accompagnateurs' | translate }}"  multiple>
+              <mat-option  *ngFor="let item of listUsers" [value]="item.id">{{item.nom}}  </mat-option>
+             
+            </mat-select>
+        </mat-form-field>
+      </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <mat-form-field class="example-full-width">
+              <input formControlName="dateDepart" matInput type="date" class="form-control" name="numero"
+                  placeholder="{{ 'PAGES.Gestion.parc.newDemande.dateDepart' | translate }}" >
+          </mat-form-field>
+      </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+        <mat-form-field class="example-full-width">
+            <input formControlName="dateRetour" matInput type="date" class="form-control" name="numero"
+                placeholder="{{ 'PAGES.Gestion.parc.newDemande.dateRetour' | translate }}" >
+        </mat-form-field>
+    </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="dateArriveLettre" matInput type="date" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.newDemande.dateArriveLettre' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+<div class="col-md-4 show_port input-group">
+  <mat-form-field class="example-full-width"  >
+      <mat-select class="form-control" name="unite" formControlName ="entitrBEneficaire"  placeholder="{{ 'PAGES.Gestion.parc.newDemande.entitrBEneficaire' | translate }}" >
+          <mat-option  value="A">A  </mat-option>
+          <mat-option  value="B">B </mat-option>
+      </mat-select>
+  </mat-form-field>
+</div>
+<div class="col-md-4 show_port input-group">
+  <mat-form-field class="example-full-width"  >
+      <mat-select class="form-control" name="unite" formControlName ="typemIsion"  placeholder="{{ 'PAGES.Gestion.parc.newDemande.typemIsion' | translate }}" >
+         
+          <mat-option value="Reunion">Reunion</mat-option>
+          <mat-option value="Evaluation" >Evaluation</mat-option>
+          <mat-option value="Visite"> Visite</mat-option>
+      </mat-select>
+  </mat-form-field>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="motif" matInput type="text" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.newDemande.motif' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="parcours" matInput type="text" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.newDemande.parcours' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+      </div>
+      <div class="m-1 float-right">
+        <button _ngcontent-dkp-c41="" type="submit"  matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+        class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+        <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+        <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+        {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+      </div>
+      </form>
+
+</div>
+
+  
+  

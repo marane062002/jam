@@ -1,0 +1,79 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head w-b-5">
+        <div class="kt-portlet__head-label">
+            <h2 class="kt-portlet__head-title">Transactions globales journalières</h2>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="transactionForm">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group fv-plugins-icon-container">
+                <label>Date et heure:</label>
+                <input matInput type="text" class="form-control" formControlName="transactionTime" [value]="currentTime" readonly />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group fv-plugins-icon-container">
+                <label>Date de début de calcul:</label>
+                <mat-form-field class="example-full-width">
+                    <input matInput class="form-control" type="datetime-local" formControlName="timeDebut" required />
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group fv-plugins-icon-container" formGroupName="hangar">
+                <mat-form-field class="example-full-width">
+                    <label>{{ "PAGES.PESEE.HANGAR" | translate }}:</label>
+                    <mat-select class="form-control" formControlName="id">
+                        <mat-option *ngFor="let hangar of Hangar" [value]="hangar.id">{{hangar.lib}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 left-side">
+            <div class="transaction-lines" style="line-height: 2.5;">
+                <div class="transaction-line">
+                    <label class="left-label" (click)="toggleCheckbox('transactionNumber')"> Numéro de la transaction:</label>
+                    <mat-checkbox class="right-checkbox" formControlName="transactionNumber"></mat-checkbox>
+                </div>
+                <div class="transaction-line">
+                    <label class="left-label" (click)="toggleCheckbox('transactionTime')"> Heure de la transaction:</label>
+                    <mat-checkbox class="right-checkbox" formControlName="transactionTime"></mat-checkbox>
+                </div>
+                <div class="transaction-line">
+                    <label class="left-label" (click)="toggleCheckbox('transactionAmount')"> Somme de la transaction:</label>
+                    <mat-checkbox class="right-checkbox" formControlName="transactionAmount"></mat-checkbox>
+                </div>
+                <div class="transaction-line">
+                    <label class="left-label" (click)="toggleCheckbox('partDue')"> Part due 7% :</label>
+                    <mat-checkbox class="right-checkbox" formControlName="partDue"></mat-checkbox>
+                </div>
+                <div class="transaction-line">
+                    <label class="left-label" (click)="toggleCheckbox('partCommune')"> Part commune 5,25%:</label>
+                    <mat-checkbox class="right-checkbox" formControlName="partCommune"></mat-checkbox>
+                </div>
+                <div class="transaction-line">
+                    <label class="left-label" (click)="toggleCheckbox('partCarreau')"> Part carreau 1,75%:</label>
+                    <mat-checkbox class="right-checkbox" formControlName="partCarreau"></mat-checkbox>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 right-side">
+            <div class="icons-container">
+                <button mat-icon-button color="primary">
+                    <mat-icon class="save-icon-display">save_alt</mat-icon>
+                </button>
+                <button mat-icon-button color="primary">
+                    <mat-icon class="print-icon-display">print</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

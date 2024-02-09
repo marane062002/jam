@@ -1,0 +1,79 @@
+<div class="kt-portlet__body">
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-wrapper">
+            <div class="kt-portlet__head-actions">
+                <a href="javascript:; " (click)="openDialog(0)" class="btn btn-success btn-elevate btn-icon-sm">
+                    <i class="la la-plus"></i> {{ 'PAGES.MARCHE.convention.TITRE_NEW' | translate }}
+                </a>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- begin:: content section datasource -->
+    <!-- <div *ngIf="dataSize > 0"> -->
+    <div class="kt-portlet__body">
+        <div class="kt-portlet__body kt-portlet__body--fit">
+
+
+            <div class="example-container mat-elevation-z8">
+
+                <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+                        <td mat-cell *matCellDef="let row" class="Object">
+                            {{  row.id    ? row.id   : "-"   }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="object">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Object</th>
+                        <td mat-cell *matCellDef="let row" class="Object">
+                            {{  row.object    ? row.object   : "-"   }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                        <td mat-cell *matCellDef="let row" class="Date">
+                            {{  row.date ? row.date : "-"  }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Mantant">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mantant(MDH)</th>
+                        <td mat-cell *matCellDef="let row" class="Mantant">    {{row.montant ? row.montant   : "-"   }}
+                        </td>
+                    </ng-container>
+                  
+
+                 
+                    
+
+                    <ng-container matColumnDef="actions">
+                        <th class="action" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                        <td class="action" mat-cell *matCellDef="let row">
+                            <!----  <a href="javascript:;" (click)="showReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>-->
+                            <a href="javascript:;" (click)="openDialog(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                            <a href="javascript:;" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                </table>
+                <div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                </div>
+                <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                    </mat-progress-spinner>
+                </mat-card>
+                <mat-paginator [length]="dataSize" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10,50]" showFirstLastButtons></mat-paginator>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <!-- begin:: table des prix -->
+
+    
+    <!-- end:: table des prix -->
+    <!-- </div> -->
+</div>

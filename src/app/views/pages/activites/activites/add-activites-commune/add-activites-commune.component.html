@@ -1,0 +1,232 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="fas fa-address-card kt-font-inverse-brand"></i>
+			</span>
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ 'PAGES.ACTIVITE.TITRE_NEW' | translate }}
+			</h3>
+		</div>
+	</div>
+
+	<form novalidate [formGroup]="addForm" autocomplete="off">
+		<div class="kt-portlet__body">
+			<!-- 1 ============== nomLocal | dateDemrrageGestion ========================= -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="numAutorisation"
+								placeholder="{{ 'PAGES.ACTIVITE.NUM_AUTORISATION' | translate }} :">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker3"
+									placeholder="{{ 'PAGES.ACTIVITE.DATE_ACTIV' | translate }} :"
+									formControlName="dateActivite">
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker3">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker3></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="objet"
+								placeholder="{{ 'PAGES.ACTIVITE.OBJET' | translate }} :">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<!-- 5 =================== arrondissements | typeLocal==================== -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="arrondissements"
+								placeholder="{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }} :" required multiple>
+								<mat-option [value]=null>
+									---{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }}---
+								</mat-option>
+								<mat-option *ngFor="let arr of arrondissements" [value]="arr">
+									{{arr.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('arrondissements','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="number" class="form-control" formControlName="populationImpactee"
+								placeholder="{{ 'PAGES.ACTIVITE.POPULATION' | translate }} :">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="typeActivites"
+								placeholder="{{ 'PAGES.ACTIVITE.TYPE_ACTIVITE' | translate }} :" required>
+								<mat-option [value]=null>
+									---{{ 'PAGES.ACTIVITE.TYPE_ACTIVITE' | translate }}---</mat-option>
+								<mat-option *ngFor="let type of types" [value]="type">
+									{{type.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('typeActivites','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- 3 =================== Partenariat association ==================== -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group btn-radio">
+						<label>{{ 'PAGES.ACTIVITE.PARTENARIAT' | translate }} :</label><br>
+						<mat-radio-group name="partenariatAssociative" formControlName="partenariat" (change)="selectionChanged1()">
+							<mat-radio-button [value]="true">
+								{{ 'PAGES.ACTIVITE.AVEC_PARTENARIAT' | translate }}</mat-radio-button>
+							<mat-radio-button [checked]='true' [value]="false">
+								{{ 'PAGES.ACTIVITE.SANS_PARTENARIAT' | translate }}</mat-radio-button>
+						</mat-radio-group>
+					</div>
+				</div>
+				<div class="col-md-4"  id="enPartenariat">
+					<div class="form-group btn-radio">
+						<label>{{ 'PAGES.ACTIVITE.PARTENARIAT_AVEC' | translate }} :</label><br>
+						<mat-radio-group name="partenariatInstitution" formControlName="enPartenariat" (change)="selectionChanged2($event)">
+							<mat-radio-button value="association">
+								{{ 'PAGES.ACTIVITE.ASSOCIATION' | translate }}</mat-radio-button>
+							<mat-radio-button value="institution">
+								{{ 'PAGES.ACTIVITE.INSTITUTION' | translate }}</mat-radio-button>
+						</mat-radio-group>
+					</div>
+				</div>
+
+				<div class="col-md-4" id="association">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="idAssociation"
+								placeholder="{{ 'PAGES.ACTIVITE.ASSOCIATION' | translate }} :">
+								<mat-option [value]=null>
+									---{{ 'PAGES.ACTIVITE.ASSOCIATION' | translate }}---</mat-option>
+								<mat-option *ngFor="let ass of associations" [value]="ass.id">
+									{{ass.nom}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-4" id="institution">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="pmActiv"
+								placeholder="{{ 'PAGES.ACTIVITE.INSTITUTION' | translate }} :">
+								<mat-option [value]=null>
+									---{{ 'PAGES.ACTIVITE.INSTITUTION' | translate }}---</mat-option>
+								<mat-option *ngFor="let inst of institutions" [value]="inst">
+									{{inst.raisonSociale}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<!-- 4 =================== Note==================== -->
+			<div class="row">
+
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" formControlName="note"
+								name="note" matInput placeholder="{{ 'PAGES.ACTIVITE.NOTE' | translate }} :"></textarea>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</form>
+
+</div>
+
+<!-- end::section form-->
+
+<!-- end section attachements-->
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.GENERAL.ATTACHEMENT' | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-6 show_port input-group">
+				<form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm"
+					style="display: -webkit-inline-box;margin-inline-start: 98px;">
+					<label class="input-group-btn">
+						<span class="btn btn-info">
+							{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+								(change)="fileChange($event)" formControlName="_file" id="customFile"
+								style="display: none;" multiple>
+						</span>
+					</label>
+					<input type="text" class="form-control" readonly>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End attachement section-->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			[disabled]="addForm.invalid" (click)="onSubmit()"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

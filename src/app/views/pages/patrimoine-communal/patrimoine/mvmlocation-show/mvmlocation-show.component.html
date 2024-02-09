@@ -1,0 +1,96 @@
+<div class="form-group">
+
+    <!-- begin:: Content -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            {{ 'PAGES.GENERAL.MVML_FICHE' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+
+                            <a *ngxPermissionsOnly="['canUpdateMvMlocation']" (click)="update(mvmlocation?.id)" class="btn btn-warning btn-sm btn-bold">
+                                <i class="fas fa-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                            </a>
+                            <a *ngxPermissionsOnly="['canDeleteMvMlocation']" (click)="delete(mvmlocation?.id)" class="btn btn-danger btn-sm btn-bold">
+                                <i class="fas fa-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- begin:: Content section  -->
+    <div *ngIf="mvmlocation">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head kt-bg-portlet-1">
+                        <div class="kt-portlet__head-label">
+
+                            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.GENERAL.MVML_ID' | translate }} {{mvmlocation.id}}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+
+                        <div class="row">
+
+                            <div class="col-md-12 show_port">
+                                <table class="table pj" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <th># :</th>
+                                            <td>{{mvmlocation.id}}</td>
+
+                                            <th> {{ 'PAGES.GENERAL.MONTANT' | translate }} :</th>
+                                            <td>{{mvmlocation.montantLouer|macurrency}}</td>
+                                        </tr>
+                                        <tr>
+
+                                            <th>{{ 'PAGES.GENERAL.DATE_ACTE' | translate }} :</th>
+                                            <td>{{mvmlocation.dateDebutActe|date:'yyyy-MM-dd'}}</td>
+
+                                            <th>{{ 'PAGES.GENERAL.DATE_FIN_ACTE' | translate }} :</th>
+                                            <td>{{mvmlocation.dateFinActe|date:'yyyy-MM-dd'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'PAGES.GENERAL.DATE_PAIEMENT' | translate }} :</th>
+                                            <td>{{mvmlocation.datePaiement|date:'yyyy-MM-dd'}} </td>
+
+                                            <th>{{ 'PAGES.GENERAL.DUREE' | translate }} :</th>
+                                            <td>{{mvmlocation.dureeActe}} {{ 'PAGES.GENERAL.YEARS' | translate }}</td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="espace_bloc"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                        <button type="button" (click)="showPatrimoine(mvmlocation.patrimoine?.id)" class="btn btn-brand btn-md btn-tall btn-wide">
+                                            {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                                    </button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,41 @@
+/* style file datatable */
+.title_td {
+	font-weight: bold !important;
+	color: #155db3 !important;
+}
+
+.progress_bar {
+	width: 40%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto
+}
+
+.file_icon {
+	height: 26px;
+}
+
+.wait_text_bar {
+	display: block !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	text-align: center !important;
+}
+
+.btn_table_download i {
+	color: #0fbb51 !important;
+}
+
+.btn-download {
+	color: #212529;
+	background-color: #0fbb51;
+	border-color: #0fbb51;
+}
+
+.btn-success.focus,
+.btn-success:focus,
+.btn-success:hover {
+	color: #fff;
+	background-color: #0fbb51 !important;
+	border-color: #05a844 !important;
+}

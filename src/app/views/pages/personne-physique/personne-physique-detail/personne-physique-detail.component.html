@@ -1,0 +1,78 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="far fa-id-badge"></i>
+					</span>
+					&nbsp;
+					<h3 class="kt-portlet__head-title">
+						تفاصيل
+						الشخص المادي
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th> الاسم:</th>
+									<td class="donnee_show">
+										{{formData.prenom}} </td>
+									<th>
+										: النسب</th>
+									<td class="donnee_show">
+										{{formData.nom}} </td>
+								</tr>
+								<tr>
+									<th>
+										البطاقة الوطنية:</th>
+									<td class="donnee_show">
+										{{formData.cin }}
+									</td>
+									<th>
+										الهاتف المحمول:</th>
+									<td class="donnee_show">
+										{{formData.telephoneGsm}} </td>
+								</tr>
+								<tr>
+									<th> الهاتف الثابت:</th>
+									<td class="donnee_show">
+										{{formData.telephoneFixe}} </td>
+									<th>
+										الفاكس :
+									</th>
+									<td class="donnee_show">
+										{{formData.fax }}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										العنوان:</th>
+									<td class="donnee_show" colspan="4">
+										{{formData.adresse}}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button"
+				(click)="back()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->

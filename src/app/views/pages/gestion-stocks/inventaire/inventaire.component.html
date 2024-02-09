@@ -1,0 +1,145 @@
+<div class="main-content container">
+    <div class="breadcrumb">
+        <h1 class="mr-2">Inventaire physique des stocks</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card text-left">
+                <div class="card-body">
+                    <div class="tab-content" id="myIconTabContent">
+
+                        <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                            <div class="body">
+                                <form class="">
+                                    <div class="form-group row justify-content-center mb-1">
+                                        <div class="col-md-3 form-group ">
+                                                <label>N° magasin : </label>
+                                                <ng-multiselect-dropdown     [placeholder]="'N° magasin'"  [settings]="dropdownSettingsMagasin" [data]="listMagasins"  (onSelect)="selectMagasin($event)"  >
+                                                </ng-multiselect-dropdown> 
+                                
+                                            </div> 
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row  clo-12">
+                          <div class="col-8">
+                          <input class="form-control" id="myInput" type="text" placeholder="Rechercher..." [(ngModel)]="numArticle" >
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-primary font-weight-bold btn-block" type="button" (click)="searchArticle($event)"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                          </div>
+                          </div>
+                      <div class="row">
+
+                       
+                        
+                          <div class="col-md-12 col-lg-12 dos">
+                          <div class="p-3 mt-3 border-grey background-table br-10">
+                            <div>
+                              <div class="table-responsive">
+                                <span *ngIf=" listArticles.length ==  0" class="text-danger">Aucune article existe</span>
+                                <table class="table text-center mb-0" id="user_table" *ngIf=" listArticles.length > 0 ">
+                                  <thead>
+                                    <tr class="no-border">
+                                      <th scope="col">N° Article </th>
+                                      <th scope="col">Description</th>
+                                      <th scope="col">Unité</th>
+                                      <th scope="col">Q.PH</th>
+                                      <th scope="col">Q.TH</th>
+                                      <th scope="col">ECART</th>
+                                      <th scope="col">Observation</th>
+                                      <th scope="col">Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let article of listArticles ">
+                                      <th scope="row">{{ article.article?.numeroArticle}}</th>
+                                      <td>
+                                        {{ article.article?.designation}}
+                                      </td>
+                                      <td>{{article.article?.unite}}</td>
+                                      <td ><input  type="number" value="{{article.quaniteTh}}" [(ngModel)]="article.quaniteTh"  (ngModelChange)="CalculeEcart($event, article)"></td>
+                                      <td>{{ article.quantiteStock}}</td>
+                                      <td >{{article.ecart}}</td>
+                                      <td ><input  type="text" value="{{article.obsevations}}"[(ngModel)]="article.obsevations"></td>
+                                      <td>
+                                        <a class="text-success mr-2"  (click)="updateStock(article)"><i class="nav-icon  i-Sync font-weight-bold " ></i></a>
+
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-end pr-3 pl-3 mt-2" *ngIf=" listArticles.length > 0">
+                      
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #ajouterInventaire let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter une Inventaire</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+        <form class="" [formGroup]="InventaireForm" (ngSubmit)="createInventaire(InventaireForm.value)">
+        <div class="form-group row mb-1">
+            <div class="col-md-4 form-group" >
+                <label>N° magasin : <span class="text-danger">*</span></label>
+                <ng-multiselect-dropdown     [placeholder]="'N° magasin '"  [settings]="dropdownSettingsMagasin" [data]="listMagasins"  (onSelect)="selectMagasin($event)"  >
+                </ng-multiselect-dropdown> 
+
+            </div> 
+            <div class="col-md-4 form-group " formGroupName="article">
+                <label>N° d'article :</label>
+                <select class="form-control"  formControlName="id"  (change)="selectArticleStock($event)">
+              <option *ngFor="let article of listArticles" [value]="article.id">{{article.article.numeroArticle}}</option>
+                </select>
+            </div>
+          
+            <div class="col-md-4 form-group">
+                <label>Qunatité physique :</label>
+                <input class="form-control" type="number" placeholder="Qunatité physique" formControlName="quantitePh" readonly>
+                <p class="alert alert-danger" *ngIf="InventaireForm.controls['quantitePh'].hasError('required')">
+                    Ce champ est  obligatoire 
+                </p> 
+            </div>
+            <div class="col-md-4 form-group">
+                <label>quantité théorique :</label>
+                <input class="form-control" type="number" placeholder="quantité théorique" formControlName="quaniteTh" >
+                <p class="alert alert-danger" *ngIf="InventaireForm.controls['quaniteTh'].hasError('required')">
+                    Ce champ est  obligatoire 
+                </p> 
+            </div>
+            <div class="col-md-4 form-group">
+                <label>Ecart :</label>
+                <input class="form-control" type="number" placeholder="Qunatité" formControlName="ecart" readonly>
+                <p class="alert alert-danger" *ngIf="InventaireForm.controls['ecart'].hasError('required')">
+                    Ce champ est  obligatoire 
+                </p> 
+            </div>
+            <div class="col-md-4 form-group">
+                <label>obsevations :</label>
+                <input class="form-control" type="number" placeholder="obsevations" formControlName="obsevations">
+              
+            </div>
+        </div>
+        <div class="m-1 float-right">
+            <button class="btn btn-primary "  type="submit"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+        </div>
+        </form>
+
+
+</div>
+</ng-template>

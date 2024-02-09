@@ -1,0 +1,143 @@
+label {
+    font-weight: 600;
+}
+
+.btn-group.special {
+    display: flex;
+}
+
+.special .btn {
+    flex: 1
+}
+
+.pj th {
+    width: 19% !important;
+}
+
+.mat-tab-label,
+.mat-tab-link {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #061e73 !important;
+}
+
+.mat-tab-label-active {
+    background: #7cc1ea47 !important;
+    color: #060661 !important;
+}
+
+// Spinner style
+.center-aligned {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.sq-global-backdrop {
+    opacity: 1;
+    background: rgba(0, 0, 0, .288);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity .4s cubic-bezier(.25, .8, .25, 1);
+}
+
+.boder-table {
+    border: 1px solid #dee2e6;
+}
+
+.td-qualif {
+    width: 50%;
+    font-size: 12px;
+}
+
+.td-action {
+    width: 11%;
+}
+
+.td-classe {
+    width: 13%;
+    font-size: 12px;
+}
+
+.td-secteur {
+    width: 26%;
+    font-size: 12px;
+}
+
+.txt-weight {
+    font-weight: bold;
+}
+
+
+/** #################### ***/
+
+kt-avis-fr-secteur-ao {
+    display: none;
+}
+
+
+/*
+kt-avis-ar-secteur-ao {
+    display: none;
+}
+*/
+
+@media print {
+    kt-avis-fr-secteur-ao {
+        display: block;
+    }
+    /*
+    kt-avis-ar-secteur-ao {
+        display: block;
+    }
+    */
+    .kt-ao-show {
+        display: none !important;
+    }
+    kt-ao-show {
+        display: none !important;
+    }
+    kt-header {
+        display: none !important;
+    }
+    // @page {
+    //     size: A4;
+    //     margin: 0;
+    // }
+}
+
+.mat-menu-content:not(:empty) {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.mat-menu-item {
+    line-height: 35px !important;
+    height: 35px !important;
+}
+
+.mat-icon {
+    height: 16px !important;
+    width: 14px !important;
+}
+
+.flash.i:hover {
+    color: #fff !important;
+}
+
+
+/** Actions **/
+
+.btn.btn-icon.btn-primary i {
+    color: #007bff !important;
+}
+
+.btn.btn-icon.btn-primary:hover i {
+    color: #fff !important;
+}

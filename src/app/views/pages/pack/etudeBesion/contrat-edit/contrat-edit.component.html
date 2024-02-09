@@ -1,0 +1,219 @@
+<!-- begin:: Content section 2 -->
+
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							Modifier un contrat de droit public
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>{{ 'PAGES.MARCHE.AO.OBJET' | translate }}</label>
+									<input matInput required type="text" class="form-control" name="objet" [(ngModel)]="contrat.objet" placeholder="">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Reférence du contrat</label>
+									<input matInput required type="number" class="form-control" name="refDeContrat" [(ngModel)]="contrat.refDeContrat" placeholder="">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> {{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }} :</label>
+									<mat-select class="form-control" [value]="contrat?.typePrestation?.id" (selectionChange)="onChangeTypePrestationAo($event)" placeholder="" [compareWith]="selectedValuetypePrestation">
+										<mat-option *ngFor="let item of lisTypePrestationAo" value="{{item.id}}">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+
+					
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Délai de livraison :</label>
+									<input matInput class="form-control" name="delaiLivraison" [(ngModel)]="contrat.delaiLivraison" type="text" placeholder="">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>{{ 'PAGES.MARCHE.BC.DATE_RECEPTION' | translate }}</label>
+									<input matInput class="form-control" [matDatepicker]="picker" name="dateLivraison" [(ngModel)]="contrat.dateLivraison" placeholder="">
+									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+				
+			
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Population Cible :</label>
+									<input type="text" matInput class="form-control"  name="populationCible"
+										[(ngModel)]="contrat.populationCible"
+										placeholder="">
+										<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div>
+					
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Estimation :</label>
+									<input type="number" matInput class="form-control" name="estimation" [(ngModel)]="contrat.estimation" placeholder="">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div><br>
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-3">
+				<div class="kt-portlet__head-label">
+					<!-- <span class="kt-portlet__head-icon">
+						<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
+					</span> -->
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+					</h3>
+				</div>
+			</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<!-- start section::edit file form -->
+							<div class="row">
+								<div class="col-md-2 show_port input-group">
+									<mat-form-field class="example-full-width">
+										<label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+										<mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+											<mat-option *ngFor="let item of unites" [value]="item">{{item.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+								<div class="col-md-2" *ngIf="isVisible13==true">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<label> Label:
+											</label>
+											<input matInput type="text" class="form-control" name="label" [(ngModel)]="formPj.label" placeholder="">
+	
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6 show_port input-group">
+									<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+										<label class="input-group-btn">
+											<span class="btn btn-info">
+												{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" (change)="save($event)" id="customFile" style="display: none;" multiple>
+											</span>
+										</label>
+										<input id="test" type="text" class="form-control" readonly>
+									</form>
+								</div>
+								<div class="col-md-2" style="padding-top: 27px;">
+									<button class="btn btn-primary" type="button" (click)="validerPj()" style="position: absolute;right: 0px;">
+										{{ 'PAGES.GENERAL.SAVE' | translate }}
+									</button>
+								</div>
+							</div>
+	
+							<!-- end section::edit file form -->
+							<hr>
+							<!-- begin::file datasource -->
+							<div *ngIf="dataSource" class="example-container mat-elevation-z8">
+	
+								<mat-table [dataSource]="dataSource" matSort>
+									<!-- type Column -->
+									<ng-container matColumnDef="type">
+										<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+											{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+										<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+									</ng-container>
+									<!-- label Column -->
+									<ng-container matColumnDef="label">
+										<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+											Label</mat-header-cell>
+										<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.label?row.label:"-"}} </mat-cell>
+									</ng-container>
+									<!-- file name Column -->
+									<ng-container matColumnDef="nomDoc">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>
+											{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+										<mat-cell *matCellDef="let row"> <span *ngIf="row.idAlfresco == null ">{{row.selecetedFile[0].name}}</span>
+											<span *ngIf="row.idAlfresco !== null "> {{row.name}}</span> </mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="actions">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+										<td mat-cell *matCellDef="let row">
+											<button type="button"  [disabled]="!row.idAlfresco" (click)="onClickPjName(row.idAlfresco,row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(row.name)}}"><i class="flaticon-download-1"></i></button>
+											<button type="button" (click)="onDeleteFile(row)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+										</td>
+									</ng-container>
+	
+									<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+									<mat-row *matRowDef="let row; columns: displayedColumns1;">
+									</mat-row>
+								</mat-table>
+	
+							</div>
+							<!-- end::file datasource -->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit" (click)="onEditBC()">
+				<i class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<!-- <button class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+				(click)="backList()">
+				<i class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button> -->
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

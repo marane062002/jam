@@ -1,0 +1,22 @@
+.label {
+	color: #7d9d9c;
+}
+.nombre {
+	width: 200px;
+}
+.table {
+	margin-left: 30px;
+}
+.modhyobitto-table__action-button {
+	border-radius: 50%;
+
+	height: 40px;
+	padding: 0;
+	width: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&:focus {
+		background: darkkhaki;
+	}
+}

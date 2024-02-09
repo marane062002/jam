@@ -1,0 +1,223 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">
+				{{ "PAGES.PESEE.LISTE_PESEE" | translate }}
+			</h2>
+		</div>
+		
+	</div>
+	<div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)"
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}" />
+		</mat-form-field>
+	</div>
+
+	<nav ngbNav #nav="ngbNav" class="nav-pills">
+		<ng-container ngbNavItem>
+
+			<ng-template ngbNavContent>
+				<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100" matSort>
+					<ng-container matColumnDef="NUM">
+						<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.NUM" | translate }}
+						</th>
+						<td colspan="3" mat-cell *matCellDef="let row">
+							{{
+							row.numBon
+							}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="OPERATEUR">
+						<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.OPERATEUR" | translate }}
+						</th>
+						<td colspan="3" mat-cell *matCellDef="let row">
+
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="DATE_P">
+						<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.DATE_P" | translate }}
+						</th>
+						<td colspan="3" mat-cell *matCellDef="let row">
+							{{
+							row.date
+							}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="VEHICULE">
+						<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.VEHICULE.IMM' | translate }}
+						</th>
+						<td colspan="3" mat-cell *matCellDef="let row">
+							{{
+							row.vehicule.numVehicule
+							}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="MONTANT_T_M">
+						<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.MONTANT_T_M" | translate }}
+						</th>
+						<td colspan="3" mat-cell *matCellDef="let row">
+							{{
+							row.taxe
+							}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="STATUT">
+						<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.STATUT" | translate }}
+						</th>
+						<td colspan="3" class="text-danger" mat-cell *matCellDef="let row">
+							{{
+								row.statutPesee
+								}}
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="actions">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header class="action">
+							{{ "PAGES.GENERAL.ACTIONS" | translate }}
+						</th>
+						<td mat-cell *matCellDef="let row" class="actionsBtn action">
+							<a href="javascript:;" (click)="Details(row.id)" type="button"
+								class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{
+									'PAGES.GENERAL.DETAILS' | translate
+								}}">
+								<i class="icon la la-search-plus"></i>
+							</a>
+							
+							<button (click)="Recu(row)" type="button"
+								class="btn btn-sm btn-clean btn-icon btn-icon-md btn-outline-secondary"
+								matTooltip="Télecharger reçu">
+								<i class="icon fa fa-file text-secondary"></i>
+							</button>
+							<div *ngIf="row.statutPesee == 'EN_SAISIE'">
+								<button type="button" (click)="Payer(row.id)"
+								class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+								matTooltip="Payer"><i class="icon fa fa-check"></i></button></div>
+						</td>
+					</ng-container>
+
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+				</table>
+			</ng-template>
+		</ng-container>
+	</nav>
+
+	<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+	<!-- <mat-paginator   (page)="pageCurrentChange($event)" [length]="dataSource.data.length" [pageSizeOptions]="[ 10, 20, 50]" [showFirstLastButtons]="true">
+	</mat-paginator> -->
+	<kt-custom-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+	(pageSizeEvent)="getPageInNewSize($event)">
+   </kt-custom-pagination>
+</div>
+
+<div style="overflow: hidden; height: 0">
+	<div id="htmlData">
+		<div class="toprint">
+			<div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
+				<div class="col-md-3">
+					<img style="width:500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+				</div>
+				<div class="col-md-6"></div>
+				<div class="col-md-3">
+					<img style="width:200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+				</div>
+			</div><br><br>
+			<div class="row">
+				<table class="table"
+					style="width: 70%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr>
+						<th style="border: none;"> {{ "PAGES.PESEE.HANGAR" | translate }}</th>
+						<th class="table-bordered dashed-line">{{toPrint?.hangar.numHangar}}
+						</th>
+						<th style="border: none;">{{ "PAGES.PESEE.DATE" | translate }}</th>
+						<th class="table-bordered dashed-line">{{toPrint?.date}}  {{toPrint?.heure}}</th>
+					</tr>
+					<tr>
+						<th style="border: none;">{{ "PAGES.PESEE.NUM" | translate }}</th>
+						<th class="table-bordered dashed-line">{{toPrint?.numBon}}</th>
+						<th style="border: none;">{{ "PAGES.PESEE.CONDUCTEUR" | translate }}
+						</th>
+						<th class="table-bordered dashed-line">{{toPrint?.nomConducteur}}
+						</th>
+					</tr>
+				</table>
+			</div><br>
+			<div class="row">
+				<table class="table table-bordered dashed-line" style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.MATR" | translate }}</th>
+						<th colspan="2">{{toPrint?.vehicule.numVehicule}}</th>
+					</tr>
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.CONDUCTEUR" | translate }}</th>
+						<th colspan="2">{{toPrint?.vehicule.nomConducteur}}</th>
+					</tr>
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.MONDATAIRE" | translate }}</th>
+						<th colspan="2">{{toPrint?.mondataire}}</th>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PESEE.POIDS_T" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_V" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_E" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_N" | translate }}</th>
+					</tr>
+					<tr>
+						<td>{{toPrint?.poidGlobal}}</td>
+						<td>{{toPrint?.vehicule.tarra}}</td>
+						<td>{{toPrint?.poidEmballageTotal}}</td>
+						<td>{{toPrint?.totalPoidNet}}</td>
+					</tr>
+				</table>
+			</div><br>
+			<div class="row">
+				<table class="table table-bordered"
+					style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr>
+						<th>{{ "PAGES.PESEE.NUMPROD" | translate }}</th>
+						<th>{{ "PAGES.PESEE.CATEGORIE" | translate }}</th>
+						<th>{{ "PAGES.PESEE.TYPE" | translate }}</th>
+						<th>{{ "PAGES.PESEE.SOUS_TYPE" | translate }}</th>
+						<th>{{ "PAGES.PESEE.PRIX" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_NET" | translate }}</th>
+						<th>{{ "PAGES.PESEE.TOTAL" | translate }}</th>
+					</tr>
+					<tr *ngFor="let item of toPrint?.peseeProduits">
+						<td>{{item.produit.refProduit}}</td>
+						<td>{{item.produit.typeProduit.categorieProduit.nomCategori}}</td>
+						<td>{{item.produit.typeProduit.nomArticleProduit}}</td>
+						<td>{{item.produit.description}}</td>
+						<td>{{item.produit.tarif}}</td>
+						<td>{{item.poidNetProduit}}</td>
+						<td>{{item.totalProduit}}</td>
+					</tr>
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.NBPROD" | translate }}</th>
+						<th>{{toPrint?.peseeProduits.length}}</th>
+						<th colspan="3">{{ "PAGES.PESEE.MONTANT_T_M" | translate }}</th>
+						<th>{{toPrint?.chiffreTransaction}}</th>
+					</tr> 
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_COMMUNE" | translate }} :</th>
+						<th>{{toPrint?.partCommune}}</th>
+					</tr>
+
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} :</th>
+						<th>{{toPrint?.partMondataire}}</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

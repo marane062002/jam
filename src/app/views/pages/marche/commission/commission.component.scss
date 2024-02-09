@@ -1,0 +1,135 @@
+/*
+.title-style{
+	text-align: right;
+    color: #ffffff;
+    background-color: #2a5599;
+    padding: 7px;
+    font-size: inherit;
+}
+
+.title-styleH{
+	text-align: right;
+    color: #78777b;
+    background-color: #c2c7ce;
+    padding: 7px;
+    font-size: inherit;
+    border: 1px solid #adacac;
+}
+*/
+
+.title-style {
+    text-align: center;
+    color: #ffffff;
+    background-color: #2a5599;
+    padding: 7px;
+    font-size: inherit;
+}
+
+.title-styleH {
+    text-align: center;
+    color: #ffffff;
+    background-color: #4d4b4ed0;
+    padding: 7px;
+    font-size: inherit;
+}
+
+.title-style-IN {
+    text-align: center;
+    color: #ffffff;
+    background-color: #2a997f;
+    padding: 7px;
+    font-size: inherit;
+}
+
+.title-style-OUT {
+    text-align: center;
+    color: #ffffff;
+    background-color: #7e827e;
+    padding: 7px;
+    font-size: inherit;
+}
+
+.title-style-LC {
+    text-align: center;
+    color: #ffffff;
+    background-color: #0274a8bb;
+    padding: 7px;
+    font-size: inherit;
+}
+
+
+/* *********** commission interne ************* */
+
+.nom-in {
+    width: 20% !important;
+    padding: 0 12px 0 7px !important;
+}
+
+.role_in {
+    width: 15% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.presence-in {
+    width: 10% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.motif-in {
+    width: 55% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+
+/* *********** commission externe ************* */
+
+.nom-out {
+    width: 20% !important;
+    padding: 0 10px 0 5px !important;
+}
+
+.role_out {
+    width: 10% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.presence-out {
+    width: 10% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.motif-out {
+    width: 40% !important;
+    padding: 0 12px 0 5px !important;
+}
+
+.organisme-out {
+    width: 10% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.tel-out {
+    width: 10% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.statut2 {
+    width: 10% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.observ2 {
+    width: 40% !important;
+    padding: 0 12px 0 5px !important;
+}
+
+
+/** Actions **/
+
+.btn.btn-icon.btn-primary i {
+    color: #007bff !important;
+}
+
+.btn.btn-icon.btn-primary:hover i {
+    color: #fff !important;
+}

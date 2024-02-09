@@ -1,0 +1,241 @@
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+            <i class="fas fa-stopwatch kt-font-inverse-brand"></i>
+          </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ARRET_REPRISE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div style="display: none;" class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" id="myCheck" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.NUM_ORDRE' | translate }} :" name="numOP" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div *ngIf="showButtonAdd" class="row"> -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-wrapper">
+                                <div *ngxPermissionsOnly="['canCreateOrdreArretMarche']" class="kt-portlet__head-actions">
+                                    &nbsp;
+                                    <a href="javascript:;" (click)="nouveauOrdreService()" class="btn btn-success btn-elevate btn-icon-sm">
+                                        <i class="la la-plus"></i> {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TITRE_NEW' | translate }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BEGIN :: ORDRE ARRET FORM -->
+                <div *ngIf="selectedStatus">
+                    <div class="espace_bloc"></div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.NUM_ORDRE' | translate }} :" name="numOM" [(ngModel)]="ordreArretMarche.numOrdre">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }} :" name="objetOM" [(ngModel)]="ordreArretMarche.objet" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker" name="dateEffetOM" [(ngModel)]="ordreArretMarche.dateEffet" placeholder=" {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.DATE_EFFET' | translate }}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary  " type="button" (click)="onClickOM($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                </div>
+                <!-- END :: ORDRE ARRET FORM -->
+
+                <!-- BEGIN :: ORDRE ARRET LIST -->
+                <div *ngIf="showListeOrdreArretMarche" class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="espace_bloc"></div>
+                    <h4 class="title-style">
+                        {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TITRE_INDEX_OARR' | translate }}
+                    </h4>
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table [dataSource]="dataSourceOM" matSort>
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="numOrdre">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.NUM_ORDRE' | translate }} </mat-header-cell>
+                                <mat-cell *matCellDef="let rowOAR"> {{rowOAR.numOrdre?rowOAR.numOrdre:"-"}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="dateEffet">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.DATE_EFFET' | translate }} </mat-header-cell>
+                                <mat-cell *matCellDef="let rowOAR">
+                                    {{(rowOAR.dateEffet !== "") ? (rowOAR.dateEffet |date: 'dd/MM/yyyy') : "-"}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="objet">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let rowOAR"> {{rowOAR.objet?rowOAR.objet:"-"}} </mat-cell>
+                            </ng-container>
+
+                            <!-- flag Column -->
+                            <ng-container matColumnDef="flag">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.MARCHE.MARCHE.IS_REPRISE' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let rowOAR"><span [ngStyle]="{
+                  'height': '15px',
+                'width': '15px',
+                'border-radius': '50%',
+                'display': 'inline-block','background-color':rowOAR.ordreReprise != null ? '#1dca5ae6' : 'rgb(255 53 53)' }"></span>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let rowOAR">
+                                    <div *ngxPermissionsOnly="['canCreateOrdreRepriseMarche']">
+
+                                    </div>
+                                    
+                                    <a *ngIf="rowOAR.ordreReprise === null" href="javascript:;" (click)="AddOrdreReprise(rowOAR.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip=" {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TITRE_SHOW' | translate }}"><i class="fab fa-buffer"></i></a>
+                                    <a href="javascript:;" (click)="editOrderArret(rowOAR.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                                    <a href="javascript:;" (click)="deleteOrderArret(rowOAR.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                                    <a (click)="generateOrdreArret(rowOAR.id)"  type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="Ordre d'arret">
+                                        <i class="flaticon2-download text-success"></i>
+                                    </a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumnsOM"></mat-header-row>
+                            <mat-row *matRowDef="let rowOAR; columns: displayedColumnsOM;">
+                            </mat-row>
+                        </mat-table>
+                        <div *ngIf="sizeDataOA == 0" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-paginator [length]="sizeDataOA" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+
+                    </div>
+                </div>
+                <!-- END :: ORDRE ARRET LIST -->
+
+                <!-- BEGIN :: ORDRE REPRISE FORM -->
+                <div *ngIf="showCreateOrdreReprise">
+                    <div class="espace_bloc"></div>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }} :" name="objetOP" [(ngModel)]="ordreReprise.objet" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker1" name="dateEffetOM" [(ngModel)]="ordreReprise.dateEffet" placeholder=" {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.DATE_EFFET' | translate }}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" (click)="onClickOP($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                </div>
+                <!-- END :: ORDRE REPRISE FORM -->
+
+                <!-- BEGIN :: ORDRE ARRET LIST FINAL-->
+                <div *ngIf="showListeAllOrdreArretMarche">
+                    <div class="espace_bloc"></div>
+                    <div *ngxPermissionsOnly="['accessToIndexOrdreArretMarche']" class="kt-portlet__body kt-portlet__body--fit">
+                        <h4 class="title-style">
+                            {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TITRE_INDEX' | translate }}
+                        </h4>
+                        <div class="example-container mat-elevation-z8">
+
+                            <mat-table [dataSource]="dataSourceOP" matSort>
+
+                                <!-- Progress Column -->
+                                <ng-container matColumnDef="numOrdre">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.NUM_ORDRE' | translate }}
+
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.ordreReprise?row.ordreReprise.numOrdre:"-"}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Progress Column -->
+                                <ng-container matColumnDef="numPhaseMarche">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.NUM_OR_ARR_RE' | translate }}
+
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.numOrdre?row.numOrdre:"-"}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="dateEffet">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.DATE_EFFET' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        {{(row.ordreReprise.dateEffet !== "") ? (row.ordreReprise.dateEffet |date: 'dd/MM/yyyy') : "-"}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <!-- Progress Column -->
+                                <ng-container matColumnDef="objet">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.ordreReprise?row.ordreReprise.objet:"-"}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        
+                                        <a href="javascript:;" (click)="editOrderReprise(row.ordreReprise.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                                        <a href="javascript:;" (click)="deleteOrdreReprise(row.ordreReprise.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                                        <a (click)="generateOrdreReprise(row.ordreReprise.id)"  type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="Ordre de reprise">
+                                            <i class="flaticon2-download text-success"></i>
+                                        </a>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColumnsOP"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumnsOP;">
+                                </mat-row>
+                            </mat-table>
+                            <div *ngIf="sizeData == 0" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-paginator [length]="sizeData" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                        </div>
+                        <div class="espace_bloc"></div>
+                    </div>
+                </div>
+                <!-- END :: ORDRE ARRET LIST FINAL -->
+            </div>
+        </div>
+    </div>
+</div>

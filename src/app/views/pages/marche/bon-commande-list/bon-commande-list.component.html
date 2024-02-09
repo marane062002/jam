@@ -1,0 +1,109 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+				<div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="fas fa-dolly-flatbed"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							{{ 'PAGES.MARCHE.BC.TITRE_CONSULTATION_BC' | translate }}
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="kt-portlet__body kt-portlet__body--fit">
+						<div class="example-header col-md-4">
+							<i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+							<mat-form-field>
+								<input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+							</mat-form-field>
+						</div>
+						<div class="example-container mat-elevation-z8">
+							<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+								<!-- Progress Column -->
+								<ng-container matColumnDef="id">
+									<th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+									<td mat-cell *matCellDef="let row"> {{row.id}} </td>
+								</ng-container>
+
+								<!-- Name Column -->
+								<ng-container matColumnDef="numConsultation">
+									<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.MARCHE.BC.DATE_RECEPTION' | translate }}</th>
+									<td mat-cell *matCellDef="let row">
+										{{row.dateLivraison |date: 'dd/MM/yyyy'}} </td>
+								</ng-container>
+								<!-- refDeBC-->
+								<ng-container matColumnDef="refDeBC">
+									<th class="statutAo" mat-header-cell *matHeaderCellDef mat-sort-header>
+										refDeBC
+									</th>
+									<td class="statutAo" mat-cell *matCellDef="let row">
+										{{ row.refDeBC
+? row.refDeBC
+: "-" }}
+									</td>
+								</ng-container>
+								<!-- OBJET -->
+								<ng-container matColumnDef="objet">
+									<th mat-header-cell *matHeaderCellDef mat-sort-header class="objet">
+										{{
+        "PAGES.MARCHE.AO.OBJET" | translate
+        }}
+									</th>
+									<td mat-cell class="objet" *matCellDef="let row">
+										{{
+        row.objet
+        ? row.objet
+        : "-"
+        }}
+
+									</td>
+								</ng-container>
+
+								<ng-container matColumnDef="status">
+									<th mat-header-cell *matHeaderCellDef mat-sort-header class="objet">
+										Statut du bon de commande
+									</th>
+									<td mat-cell class="objet" *matCellDef="let row">
+										<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" *ngIf="row.statutBC=='ADJUGE'"> {{ row.statutBC ? row.statutBC : "-" }}</span>
+										<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--warning kt-badge--wide" *ngIf="row.statutBC=='ANNULE'"> {{ row.statutBC ? row.statutBC : "-" }}</span>
+
+									</td>
+								</ng-container>
+								<!-- Name Column -->
+								<!-- <ng-container matColumnDef="budgetGlobalPropose">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        N° consultation</th>
+                                    <td mat-cell *matCellDef="let row"> {{row[2] }} </td>
+                                </ng-container> -->
+
+								<ng-container matColumnDef="actions">
+									<th mat-header-cell *matHeaderCellDef></th>
+									<td mat-cell *matCellDef="let row">
+										<a href="javascript:;" *ngxPermissionsOnly="['canShowBonCommande']" (click)="showBC(row)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="la la-search-plus"></i></a>
+										<a href="javascript:;" *ngxPermissionsOnly="['canEditBonCommande']" (click)="editBonCommand(row)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+										<!----       <a href="javascript:;" (click)="deletepp(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>-->
+									</td>
+								</ng-container>
+
+								<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+								<tr mat-row *matRowDef="let row; columns: displayedColumns;">
+								</tr>
+							</table>
+							<div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+								{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+							</div>
+							<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+								<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+								</mat-progress-spinner>
+							</mat-card>
+							<mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

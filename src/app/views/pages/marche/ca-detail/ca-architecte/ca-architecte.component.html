@@ -1,0 +1,578 @@
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label">
+		<button
+			type="submit"
+			_ngcontent-dkp-c41=""
+			class="
+				btn btn-success btn-md btn-tall btn-wide
+				kt-font-bold kt-font-transform-u
+			"
+			(click)="ShowForm()"
+		>
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{
+				"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.AJOUTER_ARCHITECTES"
+					| translate
+			}}
+		</button>
+	</div>
+	<div *ngIf="Ajouter" class="espace_bloc">
+		<form
+			*ngxPermissionsOnly="['canCreatePrestataireAo']"
+			class="kt-form"
+			autocomplete="off"
+			(submit)="AjouterArchitecte()"
+		>
+			<div class="row">
+				<div class="col-lg-12 col-md-offset-2">
+					<div class="kt-portlet portlet-3">
+						<div class="kt-portlet__head">
+							<div class="kt-portlet__head-label">
+								<span class="kt-portlet__head-icon">
+									<i class="flaticon2-size"></i>
+								</span>
+								<h3 class="kt-portlet__head-title">
+									{{
+										"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.AJOUTER_ARCHITECTES"
+											| translate
+									}}
+								</h3>
+							</div>
+						</div>
+						<div class="kt-portlet__body">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field
+											class="example-full-width"
+										>
+											<input
+												matInput
+												type="text"
+												class="form-control"
+												name="nom"
+												placeholder="{{
+													'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NOM_ARCHITECTE'
+														| translate
+												}} :"
+												[(ngModel)]="architecteForm.nom"
+												required
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field
+											class="example-full-width"
+										>
+											<input
+												matInput
+												type="text"
+												class="form-control"
+												name="prenom"
+												placeholder="{{
+													'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.PRENOM_ARCHITECTE'
+														| translate
+												}} :"
+												[(ngModel)]="
+													architecteForm.prenom
+												"
+												required
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field
+											class="example-full-width"
+										>
+											<input
+												matInput
+												type="text"
+												class="form-control"
+												name="mail"
+												placeholder="{{
+													'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MAIL_ARCHITECTE'
+														| translate
+												}} :"
+												[(ngModel)]="
+													architecteForm.mail
+												"
+												required
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field
+											class="example-full-width"
+										>
+											<input
+												matInput
+												type="text"
+												class="form-control"
+												name="adresse"
+												placeholder="{{
+													'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADRESSE_ARCHITECTE'
+														| translate
+												}} :"
+												[(ngModel)]="
+													architecteForm.adresse
+												"
+												required
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field
+											class="example-full-width"
+										>
+											<input
+												matInput
+												type="text"
+												class="form-control"
+												name="montant"
+												(blur)="onMontantAndPercentChange()" 
+												placeholder="{{
+													'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MONTAANT_ARCHITECTE'
+														| translate
+												}} :"
+												[(ngModel)]="
+													architecteForm.montant
+												"
+												required
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field
+											class="example-full-width"
+										>
+											<input
+												matInput
+												type="text"
+												class="form-control"
+												name="pourcentage"
+												(blur)="onMontantAndPercentChange()" 
+												placeholder="{{
+													'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.POURCENTAGE_ARCHITECTE'
+														| translate
+												}} :"
+												[(ngModel)]="
+													architecteForm.pourcentage
+												"
+												required
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field
+											class="example-full-width"
+										>
+											<input
+												readonly
+												matInput
+												type="text"
+												class="form-control"
+												name="profit"
+												placeholder="{{
+													'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.PROFIT_ARCHITECTE'
+														| translate
+												}} :"
+												[(ngModel)]="profit"
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--Action Section :: begin-->
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label" align="right">
+					<button
+						type="submit"
+						_ngcontent-dkp-c41=""
+						class="
+							btn btn-success btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						"
+					>
+						<i
+							_ngcontent-dkp-c41=""
+							class="icon la la-floppy-o"
+						></i>
+						{{ "PAGES.GENERAL.SAVE" | translate }}
+					</button>
+					<button
+						_ngcontent-dkp-c41=""
+						class="
+							btn btn-info btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						"
+						type="reset"
+						(click)="annuler()"
+					>
+						<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+						{{ "PAGES.GENERAL.EXIT" | translate }}
+					</button>
+					<button
+						_ngcontent-dkp-c41=""
+						class="
+							btn btn-secondary btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						"
+						type="reset"
+					>
+						<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+						{{ "PAGES.GENERAL.RESET" | translate }}
+					</button>
+				</div>
+				<div class="espace_bloc"></div>
+			</div>
+			<!--Action Section :: end-->
+		</form>
+	</div>
+
+	<div class="espace_bloc text text-success">
+		<div class="kt-portlet__body">
+			<div class="kt-portlet__body kt-portlet__body--fit">
+				<div class="example-container mat-elevation-z8">
+					<table
+						id="exportData"
+						mat-table
+						[dataSource]="dataSource"
+						class="mat-elevation-z8"
+						matSort
+					>
+						<ng-container matColumnDef="nom">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-header
+							>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NOM_ARCHITECTE"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let row">
+								{{ row.nom ? row.nom : "-" }}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="prenom">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-header
+							>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.PRENOM_ARCHITECTE"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let row">
+								{{ row.prenom ? row.prenom : "-" }}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="mail">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-header
+							>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MAIL_ARCHITECTE"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let row">
+								{{ row.mail ? row.mail : "-" }}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="adresse">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-header
+							>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADRESSE_ARCHITECTE"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let row">
+								{{ row.adresse ? row.adresse : "-" }}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="montant">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-header
+							>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MONTAANT_ARCHITECTE"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let row">
+								{{ row.montant ? row.montant : "-" }}
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="pourcentage">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-header
+							>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.POURCENTAGE_ARCHITECTE"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let row">
+								{{ row.pourcentage ? row.pourcentage : "-" }}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="noteTotale">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-header
+							>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NOTE_TOTALE_ARCHITECTE"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let row">
+								{{ row.noteTotale ? row.noteTotale : "0" }}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="actions">
+							<th mat-header-cell *matHeaderCellDef></th>
+							<td mat-cell *matCellDef="let row">
+								<button
+									type="button"
+									(click)="detailArchitecte(row.id)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-success
+										btn-icon-md
+										btn_table_show
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.DETAILS' | translate
+									}}"
+								>
+									<i class="icon la la-search-plus"></i>
+								</button>
+								<button
+									type="button"
+									*ngIf="valDatePlis"
+									(click)="imprimerAvis(row.id)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-warning
+										btn-icon-md
+										btn_table_edit
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.PRINT' | translate
+									}}"
+								>
+									<i class="icon la la-print"></i>
+								</button>
+								<button
+									*ngIf="
+										valDatePlis &&
+										row.id != idNoteArchitecte &&
+										row.noteTotale > 0
+									"
+									type="button"
+									(click)="imprimerAvisEcarte(row.id)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-warning
+										btn-icon-md
+										btn_table_edit
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.PRINT_ECARTER'
+											| translate
+									}}"
+								>
+									<i class="icon la la-print"></i>
+								</button>
+								<button
+									*ngIf="
+										valDatePlis &&
+										row.id != idNoteArchitecte &&
+										row.noteTotale == -1
+									"
+									type="button"
+									(click)="imprimerAvisEcarte(row.id)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-warning
+										btn-icon-md
+										btn_table_edit
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.PRINT_ECARTER'
+											| translate
+									}}"
+								>
+									<i class="icon la la-print"></i>
+								</button>
+								<button
+									*ngIf="
+										valDatePlis &&
+										row.id == idNoteArchitecte &&
+										row.noteTotale != 0
+									"
+									type="button"
+									(click)="imprimerAvisAccepter(row.id)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-warning
+										btn-icon-md
+										btn_table_edit
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.PRINT_ACCEPTER'
+											| translate
+									}}"
+								>
+									<i class="icon la la-print"></i>
+								</button>
+								<button
+									type="button"
+									(click)="editArchitecte(row.id)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-success
+										btn-icon-md
+										btn_table_show
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.EDIT' | translate
+									}}"
+								>
+									<i class="icon la la-edit"></i>
+								</button>
+								<button
+									type="button"
+									(click)="deleteArchitecte(row.id)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-danger
+										btn-icon-md
+										btn_table_delete
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.DELETE' | translate
+									}}"
+								>
+									<i class="icon la la-trash"></i>
+								</button>
+							</td>
+						</ng-container>
+						<tr
+							mat-header-row
+							*matHeaderRowDef="displayedColumns"
+						></tr>
+						<tr
+							mat-row
+							*matRowDef="let row; columns: displayedColumns"
+						></tr>
+					</table>
+
+					<mat-card
+						*ngIf="isLoading"
+						style="
+							display: flex;
+							justify-content: center;
+							align-items: center;
+						"
+					>
+						<mat-progress-spinner
+							color="primary"
+							mode="indeterminate"
+							diameter="50"
+						>
+						</mat-progress-spinner>
+					</mat-card>
+					<mat-paginator
+						[length]="dataSize"
+						[pageSize]="5"
+						[pageIndex]="0"
+						[pageSizeOptions]="[5, 10, 50]"
+						showFirstLastButtons
+					></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

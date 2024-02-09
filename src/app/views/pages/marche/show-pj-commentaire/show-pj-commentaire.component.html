@@ -1,0 +1,37 @@
+
+
+<div  class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource1" matSort>
+       
+        <ng-container matColumnDef="nomDoc">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+            </mat-header-cell>
+            <!-- <mat-cell *matCellDef="let row; let i=index">
+                <button type="button" (click)="onDeletePj(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+                    <i class="icon la la-trash"></i>
+                </button>
+            </mat-cell> -->
+            <mat-cell *matCellDef="let row">
+                <button type="button" (click)="onClickPj(row.idAlfresco,row.id)"
+                    [disabled]="!row.idAlfresco"
+                    [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }"
+                    class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+                    <i class="flaticon-download-1"></i></button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns1;">
+        </mat-row>
+    </mat-table>
+
+</div>
+
+

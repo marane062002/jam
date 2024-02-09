@@ -1,0 +1,163 @@
+<!-- begin:: Content -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+						رقم
+						النقطة :
+						{{point.id}}
+					</h3>
+				</div>
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+						وضع النقطة : <span class="kt-font-brand kt-font-bold"> {{point.statut.libelle}}</span>
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-calendar-1"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						تفاصيل
+						النقطة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>رقم الدورة :</th>
+									<td class="donnee_show"> {{point.session.id}}</td>
+									<th> المصدر:</th>
+									<td class="donnee_show">
+										{{point.source}}
+									</td>
+								</tr>
+								<tr>
+									<th>موضوع النقطة : </th>
+									<td class="donnee_show" colspan="4">
+										{{point.objet}}
+									</td>
+								</tr>
+								<tr *ngIf="choix1">
+									<th>القسم :</th>
+									<td class="donnee_show">
+										{{point.division }}
+									</td>
+									<th>المصلحة :</th>
+									<td class="donnee_show" colspan="4">
+										{{point.service }}
+									</td>
+								</tr>
+								<tr *ngIf="choix1">
+									<th>الموظف :</th>
+									<td class="donnee_show" colspan="4">
+										{{point.personnel }}
+									</td>
+								</tr>
+								<tr *ngIf="choix2">
+									<th> عضو المكتب
+										:</th>
+									<td class="donnee_show" colspan="4">
+										{{point.membreBureau.membre.nom }} {{point.membreBureau.membre.prenom}}
+									</td>
+								</tr>
+								<tr *ngIf="choix4">
+									<th>مصدر آخر :</th>
+									<td class="donnee_show" colspan="4">
+										{{point.sourceExterne }}
+									</td>
+								</tr>
+								<tr>
+									<th>الصنف:</th>
+									<td class="donnee_show">
+										{{point.type.libelle}} </td>
+									<th>
+										اللجان
+										المكلفة :</th>
+										<td class="donnee_show">
+											<ul class="list-group">
+												<li *ngFor="let row of nomCommissions">
+													{{ row }}
+												  </li>
+											</ul>
+										</td>
+								</tr>
+								<tr>
+									<th>ملاحظات عن النقطة : </th>
+									<td colspan="4" class="donnee_show">
+										{{point.observations}} </td>
+								</tr>
+								<tr>
+									<th>توصيات :</th>
+									<td class="donnee_show">{{point.typeVote}} </td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon2-hangouts-logo"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						التصويت
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tr>
+								<th style="color: forestgreen; width: 20% !important; border-top: none !important;">
+									الموافقون&nbsp;<i class="fa fa-thumbs-up"></i>&nbsp; : </th>
+								<td class="donnee_show"
+									style="font-size: 14px;font-style: normal; border-top: none !important;">
+									{{point.voteOui}}</td>
+								<th style="color: red; width: 20% !important; border-top: none !important;">
+									الرافضون&nbsp;<i class="fa fa-thumbs-down"></i>&nbsp; : </th>
+								<td class="donnee_show"
+									style="font-size: 14px;font-style: normal; border-top: none !important;">
+									{{point.voteNon}}
+								</td>
+								<th style="color: slategray; width: 20% !important; border-top: none !important;">
+									الممتنعون&nbsp; <i class="fa fa-circle"></i>&nbsp; : </th>
+								<td class="donnee_show"
+									style="font-size: 14px;font-style: normal; border-top: none !important;">
+									{{point.pasVote}}
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

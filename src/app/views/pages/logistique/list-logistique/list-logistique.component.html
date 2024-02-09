@@ -1,0 +1,124 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.LOGISTIQUE.TITRE_INDEX" | translate }}
+			</h3>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<button (click)="exportTable()" type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.LOGISTIQUE.TITRE_INDEX' | translate }}">
+						<i class="flaticon2-download text-success"></i>
+					</button>
+					<a href="javascript:; " (click)="addLogistique()" *ngxPermissionsOnly="['canCreateAssociation']" class="btn btn-success btn-elevate btn-icon-sm"> <i class="la la-plus"></i> {{ "PAGES.LOGISTIQUE.TITRE_NEW" | translate }} </a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}" />
+		</mat-form-field>
+	</div>
+	<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+		<!-- nom Column -->
+		<ng-container matColumnDef="numSubvention">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="numSubvention">
+				{{ "PAGES.SUBVENTION.NUM_SUB" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="num">{{ row.numSubvention }}</td>
+		</ng-container>
+
+		<!-- nom Column -->
+		<ng-container matColumnDef="anneeSubvention">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="nom">{{ "PAGES.SUBVENTION.DATE_SUB" | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="nom">
+				<!-- {{ row.nom ? (row.nom.length > 25 ? (row.nom | slice : 0 : 25) + "..." : row.nom) : "-" }} -->
+				<a href="javascript:void(0);" matTooltip="{{ row.nom }}"><i class="fas fa-info-circle"></i></a>{{ row.anneeSubvention }}
+			</td>
+		</ng-container>
+
+		<!-- email  Column -->
+		<ng-container matColumnDef="champActivite">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="champActivite">
+				{{ "PAGES.LOGISTIQUE.CHAMPACT" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="mail">
+				<!-- {{ row.email ? (row.email.length > 20 ? (row.email | slice : 0 : 17) + "..." : row.email) : "-" }} -->
+				<a href="javascript:void(0);" matTooltip="{{ row.gid }}"><i class="fas fa-info-circle"></i></a>{{ row.champActivite }}
+			</td>
+		</ng-container>
+
+		<!-- typeActiviteAssociation  Column -->
+		<ng-container matColumnDef="montantSubvention">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="montantSubvention">
+				{{ "PAGES.SUBVENTION.MONTANT_SUB" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="montantSubvention">
+				{{ row?.montantDemande ? row.montantDemande : "-" }}
+			</td>
+		</ng-container>
+
+		<!-- Adresse local Column -->
+
+		<!-- Fax / Num Tel Column -->
+		<ng-container matColumnDef="date">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="DATE">{{ "PAGES.LOGISTIQUE.DATE" | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="date">{{ row?.date | date : "dd/MM/yyyy" }}</td>
+		</ng-container>
+
+		<!-- President Column -->
+		<ng-container matColumnDef="natureSubvention">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="natureSubvention">
+				{{ "PAGES.SUBVENTION.TYPE_SUBV" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="date">{{ row?.natureSubvention }}</td>
+		</ng-container>
+		<!-- President Column -->
+		<ng-container matColumnDef="nomProjet">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="nomProjet">
+				{{ "PAGES.SUBVENTION.NOM_ACTIVITE" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="date">{{ row?.nomProjet }}</td>
+		</ng-container>
+
+		<!-- pour exporter excel -->
+		<ng-container matColumnDef="dateCreation">
+			<th hidden mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ التأسيس</th>
+			<td hidden mat-cell *matCellDef="let row">{{ row.dateCreation | date : "dd/MM/yyyy" }}</td>
+		</ng-container>
+		<ng-container matColumnDef="datePvChangementBureau">
+			<th hidden mat-header-cell *matHeaderCellDef mat-sort-header>إنتهاء صلاحية المكتب</th>
+			<td hidden mat-cell *matCellDef="let row">{{ row.datePvChangementBureau | date : "dd/MM/yyyy" }}</td>
+		</ng-container>
+		<ng-container matColumnDef="annexeAdministratif">
+			<th hidden mat-header-cell *matHeaderCellDef mat-sort-header>الملحقة</th>
+			<td hidden mat-cell *matCellDef="let row">{{ row.annexeAdministratif }}</td>
+		</ng-container>
+		<!-- pour exporter excel -->
+
+		<!-- Action Column -->
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="action"></th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button type="button" routerLink="/logistique/show-logistique/{{ row.id }}" *ngxPermissionsOnly="['canShowAssociation']" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="icon la la-search-plus"></i></button>
+				<button type="button" routerLink="/logistique/edit-logistique/{{ row.id }}" *ngxPermissionsOnly="['canUpdateAssociation']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+				<button type="button" (click)="deleteLogistique(row.id)" *ngxPermissionsOnly="['canDeleteAssociation']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div *ngIf="dataSize == 0 && isLoading == false" style="display: flex; justify-content: center; padding: 2%; color: orangered">
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+		<mat-progress-spinner color="primary" mode="indeterminate" diameter="50"> </mat-progress-spinner>
+	</mat-card>
+	<mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons></mat-paginator>
+	<hr />
+</div>

@@ -1,0 +1,63 @@
+<div class="kt-portlet__body">
+    <div class="kt-section">
+        <div class="example-header">
+            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+            </mat-form-field>
+        </div>
+
+        <div class="example-container mat-elevation-z8">
+
+            <mat-table [dataSource]="dataSource" matSort>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                </ng-container>
+                <!-- num Column -->
+                <ng-container matColumnDef="numAppartement">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.NUM_APPARTEMENT' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        {{row.numAppartement}}
+                    </mat-cell>
+                </ng-container>
+                <!-- datedebut Column -->
+                <ng-container matColumnDef="debutExploitation">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.DATE_DEBUT_EXPLOITATION' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.debutExploitation|date:'dd/MM/yyyy'}} </mat-cell>
+                </ng-container>
+
+                <!-- situation Column -->
+                <ng-container matColumnDef="situation">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.SITUATION' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.situation}} </mat-cell>
+                </ng-container>
+
+                <!-- superficie Column -->
+                <ng-container matColumnDef="superficie">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.SUPERFICIE' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.superficie}} </mat-cell>
+                </ng-container>
+                <!-- Action Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button *ngxPermissionsOnly="['canShowHabitation']" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="icon la la-search-plus"></i></button>
+                        <button *ngxPermissionsOnly="['canUpdateHabitation']" (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="icon la la-edit"></i></button>
+                        <!-- <button class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"><i class="icon la la-print"></i></button> -->
+                        <button *ngxPermissionsOnly="['canDeleteHabitation']" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+
+                    </mat-cell>
+                </ng-container>
+
+
+
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

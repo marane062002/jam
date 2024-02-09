@@ -1,0 +1,125 @@
+<!-- begin:: Content -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+						رقم المشاورة :
+						{{consultation.numConsultation}}
+					</h3>
+				</div>
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+						وضع المشاورة : <span class="kt-font-brand kt-font-bold"> {{consultation.statut.libelle}}</span>
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fas fa-info kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						تفاصيل
+						المشاورة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>الرقم الداخلي :</th>
+									<td class="donnee_show"> {{consultation.id}}</td>
+
+									<th> نوع المشاورة </th>
+									<td class="donnee_show">
+										{{consultation.type.libelle }}
+									</td>
+								</tr>
+								<tr>
+									<th>الموضوع :</th>
+									<td colspan="4" class="donnee_show">
+										{{consultation.objet}}
+									</td>
+								</tr>
+								<tr>
+									<th style="width: 15% !important;">الميزانية المقدرة :</th>
+									<td class="donnee_show">
+										{{consultation.budgetGlobalPropose  | macurrency}} </td>
+									<th> تاريخ البدء :</th>
+									<td class="donnee_show">
+										{{consultation.dateDebutConsultation |date: 'dd/MM/yyyy'}} </td>
+								</tr>
+								<tr>
+									<th>
+										القسم :</th>
+									<td class="donnee_show">
+										{{divisionLibelle}} </td>
+									<th>
+										المصلحة :</th>
+									<td>
+										{{serviceLibelle}} </td>
+								</tr>
+								<tr>
+									<th>
+										صيغة التحويل :</th>
+									<td class="donnee_show">
+										{{mdPassation}} </td>
+									<th>
+										الحد الأدنى :</th>
+									<td class="donnee_show">
+										{{consultation.seuilMinimal}} </td>
+								</tr>
+								<tr>
+									<th>الوصف :</th>
+									<td colspan="4" class="donnee_show">
+										{{consultation.description}} </td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="espace_bloc"></div>
+					</div>
+				</div>
+				<div class="kt-portlet__foot">
+					<div>
+						<br>
+						<!----   <div class="btn-group special" role="group" aria-label="Basic example">
+                  <button  type="button" (click)="AddCommande()" class="btn btn-secondary">الطلبيات</button>
+                  <button  type="button" (click)="AddArticle()" class="btn btn-secondary">الأغراض</button>
+                  <button  type="button" (click)="AddPrestataire()" class="btn btn-secondary">المتنافسين </button>
+                  <button  type="button"  (click)="AddCommission()" class="btn btn-secondary">اللجان </button>
+                  <button  type="button" class="btn btn-secondary">
+                      الوثائق المرفقة  للمشاورة  </button>
+                </div>-->
+
+						<mat-tab-group (selectedTabChange)="changeTab($event)">
+							<mat-tab label="الطلبيات"> </mat-tab>
+							<mat-tab label="الأغراض"> </mat-tab>
+							<mat-tab label="المتنافسين"></mat-tab>
+							<mat-tab label="اللجان"> </mat-tab>
+							<mat-tab label=" الوثائق المرفقة  للمشاورة "></mat-tab>
+						</mat-tab-group>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</div>
+
+<router-outlet></router-outlet>

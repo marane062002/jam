@@ -1,0 +1,133 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-user-ok"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						تفاصيل المنتخب
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<!-- <th>
+											الرقم الداخلي :</th>
+										<td class="donnee_show">
+											{{formData.id}}
+										</td> -->
+									<th>الاسم :</th>
+									<td class="donnee_show">
+										{{formData.membre.prenom}}
+									</td>
+									<th>
+										النسب :</th>
+									<td class="donnee_show">
+										{{formData.membre.nom}}
+									</td>
+
+								</tr>
+								<tr>
+									<th>
+										البطاقة الوطنية:</th>
+									<td class="donnee_show">
+										{{formData.membre.cin}}
+									</td>
+									<th>
+										الهاتف المحمول :</th>
+									<td class="donnee_show">
+										{{formData.membre.tele}}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										الحالة العائلية:</th>
+									<td class="donnee_show">
+										{{getSituationFamiliale(formData.membre.situationFamiliale)}}
+									</td>
+									<th>
+										المستوى الدراسي:</th>
+									<td class="donnee_show">
+										{{getNiveauScolaire(formData.membre.niveauScolaire)}}
+									</td>
+								</tr>
+								<tr>
+
+									<th>البريد الإلكتروني :</th>
+									<td class="donnee_show">
+										{{formData.membre.mail}}
+									</td>
+									<th>
+										الانتماء السياسي : </th>
+									<td class="donnee_show">
+										{{formData.membre.parti}}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										العنوان :</th>
+									<td class="donnee_show" colspan="4">
+										{{formData.membre.adresse}}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										المقاطعة :</th>
+									<td class="donnee_show">
+										{{formData.membre.arrondissement}}
+									</td>
+									<th>
+										الصفة :</th>
+									<td class="donnee_show">
+										{{formData.role.libelle}}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										الوضعية:
+									</th>
+									<td class="donnee_show">
+										{{getStatutElus(formData.membre.actif)}}
+									</td>
+									<th>
+										المهنة :
+									</th>
+									<td class="donnee_show">
+										{{formData.membre.profession}}
+									</td>
+								</tr>
+								<tr>
+									<th>
+										ملاحظات :
+									</th>
+									<td class="donnee_show" colspan="4">
+										{{formData.membre.remarques}}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="espace_bloc"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

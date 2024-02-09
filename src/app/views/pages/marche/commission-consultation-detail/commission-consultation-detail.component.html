@@ -1,0 +1,57 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.MARCHE.COMMISSIONS.TITRE_SHOW' | translate }} 
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>رقم اللجنة :</th>
+									<td class="donnee_show kt-font-warning kt-font-bold"> {{commission.id}}</td>
+									<th> نوع اللجنة :</th>
+									<td class="donnee_show">
+										{{commission.typeCommission.libelle}}
+									</td>
+									<th> تاريخ البدء :</th>
+									<td class="donnee_show">
+										{{commission.dateOuveture  |date: 'dd/MM/yyyy' }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<div class="kt-portlet__foot">
+							<div>
+								<br>
+								<div class="btn-group special" role="group" aria-label="Basic example">
+									<button type="button" (click)="ShowPI()" class="btn btn-secondary"> المشتركين
+										الداخليين</button>
+									<button type="button" (click)="ShowPE()" class="btn btn-secondary">المشتركين
+										الخارجيين</button>
+									<button type="button" (click)="ShowOffreDeposee()" class="btn btn-secondary">عروض
+										المتنافسين</button>
+									<button type="button" class="btn btn-secondary">الوثائق المرفقة</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<router-outlet></router-outlet>

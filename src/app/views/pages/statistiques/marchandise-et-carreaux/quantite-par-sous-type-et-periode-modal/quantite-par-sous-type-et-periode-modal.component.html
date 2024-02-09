@@ -1,0 +1,266 @@
+<div class="kt-portlet">
+    <div class="row">
+            <h4 class="modal-title" id="exampleModalCenterTitle">Marchandise écoulée par sous-type de produit selon une
+                certaine période pour chaque carreau<button mat-icon-button color="primary" (click)="Recu()">
+                    <i class="fas fa-download"></i>
+                </button></h4>
+
+            <button mat-icon-button (click)="close()">
+                <h4>×</h4>
+            </button>
+    </div>
+
+    <table *ngIf="isAllTrue==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+        style="width: 100%;">
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total en Kg
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.total}}</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="sousType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sous-type de marchandise
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.sousType}}</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="referenceProduit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Référence du produit
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.referenceProduit}}</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsALL"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsALL;"></tr>
+    </table>
+    <table *ngIf="isNotTotal==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+        style="width: 100%;">
+        <ng-container matColumnDef="sousType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sous-type de marchandise
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.sousType}}</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="referenceProduit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Référence du produit
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.referenceProduit}}</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+    </table>
+    <table *ngIf="isNotSousType==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+        matSort style="width: 100%;">
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total en Kg
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.total}}</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="referenceProduit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Référence du produit
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.referenceProduit}}</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+    </table>
+    <table *ngIf="isNotRefProd==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+        matSort style="width: 100%;">
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total en Kg
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.total}}</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="sousType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sous-type de marchandise
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.sousType}}</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+    </table>
+    <table *ngIf="isNotTotalAndIsNotSousType==true" id="exportData" mat-table [dataSource]="dataSource"
+        class="mat-elevation-z8" matSort style="width: 100%;">
+        <ng-container matColumnDef="referenceProduit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Référence du produit
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.referenceProduit}}</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+    </table>
+    <table *ngIf="isNotTotalAndIsNotRefProd==true" id="exportData" mat-table [dataSource]="dataSource"
+        class="mat-elevation-z8" matSort style="width: 100%;">
+        <ng-container matColumnDef="sousType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Sous-type de marchandise
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.sousType}}</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+    </table>
+    <table *ngIf="isNotRefProdAndIsNotSousType==true" id="exportData" mat-table [dataSource]="dataSource"
+        class="mat-elevation-z8" matSort style="width: 100%;">
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total en Kg
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span>{{row.total}}</span>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns6"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"></mat-paginator>
+
+</div>
+
+<div style="overflow: hidden; height: 0">
+    <div id="htmlData">
+        <div class="toprint">
+            <div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
+                <div class="col-md-3">
+                    <img style="width: 500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-3">
+                    <img style="width: 200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+                </div>
+            </div><br><br>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h2 class="kt-portlet__head-title"
+                        style="width: 80%;margin: 20px auto;text-align: center;font-size: 40px;">
+                        <strong>Marchandise écoulée par sous-type de produit selon une certaine période pour chaque
+                            carreau</strong>
+                    </h2>
+                </div>
+                <div class="col-md-3"></div>
+            </div><br><br><br><br>
+            <div class="row">
+                <table class="table" style="width: 60%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="border: none;font-size: 30px;">N° Carreau</th>
+                        <th class="table-bordered dashed-line">{{toPrint?.idHangar}}
+                        </th>
+                        <th style="border: none;font-size: 30px;">Date et heure</th>
+                        <th class="table-bordered dashed-line">{{toPrint?.currentTime | date:"dd-MM-yyyy HH:mm"}}</th>
+                    </tr>
+                </table>
+            </div><br><br>
+            <div class="row">
+                <table
+                    style="background-color: #499996;width: 60%;margin: 20px auto;text-align: center;font-size: 30px;">
+                    <tr>
+                        <th>Du :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateDebut |
+                            date:"dd-MM-yyyy"}}
+                        </th>
+                        <th>Au :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateFin | date:"dd-MM-yyyy"}}
+                        </th>
+                    </tr>
+                </table>
+            </div><br><br><br>
+            <div class="row">
+                <table *ngIf="isAllTrue==true" class="table table-bordered"
+                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Total en Kg</th>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Sous-type de marchandise</th>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Référence du produit</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrint?.data">
+                        <td style="font-size: 30px;">{{item.total}}</td>
+                        <td style="font-size: 30px;">{{item.sousType}}</td>
+                        <td style="font-size: 30px;">{{item.referenceProduit}}</td>
+                    </tr>
+                </table>
+                <table *ngIf="isNotTotal==true" class="table table-bordered"
+                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Sous-type de marchandise</th>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Référence du produit</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrint?.data">
+                        <td style="font-size: 30px;">{{item.sousType}}</td>
+                        <td style="font-size: 30px;">{{item.referenceProduit}}</td>
+                    </tr>
+                </table>
+                <table *ngIf="isNotRefProd==true" class="table table-bordered"
+                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Total en Kg</th>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Sous-type de marchandise</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrint?.data">
+                        <td style="font-size: 30px;">{{item.total}}</td>
+                        <td style="font-size: 30px;">{{item.sousType}}</td>
+                    </tr>
+                </table>
+                <table *ngIf="isNotSousType==true" class="table table-bordered"
+                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Total en Kg</th>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Référence du produit</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrint?.data">
+                        <td style="font-size: 30px;">{{item.total}}</td>
+                        <td style="font-size: 30px;">{{item.referenceProduit}}</td>
+                    </tr>
+                </table>
+                <table *ngIf="isNotTotalAndIsNotRefProd==true" class="table table-bordered"
+                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Sous-type de marchandise</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrint?.data">
+                        <td style="font-size: 30px;">{{item.sousType}}</td>
+                    </tr>
+                </table>
+
+                <table *ngIf="isNotTotalAndIsNotSousType==true" class="table table-bordered"
+                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Référence du produit</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrint?.data">
+                        <td style="font-size: 30px;">{{item.referenceProduit}}</td>
+                    </tr>
+                </table>
+                <table *ngIf="isNotRefProdAndIsNotSousType==true" class="table table-bordered"
+                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    <tr>
+                        <th style="font-size: 30px;background-color: #b5c5e7;">Total en Kg</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrint?.data">
+                        <td style="font-size: 30px;">{{item.total}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

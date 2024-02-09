@@ -1,0 +1,62 @@
+<div autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Modifier une type de vaccination:
+
+				</h2>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<form [formGroup]="FormArticle" (ngSubmit)="updateStatut()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group fv-plugins-icon-container">
+          <mat-form-field class="example-full-width">
+            <label> Libellé: </label>
+            <input matInput formControlName="libelle" type="text" class="form-control" placeholder="">
+          </mat-form-field>
+          <div class="fv-plugins-message-container"></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group fv-plugins-icon-container">
+          <mat-form-field class="example-full-width">
+            <label> Description : </label>
+            <input matInput formControlName="description" type="text" class="form-control" placeholder="">
+          </mat-form-field>
+          <div class="fv-plugins-message-container"></div>
+        </div>
+      </div>
+    </div>
+   
+    <div class="kt-portlet__heads" style="margin-top: 20px;">
+        <div class="kt-portlet__head-label" align="right">
+            <button
+                href="javascript:; "
+                (click)="RetourEmbalages()"
+                _ngcontent-dkp-c41=""
+                class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+            >
+                <i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+                Retour
+            </button>
+    
+            <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+                <i class="icon la la-floppy-o"></i>
+                Enregistrer
+              </button>
+        </div>
+    </div>
+  </form>
+  
+	
+</div>
+
+
+

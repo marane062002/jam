@@ -1,0 +1,97 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-interface-2"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TITRE_INDEX' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:; " *ngxPermissionsOnly="['canCreateConsultation']" (click)=" nouvelleconsultation()" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i> {{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TITRE_NEW' | translate }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="kt-portlet__body kt-portlet__body--fit">
+                        <div class="example-header col-md-4">
+                            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                            </mat-form-field>
+                        </div>
+                        <div class="example-container mat-elevation-z8">
+                            <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="numConsultation">
+                                    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NUM' | translate }}</th>
+                                    <td mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row[1]?row[1]:"-"}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="budgetGlobalPropose">
+                                    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.BUDGET_ESTIMATIF' | translate }}</th>
+                                    <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                        {{row[2] | macurrency}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="type">
+                                    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TYPE' | translate }}</th>
+                                    <td mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row[3]}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="dateDebutConsultation">
+                                    <th mat-header-cell class="td_mail" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DATE_DEBUT' | translate }}</th>
+                                    <td mat-cell class="td_mail" *matCellDef="let row"> {{row[4] |date: 'dd/MM/yyyy'}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="statut">
+                                    <th mat-header-cell class="td_mail" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ETAT' | translate }}</th>
+                                    <td mat-cell class="td_mail" *matCellDef="let row"> {{row[5]}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef></th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <a href="javascript:;" *ngxPermissionsOnly="['canShowConsultation']" (click)="showconsultation(row[0])" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+											class="la la-search-plus"></i></a>
+                                        <a href="javascript:;" *ngxPermissionsOnly="['canEditConsultation']" (click)="editconsultation(row[0])" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+											class="la la-edit"></i></a>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                </tr>
+                            </table>
+                            <div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                                </mat-progress-spinner>
+                            </mat-card>
+                            <mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

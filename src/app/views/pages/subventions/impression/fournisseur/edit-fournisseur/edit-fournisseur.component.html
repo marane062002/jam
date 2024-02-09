@@ -1,0 +1,111 @@
+<form novalidate [formGroup]="addForm" autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<span class="kt-portlet__head-icon">
+					<i class="fa fa-truck kt-font-inverse-brand"></i>
+				</span>
+				<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ 'PAGES.IMPRESSION.EDIT_FOURNISSEUR' | translate }}
+				</h3>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<!-- 1 ============== nomLocal | dateDemrrageGestion ========================= -->
+			<div class="row">
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="nom"
+								placeholder="{{ 'PAGES.SUBVENTION.NOM' | translate }} :" value="" required>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="prenom"
+								placeholder="{{ 'PAGES.SUBVENTION.PRENOM' | translate }} :" value="">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- 3 =================dateFinGestion | duree====================== -->
+			<div class="row">
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="mail"
+								placeholder="{{ 'PAGES.SUBVENTION.MAIL' | translate }} :" value="">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="fax"
+								placeholder="{{ 'PAGES.SUBVENTION.FAX' | translate }} :" value="">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="gsm"
+								placeholder="{{ 'PAGES.SUBVENTION.GSM' | translate }} :" value="">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- 3 =================== note==================== -->
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" formControlName="adresse"
+								name="adresse" matInput
+								placeholder="{{ 'PAGES.SUBVENTION.ADRESSE' | translate }} :"></textarea>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</form>
+<!-- end::section form -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			[disabled]="addForm.invalid" (click)="onSubmit()"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

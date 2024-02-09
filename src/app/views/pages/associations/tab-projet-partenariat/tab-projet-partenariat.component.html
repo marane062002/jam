@@ -1,0 +1,82 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-search-magnifier-interface-symbol"></i>
+			</span>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button *ngIf="dataSource.data.length > 0" (click)="exportTable()" type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.PROJET_PART.TITRE_INDEX' | translate }}">
+						<i class="flaticon2-download text-success"></i>
+					</button>
+                    <a href="javascript:; " (click)="addProjetPartenariat()" *ngxPermissionsOnly="['canCreateProjetPartenariat']" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.PROJET_PART.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="exportDataProjetPart" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- nomProjet Column -->
+        <ng-container matColumnDef="nomProjet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_PART.NOM_PROJ' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.nomProjet}} </td>
+        </ng-container>
+        <!-- typeProjetPartenariat  Column -->
+        <ng-container matColumnDef="typeProjetPartenariat">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_PART.TYP_PROJ' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.typeProjetPartenariat}} </td>
+        </ng-container>
+        <!-- dateDemarrage  Column -->
+        <ng-container matColumnDef="dateDemarrage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_PART.DATE_DEMMARAGE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.dateDemarrage | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <!-- dateFin  Column -->
+        <ng-container matColumnDef="dateFin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_PART.DATE_FIN' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.dateFin | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <!-- budgetAlloue  Column -->
+        <ng-container matColumnDef="budgetAlloue">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_PART.BUDGET_ALLOUE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row"> {{row.budgetAlloue | dirhamsCurrency}} </td>
+        </ng-container>
+        <!-- objet  Column -->
+        <ng-container matColumnDef="objet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_PART.OBJET' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.objet}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" routerLink="/projet-partenariat/show-projet-partenariat/{{row.id}}" *ngxPermissionsOnly="['canShowProjetPartenariat']" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+						class="icon la la-search-plus"></i></button>
+                <button type="button" (click)="editProjetPartenariat(row)" *ngxPermissionsOnly="['canUpdateProjetPartenariat']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button type="button" (click)="deleteProjetPartenariat(row.id)" *ngxPermissionsOnly="['canDeleteProjetPartenariat']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

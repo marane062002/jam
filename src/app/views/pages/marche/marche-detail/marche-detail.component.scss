@@ -1,0 +1,106 @@
+.tab-marche {
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: monospace;
+}
+
+.btn {
+    margin-left: 0px !important;
+    margin-right: 3px !important;
+    /*
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 6px !important;
+    */
+}
+
+.pj th {
+    width: 19% !important;
+    text-transform: none !important;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #2a5599;
+    border-color: #153d7b;
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #1584eb;
+    border-color: #1584eb;
+}
+
+.btn-info:disabled {
+    color: #fff !important;
+    background-color: #fd2c72 !important;
+    border-color: #eb156e !important;
+}
+
+section {
+    display: table;
+}
+
+.example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+}
+
+.example-button-row {
+    display: table-cell;
+    width: 490px;
+}
+
+.example-button-row .mat-button-base {
+    margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 120px;
+}
+
+
+/** ========== Tabs style=========== */
+
+.mat-tab-group[_ngcontent-pbf-c14] {
+    margin-bottom: 0px !important;
+}
+
+.mat-tab-label-container {
+    background-color: #e4e8ee !important;
+}
+
+.mat-tab-header,
+.mat-tab-nav-bar {
+    background-color: #e4e8ee !important;
+}
+
+.adjudicataire {
+    text-align: center;
+    color: #ffffff;
+    background-color: #2a5599;
+    padding: 7px;
+    font-size: inherit;
+    text-transform: uppercase;
+}
+
+.vue360 {
+    text-align: center;
+    color: #ffffff;
+    background-color: #717373;
+    padding: 7px;
+    margin-bottom: 16px;
+    font-size: inherit;
+    text-transform: uppercase;
+}

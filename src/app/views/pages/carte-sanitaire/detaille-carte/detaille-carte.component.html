@@ -1,0 +1,236 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1 col-md-12">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			&nbsp;
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Détails de la carte sanitaire:
+			</h2>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations de l'Employé
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div  class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Nom :</th>
+								<td class="donnee_show">{{carteDetails.employe.nom}}</td>
+							</tr>
+							<tr>
+								<th>Prénom :</th>
+								<td class="donnee_show">{{carteDetails.employe.prenom}}</td>
+							</tr>
+
+							<tr>
+								<th>CIN :</th>
+								<td class="donnee_show">{{carteDetails.employe.cin}}</td>
+							</tr>
+							<tr>
+								<th>Sexe :</th>
+								<td class="donnee_show">{{carteDetails.employe.sexe}}</td>
+							</tr>
+
+							<tr>
+								<th>N°CNSS :</th>
+								<td class="donnee_show">{{carteDetails.employe.cnss}}</td>
+							</tr>
+							<tr>
+								<th>Date de naissance :</th>
+								<td class="donnee_show">{{carteDetails.employe.dateNaissance}}</td>
+							</tr>
+							<tr>
+								<th>Tél :</th>
+								<td class="donnee_show">{{carteDetails.employe.tel}}</td>
+							</tr>
+							<tr>
+								<th>Durée de validité de la carte :</th>
+								<td class="donnee_show">{{carteDetails.employe.dureCarte}}</td>
+							</tr>
+							<tr>
+								<th>Email :</th>
+								<td class="donnee_show">{{carteDetails.employe.email}}</td>
+							</tr>
+							<!-- <tr>
+								<th>Employeur :</th>
+								<td class="donnee_show">aaaaaaaaaaa</td>
+							</tr> -->
+							<tr>
+								<th>Fonction :</th>
+								<td class="donnee_show">{{carteDetails.employe.fonction}}</td>
+							</tr>
+							<tr>
+								<th>Date de recrutement :</th>
+								<td class="donnee_show">{{carteDetails.employe.dateRecrutement}}</td>
+							</tr>
+							<tr>
+								<th>Date demande de la carte :</th>
+								<td class="donnee_show">{{carteDetails.employe.dateDemandeDeCarte}}</td>
+							</tr>
+							<tr>
+								<th>Date du prochain controle :</th>
+								<td class="donnee_show">{{carteDetails.employe.dateProchainControle}}</td>
+							</tr>
+							<tr>
+								<th>Statut demande de la carte :</th>
+								<td class="donnee_show">
+									{{carteDetails.employe.statutDemandeDeCarte}}
+								</td>
+							</tr>
+							<tr>
+								<th>Type d'analyse demandé :</th>
+								<td class="donnee_show">{{carteDetails.employe.typeAnalyseDemande}}</td>
+							</tr>
+							<tr>
+								<th>Résultat de l'analyse :</th>
+								<td class="donnee_show">{{carteDetails.employe.resultatAnalyse}}</td>
+							</tr>
+							<tr>
+								<th>Date de résultat :</th>
+								<td class="donnee_show">{{carteDetails.employe.dateResultat}}</td>
+							</tr>
+							<tr>
+								<th>Décision :</th>
+								<td class="donnee_show">{{carteDetails.employe.decision}}</td>
+							</tr>
+							<tr>
+								<th>N°Quittance :</th>
+								<td class="donnee_show">{{carteDetails.employe.numQuittance}}</td>
+							</tr>
+							<tr>
+								<th>Date de la quittance :</th>
+								<td class="donnee_show">{{carteDetails.employe.dateQuittance}}</td>
+							</tr>
+							<tr>
+								<th>Date de la délivrance de la carte :</th>
+								<td class="donnee_show">{{carteDetails.employe.dateDelivranceCarte}}</td>
+							</tr>
+							<tr>
+								<th>Adresse :</th>
+								<td class="donnee_show">{{carteDetails.employe.adresse}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END DETAILS ASSOCIATION -->
+		</div>
+	</div>
+	<div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations de l'employeur
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Raison social :</th>
+								<td class="donnee_show"> {{carteDetails.raisonSocial}}</td>
+							</tr>
+							<tr>
+								<th>Taxe :</th>
+								<td class="donnee_show">{{carteDetails.taxe}}</td>
+							</tr>
+							<tr>
+								<th>Numéro d'autorisation :</th>
+								<td class="donnee_show">{{carteDetails.numeroAutorisation}}</td>
+							</tr>
+							<tr>
+								<th>IF :</th>
+								<td class="donnee_show">{{carteDetails.idFiscal}}</td>
+							</tr>
+							<tr>
+								<th>ICE :</th>
+								<td class="donnee_show">{{carteDetails.ice}}</td>
+							</tr>
+							<tr>
+								<th>Nombre d'employés :</th>
+								<td class="donnee_show">{{carteDetails.nombreEmployes}}</td>
+							</tr>
+							<tr>
+								<th>Tél :</th>
+								<td class="donnee_show">{{carteDetails.tel}}</td>
+							</tr>
+							<tr>
+								<th>Fax :</th>
+								<td class="donnee_show">{{carteDetails.fax}}</td>
+							</tr>
+							<tr>
+								<th>Email :</th>
+								<td class="donnee_show">{{carteDetails.fax}}</td>
+							</tr>
+							<tr>
+								<th>Adresse :</th>
+								<td class="donnee_show">{{carteDetails.adresse}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+
+	<mat-table [dataSource]="dataSource2" matSort>
+		<!-- file name Column -->
+		<ng-container matColumnDef="nomDoc">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+			<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="titre">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+			<mat-cell *matCellDef="let row"> {{row.sousModule}} </mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="dow">
+			<mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+			<mat-cell *matCellDef="let row">
+				<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]="!row.idAlfresco" [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+					<i class="flaticon-download-1"></i></button>
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns2;">
+		</mat-row>
+	</mat-table>
+</div>
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="RetourEmbalages()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+	</div>
+</div>
+<div class="espace_bloc"></div>
+<!-- end:: Content -->

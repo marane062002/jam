@@ -1,0 +1,380 @@
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="fab fa-buffer kt-font-inverse-brand"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_LIVRABLE_PHASE_MARCHE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div style="display: none;" class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" id="myCheck" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TAB_LIVRABLE_PHASE_MARCHE' | translate }} :" name="numOP" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div style="display: none;" class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" id="myCheck1" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TAB_LIVRABLE_PHASE_MARCHE' | translate }} :" name="numOP" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-wrapper">
+                                <div *ngxPermissionsOnly="['canCreateLivrable']" class="kt-portlet__head-actions">
+                                    <a href="javascript:; " (click)="nouveauLivrable()" class="btn btn-success btn-elevate btn-icon-sm">
+                                        <i class="la la-plus"></i> {{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.TITRE_NEW' | translate }}
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- BEGIN :: TABLE-PHASE-MARCHE -->
+                            <div *ngIf="selectedStatus">
+                                <div class="espace_bloc"></div>
+                                <h4 class="title-style">
+                                    {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PHASE_MARCHE' | translate }}
+                                </h4>
+                                <div class="example-container mat-elevation-z8">
+
+                                    <table mat-table [dataSource]="dataSource" matSort>
+
+                                        <!-- TAUX -->
+                                        <ng-container matColumnDef="budget">
+                                            <th mat-header-cell *matHeaderCellDef class="tauxPhase">
+                                                {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.TAUX_PAHSE' | translate }}
+                                            </th>
+                                            <td mat-cell class="tauxPhase" *matCellDef="let row"> {{row.budget}} % </td>
+                                        </ng-container>
+
+                                        <!-- DATE DEBUT -->
+                                        <ng-container matColumnDef="dateDebut">
+                                            <th mat-header-cell *matHeaderCellDef class="dateDebut">
+                                                {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_DEBUT' | translate }}
+                                            </th>
+                                            <td mat-cell class="dateDebut" *matCellDef="let row">
+                                                {{row.dateDebut |date: 'dd/MM/yyyy'}} </td>
+                                        </ng-container>
+
+                                        <!-- DATE EFFET -->
+                                        <ng-container matColumnDef="dateEcheance">
+                                            <th mat-header-cell *matHeaderCellDef class="dateEffet">
+                                                {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }} </th>
+                                            <td mat-cell class="dateEffet" *matCellDef="let row">
+                                                {{row.dateEcheance |date: 'dd/MM/yyyy'}}
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- OBJET -->
+                                        <ng-container matColumnDef="intitule">
+                                            <th mat-header-cell *matHeaderCellDef class="objet">
+                                                {{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }} </th>
+                                            <td mat-cell class="objet" *matCellDef="let row"> {{row.intitule}} </td>
+                                        </ng-container>
+
+                                        <!-- OBSERVATION -->
+                                        <ng-container matColumnDef="remarques">
+                                            <th mat-header-cell *matHeaderCellDef class="observation">
+                                                {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.OBSERVATION' | translate }}</th>
+                                            <td mat-cell class="observation" *matCellDef="let row"> {{row.remarques}}
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- DUREE -->
+                                        <ng-container matColumnDef="duree">
+                                            <th mat-header-cell *matHeaderCellDef class="duree">
+                                                {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DUREE' | translate }} </th>
+                                            <td mat-cell class="duree" *matCellDef="let row"> {{row.duree}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="actions">
+                                            </th>
+                                            <td mat-cell *matCellDef="let row" class="actions">
+                                                <button type="button" class="btn btn-outline-primary" (click)="onClickPhase(row.id)">{{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.TITRE_NEW' | translate }}</button>
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                        </tr>
+                                    </table>
+                                    <div *ngIf="sizeData == 0" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                                    </div>
+                                    <mat-paginator [length]="sizeData" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                                </div>
+
+                                <!-- <div *ngIf="showCreateOrdrePhase">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<mat-form-field class="example-full-width">
+													<input matInput type="text" class="form-control"
+														placeholder="{{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.NUMERO_PHASE' | translate }} :"
+														name="nompp" [(ngModel)]="ordreServicePhase.phaseMarche.id"
+														required>
+												</mat-form-field>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<mat-form-field class="example-full-width">
+													<input matInput type="text" class="form-control"
+														placeholder="{{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TAB_LIVRABLE_PHASE_MARCHE' | translate }} :"
+														name="numOP" [(ngModel)]="ordreServicePhase.numOrdre" required>
+												</mat-form-field>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<mat-form-field class="example-full-width">
+													<input matInput type="text" class="form-control"
+														placeholder="{{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.OBJET' | translate }} :"
+														name="objetOP" [(ngModel)]="ordreServicePhase.objet" required>
+												</mat-form-field>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<mat-form-field class="example-full-width">
+													<input matInput class="form-control" [matDatepicker]="picker1"
+														name="dateEffetOM" [(ngModel)]="ordreServicePhase.dateEffet"
+														placeholder=" {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.DATE_EFFET' | translate }}  ">
+													<mat-datepicker-toggle matSuffix [for]="picker1">
+													</mat-datepicker-toggle>
+													<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+												</mat-form-field>
+											</div>
+										</div>
+										<div class="col-md-8 my-auto kt-margin-b-10">
+											<div class="form-group">
+												<div class="input-group">
+													<form>
+														<label class="input-group-btn">
+															<span class="btn btn-brand">
+																اختيار الوثائق المرفقة <input type="file"
+																	(change)="save($event)" style="display: none;">
+															</span>
+														</label>
+														<input type="text" class="form-control piece_demande" readonly>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+									<button type="button" class="btn btn-outline-primary"
+										(click)="onClickOP($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+
+								</div> -->
+                            </div>
+                            <!-- END :: TABLE-PHASE-MARCHE -->
+
+                            <!-- BEGIN :: FORM-LIVRABLE -->
+                            <div *ngIf="showFormLivrable">
+                                <div class="espace_bloc"></div>
+                                <h4 class="title-style2">
+                                    {{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.INTITULE' | translate }}
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.NUMERO_PHASE' | translate }}:" name="nompp" [(ngModel)]="livrable.phase.id" readonly>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.OBJET' | translate }} :" name="objetOM" [(ngModel)]="livrable.intitule" required>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select class="form-control" name="divisionAo" [(ngModel)]="livrable.formatLivrable" placeholder="{{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.FORMAT_LIVRABLE' | translate }} ">
+                                                    <mat-option *ngFor="let item of formatLivrable" value="{{item}}">
+                                                        {{item}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.NBR_EXEMPLAIRE' | translate }}  :" name="nompsjkp" [(ngModel)]="livrable.nbrExemplaire" required>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select class="form-control" name="divisnksionAo" [(ngModel)]="livrable.statut" placeholder="{{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.STATUT' | translate }} ">
+                                                    <mat-option *ngFor="let item of statut" value="{{item}}">{{item}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary  " type="button" (click)="onClick($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                                </div>
+                            </div>
+                            <!-- END :: FORM-LIVRABLE -->
+
+                            <!-- BEGIN :: TABLE-LIVRABLE -->
+                            <div *ngIf="tableLivrables">
+                                <div class="espace_bloc"></div>
+                                <h4 class="title-style">
+                                    {{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.TITRE_INDEX' | translate }}
+                                </h4>
+                                <div *ngxPermissionsOnly="['accessToIndexLivrable']">
+
+                                    <div class="example-container mat-elevation-z8">
+
+                                        <mat-table [dataSource]="dataSourceLivrable" matSort>
+
+                                            <!-- Progress Column -->
+                                            <ng-container matColumnDef="intitule">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                    {{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.OBJET' | translate }}
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row"> {{row.intitule}}</mat-cell>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="formatLivrable">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                    {{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.FORMAT_LIVRABLE' | translate }}
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row"> {{row.formatLivrable }} </mat-cell>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="nbrExemplaire">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                    {{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.NBR_EXEMPLAIRE' | translate }}
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row"> {{row.nbrExemplaire }} </mat-cell>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="statut">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                    {{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.STATUT' | translate }}
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row"> {{row.statut}} </mat-cell>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="actions">
+                                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row">
+                                                    <a href="javascript:;" (click)="editLivrablePhase(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+															class="la la-edit"></i></a>
+                                                    <a href="javascript:;" (click)="deleteLivrablePhase(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+															class="la la-trash"></i></a>
+                                                </mat-cell>
+                                            </ng-container>
+
+                                            <mat-header-row *matHeaderRowDef="displayedColumnsLivrable">
+                                            </mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumnsLivrable;">
+                                            </mat-row>
+                                        </mat-table>
+                                        <div *ngIf="sizeData == 0" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                                        </div>
+                                        <mat-paginator [length]="sizeData" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                                    </div>
+
+                                    <!-- BEGIN :: SHOW-CREATE-ORDRE-PHASE -->
+                                    <!-- <div *ngIf="showCreateOrdrePhase">
+										<div class="espace_bloc"></div>
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<mat-form-field class="example-full-width">
+														<input matInput type="text" class="form-control"
+															placeholder="{{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.NUMERO_PHASE' | translate }}  :"
+															name="nompp" [(ngModel)]="ordreServicePhase.phaseMarche.id"
+															required>
+													</mat-form-field>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<mat-form-field class="example-full-width">
+														<input matInput type="text" class="form-control"
+															placeholder="{{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.TAB_LIVRABLE_PHASE_MARCHE' | translate }} :"
+															name="numOP" [(ngModel)]="ordreServicePhase.numOrdre"
+															required>
+													</mat-form-field>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<mat-form-field class="example-full-width">
+														<input matInput type="text" class="form-control"
+															placeholder="{{ 'PAGES.MARCHE.MARCHE.LIVRABLE_PHASE_MARCHE.OBJET' | translate }}  :"
+															name="objetOP" [(ngModel)]="ordreServicePhase.objet"
+															required>
+													</mat-form-field>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+													<mat-form-field class="example-full-width">
+														<input matInput class="form-control" [matDatepicker]="picker1"
+															name="dateEffetOM" [(ngModel)]="ordreServicePhase.dateEffet"
+															placeholder=" {{ 'PAGES.MARCHE.MARCHE.ORDRE_ARRET_REPRISE.DATE_EFFET' | translate }}  ">
+														<mat-datepicker-toggle matSuffix [for]="picker1">
+														</mat-datepicker-toggle>
+														<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+													</mat-form-field>
+												</div>
+											</div>
+											<div class="col-md-8 my-auto kt-margin-b-10">
+												<div class="form-group">
+													<div class="input-group">
+														<form>
+															<label class="input-group-btn">
+																<span class="btn btn-brand">
+																	اختيار الوثائق المرفقة <input type="file"
+																		(change)="save($event)" style="display: none;">
+																</span>
+															</label>
+															<input type="text" class="form-control piece_demande"
+																readonly>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+										<button type="button" class="btn btn-outline-primary"
+											(click)="onClickOP($event)">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+
+									</div> -->
+                                    <!-- END :: SHOW-CREATE-ORDRE-PHASE -->
+
+                                </div>
+                            </div>
+                            <!-- END :: TABLE-LIVRABLE -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

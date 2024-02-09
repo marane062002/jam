@@ -1,0 +1,182 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Afficher un Organisme:
+				</h2>
+			</div>
+		</div>
+	</div>
+    <form *ngIf="info" class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Raison Sociale</mat-label>
+								<input
+                                    readonly
+                                    [value]="info.raisonSociale"
+									class="form-control-solid form-control-lg"
+									name="raisonSociale"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Type</mat-label>
+								<input
+                                [value]="info.type.libelle"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="status"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>RC</mat-label>
+								<input
+                                    readonly
+                                    [value]="info.rc"
+									class="form-control-solid form-control-lg"
+									name="rc"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>IF</mat-label>
+								<input
+                                [value]="info.IFf"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="IFf"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>ICE</mat-label>
+								<input
+                                    readonly
+                                    [value]="info.ice"
+									class="form-control-solid form-control-lg"
+									name="ice"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Adresse</mat-label>
+								<input
+                                [value]="info.adresse"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="IFf"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Tel</mat-label>
+								<input
+                                    readonly
+                                    [value]="info.tel"
+									class="form-control-solid form-control-lg"
+									name="ice"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+
+					<mat-table [dataSource]="dataSource2" matSort>
+						<!-- file name Column -->
+						<ng-container matColumnDef="nomDoc">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="titre">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.sousModule}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="dow">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]="!row.idAlfresco" [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+									<i class="flaticon-download-1"></i></button>
+							</mat-cell>
+						</ng-container>
+
+						<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns2;">
+						</mat-row>
+					</mat-table>
+				</div>
+                <div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									<button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u mt-1"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+								
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>

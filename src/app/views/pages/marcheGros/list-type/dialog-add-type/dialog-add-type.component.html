@@ -1,0 +1,71 @@
+<div novalidate autocomplete="off">
+
+    <div class="kt-portlet portlet-3">
+        <div class="kt-portlet__head kt-bg-portlet-3">
+            <div class="kt-portlet__head-label">
+                <h2 class="kt-portlet__head-title kt-font-inverse-brand">
+                    {{ "PAGES.CATEGORIE.TITRE_TYPE" | translate }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="typeform">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <mat-form-field class="example-full-width">
+                        <label> Réf Article Produit </label>
+                        <input matInput type="number" formControlName="numArticleProduit"
+                            class="form-control form-control-solid form-control-lg" name="address1" />
+                    </mat-form-field>
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <mat-form-field class="example-full-width">
+                        <label> Nom Article Produit </label>
+                        <input matInput type="text" formControlName="nomArticleProduit"
+                            class="form-control form-control-solid form-control-lg" name="address1" />
+                    </mat-form-field>
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group fv-plugins-icon-container " formGroupName="categorieProduit">
+                    <mat-form-field class="example-full-width">
+                        <label> Catégorie Article Produit</label>
+                        <mat-select class="form-control-lg" placeholder="" formControlName="id">
+                            <mat-option *ngFor="let cat of Cat" [value]="cat.id">{{cat.nomCategori}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        
+            <div class="col-md-6">
+              <div class="form-group fv-plugins-icon-container">
+                <label>Image du Produit</label>
+                <input type="file" (change)="onImageSelected($event)" accept="image/*" />
+              </div>
+            </div>
+        </div>
+        <div class="kt-portlet__heads">
+            <div class="kt-portlet__head-label" align="bottom">
+                <button mat-button type="button" (click)="resetForm()"
+                    class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                    <i class="la la-recycle"></i>
+                    Retour
+                </button>
+                <button mat-button type="button" (click)="onSubmit()"
+                    class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                    <i class="icon la la-floppy-o"></i>
+                    Enregistrer
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>

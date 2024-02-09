@@ -1,0 +1,291 @@
+<!-- begin:: Content -->
+<form
+	*ngxPermissionsOnly="['canCreatePrestataireAo']"
+	class="kt-form"
+	autocomplete="off"
+	(submit)="onSubmit()"
+>
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon2-size"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							{{
+								"PAGES.MARCHE.MARCHE.AJOUTER_CONSULTATION_ARCHITECTURALE"
+									| translate
+							}}
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="numero"
+										placeholder="{{
+											'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_NUMERO'
+												| translate
+										}} :"
+										[(ngModel)]="form.numCA"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+								<span
+									class="text text-danger"
+									*ngIf="
+										formGroup?.get('numCA')?.touched &&
+										formGroup
+											?.get('numCA')
+											.hasError('required')
+									"
+								>
+									required
+								</span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="objetFR"
+										placeholder="{{
+											'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_OBJET_FR'
+												| translate
+										}} :"
+										[(ngModel)]="form.objetFR"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+								<span
+									class="text text-danger"
+									*ngIf="
+										formGroup?.get('objetFR')?.touched &&
+										formGroup
+											?.get('objetFR')
+											.hasError('required')
+									"
+								>
+									required
+								</span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="objetAR"
+										placeholder="{{
+											'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_OBJET_AR'
+												| translate
+										}} :"
+										[(ngModel)]="form.objetAR"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+								<span
+									class="text text-danger"
+									*ngIf="
+										formGroup?.get('objetAR')?.touched &&
+										formGroup
+											?.get('objetAR')
+											.hasError('required')
+									"
+								>
+									required
+								</span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="budget"
+										placeholder="{{
+											'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_BUDGET'
+												| translate
+										}} :"
+										[(ngModel)]="form.budget"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+								<span
+									class="text text-danger"
+									*ngIf="
+										formGroup?.get('budget')?.touched &&
+										formGroup
+											?.get('budget')
+											.hasError('required')
+									"
+								>
+									required
+								</span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select
+										class="form-control"
+										name="typePrestAo"
+										(selectionChange)="onChangeType($event)"
+										placeholder="{{
+											'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TYPE'
+												| translate
+										}}"
+									>
+										<mat-option
+											value="Consultation Architecturale Ouvert"
+										>
+											Consultation Architecturale Ouvert
+										</mat-option>
+										<mat-option
+											value="Consultation Architecturale négocié"
+										>
+											Consultation Architecturale négocié
+										</mat-option>
+										<mat-option
+											value="Concours Architecturale "
+										>
+											Concours Architecturale
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select
+										class="form-control"
+										name="typePrestAo"
+										(selectionChange)="onChangeLoi($event)"
+										placeholder="{{
+											'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_LOI'
+												| translate
+										}}"
+									>
+										<mat-option value="1">1</mat-option>
+										<mat-option value="2">2</mat-option>
+										<mat-option value="3">3</mat-option>
+										<mat-option value="4">4</mat-option>
+										<mat-option value="5">5</mat-option>
+										<mat-option value="6">6</mat-option>
+										<mat-option value="7">7</mat-option>
+										<mat-option value="8">8</mat-option>
+										<mat-option value="9">9</mat-option>
+										<mat-option value="10">10</mat-option>
+										<mat-option value="11">11</mat-option>
+										<mat-option value="12">12</mat-option>
+										<mat-option value="13">13</mat-option>
+										<mat-option value="14">14</mat-option>
+										<mat-option value="15">15</mat-option>
+										<mat-option value="16">16</mat-option>
+										<mat-option value="17">17</mat-option>
+										<mat-option value="18">18</mat-option>
+										<mat-option value="19">19</mat-option>
+										<mat-option value="20">20</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field
+									class="example-full-width"
+								>
+									<input
+										matInput
+										type="date"
+										class="form-control"
+										name="date"
+										placeholder="{{
+											'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.JOURNALE_DATE'
+												| translate
+										}} :"
+										[(ngModel)]="
+											form.date
+										"
+										required
+									/>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button
+				type="submit"
+				_ngcontent-dkp-c41=""
+
+				class="
+					btn btn-success btn-md btn-tall btn-wide
+					kt-font-bold kt-font-transform-u
+				"
+			>
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ "PAGES.GENERAL.SAVE" | translate }}
+			</button>
+			<button
+				_ngcontent-dkp-c41=""
+				class="
+					btn btn-secondary btn-md btn-tall btn-wide
+					kt-font-bold kt-font-transform-u
+				"
+				type="reset"
+			>
+				<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+				{{ "PAGES.GENERAL.RESET" | translate }}
+			</button>
+			<button
+				_ngcontent-dkp-c41=""
+				class="
+					btn btn-info btn-md btn-tall btn-wide
+					kt-font-bold kt-font-transform-u
+				"
+				type="reset"
+				(click)="back()"
+			>
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ "PAGES.GENERAL.EXIT" | translate }}
+			</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

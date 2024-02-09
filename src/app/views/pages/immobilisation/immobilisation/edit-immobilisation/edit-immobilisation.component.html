@@ -1,0 +1,428 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-open-box kt-font-inverse-brand"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ 'PAGES.IMMOBILISATION.TITRE_EDIT' | translate }}
+			</h3>
+		</div>
+	</div>
+	<form novalidate [formGroup]="editForm" autocomplete="off">
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="reference" matInput type="text" class="form-control"
+								name="reference" placeholder="{{ 'PAGES.IMMOBILISATION.REFERENCE' | translate }}"
+								required>
+							<mat-error *ngIf="isControlHasError('reference','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="fa fa-key"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="designation" matInput type="text" class="form-control"
+								name="designation" placeholder="{{ 'PAGES.IMMOBILISATION.DESIGNATION' | translate }}"
+								required>
+							<mat-error *ngIf="isControlHasError('designation','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-6 align-btn-radio">
+					<div class="form-group">
+						<label>{{ 'PAGES.IMMOBILISATION.MODE_ACQUSITION' | translate }} * : </label><br>
+						<mat-radio-group name="modeAcquisition" [(ngModel)]="selectedList"
+							(change)="selectionModeChanged()" formControlName="modeAcquisition">
+							<mat-radio-button value="marche">
+								{{ 'PAGES.IMMOBILISATION.MARCHE' | translate }}</mat-radio-button>
+							<mat-radio-button value="bc">
+								{{ 'PAGES.IMMOBILISATION.BC' | translate }}</mat-radio-button>
+						</mat-radio-group>
+						<mat-error *ngIf="isControlHasError('modeAcquisition','required')">
+							<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+						</mat-error>
+					</div>
+				</div>
+				<div class="col-md-6" id="marche">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="numMarche" matInput type="text" class="form-control"
+								name="numMarche" placeholder="{{ 'PAGES.IMMOBILISATION.NUM_MARCHE' | translate }}"
+								required>
+							<mat-error *ngIf="isControlHasError('numMarche','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6" id="bc">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="numBC" matInput type="text" class="form-control" name="numBC"
+								placeholder="{{ 'PAGES.IMMOBILISATION.NUM_BC' | translate }}" required>
+							<mat-error *ngIf="isControlHasError('numBC','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input formControlName="dateAcquisition" matInput class="form-control"
+									name="dateAcquisition" (dateChange)="dateAquisitionChange()"
+									[matDatepicker]="picker1"
+									placeholder="{{ 'PAGES.IMMOBILISATION.DATE_ACQUSITION' | translate }}" required>
+								<mat-error *ngIf="isControlHasError('dateAcquisition','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error>
+								<mat-datepicker-toggle matSuffix [for]="picker1">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="prixAchat" matInput type="number" class="form-control"
+								name="prixAchat" placeholder="{{ 'PAGES.IMMOBILISATION.PRIX_ACHAT' | translate }}"
+								required>
+							<mat-error *ngIf="isControlHasError('prixAchat','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="fa fa-money"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+			<div class="row">
+				<div class="col-md-6" formGroupName="sousTypeImmobilisation">
+					<div class="form-group" formGroupName="typeImmobilisation">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="id" class="form-control"
+								(selectionChange)="selectionTypeChanged($event)"
+								placeholder="{{ 'PAGES.IMMOBILISATION.TYPE' | translate }}" required>
+								<mat-option>-- {{ 'PAGES.IMMOBILISATION.TYPE' | translate }} --</mat-option>
+								<mat-option *ngFor="let type of types" [value]="type.id">
+									{{type.typeImmobilisation}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('typeImmobilisation','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group" formGroupName="sousTypeImmobilisation">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="id" class="form-control"
+								placeholder="{{ 'PAGES.IMMOBILISATION.SOUS_TYPE' | translate }}" required>
+								<mat-option>-- {{ 'PAGES.IMMOBILISATION.SOUS_TYPE' | translate }} --
+								</mat-option>
+								<mat-option *ngFor="let sous of sousTypes" [value]="sous.id">
+									{{sous.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('sousType','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group" formGroupName="emplacement">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="id" class="form-control"
+								placeholder="{{ 'PAGES.IMMOBILISATION.EMPLACEMENT' | translate }}" required>
+								<mat-option>-- {{ 'PAGES.IMMOBILISATION.EMPLACEMENT' | translate }} --
+								</mat-option>
+								<mat-option *ngFor="let empl of emplacements" [value]="empl.id">
+									{{empl.designation}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('emplacement','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="marque" class="form-control"
+								placeholder="{{ 'PAGES.IMMOBILISATION.MARQUE' | translate }}" required>
+								<mat-option>-- {{ 'PAGES.IMMOBILISATION.MARQUE' | translate }} --
+								</mat-option>
+								<mat-option *ngFor="let mark of marques" [value]="mark.libelle">
+									{{mark.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('marque','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="poids" matInput type="number" class="form-control" name="poids"
+								placeholder="{{ 'PAGES.IMMOBILISATION.POIDS' | translate }}" required>
+							<mat-error *ngIf="isControlHasError('poids','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="fa fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="couleur" class="form-control"
+								placeholder="{{ 'PAGES.IMMOBILISATION.COULEUR' | translate }}" required>
+								<mat-option>-- {{ 'PAGES.IMMOBILISATION.COULEUR' | translate }} --
+								</mat-option>
+								<mat-option *ngFor="let color of colors" [value]="color.libelle">
+									{{color.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('couleur','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="longueur" matInput type="number" class="form-control"
+								name="longueur" placeholder="{{ 'PAGES.IMMOBILISATION.LONGUEUR' | translate }}"
+								required>
+							<mat-error *ngIf="isControlHasError('longueur','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="fa fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="largeur" matInput type="number" class="form-control" name="largeur"
+								placeholder="{{ 'PAGES.IMMOBILISATION.LARGEUR' | translate }}" required>
+							<mat-error *ngIf="isControlHasError('largeur','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="fa fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input formControlName="dateReforme" matInput class="form-control"
+									(dateChange)="dateChanged('change', $event)" name="dateReforme"
+									[matDatepicker]="picker" [min]="editForm.controls.dateAcquisition.value"
+									placeholder="{{ 'PAGES.IMMOBILISATION.REFORME.DATE_REFORME' | translate }}"
+									required>
+								<mat-error *ngIf="isControlHasError('dateReforme','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error>
+								<mat-datepicker-toggle matSuffix [for]="picker">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input readonly formControlName="dureeVie" matInput type="number" class="form-control"
+								name="dureeVie" placeholder="{{ 'PAGES.IMMOBILISATION.REFORME.DUREE_VIE' | translate }}"
+								required>
+							<mat-error *ngIf="isControlHasError('dureeVie','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group" formGroupName="statutImmobilisation">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="id" class="form-control"
+								placeholder="{{ 'PAGES.IMMOBILISATION.STATUT' | translate }}" required>
+								<mat-option>-- {{ 'PAGES.IMMOBILISATION.STATUT' | translate }} --
+								</mat-option>
+								<mat-option *ngFor="let statut of statuts" [value]="statut.id">
+									{{statut.libelle}}
+								</mat-option>
+							</mat-select>
+							<mat-error *ngIf="isControlHasError('statutImmobilisation','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" name="descriptif" matInput
+								formControlName="descriptif"
+								placeholder="{{ 'PAGES.IMMOBILISATION.DESCRIPTIF' | translate }}" required></textarea>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- Action section-->
+		</div>
+	</form>
+</div>
+<!-- end :: content form -->
+
+<!-- begin:: Content -->
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<!-- start section::edit file form -->
+				<div class="row">
+					<div class="col-md-6 show_port input-group">
+						<form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm"
+							style="display: -webkit-inline-box;margin-inline-start: 98px;">
+							<label class="input-group-btn">
+								<span class="btn btn-info">
+									{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+										(change)="fileChange($event)" formControlName="_file" id="customFile"
+										style="display: none;" multiple>
+								</span>
+							</label>
+							<input type="text" class="form-control" readonly>
+						</form>
+					</div>
+					<!-- <label class="input-group-btn" >
+									<span class="btn btn-danger" (click)="resetFileField()" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+										{{ 'PAGES.GENERAL.DELETE' | translate }}
+									</span>
+								</label> -->
+				</div>
+				<!-- end section::edit file form -->
+				<hr>
+				<table *ngIf="files" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+							<td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+							</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+							<td class="title_td"></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of files | async">
+							<td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}"
+									matTooltip="{{FileName(item.name)}}"></td>
+							<td> {{FileName(item.name)  | slice:0:20}}</td>
+							<td>{{item.dateFile  | date:'dd/MM/yyyy HH:mm'}}</td>
+							<td>{{item.fSize/1000}} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco,item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+								<button type="button" (click)="onDeleteFile(item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="icon la la-trash"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div *ngIf="start">
+					<p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+					<mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			(click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

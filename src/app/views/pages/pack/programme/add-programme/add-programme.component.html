@@ -1,0 +1,1002 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					<span *ngIf="isUpdate">{{ "PAGES.PROGRAMME.MODIFICATION_PROJET" | translate }}</span>
+					<span *ngIf="!isUpdate">{{ "PAGES.PROGRAMME.AJOUT_PROJET" | translate }}</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+	<form action="" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.ANNEE" | translate }} :</mat-label>
+						<input matInput class="form-control" [matDatepicker]="picker5"
+							placeholder="{{ 'PAGES.PROGRAMME.ANNEE' | translate }} :" formControlName="date" />
+						<mat-datepicker-toggle matSuffix matSuffix [for]="picker5">
+							<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i> </mat-icon>
+						</mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #picker5></mat-datepicker>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</mat-label>
+						<input type="date" class="form-control-solid form-control-lg" formControlName="dateDebut" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</mat-label>
+						<input type="date" class="form-control-solid form-control-lg" formControlName="dateFin" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.ORIENTATIONS_STRATEGIQUES" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="orientationStrategique" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.ORIENTATIONS_STRATEGIQUES_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="orientationStrategiqueAr" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control-lg"
+							placeholder="{{ 'PAGES.PROGRAMME.CODE_ORIENTATION' | translate }} :"
+							formControlName="codeOrientation">
+							<mat-option *ngFor="let item of codes" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.AXE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="axe" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.AXE_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="axeAr"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<!-- 	<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>code d'axe</mat-label>
+						<input	type="text" class="form-control-solid form-control-lg" 	formControlName="codeAxe"	matInput/>
+					</mat-form-field>
+				</div>
+			</div> -->
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.OBJECTIFS_STRATEGIQUES" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="objectifStrategique" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.OBJECTIFS_STRATEGIQUES_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="objectifStrategiqueAr" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.OBJECTIFS_OPERATIONNELS" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="objectifOperationnel" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.OBJECTIFS_OPERATIONNELS_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="objectifOperationnelAr" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.NUMERO_PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="numeroprojet"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.CODE_PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="codeProjet"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<!-- <div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.NATURE_PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="nature"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div> -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control-lg"
+							placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :"
+							formControlName="nature">
+							<mat-option *ngFor="let item of listeNature" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<!-- <div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.NATURE_PROJET_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="natureAr"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div> -->
+			<div class="col-md-3">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NIVEAU' | translate }} :"
+							formControlName="niveau">
+							<span *ngIf="language == 'fr'">
+								<mat-option value="proximité">proximité</mat-option>
+								<mat-option value="structurant">structurant</mat-option>
+							</span>
+							<span *ngIf="language == 'ar'">
+								<mat-option value="proximité">قرب</mat-option>
+								<mat-option value="structurant">مهيكل</mat-option>
+							</span>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="maitreOuvrage"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE_DELEGUE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="maitreOuvrageDelegue" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.LIEU" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="localisation"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.LIEU_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="localisationAr"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.CHEF_PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="chefProjet"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.CHEF_PROJET_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="chefProjetAr"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.COUT" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="cout" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DELAI" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="delai"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control-lg"
+							placeholder="Thème :"
+							formControlName="theme" (selectionChange)="ThemeChange($event)" >
+							<mat-option *ngFor="let item of listeTheme" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control-lg"
+							placeholder="Sous-thème :"
+							formControlName="sousTheme" >
+							<mat-option *ngFor="let item of listeSousTheme" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+
+				<mat-form-field class="example-full-width">
+					<mat-label>Montant réelle du projet :</mat-label>
+					<input type="number" class="form-control form-control-solid form-control-lg"
+						name="address1" formControlName="montantReel" matInput />
+				</mat-form-field></div>
+			</div>
+			<!-- <div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>Sous projet</mat-label>
+						<input	type="text" class="form-control-solid form-control-lg" 	formControlName="sousProjet"	matInput/>
+					</mat-form-field>
+				</div>
+			</div> -->
+			<div class="col-md-12">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="nameProjet"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.PROJET_ARABE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="nameProjetAr"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-6" *ngIf="isUpdate == true">
+				<mat-form-field class="example-full-width">
+					<label>{{ "PAGES.PROGRAMME.ETAT_AVANCEMENT_PROJET" | translate }} :</label>
+					<mat-select (selectionChange)="onEtatAvancementChange($event)" class="form-control" placeholder=""
+						formControlName="etatAvancement">
+						<mat-option [value]="'NON_LANCES'">{{ "PAGES.PROGRAMME.NON_LANCES" | translate }} </mat-option>
+						<mat-option [value]="'ACHEVES'">{{ "PAGES.PROGRAMME.ACHEVES" | translate }} </mat-option>
+						<mat-option [value]="'EN_COURS'">{{ "PAGES.PROGRAMME.EN_COURS" | translate }}</mat-option>
+						<mat-option [value]="'EN_ARRET'">{{ "PAGES.PROGRAMME.EN_ARRET" | translate }} </mat-option>
+						<mat-option [value]="'ANNULE'">{{ "PAGES.PROGRAMME.ANNULE" | translate }} </mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+		<div>
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+							{{ "PAGES.PROGRAMME.SOUS_PROJET" | translate }}
+						</h2>
+					</div>
+				</div>
+			</div>
+
+			<div formArrayName="sousProjets">
+				<div *ngFor="let item of getFormArraySousProjet().controls; let i = index">
+					<div class="row" style="justify-content: end">
+						<button type="button" class="btn btn-danger btn-md btn-wide kt-font-bold kt-font-transform-u"
+							(click)="deleteItemP(i)">
+							<i class="icon la la-trash"></i>
+						</button>
+						<button type="button" class="btn btn-success btn-md btn-wide kt-font-bold kt-font-transform-u"
+							(click)="addItemP()">
+							<i class="la la-plus"></i>
+						</button>
+					</div>
+					<div [formGroupName]="i">
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.OBJECT" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="object" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.NUMERO" | translate }} :</mat-label>
+									<input type="number" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="numero" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="constibutionC" matInput />
+								</mat-form-field>
+							</div>
+							<!-- <div class="col-md-3 form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label></mat-label>
+							<input 	type="number" 	class="form-control form-control-solid form-control-lg" 	name="address1" 	formControlName="constibutionP" matInput/>
+						  </mat-form-field>
+				       </div> -->
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.CHEF_PROJET" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="chefProjet" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.LIEU" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="lieu" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</mat-label>
+									<input type="date" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="dateDebut" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</mat-label>
+									<input type="date" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="dateFine" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Montant Prévisionnel :</mat-label>
+									<input type="number" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantPrevisionnel" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Montant Réel :</mat-label>
+									<input type="number" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantReel" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Date Réel :</mat-label>
+									<input type="date" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="dateReel" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Date Prévisionnel :</mat-label>
+									<input type="date" class="form-control form-control-solid form-control-lg" (blur)="updateDelais()"
+										name="address1" formControlName="datePrevisionnel" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Délais:</mat-label>
+									<input type="number"  class="form-control form-control-solid form-control-lg" readonly
+										name="address1" formControlName="delais" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Observation:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="observation" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE_DELEGUE" | translate }} :</mat-label>
+										<input type="text" class="form-control-solid form-control-lg"
+											formControlName="maitreOuvrageDelegue" matInput />
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="col-md-6" >
+								<mat-form-field class="example-full-width">
+									<label>{{ "PAGES.PROGRAMME.ETAT_AVANCEMENT_PROJET" | translate }} :</label>
+									<mat-select (selectionChange)="onEtatAvancementSousProjetChange($event)" class="form-control" placeholder=""
+										formControlName="etatAvancement">
+										<mat-option [value]="'NON_LANCES'">{{ "PAGES.PROGRAMME.NON_LANCES" | translate }} </mat-option>
+										<mat-option [value]="'ACHEVES'">{{ "PAGES.PROGRAMME.ACHEVES" | translate }} </mat-option>
+										<mat-option [value]="'EN_COURS'">{{ "PAGES.PROGRAMME.EN_COURS" | translate }}</mat-option>
+										<mat-option [value]="'EN_ARRET'">{{ "PAGES.PROGRAMME.EN_ARRET" | translate }} </mat-option>
+										<mat-option [value]="'ANNULE'">{{ "PAGES.PROGRAMME.ANNULE" | translate }} </mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+				
+							<div class="Radio" style="display: flex; flex-wrap: wrap; margin-left: -15px; justify-content: center">
+								<div class="col-md-4">
+									<div class="form-group fv-plugins-icon-container">
+										<input class="form-check-input" type="radio" [(ngModel)]="VisibleSousProjet" name="Visible1" [value]="0"
+											[ngModelOptions]="{ standalone: true }" [checked]="isSelected"
+											(change)="selectedConvontionSousProjet($event)" />
+										<label>
+											<h5>{{ "PAGES.PROGRAMME.AUCUNE_CONVENTION" | translate }}</h5>
+										</label>
+									</div>
+								</div>
+				
+								<div class="col-md-4">
+									<div class="form-group fv-plugins-icon-container">
+										<input class="form-check-input" type="radio" [(ngModel)]="VisibleSousProjet"
+											[ngModelOptions]="{ standalone: true }" name="Visible1" [value]="1" [checked]="!isSelected"
+											(change)="selectedConvontioncSousProjet($event)" />
+										<label>
+											<h5>{{ "PAGES.PROGRAMME.CONVENTION" | translate }}</h5>
+										</label>
+									</div>
+								</div>
+							</div>
+				
+							<div class="m-6 text-center purple" *ngIf="VisibleSousProjet == 1">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<mat-form-field class="example-full-width" formControlName="convention" >
+												<mat-select class="form-control-lg" 
+													placeholder="{{ 'PAGES.PROGRAMME.CONVENTION' | translate }}" multiple (selectionChange)="ConventionChangeSousProjet($event)">
+													<mat-option *ngFor="let item of listConvention" [value]="item" >
+														<span *ngIf="language == 'fr'">
+															{{ item?.object }}
+														</span>
+														<span *ngIf="language == 'ar'">
+															{{ item?.objectAr }}
+														</span>
+													</mat-option>
+												</mat-select>
+											</mat-form-field>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-3">
+				<div class="kt-portlet__head-label">
+					<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.PROGRAMME.PHASES" | translate }}
+					</h2>
+				</div>
+			</div>
+		</div>
+		<div formArrayName="programmePhaseBudgets">
+			<div class="row" style="justify-content: center" *ngIf="isUpdate == false">
+				<div class="col-md-4 form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width" formGroupName="phase">
+						<mat-select class="form-control" formControlName="id"
+							(selectionChange)="getValuePhase($event.value)"
+							placeholder="{{ 'PAGES.PROGRAMME.PHASE' | translate }} :">
+							<mat-option *ngFor="let p of listPhase" [value]="p.id"> {{ p.name }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="row" style="justify-content: center" *ngIf="isUpdate == true">
+				<div class="col-md-4 form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width" formGroupName="phase">
+						<mat-select class="form-control" formControlName="id"
+							placeholder="{{ 'PAGES.PROGRAMME.PHASE' | translate }} :"
+							(selectionChange)="getValuePhase($event.value)" [compareWith]="compareObjects">
+							<mat-option *ngFor="let p of listPhase" [value]="p.id"> {{ p.name }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div *ngIf="getFormArray().controls.length > 0">
+				<div *ngIf="isP1 == true">
+					<div [formGroupName]="0">
+						<h4 class="kt-portlet__head-title kt-font-inverse-brand">{{
+							"PAGES.PROGRAMME.CONTRIBUTION_COMUNE" | translate }} :</h4>
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.PREMIERE_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionComune1" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DEUXIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionComune2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.TROISIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionComune3" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.CONTRIBUTION_TOTAL" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionCommune" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+						<h4 class="kt-portlet__head-title kt-font-inverse-brand">{{
+							"PAGES.PROGRAMME.CONTRIBUTION_PARTENAIRES" | translate }} :</h4>
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.PREMIERE_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenaires1" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DEUXIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenaires2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.TROISIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenaires3" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.CONTRIBUTION_TOTAL" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenaires" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_PREMIERE_ANNEE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContributionPremiereAnnee" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_DEUXIEME_ANNEE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContributionDeuxiemeAnnee" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_TROISIEME_ANNEE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContributionTroisiemeAnnee" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_PHASE_1" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContribution" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.MONTANT_DISPONIBLE_COMMUNE_3PA" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantDispoCommune3PA" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.MONTANT_DISPONIBLE_COMMUNE_3DA" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantDispoCommune3DA" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.MONTANT_INDISPONIBLE_COMMUNE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantIndispoCommune" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="isP2 == true">
+					<div [formGroupName]="1">
+						<h4 class="kt-portlet__head-title kt-font-inverse-brand">{{
+							"PAGES.PROGRAMME.CONTRIBUTION_COMUNE" | translate }} :</h4>
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.PREMIERE_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionComune1P2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DEUXIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionComune2P2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.TROISIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionComune3P2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.CONTRIBUTION_TOTAL" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionCommuneP2" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+						<h4 class="kt-portlet__head-title kt-font-inverse-brand">{{
+							"PAGES.PROGRAMME.CONTRIBUTION_PARTENAIRES" | translate }} :</h4>
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.PREMIERE_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenaires1P2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DEUXIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenaires2P2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.TROISIEME_ANNEE" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenaires3P2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.CONTRIBUTION_TOTAL" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="contributionPartenairesP2" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_PREMIERE_ANNEE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContributionPremiereAnneeP2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_DEUXIEME_ANNEE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContributionDeuxiemeAnneeP2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_TROISIEME_ANNEE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContributionTroisiemeAnneeP2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.COUT_TOTAL_PHASE_2" | translate }} :</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="totalContributionPh2" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.MONTANT_DISPONIBLE_COMMUNE_3PA" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantDispoCommune3PAP2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.MONTANT_DISPONIBLE_COMMUNE_3DA" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantDispoCommune3DAP2" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.MONTANT_INDISPONIBLE_COMMUNE" | translate }}
+										:</mat-label>
+									<input type="text" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="montantIndispoCommuneP2" matInput />
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<h2 class="kt-portlet__head-title kt-font-inverse-brand">{{ "PAGES.PROGRAMME.CONVENTION" |
+							translate }} :</h2>
+					</div>
+				</div>
+			</div>
+
+			<div class="Radio" style="display: flex; flex-wrap: wrap; margin-left: -15px; justify-content: center">
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<input class="form-check-input" type="radio" [(ngModel)]="Visible" name="Visible1" [value]="0"
+							[ngModelOptions]="{ standalone: true }" [checked]="isSelected"
+							(change)="selectedConvontion($event)" />
+						<label>
+							<h5>{{ "PAGES.PROGRAMME.AUCUNE_CONVENTION" | translate }}</h5>
+						</label>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<input class="form-check-input" type="radio" [(ngModel)]="Visible"
+							[ngModelOptions]="{ standalone: true }" name="Visible1" [value]="1" [checked]="!isSelected"
+							(change)="selectedConvontionc($event)" />
+						<label>
+							<h5>{{ "PAGES.PROGRAMME.CONVENTION" | translate }}</h5>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="m-6 text-center purple" *ngIf="Visible == 1">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<mat-form-field class="example-full-width"formControlName="convention">
+								<mat-select class="form-control-lg" 
+									placeholder="{{ 'PAGES.PROGRAMME.CONVENTION' | translate }}"  multiple (selectionChange)="ConventionChangeProjet($event)">
+									<mat-option  *ngFor="let item of listConvention" [value]="item">
+										<span *ngIf="language == 'fr'">
+											{{ item?.object }}
+										</span>
+										<span *ngIf="language == 'ar'">
+											{{ item?.objectAr }}
+										</span>
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="isUpdate">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<h2 class="kt-portlet__head-title kt-font-inverse-brand">{{ "PAGES.PROGRAMME.PIECE_JOINTE" |
+							translate }} :</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 show_port input-group">
+				<form style="display: -webkit-inline-box; margin-inline-start: 98px; padding-top: 27px">
+					<label class="input-group-btn">
+						<span class="btn btn-info"> {{ "PAGES.ATTCHEMENTS.SELECT_FILE" | translate }}<input type="file"
+								(change)="save($event)" id="customFile" style="display: none" multiple /> </span>
+					</label>
+					<input id="test" type="text" class="form-control" readonly />
+					<a href="javascript:; " (click)="addFile()" class="btn btn-info btn-elevate btn-icon-sm">
+						<i style="color: white" class="la la-plus"></i>
+					</a>
+				</form>
+			</div>
+
+			<div class="kt-portlet__body" *ngIf="allpjs2.length > 0">
+				<div class="row ex3">
+					<div class="col-md-2 show_port"></div>
+					<div class="col-md-6 show_port">
+						<table *ngIf="allpjs2.length > 0" class="table pj" width="100%">
+							<thead>
+								<tr>
+									<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+									<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+									<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+									<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of allpjs2; let i = index">
+									<td class="file_icon"><img style="height: 25px !important"
+											src="./assets/media/files/{{ FileExtension(item.name) }}"
+											matTooltip="{{ FileName(item.name) }}" /></td>
+									<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+									<td>{{ item.size / 1000 }} ko</td>
+									<td>
+										<button type="button" (click)="onDeleteFile2(i)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+												class="icon la la-trash"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-4 show_port"></div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__body">
+				<div class="row ex3">
+					<div class="col-md-12 show_port">
+						<table *ngIf="files1 && files1.length > 0" class="table pj" width="100%">
+							<thead>
+								<tr>
+									<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+									<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+									<td class="title_td">{{ "PAGES.ATTCHEMENTS.DATE_DISPATCHING" | translate }}</td>
+									<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+									<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of files | async">
+									<td class="file_icon"><img style="height: 25px !important"
+											src="./assets/media/files/{{ FileExtension(item.name) }}"
+											matTooltip="{{ FileName(item.name) }}" /></td>
+									<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+									<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
+									<td>{{ item.fSize / 1000 }} ko</td>
+									<td>
+										<button type="button"
+											(click)="onClickPjName(FileExtension(item.name), item.idAlfresco, item.id)"
+											class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+											matTooltip="{{ FileName(item.name) }}"><i
+												class="flaticon-download-1"></i></button>
+										<button type="button" (click)="onDeleteFile(item.id)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+												class="icon la la-trash"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="kt-portlet__heads">
+			<div class="kt-portlet__head-label text-right">
+				<!-- <button _ngcontent-dkp-c41=""
+		(click)="RetourEmbalages()"
+		class="btn btn-info btn-md btn-tall btn-wide bg-primary kt-font-transform-u" type="reset" >
+		<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+		RETOUR</button> -->
+
+				<button _ngcontent-dkp-c41=""
+					class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+					{{ "PAGES.PROGRAMME.SAVE" | translate }}
+				</button>
+			</div>
+		</div>
+		<div class="espace_bloc"></div>
+	</form>
+</div>

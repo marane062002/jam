@@ -1,0 +1,192 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-layer"></i>
+						</span> &nbsp;
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.Gestion.Stock.sortie.title' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="example-header  col-md-4">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <div class="example-container mat-elevation-z8">
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="numDemande">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.sortie.numDemande' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.demandeFourniture.codeAnalytique ?row.demandeFourniture.codeAnalytique :"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="codeAnalytique">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.sortie.codeAnalytique' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.demandeFourniture.codeAnalytique?row.demandeFourniture.codeAnalytique:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.sortie.status' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.status? row.status:"-"}} </td>
+                            </ng-container>
+                   
+
+
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let row">
+                                 <a href="javascript:;"  (click)="showSortie(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+											class="la la-search-plus"></i></a>
+                                <!--     <a href="javascript:;" *ngxPermissionsOnly="['canUpdateAutorisation']" (click)="editAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+											class="la la-edit"></i></a>
+                                   <a href="javascript:;" *ngxPermissionsOnly="['canDeleteAutorisation']" (click)=" deleteAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+											class="la la-trash"></i></a> -->
+                               </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+
+                        <div *ngIf="datasize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   <!--end: detail sortie-->
+
+    <!--begin: Modal ajouter -->
+    <ng-template #ajouterSortie let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter une sortie</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <form class="" [formGroup]="formSortie" (ngSubmit)="createSortie(formSortie.value)">
+            <div class="form-group row mb-1">
+                <div class="col-md-4 form-group"  formGroupName="magasin">
+                    <label>N° magasin :</label>
+                    <select class="form-control" formControlName="id" (change)="SlectedMagasin($event)">
+                        <option *ngFor=" let m of listMagasins" [value]="m.id">{{m.numeroMagasin}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group " formGroupName="article">
+                    <label>N° d'article :</label>
+                    <select class="form-control"  formControlName="id">
+                  <option *ngFor="let article of listArtickeStock" [value]="article.article.id">{{article.article.numeroArticle}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group ">
+                    <label>N° demande :</label>
+                    <input class="form-control" type="text" placeholder="code analytique"  formControlName="numeroCommande">
+                </div>
+                <div class="col-md-4 form-group ">
+                    <label>Code analytique :</label>
+                    <input class="form-control" type="text" placeholder="code analytique"  formControlName="codeAnalytique">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Désignation :</label>
+                    <input class="form-control" type="text" placeholder="Désignation"  formControlName="designation">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Unité :</label>
+                    <input class="form-control" type="text" placeholder="Unité"  formControlName="unite">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Quantité :</label>
+                    <input class="form-control" type="number" placeholder="Quantité"  formControlName="quantite">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary ml-2" type="submit"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+            </div>
+            </form>
+            
+        </div>
+       
+    
+    </ng-template>
+    <!--end: Modal ajouter -->
+
+  <!--begin: Modal modifier -->
+  <ng-template #modifierSortie let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modifier une sortie</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group row mb-1">
+            <div class="col-md-4 form-group">
+                <label>N° magasin :</label>
+                <select class="form-control">
+                    <option>N258</option>
+                    <option>N896</option>
+                    <option>N824</option>
+                    <option>N784</option>
+                </select>
+            </div>
+            <div class="col-md-4 form-group ">
+                <label>N° d'article :</label>
+                <select class="form-control">
+                    <option>A123</option>
+                    <option>B123</option>
+                    <option>C123</option>
+                </select>
+            </div>
+            <div class="col-md-4 form-group ">
+                <label>N° demande :</label>
+                <select class="form-control">
+                    <option>001</option>
+                    <option>002</option>
+                    <option>003</option>
+                </select>
+            </div>
+            <div class="col-md-4 form-group ">
+                <label>Code analytique :</label>
+                <input class="form-control" type="text" placeholder="code analytique">
+            </div>
+            <div class="col-md-4 form-group">
+                <label>Désignation :</label>
+                <input class="form-control" type="text" placeholder="Désignation">
+            </div>
+            <div class="col-md-4 form-group">
+                <label>Unité :</label>
+                <input class="form-control" type="text" placeholder="Unité">
+            </div>
+            <div class="col-md-4 form-group">
+                <label>Quantité :</label>
+                <input class="form-control" type="number" placeholder="Quantité">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button"><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i> Modifier</button>
+    </div>
+  </ng-template>
+  <!--end: Modal modifier -->
+</div>

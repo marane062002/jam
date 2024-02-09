@@ -1,0 +1,153 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Modifier Cotation
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label class="label">Numéro Tuerie</label>
+						<input
+							value="1"
+							matInput
+							type="text"
+							class="form-control"
+							placeholder=""
+						/>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label class="label">Date Du Jour</label>
+							<input
+								value="2022-02-09"
+								matInput
+								class="form-control"
+								[matDatepicker]="picker1"
+								placeholder=""
+							/>
+							<mat-datepicker-toggle
+								matSuffix
+								matSuffix
+								[for]="picker1"
+							>
+								<mat-icon matDatepickerToggleIcon
+									><i class="fas fa-calendar-plus"></i>
+								</mat-icon>
+							</mat-datepicker-toggle>
+							<mat-datepicker
+								touchUi="true"
+								#picker1
+							></mat-datepicker>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label class="label">Conformation</label>
+						<mat-select class="form-control">
+							<mat-option [value]="''">S</mat-option>
+							<mat-option [value]="''">E</mat-option>
+							<mat-option [value]="''">U</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label class="label">Etat Engraissement</label>
+						<mat-select class="form-control">
+							<mat-option [value]="''">1</mat-option>
+							<mat-option [value]="''">2</mat-option>
+							<mat-option [value]="''">3</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label class="label">Couleur</label>
+						<mat-select class="form-control">
+							<mat-option [value]="''">1</mat-option>
+							<mat-option [value]="''">2</mat-option>
+							<mat-option [value]="''">3</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label class="label">Catégorie</label>
+						<mat-select class="form-control">
+							<mat-option [value]="''">A</mat-option>
+							<mat-option [value]="''">B</mat-option>
+							<mat-option [value]="''">C</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label class="label">Référence Facture</label>
+						<mat-select class="form-control">
+							<mat-option [value]="''">A</mat-option>
+							<mat-option [value]="''">B</mat-option>
+							<mat-option [value]="''">C</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button
+					type="button"
+					(click)="back()"
+					class="btn btn-primary"
+					data-wizard-type="action-prev"
+				>
+					<i class="la la-angle-left"></i>
+					Retour
+				</button>
+
+				<button
+					type="button"
+					class="btn btn-success btn-elevate btn-icon-sm"
+					data-wizard-type="action-submit"
+				>
+					<i class="la la-plus"></i>
+					Enregistrer
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

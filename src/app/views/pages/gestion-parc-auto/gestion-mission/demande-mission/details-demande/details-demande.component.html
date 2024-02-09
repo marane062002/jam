@@ -1,0 +1,168 @@
+
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.Gestion.parc.newDemande.details.title' | translate }} 
+					</h3>
+				</div>
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+					  <div class="m-1 float-right">
+					 
+						<!-- <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.NOVALIDE' | translate }}" (click)="livreVehicule()"
+						class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+						<i _ngcontent-dkp-c41="" class="icon la la-print"></i>
+						</button> -->
+					
+						<button  *ngIf="phase == 0" _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.NOVALIDE' | translate }}" (click)="modalModifierTransfert(detailFournisseur,demande)"
+						class="btn btn-danger btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+						<i _ngcontent-dkp-c41="" class="icon la la-times-circle-o"></i>
+						</button>
+						<button  *ngIf="phase == 0" _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.VALIDE' | translate }}" (click)="valide()"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+						<i _ngcontent-dkp-c41="" class="icon la la-check"></i>
+						</button>
+					</div>
+					</h3>
+				  </div>
+
+			</div>
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table " width="100%">
+							<tbody>
+								<tr>
+									<th> {{ 'PAGES.Gestion.parc.newDemande.numdemande' | translate }}</th>
+									<td class="donnee_show">{{demande?.numdemande ? demande?.numdemande :'-'}}</td>
+									<th> {{ 'PAGES.Gestion.parc.newDemande.moyenTransport' | translate }}</th>
+									<td class="donnee_show">{{demande?.moyenTransport ? demande?.moyenTransport :'-'}}</td>
+                                    <th> {{ 'PAGES.Gestion.parc.newDemande.typemIsion' | translate }}</th>
+									<td class="donnee_show">{{demande?.typemIsion ? demande?.typemIsion :'-'}}</td>
+                                </tr>
+                                <tr>
+                                    <th> {{ 'PAGES.Gestion.parc.newDemande.dateDepart' | translate }}</th>
+									<td class="donnee_show">{{demande?.dateDepart ? (demande?.dateDepart | date:'yyyy-MM-dd') :'-'}}
+									</td>
+                                    <th> {{ 'PAGES.Gestion.parc.newDemande.dateRetour' | translate }}</th>
+									<td class="donnee_show">{{demande?.dateRetour ? (demande?.dateRetour | date:'yyyy-MM-dd') :'-'}}
+									</td>
+                                    <th> {{ 'PAGES.Gestion.parc.newDemande.dateArriveLettre' | translate }}</th>
+									<td class="donnee_show">{{demande?.dateArriveLettre ? (demande?.dateArriveLettre | date:'yyyy-MM-dd') :'-'}}
+									</td>
+								   </tr>
+                                <tr>
+                                    <th> {{ 'PAGES.Gestion.parc.newDemande.entitrBEneficaire' | translate }}</th>
+									<td class="donnee_show">{{demande?.entitrBEneficaire ? demande?.entitrBEneficaire :'-'}}</td>
+									<th> {{ 'PAGES.Gestion.parc.newDemande.motif' | translate }}</th>
+									<td class="donnee_show">{{demande?.motif ? demande?.motif :'-'}}</td>
+									<th> {{ 'PAGES.Gestion.parc.newDemande.parcours' | translate }}</th>
+									<td class="donnee_show">
+										{{demande?.parcours ? demande?.parcours :'-'}}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- **************************************** affection voiture ********************************-->
+						<div class="row">
+							<div class="col-md-6 form-group "  *ngIf="phase == 1" >
+								<mat-form-field class="example-full-width"  >
+									<mat-select class="form-control" name="unite" [(ngModel)]="vehicule_id"  placeholder="{{ 'PAGES.Gestion.parc.newDemande.voitures' | translate }}"  >
+									  <mat-option  *ngFor="let item of listVehiculeDisponible" [value]="item.id">{{item.matricule}}  </mat-option>
+									 
+									</mat-select>
+								</mat-form-field>
+
+							 <!--  <label>Véhicules disponibles :</label>
+							  <select class="form-control" [(ngModel)]="vehicule_id" (change)="findAllAccessoireByVehicule($event)">
+								<option *ngFor=" let v of listVehiculeDisponible " [value]="v.id">{{v.matricule}}</option>
+							  </select> -->
+							</div> 
+							<div class="col-md-6 form-group "  *ngIf="phase == 1" >
+
+								<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.VALIDE' | translate }}" (click)="affectationVehicule()"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+						<i _ngcontent-dkp-c41="" class="icon la la-check"></i>
+						</button>
+							<!-- 	<mat-form-field class="example-full-width"  >
+									<mat-select class="form-control" name="unite" [(ngModel)]="vehicule_id"  placeholder="{{ 'PAGES.Gestion.parc.newDemande.voitures' | translate }}"  multiple>
+									  <mat-option  *ngFor="let item of listUsers" [value]="item.id">{{item.nom}}  </mat-option>
+									 
+									</mat-select>
+								</mat-form-field> -->
+							<!--   <label>accessoire des Vehicules :</label>
+							<ng-multiselect-dropdown     [placeholder]="'accessoire des Vehicules'"  [(ngModel)]="selectedAccesoire" [settings]="dropdownSettingsAccesoire" [data]="statusAccessoireVehicules"   >
+							</ng-multiselect-dropdown>  -->
+						  </div> 
+					</div>
+					<!-- ****************************************************  afectation carteJawaz************************-->
+					<div class="row"  *ngIf="phase == 2" >
+						<div class="col-md-6 form-group " >
+							<mat-form-field class="example-full-width"  >
+								<mat-select class="form-control" name="unite" [(ngModel)]="carte_id"   placeholder="{{ 'PAGES.Gestion.parc.newDemande.carteJawaz' | translate }}"  >
+								  <mat-option  *ngFor="let item of listCartejawz" [value]="item.id">{{item.reference}} / {{item.soldeactuel}}  </mat-option>
+								 
+								</mat-select>
+							</mat-form-field>
+					 
+						</div>
+						<div class="col-md-6 form-group ">
+						<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.VALIDE' | translate }}" (click)="affectionCarteJawaz()"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+						<i _ngcontent-dkp-c41="" class="icon la la-check"></i>
+						</button>
+						</div>
+					</div> 
+						<!-- ****************************************************  afectation vignette************************--> 
+					<div class="row"  *ngIf="phase == 3" >
+						<div class="col-md-6 form-group " >
+							<mat-form-field class="example-full-width"  >
+								<mat-select class="form-control" name="unite" [(ngModel)]="selectedItems"   placeholder="{{ 'PAGES.Gestion.parc.newDemande.vignette' | translate }}"  multiple >
+								  <mat-option  *ngFor="let item of listArticle" [value]="item">{{item.designation}}  </mat-option>
+								 
+								</mat-select>
+							</mat-form-field>
+					 
+						</div>
+						<div class="col-md-6 form-group ">
+						<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.VALIDE' | translate }}" (click)="affectionVignete()"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+						<i _ngcontent-dkp-c41="" class="icon la la-check"></i>
+						</button>
+						</div>
+					</div>
+					
+					
+					<ng-template #detailFournisseur let-c="close" let-d="dismiss" style="margin-top: 23%;">
+						<div class="modal-body" >
+							<form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+								
+								<mat-form-field class="example-full-width">
+									<input [(ngModel)]="textRejtee" matInput type="text" class="form-control" name="numero"
+										placeholder="Note de Rejet">
+								</mat-form-field>
+							</form> 
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">fermer</button>
+							<button  *ngIf="phase == 0" _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.VALIDE' | translate }}" (click)="NonValide()"
+						    class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+						    <i _ngcontent-dkp-c41="" class="icon la la-check"></i>
+						</button>
+						</div>
+						</ng-template> 
+				</div>
+
+
+			
+			</div>

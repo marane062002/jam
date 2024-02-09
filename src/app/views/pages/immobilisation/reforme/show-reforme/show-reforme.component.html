@@ -1,0 +1,160 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-open-box"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.IMMOBILISATION.REFORME.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="editImmobilisation()" *ngxPermissionsOnly="['canUpdateImmobilisation']" class="btn btn-warning btn-elevate btn-icon-sm">
+                        <i class="la la-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- *ngIf="details" -->
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.REFERENCE' | translate }} :</th>
+                            <td class="donnee_show">{{details.reference}}</td>
+                            <th>{{ 'PAGES.IMMOBILISATION.DESIGNATION' | translate }} :</th>
+                            <td class="donnee_show">{{details.designation}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.MODE_ACQUSITION' | translate }} :</th>
+                            <td class="donnee_show">
+                                <span *ngIf="details?.modeAcquisition=='marche'">
+									{{ 'PAGES.IMMOBILISATION.MARCHE' | translate }}
+								</span>
+                                <span *ngIf="details?.modeAcquisition=='bc'">
+									{{ 'PAGES.IMMOBILISATION.BC' | translate }}
+								</span>
+                            </td>
+                            <span *ngIf="details?.modeAcquisition=='marche'">
+								<th>{{ 'PAGES.IMMOBILISATION.NUM_MARCHE' | translate }} :</th>
+							</span>
+                            <span *ngIf="details?.modeAcquisition=='bc'">
+								<th>{{ 'PAGES.IMMOBILISATION.NUM_BC' | translate }} :</th>
+							</span>
+                            <td class="donnee_show">
+                                {{details.modeAcquisition=='marche'?details.numMarche : details.numBC}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.DATE_ACQUSITION' | translate }} :</th>
+                            <td colspan="4" class="donnee_show">
+                                {{details.dateAcquisition | date:'dd/MM/yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.TYPE' | translate }} :</th>
+                            <td class="donnee_show">
+                                {{details.sousTypeImmobilisation.typeImmobilisation.typeImmobilisation}}</td>
+                            <th>{{ 'PAGES.IMMOBILISATION.SOUS_TYPE' | translate }} :</th>
+                            <td class="donnee_show">{{details.sousTypeImmobilisation.libelle}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.EMPLACEMENT' | translate }} :</th>
+                            <td class="donnee_show">{{details.emplacement.designation}}</td>
+                            <th>{{ 'PAGES.IMMOBILISATION.STATUT' | translate }} :</th>
+                            <td class="donnee_show">{{details.statutImmobilisation.libelle}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.MARQUE' | translate }} :</th>
+                            <td class="donnee_show">{{details.marque}}</td>
+                            <th>{{ 'PAGES.IMMOBILISATION.PRIX_ACHAT' | translate }} :</th>
+                            <td class="donnee_show">{{details.prixAchat | macurrency}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.LONGUEUR' | translate }} :</th>
+                            <td class="donnee_show">{{details.longueur}} (m)</td>
+                            <th>{{ 'PAGES.IMMOBILISATION.LARGEUR' | translate }} :</th>
+                            <td class="donnee_show">{{details.largeur}} (m)</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.POIDS' | translate }} :</th>
+                            <td class="donnee_show">{{details.poids}} (kg)</td>
+                            <th>{{ 'PAGES.IMMOBILISATION.COULEUR' | translate }} :</th>
+                            <td class="donnee_show">
+                                {{details.couleur}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.IMMOBILISATION.DESCRIPTIF' | translate }} :</th>
+                            <td class="donnee_show" colspan="4">{{details.descriptif}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon2-hourglass-1"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.IMMOBILISATION.REFORME.LIBELLE' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tr>
+                        <th>{{ 'PAGES.IMMOBILISATION.REFORME.DATE_REFORME_PRE' | translate }}:</th>
+                        <td class="donnee_show date_reforme">{{details.dateReforme | date:'dd/MM/yyyy'}}</td>
+                        <th>{{ 'PAGES.IMMOBILISATION.REFORME.DUREE_VIE_PRE' | translate }} :</th>
+                        <td class="donnee_show">
+                            {{details.dureeVie}}&nbsp;{{ 'PAGES.IMMOBILISATION.REFORME.JOURS' | translate }}</td>
+                    </tr>
+                    <tr *ngIf="details.motifReforme!=null">
+                        <th>{{ 'PAGES.IMMOBILISATION.REFORME.DATE_REFOMR_REE' | translate }} :</th>
+                        <td class="donnee_show date_reformeFinal">{{details.dateReformeFinal | date:'dd/MM/yyyy'}}</td>
+                        <th>{{ 'PAGES.IMMOBILISATION.REFORME.DUREE_VIE_REE' | translate }} :</th>
+                        <td class="donnee_show">
+                            {{details.dureeVieFinal}}&nbsp;{{ 'PAGES.IMMOBILISATION.REFORME.JOURS' | translate }}</td>
+                    </tr>
+                    <tr *ngIf="details.motifReforme!=null">
+                        <th>{{ 'PAGES.IMMOBILISATION.REFORME.MOTIF' | translate }}:</th>
+                        <td class="donnee_show" colspan="4">
+                            {{details.motifReforme!=null?details.motifReforme.motifReforme:null}}</td>
+                    </tr>
+                    <tr *ngIf="details.motifReforme!=null">
+                        <th>{{ 'PAGES.IMMOBILISATION.REFORME.DESCRIPTION' | translate }} :</th>
+                        <td class="donnee_show" colspan="4">{{details.descriptionReforme}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin :: Action -->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end::Action -->

@@ -1,0 +1,219 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter un Origine :
+				</h2>
+			</div>
+		</div>
+	</div>
+
+    <form [formGroup]="ajoutForm" action="">
+	<div  class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nom :</mat-label>
+								<input
+                                    formControlName="nom"
+									matNativeControl
+									class="form-control"
+                                    matInput
+								>
+                               
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prenom :</mat-label>
+								<input
+                                    formControlName="prenom"
+									matNativeControl
+									class="form-control"
+                                    matInput
+								>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN :</mat-label>
+								<input
+                                formControlName="cin"
+									matNativeControl
+									class="form-control"
+								>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date :</mat-label>
+								<input
+                                formControlName="date"
+									type="date"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N Bullettin :</mat-label>
+								<input
+                                formControlName="numBulletin"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="ice"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nationalite:</mat-label>
+                                <!-- <input type="text"
+                                class="form-control-solid form-control-lg"
+                                name="ice"
+                                matInput  formControlName="nationalite"> -->
+								<mat-select
+									matNativeControl
+                                    formControlName="nationalite1"
+									class="form-control"
+								>
+                                <mat-option  value="Marocain">Marocain</mat-option>
+                                <mat-option  value="Autre">Autre
+                                    <input
+                                    formControlName="nationalite"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+                                </mat-option>
+                                
+								</mat-select>
+							</mat-form-field>
+                            <mat-form-field *ngIf="ajoutForm.get('nationalite1').value === 'Autre'" class="example-full-width">
+                                <mat-label  >Nationalité (Autre)</mat-label>
+                                <input  matInput formControlName="autreNationalite" placeholder="Saisir autre nationalité">
+                              </mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+                            <mat-radio-group formControlName="connu">
+                                <mat-radio-button  value="true">Oui</mat-radio-button>
+                                <mat-radio-button  value="false">Non</mat-radio-button>
+                              </mat-radio-group>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                </div>
+				<div class="row">
+					<div class="pb-5" data-wizard-type="step-content">
+						<h4 class="mb-10 font-weight-bold text-dark"></h4>
+						<div class="kt-portlet">
+							<div class="kt-portlet__body">
+								<div class="row">
+									<div
+										class="col-md-12 show_port input-group"
+									>
+										<form
+											enctype="multipart/form-data"
+											method="POST"
+											style="
+												display: -webkit-inline-box;
+												margin-inline-start: 98px;
+											"
+										>
+											<label class="input-group-btn">
+												<span class="btn btn-info">
+													Sélectionner un fichier
+													<input
+														type="file"
+														name="file"
+														formControlName="_file"
+														id="customFile"
+														style="display: none"
+														multiple
+													/>
+												</span>
+											</label>
+											<input
+												type="text"
+												class="form-control"
+												readonly
+											/>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									
+                                    <button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+									<button
+                                    (click)="ajouter()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dlp-c41
+											class="icon la la-floppy-o"
+										></i>
+										ENREGISTRER
+									</button>
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+</div>

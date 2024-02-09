@@ -1,0 +1,297 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<div mat-dialog-content>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="kt-portlet portlet-1">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<!-- ======================================== -->
+
+							<!-- ====================================================== -->
+
+							<!--First level Menu-->
+							<mat-menu #print="matMenu">
+								<button
+									mat-menu-item
+									(click)="imprimerAvis(architecte.id)"
+								>
+									Avis AO
+								</button>
+							</mat-menu>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<!-- Start :: Expansion panel -->
+			<table class="table pj" width="100%">
+				<tbody>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NOM_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							{{ architecte.nom }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.PRENOM_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							{{ architecte.prenom | translate }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MAIL_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show" colspan="4">
+							{{ architecte.mail }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADRESSE_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							{{ architecte.adresse }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MONTAANT_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							{{ architecte.montant }}
+						</td>
+					</tr>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ACTION_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							<mat-radio-group (change)="change($event)">
+								<mat-radio-button [value]="1"
+									>Accepté</mat-radio-button
+								>
+								<mat-radio-button [value]="2"
+									>Rejeté</mat-radio-button
+								>
+							</mat-radio-group>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table *ngIf="accepte" class="table pj" width="80%">
+				<tbody>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NT_ARCHITECT"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="numero"
+										[(ngModel)]="validationFinanceForm.nt"
+										required
+										value="{{
+											validationFinanceForm.nt
+												? validationFinanceForm.nt
+												: '0'
+										}}"
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NE_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="numero"
+										[(ngModel)]="validationFinanceForm.ne"
+										value="{{
+											validationFinanceForm.ne
+												? validationFinanceForm.ne
+												: '0'
+										}}"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NF_ARCHITECTE"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="numero"
+										[(ngModel)]="validationFinanceForm.nf"
+										value="{{
+											validationFinanceForm.nf
+												? validationFinanceForm.nf
+												: '0'
+										}}"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<button
+								_ngcontent-dkp-c41=""
+								(click)="validerComissionFinance()"
+								class="
+									btn btn-success btn-md btn-tall btn-wide
+									kt-font-bold kt-font-transform-u
+								"
+							>
+								<i
+									_ngcontent-dkp-c41=""
+									class="icon la la-floppy-o"
+								></i>
+								{{ "PAGES.GENERAL.SAVE" | translate }}
+							</button>
+						</th>
+					</tr>
+				</tbody>
+			</table>
+
+			<table *ngIf="rejete" class="table pj" width="80%">
+				<tbody>
+					<tr>
+						<th>
+							{{
+								"PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_MOTIF"
+									| translate
+							}}
+							:
+						</th>
+						<td class="donnee_show">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="numero"
+										[(ngModel)]="
+											validationFinanceForm.motif
+										"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<button
+								_ngcontent-dkp-c41=""
+								(click)="rejeter()"
+								class="
+									btn btn-success btn-md btn-tall btn-wide
+									kt-font-bold kt-font-transform-u
+								"
+							>
+								<i
+									_ngcontent-dkp-c41=""
+									class="icon la la-floppy-o"
+								></i>
+								{{ "PAGES.GENERAL.SAVE" | translate }}
+							</button>
+						</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div mat-dialog-actions>
+		<div class="kt-portlet__head-label" align="right">
+			<button
+				_ngcontent-dkp-c41=""
+				class="
+					btn btn-info btn-md btn-tall btn-wide
+					kt-font-bold kt-font-transform-u
+				"
+				type="reset"
+				(click)="onNoClick()"
+			>
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ "PAGES.GENERAL.EXIT" | translate }}
+			</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+</form>

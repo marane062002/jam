@@ -1,0 +1,533 @@
+<form class="kt-form" autocomplete="off" #form="ngForm" (submit)="form.form.valid && onSubmit(form)">
+    <!-- begin:: Content -->
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div     class="kt-portlet portlet-3">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="socicon-buffer"></i>
+						</span> &nbsp;
+                        <h3 class="kt-portlet__head-title">
+                           Créer une consultation
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="Radio col-md-12" style=" display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		">
+                             <div class="col-md-4">
+                                 <div class="form-group fv-plugins-icon-container">
+                                     <label><h5>{{ 'PAGES.BESOINCONSULTATION.PROGRAMME' | translate }}:</h5></label>
+                                 </div>
+                             </div>
+                             <div class="col-md-4">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible"  name="isVisible" 	[value]="0" [checked]="isSelected"/>
+                                    <label><h6>Non</h6></label>
+                                </div>
+                            </div>
+                             <div class="col-md-4">
+                                 <div class="form-group fv-plugins-icon-container">
+                                     <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible" name="isVisible" 	  [value]="1" [checked]="!isSelected"	/>
+                                     <label><h6> Oui</h6></label>
+                                 </div>
+                             </div>
+                             
+                             
+                         </div>
+                    </div>
+                    <div class="row" *ngIf="isVisible == 1">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control-lg" 	placeholder="Orientation"  (selectionChange)="selectedCode($event)" >
+                                        <mat-option  *ngFor="let item of codes"[value]="item">{{item}}</mat-option>
+                                        
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control-lg" 	[(ngModel)]="formData.idProject" placeholder="Intitulé du projet" >
+                                        <mat-option *ngFor="let item of listprogramme" [value]="item.id">{{item.nameProjet }}</mat-option>
+                                        
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <!--====================================================================================================================================================-->
+                 
+                    <div class="row">
+                        <div	 class="Radio col-md-12"	style="	display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		">
+                             <div class="col-md-4">
+                                 <div class="form-group fv-plugins-icon-container">
+                                     <label><h5>{{ 'PAGES.BESOINCONSULTATION.CONVENTION' | translate }} :</h5></label>
+                                 </div>
+                             </div>
+
+                             <div class="col-md-4">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible3"  name="isVisible3" 	[value]="0" [checked]="isSelected" 	/>
+                                    <label><h6>Non</h6></label>
+                                </div>
+                            </div>
+
+                             <div class="col-md-4">
+                                 <div class="form-group fv-plugins-icon-container">
+                                     <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible3" name="isVisible3" 	  [value]="1" [checked]="!isSelected" 	/>
+                                     <label><h6>Oui</h6></label>
+                                 </div>
+                             </div>
+         
+                             
+                         </div>
+                 </div>
+                    <div class="row">
+                                <div class="col-md-6 text-center purple" *ngIf="isVisible3 == 1">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-select class="form-control-lg" 	placeholder="Convention"   [(ngModel)]="formData.idConvention"  >
+                                                        <mat-option *ngFor="let item of listConvention" [value]="item.id" >{{item.object }}</mat-option>
+                                                        
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                     <!--====================================================================================================================================================-->
+
+                    <div class="row"> 
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="typeAO" [(ngModel)]="formData.typeAO" placeholder="{{ 'PAGES.MARCHE.AO.ORGANISME' | translate }}">
+                                        <mat-option *ngFor="let item of typesAO" value="{{item}}">
+                                            {{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                      
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="typePrestAo" (selectionChange)="onChangeTypePrestationAo($event)" placeholder="{{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }}">
+                                        <mat-option *ngFor="let item of lisTypePrestationAo" value="{{item.id}}">
+                                            {{item.libelle}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="crit" [(ngModel)]="formData.typeMarche.id" placeholder="{{ 'PAGES.MARCHE.AO.TYPE_AO' | translate }}">
+                                        <mat-option *ngFor="let item of typeMarcheAll" value="{{item.id}}">
+                                            {{item.libelle}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" #nompp="ngModel" placeholder="{{ 'PAGES.MARCHE.AO.BUDGET_ESTIMATIF' | translate }}" [(ngModel)]="formData.budgetEstimatif" name="nompp" (blur)="changeBudgetEstimation($event)">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" #nompp="ngModel" placeholder="{{ 'PAGES.MARCHE.AO.estimation' | translate }}" [(ngModel)]="formData.estimation" name="estimation" required (blur)="changeEstimation($event)">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="objet" [(ngModel)]="formData.objet" #objet="ngModel" placeholder="{{ 'PAGES.MARCHE.AO.OBJET' | translate }}" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+                                    <mat-error *ngIf="(form.submitted && objet.invalid) || objet.touched">
+                                        <div>
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </div>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="objetAR" [(ngModel)]="formData.objetAR" #objet="ngModel" placeholder="{{ 'PAGES.MARCHE.AO.OBJET' | translate }} AR" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="row">
+                      <!--   <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select matInput class="form-control" name="division" (selectionChange)="onChangeDivision($event)" [(ngModel)]="formData.division" #division="ngModel" placeholder="{{ 'PAGES.MARCHE.AO.DIVISION' | translate }}" required>
+                                        <mat-option *ngFor="let item of divisions" value="{{item.id}}">{{checkLang=='ar'?item.libelle:item.libelleFR}}
+                                        </mat-option>
+                                    </mat-select>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select matInput class="form-control" name="criticiterec" [(ngModel)]="formData.serviceGestionnaire" placeholder="{{ 'PAGES.MARCHE.AO.SERVICE' | translate }}">
+                                        <mat-option *ngFor="let item of services" value="{{item.id}}">{{checkLang=='ar'?item.libelle:item.libelleFR}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+
+                            </div>
+                        </div> -->
+                      
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="naturePrix" [(ngModel)]="formData.naturePrix" placeholder="{{ 'PAGES.MARCHE.AO.NATURE_PRIX' | translate }}">
+                                        <mat-option *ngFor="let item of naturePrix" value="{{item}}">
+                                            {{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="qualification" [(ngModel)]="formData.qualification" #objet="ngModel" placeholder="{{ 'PAGES.MARCHE.AO.QUALIFICATION' | translate }}" >
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="critici" [(ngModel)]="formData.natureAo.id" placeholder="{{ 'PAGES.MARCHE.AO.NATURE_AO' | translate }}">
+                                        <mat-option *ngFor="let item of natureAoAll" value="{{item.id}}">
+                                            {{item.libelle}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="caution" [(ngModel)]="formData.caution" #objet="ngModel" placeholder="{{ 'PAGES.MARCHE.AO.CAUTION_PROVISOIRE' | translate }} " required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                         <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="loi" [(ngModel)]="formData.loi" placeholder="{{ 'PAGES.MARCHE.AO.LOI' | translate }}">
+                                        <mat-option value="1">1</mat-option>
+                                        <mat-option value="2">2</mat-option>
+                                        <mat-option value="3">3</mat-option>
+                                        <mat-option value="4">4</mat-option>
+                                        <mat-option value="5">5</mat-option>
+                                        <mat-option value="6">6</mat-option>
+                                        <mat-option value="7">7</mat-option>
+                                        <mat-option value="8">8</mat-option>
+                                        <mat-option value="9">9</mat-option>
+                                        <mat-option value="10">10</mat-option>
+                                        <mat-option value="11">11</mat-option>
+                                        <mat-option value="12">12</mat-option>
+                                        <mat-option value="13">13</mat-option>
+                                        <mat-option value="14">14</mat-option>
+                                        <mat-option value="15">15</mat-option>
+                                        <mat-option value="16">16</mat-option>
+                                        <mat-option value="17">17</mat-option>
+                                        <mat-option value="18">18</mat-option>
+                                        <mat-option value="19">19</mat-option>
+                                        <mat-option value="20">20</mat-option>
+                                    </mat-select>            
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                       
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput type="text" class="form-control" name="cinpp" [(ngModel)]="formData.descriptif" placeholder="{{ 'PAGES.MARCHE.AO.DESCRIPTIF' | translate }}"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                   <!--  <div class="espace_bloc"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="left">
+                                <div class="form-group">
+                                    <div *ngFor="let item of dataExistenceVisite; let i = index;"  >
+                                        <mat-slide-toggle (change)="existenceVisite($event)"   >
+                                            {{item.label}}
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="left">
+                                <div class="form-group">
+                                    <div *ngFor="let item of data; let i = index;">
+                                        <mat-slide-toggle (change)="change($event)" [checked]="checked">
+                                            {{item.label}}
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+ <!-- ================================================================================================================================================================= -->
+ <div class="row">
+    <div *ngFor="let item of dataExistenceVisite; let i = index;" 	 class="Radio col-md-12"	style="	display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		">
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <label><h5> {{item.label}}</h5></label>
+             </div>
+         </div>
+
+         <div class="col-md-4">
+            <div class="form-group fv-plugins-icon-container">
+                <input class="form-check-input" 	type="radio" [(ngModel)]="isVisible10"	(change)="existenceVisite2()"    name="isVisible10" [value]="false" [checked]="isSelected10"	/>
+                <label><h6>Non</h6></label>
+            </div>
+        </div>
+
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <input class="form-check-input" 	type="radio" [(ngModel)]="isVisible10"	(change)="existenceVisite2()"  [value]="true " name="isVisible10" 	  [value]="true" [checked]="!isSelected10" 	/>
+                 <label><h6>Oui</h6></label>
+             </div>
+         </div>
+
+         
+     </div>
+ </div>
+
+ <div class="row">
+    <div  class="Radio col-md-12"	style="	display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		">
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <label><h5>  Echantillon /prospectus</h5></label>
+             </div>
+         </div>
+
+         <div class="col-md-4">
+            <div class="form-group fv-plugins-icon-container">
+                <input class="form-check-input" 	type="radio" [(ngModel)]="isVisible4" (change)="existEchantillon()" name="isVisible4" [value]="false" [checked]="isSelected4"	/>
+                <label><h6>Non</h6></label>
+            </div>
+        </div>
+
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <input class="form-check-input" 	type="radio" [(ngModel)]="isVisible4" (change)="existEchantillon()" [value]="true " name="isVisible4"  [value]="true" [checked]="!isSelected4" 	/>
+                 <label><h6>Oui</h6></label>
+             </div>
+         </div>
+
+     </div>
+ </div>
+ <div class="row">
+    <div class="Radio col-md-12" style=" display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		">
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <label><h5>Agrément</h5></label>
+             </div>
+         </div>
+         <div class="col-md-4">
+            <div class="form-group fv-plugins-icon-container">
+                <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible5" (change)="existanceAgrement()" name="isVisible5" 	[value]="false" [checked]="isSelected5"/>
+                <label><h6>Non</h6></label>
+            </div>
+        </div>
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible5"(change)="existanceAgrement()" name="isVisible5" 	  [value]="true" [checked]="!isSelected5"	/>
+                 <label><h6> Oui</h6></label>
+             </div>
+         </div>
+         
+         
+     </div>
+</div>
+ <div class="row">
+    <div class="Radio col-md-12" style=" display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		">
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <label><h5>Allotissement </h5></label>
+             </div>
+         </div>
+         <div class="col-md-4">
+            <div class="form-group fv-plugins-icon-container">
+                <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible6" (change)="existenceVisite6()"  name="isVisible6" 	[value]="'lot unique'" [checked]="isSelected6"/>
+                <label><h6>lot unique</h6></label>
+            </div>
+        </div>
+         <div class="col-md-4">
+             <div class="form-group fv-plugins-icon-container">
+                 <input class="form-check-input" 	type="radio" 	[(ngModel)]="isVisible6"(change)="existenceVisite6()" name="isVisible6" 	  [value]="'allotis'" [checked]="!isSelected6"	/>
+                 <label><h6> allotis</h6></label>
+             </div>
+         </div>
+         
+         
+     </div>
+</div>
+
+
+<div  class="row" >
+    <div class="col-md-3 ">
+        
+    </div>
+    <div class="col-md-3 ">
+        
+    </div>
+    <div class="col-md-3 ">
+        
+    </div>
+    <div class="col-md-3 ">
+        <div  class="left">
+            <div  class="form-group">
+                <div *ngFor="let item of data; let i = index;">
+                    <mat-slide-toggle (change)="change($event)" [checked]="checked">
+                        {{item.label}}
+                    </mat-slide-toggle>
+                    <!-- <p>{{bool}}</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- ================================================================================================================================================================= -->
+                </div> 
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- begin:: Content section 2 -->
+    <div class="kt-portlet">
+        <div class="kt-portlet__head kt-bg-portlet-5">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+					<i class="flaticon-attachment"></i>
+				</span>
+                <h3 class="kt-portlet__head-title">
+                    {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-12 show_port">
+                    <!-- start section::edit file form -->
+                    <div class="row">
+                        <div class="col-md-3 show_port input-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select class="form-control" name="unite" [(ngModel)]="formPj.type" placeholder="{{ 'PAGES.MARCHE.AO.PJ.TYPE' | translate }}">
+                                    <mat-option *ngFor="let item of unites" [value]="item">{{item.libelle}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 show_port input-group">
+                            <form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+                                <label class="input-group-btn">
+									<span class="btn btn-info">
+										{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
+											(change)="save($event)" id="customFile" style="display: none;" multiple>
+									</span>
+								</label>
+                                <input id="test" type="text" class="form-control" readonly>
+                            </form>
+                        </div>
+                        <div class="col-md-3" style="padding-top: 27px;">
+                            <button class="btn btn-primary" type="button" (click)="validerPj()" style="position: absolute;right: 0px;">
+								{{ 'PAGES.GENERAL.SAVE' | translate }}
+							</button>
+                        </div>
+                    </div>
+                    <!-- end section::edit file form -->
+                    <hr>
+                    <!-- begin::file datasource -->
+                    <div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSource1" matSort>
+                            <!-- type Column -->
+                            <ng-container matColumnDef="type">
+                                <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.AO.PJ.TYPE' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+                            </ng-container>
+                            <!-- file name Column -->
+                            <ng-container matColumnDef="nomDoc">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                            </mat-row>
+                        </mat-table>
+
+                    </div>
+                    <!-- end::file datasource -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Content section 2 -->
+    <!--Action Section :: begin-->
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label" align="right">
+            <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.NEXT' | translate }}</button>
+            <button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset">
+				<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+				{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+            <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="backList()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        </div>
+        <div class="espace_bloc"></div>
+    </div>
+    <!--Action Section :: end-->
+</form>

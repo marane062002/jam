@@ -1,0 +1,315 @@
+<div autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter une sortie:
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Date: </label>
+					<input
+                    [(ngModel)]="date"
+						matInput
+						type="date"
+						class="form-control"
+						placeholder=""
+					/>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>Objet de la sortie: </label>
+					<mat-select [formControl]="objetControl" matNativeControl class="form-control">
+						<mat-option *ngFor="let typec of obj" [value]="typec.id"> 
+                            {{ typec.libelle }}
+                        </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Type de traitement: </label>
+					<mat-select [formControl]="typeTraitementControl" matNativeControl class="form-control" >
+                        <mat-option *ngFor="let typec of type" [value]="typec.id"> 
+                            {{ typec.libelle }}
+                        </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<div class="input-group date">
+					<mat-form-field class="example-full-width">
+						<label> Equipe: </label>
+						<mat-select
+                           [formControl]="equipeControl"
+							matNativeControl
+							multiple
+							class="form-control"
+						>
+                        <mat-option *ngFor="let type of equipe" [value]="type.id"> 
+							{{ type.prenom}} {{ type.nom }}
+						</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Commune: </label>
+					<mat-select [formControl]="communeControl" matNativeControl class="form-control">
+						<mat-option *ngFor="let typec of commune" [value]="typec.id"> 
+                            {{ typec.libelle }}
+                        </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Arrondissement: </label>
+					<mat-select [formControl]="arrondissementControl" matNativeControl class="form-control">
+						<mat-option *ngFor="let typec of arrondissement" [value]="typec.id"> 
+                            {{ typec.libelle }}
+                        </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>Quartier: </label>
+					<mat-select [formControl]="quartierControl" matNativeControl class="form-control">
+						<mat-option *ngFor="let typec of quartier" [value]="typec.id"> 
+                            {{ typec.libelle }}
+                        </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>Lieu: </label>
+					<input
+                        [(ngModel)]="lieu"
+						matInput
+						type="text"
+						class="form-control form-control-solid form-control-lg"
+						name="address1"
+					/>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Quantité: </label>
+					<mat-select [formControl]="quantiteControl" matNativeControl class="form-control">
+						<mat-option *ngFor="let typec of quantite" [value]="typec.id"> 
+                            {{ typec.libelle }}
+                        </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>Produit utilisé: </label>
+					<mat-select [formControl]="produitControl" matNativeControl class="form-control">
+						<mat-option *ngFor="let typec of produit" [value]="typec.id"> 
+                            {{ typec.libelle }}
+                        </mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Adresse: </label>
+					<input
+                    [(ngModel)]="adresse"
+                    matInput
+                    type="text"
+                    class="form-control form-control-solid form-control-lg"
+                    name="address1"
+					/>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+	<div class="pb-5" data-wizard-type="step-content">
+		<h4 class="mb-10 font-weight-bold text-dark"></h4>
+		<div class="kt-portlet">
+			<div class="kt-portlet__head kt-bg-portlet-5">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-attachment"></i>
+					</span>
+					&nbsp;
+					<h3 class="kt-portlet__head-title">
+						Procès-verbal de sortie:
+						<i class="la la-cloud-upload"></i>
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-6 show_port input-group">
+						<form
+							enctype="multipart/form-data"
+							method="POST"
+							style="
+								display: -webkit-inline-box;
+								margin-inline-start: 98px;
+							"
+						>
+							<label class="input-group-btn">
+								<span class="btn btn-info">
+									Sélectionner un fichier
+									<input
+                                    (change)="handleproces($event)"
+										type="file"
+										name="file"
+										formControlName="_file"
+										id="customFile"
+										style="display: none"
+										multiple
+									/>
+								</span>
+							</label>
+							<input type="text" class="form-control" readonly />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Remarques: </label>
+					<input
+                    [(ngModel)]="remarques"
+                    matInput
+                    type="text"
+                    class="form-control form-control-solid form-control-lg"
+                    name="address1"
+					/>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+	<div class="pb-5" data-wizard-type="step-content">
+		<h4 class="mb-10 font-weight-bold text-dark"></h4>
+		<div class="kt-portlet">
+			<div class="kt-portlet__head kt-bg-portlet-5">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-attachment"></i>
+					</span>
+					&nbsp;
+					<h3 class="kt-portlet__head-title">
+						Pièce jointe:
+						<i class="la la-cloud-upload"></i>
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-6 show_port input-group">
+						<form
+							enctype="multipart/form-data"
+							method="POST"
+							style="
+								display: -webkit-inline-box;
+								margin-inline-start: 98px;
+							"
+						>
+							<label class="input-group-btn">
+								<span class="btn btn-info">
+									Sélectionner un fichier
+									<input
+                                    (change)="handleFileInput($event)"
+										type="file"
+										name="file"
+										formControlName="_file"
+										id="customFile"
+										style="display: none"
+										multiple
+									/>
+								</span>
+							</label>
+							<input type="text" class="form-control" readonly />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="RetourEmbalages()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+
+		<button
+        (click)="createCarte()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset"
+		>
+			<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+			Enregistrer
+		</button>
+	</div>
+</div>

@@ -1,0 +1,1522 @@
+<div class="kt-portlet__body">
+	<div class="kt-portlet__head-toolbar">
+		<div class="kt-portlet__head-wrapper">
+			<div
+				*ngxPermissionsOnly="['canCreateCommissionAo']"
+				class="kt-portlet__head-actions"
+			>
+				&nbsp;
+				<a
+					href="javascript:;"
+					*ngIf="AddCommissionShow"
+					(click)="nouvelleLigne()"
+					class="btn btn-success btn-elevate btn-icon-sm"
+				>
+					<i class="la la-plus"></i>
+					{{ "PAGES.MARCHE.COMMISSIONS.TITRE_NEW" | translate }}
+				</a>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="commissionShowForm">
+		<div class="espace_bloc"></div>
+		<form autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input
+								matInput
+								type="text"
+								[disabled]="true"
+								class="form-control"
+								name="prepp"
+								[(ngModel)]="
+									formDataCommssion.typeCommission.libelle
+								"
+								placeholder="{{
+									'PAGES.MARCHE.COMMISSIONS.COMMISSION'
+										| translate
+								}} :"
+								required
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input
+								matInput
+								class="form-control"
+								[matDatepicker]="picker2"
+								name="dateCommission"
+								[(ngModel)]="formDataCommssion.dateOuveture"
+								placeholder="{{
+									'PAGES.MARCHE.COMMISSIONS.DATE_DEBUT'
+										| translate
+								}}:"
+							/>
+							<mat-datepicker-toggle
+								matSuffix
+								[for]="picker2"
+							></mat-datepicker-toggle>
+							<mat-datepicker
+								touchUi="true"
+								#picker2
+							></mat-datepicker>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="espace_bloc"></div> -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="kt-portlet__head-toolbar">
+						<div class="kt-portlet__head-wrapper">
+							<div class="kt-portlet__head-actions">
+								<a
+									href="javascript:; "
+									(click)="nouveauParticipant()"
+									class="btn btn-info btn-elevate btn-icon-sm"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.ADD_MEMBRE"
+											| translate
+									}}
+									<i class="flaticon-user-add"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showRadio">
+				<div class="espace_bloc"></div>
+				<div class="row">
+					<div class="col-md-12">
+						<form [formGroup]="eventEditForm" novalidate>
+							<div class="form-group">
+								<mat-radio-group
+									[(ngModel)]="selectedStatus"
+									formControlName="completed"
+								>
+									<mat-radio-button [value]="0">
+										{{
+											"PAGES.MARCHE.COMMISSIONS.ADD_MEMBRE_INTERNE"
+												| translate
+										}}
+									</mat-radio-button>
+									<mat-radio-button [value]="1">
+										{{
+											"PAGES.MARCHE.COMMISSIONS.ADD_MEMBRE_EXTERNE"
+												| translate
+										}}
+									</mat-radio-button>
+								</mat-radio-group>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: FORM PERSONNE INTERNE -->
+				<div *ngIf="!selectedStatus">
+					<div class="espace_bloc"></div>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select
+										class="form-control"
+										name="divisionAo"
+										(selectionChange)="
+											onChangeDivision($event)
+										"
+										[(ngModel)]="
+											participantInterne.idDivision
+										"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.DIVISION'
+												| translate
+										}}"
+									>
+										<mat-option
+											*ngFor="let item of typeBien1"
+											value="{{ item.id }}"
+										>
+											{{
+												checkLang == "ar"
+													? item.libelle
+													: item.libelleFR
+											}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select
+										class="form-control"
+										name="criticiterec"
+										(selectionChange)="
+											onChangeService($event)
+										"
+										[(ngModel)]="
+											participantInterne.idService
+										"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.SERVICE'
+												| translate
+										}} "
+									>
+										<mat-option
+											*ngFor="let item of typeBien"
+											value="{{ item.id }}"
+										>
+											{{
+												checkLang == "ar"
+													? item.libelle
+													: item.libelleFR
+											}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select
+										class="form-control"
+										name="crit"
+										(selectionChange)="
+											onChangeofOptionsPerso($event)
+										"
+										[(ngModel)]="
+											participantInterne.idPersonnel
+										"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.PERSONNEL'
+												| translate
+										}}"
+									>
+										<mat-option
+											*ngFor="let item of personnel"
+											value="{{ item.id }}"
+											>{{ item.nom }} {{ item.prenom }}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select
+										class="form-control"
+										name="critici"
+										(selectionChange)="
+											onChangeofOptionsRole($event)
+										"
+										[(ngModel)]="participantInterne.role.id"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.ROLE'
+												| translate
+										}}"
+									>
+										<mat-option
+											*ngFor="
+												let item of roleCommissionAll
+											"
+											value="{{ item.id }}"
+										>
+											{{ item.libelle }}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<button
+							class="btn btn-primary"
+							type="button"
+							(click)="onClick($event)"
+						>
+							<i class="fas fa-check"></i
+							>{{ "PAGES.GENERAL.SAVE" | translate }}
+						</button>
+					</div>
+				</div>
+				<!-- END :: FORM PERSONNE INTERNE -->
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: FORM PERSONNE EXTERNE -->
+				<div *ngIf="selectedStatus">
+					<div class="espace_bloc"></div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="prenompp"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.NOM'
+												| translate
+										}} :"
+										[(ngModel)]="formDataPE.nom"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.PRENOM'
+												| translate
+										}} :"
+										name="nompp"
+										[(ngModel)]="formDataPE.prenom"
+										required
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-keyboard"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="cinpp"
+										[(ngModel)]="formDataPE.cin"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.CIN'
+												| translate
+										}} :"
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-address-card"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="telePE"
+										[(ngModel)]="formDataPE.tele"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.TEL'
+												| translate
+										}}  :"
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-address-card"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input
+										matInput
+										type="text"
+										class="form-control"
+										name="nomOrganisme"
+										[(ngModel)]="formDataPE.organisme"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ORGANISME'
+												| translate
+										}}  :"
+									/>
+									<mat-icon matSuffix
+										><i class="far fa-address-card"></i
+									></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select
+										class="form-control"
+										name="critici"
+										(selectionChange)="
+											onChangeofOptionsRole($event)
+										"
+										[(ngModel)]="formDataPE.role.id"
+										placeholder="{{
+											'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ROLE'
+												| translate
+										}} "
+									>
+										<mat-option
+											*ngFor="
+												let item of roleCommissionAll
+											"
+											value="{{ item.id }}"
+										>
+											{{ item.libelle }}</mat-option
+										>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<button
+						class="btn btn-primary"
+						type="button"
+						(click)="onClickPE($event)"
+					>
+						<i class="fas fa-check"></i
+						>{{ "PAGES.GENERAL.SAVE" | translate }}
+					</button>
+				</div>
+				<!-- END :: FORM PERSONNE EXTERNE -->
+			</div>
+			<div class="kt-portlet__body kt-portlet__body--fit">
+				<!-- BEGIN :: TABLE PERSONNE INTERNE -->
+				<div
+					*ngIf="dataSourcePI"
+					class="example-container mat-elevation-z8"
+				>
+					<div class="espace_bloc"></div>
+					<h4 *ngIf="dataSourcePI" class="title-style-IN">
+						{{
+							"PAGES.MARCHE.COMMISSIONS.MEMBRE_INTERNE"
+								| translate
+						}}
+					</h4>
+					<table
+						id="exportDataPI"
+						mat-table
+						[dataSource]="dataSourcePI"
+						class="mat-elevation-z8"
+					>
+						<!-- ID Column -->
+						<ng-container matColumnDef="nom">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								class="nom-in"
+							>
+								{{
+									"PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.NOM"
+										| translate
+								}}
+							</th>
+							<td mat-cell *matCellDef="let rowPI" class="nom-in">
+								{{ rowPI.nom ? rowPI.nom : "-" }}
+							</td>
+						</ng-container>
+
+						<!-- Progress Column -->
+						<ng-container matColumnDef="role">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								mat-sort-heade
+								class="role_in"
+							>
+								{{
+									"PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ROLE"
+										| translate
+								}}
+							</th>
+							<td
+								mat-cell
+								*matCellDef="let rowPI"
+								class="role_in"
+							>
+								{{ rowPI.role ? rowPI.role : "-" }}
+							</td>
+						</ng-container>
+
+						<!-- Fav Column -->
+						<ng-container matColumnDef="present">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								class="presence-in"
+							>
+								{{
+									"PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT"
+										| translate
+								}}
+							</th>
+							<td
+								mat-cell
+								*matCellDef="let rowPI"
+								class="presence-in"
+							>
+								<mat-form-field floatLabel="never">
+									<mat-select [(value)]="rowPI.present">
+										<mat-option [value]="true"
+											>Oui</mat-option
+										>
+										<mat-option [value]="false"
+											>Non</mat-option
+										>
+									</mat-select>
+								</mat-form-field>
+							</td>
+						</ng-container>
+
+						<!-- Name Column -->
+						<ng-container matColumnDef="justif">
+							<th
+								mat-header-cell
+								*matHeaderCellDef
+								class="motif-in"
+							>
+								{{
+									"PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE"
+										| translate
+								}}
+							</th>
+							<td
+								mat-cell
+								*matCellDef="let rowPI"
+								class="motif-in"
+							>
+								<mat-form-field floatLabel="never">
+									<input
+										matInput
+										type="text"
+										[disabled]="
+											rowPI.present === true ||
+											rowPI.present === null
+										"
+										name="motifin"
+										[value]="rowPI.justif"
+										[(ngModel)]="rowPI.justif"
+									/>
+								</mat-form-field>
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="actions">
+							<th mat-header-cell *matHeaderCellDef></th>
+							<td mat-cell *matCellDef="let rowPI">
+								<a
+									href="javascript:;"
+									(click)="deletePI(rowPI)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-danger
+										btn-icon-md
+										btn_table_delete
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.DELETE' | translate
+									}}"
+									><i class="la la-trash"></i
+								></a>
+							</td>
+						</ng-container>
+						<tr
+							mat-header-row
+							*matHeaderRowDef="displayedColumnsPI"
+						></tr>
+						<tr
+							mat-row
+							*matRowDef="let rowPI; columns: displayedColumnsPI"
+						></tr>
+					</table>
+					<mat-paginator
+						[pageSizeOptions]="[3, 5, 10, 25]"
+					></mat-paginator>
+				</div>
+				<!-- END :: TABLE PERSONNE INTERNE -->
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: TABLE PERSONNE EXTERNE -->
+				<div *ngIf="dataSourcePE">
+					<div class="espace_bloc"></div>
+					<h4 class="title-style-OUT">
+						{{
+							"PAGES.MARCHE.COMMISSIONS.MEMBRE_EXTERNE"
+								| translate
+						}}
+					</h4>
+					<div class="example-container mat-elevation-z8">
+						<table
+							id="exportDataPE"
+							mat-table
+							[dataSource]="dataSourcePE"
+							class="mat-elevation-z8"
+						>
+							<!-- ID Column -->
+							<ng-container matColumnDef="nom">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="nom-out"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.PRESENCE.NOM"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let rowPE"
+									class="nom-out"
+								>
+									{{ rowPE.nom }} {{ rowPE.prenom }}
+								</td>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="organisme">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="organisme-out"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ORGANISME"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let rowPE"
+									class="organisme-out"
+								>
+									{{
+										rowPE.organisme ? rowPE.organisme : "-"
+									}}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="tele">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="tel-out"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.TEL"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let rowPE"
+									class="tel-out"
+								>
+									{{ rowPE.tele ? rowPE.tele : "-" }}
+								</td>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="role">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="role_out"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ROLE"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let rowPE"
+									class="role_out"
+								>
+									{{
+										getRoleCommissionDS(rowPE.role.id)
+											? getRoleCommissionDS(rowPE.role.id)
+											: "-"
+									}}
+								</td>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="present">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="presence-out"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let rowPE"
+									class="presence-out"
+								>
+									<mat-form-field floatLabel="never">
+										<mat-select [(value)]="rowPE.present">
+											<mat-option [value]="true"
+												>Oui</mat-option
+											>
+											<mat-option [value]="false"
+												>Non</mat-option
+											>
+										</mat-select>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="justif">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="motif-out"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let rowPE"
+									class="motif-out"
+								>
+									<mat-form-field floatLabel="never">
+										<input
+											matInput
+											type="text"
+											[disabled]="
+												rowPE.present === true ||
+												rowPE.present === null
+											"
+											name="motifOut"
+											[value]="rowPE.justif"
+											[(ngModel)]="rowPE.justif"
+										/>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<ng-container matColumnDef="actions">
+								<th mat-header-cell *matHeaderCellDef></th>
+								<td mat-cell *matCellDef="let rowPE">
+									<a
+										href="javascript:;"
+										(click)="deletePE(rowPE)"
+										class="
+											btn
+											btn-sm
+											btn-clean
+											btn-icon
+											btn-danger
+											btn-icon-md
+											btn_table_delete
+										"
+										matTooltip="{{
+											'PAGES.GENERAL.DELETE' | translate
+										}}"
+										><i class="la la-trash"></i
+									></a>
+								</td>
+							</ng-container>
+							<tr
+								mat-header-row
+								*matHeaderRowDef="displayedColumnsPE"
+							></tr>
+							<tr
+								mat-row
+								*matRowDef="
+									let rowPE;
+									columns: displayedColumnsPE
+								"
+							></tr>
+						</table>
+					</div>
+					<mat-paginator
+						[pageSizeOptions]="[3, 5, 10, 25]"
+					></mat-paginator>
+				</div>
+				<!-- END :: TABLE PERSONNE EXTERNE -->
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: ETAPE OUVERTURE DES PLIS -->
+				<div *ngIf="show == 1">
+					<div class="espace_bloc"></div>
+					<h4 class="title-style">
+						{{ "PAGES.MARCHE.COMMISSIONS.LIST_OFFRE" | translate }}
+					</h4>
+					<div class="example-container mat-elevation-z8">
+						<table
+							id="exportDataOD"
+							mat-table
+							[dataSource]="dataSourceOD"
+							class="mat-elevation-z8"
+						>
+							<!-- Progress Column -->
+							<ng-container matColumnDef="NomOrganisme">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.nom }}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="rc">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.RC"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.rc }}
+								</td>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="tele">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.TEL"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.tel }}
+								</td>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="deposee">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.IS_DEPOT"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									<mat-form-field floatLabel="never">
+										<mat-select
+											[(value)]="row.deposee"
+											required
+										>
+											<mat-option [value]="true"
+												>Oui</mat-option
+											>
+											<mat-option [value]="false"
+												>Non</mat-option
+											>
+										</mat-select>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<tr
+								mat-header-row
+								*matHeaderRowDef="displayedColumnsOD"
+							></tr>
+							<tr
+								mat-row
+								*matRowDef="
+									let row;
+									columns: displayedColumnsOD
+								"
+							></tr>
+						</table>
+
+						<mat-paginator
+							[pageSizeOptions]="[3, 5, 10, 25]"
+						></mat-paginator>
+					</div>
+				</div>
+				<!-- END :: ETAPE OUVERTURE DES PLIS -->
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: ETAPE ADMINISTRATIVE -->
+				<div *ngIf="show == 2">
+					<div class="espace_bloc"></div>
+					<h4 class="title-style">
+						{{ "PAGES.MARCHE.COMMISSIONS.LIST_OFFRE" | translate }}
+					</h4>
+					<div class="example-container mat-elevation-z8">
+						<table
+							id="exportDataODEvAdmin"
+							mat-table
+							[dataSource]="dataSourceODEvAdmin"
+							class="mat-elevation-z8"
+						>
+							<!-- Progress Column -->
+							<ng-container matColumnDef="NomOrganisme">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.nom }}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="rc">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.RC"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.rc }}
+								</td>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="tele">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.TEL"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.tel }}
+								</td>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="statut">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="statut2"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.STATUT"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let row"
+									class="statut2"
+								>
+									<mat-form-field floatLabel="never">
+										<mat-select
+											[(value)]="row.statut.id"
+											placeholder="{{
+												'PAGES.MARCHE.COMMISSIONS.STATUT'
+													| translate
+											}} "
+										>
+											<mat-option [value]="1">
+												{{
+													"PAGES.MARCHE.PROCESSUS_VALIDATION.VALIDER"
+														| translate
+												}}
+											</mat-option>
+											<mat-option [value]="2">
+												{{
+													"PAGES.MARCHE.PROCESSUS_VALIDATION.REFUSER"
+														| translate
+												}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="reserve">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									class="observ2"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.OBSERVATION"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let row"
+									class="observ2"
+								>
+									<mat-form-field floatLabel="never">
+										<input
+											matInput
+											type="text"
+											name="test2"
+											placeholder="{{
+												'PAGES.MARCHE.COMMISSIONS.OBSERVATION'
+													| translate
+											}}"
+											[value]="row.reserve"
+											[(ngModel)]="row.reserve"
+										/>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<tr
+								mat-header-row
+								*matHeaderRowDef="displayedColumnsODEvAdmin"
+							></tr>
+							<tr
+								mat-row
+								*matRowDef="
+									let row;
+									columns: displayedColumnsODEvAdmin
+								"
+							></tr>
+						</table>
+
+						<mat-paginator
+							[pageSizeOptions]="[3, 5, 10, 25]"
+						></mat-paginator>
+					</div>
+				</div>
+				<!-- END :: ETAPE ADMINISTRATIVE -->
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: ETAPE TECHNIQUE -->
+				<div *ngIf="show == 3">
+					<div class="espace_bloc"></div>
+					<h4 class="title-style">
+						{{ "PAGES.MARCHE.COMMISSIONS.LIST_OFFRE" | translate }}
+					</h4>
+					<div class="example-container mat-elevation-z8">
+						<table
+							id="exportDataODEvTechnique"
+							mat-table
+							[dataSource]="dataSourceODEvTechnique"
+							class="mat-elevation-z8"
+						>
+							<!-- Progress Column -->
+							<ng-container matColumnDef="NomOrganisme">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									style="width: 50%"
+								>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let row"
+									style="width: 50%"
+								>
+									{{ row.prestataire.nom }}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="rc">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									style="margin-right: 10px; width: 24%"
+								>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.RC"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let row"
+									style="margin-right: 10px; width: 24%"
+								>
+									{{ row.prestataire.rc }}
+								</td>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="tele">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									style="margin-right: 10px; width: 24%"
+								>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.TEL"
+											| translate
+									}}
+								</th>
+								<td
+									mat-cell
+									*matCellDef="let row"
+									style="margin-right: 10px; width: 24%"
+								>
+									{{ row.prestataire.tel }}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="statut">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									style="margin-right: 10px; width: 80%"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.NOTE"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									<mat-form-field
+										floatLabel="never"
+										style="margin-right: 10px; width: 80%"
+									>
+										<input
+											matInput
+											type="text"
+											name="test2"
+											(change)="
+												changeStatutTech($event, row)
+											"
+											placeholder="{{
+												'PAGES.MARCHE.COMMISSIONS.NOTE'
+													| translate
+											}}"
+											[value]="row.noteTechnique"
+											[(ngModel)]="row.noteTechnique"
+										/>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="reserve">
+								<th
+									mat-header-cell
+									*matHeaderCellDef
+									style="margin-right: 10px; width: 80%"
+								>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.STATUT"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									<mat-form-field
+										floatLabel="never"
+										style="margin-right: 10px; width: 80%"
+									>
+										<mat-select
+											[(value)]="row.statutTechnique.id"
+											placeholder="
+                        {{ 'PAGES.MARCHE.COMMISSIONS.STATUT' | translate }}"
+										>
+											<mat-option [value]="1">
+												{{
+													"PAGES.MARCHE.PROCESSUS_VALIDATION.VALIDER"
+														| translate
+												}}
+											</mat-option>
+											<mat-option [value]="2">
+												{{
+													"PAGES.MARCHE.PROCESSUS_VALIDATION.REFUSER"
+														| translate
+												}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<tr
+								mat-header-row
+								*matHeaderRowDef="displayedColumnsODEvAdmin"
+							></tr>
+							<tr
+								mat-row
+								*matRowDef="
+									let row;
+									columns: displayedColumnsODEvAdmin
+								"
+							></tr>
+						</table>
+
+						<mat-paginator
+							[pageSizeOptions]="[3, 5, 10, 25]"
+						></mat-paginator>
+					</div>
+				</div>
+				<!-- END :: ETAPE TECHNIQUE -->
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: ETAPE FINANCIERE -->
+				<div *ngIf="show == 4">
+					<div class="espace_bloc"></div>
+					<h4 class="title-style">
+						{{ "PAGES.MARCHE.COMMISSIONS.LIST_OFFRE" | translate }}
+					</h4>
+					<div class="example-container mat-elevation-z8">
+						<table
+							id="exportDataODEvFinanciere"
+							mat-table
+							[dataSource]="dataSourceODEvFinanciere"
+							class="mat-elevation-z8"
+						>
+							<!-- Progress Column -->
+							<ng-container matColumnDef="NomOrganisme">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.nom }}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="rc">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.RC"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.rc }}
+								</td>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="tele">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.TEL"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.tel }}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="statut">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.MONTANT_PRPOSE"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									<mat-form-field floatLabel="never">
+										<input
+											matInput
+											type="text"
+											name="test2"
+											(change)="changeMontantPropose(row)"
+											placeholder="{{
+												'PAGES.MARCHE.COMMISSIONS.MONTANT_PRPOSE'
+													| translate
+											}}"
+											[value]="row.montantPropose"
+											[(ngModel)]="row.montantPropose"
+										/>
+									</mat-form-field>
+								</td>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="reserve">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.NOTE_FINANCIERE"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.noteFinanciere }}
+								</td>
+							</ng-container>
+
+							<tr
+								mat-header-row
+								*matHeaderRowDef="displayedColumnsODEvAdmin"
+							></tr>
+							<tr
+								mat-row
+								*matRowDef="
+									let row;
+									columns: displayedColumnsODEvAdmin
+								"
+							></tr>
+						</table>
+
+						<mat-paginator
+							[pageSizeOptions]="[3, 5, 10, 25]"
+						></mat-paginator>
+					</div>
+				</div>
+				<!-- END :: ETAPE FINANCIERE -->
+
+				<!-- ------------------------------------------------------------------------- -->
+				<!-- BEGIN :: ETAPE FINAL -->
+				<div *ngIf="show == 5">
+					<div class="espace_bloc"></div>
+					<h4 class="title-style">
+						{{ "PAGES.MARCHE.COMMISSIONS.LIST_OFFRE" | translate }}
+					</h4>
+					<div class="example-container mat-elevation-z8">
+						<table
+							id="exportDataODEvFinale"
+							mat-table
+							[dataSource]="dataSourceODEvFinale"
+							class="mat-elevation-z8"
+						>
+							<!-- Progress Column -->
+							<ng-container matColumnDef="NomOrganisme">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.nom }}
+								</td>
+							</ng-container>
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="rc">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.RC"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.rc }}
+								</td>
+							</ng-container>
+
+							<!-- Progress Column -->
+							<ng-container matColumnDef="tele">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.PRESTATAIRE.TEL"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.prestataire.tel }}
+								</td>
+							</ng-container>
+
+							<!-- Fav Column -->
+							<ng-container matColumnDef="reserve">
+								<th mat-header-cell *matHeaderCellDef>
+									{{
+										"PAGES.MARCHE.COMMISSIONS.NOTE_FINAL"
+											| translate
+									}}
+								</th>
+								<td mat-cell *matCellDef="let row">
+									{{ row.noteFinale }}
+								</td>
+							</ng-container>
+
+							<tr
+								mat-header-row
+								*matHeaderRowDef="displayedColumnsODEvFinale"
+							></tr>
+							<tr
+								mat-row
+								*matRowDef="
+									let row;
+									columns: displayedColumnsODEvFinale
+								"
+							></tr>
+						</table>
+						<mat-paginator
+							[pageSizeOptions]="[3, 5, 10, 25]"
+						></mat-paginator>
+					</div>
+				</div>
+				<!-- END :: ETAPE FINAL -->
+			</div>
+		</form>
+	</div>
+	<div class="kt-portlet__body kt-portlet__body--fit">
+		<div class="espace_bloc"></div>
+		<div>
+			<div class="example-container mat-elevation-z8">
+				<table
+					id="exportData"
+					mat-table
+					[dataSource]="dataSource"
+					class="mat-elevation-z8"
+				>
+					<!-- Column -->
+					<ng-container matColumnDef="type">
+						<th mat-header-cell *matHeaderCellDef>
+							{{
+								"PAGES.MARCHE.COMMISSIONS.TYPE_COMMISION.TYPE"
+									| translate
+							}}
+						</th>
+						<td mat-cell *matCellDef="let row">
+							{{ row.typeCommissionCA.libelle }}
+						</td>
+					</ng-container>
+
+					<!-- Column -->
+					<ng-container matColumnDef="dateOuverture">
+						<th mat-header-cell *matHeaderCellDef>
+							{{
+								"PAGES.MARCHE.COMMISSIONS.DATE_DEBUT"
+									| translate
+							}}
+						</th>
+						<td mat-cell *matCellDef="let row">
+							{{ row.dateDebut | date: "dd/MM/yyyy " }}
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="actions">
+						<th mat-header-cell *matHeaderCellDef></th>
+						<td mat-cell *matCellDef="let row">
+							<a
+								*ngIf="
+									row.typeCommissionCA.libelle == 'Jury' &&
+									valDatePlis
+								"
+								href="javascript:;"
+								(click)="printPVCommissionJury(row.id)"
+								class="
+									btn
+									btn-sm
+									btn-clean
+									btn-icon
+									btn-warning
+									btn-icon-md
+									btn_table_edit
+								"
+								matTooltip="PV_Commission_Jury"
+								><i class="la la-print"></i
+							></a>
+							<a
+								*ngIf="
+									row.typeCommissionCA.libelle ==
+										'Financier' && valDatePlis
+								"
+								href="javascript:;"
+								(click)="printPVCommissionFinancier(row.id)"
+								class="
+									btn
+									btn-sm
+									btn-clean
+									btn-icon
+									btn-warning
+									btn-icon-md
+									btn_table_edit
+								"
+								matTooltip="PV_Commission_Financier"
+								><i class="la la-print"></i
+							></a>
+							<a
+								*ngIf="
+									row.typeCommissionCA.libelle ==
+										'Technique' && valDatePlis
+								"
+								href="javascript:;"
+								(click)="printPVCommissionTechnique(row.id)"
+								class="
+									btn
+									btn-sm
+									btn-clean
+									btn-icon
+									btn-warning
+									btn-icon-md
+									btn_table_edit
+								"
+								matTooltip="Commission_Technique_Convocation"
+								><i class="la la-print"></i
+							></a>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr
+						mat-row
+						*matRowDef="let row; columns: displayedColumns"
+					></tr>
+				</table>
+			</div>
+			<div class="espace_bloc"></div>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+
+	<hr />
+	<!-- BEGIN :: ACTION SECTION -->
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			type="button"
+			(click)="onSubmit()"
+			*ngIf="dataSourcePI || dataSourcePE"
+			class="
+				btn btn-success btn-md btn-tall btn-wide
+				kt-font-bold kt-font-transform-u
+			"
+		>
+			<i class="icon la la-floppy-o"></i
+			>{{ "PAGES.GENERAL.SAVE" | translate }}
+		</button>
+		<button
+			_ngcontent-dkp-c41=""
+			class="btn btn-info btn-md"
+			type="reset"
+			(click)="back()"
+		>
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+</div>

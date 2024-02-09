@@ -1,0 +1,100 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<!-- <button class="close" mat-button (click)="onNoClick()">X</button> -->
+	<h3 mat-dialog-title style="
+	text-align: center;
+    font-size: 15px !important;
+    border-bottom: 1px solid #d0cdcd;
+    color: #0a3552;
+    padding-bottom: 5px;">{{ 'PAGES.MARCHE.BORDEREAU_PRIX.TITRE_INDEX' | translate }}</h3>
+	<div mat-dialog-content>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" class="form-control" [(ngModel)]="formData.numPrix" name="numprix"
+							placeholder="{{ 'PAGES.MARCHE.BORDEREAU_PRIX.NUM_PRIX' | translate }} :" required>
+						<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<!-- style="text-align: right !important;" -->
+					<mat-form-field class="example-full-width">
+						<input matInput type="number" class="form-control" [(ngModel)]="formData.prixEstimati" name="prixEstimati"
+							placeholder="{{ 'PAGES.MARCHE.BORDEREAU_PRIX.prixEstimatif' | translate }} % :" required>
+						<!-- <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon> -->
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<!-- style="text-align: right !important;" -->
+					<mat-form-field class="example-full-width">
+						<input matInput type="number" class="form-control" [(ngModel)]="formData.tva" name="tvaLigne"
+							placeholder="{{ 'PAGES.MARCHE.BORDEREAU_PRIX.TVA' | translate }} % :" required>
+						<!-- <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon> -->
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<input matInput type="text" class="form-control" [(ngModel)]="formData.designation"
+							name="objetlignebp" placeholder="{{ 'PAGES.MARCHE.BORDEREAU_PRIX.OBJET' | translate }} :" required>
+						<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control" name="unite" (selectionChange)="onChangeofOptionsUnite($event)"
+							[(ngModel)]="formData.unite" placeholder="{{ 'PAGES.MARCHE.BORDEREAU_PRIX.UNITE' | translate }} :">
+							<mat-option *ngFor="let item of unites" value="{{item.id}}">{{item.libelle}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<input matInput type="number" class="form-control" [(ngModel)]="formData.prixUnite"
+							name="prixUnite" placeholder="{{ 'PAGES.MARCHE.BORDEREAU_PRIX.PRIX_UNITAIRE' | translate }} :" required>
+						<!-- <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon> -->
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<input [disabled]="EnableQte" matInput type="number" class="form-control"
+							[(ngModel)]="formData.quantite" placeholder="{{ 'PAGES.MARCHE.BORDEREAU_PRIX.QTE' | translate }}  :" name="qte"
+							(selectionChange)="onChangeofQte($event)" required>
+						<!-- <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon> -->
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div mat-dialog-actions>
+		<div class="kt-portlet__head">
+			<div class="kt-portlet__head-label" align="right">
+				<button [disabled]="form.invalid" type="submit" [mat-dialog-close]="formData" cdkFocusInitial
+					class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i class="icon la la-floppy-o"></i>
+					{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+				<button mat-dialog-close type="reset"
+					class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+					(click)="onNoClick()">
+					<i class="icon la la-close"></i>
+					{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+			</div>
+		</div>
+		<!-- <button type="reset" mat-button mat-dialog-close (click)="onNoClick()">إلغاء</button>
+		<button [disabled]="form.invalid" type="submit" mat-button [mat-dialog-close]="formData" cdkFocusInitial>حفظ</button> -->
+	</div>
+</form>

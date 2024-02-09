@@ -1,0 +1,171 @@
+
+<div class="kt-portlet portlet-3">
+    <!-- <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-plus kt-font-inverse-brand"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.Stock.newDemande.new.title' | translate }}
+            </h3>
+        </div>
+    </div> -->
+
+    <div class="kt-portlet__head mb-10">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon icon-10x">
+                <i class="flaticon2-plus-1"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.Stock.newDemande.new.title' | translate }}
+            </h3>
+        </div>
+    </div>
+
+        <form class="" [formGroup]="demandeFournitureFormGroup"><!-- </form> (ngSubmit)="createArticle(FormArticle.value)"> -->
+            <div class="form-group row mb-1">
+               
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="numeroDemande" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.newDemande.numero' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="codeAnalytique" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.newDemande.codeAnalytique' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 show_port input-group">
+                    <mat-form-field class="example-full-width"  >
+                        <mat-select class="form-control" name="unite" (selectionChange)="onchangeLoadArticleByMagazin($event)" formControlName ="magazin"  placeholder="{{ 'PAGES.Gestion.Stock.newDemande.magsin' | translate }}">
+                            <mat-option *ngFor="let item of magazinListDTO" [value]="item">{{item.numeroMagasin}}
+                            
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 show_port input-group">
+                    <mat-form-field class="example-full-width"  >
+                        <mat-select class="form-control" name="unite" formControlName ="article"  placeholder="{{ 'PAGES.Gestion.Stock.newDemande.article' | translate }}">
+                            <mat-option *ngFor="let item of articleStockMaps" [value]="item">{{item.numeroArticle}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="qteDemande" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.newDemande.quantiteDemande' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+              
+                <!-- <div class="col-md-12 form-group text-right">
+                   <button  class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u mt-4" matTooltip=" {{ 'PAGES.GENERAL.AJOUTER' | translate }}" (click)="ajouterArticle()">
+                     <i  class="flaticon2-plus"></i> 
+                     {{ 'PAGES.GENERAL.AJOUTER' | translate }}
+                </button>
+                </div> -->
+
+
+                <div class="m-1 float-right">
+                    <button _ngcontent-dkp-c41="" (click)="ajouterDemande()" matTooltip="{{ 'PAGES.GENERAL.AJOUTER' | translate }} "
+                    class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+                    <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+                    <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+                    {{ 'PAGES.GENERAL.AJOUTER' | translate }}  </button> 
+                </div>
+                <!-- <div class="m-1 float-right">
+                    <button _ngcontent-dkp-c41="" matTooltip="{{'PAGES.GENERAL.AJOUTER' | translate }}" (click)="ajouterArticle()"
+                    class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+                    <i  class="flaticon2-plus"></i> 
+                    {{ 'PAGES.GENERAL.AJOUTER' | translate }} 
+                </button>
+                </div> -->
+               
+                <div class="row mt-4 w-100">
+                    <div class="col-md-12 col-lg-12 dos">
+                      <div class="p-3 mt-3 border-grey background-table br-10">
+                        <div>
+                          <div class="table-responsive">
+                           
+                            <table class="table text-center mb-0" id="user_table" *ngIf=" saveArticleWithQTEList.length >  0">
+                              <thead>
+                                <tr class="no-border">
+                                  <th scope="col">N° d'article</th>
+                                  <th scope="col">Unité</th>
+                                  <th scope="col">Designations</th>
+                                  <th scope="col">Quantité demandée</th>
+                                  <th scope="col">Quantité livrée</th>
+                                  <th scope="col">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let article of saveArticleWithQTEList ; let i = index">
+                                  <th scope="row">{{ article.articleDTO?.numeroArticle ? article.articleDTO?.numeroArticle:"-" }}</th>
+                                  <td>
+                                    {{ article.articleDTO?.unite ?article.articleDTO?.unite:"-" }}
+                                  </td>
+                                  <td>{{ article.articleDTO?.designation ? article.articleDTO?.designation :"-" }}</td>
+                                  <td>{{ article.qteDemandee ? article.qteDemandee : '0'  }}</td>
+                                  <td>{{article.qteLivree ? article.qteLivree : '0'}}</td>
+                                  <td><button class="btn btn-outline-danger" (click)="supprimerArticle(i)"><i class="nav-icon i-Close-Window font-weight-bold"></i></button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row w-100" style="
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    ">
+                        <span *ngIf=" saveArticleWithQTEList.length ==  0" class="text-danger">Aucun article existe</span>
+                    </div>
+                    
+                  </div>
+                  <div class="col-md-12 mt-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <textarea formControlName="Observation" matInput type="text" class="form-control" name="Observation"
+                                placeholder="Observation" cdkAutosizeMinRows="10"
+                                cdkAutosizeMaxRows="33" ></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+            
+                <div class="m-1 float-right">
+                    <button _ngcontent-dkp-c41="" (click)="ajouterDemande()" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+                    class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+                    <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+                    <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+                    {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+                </div>
+                
+        </form>
+  
+
+</div>
+
+
+
+
+
+                             
+                                
+                                   
+              

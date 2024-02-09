@@ -1,0 +1,209 @@
+<!-- 
+<div class="kt-portlet portlet-3">
+  <div class="kt-portlet__head kt-bg-portlet-4">
+      <div class="kt-portlet__head-label">
+          <span class="kt-portlet__head-icon">
+              <i class="flaticon-plus kt-font-inverse-brand"></i>
+          </span>
+          &nbsp;
+          <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+              {{ 'PAGES.Gestion.parc.car.new.title' | translate }}
+          </h3>
+      </div>
+  </div> -->
+
+  <div class="kt-portlet portlet-3 ">
+    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-plus kt-font-inverse-brand"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.Gestion.parc.car.new.title' | translate }}
+            </h3>
+        </div>
+    </div>
+  <form name="editForm" role="form" novalidate [formGroup]="editForm" (ngSubmit)="ajouterInfoVehicule()">
+      <div class="form-group row mb-1">
+        <div class="col-md-4">
+          <div class="form-group">
+              <mat-form-field class="example-full-width">
+                  <input formControlName="matricule" matInput type="text" class="form-control" name="numero"
+                      placeholder="{{ 'PAGES.Gestion.parc.car.matricule' | translate }}" >
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <input formControlName="numInventaire" matInput type="text" class="form-control" name="numero"
+                    placeholder="{{ 'PAGES.Gestion.parc.car.numInventaire' | translate }}" >
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="form-group">
+          <mat-form-field class="example-full-width">
+              <input formControlName="modele" matInput type="text" class="form-control" name="numero"
+                  placeholder="{{ 'PAGES.Gestion.parc.car.modele' | translate }}" >
+          </mat-form-field>
+      </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+        <mat-form-field class="example-full-width">
+            <input formControlName="cartegriseVehicule" matInput type="text" class="form-control" name="numero"
+                placeholder="{{ 'PAGES.Gestion.parc.car.cartgrise' | translate }}" >
+        </mat-form-field>
+    </div>
+</div>
+
+  <div class="col-md-4 show_port input-group">
+    <mat-form-field class="example-full-width"  >
+        <mat-select class="form-control" name="unite" formControlName ="marque"  placeholder="{{ 'PAGES.Gestion.parc.car.marque' | translate }}" >
+            <mat-option *ngFor="let item of marquesSharedCollection" [value]="item">{{item.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  </div>
+
+        <div class="col-md-4 show_port input-group">
+          <mat-form-field class="example-full-width"  >
+              <mat-select class="form-control" name="unite" formControlName ="categorieVehicule"  placeholder="{{ 'PAGES.Gestion.parc.car.categorie' | translate }}" >
+                  <mat-option *ngFor="let item of categorieVehiculesSharedCollection" [value]="item">{{item.name}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+         </div>
+        <div class="col-md-4 show_port input-group">
+          <mat-form-field class="example-full-width"  >
+              <mat-select class="form-control" name="unite" formControlName ="carburant"  placeholder="{{ 'PAGES.Gestion.parc.car.carburant' | translate }}" multible>
+                  <mat-option *ngFor="let item of typeCarburantValues" [value]="item">{{item}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+         </div>
+         <div class="col-md-4">
+          <div class="form-group">
+              <mat-form-field class="example-full-width">
+                  <input formControlName="puissanceFiscale" matInput type="text" class="form-control" name="numero"
+                      placeholder="{{ 'PAGES.Gestion.parc.car.puissanceFiscale' | translate }}" >
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <input formControlName="nombrePlaces" matInput type="number" class="form-control" name="numero"
+                    placeholder="{{ 'PAGES.Gestion.parc.car.nombrePlaces' | translate }}" >
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+          <!-- <mat-form-field class="example-full-width">
+              <input formControlName="dateAcquisition" matInput type="text" class="form-control" name="numero"
+                  placeholder="{{ 'PAGES.Gestion.parc.car.dateAcquisition' | translate }}" >
+          </mat-form-field> -->
+
+          <mat-form-field class="example-full-width">
+            <input
+            formControlName="dateAcquisition" matInput  class="form-control" name="numero"
+                [matDatepicker]="picker1"
+                placeholder="{{ 'PAGES.Gestion.parc.car.dateAcquisition' | translate }}" 
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                matSuffix
+                [for]="picker1"
+            >
+                <mat-icon matDatepickerToggleIcon
+                    ><i class="fas fa-calendar-plus"></i>
+                </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker
+                touchUi="true"
+                #picker1
+            ></mat-datepicker>
+        </mat-form-field>
+      </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+        <mat-form-field class="example-full-width">
+            <input formControlName="entiteBenificiaire" matInput type="text" class="form-control" name="numero"
+                placeholder="{{ 'PAGES.Gestion.parc.car.entiteBenificiaire' | translate }}" >
+        </mat-form-field>
+    </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="consommation" matInput type="text" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.car.consommation' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="compteur" matInput type="number" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.car.compteur' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="etatVehicule" matInput type="text" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.car.etatVehicule' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="origin" matInput type="text" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.car.origine' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+      <mat-form-field class="example-full-width">
+          <input formControlName="numeroChassis" matInput type="text" class="form-control" name="numero"
+              placeholder="{{ 'PAGES.Gestion.parc.car.numeroChassis' | translate }}" >
+      </mat-form-field>
+  </div>
+</div>
+        
+       
+        
+         
+         
+         <div class="col-md-4 show_port input-group">
+          <mat-form-field class="example-full-width"  >
+              <mat-select class="form-control" name="unite" formControlName ="accessoireVehicules"  placeholder="{{ 'PAGES.Gestion.parc.car.accessoire' | translate }}" multiple>
+                  <mat-option *ngFor="let item of accessoireVehiculesSharedCollection" [value]="item">{{item.name}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+         </div>
+      
+
+      </div>
+      <div class="m-1 float-right">
+        <button _ngcontent-dkp-c41="" type="submit"  matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+        class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+        <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+        <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+        {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+    </div>
+    </form>
+
+   
+
+</div>
+

@@ -1,0 +1,145 @@
+<!-- begin:: Content -->
+<div *ngIf="detailscourrier" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-multimedia-2"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.DATE' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.date ? (detailscourrier.date | date : 'dd/MM/yyyy') : '-'}}
+                            </td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.HEURE' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.heure ? detailscourrier.heure : '-'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.LIEU' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.lieu ? detailscourrier.lieu : '-'}}
+                            </td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ORDRE_JOUR' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">
+                                {{detailscourrier.ordreJour ? detailscourrier.ordreJour : '-'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+
+<!-- begin:: Content  | id="destinataire" -->
+<div class="kt-portlet" id="destinataire">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-users  kt-font-inverse-brand"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.TITRE_INDEX' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="onCreate()" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+
+                <table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                    <ng-container matColumnDef="idDivision">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.ORGANISATION.DIVISION' | translate }} </th>
+                        <td mat-cell *matCellDef="let row">{{row?.division?row.division:'---'}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="idService">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.ORGANISATION.SERVICE' | translate }} </th>
+						<td mat-cell *matCellDef="let row">{{row?.service?row.service:'---'}} </td>
+					</ng-container> -->
+
+                    <ng-container matColumnDef="idPersonne">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.MEMBRE_COMMISSION' | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row?.personnelInterne?row.personnelInterne:'-'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="typeDestinataire">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.DESTINATAIRE' | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row?.typeDestinataire?row.typeDestinataire:'-'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="designation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.DESIGNATION' | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row?.designation?row.designation:'-'}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                        <td mat-cell *matCellDef="let row">
+                            <button type="button" (click)="onEdit(row)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                            <button type="button" (click)="onDelete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+									class="icon la la-trash"></i></button>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div *ngIf="data_size == 0 && loading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                </div>
+                <mat-card *ngIf="loading" style="display: flex; justify-content: center; align-items: center">
+                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                    </mat-progress-spinner>
+                </mat-card>
+                <mat-paginator [length]="data_size" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin :: Action -->
+<div class="kt-portlet__head" *ngIf="detailscourrier">
+    <div class="kt-portlet__head-label" align="right">
+        <button [disabled]="validate == 0" _ngcontent-dkp-c41="" (click)="dispatching()" type="submit" matTooltip="{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.DISPATCHING' | translate }}" class="btn btn-danger btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+            [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': btnloading}">
+			<i _ngcontent-dkp-c41="" class="fa fa-share-alt"></i>
+			{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.DISPATCHING' | translate }}</button>
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end::section form -->

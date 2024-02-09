@@ -1,0 +1,122 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head ">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">{{"PAGES.VEHICULE.LIST"|translate}}</h2>
+		</div>
+
+
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a (click)="addvehicule()" class="btn btn-success btn-elevate btn-icon-sm">
+						<i class="la la-plus"></i>
+						{{"PAGES.VEHICULE.AJOUT"|translate}}
+					</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row mt-3">
+		<div class="example-header col-md-4">
+			<i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+			<mat-form-field>
+				<input matInput (keyup)="applyFilter($event.target.value)"
+					placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}" />
+			</mat-form-field>
+
+		</div>
+		<div class="col-md-8 w-t-5" align="right">
+			<button mat-button type="button" (click)="print()"
+				class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u w-b-5">
+				{{"PAGES.GENERAL.EXPORTER"|translate}}
+				<i class="fa fa-print" aria-hidden="true"></i>
+
+			</button>
+		</div>
+
+	</div>
+	<div class="example-container mat-elevation-z8">
+		<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100" matSort
+			id="component1" style="color:rgb(96, 197, 211);">
+			<ng-container matColumnDef="RefVehicule">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.VEHICULE.REF_TRANSPORT' | translate }}</th>
+				<td mat-cell *matCellDef="let row">
+
+					{{row.refTransport}}
+
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="NumVehicule">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.VEHICULE.IMM' | translate }}</th>
+				<td mat-cell *matCellDef="let row" class="num">
+
+					{{row.numVehicule}}
+
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="NomProprietaire">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.VEHICULE.NOM' | translate }}</th>
+				<td mat-cell *matCellDef="let row" class="num">
+					{{row.nomConducteur}}
+			</ng-container>
+			<ng-container matColumnDef="PoidsVide">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.VEHICULE.TARRA' | translate }}</th>
+				<td mat-cell *matCellDef="let row" class="num">
+					{{row.tarra}}
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="Genre">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.VEHICULE.GENRE' | translate }}</th>
+				<td mat-cell *matCellDef="let row" class="num">
+					{{row.genre}}
+
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="Tel">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.VEHICULE.TEL' | translate }}
+				</th>
+				<td mat-cell *matCellDef="let row" class="num">
+					{{row.tel}}
+			</ng-container>
+			<ng-container matColumnDef="message">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.VEHICULE.MESSAGE' | translate }}
+				</th>
+				<td mat-cell *matCellDef="let row" class="num">
+					{{row.message}}
+
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="actions" class="num">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ 'PAGES.GENERAL.ACTIONS' | translate }} </th>
+				<td mat-cell *matCellDef="let row" class="num">
+
+
+					<button type="button" (click)="ModifierAssociation1(row.id)"
+						class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+						matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+
+					<button type="button" (click)="deleteAssociation(row.id)"
+						class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+						matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+
+				</td>
+
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns; "></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		</table>
+	</div>
+	<mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons>
+	</mat-paginator>
+
+
+</div>

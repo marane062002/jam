@@ -1,0 +1,126 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.MARCHE.ECHANTILLONS.TITRE_SHOW' | translate }}
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>{{ 'PAGES.MARCHE.ECHANTILLONS.NUM_ECH' | translate }} :</th>
+									<td class="donnee_show"> {{echantillon.id}}</td>
+									<th>{{ 'PAGES.MARCHE.ECHANTILLONS.DATE_EXAMEN' | translate }} :</th>
+									<td class="donnee_show">{{echantillon.dateExamen  |date: 'dd/MM/yyyy'}}</td>
+									<th>{{ 'PAGES.MARCHE.ECHANTILLONS.DELAIS' | translate }} :</th>
+									<td class="donnee_show">{{echantillon.delais  |date: 'dd/MM/yyyy'}}</td>
+								</tr>
+								<tr>
+									<th>{{ 'PAGES.MARCHE.ECHANTILLONS.DIVISION' | translate }} :</th>
+									<td class="donnee_show">
+										{{libelleDivision}}
+									</td>
+									<th>{{ 'PAGES.MARCHE.ECHANTILLONS.SERVICE' | translate }} :</th>
+									<td class="donnee_show">{{libelleService}}
+									</td>
+									<th>{{ 'PAGES.MARCHE.ECHANTILLONS.RESPONSABLE' | translate }} :</th>
+									<td class="donnee_show">{{libellePersonnel}}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<h4 class="title-ligneEchantillonTable">{{ 'PAGES.MARCHE.ECHANTILLONS.TABLE_ECH' | translate }}
+						</h4>
+						<div class="kt-portlet__head-toolbar">
+							<div class="kt-portlet__head-wrapper">
+								<div class="kt-portlet__head-actions">
+									&nbsp;
+									<a href="javascript:; "
+										(click)="addEchantillonFormDialog()"
+										class="btn btn-success btn-elevate btn-icon-sm">
+										<i class="la la-plus"></i>{{ 'PAGES.MARCHE.ECHANTILLONS.TITRE_NEW' | translate }}
+									</a>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="example-container mat-elevation-z8">
+
+							<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+								<!-- ID Column -->
+								<ng-container matColumnDef="libelle">
+									<th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef
+										mat-sort-header>{{ 'PAGES.MARCHE.ECHANTILLONS.LIBELLE' | translate }}</th>
+									<td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.libelle}} </td>
+								</ng-container>
+								<!-- ID Column -->
+								<ng-container matColumnDef="qte">
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.ECHANTILLONS.QTE' | translate }} </th>
+									<td mat-cell *matCellDef="let row"> {{row.qte}} </td>
+								</ng-container>
+								<!-- ID Column -->
+								<ng-container matColumnDef="format">
+									<th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.ECHANTILLONS.EXEMPLAIRE' | translate }} </th>
+									<td mat-cell *matCellDef="let row"> {{row.format}} </td>
+								</ng-container>
+								<!-- ID Column -->
+								<ng-container matColumnDef="actions">
+									<th mat-header-cell *matHeaderCellDef></th>
+									<td mat-cell *matCellDef="let row">
+										<button type="button" (click)="editLigneEchantillon(row.id)"
+											class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+											matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+												class="icon la la-edit"></i></button>
+										<button type="button" (click)="deleteLigneEchantillon(row.id)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+												class="icon la la-trash"></i></button>
+									</td>
+								</ng-container>
+								<!-- Name Column -->
+								<tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+								<tr mat-row *matRowDef="let row; columns: displayedColumns1;">
+								</tr>
+							</table>
+							<div *ngIf="sizeData == 0 && isLoading == false"
+								style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+								{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+							</div>
+							<mat-card *ngIf="isLoading"
+								style="display: flex; justify-content: center; align-items: center">
+								<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+								</mat-progress-spinner>
+							</mat-card>
+							<mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0"
+								[pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+							<hr>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

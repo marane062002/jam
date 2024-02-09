@@ -1,0 +1,163 @@
+
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-layer"></i>
+						</span> &nbsp;
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.Gestion.Stock.empalacement.title' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:; "  (click)=" addNow()" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i>    {{ 'PAGES.Gestion.Stock.empalacement.add' | translate }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="example-header">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <div class="example-container mat-elevation-z8">
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="entite">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.empalacement.entite' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.entityMagasin?row.entityMagasin.libelle:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="numeroMagasin">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.empalacement.numeroMagasin' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.numeroMagasin?row.numeroMagasin:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="ville">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.empalacement.ville' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.ville? row.ville:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="adresse">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.empalacement.adresse' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.adresse?row.adresse:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                 <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a href="javascript:;"  (click)="detailsMegasin(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+											class="la la-search-plus"></i></a>
+                                   <!-- <a href="javascript:;" *ngxPermissionsOnly="['canUpdateAutorisation']" (click)="editAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+											class="la la-edit"></i></a>
+                                   <a href="javascript:;" *ngxPermissionsOnly="['canDeleteAutorisation']" (click)=" deleteAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+											class="la la-trash"></i></a>-->
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+
+                        <div *ngIf="datasize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+  <!--begin: Modal detail -
+  <ng-template #detailEmplacement let-c="close" let-d="dismiss">
+    <div class="modal-body">
+          <div class="form-group row mb-0">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <div class="row">
+                      <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">N° magasin :</label>
+                      <label class="col-sm-2 col-form-label f-s-13">{{magasinDetail.numeroMagasin}}</label>
+
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Entitée magasin  :</label>
+                      <label class="col-sm-1 col-form-label f-s-13">{{magasinDetail.entityMagasin.libelle}}</label>
+                      <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Ville :</label>
+                      <label class="col-sm-2 col-form-label f-s-13">{{magasinDetail.ville}}</label>
+
+                  </div>
+              </div>
+          </div>
+          <div class="form-group row mb-0">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <div class="row">
+
+
+                      <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Adresse :</label>
+                      <label class="col-sm-2 col-form-label f-s-13">{{magasinDetail.adresse}}</label>
+                      <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Actif :</label>
+                      <label class="col-sm-2 col-form-label f-s-13"><span class="badge badge-success" >{{magasinDetail.actif? "Oui":"Non"}}</span></label>
+                  </div>
+              </div>
+          </div>
+
+  </div>
+  <div class="modal-body">
+      <div class="row " style="justify-content: center;">
+        <input  [(ngModel)]="inputRecherchArticle" class="form-control" style="width: 60%; height:40px;" type="text" placeholder="rechercher"  >
+        <button  type="button"  class="btn btn-primary ml-2"  (click)="searchArticleByNumeroArticle($event)">Rechercher</button>
+    </div>
+    <table  class="table text-center" id="user_table">
+                <tr>
+                <th>N° article</th>
+                <th>Quantité</th>
+                <th>Rayonnage</th>
+                <th>Désignation</th>
+                <th>prix Moyen pondéré</th>
+                </tr>
+        <tr *ngFor="let a of articlesStocksDeatil">
+                    <td>{{a.article.numeroArticle}}</td>
+                    <td>{{a.quantiteStock}}</td>
+                    <td>{{a.rayonnage}}</td>
+                    <td>{{a.article.designation}}</td>
+                     <td>{{a.prixMoyenpondere | number:'1.0-0'}}</td>
+          </tr>
+    </table>
+    <div class="col-md-8">
+        <nav aria-label="Page navigation example"  >
+
+            <ul class="pagination justify-content-end mb-0 mt-2">
+                    <select style="    width: 40px; margin-right: 10px; border-radius: 5px;" (change)="chnageSizeEvent($event)">
+                        <option *ngFor="let size of [5,10,15]"  [value]="size"  >{{size}}</option>
+                    </select>
+
+                <li class="page-item"><a class="page-link"  tabindex="-1" (click)="chnagePageEvent(currentPageArticle)" *ngIf="currentPageArticle!=0">Précédent</a></li>
+                <li class="page-item"><a class="page-link"  (click)="chnagePageEvent(currentPageArticle-1)" *ngIf="currentPageArticle!=0" >{{currentPageArticle}}</a></li>
+                <li class="page-item active"><a class="page-link" (click)="chnagePageEvent(currentPageArticle)" >{{currentPageArticle+1}} <span class="sr-only">(current)</span></a></li>
+                <li class="page-item"><a class="page-link" (click)="chnagePageEvent(currentPageArticle+1)" *ngIf="totalPagesArticle>currentPageArticle+1">{{currentPageArticle+2}}</a></li>
+                <li class="page-item"><a class="page-link" (click)="chnagePageEvent(currentPageArticle+1)" *ngIf="totalPagesArticle>currentPageArticle+1">Suivant</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+  <div class="modal-footer">
+      <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+</div>
+  </ng-template>
+</div>
+-->

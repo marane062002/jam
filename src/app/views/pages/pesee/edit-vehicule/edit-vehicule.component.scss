@@ -1,0 +1,37 @@
+.subfield-container {
+	display: flex;
+  }
+  
+  .subfield {
+	flex: 1;
+	margin-right: 5px; /* Add some space between subfields if needed */
+  }
+  
+  .subfield-numbers {
+	/* Specific styling for the numbers subfield */
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	color: #333;
+  }
+  
+  .subfield-alphabet {
+	/* Specific styling for the Arabic alphabet subfield */
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	color: #333;
+	width: 50px; /* Adjust width as needed to fit the content */
+  }
+  
+  .subfield-two-numbers {
+	/* Specific styling for the two numbers subfield */
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	color: #333;
+	width: 40px; /* Adjust width as needed to fit the content */
+  }

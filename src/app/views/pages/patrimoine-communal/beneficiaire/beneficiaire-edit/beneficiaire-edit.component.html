@@ -1,0 +1,126 @@
+<!-- begin:: Content -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'MENU.EDITERBENEFICIAIRE' | translate }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- begin:: Content section 2 -->
+<!--begin::Form-->
+<form [formGroup]="beneficiaireForm" (submit)="onSubmit()" class="kt-form">
+
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head kt-bg-portlet-3">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.FORM_BENEFICIAIRE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="nom" placeholder="{{ 'PAGES.GENERAL.NOM' | translate }} :"  required >
+                                        <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('nom','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" formControlName="prenom" placeholder="{{ 'PAGES.GENERAL.PRENOM' | translate }} :"  required >
+                                            <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                            <mat-error *ngIf="isControlHasError('prenom','required')">
+                                                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                
+                        <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="cin" placeholder="{{ 'PAGES.GENERAL.CIN' | translate }} :"  required >
+                                        <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('cin','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                       
+                        
+                       
+                            
+                        </div>
+                
+                        <div class="row">
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                    <textarea matInput type="text" class="form-control" formControlName="adresse" placeholder="{{ 'PAGES.GENERAL.ADRESSE' | translate }} :"  
+                                                    Rows="5"
+                                                    >
+                                                         </textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <textarea matInput type="text" class="form-control" 
+                                            formControlName="observation" placeholder="{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :" 
+                                            Rows="5"
+                                           >
+                                                </textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                               
+                                    
+                                </div>
+                
+                    
+                       
+                        <div class="kt-portlet__body">
+               
+                            <div class="kt-form__actions">
+                                    <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-success btn-md btn-tall btn-wide">
+                                            {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                                    </button>
+                                    <button type="button" (click)="back()"  class="btn btn-brand btn-md btn-tall btn-wide">
+                                        {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                                </button>                        
+                            </div>
+                        </div>
+                    
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+</form>
+
+

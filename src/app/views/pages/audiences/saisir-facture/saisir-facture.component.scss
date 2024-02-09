@@ -1,0 +1,49 @@
+.tp-margin {
+	margin: 0 10px;
+}
+.tp-section {
+	display: flex;
+	align-content: center;
+	align-items: center;
+	height: 60px;
+}
+.tp-h2 {
+	margin: 10px;
+	font-weight: 7px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.nombre {
+	width: 200px;
+}
+.mb-3 {
+	display: flex;
+}
+td {
+	width: 20px;
+	margin-left: 10px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+.example-form {
+	min-width: 150px;
+	max-width: 500px;
+	width: 100%;
+}
+
+.example-full-width {
+	width: 100%;
+}
+.modhyobitto-table__add {
+	margin-left: 660px;
+	margin-top: 6px;
+}

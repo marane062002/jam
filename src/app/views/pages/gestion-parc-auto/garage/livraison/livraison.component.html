@@ -1,0 +1,201 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+    <div class="col-xl-12">
+    <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+    <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+    <div class="kt-portlet__head-label">
+    <span class="kt-portlet__head-icon">
+    <i class="flaticon-layer"></i>
+    </span> &nbsp;
+    <h3 class="kt-portlet__head-title">
+    {{ 'PAGES.Gestion.parc.livraison.title' | translate }}
+    </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+    <div class="kt-portlet__head-wrapper">
+    </div>
+    </div>
+    </div>
+    
+    </div>
+    
+    
+    </div>
+    
+    <div class="kt-portlet__body" >
+    <mat-tab-group (selectedTabChange)="displayTabs($event)">
+    <mat-tab label="{{ 'PAGES.Gestion.parc.livraison.enCours' | translate }}"></mat-tab>
+    <mat-tab label="{{ 'PAGES.Gestion.parc.livraison.accepter' | translate }}"></mat-tab>
+    </mat-tab-group>
+    
+    
+    </div>
+    </div>
+    
+    
+    <div class="kt-portlet__body kt-portlet__body--fit">
+    <div class="example-header">
+    <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+    <mat-form-field>
+    <input matInput (keyup)="applyFilter($event)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+    </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="numdemande">
+    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.livraison.numdemande' | translate }} </th>
+    <td mat-cell *matCellDef="let row" class="chikaya_td"> {{ row.numdemande ? row.numdemande : '-' }}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="dateArriveLettre">
+    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.livraison.dateArriveLettre' | translate }} </th>
+    <td mat-cell *matCellDef="let row" class="chikaya_td"> {{ row.dateArriveLettre ? row.dateArriveLettre : '-' }}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="dateDepart">
+    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.livraison.dateDepart' | translate }} </th>
+    <td mat-cell *matCellDef="let row" class="chikaya_td"> {{ row.dateDepart ? row.dateDepart : '-' }}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="dateRetour">
+    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.livraison.dateRetour' | translate }} </th>
+    <td mat-cell *matCellDef="let row" class="chikaya_td"> {{ row.dateRetour ? row.dateRetour : '-' }}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="matricule">
+    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.car.matricule' | translate }} </th>
+    <td mat-cell *matCellDef="let row" class="chikaya_td"> {{ row.vehicule?.matricule ? row.vehicule?.matricule : '-' }}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="moyenTransport">
+    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.livraison.moyenTransport' | translate }} </th>
+    <td mat-cell *matCellDef="let row" class="chikaya_td"> {{ row.moyenTransport ? row.moyenTransport : '-' }}</td>
+    </ng-container>
+    
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let row">
+          <a href="javascript:;"  (click)="details(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+            class="la la-search-plus"></i></a>
+   </td>
+    </ng-container>
+          
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+    </table>
+    
+    <div *ngIf="datasize == 0 && isLoading == false"  style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+    </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+    <hr>
+    </div>
+    </div>
+    </div>
+
+<!--     <ng-template #detailLivres let-c="close" let-d="dismiss">
+      <div class="modal-header">
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+          <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+              
+              <div class="form-group row mb-0">
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row">
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Numéro de la demande :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.numdemande}}</label>
+
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Type de la mission :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.typemIsion}}</label>
+                      </div>
+
+                      <div class="row">
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Parcours :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.parcours}}</label>
+
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Véhicule :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.vehicule?.matricule}}</label>
+                      </div>
+
+                      <div class="row">
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Montant départ :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.solde}} MAD</label>
+
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Compteur :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.vehicule.compteur}} KM</label>
+                      </div>
+
+                      <div class="row">
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de départ :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.dateDepart}}</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de retour :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{demandeMision.dateRetour}}</label>
+                      </div>
+
+                  </div>
+              </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary " type="button" data-dismiss="modal" (click)="close()"><i class="nav-icon i-Close font-weight-bold"></i> annuler</button>
+          <button  *ngIf="tabID===1" class="btn btn-outline-success ml-2" type="button" data-dismiss="modal" (click)="livreVehicule(demandeMision.id)"><i class="nav-icon i-Yes font-weight-bold"></i> Livrer</button>
+      </div>
+    </ng-template>
+    <ng-template #modifierLivres let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Modification d'une Livraison</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group row mb-1">
+                <div class="col-md-4 form-group ">
+                    <label>Numéro de la demande :</label>
+                    <input class="form-control" type="text" placeholder="Numéro d'article">
+                </div>
+                <div class="col-md-4 form-group ">
+                    <label>Type de la mission :</label>
+                    <input class="form-control" type="text" placeholder="Type de la mission">
+                </div>
+                <div class="col-md-4 form-group ">
+                    <label>Parcours :</label>
+                    <input class="form-control" type="number" placeholder="Parcours">
+                </div>
+                <div class="col-md-4 form-group ">
+                    <label>Véhicule :</label>
+                    <input class="form-control" type="number" placeholder="Véhicule">
+                </div>
+                <div class="col-md-4 form-group ">
+                  <label>Montant départ :</label>
+                  <input class="form-control" type="number" placeholder="Montant départ">
+                </div>
+                <div class="col-md-4 form-group ">
+                  <label>Compteur :</label>
+                  <input class="form-control" type="number" placeholder="Compteur">
+                </div>
+                <div class="col-md-4 form-group ">
+                  <label>Date de départ :</label>
+                  <input class="form-control" type="datetime-local" placeholder="dd/mm/yyyy">
+                </div>
+                <div class="col-md-4 form-group ">
+                    <label>Date de retour :</label>
+                    <input class="form-control" type="datetime-local" placeholder="dd/mm/yyyy">
+                </div>
+                <div class="col-md-4 form-group ">
+                    <label>Date de Livraison :</label>
+                    <input class="form-control" type="datetime-local" placeholder="dd/mm/yyyy">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary ml-2" type="button" (click)="modifierLivraison()"><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+        </div>
+    </ng-template>
+</div> -->

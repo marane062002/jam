@@ -1,0 +1,291 @@
+<div class="kt-ao-show">
+	<!-- begin:: Content -->
+	<!-- <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.MARCHE.AO.NUM_AO' | translate }} : {{ao.numAo}}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.MARCHE.AO.STATUT_AO' | translate }} : <span class="kt-font-brand kt-font-bold">
+                                {{ao.statutAo.libelle}}</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="kt-portlet portlet-1">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<!-- ======================================== -->
+
+						<!-- ====================================================== -->
+						<button
+							[matMenuTriggerFor]="print"
+							type="button"
+							class="
+								btn
+								btn-sm
+								btn-clean
+								btn-icon
+								btn-warning
+								btn-icon-md
+								btn_table_edit
+							"
+							matTooltip="{{ 'PAGES.GENERAL.PRINT' | translate }}"
+						>
+							<i class="flaticon2-printer"></i>
+						</button>
+						<!--First level Menu-->
+						<mat-menu #print="matMenu">
+							<button mat-menu-item [matMenuTriggerFor]="avis">
+								Avis AO
+							</button>
+
+							<!--  <button mat-menu-item (click)="printBordereau(ao.id,divisionLibelle)">Bordereau</button> -->
+							<button
+								mat-menu-item
+								(click)="printBordereau(form.id)"
+							>
+								Bordereau
+							</button>
+							<button
+								mat-menu-item
+								(click)="printOuvertureDesPlis(form.id)"
+							>
+								Fiche Ouverture des plis
+							</button>
+							<button
+								*ngIf="valCommission"
+								mat-menu-item
+								(click)="printFinCommision(form.id)"
+							>
+								Fin de Commission
+							</button>
+							<button
+								*ngIf="valCommission"
+								mat-menu-item
+								(click)="printRapport(form.id)"
+							>
+								Rapport
+							</button>
+						</mat-menu>
+
+						<mat-menu #avis="matMenu">
+							<button
+								mat-menu-item
+								(click)="printAvisFR(form.id)"
+								matTooltip="{{
+									'PAGES.GENERAL.PRINT' | translate
+								}}"
+							>
+								<mat-icon>print</mat-icon><span>Français</span>
+							</button>
+							<button
+								mat-menu-item
+								(click)="printAvisAR(form.id)"
+								matTooltip="{{
+									'PAGES.GENERAL.PRINT' | translate
+								}}"
+							>
+								<mat-icon>print</mat-icon><span>Arabe</span>
+							</button>
+						</mat-menu>
+						<!--Second level sub Menu-->
+					</div>
+					<div class="kt-portlet__head-label">
+						<h3 class="kt-portlet__head-title">
+							{{
+								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TITRE_SHOW"
+									| translate
+							}}
+							:
+							<span class="kt-font-brand kt-font-bold">
+								{{ form.objetFR }}</span
+							>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<!-- Start :: Expansion panel -->
+		<mat-accordion class="example-headers-align panel-space" multi>
+			<mat-expansion-panel [expanded]="true">
+				<mat-expansion-panel-header>
+					<mat-panel-title class="panel-title" style="color: #2a79b1">
+						<mat-icon>info</mat-icon>&nbsp;{{
+							"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TITRE_SHOW"
+								| translate
+						}}
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>
+								{{
+									"PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_NUMERO"
+										| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">{{ form.numCA }}</td>
+						</tr>
+						<tr>
+							<th>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.JOURNALE_DATE"
+										| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">
+								{{ form.date | date: "dd/MM/yyyy" }}
+							</td>
+						</tr>
+						<tr>
+							<th>
+								{{
+									"PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_OBJET_FR"
+										| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">
+								{{ form.objetFR | translate }}
+							</td>
+						</tr>
+						<tr>
+							<th>
+								{{
+									"PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_OBJET_AR"
+										| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show" colspan="4">
+								{{ form.objetAR }}
+							</td>
+						</tr>
+						<tr>
+							<th>
+								{{
+									"PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_BUDGET"
+										| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">
+								{{ form.budget }}
+							</td>
+						</tr>
+						<tr>
+							<th>
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TYPE"
+										| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">
+								{{ form.type }}
+							</td>
+						</tr>
+						<tr>
+							<th>
+								{{
+									"PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_LOI"
+										| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">
+								{{ form.loi }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</mat-expansion-panel>
+			<mat-expansion-panel>
+				<mat-expansion-panel-header>
+					<mat-panel-title class="panel-title" style="color: #2a79b1">
+						<mat-icon>settings</mat-icon>&nbsp;{{
+							"PAGES.GENERAL.VUE" | translate
+						}}
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<div class="col-md-12 show_port">
+					<br />
+					<div class="kt-portlet__foot">
+						<mat-tab-group (selectedTabChange)="changeTab($event)">
+							<mat-tab
+								label="{{
+									'PAGES.MARCHE.AO.TAB_360.TAB_APPROBATION_PRESIDENT'
+										| translate
+								}}"
+							>
+							</mat-tab>
+							<mat-tab
+								label="{{
+									'PAGES.MARCHE.AO.TAB_360.TAB_APPROBATION_DIR_GENE_SERVIVE'
+										| translate
+								}}"
+							>
+							</mat-tab>
+							<mat-tab
+								label="{{
+									'PAGES.MARCHE.AO.TAB_360.TAB_APPROBATION_TRESORIER'
+										| translate
+								}}"
+							>
+							</mat-tab>
+							<div>
+								<mat-tab
+									label="{{
+										'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ARCHITECTES'
+											| translate
+									}}"
+								>
+								</mat-tab>
+							</div>
+
+							<mat-tab
+								label="{{
+									'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.JOURNAUX'
+										| translate
+								}}"
+							></mat-tab>
+							<mat-tab
+								label="{{
+									'PAGES.MARCHE.AO.TAB_360.TAB_VISITES'
+										| translate
+								}}"
+							>
+							</mat-tab>
+							<mat-tab
+								label="{{
+									'PAGES.MARCHE.AO.TAB_360.TAB_COMMISSIONS'
+										| translate
+								}}"
+							>
+							</mat-tab>
+						</mat-tab-group>
+					</div>
+					<router-outlet></router-outlet>
+				</div>
+			</mat-expansion-panel>
+		</mat-accordion>
+		<!-- End :: Expansion panel -->
+	</div>
+</div>

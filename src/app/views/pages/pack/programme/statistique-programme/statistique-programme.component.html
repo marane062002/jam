@@ -1,0 +1,935 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					<span>{{ "PAGES.PROGRAMME.STATISTIQUES_PROJET" | translate }}</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<form [formGroup]="searchForm">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.RECHERCHER" | translate }} :
+							</label>
+							<mat-select class="form-control" (selectionChange)="doSomething($event.value)"
+								formControlName="tabcherches">
+								<mat-option [value]="'COUT_GLOBAL_6_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_6_ANS" | translate }}</mat-option>
+								<mat-option [value]="'CONTRIBUTION_COMMUNE_6_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_6_ANS" | translate }} </mat-option>
+								<mat-option [value]="'CONTRIBUTION_PARTENAIRES_6_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_PARTENAIRES_6_ANS" |
+									translate}}</mat-option>
+								<mat-option [value]="'COUT_GLOBAL_3_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_3_ANS" | translate}}</mat-option>
+								<mat-option [value]="'CONTRIBUTION_COMMUNE_3_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_3_ANS" | translate}}</mat-option>
+								<mat-option [value]="'CONTRIBUTION_PARTENAIRES_3_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_PARTENAIRES_3_ANS" |
+									translate}}</mat-option>
+								<mat-option [value]="'MONTANT_DISPONIBLE_COMMUNE_3PA'">
+									{{"PAGES.PROGRAMME.RECHERCHE.MONTANT_DISPONIBLE_COMMUNE_3PA" |
+									translate}}</mat-option>
+								<mat-option [value]="'MONTANT_INDISPONIBLE_COMMUNE_3_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.MONTANT_INDISPONIBLE_COMMUNE_3_ANS" |
+									translate}}</mat-option>
+								<mat-option [value]="'CONTRIBUTION_COMMUNE_A_1'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_A_1" | translate}}</mat-option>
+								<mat-option [value]="'COUT_GLOBAL_A_1'"> {{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_A_1"
+									| translate}}</mat-option>
+								<mat-option [value]="'CONTRIBUTION_COMMUNE_A_2'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_A_2" | translate}}</mat-option>
+								<mat-option [value]="'COUT_GLOBAL_A_2'"> {{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_A_2"
+									| translate}}</mat-option>
+								<mat-option [value]="'CONTRIBUTION_COMMUNE_A_3'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_A_3" | translate}}</mat-option>
+								<mat-option [value]="'COUT_GLOBAL_A_3'"> {{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_A_3"
+									| translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('COUT_GLOBAL_6_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_6_ANS" | translate }}
+							</label>
+							<mat-select class="form-control" (selectionChange)="onChangeCoutGlobal6A($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('CONTRIBUTION_COMMUNE_6_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_6_ANS" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContributionCommune6A($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('CONTRIBUTION_PARTENAIRES_6_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_PARTENAIRES_6_ANS" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContributionPartenaires6A($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('COUT_GLOBAL_3_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_3_ANS" | translate }}
+							</label>
+							<mat-select class="form-control" (selectionChange)="onChangeCoutGlobal3A($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('CONTRIBUTION_COMMUNE_3_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_3_ANS" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContributionCommune3A($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('CONTRIBUTION_PARTENAIRES_3_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_PARTENAIRES_3_ANS" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContributionPartenaires3A($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('MONTANT_DISPONIBLE_COMMUNE_3PA')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.MONTANT_DISPONIBLE_COMMUNE_3PA" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeMontantDisponibleCommune3PA($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('MONTANT_INDISPONIBLE_COMMUNE_3_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.MONTANT_INDISPONIBLE_COMMUNE_3_ANS" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeMontantIndisponibleCommune3PA($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('CONTRIBUTION_COMMUNE_A_1')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_A_1" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContributionCommuneA1($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('COUT_GLOBAL_A_1')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_A_1" | translate }}
+							</label>
+							<mat-select class="form-control" (selectionChange)="onChangeCoutGlobalA1($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('CONTRIBUTION_COMMUNE_A_2')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_A_2" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContributionCommuneA2($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('COUT_GLOBAL_A_2')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_A_2" | translate }}
+							</label>
+							<mat-select class="form-control" (selectionChange)="onChangeCoutGlobalA2($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('CONTRIBUTION_COMMUNE_A_3')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE_A_3" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContributionCommuneA3($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche.includes('COUT_GLOBAL_A_3')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL_A_3" | translate }}
+							</label>
+							<mat-select class="form-control" (selectionChange)="onChangeCoutGlobalA3($event.value)">
+								<mat-option value="PREMIERE_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.PREMIERE_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="DEUXIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.DEUXIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option
+									value="TROISIEME_ORIENTATION">{{'PAGES.PROGRAMME.RECHERCHE.TROISIEME_ORIENTATION' |
+									translate}} </mat-option>
+								<mat-option value="QUATRIEME_ORIENTATION">
+									{{'PAGES.PROGRAMME.RECHERCHE.QUATRIEME_ORIENTATION' | translate}}</mat-option>
+								<mat-option value="TOTAL_ORIENTATION"> {{'PAGES.PROGRAMME.RECHERCHE.TOTAL_ORIENTATION' |
+									translate}}</mat-option>>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2" style="line-height:9.5" *ngIf="isSelected">
+				<label>{{ 'PAGES.PROGRAMME.COUT_TOTAL' | translate }} :{{formattedNumber}}</label>
+				<span> </span>
+			</div>
+		</div>
+
+
+
+
+
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.RECHERCHER" | translate }} :
+							</label>
+							<mat-select class="form-control" (selectionChange)="doSomething2($event.value)"
+								formControlName="tabcherches2">
+								<mat-option [value]="'PROGRAMME_GLOBAL_6_ANS'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.PROGRAMME_GLOBAL_6_ANS" | translate }}</mat-option>
+								<mat-option [value]="'PROGRAMME_PREMIERE_PHASE'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.PROGRAMME_PREMIERE_PHASE" | translate }} </mat-option>
+								<mat-option [value]="'PROGRAMME_DEUXIEME_PHASE'"> {{
+									"PAGES.PROGRAMME.RECHERCHE.PROGRAMME_DEUXIEME_PHASE" |
+									translate}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2" *ngIf="selectedValueCherche2.includes('PROGRAMME_GLOBAL_6_ANS')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.PROGRAMME_GLOBAL_6_ANS" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeProgrammeGlobal6A($event.value)">
+								<mat-option value="NOMBRE_PROJET"> {{'PAGES.PROGRAMME.RECHERCHE.NOMBRE_PROJET' |
+									translate}}</mat-option>
+								<mat-option value="COUT_GLOBAL"> {{'PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL' |
+									translate}}</mat-option>
+								<mat-option
+									value="CONTRIBUTION_COMMUNE">{{'PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE' |
+									translate}} </mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche2.includes('PROGRAMME_PREMIERE_PHASE')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.PROGRAMME_PREMIERE_PHASE" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeContProgrammePremierePhase($event.value)">
+								<mat-option value="NOMBRE_PROJET"> {{'PAGES.PROGRAMME.RECHERCHE.NOMBRE_PROJET' |
+									translate}}</mat-option>
+								<mat-option value="COUT_GLOBAL"> {{'PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL' |
+									translate}}</mat-option>
+								<mat-option
+									value="CONTRIBUTION_COMMUNE">{{'PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE' |
+									translate}} </mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2" *ngIf="selectedValueCherche2.includes('PROGRAMME_DEUXIEME_PHASE')">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<label for="">
+								{{ "PAGES.PROGRAMME.RECHERCHE.PROGRAMME_DEUXIEME_PHASE" | translate }}
+							</label>
+							<mat-select class="form-control"
+								(selectionChange)="onChangeProgrammeDeuxiemePhase($event.value)">
+								<mat-option value="NOMBRE_PROJET"> {{'PAGES.PROGRAMME.RECHERCHE.NOMBRE_PROJET' |
+									translate}}</mat-option>
+								<mat-option value="COUT_GLOBAL"> {{'PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL' |
+									translate}}</mat-option>
+								<mat-option
+									value="CONTRIBUTION_COMMUNE">{{'PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE' |
+									translate}} </mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2" style="line-height:9.5" *ngIf="isNombreProjetsSelected">
+				<label>{{'PAGES.PROGRAMME.RECHERCHE.NOMBRE_PROJET' | translate}} :{{formattedNumber1}}</label>
+				<span> </span>
+			</div>
+			<div class="col-md-2" style="line-height:9.5" *ngIf="isCoutGlobalSelected">
+				<label>{{'PAGES.PROGRAMME.RECHERCHE.COUT_GLOBAL' | translate}} :{{formattedNumber2}}</label>
+				<span> </span>
+			</div>
+			<div class="col-md-2" style="line-height:9.5" *ngIf="isContributionCommuneSelected">
+				<label>{{'PAGES.PROGRAMME.RECHERCHE.CONTRIBUTION_COMMUNE' | translate}} :{{formattedNumber3}}</label>
+				<span> </span>
+			</div>
+		</div>
+	</form>
+
+
+
+
+	<!-- <div class="row" style="text-align: center;">
+		<h5 >Bilan des réalisations du programme d'action de la commune</h5>
+	</div> -->
+	<form [formGroup]="searchForm2">
+		<div class="row">
+			<div class="col-md-3 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</mat-label>
+					<input type="date" class="form-control form-control-solid form-control-lg" name="address1"
+						formControlName="dateDebut" matInput />
+				</mat-form-field>
+			</div>
+			<div class="col-md-3 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</mat-label>
+					<input type="date" class="form-control form-control-solid form-control-lg" name="address1"
+						formControlName="dateFin" matInput />
+				</mat-form-field>
+			</div>
+			<div class="col-md-3 form-group fv-plugins-icon-container">
+				<div class="kt-portlet__head-label text-center">
+					<button (click)="appliquer()" _ngcontent-dkp-c41=""
+						style="margin-left: 20px !important; margin-bottom: -75px !important;"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						{{'PAGES.PROGRAMME.STATISTIQUE.APPLIQUER'| translate}} </button>
+					<button (click)="reset()" _ngcontent-dkp-c41=""
+						style="margin-left: 20px !important; margin-bottom: -75px !important;"
+						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						{{'PAGES.PROGRAMME.STATISTIQUE.REINITIALISER'| translate}} </button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="table">
+		<table class="table table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th rowspan="2"
+						style="background-color: #ffffff;border: 1px solid black;border-bottom: 0px solid #ffffff;">
+					</th>
+					<td colspan="3"
+						style="text-align: center;background-color: #E2EFDA;color: #000000;border: 1px solid black;">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.ORIENTATION1'| translate}}</strong>
+					</td>
+					<td colspan="3"
+						style="text-align: center;background-color: #C6E0B4;color: #000000;border: 1px solid black;">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.ORIENTATION2'| translate}}</strong>
+					</td>
+					<td colspan="3"
+						style="text-align: center;background-color: #A9D08E;color: #000000;border: 1px solid black;">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.ORIENTATION3'| translate}}</strong>
+					</td>
+					<td colspan="3"
+						style="text-align: center;background-color: #8ab36e;color: #000000;border: 1px solid black;">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.ORIENTATION4'| translate}}</strong>
+					</td>
+					<td colspan="3"
+						style="text-align: center;border-top:2px solid #ffffff;;border-right: 2px solid #ffffff;border-bottom: 0px solid #000000;">
+					</td>
+				</tr>
+				<tr>
+					<!-- 					<th style="background-color: #ffffff;border: 1px solid black;border-bottom: 2px solid #ffffff;"></th>
+ -->
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.NOMBREPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.COUTPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.CONTRIBUTIONCOMMUNEMARRAKECH'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.NOMBREPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.COUTPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.CONTRIBUTIONCOMMUNEMARRAKECH'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.NOMBREPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.COUTPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.CONTRIBUTIONCOMMUNEMARRAKECH'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.NOMBREPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.COUTPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;background-color: #D9E1F2;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.CONTRIBUTIONCOMMUNEMARRAKECH'| translate}}</strong>
+					</td>
+					<td style="text-align: center;"
+						style="border-top:2px solid #000000;background-color:#8EA9DB;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.COUTTOTALPROJETS'| translate}}</strong>
+					</td>
+					<td style="text-align: center;"
+						style="border-top:2px solid #000000;background-color:#8EA9DB;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.NOMBRETOTALPROJETS'| translate}}</strong>
+					</td>
+					<td rowspan="2" valign="middle" text-align="center"
+						style="border-top:2px solid #000000;background-color:#00B0F0;color: #000000;border: 1px solid black">
+						<strong><br>{{'PAGES.PROGRAMME.STATISTIQUE.TAUXAVANCEMENTPROGRAMMETERRAIN'| translate}}</strong>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.PROJETSPROGRAMMES'| translate}}</strong>
+					</th>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien1Programmes!=0">{{nbProjetOrien1Programmes}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien1Programmes!=0">{{coutProjetOrien1Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien1Programmes!=0">{{contributionTotaleCommuneOrien1Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien2Programmes!=0">{{nbProjetOrien2Programmes}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien2Programmes!=0">{{coutProjetOrien2Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien2Programmes!=0">{{contributionTotaleCommuneOrien2Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Programmes!=0">{{nbProjetOrien3Programmes}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Programmes!=0">{{coutProjetOrien3Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Programmes!=0">{{contributionTotaleCommuneOrien3Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Programmes!=0">{{nbProjetOrien4Programmes}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Programmes!=0">{{coutProjetOrien4Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Programmes!=0">{{contributionTotaleCommuneOrien4Programmes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#7B7B7B;color: #FFD966;border: 1px solid black">
+						<span *ngIf="coutProjetTotalProgrammes!=0">{{coutProjetTotalProgrammes | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#7B7B7B;color: #FFD966;border: 1px solid black">
+						<span *ngIf="nbProjetTotalProgrammes!=0">{{nbProjetTotalProgrammes}}</span>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.PROJETSACHEVES'| translate}}</strong>
+					</th>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien1Acheves!=0">{{nbProjetOrien1Acheves}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien1Acheves!=0">{{coutProjetOrien1Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien1Acheves!=0">{{contributionTotaleCommuneOrien1Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien2Acheves!=0">{{nbProjetOrien2Acheves}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien2Acheves!=0">{{coutProjetOrien2Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien2Acheves!=0">{{contributionTotaleCommuneOrien2Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Acheves!=0">{{nbProjetOrien3Acheves}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Acheves!=0">{{coutProjetOrien3Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Acheves!=0">{{contributionTotaleCommuneOrien3Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Acheves!=0">{{nbProjetOrien4Acheves}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Acheves!=0">{{coutProjetOrien4Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Acheves!=0">{{contributionTotaleCommuneOrien4Acheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#D9E1F2;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetTotalAcheves!=0">{{coutProjetTotalAcheves | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#00B050;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetTotalAcheves!=0">{{nbProjetTotalAcheves}}</span>
+					</td>
+					<td style="background-color:#00B0F0;color: #000000;border: 1px solid black"></td>
+				</tr>
+				<tr>
+					<th style="text-align: center;background-color: #FFFF00;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.PROJETSENCOURS'| translate}}</strong>
+					</th>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien1Encours!=0">{{nbProjetOrien1Encours}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien1Encours!=0">{{coutProjetOrien1Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien1Encours!=0">{{contributionTotaleCommuneOrien1Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien2Encours!=0">{{nbProjetOrien2Encours}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien2Encours!=0">{{coutProjetOrien2Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien2Encours!=0">{{contributionTotaleCommuneOrien2Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Encours!=0">{{nbProjetOrien3Encours}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Encours!=0">{{coutProjetOrien3Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Encours!=0">{{contributionTotaleCommuneOrien3Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Encours!=0">{{nbProjetOrien4Encours}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Encours!=0">{{coutProjetOrien4Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Encours!=0">{{contributionTotaleCommuneOrien4Encours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#D9E1F2;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetTotalEncours!=0">{{coutProjetTotalEncours | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#FFFF00;color: #000000;border: 1px solid black"><span
+							*ngIf="nbProjetTotalEncours!=0">{{nbProjetTotalEncours}}</span></td>
+					<td style="background-color:#00B0F0;color: #000000;border: 1px solid black"></td>
+				</tr>
+				<tr>
+					<th style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.PROJETSNONLANCES'| translate}}</strong>
+					</th>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien1Nlances!=0">{{nbProjetOrien1Nlances}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien1Nlances!=0">{{coutProjetOrien1Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien1Nlances!=0">{{contributionTotaleCommuneOrien1Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien2Nlances!=0">{{nbProjetOrien2Nlances}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien2Nlances!=0">{{coutProjetOrien2Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien2Nlances!=0">{{contributionTotaleCommuneOrien2Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Nlances!=0">{{nbProjetOrien3Nlances}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Nlances!=0">{{coutProjetOrien3Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Nlances!=0">{{contributionTotaleCommuneOrien3Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetOrien3Nlances!=0">{{nbProjetOrien4Nlances}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetOrien3Nlances!=0">{{coutProjetOrien4Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
+						<span
+							*ngIf="contributionTotaleCommuneOrien3Nlances!=0">{{contributionTotaleCommuneOrien4Nlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#D9E1F2;color: #000000;border: 1px solid black">
+						<span *ngIf="coutProjetTotalNlances!=0">{{coutProjetTotalNlances | number: '1.2-2'}}</span>
+					</td>
+					<td style="text-align: center;background-color:#FF0000;color: #000000;border: 1px solid black">
+						<span *ngIf="nbProjetTotalNlances!=0">{{nbProjetTotalNlances}}</span>
+					</td>
+					<td style="background-color:#00B0F0;color: #000000;border: 1px solid black"></td>
+				</tr>
+				<tr>
+					<th rowspan="2"
+						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.CONTRIBUTIONTOTALECOMMUNEMARRAKECH'| translate}}</strong>
+					</th>
+					<td colspan="3"
+						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
+							*ngIf="contributionTotaleCommuneOrien1!=0">{{contributionTotaleCommuneOrien1 | number: '1.2-2'}}</span></td>
+					<td colspan="3"
+						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
+							*ngIf="contributionTotaleCommuneOrien2!=0">{{contributionTotaleCommuneOrien2 | number: '1.2-2'}}</span></td>
+					<td colspan="3"
+						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
+							*ngIf="contributionTotaleCommuneOrien3!=0">{{contributionTotaleCommuneOrien3 | number: '1.2-2'}}</span></td>
+							<td colspan="3"
+						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
+							*ngIf="contributionTotaleCommuneOrien3!=0">{{contributionTotaleCommuneOrien4 | number: '1.2-2'}}</span></td>
+				</tr>
+				<tr>
+					<td colspan="12"
+						style="text-align: center;background-color:#BF8F00;color: #000000;border: 1px solid black">
+						<span *ngIf="contributionTotaleCommune!=0">{{contributionTotaleCommune}}</span>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;background-color:#00B0F0;color: #000000;border: 1px solid black">
+						<strong>{{'PAGES.PROGRAMME.STATISTIQUE.TAUXAVANCEMENTPROGRAMMETERRAIN'| translate}}</strong>
+					</th>
+					<td colspan="15"
+						style="border-top:2px solid #dee2e6;background-color:#00B0F0;color: #000000;border: 1px solid black">
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div><br><br>
+
+
+	<div class="row">
+		<div class="col-md-1 show_port">
+			<!-- 	<table class="table table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">Projets programmés</th>
+						<td style="text-align: center;background-color:#7B7B7B;color: #FFD966;border: 1px solid black">
+							<span *ngIf="nbProjetTotalProgrammes!=0">{{nbProjetTotalProgrammes}}</span>
+						</td>
+					</tr>
+					<tr>
+						<th style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">Projets achevés</th>
+						<td style="text-align: center;background-color:#00B050;color: #000000;border: 1px solid black">
+							<span *ngIf="nbProjetTotalAcheves!=0">{{nbProjetTotalAcheves}}</span>
+						</td>
+					</tr>
+					<tr>
+						<th style="text-align: center;background-color: #FFFF00;color: #000000;border: 1px solid black">Projets en cours</th>
+						<td style="text-align: center;background-color:#FFFF00;color: #000000;border: 1px solid black">
+							<span *ngIf="nbProjetTotalEncours!=0">{{nbProjetTotalEncours}}</span>
+						</td>
+					</tr>
+					<tr>
+						<th style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">Projets en cours</th>
+						<td style="text-align: center;background-color:#FF0000;color: #000000;border: 1px solid black">
+							<span *ngIf="nbProjetTotalNlances!=0">{{nbProjetTotalNlances}}</span>
+						</td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table> -->
+		</div>
+		<div class="col-md-5 show_port">
+			<div Style="pointer-events: none;">
+				<canvas id="canvas2"></canvas>
+			</div>
+		</div>
+		<div class="col-md-5 show_port">
+			<div Style="pointer-events: none;">
+				<canvas id="canvas1"></canvas>
+			</div>
+		</div>
+		<div class="col-md-1 show_port"></div>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+<div class="kt-portlet">
+	<!-- <div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-multimedia-2"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.BUREAU_ORDRE.PERSONNEL_COURRIER.MES_COURRIERS' | translate }}
+			</h3>
+		</div>
+	</div>
+	<hr> -->
+	<!-- start::tabs -->
+	<ng-container *ngIf="(asyncTabs | async) === null">
+		{{ 'PAGES.GENERAL.LOADING' | translate }}
+	</ng-container>
+	<mat-tab-group dynamicHeight [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+		<mat-tab *ngFor="let tab of asyncTabs | async">
+			<ng-template mat-tab-label><mat-icon matSuffix><i class="flaticon-mail-1"></i></mat-icon>&nbsp;{{tab.label | translate }}</ng-template>
+			<!-- COURRIERS ENTRANTS TAB -->
+			<div *ngIf="tab.content == '1'">
+				<div *ngIf="selected.value==0">
+					<kt-tab-courrier-entrants [persoId]=pid  *ngxPermissionsOnly="['accessToIndexPersonnelCE']"></kt-tab-courrier-entrants>
+				</div>
+			</div>
+			<!-- COURRIERS SORTANTS TAB -->
+			<div *ngIf="tab.content == '2'">
+				<div *ngIf="selected.value==1">
+					<kt-tab-courrier-sortants [persoId]=pid  *ngxPermissionsOnly="['accessToIndexPersonnelCS']"></kt-tab-courrier-sortants>
+				</div>
+			</div>
+			<!-- COURRIERS REFUSES TAB -->
+			<div *ngIf="tab.content == '3'">
+				<div *ngIf="selected.value==2">
+					<kt-tab-courrier-refuse [persoId]=pid  *ngxPermissionsOnly="['accessToIndexRefusedPersonnelCS']"></kt-tab-courrier-refuse>
+				</div>
+			</div>
+			<!-- COURRIERS CONVOCATIONS TAB -->
+			<div *ngIf="tab.content == '4'">
+				<div *ngIf="selected.value==3">
+					<kt-tab-courrier-convocations [persoId]=pid></kt-tab-courrier-convocations>
+				</div>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+	<!-- end::tabs -->
+	<hr>
+</div>

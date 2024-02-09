@@ -1,0 +1,245 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<div mat-dialog-content>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="kt-portlet portlet-1">
+					<div class="kt-portlet__head">
+						<div class="kt-portlet__head-label">
+							<!-- ======================================== -->
+
+							<!-- ====================================================== -->
+
+							<!--First level Menu-->
+						</div>
+						<div class="kt-portlet__head-label">
+							<h3 class="kt-portlet__head-title">
+								{{
+									"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DETAIL_ARCHITECTE"
+										| translate
+								}}
+								:
+								<span class="kt-font-brand kt-font-bold">
+									{{ architecte.nom }}</span
+								>
+							</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<!-- Start :: Expansion panel -->
+
+			<div class="espace_bloc">
+				<form
+					*ngxPermissionsOnly="['canCreatePrestataireAo']"
+					class="kt-form"
+					autocomplete="off"
+				>
+					<div class="row">
+						<div class="col-lg-12 col-md-offset-2">
+							<div class="kt-portlet portlet-3">
+								<div class="kt-portlet__head">
+									<div class="kt-portlet__head-label">
+										<span class="kt-portlet__head-icon">
+											<i class="flaticon2-size"></i>
+										</span>
+									</div>
+								</div>
+								<div class="kt-portlet__body">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<mat-form-field
+													class="example-full-width"
+												>
+													<input
+														matInput
+														type="text"
+														class="form-control"
+														name="nom"
+														placeholder="{{
+															'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.NOM_ARCHITECTE'
+																| translate
+														}} :"
+														[(ngModel)]="
+															architecteForm.nom
+														"
+														required
+													/>
+													<mat-icon matSuffix
+														><i
+															class="
+																far
+																fa-keyboard
+															"
+														></i
+													></mat-icon>
+												</mat-form-field>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<mat-form-field
+													class="example-full-width"
+												>
+													<input
+														matInput
+														type="text"
+														class="form-control"
+														name="prenom"
+														placeholder="{{
+															'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.PRENOM_ARCHITECTE'
+																| translate
+														}} :"
+														[(ngModel)]="
+															architecteForm.prenom
+														"
+														required
+													/>
+													<mat-icon matSuffix
+														><i
+															class="
+																far
+																fa-keyboard
+															"
+														></i
+													></mat-icon>
+												</mat-form-field>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<mat-form-field
+													class="example-full-width"
+												>
+													<input
+														matInput
+														type="text"
+														class="form-control"
+														name="mail"
+														placeholder="{{
+															'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MAIL_ARCHITECTE'
+																| translate
+														}} :"
+														[(ngModel)]="
+															architecteForm.mail
+														"
+														required
+													/>
+													<mat-icon matSuffix
+														><i
+															class="
+																far
+																fa-keyboard
+															"
+														></i
+													></mat-icon>
+												</mat-form-field>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<mat-form-field
+													class="example-full-width"
+												>
+													<input
+														matInput
+														type="text"
+														class="form-control"
+														name="adresse"
+														placeholder="{{
+															'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADRESSE_ARCHITECTE'
+																| translate
+														}} :"
+														[(ngModel)]="
+															architecteForm.adresse
+														"
+														required
+													/>
+													<mat-icon matSuffix
+														><i
+															class="
+																far
+																fa-keyboard
+															"
+														></i
+													></mat-icon>
+												</mat-form-field>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group">
+												<mat-form-field
+													class="example-full-width"
+												>
+													<input
+														matInput
+														type="text"
+														class="form-control"
+														name="montant"
+														placeholder="{{
+															'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.MONTAANT_ARCHITECTE'
+																| translate
+														}} :"
+														[(ngModel)]="
+															architecteForm.montant
+														"
+														required
+													/>
+													<mat-icon matSuffix
+														><i
+															class="
+																far
+																fa-keyboard
+															"
+														></i
+													></mat-icon>
+												</mat-form-field>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--Action Section :: begin-->
+
+					<!--Action Section :: end-->
+				</form>
+			</div>
+
+			<!-- End :: Expansion panel -->
+		</div>
+	</div>
+	<div mat-dialog-actions>
+		<div class="kt-portlet__head-label" align="right">
+			<button
+				_ngcontent-dkp-c41=""
+				(click)="edite()"
+				class="
+					btn btn-success btn-md btn-tall btn-wide
+					kt-font-bold kt-font-transform-u
+				"
+			>
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ "PAGES.GENERAL.SAVE" | translate }}
+			</button>
+
+			<button
+				_ngcontent-dkp-c41=""
+				class="
+					btn btn-info btn-md btn-tall btn-wide
+					kt-font-bold kt-font-transform-u
+				"
+				type="reset"
+				(click)="onNoClick()"
+			>
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ "PAGES.GENERAL.EXIT" | translate }}
+			</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+</form>

@@ -1,0 +1,394 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">
+				{{ "PAGES.PROGRAMME.PLANIFICATION" | translate }}
+			</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a href="javascript:; " (click)="addNew()" class="btn btn-success btn-elevate btn-icon-sm"> <i class="la la-plus"></i> {{ "PAGES.PROGRAMME.AJOUTER" | translate }} </a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="   ">
+		<form action="" class="row" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+			<div class=""></div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.ORIENTATIONS_STRATEGIQUES" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" (selectionChange)="OrientationStarategiqueSelect($event.value)" formControlName="orientationStrategique" (selectionChange)="addItemOrientationStrategique($event.value)" [(ngModel)]="selectedOptionsORS">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of orientationStrategique" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.OBJECTIFS_OPERATIONNELS" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="objectifOperationnel" (selectionChange)="addItemObjectifOperationnel($event.value)" [(ngModel)]="selectedOptionsOP">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of objectifOperationnel" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.OBJECTIFS_STRATEGIQUES" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="objectifStrategique" (selectionChange)="addItemObjectifStrategique($event.value)" [(ngModel)]="selectedOptionsOS">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of objectifStrategique" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.AXE" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="axe" (selectionChange)="addItemAxe($event.value)" [(ngModel)]="selectedOptionsA">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of axe" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="nameProjet" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NIVEAU' | translate }} :" formControlName="niveau" [(ngModel)]="selectedOptionsN" (selectionChange)="addItemNiveau($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option value="proximité">Proximité</mat-option>
+							<mat-option value="structurant">Structurant</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<!--  <div class=" col-md-3 form-group fv-plugins-icon-container">
+                <mat-form-field class="example-full-width" >
+                    <mat-select class="form-control" formControlName="programmePhasses" placeholder="Phase" multiple >
+                        <mat-option *ngFor="let p of listPhase" [value]="p.id"> {{p.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+          </div> -->
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="maitreOuvrage" [(ngModel)]="selectedOptionsMO" (selectionChange)="addItemMaitreOuvrage($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of maitreOuvrage" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+
+            <div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE_DELEGUE" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="maitreOuvrageDelegue" [(ngModel)]="selectedOptionsMOD" (selectionChange)="addItemMaitreOuvrageDelegue($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of maitreOuvrageDelegue" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.ANNEE" | translate }} :</mat-label>
+						<input matInput class="form-control" [matDatepicker]="picker5" placeholder="{{ 'PAGES.PROGRAMME.ANNEE' | translate }} :" formControlName="date" />
+						<mat-datepicker-toggle matSuffix matSuffix [for]="picker5">
+							<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i> </mat-icon>
+						</mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #picker5></mat-datepicker>
+					</mat-form-field>
+				</div>
+			</div>
+			<!-- <div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</mat-label>
+						<input type="date" class="form-control-solid form-control-lg" formControlName="dateFin" matInput />
+					</mat-form-field>
+				</div>
+			</div> -->
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.NATURE_PROJET" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="nature" [(ngModel)]="selectedOptionsNP" (selectionChange)="addItemNature($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of natures" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-select multiple class="form-control-lg" placeholder="{{ 'PAGES.PROGRAMME.CODE_ORIENTATION' | translate }} :" formControlName="codeOrientation" [(ngModel)]="selectedOptionsCO" (selectionChange)="addItemCodeOrientation($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of codes" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.NUMERO_PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="numProjet" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.CODE_PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="codeProjet" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+
+            <div class="col-md-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>{{ "PAGES.PROGRAMME.CHEF_PROJET" | translate }} :</mat-label>
+                        <mat-select multiple class="form-control-lg" (selectionChange)="addItemChefProjet($event.value)"
+                            placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :"
+                            formControlName="chefProjet" [(ngModel)]="selectedOptionsCP">
+                            <mat-option  value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                            <mat-option *ngFor="let item of chefProjets" [value]="item">{{item}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>{{ "PAGES.PROGRAMME.LIEU" | translate }} :</mat-label>
+                        <mat-select multiple class="form-control-lg"
+                            placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="lieu"
+                            [(ngModel)]="selectedOptionsL" (selectionChange)="addItemLieu($event.value)">
+                            <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                            <mat-option *ngFor="let item of localisation" [value]="item">{{item}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>{{ "PAGES.PROGRAMME.ANNEE_DEBUT" | translate }} :</mat-label>
+                        <input type="number" class="form-control-solid form-control-lg" formControlName="anneeDebut"
+                            matInput />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>{{ "PAGES.PROGRAMME.ANNEE_FIN" | translate }} :</mat-label>
+                        <input type="number" class="form-control-solid form-control-lg" formControlName="anneeFin"
+                            matInput />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group fv-plugins-icoan-container">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>{{ "PAGES.PROGRAMME.ETAT_AVANCEMENT_PROJET" | translate }} :</mat-label>
+                        <mat-select multiple class="form-control" formControlName="etatAvancement" [(ngModel)]="selectedOptionsEA" (selectionChange)="addItemEtatAvancement($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                            <mat-option [value]="'NON_LANCES'">{{ "PAGES.PROGRAMME.NON_LANCES" | translate }}
+                            </mat-option>
+                            <mat-option [value]="'ACHEVES'">{{ "PAGES.PROGRAMME.ACHEVES" | translate }}
+                            </mat-option>
+                            <mat-option [value]="'EN_COURS'">{{ "PAGES.PROGRAMME.EN_COURS" | translate }}</mat-option>
+                            <mat-option [value]="'EN_ARRET'">{{ "PAGES.PROGRAMME.EN_ARRET" | translate }}</mat-option>
+							<mat-option [value]="'ANNULE'">{{ "PAGES.PROGRAMME.ANNULE" | translate }} </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+            </div>
+			<div class="col-md-3">
+				
+						<div class="form-group fv-plugins-icoan-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>{{ 'PAGES.PROGRAMME.CONVENTION' | translate }} :</mat-label>
+
+								<mat-select class="form-control" 
+									 multiple formControlName="convention" [(ngModel)]="selectedOptionsConvention" (selectionChange)="ConventionChange($event.value)">
+									 <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
+									<mat-option *ngFor="let item of listConvention" [value]="item" >
+										<span *ngIf="language == 'fr'">
+											{{ item?.object }}
+										</span>
+										<span *ngIf="language == 'ar'">
+											{{ item?.objectAr }}
+										</span>
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						
+				</div>
+			</div>
+            <div class="col-md-3" style="margin-top: 15px;;">
+            </div>
+			<div class="col-md-3" style="margin-top: 15px;;">
+            </div>
+            <div class="col-md-3" style="margin-top: 15px;;">
+                <button _ngcontent-dkp-c41=""
+                    class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                    <i _ngcontent-dlp-c41 class=" la la-search-plus"></i>
+                    {{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+                </button>
+            </div>
+            <div class="col-md-3" style="margin-top: 15px;;">
+                <button (click)="initForm()" _ngcontent-dkp-c41=""
+                    class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                    <i _ngcontent-dlp-c41 class="icon la "></i>
+                    {{ "PAGES.PROGRAMME.REINITIALISER" | translate }}
+                </button>
+            </div>
+            <div class="col-md-3" style="margin-top: 15px;;">
+
+                <button style="background-color: #7174cc;" (click)="exportTable()" type="button" class="btn btn-export"
+                    matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }} ">
+                    <i style="color: #ffffff;" _ngcontent-clk-c12="" class="icon la la-file-excel-o"></i><span style="color: #ffffff;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate
+                    }}</span>
+                </button>
+            </div>
+
+
+
+        </form>
+
+    </div>
+    <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">
+            <span style="background: #acdbb7;">{{ 'PAGES.PROGRAMME.COUT_TOTAL' | translate }} :
+                {{formattedNumber}}</span>
+        </div>
+    </div>
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.TYPE_ALERT.Id' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="num"> {{row.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cout">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ "PAGES.PROGRAMME.COUT" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="Nom" style="text-align: center;">
+                {{ row.cout? row.cout : "0" }}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="contributionTotalCommunePh1Ph2">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ "PAGES.PROGRAMME.TOTAL_CONTRIBUTION_COMMUNE_PH1ph2" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="Nom" style="text-align: center;">
+                <span
+                    *ngIf="row.programmePhaseBudgets[0]?.phase?.name=='1' && row.programmePhaseBudgets[0]?.totalContributionCommunePh1Ph2!=null">
+                    {{row.programmePhaseBudgets[0].totalContributionCommunePh1Ph2}}
+                </span>
+                <span
+                    *ngIf="row.programmePhaseBudgets[0]?.phase?.name=='2' && row.programmePhaseBudgets[0]?.totalContributionCommunePh1Ph2!=null">
+                    {{ row.programmePhaseBudgets[0].totalContributionCommunePh1Ph2}}
+                </span>
+                <span
+                    *ngIf="(row.programmePhaseBudgets[0]?.phase?.name=='1' || row.programmePhaseBudgets[0]?.phase?.name=='2') && row.programmePhaseBudgets[0]?.totalContributionCommunePh1Ph2==null">
+                    {{ "0"}}
+                </span>
+            </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="contributionCommune">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Constribution  total 
+            </th>
+            <td mat-cell *matCellDef="let row" class="Nom" style="text-align: center;">
+                {{ row.contributionCommune? row.contributionCommune : "-" }}
+            </td>
+        </ng-container> -->
+		<ng-container matColumnDef="projet">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.PROJET" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="Nom">
+				<span *ngIf="language == 'fr'">{{ row.nameProjet ? row.nameProjet : "-" }}</span>
+
+				<span *ngIf="language == 'ar'">{{ row.nameProjetAr ? row.nameProjetAr : "-" }}</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="etatAvancement">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.ETAT_AVANCEMENT_PROJET" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" style="text-align: center">
+				<button [style.background-color]="getTypeColor(row.etatAvancement)" color="#ff" [ngClass]="{ cssClass: expression }" mat-raised-button matBadge="8" matBadgePosition="before" matBadgeColor="accent">
+					{{ "PAGES.PROGRAMME." + row.etatAvancement | translate }}
+				</button>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="date">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="Annee">
+				{{ row.date ? (row.date | date : "yyyy") : "-" }}
+			</td>
+		</ng-container>
+		<!-- <ng-container matColumnDef="dateFin">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.DATE_FIN" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="Porten">
+				{{ row.dateFin ? (row.dateFin | date : "dd/MM/yyyy") : "-" }}
+			</td>
+		</ng-container> -->
+
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="action">{{ "PAGES.PROGRAMME.ACTIONS" | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button type="button" routerLink="/parametrages/add-type-fichier" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" (click)="Details(row)" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="icon la la-search-plus"></i></button>
+				<button type="button" routerLink="/parametrages/add-type-fichier" (click)="update(row)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+				<button type="button" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+
+	<div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex; justify-content: center; padding: 2%; color: orangered">
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<div *ngIf="!dataMultipleSearch && dataMultipleSearch.length == 0 && isLoading == false" style="display: flex; justify-content: center; padding: 2%; color: orangered">
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons (page)="handlePageEvent($event)"></mat-paginator>
+	<hr />
+</div>

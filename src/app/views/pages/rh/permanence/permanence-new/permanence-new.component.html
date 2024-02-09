@@ -1,0 +1,204 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                                {{ 'PAGES.PERMANENCE.TITRE_NEW' | translate }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- begin:: Content section 2 -->
+ <!--begin::Form-->
+ <form [formGroup]="permanenceForm" (submit)="onSubmit()" class="kt-form">
+        
+<div class="kt-container">
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                       
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.GENERAL.FORM_PERMANENCE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                       
+                    <div class="row"> 
+                            <div class="col-md-5">
+                                    <div class="form-group"> 
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" [formControl]="division" (selectionChange)=getServices($event)>
+                                                    <mat-option [value]=0>---{{ 'PAGES.ORGANISATION.DIVISION' | translate }}---</mat-option>
+                                                    <mat-option *ngFor="let division of divisions " value={{division.id}}>
+                                                            {{division.libelle}}
+                                                    </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="isControlHasError('division','required')">
+                                                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                    <mat-select class="form-control" [formControl]="service" >
+                                                            <mat-option [value]=0>---{{ 'PAGES.ORGANISATION.SERVICE' | translate }}---</mat-option>
+                                                            <mat-option *ngFor="let service of services " value={{service.id}}>
+                                                                    {{service.libelle}}
+                                                            </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                    </div>
+                                </div>
+                               
+                       
+                    </div>
+                    <div class="row">
+                    <div class="col-md-2">
+                            <button type="button" (click)="filter()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-label-dark"><i
+                                    class="flaticon-search-1"></i>{{ 'PAGES.GENERAL.FILTER' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                    <mat-divider></mat-divider> 
+                    <br>
+                    <br>
+                    <div class="row">
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select class="form-control" formControlName="idPersonnel"  placeholder="{{ 'PAGES.GENERAL.PERSONNEL' | translate }} :"  required>
+                                                        <mat-option [value]=null>---{{ 'PAGES.GENERAL.PERSONNEL' | translate }}---</mat-option>
+                                                        <mat-option *ngFor="let personnel of personnels" [value]="personnel.id">
+                                                                {{personnel.nom}} {{personnel.prenom}}
+                                                        </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="isControlHasError('idPersonnel','required')">
+                                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                    </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group date">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput class="form-control" [matDatepicker]="picker"
+                                                    placeholder="{{ 'PAGES.GENERAL.DATE' | translate }} :" formControlName="date">
+                                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker">
+                                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                                    </mat-icon>
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                                <mat-error *ngIf="isControlHasError('date','required')">
+                                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                    </mat-error> 
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                           
+                        </div>
+                      
+                    <div class="row">
+                            <div class="col-md-3"></div>
+                               
+                    <!-- 3 ==================Heure debut-fin===================== -->
+                    
+                    <!-- HEURE DEBUT -->
+							    <div class="col-md-4">
+                                    <label>{{ 'PAGES.GENERAL.HEURED' | translate }} : </label>
+                                
+                                    <div class="form-group">
+                                        <ngb-timepicker [(ngModel)]="time1" name="heureDebut"
+                                            formControlName="heureDebut"></ngb-timepicker>
+                                            <!-- <mat-error *ngIf="isControlHasError('heureDebut','required')">
+                                                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                </mat-error>  -->
+                                    </div>
+                                </div>
+                                <!-- HEURE FIN -->
+                                <div class="col-md-4">
+                                    <label>{{ 'PAGES.GENERAL.HEUREF' | translate }} : </label>
+                               
+                                    <div class="form-group">
+                                        <ngb-timepicker [(ngModel)]="time2" name="heureFin"
+                                            formControlName="heureFin"></ngb-timepicker>
+                                    </div>
+                                </div>
+                        <!-- <div class="col-md-4">
+                              
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="heureDebut" placeholder="{{ 'PAGES.GENERAL.HEURED' | translate }} :" value="">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('heureDebut','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="heureFin" placeholder="{{ 'PAGES.GENERAL.HEUREF' | translate }} :" value="">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('heureFin','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div> -->
+                         <!-- 3 ==================fin 3===================== -->
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                        <textarea matInput type="text" class="form-control" 
+                                        formControlName="remarque" placeholder="{{ 'PAGES.GENERAL.REMARQUE' | translate }} :" 
+                                        Rows="5"
+	                                   >
+                                            </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                    </div>
+                   
+                       
+    
+                    <div class="kt-form__actions"> 
+                            <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': isloading}" class="btn btn-success btn-md btn-tall btn-wide">
+                                    {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                            </button>
+                            <button type="reset" class="btn btn-secondary btn-md btn-tall btn-wide">
+                                    {{ 'PAGES.GENERAL.RESET' | translate }} <i class="fas fa-times"></i>
+                            </button>
+                            <button type="button" class="btn btn-brand btn-md btn-tall btn-wide">
+                                    {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                            </button>
+                    </div>
+                
+            
+            </div>
+        </div> 
+    </div>
+</div>
+</div>
+</form>
+

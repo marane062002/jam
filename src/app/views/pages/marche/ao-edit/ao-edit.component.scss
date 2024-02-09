@@ -1,0 +1,12 @@
+.center {
+    margin: auto;
+    width: 30%;
+   // border: 2px solid #6495ED;
+    padding: 10px;
+  }
+  .requiredLabel::after {
+    content: "*";
+    color: red;
+    size: 12px;
+  }
+  

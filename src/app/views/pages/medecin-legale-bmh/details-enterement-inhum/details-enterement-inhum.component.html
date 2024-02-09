@@ -1,0 +1,196 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Afficher un Inhumation:
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<form *ngIf="info" class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Type</mat-label>
+								<input
+                                    readonly
+                                    [value]="info.type.libelle"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Sexe</mat-label>
+								<input
+                                [value]="info.sexe"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Commune</mat-label>
+								<input
+                                [value]="info.commune.libelle"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Arrondissement</mat-label>
+                                <input
+                                readonly
+                                [value]="info.arrondissement.libelle"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date </mat-label>
+								<input
+                                [value]="info.date | date"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Quartier</mat-label>
+                                <input
+                                [value]="info.quartier.libelle"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Lieu d'enterrement</label>
+                                <input
+                               
+                                readonly  [value]="info.lieuEnterrement"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								<!-- <mat-select
+                                aria-readonly="true"
+                                formControlName="commune"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option *ngFor="let c of info.commune" [value]="c"></mat-option>
+								</mat-select> -->
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Lieu de recuperation</label>
+                                <input
+                                [value]="info.lieuRecuperation"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N deces: </mat-label>
+                                <input
+                                [value]="info.obstacleDefunts.numDeces"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									<button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u mt-1"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+								
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

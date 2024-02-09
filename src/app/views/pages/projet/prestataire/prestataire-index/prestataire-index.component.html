@@ -1,0 +1,103 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{ 'MENU.LISTEPRESTATAIRES' | translate }}
+            </h3>
+        </div>
+        <!-- <div class="kt-portlet__head-toolbar">
+            <div *ngxPermissionsOnly="['canCreatePrestataire']" class="kt-portlet__head-actions">
+                <a routerLink="/prestataire/prestataire-new" class="btn btn-outline-success btn-bold btn-sm">
+                    <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                </a>
+
+            </div>
+        </div> -->
+    </div>
+    <div class="kt-portlet__body">
+        <div class="kt-section">
+            <div class="example-header">
+                <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+            <div class="example-container mat-elevation-z8">
+
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <!-- NOM Column -->
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell class="prestataire" *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }} </th>
+                        <td mat-cell class="prestataire" *matCellDef="let row">
+                            {{ row.raisonSociale }}
+                        </td>
+                    </ng-container>
+
+                    <!-- TEL Column -->
+                    <ng-container matColumnDef="tel">
+                        <th mat-header-cell class="tel" *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }} </th>
+                        <td mat-cell class="tel" *matCellDef="let row"> {{row.teleGsm}} </td>
+                    </ng-container>
+
+                    <!-- MAIL Column -->
+                    <ng-container matColumnDef="mail">
+                        <th mat-header-cell class="mail" *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.MARCHE.PRESTATAIRE.EMAIL' | translate }} </th>
+                        <td mat-cell class="mail" *matCellDef="let row"> {{row.mail}} </td>
+                    </ng-container>
+
+                    <!-- RC Column -->
+                    <ng-container matColumnDef="rc">
+                        <th mat-header-cell class="rc" *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }} </th>
+                        <td mat-cell class="rc" *matCellDef="let row"> {{row.rc}} </td>
+                    </ng-container>
+
+                    <!-- ICE Column -->
+                    <ng-container matColumnDef="ice">
+                        <th mat-header-cell class="ice" *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.MARCHE.PRESTATAIRE.ICE' | translate }} </th>
+                        <td mat-cell class="ice" *matCellDef="let row"> {{row.numeroPatente}} </td>
+                    </ng-container>
+
+                    <!-- IDFISC Column -->
+                    <ng-container matColumnDef="idFisc">
+                        <th mat-header-cell class="idFisc" *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.MARCHE.PRESTATAIRE.IF' | translate }} </th>
+                        <td mat-cell class="idFisc" *matCellDef="let row"> {{row.identifiantFiscale}} </td>
+                    </ng-container>
+
+                    <!-- ADRESSE Column -->
+                    <ng-container matColumnDef="adresse">
+                        <th mat-header-cell class="adresse" *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.MARCHE.PRESTATAIRE.ADRESSE' | translate }} </th>
+                        <td mat-cell class="adresse" *matCellDef="let row">
+                            {{ row.adresse  }}
+<!--                             <a href="javascript:void(0);" *ngIf="row[7].length>20" matTooltip="{{ row[7] }}"><i class="fas fa-info-circle"></i></a>
+ -->                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                        <td mat-cell *matCellDef="let row">
+                            <button *ngxPermissionsOnly="['canShowPrestataire']" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="icon la la-search-plus"></i></button>
+                            <button *ngxPermissionsOnly="['canUpdatePrestataire']" (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="icon la la-edit"></i></button>
+<!--                             <button class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"><i class="icon la la-print"></i></button>
+ --><!--                             <button *ngxPermissionsOnly="['canDeletePrestataire']" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+ -->                             <button *ngxPermissionsOnly="['canDeletePrestataire']" (click)="prestataireDelete(row.id)"
+                                class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete">
+                                    <i class="icon la la-trash"></i></button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

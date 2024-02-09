@@ -1,0 +1,265 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">Programmes provisionnel</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                            <div class="form-group row justify-content-center mb-1">
+                                <div class="col-md-3 form-group ">
+                                    <label>N° de la demande :</label>
+                                    <input class="form-control" type="text" placeholder="Numéro de la demande">
+                                </div>
+                                <div class="col-md-2 col-lg-2 form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                    <data-table 
+                            [currentPage]="currentPage"
+                            [totalPages]="totalPages"
+                            [datasource]="listDemandeMission" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des programmes provisionnel'"
+                            [titleButton]="' Ajouter un programme provisionnel'"
+                            (ajouterElement)="modalAjouterDemandeMission(ajouterProgrammeProvisionnel)"
+                            (selectUpdateElement)="modalModifierDemandeMission(modifierProgrammeProvisionnel,$event)"
+                            (detail)="openModalDetail(detailDemandeMission,$event)"
+                            (affectDemandeMission)="affectDemande(affectDemandeMission,$event)"
+                            (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)"
+                            (deleteElement)="supprimerDemandeMission($event)">
+                    </data-table>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    <ng-template #modifierProgrammeProvisionnel let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Modification d'un programme provisionnel</h5>
+        </div>
+          <form class="" [formGroup]="formDemandeMision" (ngSubmit)="updateMission(formDemandeMision.value)">
+          <div class="modal-body">
+            <div class="form-group row mb-1">
+              
+                <div class="col-md-4 form-group ">
+                    <label>Moyen de transport :</label>
+                    <select class="form-control" formControlName="moyenTransport">
+                      <option value="" disabled selected>sélectionner Moyen de transport</option>
+                      <option value="voiture">voiture</option>
+                      <option value="camion">camion</option>
+                    </select>
+                </div>
+            <!--     <div class="col-md-4 form-group">
+                  <label>Responsable mission :</label>
+                  <select class="form-control" formControlName="resbonsable_id" >
+                    <option value="" disabled selected>sélectionner  le Responsable</option>
+                    <option *ngFor="let f of listFonctionnaire"  value="f.id">{{f.nom}}</option>  
+                  </select>
+                  </div> -->
+                <div class="col-md-4 form-group ">
+                    <label>Date de départ :</label>
+                    <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateDepart">
+                </div>
+                <div class="col-md-4 form-group "  *ngIf="formDemandeMision.value.dateDepart">
+                    <label>Date de retour :</label>
+                    <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateRetour" [min]="formDemandeMision.value.dateDepart">
+                </div>
+                
+        
+                <div class="col-md-4 form-group">
+                    <label>Type Mission :</label>
+                    <select class="form-control" formControlName="type">
+                      <option value="" disabled selected>sélectionner Type Mission</option>
+                      <option value="Reunion">Reunion</option>
+                      <option value="Evaluation" >Evaluation</option>
+                      <option value="Visite"> Visite</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Motif :</label>
+                    <input class="form-control" type="text" placeholder="Motif" formControlName="motif">
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Parcours :</label>
+                    <input class="form-control" type="text" placeholder="Parcours" formControlName="parcours">
+                </div>
+             
+        
+                <div class="map-container" #map></div>
+            </div>
+         
+          </div>
+         
+        <div class="modal-footer">
+            <button class="btn btn-primary ml-2" type="submit" ><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+        </div>
+          </form>
+          
+    </ng-template>
+
+   <!--  Modal ajouter -->
+   <ng-template #ajouterProgrammeProvisionnel let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle"> Ajouter un programme provisionnel</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+  </div>
+  <form class="" [formGroup]="formDemandeMision" (ngSubmit)="ajouterMission(formDemandeMision.value)">
+  <div class="modal-body">
+    <div class="form-group row mb-1">
+      
+        <div class="col-md-4 form-group ">
+            <label>Moyen de transport :</label>
+            <select class="form-control" formControlName="moyenTransport">
+              <option value="" disabled selected>sélectionner Moyen de transport</option>
+              <option value="voiture">voiture</option>
+              <option value="camion">camion</option>
+            </select>
+        </div>
+    <!--     <div class="col-md-4 form-group">
+          <label>Responsable mission :</label>
+          <select class="form-control" formControlName="resbonsable_id" >
+            <option value="" disabled selected>sélectionner  le Responsable</option>
+            <option *ngFor="let f of listFonctionnaire"  value="f.id">{{f.nom}}</option>  
+          </select>
+          </div> -->
+        <div class="col-md-4 form-group ">
+            <label>Date de départ :</label>
+            <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateDepart">
+        </div>
+        <div class="col-md-4 form-group "  *ngIf="formDemandeMision.value.dateDepart">
+            <label>Date de retour :</label>
+            <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateRetour" [min]="formDemandeMision.value.dateDepart">
+        </div>
+        
+
+        <div class="col-md-4 form-group">
+            <label>Type Mission :</label>
+            <select class="form-control" formControlName="type">
+              <option value="" disabled selected>sélectionner Type Mission</option>
+              <option value="Reunion">Reunion</option>
+              <option value="Evaluation" >Evaluation</option>
+              <option value="Visite"> Visite</option>
+            </select>
+        </div>
+        <div class="col-md-4 form-group">
+            <label>Motif :</label>
+            <input class="form-control" type="text" placeholder="Motif" formControlName="motif">
+        </div>
+        <div class="col-md-4 form-group">
+            <label>Parcours :</label>
+            <input class="form-control" type="text" placeholder="Parcours" formControlName="parcours">
+        </div>
+     
+
+      <!--   <div class="map-container" #map></div> -->
+    </div>
+ 
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-primary ml-2" type="submit"  ><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+  </div>
+  </form>
+ </ng-template>
+   <!-- modal detail-->
+   <ng-template #detailDemandeMission let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">détail d'un programme provisionnel</h5>
+  </div>
+  <div class="modal-body">
+      <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+          
+          <div class="form-group row mb-0">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <div class="row">
+                    <label *ngIf="demandeMission.demandeMission!=null"  class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">mission :</label>
+                    <label  *ngIf="demandeMission.demandeMission!=null"class="col-sm-3 col-form-label f-s-13">{{demandeMission.demandeMission.numdemande}}</label>
+                    <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Type de la mission :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.type}}</label>
+                    
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13"> Moyen de transport:</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.moyenTransport}}</label>
+                 
+                    <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Motif :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.motif}}</label>
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Parcours :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.parcours}}</label>
+                
+                    <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de départ :</label>
+                    <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.dateDepart}}</label>
+
+                    <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de retour :</label>
+                    <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.dateRetour}}</label>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+  <div class="modal-footer"> <button class="btn btn-outline-secondary ml-2 font-weight-bold"   (click)="close()" >   Annuler  </button>
+ </div>
+  
+  
+   </ng-template>
+
+   <!-- modal detail-->
+   <ng-template #affectDemandeMission let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Affectation d'une demande de mission</h5>
+  </div>
+  <div class="modal-body">
+      <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+          
+          <div class="form-group row mb-0">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <div class="row">
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Type de la mission :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.type}}</label>
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13"> Moyen de transport:</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.moyenTransport}}</label>
+                  </div>
+                  <div class="row"> 
+                    <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Motif :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.motif}}</label>
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Parcours :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.parcours}}</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de départ :</label>
+                    <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.dateDepart}}</label>
+
+                    <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de retour :</label>
+                    <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.dateRetour}}</label>
+                  </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="text-dark font-weight-bold f-s-13">les Missions :</label>
+                <select class="form-control"  [(ngModel)]="id_mission"  [ngModelOptions]="{standalone: true}" >
+                  <option value="" disabled selected>sélectionner  la demande de mission </option>
+                  <option *ngFor="let f of listMisssion"  [value]="f.id">{{f.numdemande}}</option>  
+                </select>
+              </div>
+          </div>
+         
+          
+      </form>
+  </div>
+  <div class="modal-footer"> 
+    <button class="btn btn-outline-warning ml-2 font-weight-bold"   (click)="affecteMission(demandeMission.id)" >   modifier  </button>
+   <button class="btn btn-outline-secondary ml-2 font-weight-bold"   (click)="close()" >   Annuler  </button>
+ </div>
+  
+  
+   </ng-template>
+</div>
+

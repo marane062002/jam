@@ -1,0 +1,77 @@
+<!-- begin:: Content section 2 -->
+
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<!-- <span class="kt-portlet__head-icon">
+							<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
+						</span> -->
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						Modifier Agrement				</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Libellé</label>
+									<input matInput  required type="text" class="form-control" name="agrement" [value]="agrement" [(ngModel)]="agrement" placeholder="" >
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+                                    <label > Date  :
+                                    </label>
+                                    <input matInput class="form-control" (click)="picker1.open()" [value]="date" [(ngModel)]="date"name="dateEchantillon" [matDatepicker]="picker1" />
+                                    <mat-hint>JJ/MM/AAAA</mat-hint>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1">
+                                        <mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
+                                        </mat-icon>
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                                </mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+                        <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Observation</label>
+									<input matInput  required type="text" class="form-control" name="observation" [value]="observation" [(ngModel)]="observation" placeholder="" >
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	
+	
+		
+	</div>
+	<!--Action Section :: begin--> 
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit"
+				(click)="onSubmit()">
+				<i class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<!-- <button class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+				(click)="backList()">
+				<i class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button> -->
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

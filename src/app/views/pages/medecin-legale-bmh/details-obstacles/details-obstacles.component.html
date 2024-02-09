@@ -1,0 +1,294 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1 col-md-12">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			&nbsp;
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">Détails des morts non naturelles :</h2>
+		</div>
+
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a href="javascript:; " (click)="SortirAssociation()" class="btn btn-outline-danger btn-elevate btn-icon-sm">
+						<i class="icon la la-share"></i>
+
+						Sortie du cadavre
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Informations défunts</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div *ngIf="history" class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Nom :</th>
+								<td class="donnee_show">353531343483</td>
+							</tr>
+							<tr>
+								<th>Prénom :</th>
+								<td class="donnee_show">438348383383</td>
+							</tr>
+
+							<tr>
+								<th>CIN :</th>
+								<td class="donnee_show">434383833</td>
+							</tr>
+							<tr>
+								<th>Sexe :</th>
+								<td class="donnee_show">Homme</td>
+							</tr>
+
+							<tr>
+								<th>Nationalité :</th>
+								<td class="donnee_show">34838888888888888</td>
+							</tr>
+							<tr>
+								<th>Date de naissance :</th>
+								<td class="donnee_show">24/06/1987</td>
+							</tr>
+							<tr>
+								<th>Adresse de résidence :</th>
+								<td class="donnee_show">3434358343</td>
+							</tr>
+							<tr>
+								<th>Arrondissement :</th>
+								<td class="donnee_show">Active</td>
+							</tr>
+							<tr>
+								<th>Quartier :</th>
+								<td class="donnee_show">43483483483</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Infos Déclarant</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div *ngIf="history" class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Nom du déclarant</th>
+								<td class="donnee_show">368463483483</td>
+							</tr>
+							<tr>
+								<th>Prénom du déclarant :</th>
+								<td class="donnee_show">34834348344583</td>
+							</tr>
+
+							<tr>
+								<th>C.I.N du déclarant :</th>
+								<td class="donnee_show">43343438843</td>
+							</tr>
+							<tr>
+								<th>Qualité du déclarant :</th>
+								<td class="donnee_show">Avancé</td>
+							</tr>
+							<tr>
+								<th>Date de déclaration :</th>
+								<td class="donnee_show">22/10/2022</td>
+							</tr>
+							<tr>
+								<th>Heure de déclaration :</th>
+								<td class="donnee_show">11:00</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END DETAILS ASSOCIATION -->
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Décés</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div *ngIf="history" class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Date du décés :</th>
+								<td class="donnee_show">Activité</td>
+							</tr>
+							<tr>
+								<th>Heure de décés</th>
+								<td class="donnee_show">Type</td>
+							</tr>
+							<tr>
+								<th>Causes de décés</th>
+								<td class="donnee_show">Type</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END DETAILS ASSOCIATION -->
+		</div>
+	</div>
+
+	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Constateur</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div *ngIf="history" class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Constateur :</th>
+								<td class="donnee_show">125431821231485</td>
+							</tr>
+							<tr>
+								<th>Date de constation :</th>
+								<td class="donnee_show">20/11/2022</td>
+							</tr>
+							<tr>
+								<th>Heure de constation :</th>
+								<td class="donnee_show">03:23</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Enterrement</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Lieu d'entrremment :</th>
+								<td class="donnee_show">Activité</td>
+							</tr>
+							<tr>
+								<th>Date de bulletin</th>
+								<td class="donnee_show">Activité</td>
+							</tr>
+							<tr>
+								<th>Date de récupération du cadavre</th>
+								<td class="donnee_show">Activité</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END DETAILS ASSOCIATION -->
+		</div>
+	</div>
+
+	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Piéces jointes</h2>
+			</div>
+		</div>
+	
+		<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+
+			<mat-table [dataSource]="dataSource2" matSort>
+				<!-- file name Column -->
+				<ng-container matColumnDef="nomDoc">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="titre">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let row"> {{row.sousModule}} </mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="dow">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]="!row.idAlfresco" [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+							<i class="flaticon-download-1"></i></button>
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns2;">
+				</mat-row>
+			</mat-table>
+		</div>
+	</div>
+</div>
+
+<mat-tab-group >
+	<mat-tab label="Examens">
+		<kt-list-examen></kt-list-examen>
+	</mat-tab>
+	<mat-tab label="Autopsies">
+		<kt-list-autopsie></kt-list-autopsie>
+	</mat-tab>
+	<mat-tab label="Prélévements">
+		<kt-list-prelevement></kt-list-prelevement>
+	</mat-tab>
+
+	<!-- <mat-tab label="Pièces jointes">
+		<kt-tab-piecejointe></kt-tab-piecejointe>
+	</mat-tab> -->
+</mat-tab-group>
+
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button href="javascript:;" (click)="back()" _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+</div>
+<div class="espace_bloc"></div>
+<!-- end:: Content -->

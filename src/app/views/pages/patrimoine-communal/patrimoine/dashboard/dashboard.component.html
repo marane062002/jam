@@ -1,0 +1,315 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-1">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-search"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'MENU.STATS.CONTROL.SEARCHE' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <form novalidate [formGroup]="searchForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="type" placeholder="{{ 'AUTH.GENERAL.STATISTISQUE' | translate }} :" >
+                                <mat-option value="1">Nombre de biens communaux par catégorie </mat-option>
+                                <mat-option  value="2"> Nombre de locataires par catégorie par arrondissement</mat-option>
+                                <mat-option  value="3"> Nombre de locataires par tranche de durée d’exploitation </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                   <!-- Cateroire MArche -->
+
+                   <div class="col-md-3"   *ngIf="searchForm.value.type == 1 ||searchForm.value.type == 2" >
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="naturePAtrimoine" placeholder="{{ 'PAGES.GENERAL.nature_Patrimoine' | translate }} :">
+                                <mat-option [value]=null> ---{{ 'PAGES.GENERAL.VIDE' | translate }}--- </mat-option>
+                                <mat-option value="publique">{{ 'PAGES.GENERAL.PUBLIQUE' | translate }} </mat-option>
+                                <mat-option value="prive">{{ 'PAGES.GENERAL.PRIVE' | translate }} </mat-option>
+                            </mat-select>
+
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3"   *ngIf="searchForm.value.type == 1 ||searchForm.value.type == 2 ">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="typePatrimoine" placeholder="{{ 'PAGES.GENERAL.TYPE_PATRIMOINE' | translate }} :" multiple>
+                                <div *ngIf="searchForm.value.naturePAtrimoine != null">
+                                    <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}  ---
+                                    </mat-option>
+                                    <mat-option *ngFor="let t of getTypesByNaturePAtrimoine()" [value]="t.id" >
+                                        {{t.libelle}}
+                                    </mat-option>
+                                </div>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('type','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-3"  *ngIf="searchForm.value.type == 2">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="arrondissement" placeholder="{{ 'PAGES.GENERAL.ARRONDISSEMENT' | translate }} :" multiple>
+                                <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                </mat-option>
+                                <mat-option *ngFor="let arr of arrondissements" [value]="arr.id">
+                                    {{ arr.libelle }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-3"  *ngIf="searchForm.value.type == 3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="tranche" placeholder="tranche de durée d’exploitation" >
+                                <mat-option  value="1,1"> Inférieur à une année</mat-option>
+                                <mat-option   value="2,1,3"> Entre 1 années et 3 ans </mat-option>
+                                <mat-option   value="2,3,5"> Entre 3 ans et 5 ans </mat-option>
+                                <mat-option   value="2,5,8">Entre 5 ans et 8 ans </mat-option>
+                                <mat-option   value="2,8,10"> Entre. 8 ans et 10 ans</mat-option>
+                                <mat-option   value="3,10"> Supérieur à 10 ans</mat-option>  
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div> 
+                <!--
+                   <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="type" placeholder="{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} :" multiple>
+                                <mat-option *ngFor="let type of types" [value]="type">
+                                    {{type.libelle}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div> 
+              
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="type" placeholder="tranche de durée de location">
+                                <mat-option  value="1"> Inférieur à une année</mat-option>
+                                <mat-option  value="2"> Entre 1 années et 3 ans </mat-option>
+                                <mat-option  value="3"> Entre 3 ans et 5 ans </mat-option>
+                                <mat-option  value="4">Entre 5 ans et 8 ans </mat-option>
+                                <mat-option  value="5"> Entre. 8 ans et 10 ans</mat-option>
+                                <mat-option  value="6"> Supérieur à 10 ans</mat-option>  
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div> 
+                    <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="type" placeholder="nombre. Les tranches ">
+                                <mat-option  value="1"> Inférieur à 3 loyers</mat-option>
+                                <mat-option  value="2">Entre 7 loyers et 12 loyers </mat-option>
+                                <mat-option  value="3"> Entre 13 loyers et 24 loyers </mat-option>
+                                <mat-option  value="4">Entre 24 loyers et 36 loyers</mat-option>
+                                <mat-option  value="5">Supérieur à 36 loyers</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div> -->
+                <!-- DATE DEBUT -->
+             <!--    <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input autocomplete="off" matInput class="form-control" [matDatepicker]="picker1" formControlName="dateDebut" placeholder="{{ 'MENU.STATS.CONTROL.DATE_START' | translate }} :">
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input autocomplete="off" matInput class="form-control" [min]="searchForm.controls.dateDebut.value" [matDatepicker]="picker2" formControlName="dateFin" placeholder="{{ 'MENU.STATS.CONTROL.DATE_END' | translate }} :">
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker2">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div> -->
+             
+                <div class="col-md-3">
+                    <button [disabled]="searchForm.invalid" (click)="onSubmit()" class="btn btn-label-dark w-100 bg-success text-white mb-3 mt-4" > <i class="flaticon-search-1"></i>{{ 'PAGES.GENERAL.FILTER' | translate }}   </button>
+                </div>
+            </div>
+        </form>
+       <!--  <div class="row">
+            <div class="col-md-3">
+                <button [disabled]="searchForm.invalid" (click)="onSubmit()" class="btn btn-label-dark"><i
+						class="flaticon-search-1"></i>{{ 'PAGES.GENERAL.FILTER' | translate }}
+				</button>
+            </div>
+        </div> -->
+    </div>
+</div>
+<!-- end::row-content-top -->
+<!-- start::row-content -->
+<div class="row">
+    <!-- start::dataTable -->
+    <div class="col-lg-6">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head kt-bg-portlet-2">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-tabs"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'MENU.LISTEPATRIMOINES' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            &nbsp;
+                            <a href="javascript:; " (click)="refresh()" class="btn btn-warning">
+                                <i class="flaticon-refresh"></i> {{ 'MENU.STATS.CONTROL.REFRESH' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <div class="kt-portlet">
+                            <mat-table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                                <!-- dateExpedetion Column -->
+                                <ng-container matColumnDef="nbrPatremoine">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                      <!--   {{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.DATE_EXPIDITION' | translate }} -->
+                                      nbrPatremoine
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column">{{row.nbrPatremoine}}
+                                    </mat-cell>
+                                </ng-container>
+                                <!-- nbrCourrier Column -->
+                                <ng-container matColumnDef="Categorie">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                      <!--   {{ 'PAGES.' | translate }} -->Categorie
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column"> {{row.categorie}}
+                                    </mat-cell>
+                                </ng-container>
+                                <!-- type Column -->
+                                <ng-container matColumnDef="Nombre Locataire">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+                                        Nombre Locataire
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="mat-column"> {{row}}</mat-cell>
+                                </ng-container> 
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                            <div *ngIf="sizeData == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                                </mat-progress-spinner>
+                            </mat-card>
+                            <mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+                            <!-- end: BOTTOM -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end::dataTable -->
+    <!-- begin :: statistiques -->
+    <div class="col-lg-6">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-bg-portlet-5">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-graphic-2"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        {{ 'MENU.STATPATRIMOINE' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            &nbsp;
+                            <a href="javascript:; " (click)="downloadCanvas($event)" class="btn btn-primary btn-icon-sm">
+                                <i class="flaticon2-download"></i> {{ 'MENU.STATS.CONTROL.DOWLOAD_CHART' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <div class="col-md-12 show_port">
+                            <!-- begin::action radio -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <mat-radio-group name="partenariatAssociative" (change)="selectionChanged($event)"  ([ngModel])="chartType">
+                                            <mat-radio-button value="pie" [checked]="chartType==='pie'">
+                                                <i class="flaticon2-pie-chart-1"></i>
+                                            </mat-radio-button>
+                                            <mat-radio-button value="doughnut" [checked]="chartType==='doughnut'">
+                                                <i class="flaticon2-pie-chart-2"></i>
+                                            </mat-radio-button>
+                                            <mat-radio-button  value="bar" [checked]="chartType==='bar'">
+                                                <i class="flaticon2-poll-symbol"></i>
+                                            </mat-radio-button>
+                                            <mat-radio-button value="line" [checked]="chartType==='line'">
+                                                <i class="flaticon2-analytics"></i>
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end::action radio -->
+                            <!-- begin::chart -->
+                            <div  Style="pointer-events: none;"> 
+                                <canvas id="canvas"></canvas>
+                            </div>
+                            <!-- end::chart -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: statistiques -->
+
+
+</div>
+<!-- end:: row-content -->

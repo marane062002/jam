@@ -1,0 +1,813 @@
+<!--begin::Form-->
+
+<div autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter un nouveaux né :
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<mat-horizontal-stepper #stepper>
+		<mat-step label="Infos nouveau né">
+            <form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>N° d'enregistrement : </label>
+							<input
+								matInput
+                                formControlName="numEnregistrement"
+								type="number"
+								class="form-control form-control-solid form-control-lg"
+								name="numEnregistrement"
+							/>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Date d'enregistrement : </label>
+							<input
+                            formControlName="dateEnregistrement"
+								matInput
+								type="datetime-local"
+								class="form-control form-control-solid form-control-lg"
+								name="dateEnregistrement"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Nom : </label>
+							<input
+								matInput
+                                formControlName="nom"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="nom"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Prénom : </label>
+							<input
+								matInput
+                                formControlName="prenom"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="address1"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label>Nom de la mére : </label>
+							<input
+								matInput
+                                formControlName="nomMere"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="nomMere"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label>Prénom de la mére : </label>
+							<input
+								matInput
+                                formControlName="prenomMere"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="prenomMere"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label>CIN de la mére : </label>
+							<input
+								matInput
+                                formControlName="cinMere"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="address1"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label>Tél de la mére : </label>
+							<input
+								matInput
+                                formControlName="telMere"
+								type="tel"
+								class="form-control form-control-solid form-control-lg"
+								name="address1"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Adresse de résidence de la mére : </label>
+							<input
+								matInput
+                                formControlName="adresseResMere"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="address1"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Nationalité de la mére : </label>
+							<mat-select
+                                            matNativeControl
+                                            formControlName="nationaliteMere"
+                                            class="form-control"
+                                        >
+                                            <mat-option  value="Marocaine">Marocaine</mat-option>
+                                            <mat-option  value="Autre">Autre</mat-option>                                    
+                                        </mat-select>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+            <div class="row" *ngIf="ajoutForm.value.nationaliteMere === 'Autre'">
+                <div class="col-md-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Autre Nationalité :</mat-label>
+                            <input
+                            formControlName="autreNationalite"
+                            class="form-control-solid form-control-lg"
+                            name="address1"
+                            matInput
+                        />
+                        </mat-form-field>
+                        <div class="fv-plugins-message-container"></div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Poids au moment de la déclaration : </label>
+							<input
+								matInput
+                                formControlName="poids"
+								type="number"
+								class="form-control form-control-solid form-control-lg"
+								name="poids"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Date d'accouchement : </label>
+							<input
+								matInput
+                                formControlName="dateAccouchement"
+								type="datetime-local"
+								class="form-control form-control-solid form-control-lg"
+								name="dateAccouchement"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Adresse d'accouchement : </label>
+							<input
+								matInput
+                                formControlName="adresseAccouchement"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="adresseAccouchement"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+                <div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Nature d'accouchement : </label>
+							<input
+								matInput
+                                formControlName="natureAccouchement"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="natureAccouchement"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+            
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Observation : </label>
+							<input
+								matInput
+                                formControlName="observation"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="observation"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<h2
+							class="kt-portlet__head-title kt-font-inverse-brand"
+						>
+							Acte de mariage :
+						</h2>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
+					<label class="checkbox-inline" style="padding-left: 20px"
+						>Oui
+						<input type="radio" name="radio" />
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="col-md-3">
+					<label class="checkbox-inline" style="padding-left: 20px"
+						>Non
+						<input type="radio" name="radio" />
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Nom du pére:</mat-label>
+							<input
+								type="text"
+                                formControlName="nomPere"
+								class="form-control-solid form-control-lg"
+								name="nomPere"
+								matInput
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Prénom du pére:</mat-label>
+							<input
+								type="text"
+                                formControlName="prenomPere"
+								class="form-control-solid form-control-lg"
+								name="prenomPere"
+								matInput
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>CIN du pére:</mat-label>
+							<input
+								type="text"
+                                formControlname="cinPere"
+								class="form-control-solid form-control-lg"
+								name="cinPere"
+								matInput
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Nationalité du pére:</mat-label>
+                            <mat-select
+                            matNativeControl
+                            formControlName="nationalitePere"
+                            class="form-control"
+                        >
+                            <mat-option  value="Marocain">Marocain</mat-option>
+                            <mat-option  value="Autre">Autre</mat-option>                                    
+                        </mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+            <div class="row" *ngIf="ajoutForm.value.nationalitePere === 'Autre'">
+                <div class="col-md-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Autre Nationalité :</mat-label>
+                            <input
+                            formControlName="autreNationalite1"
+                            class="form-control-solid form-control-lg"
+                            name="address1"
+                            matInput
+                        />
+                        </mat-form-field>
+                        <div class="fv-plugins-message-container"></div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Tél du pére:</mat-label>
+							<input
+								type="tel"
+                                formControlName="telPere"
+								class="form-control-solid form-control-lg"
+								name="telPere"
+								matInput
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Statut:</mat-label>
+							<input
+								type="text"
+                                formControlName="statut"
+								class="form-control-solid form-control-lg"
+								name="Statut"
+								matInput
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label
+								>Adresse de résidence du pére :</mat-label
+							>
+							<input
+								type="text"
+                                formControlName="adresseResPere"
+								class="form-control-solid form-control-lg"
+								name="adresseResPere"
+								matInput
+							/>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div data-wizard-type="step-content">
+				<h4 class="font-weight-bold text-dark"></h4>
+				<div class="kt-portlet">
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-12 show_port input-group">
+								<form
+									enctype="multipart/form-data"
+									method="POST"
+									style="display: -webkit-inline-box"
+								>
+									<label class="input-group-btn">
+										Pièce jointe :
+										<span class="btn btn-info">
+											Sélectionner un fichier
+											<input
+												type="file"
+												name="file"
+												style="display: none"
+												multiple
+											/>
+										</span>
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										readonly
+									/>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label" align="right">
+					<button
+						mat-button
+						matStepperPrevious
+						(click)="RetourEmbalages()"
+						_ngcontent-dkp-c41=""
+						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+					>
+						<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+						Retour
+					</button>
+					<button
+						mat-button
+						matStepperNext
+						type="button"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+					>
+						<i class="fa fa-plus-circle"></i>
+						Suivant
+					</button>
+				</div>
+			</div>
+        </form>
+		</mat-step>
+
+		<mat-step label="Sage femme">
+            <form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Nom : </label>
+							<input
+								matInput
+                                formControlName="nomSageFemme"
+								type="text"
+								class="form-control"
+								placeholder=""
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Prénom : </label>
+							<input
+								matInput
+                                formControlName="prenomSageFemme"
+								type="text"
+								class="form-control"
+								placeholder=""
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>CIN : </label>
+							<input
+								matInput
+                                formControlName="cinSageFemme"
+								type="text"
+								class="form-control"
+								placeholder=""
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Date de naissance : </label>
+							<input
+								matInput
+                                formControlName="dateSageFemme"
+								type="date"
+								class="form-control"
+								placeholder=""
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label>Tél : </label>
+							<input
+								matInput
+                                formControlName="telSageFemme"
+								type="tel"
+								class="form-control"
+								placeholder=""
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label>Adresse : </label>
+							<input
+								matInput
+                                formControlName="adresseSageFemme"
+								type="text"
+								class="form-control"
+								placeholder=""
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div data-wizard-type="step-content">
+					<h4 class="font-weight-bold text-dark"></h4>
+					<div class="kt-portlet">
+						<div class="kt-portlet__body">
+							<div class="row">
+								<div class="col-md-12 show_port input-group">
+									<form
+										enctype="multipart/form-data"
+										method="POST"
+										style="display: -webkit-inline-box"
+									>
+										<label class="input-group-btn">
+											Pièce jointe :
+											<span class="btn btn-info">
+												Sélectionner un fichier
+												<input
+													type="file"
+													name="file"
+													style="display: none"
+													multiple
+												/>
+											</span>
+										</label>
+										<input
+											type="text"
+											class="form-control"
+											readonly
+										/>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label" align="right">
+					<button
+						mat-button
+						matStepperPrevious
+						href="javascript:; "
+						_ngcontent-dkp-c41=""
+						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+					>
+						<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+						Retour
+					</button>
+					<button
+						mat-button
+						matStepperNext
+						type="button"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+					>
+						<i class="fa fa-plus-circle"></i>
+						Suivant
+					</button>
+				</div>
+			</div>
+        </form>
+		</mat-step>
+		<mat-step label="Constateur">
+            <form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Nom : </label>
+							<input
+								matInput
+                                formControlName="nomConstateur"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="nomConstateur"
+							/>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>Prénom : </label>
+							<input
+								matInput
+                                formControlName="prenomConstateur"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="prenomConstateur"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>CIN : </label>
+							<input
+								matInput
+                                formControlName="cinConstateur"
+								type="text"
+								class="form-control form-control-solid form-control-lg"
+								name="cinConstateur"
+							/>
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Sexe:</mat-label>
+							<mat-select formControlName="sexe" class="form-control">
+								<mat-option value="Homme"> Homme </mat-option>
+								<mat-option value="Femme"> Femme </mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div data-wizard-type="step-content">
+				<h4 class="font-weight-bold text-dark"></h4>
+				<div class="kt-portlet">
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-12 show_port input-group">
+								<form
+									enctype="multipart/form-data"
+									method="POST"
+									style="display: -webkit-inline-box"
+								>
+									<label class="input-group-btn">
+										Pièce jointe :
+										<span class="btn btn-info">
+											Sélectionner un fichier
+											<input
+											(change)="onPcJointeChange($event)"
+												type="file"
+												name="file"
+												style="display: none"
+												multiple
+											/>
+										</span>
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										readonly
+									/>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label" align="right">
+					<button
+						mat-button
+						matStepperPrevious
+						type="button"
+						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+					>
+						<i class="la la-recycle"></i>
+						Retour
+					</button>
+					<button
+                        (click)="ajouter()"
+						mat-button
+						type="button"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+					>
+						<i class="icon la la-floppy-o"></i>
+						Enregistrer
+					</button>
+				</div>
+			</div>
+        </form>
+		</mat-step>
+	</mat-horizontal-stepper>
+</div>

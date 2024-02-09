@@ -1,0 +1,24 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">État VTT</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+
+                    <data-table 
+                            [datasource]="listVtt" 
+                            [headers]="headerData" 
+                            [titleTable]="' Journal Centralisateur (VTT)'">
+                    </data-table>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+

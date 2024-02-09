@@ -1,0 +1,105 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-network kt-font-inverse-brand"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title">
+                            لائحة اجتماعات اللجنة
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div *ngxPermissionsOnly="['canCreateReunionCommission']" class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:;" (click)="addReunion()" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i> إضافة اجتماع
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="example-header">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <div class="example-container mat-elevation-z8">
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="commission">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    اللجنة </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                    {{row.commission.nomCommission}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="session">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    إسم الدورة </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                    {{row.session.nomSession}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="libelleReunion">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> إسم الاجتماع </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.libelleReunion}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="dateReunion">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    تاريخ الاجتماع </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                    {{row.dateReunion |date: 'dd/MM/yyyy'}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="heureDebut">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> ساعة البداية </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                    {{row.heureDebut |date: 'HH:mm'}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="heureFin">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> ساعة النهاية </th>
+                                <td mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                    {{row.heureFin |date: 'HH:mm'}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canShowReunionCommission']" (click)="showReunion(row.id)" matTooltip="{{ 'PAGES.GENERAL.TRAITEMENT' | translate }}" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i
+											class="fab fa-buffer"></i></a>
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canUpdateReunionCommission']" (click)="editReunion(row.id)" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="la la-edit"></i></a>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+                        <div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

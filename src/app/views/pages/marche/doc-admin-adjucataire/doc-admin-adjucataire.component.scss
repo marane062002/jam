@@ -1,0 +1,28 @@
+.alert.alert-success {
+	background: #36e00d59;
+    border: 1px solid #36e00d59;
+    color: #0d9e129c;
+    height: 67px;
+    margin: 30px 288px 30px;
+    justify-content: center;
+    padding: 22px;
+}
+
+.spiner-style{
+    position: relative;
+    top: -0px;
+    left: -80px;
+    color: #1e7cbf;
+}
+
+.spinner-cercle{
+    display: flex; justify-content: center; align-items: center
+}
+
+.btn-success.focus,
+.btn-success:focus,
+.btn-success:hover {
+	color: #fff;
+	background-color: #0fbb51 !important;
+	border-color: #05a844 !important;
+}

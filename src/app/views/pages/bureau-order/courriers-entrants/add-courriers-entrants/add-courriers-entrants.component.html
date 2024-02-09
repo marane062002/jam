@@ -1,0 +1,342 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-1">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-multimedia-2 kt-font-inverse-brand"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_NEW' | translate }}
+                <!-- &nbsp; <span>{{num_courrier}}</span> -->
+            </h3>
+        </div>
+    </div>
+    <!-- (ngSubmit)="onSubmit()" -->
+    <form novalidate [formGroup]="addForm" autocomplete="off">
+        <div class="kt-portlet__body">
+            <div class="row">
+                <!-- <p class="font-weight-boldest">{{num_courrier}}</p> -->
+                <div class="col-md-12" id="num" style="display: inline;padding-bottom: 20px;">
+                    <div class="numStyle">
+                        <!-- {{ 'PAGES.BUREAU_ORDRE.NUMERO' | translate }} -->
+                        <!-- <p class="num">{{num_courrier}}</p> -->
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="" class="form-control" formControlName="numero" name="numero" placeholder="{{ 'PAGES.BUREAU_ORDRE.NUMERO' | translate }}" />
+                            <mat-error *ngIf="isControlHasError('numero','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="dateReception" matInput class="form-control" name="dateReception" [matDatepicker]="picker" placeholder="{{ 'PAGES.BUREAU_ORDRE.DATE_RECEPTION' | translate }} *">
+                                <mat-error *ngIf="isControlHasError('dateReception','required')">
+                                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                </mat-error>
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" formGroupName="typeCourrier">
+                        <mat-form-field class="example-full-width">
+                            <mat-select matNativeControl formControlName="id" class="form-control" placeholder="{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} *" [(ngModel)]="typ_courrier">
+                                <mat-option *ngFor="let type of typeCourrier" [value]="type.id">
+                                    <span *ngIf="language=='fr' && type.libelle=='البريد المضمون'">Courrier recommandé</span>
+                                    <span *ngIf="language=='fr' && type.libelle=='البريد العادي'">Courrier régulier</span>
+                                    <span *ngIf="language=='fr' && type.libelle=='إيداع مادي'">Dépôt financier</span>
+                                    
+                                    <span *ngIf="language=='ar' && type.libelle=='البريد المضمون'">البريد المضمون</span>
+                                    <span *ngIf="language=='ar' && type.libelle=='البريد العادي'">البريد العادي</span>
+                                    <span *ngIf="language=='ar' && type.libelle=='إيداع مادي'">إيداع مادي</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('typeCourrier','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select formControlName="responsableDispatching" name="responsableDispatching" class="form-control" placeholder="{{ 'PAGES.BUREAU_ORDRE.RESPONSABLE_DISPATCHING' | translate }}">
+                                <!-- <mat-option [value]="'الموزع'">
+									{{ 'PAGES.BUREAU_ORDRE.RESPONSABLE_DISPATCHING' | translate }}
+								</mat-option> -->
+                                <mat-option value="المدير العام للمصالح الجماعية">
+                                    <span *ngIf="language=='fr'">Directeur Général des départements communales</span>
+                                    <span *ngIf="language=='ar'">المدير العام للمصالح الجماعية</span>
+                                </mat-option>
+                                <!-- <mat-option value="موجه آخر">موجه آخر</mat-option> -->
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('responsableDispatching','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="" class="form-control" formControlName="reference"  name="reference" placeholder="{{ 'PAGES.BUREAU_ORDRE.REFERENCE' | translate }}" >
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group" formGroupName="criticiteCourrier">
+                        <mat-form-field class="example-full-width">
+                            <mat-select formControlName="id" name="criticiteEntr" class="form-control" placeholder="{{ 'PAGES.BUREAU_ORDRE.PRIORITE' | translate }} *">
+                                <mat-option *ngFor="let criticite of criticiteCourrier" [value]="criticite.id">
+                                    <span *ngIf="language=='fr' && criticite.libelle=='عادي'">Normal</span>
+                                    <span *ngIf="language=='fr' && criticite.libelle=='مستعجل'">Urgent</span>
+                                    
+                                    <span *ngIf="language=='ar' && criticite.libelle=='عادي'">عادي</span>
+                                    <span *ngIf="language=='ar' && criticite.libelle=='مستعجل'">مستعجل</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('criticiteCourrier','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 isPresident-radio">
+                    <div class="form-group">
+                        <label>{{ 'PAGES.BUREAU_ORDRE.ISPRESIDENT' | translate }} * :</label><br>
+                        <mat-radio-group (change)="presidentChanged()" name="president" formControlName="president">
+                            <mat-radio-button [value]="true">{{ 'PAGES.BUREAU_ORDRE.BOOLEAN_YES' | translate }}
+                            </mat-radio-button>
+                            <mat-radio-button [value]="false" checked>{{ 'PAGES.BUREAU_ORDRE.BOOLEAN_NO' | translate }}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="isControlHasError('president','required')">
+                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select name="typeOrigine" [(ngModel)]="selectedList" (selectionChange)="selectionChanged($event)" formControlName="typeOrigine" class="form-control" placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_INTERNE_EXTERNE' | translate }} *">
+                                <mat-option value="in">
+                                    {{ 'PAGES.BUREAU_ORDRE.ORIGINE_IN' | translate }}</mat-option>
+                                <mat-option value="out">
+                                    {{ 'PAGES.BUREAU_ORDRE.ORIGINE_OUT' | translate }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('typeOrigine','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- Type personne pp / pm -->
+                <div class="col-md-4" *ngIf="showExterne">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select formControlName="typePersonne" matNativeControl class="form-control" (selectionChange)="typePersonneChanged()" placeholder="{{ 'PAGES.BUREAU_ORDRE.PARTENAIRE' | translate }}" required>
+                                <mat-option value="pm">
+                                    {{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.LIBELLE' | translate }}</mat-option>
+                                <mat-option value="pp">
+                                    {{ 'PAGES.BUREAU_ORDRE.PERSONNE_PHYSIQUE.LIBELLE' | translate }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('typePersonne','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- Liste des personnes morales -->
+                <div class="col-md-4" *ngIf="showExternePM">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select formControlName="origineCourierEntrant" (selectionChange)="origineChanged()" matNativeControl class="form-control" placeholder="{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.LIBELLE' | translate }} * "> 
+                                <input type="text" class="form-control searchSelect" autocomplete="off" matInput (keyup)="onKey($event.target.value)">
+                                <mat-option [value]=null>
+                                    --{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.LIBELLE' | translate }}--</mat-option>
+                                <mat-option *ngFor="let origin of originCourrierPM" [value]="origin">
+                                    {{origin?.raisonSociale}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('origineCourierEntrant','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- Liste des personnes physiques -->
+                <div class="col-md-4" *ngIf="showExternePP">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="" class="form-control" formControlName="personnePhysique" name="personnePhysique" placeholder="{{ 'PAGES.BUREAU_ORDRE.PERSONNE_PHYSIQUE.LIBELLE' | translate }}" required>
+                            <mat-error *ngIf="isControlHasError('personnePhysique','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                            <mat-icon matSuffix><i class="fas fa-user-tie"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showRefOrigine">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="" class="form-control" formControlName="refOrigine" name="refOrigine" placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.REF_ORIGINE' | translate }}">
+                            <mat-icon matSuffix><i class="fas fa-hashtag"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="dateEmissionOrigine" matInput class="form-control" name="dateEmissionOrigine" [matDatepicker]="picker2" placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.DATE_EMISSION' | translate }}">
+                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showInterne">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="idDivision" (selectionChange)="onChangeDivision()" placeholder="{{ 'PAGES.ORGANISATION.DIVISION' | translate }} * ">
+                                <input type="text" class="form-control searchSelect" autocomplete="off" matInput (keyup)="onKeyDiv($event.target.value)">
+                                <mat-option>---{{ 'PAGES.ORGANISATION.DIVISION' | translate }}---
+                                </mat-option>
+                                <mat-option *ngFor="let d of divisions" [value]="d.id">
+                                    {{d?.libelle}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('idDivision','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="idService" (selectionChange)="onChangeService()" placeholder="{{ 'PAGES.ORGANISATION.SERVICE' | translate }}">
+                                <mat-option>---{{ 'PAGES.ORGANISATION.SERVICE' | translate }}---
+                                </mat-option>
+                                <mat-option *ngFor="let s of services" [value]="s.id">
+                                    {{s?.libelle}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control" class="example-full-width">
+                            <textarea rows="4" #input maxlength="255" class="form-control" name="objet" matInput formControlName="objet" placeholder="{{ 'PAGES.BUREAU_ORDRE.OBJET' | translate }}" required></textarea>
+                            <mat-error *ngIf="isControlHasError('objet','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                            <mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ "PAGES.BUREAU_ORDRE.DATE_LIMITE_TRAITEMENT" | translate }} :</mat-label>
+                            <input type="date" class="form-control-solid form-control-lg" formControlName="dateLimiteTraitement" matInput />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- End field section-->
+            <!-- Action section-->
+        </div>
+    </form>
+</div>
+<!-- end:: form section -->
+<!-- end section attachements-->
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-attachment"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.GENERAL.ATTACHEMENT' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-6 show_port input-group">
+                <form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm" style="display: -webkit-inline-box;margin-inline-start: 98px;">
+                    <label class="input-group-btn">
+                        <span class="btn btn-info">
+                            {{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+                                (change)="fileChange($event)" formControlName="_file" id="customFile"
+                                style="display: none;">
+                        </span>
+                    </label>
+                    <input type="text" #inputFile class="form-control" readonly>
+                </form>
+                <p style="border: 1px solid #333;display: inline-block; margin-top: 5px;margin-left: -70px; margin-right: -200px;"><i class="flaticon-warning-sign text-warning"></i>{{'PAGES.BUREAU_ORDRE.TAILLE_MAXIMALE' | translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End attachement section-->
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  [disabled]="loading" (click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+            {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="onReset()">
+            <i _ngcontent-dlp-c41 class="la la-recycle"></i>
+            {{ 'PAGES.GENERAL.RESET' | translate }}</button>
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="backList()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        <!-- other spinner -->
+        <!-- <button matTooltip="Spinner start" class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="loadSpinner()">
+            <i class="icon la la-list"></i>Spinner start</button> -->
+        <!-- other spinner -->
+        <!-- *** Upload files to alfresco *** -->
+        <!-- <button _ngcontent-dkp-c41="" matTooltip="Upload files to alfresco server"
+			class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button"
+			(click)="AutoUploadFiles()">
+			<i _ngcontent-dkp-c41="" class="fas fa-cloud-upload-alt"></i>
+			Upload</button> -->
+        <!-- ******************************** -->
+
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

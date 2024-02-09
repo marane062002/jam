@@ -1,0 +1,26 @@
+<form [formGroup]="statut" (submit)="onSubmit(statut.value)" *ngxPermissionsOnly="['accessToIndexPrestataireAo']"> 
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <mat-select class="form-control" name="crit" placeholder="{{ 'PAGES.MARCHE.AO.TAB_360.TAB_STATUT' | translate }}" formControlName="id" (selectionChange)="annulerAO($event)">
+                        <mat-option value="10" > annulé</mat-option>
+                        <mat-option value="11"  > infructueux</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+       <!--  <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.VISITE.LIEU_VISITE' | translate }} :" formControlName="motive" name="nompp" required>
+                <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+            </mat-form-field>
+        </div> -->
+     <!--    <div class="col-md-1" style="padding-top: 27px;">
+            <button class="btn btn-primary" type="submit"  style="position: absolute;right: 0px;">   {{ 'PAGES.GENERAL.SAVE' | translate }}    </button>
+        </div> -->
+
+    </div>
+ 
+
+</form>

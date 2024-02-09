@@ -1,0 +1,175 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon2-notepad"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        الحضور
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body kt-portlet__body--fit">
+
+                <div class="example-header">
+                    <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                    </mat-form-field>
+                </div>
+
+                <div class="example-container mat-elevation-z8">
+
+                    <mat-table [dataSource]="dataSource" matSort>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="nom">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                إسم عضو المكتب </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.membre.membre.nom}} {{row.membre.membre.prenom}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="role">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                دور العضو في المكتب </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.membre.role.libelle}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="presence">
+                            <mat-header-cell *matHeaderCellDef> حاضر </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <mat-form-field floatLabel="never" style="padding: 0 10px;">
+                                    <mat-select [(value)]="row.presence" placeholder="حاضر">
+                                        <mat-option [value]=true>نعم</mat-option>
+                                        <mat-option [value]=false>لا</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="justif">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> المبرر </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput type="text" name="justifM" placeholder="المبرر" [value]="row.justif" [(ngModel)]="row.justif">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                    <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                </div>
+                <br>
+                <br>
+                <div class="example-container mat-elevation-z8">
+
+                    <mat-table [dataSource]="dataSource1" matSort>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="nom">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                إسم الموظف </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.testshow}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="presence">
+                            <mat-header-cell *matHeaderCellDef> حاضر </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <mat-form-field floatLabel="never" style="padding: 0 10px;">
+                                    <mat-select [(value)]="row.presence" placeholder="حاضر">
+                                        <mat-option [value]=true>نعم</mat-option>
+                                        <mat-option [value]=false>لا</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="justif">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> المبرر </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput type="text" name="justifM" placeholder="المبرر" [value]="row.justif" [(ngModel)]="row.justif">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                        </mat-row>
+                    </mat-table>
+
+                    <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                </div>
+                <br>
+                <br>
+                <div class="example-container mat-elevation-z8">
+
+                    <mat-table [dataSource]="dataSource2" matSort>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="nom">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                إسم المدعو الخارجي </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.nom}} {{row.prenom}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="organisme">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                الهيئة </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.organisme}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="presence">
+                            <mat-header-cell *matHeaderCellDef> حاضر </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <mat-form-field floatLabel="never" style="padding: 0 10px;">
+                                    <mat-select [(value)]="row.presence" placeholder="حاضر">
+                                        <mat-option [value]=true>نعم</mat-option>
+                                        <mat-option [value]=false>لا</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="justif">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> المبرر </mat-header-cell>
+                            <mat-cell *matCellDef="let row">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput type="text" name="justifM" placeholder="المبرر" [value]="row.justif" [(ngModel)]="row.justif">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns2;">
+                        </mat-row>
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="send()">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

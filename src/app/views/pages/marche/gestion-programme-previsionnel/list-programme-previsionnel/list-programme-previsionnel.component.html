@@ -1,0 +1,843 @@
+<div class="desktop"><div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="fas fa-address-card text-white"></i>
+            </span>
+            <h2 class="kt-portlet__head-title">
+                Liste des programmes previsionnel
+            </h2>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+
+                    <a href="javascript:; " (click)="add()" class="btn btn-success btn-elevate btn-icon-sm"
+                        *ngxPermissionsOnly="['accessToAddEditProgrammePrevisionnelModule']">
+                        <i class="la la-plus"></i>
+                        Ajout Programme prévisionnel
+                    </a>
+
+                </div>
+                <!-- <button type="button" (click)="Recu()" class="btn btn-sm btn-clean btn-icon btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}">
+                    <i class="flaticon2-download"></i>
+                </button> -->
+            </div>
+        </div>
+    </div>
+    <br>
+    <div>
+        <!-- <form [formGroup]="filterForm">
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <label>Filtrer par année :
+                                </label>
+                                <mat-select class="form-control" (selectionChange)="filtrerParAnnee($event)"
+                                    formControlName="year">
+                                    <mat-option value="ALL">Choisir une année</mat-option>
+                                    <mat-option *ngFor="let year of anneesDisponibles" [value]="year"> {{ year
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <label>Filtre par coordonnées du service concerné:
+                            </label>
+                            <mat-select multiple class="form-control" name="CoordonneServiceConcerne"
+                                (selectionChange)="addItemDivision($event.value)"
+                                formControlName="coordonneServiceConcerne" placeholder=""
+                                [(ngModel)]="selectedOptionsDivision">
+                                <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
+                                <mat-option *ngFor="let item of ServiceConcerne" value="{{item}}">
+                                    {{item}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <label>Filtre par president:
+                            </label>
+                            <mat-select multiple class="form-control" name="president" formControlName="president"
+                                placeholder="" (selectionChange)="addItemPresident($event.value)"
+                                [(ngModel)]="selectedOptionsPresident">
+                                <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
+                                <mat-option *ngFor="let item of president" value="{{item}}">
+                                    {{item}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <label>Filtre par categorie:
+                            </label>
+                            <mat-select multiple class="form-control" name="typePrestation"
+                                formControlName="typePrestation" placeholder=""
+                                (selectionChange)="addItemCategorie($event.value)"
+                                [(ngModel)]="selectedOptionsCategorie">
+                                <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
+                                <mat-option *ngFor="let item of lisTypePrestationAo" [value]="item">
+                                    {{item.libelle}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <mat-form-field appearance="fill" class="example-full-width">
+                        <mat-label>Filtre par date d'ouverture des plis:</mat-label>
+                        <br>
+                  
+                        <div class="date-filter-inputs">
+                          <mat-form-field appearance="fill" class="example-full-width">
+                            <mat-label>Start Date:</mat-label>
+                            <input matInput type="date" id="startDate" formControlName="startFilterDate" />
+                          </mat-form-field>
+                  
+                          <mat-form-field appearance="fill" class="example-full-width">
+                            <mat-label>End Date:</mat-label>
+                            <input matInput type="date" id="endDate" formControlName="endFilterDate" />
+                          </mat-form-field>
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  
+                <div class="col-md-6"></div>
+            
+                <div class="col-md-3"></div>
+                <div class="col-md-3" style="margin-top: 15px;;">
+                    <button _ngcontent-dkp-c41="" (click)="onSubmit()"
+                        class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                        <i _ngcontent-dlp-c41 class=" la la-search-plus"></i>
+                        {{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+                    </button>
+                </div>
+                <div class="col-md-3" style="margin-top: 15px;;">
+                    <button _ngcontent-dkp-c41=""
+                        class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                        <i _ngcontent-dlp-c41 class="icon la "></i>
+                        {{ "PAGES.PROGRAMME.REINITIALISER" | translate }}
+                    </button>
+                </div>
+                <div class="col-md-3" style="margin-top: 15px;;">
+
+                    <button style="background-color: #7174cc;" (click)="Recu()" type="button" class="btn btn-export"
+                        matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }} ">
+                        <i style="color: #ffffff;" _ngcontent-clk-c12="" class="icon la la-file-excel-o"></i><span
+                            style="color: #ffffff;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate
+                            }}</span>
+                    </button>
+                </div>
+            </div>
+        </form> -->
+        <form [formGroup]="filterForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Filtrer par année :</mat-label>
+                    <mat-select class="form-control" (selectionChange)="filtrerParAnnee($event)" formControlName="year">
+                      <mat-option value="ALL">Choisir une année</mat-option>
+                      <mat-option *ngFor="let year of anneesDisponibles" [value]="year">{{ year }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Filtre par coordonnées du service concerné:</mat-label>
+                    <mat-select multiple class="form-control" name="CoordonneServiceConcerne"
+                                (selectionChange)="addItemDivision($event.value)"
+                                formControlName="coordonneServiceConcerne" placeholder=""
+                                [(ngModel)]="selectedOptionsDivision">
+                      <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                      <mat-option *ngFor="let item of ServiceConcerne" value="{{item}}">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+          
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Filtre par président:</mat-label>
+                    <mat-select multiple class="form-control" name="president" formControlName="president"
+                                placeholder="" (selectionChange)="addItemPresident($event.value)"
+                                [(ngModel)]="selectedOptionsPresident">
+                      <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                      <mat-option *ngFor="let item of president" value="{{item}}">
+                        {{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+          
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Filtre par catégorie:</mat-label>
+                    <mat-select multiple class="form-control" name="typePrestation"
+                                formControlName="typePrestation" placeholder=""
+                                (selectionChange)="addItemCategorie($event.value)"
+                                [(ngModel)]="selectedOptionsCategorie">
+                      <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                      <mat-option *ngFor="let item of lisTypePrestationAo" [value]="item">
+                        {{item.libelle}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+          
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field appearance="fill" class="example-full-width">
+                    <mat-label>Filtre par date d'ouverture des plis:</mat-label>
+                    <div class="date-filter-inputs">
+                      <mat-form-field appearance="fill" class="example-full-width">
+                        <mat-label>Start Date:</mat-label>
+                        <input matInput type="date" id="startDate" formControlName="startDate" />
+                      </mat-form-field>
+          
+                      <mat-form-field appearance="fill" class="example-full-width">
+                        <mat-label>End Date:</mat-label>
+                        <input matInput type="date" id="endDate" formControlName="endDate" />
+                      </mat-form-field>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+          
+              <div class="col-md-3"></div>
+              <div class="col-md-3"></div>
+              <div class="col-md-3" style="margin-top: 15px;">
+                <button (click)="onSubmit()"
+                        class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                  <i class="la la-search-plus"></i>
+                  {{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+                </button>
+              </div>
+              <div class="col-md-3" style="margin-top: 15px;">
+                <button class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                  <i class="icon la "></i>
+                  {{ "PAGES.PROGRAMME.REINITIALISER" | translate }}
+                </button>
+              </div>
+              <div class="col-md-3" style="margin-top: 15px;">
+                <button style="background-color: #7174cc;" (click)="Recu()" type="button" class="btn btn-export"
+                        matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }} ">
+                  <i style="color: #ffffff;" class="icon la la-file-excel-o"></i><span
+                  style="color: #ffffff;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}</span>
+                </button>
+              </div>
+            </div>
+          </form>
+          
+
+    </div>
+    <table id="exportData" mat-table [dataSource]="dataSourceTraveaux" class="mat-elevation-z8" matSort
+        style="width: 100%;">
+
+        <ng-container matColumnDef="objet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="objet">
+                {{
+                "PAGES.MARCHE.AO.OBJET" | translate
+                }}
+            </th>
+            <td mat-cell class="objet" *matCellDef="let row">
+                {{
+                row.objet
+                ? row.objet?.length > 80
+                ? (row.objet | slice: 0:80) +
+                "..."
+                : row.objet
+                : "-"
+                }}
+                <a href="javascript:void(0);" *ngIf="row.objet?.length > 80" matTooltip="{{ row.objet }}"><i
+                        class="fas fa-info-circle"></i></a>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="typePrestation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="typePrestation">
+                Catégorie
+            </th>
+            <td mat-cell class="typePrestation" *matCellDef="let row">
+                {{
+                row.typePrestation.libelle
+                ? (row.typePrestation.libelle )
+                : '-'
+                }}
+            </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="SousTypePrestation">
+                <th class="SousTypePrestation" mat-header-cell *matHeaderCellDef mat-sort-header>
+                    SousTypePrestation
+                </th>
+                <td class="SousTypePrestation" mat-cell *matCellDef="let row">
+                    {{ row.sousTypePrestation ? row.sousTypePrestation : "-" }}
+                </td>
+            </ng-container> -->
+
+
+
+        <!-- <ng-container matColumnDef="LieuExecution">
+                <th class="LieuExecution" mat-header-cell *matHeaderCellDef mat-sort-header>
+                    LieuExecution
+                </th>
+                <td class="LieuExecution" mat-cell *matCellDef="let row">
+                    {{ row.lieuExecution ? row.lieuExecution : "-" }}
+                </td>
+            </ng-container> -->
+        <ng-container matColumnDef="natureAo">
+            <th mat-header-cell *matHeaderCellDef>
+                Nature appel d'offre
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {{ row.natureAo?.libelle ? row.natureAo?.libelle : "-" }}
+            </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="LieuLivraison">
+                <th  mat-header-cell *matHeaderCellDef>
+                    LieuLivraison
+                </th>
+                <td  mat-cell *matCellDef="let row">
+                    {{ row.lieuLivraison ? row.lieuLivraison : "-" }}
+                </td>
+            </ng-container> -->
+
+        <ng-container matColumnDef="periodeLancement">
+            <th mat-header-cell *matHeaderCellDef>
+                date de lancement
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {{ row.periodeLancementFormated ? row.periodeLancementFormated : "-" }}
+
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="CoordonneServiceConcerne">
+            <th mat-header-cell *matHeaderCellDef>
+                Service gestionnaire
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {{ row.coordonneServiceConcerne ? row.coordonneServiceConcerne : "-" }}
+
+            </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="MarcheDestinePME">
+                <th  mat-header-cell *matHeaderCellDef>
+                    Marche Destine PME
+                </th>
+                <td  mat-cell *matCellDef="let row">
+                    {{ row.marcheDestinePME ? row.marcheDestinePME : "-" }}
+
+                </td>
+            </ng-container> -->
+
+        <!-- <ng-container matColumnDef="Quantite">
+                <th  mat-header-cell *matHeaderCellDef>
+                    Quantite                </th>
+                <td  mat-cell *matCellDef="let row">
+                    {{ row.quantite ? row.quantite : "-" }}
+
+                </td>
+            </ng-container> -->
+
+
+
+        <ng-container matColumnDef="actions">
+            <th class="actions" mat-header-cell *matHeaderCellDef>{{
+                "PAGES.PROGRAMME.ACTIONS" | translate }}</th>
+            <td class="actions" mat-cell *matCellDef="let row">
+                <a href="javascript:;" (click)="show(row.id)" class="
+                        btn
+                        btn-sm
+                        btn-clean
+                        btn-icon
+                        btn-success
+                        btn-icon-md
+                        btn_table_show
+                    " matTooltip="{{
+                        'PAGES.GENERAL.DETAILS'
+                            | translate
+                    }}"><i class="la la-search-plus"></i></a>
+                <span>
+                    <a href="javascript:;" *ngxPermissionsOnly="['accessToAddEditProgrammePrevisionnelModule']"
+                        (click)="edit(row.id)" class="
+                            btn
+                            btn-sm
+                            btn-clean
+                            btn-icon
+                            btn-warning
+                            btn-icon-md
+                            btn_table_edit
+                        " matTooltip="{{
+                            'PAGES.MARCHE.AO.UPDATE_EB'
+                                | translate
+                        }}"><i class="la la-edit"></i></a>
+                </span>
+                <span>
+
+                </span>
+
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="
+                let row;
+                columns: displayedColumns
+            "></tr>
+    </table>
+    <kt-custom-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+        (pageSizeEvent)="getPageInNewSize($event)">
+    </kt-custom-pagination>
+</div>
+<div style="overflow: hidden; height: 0">  
+    <div id="htmlData">
+        <div class="toprint">
+            <div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
+                <div class="col-md-3">
+                    <img style="width:500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-3">
+                    <img style="width:200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+                </div>
+            </div><br><br>
+            <div class="row">
+                <table class="table" style="width: 70%;margin: 20px auto;text-align: center;font-size: 30px;">
+                    <tr>
+                        <th style="border: none;"></th>
+                        <th>
+                        </th>
+                        <th style="border: none;">Programme Prévisionnel</th>
+                        <th></th>
+                    </tr>
+
+                </table>
+            </div><br>
+            <div class="row">
+                <table class="table table-bordered dotted-line "
+                    style="width: 60%;margin: 20px auto;text-align: center;font-size:20px;">
+                    <tr style="background-color: red;">
+                        <!-- <th >Nature des travaux</th> -->
+
+                        <th>Objet du marché</th>
+                        <th>Lieu d'execution</th>
+
+                        <th>Mode de passation</th>
+                        <th>Période prévue pour lancement</th>
+                        <th>Coordonnée du service concerné</th>
+                        <th>Marchés destinés aux PME</th>
+                        <th></th>
+
+                    </tr>
+                    <tr>
+                        <th colspan="8" style="background-color: red;">Travaux</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrintTraveaux">
+                        <!-- <td >{{item?.sousTypePrestation}}</td> -->
+
+                        <td>{{item?.objet}}</td>
+
+                        <td>{{item?.lieuExecution}}</td>
+
+                        <td>{{item?.natureAo?.libelle}}</td>
+                        <td>{{item?.periodeLancementFormated}}</td>
+                        <td style="background-color: green;">{{item?.coordonneServiceConcerne}}</td>
+                        <td>{{item?.marcheDestinePME}}</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background-color: red;">
+                        <!-- <th >Type de fourniture</th> -->
+
+                        <th>Objet des services</th>
+                        <th>Quantité</th>
+
+                        <th>Lieu de livraison</th>
+
+                        <th>Mode de passation</th>
+                        <th>Période prévue pour lancement</th>
+                        <th>Coordonnée du service concerné</th>
+                        <th>Marchés destinés aux PME</th>
+
+
+                    </tr>
+                    <tr>
+                        <th colspan="8" style="background-color: red;">Fournitures</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrintFournitures">
+                        <!-- <td >{{item?.sousTypePrestation}}</td> -->
+
+                        <td>{{item?.objet}}</td>
+                        <td>{{item?.quantite}}</td>
+                        <td>{{item?.lieuLivraison}}</td>
+
+
+                        <td>{{item?.natureAo?.libelle}}</td>
+                        <td>{{item?.periodeLancementFormated}}</td>
+                        <td style="background-color: green;">{{item?.coordonneServiceConcerne}}</td>
+                        <td>{{item?.marcheDestinePME}}</td>
+                    </tr>
+                    <tr style="background-color: red;">
+                        <!-- <th >Nature des travaux</th> -->
+
+                        <th>Objet du marché</th>
+                        <th>Lieu d'execution</th>
+
+                        <th>Mode de passation</th>
+                        <th>Période prévue pour lancement</th>
+                        <th>Coordonnée du service concerné</th>
+                        <th>Marchés destinés aux PME</th>
+                        <th></th>
+
+                    </tr>
+                    <tr>
+                        <th colspan="8" style="background-color: red;">Services</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrintServices">
+                        <!-- <td >{{item?.sousTypePrestation}}</td> -->
+
+                        <td>{{item?.objet}}</td>
+
+                        <td>{{item?.lieuExecution}}</td>
+
+                        <td>{{item?.natureAo?.libelle}}</td>
+                        <td>{{item?.periodeLancementFormated}}</td>
+                        <td style="background-color: green;">{{item?.coordonneServiceConcerne}}</td>
+                        <td>{{item?.marcheDestinePME}}</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div><br>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- <div style="overflow: hidden; height: 0" *ngIf="isServices==true">
+    <div id="htmlData">
+        <div class="toprint">
+            <div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
+                <div class="col-md-3">
+                    <img style="width:500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-3">
+                    <img style="width:200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+                </div>
+            </div><br><br>
+            <div class="row">
+                <table class="table"
+                    style="width: 70%;margin: 20px auto;text-align: center;font-size: 30px;">
+                    <tr>
+                        <th style="border: none;"></th>
+                        <th class=" dotted-line ">
+                        </th>
+                        <th style="border: none;">Programme Prévisionnel 2023</th>
+                        <th class=" dotted-line "></th>
+                    </tr>
+                
+                </table>
+            </div><br>
+            <div class="row">
+                <table class="table table-bordered dotted-line " style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
+                    <tr style="background-color: red;">
+                        <th >Nature des travaux</th>
+                        
+                        <th>Objet du marché</th>
+                        <th>Lieu d'execution</th>
+
+                        <th>Mode de passation</th>
+                        <th>Période prévue pour lancement</th>
+                        <th>Coordonnée du service concerné</th>
+                        <th>Marchés destinés aux PME</th>
+
+
+                    </tr>
+                    <tr >
+                        <th colspan="7" style="background-color: red;">Services</th>
+                    </tr>
+                    <tr *ngFor="let item of toPrintServices">
+                        <td >{{item?.sousTypePrestation}}</td>
+
+                        <td>{{item?.objet}}</td>
+                    
+                        <td>{{item?.lieuExecution}}</td>
+                    
+                        <td>{{item?.natureAo?.libelle}}</td>
+                        <td>{{item?.periodeLancement}}</td>
+                        <td style="background-color: green;">{{item?.coordonneServiceConcerne}}</td>
+                        <td>{{item?.marcheDestinePME}}</td>
+                    </tr>
+                </table>
+            </div><br>
+            
+        </div>
+    </div>
+</div>   -->
+</div>
+<div class="mobile" >
+    
+
+    
+    <div class="m-5">
+        <h1 class=" text-center p-2 font-weight-bolder" >
+            Planning prévisionnel de la commande publique de la commune de <span class="text-center" style="color:#7B362E">Marrakech</span>
+          </h1>
+    </div>
+ 
+  <div class="card card-centent pt-3 pb-3 ">
+    <div class="card-body d-flex justify-content-between">
+        <h5 class="card-title" >Liste des programmes previsionnell</h5>
+        
+        <a href="javascript:;" (click)="add()" class="btn ajout-button btn-elevate btn-icon-sm d-flex align-items-center"
+   *ngxPermissionsOnly="['accessToAddEditProgrammePrevisionnelModule']">
+    <i class="la la-plus"></i>
+    <span class="ml-2"> Programme prévisionnel </span>
+</a>
+
+    
+<button style="margin-left: 2px;" (click)="Recu()" type="button" class="btn btn-export d-flex align-items-center"
+matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}">
+<i class="fas fa-file-excel" style="color: white;"></i>
+<span style="color: white; margin-left: 5px;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}</span>
+</button>
+
+    </div>
+    
+    
+    <hr>
+  <div class="container-fluid mt-3 ">
+    
+    <div class="container-fluid">
+        
+        <form id="search-form" [formGroup]="filterForm">
+            
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <mat-label class="label-form">Année :</mat-label>
+                    <mat-form-field appearance="none" class="example-full-width custom-mat-form-field feild" color="none">
+                        
+                        <mat-select class="form-control" (selectionChange)="filtrerParAnnee($event)" formControlName="year">
+                            <mat-option value="ALL">Choisir une année</mat-option>
+                            <mat-option *ngFor="let year of anneesDisponibles" [value]="year">{{ year }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+              </div>
+              <!--  col-md-6   -->
+        
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                     <mat-label class="label-form">Service concerné:</mat-label>
+                    <mat-form-field appearance="none" class="example-full-width feild">
+                       
+                        <mat-select multiple class="form-control" name="CoordonneServiceConcerne"
+                                    (selectionChange)="addItemDivision($event.value)"
+                                    formControlName="coordonneServiceConcerne" placeholder=""
+                                    [(ngModel)]="selectedOptionsDivision">
+                          <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                          <mat-option *ngFor="let item of ServiceConcerne" value="{{item}}">
+                            {{item}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+              </div>
+              <!--  col-md-6   -->
+            </div>
+        
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group"> 
+                     <mat-label class="label-form">Président:</mat-label>
+                    <mat-form-field appearance="none" class="example-full-width feild">
+                      
+                        <mat-select multiple class="form-control" name="president" formControlName="president"
+                                    placeholder="" (selectionChange)="addItemPresident($event.value)"
+                                    [(ngModel)]="selectedOptionsPresident">
+                          <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                          <mat-option *ngFor="let item of president" value="{{item}}">
+                            {{item}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+        
+              </div>
+              <!--  col-md-6   -->
+        
+              <div class="col-md-6 col-sm-6">
+        
+                <div class="form-group">
+                    <mat-label class="label-form">Catégorie:</mat-label>
+                    <mat-form-field appearance="none" class="example-full-width feild">
+                        
+                        <mat-select multiple class="form-control" name="typePrestation"
+                                    formControlName="typePrestation" placeholder=""
+                                    (selectionChange)="addItemCategorie($event.value)"
+                                    [(ngModel)]="selectedOptionsCategorie">
+                          <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                          <mat-option *ngFor="let item of lisTypePrestationAo" [value]="item">
+                            {{item.libelle}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+              </div>
+              <!--  col-md-6   -->
+            </div>
+            <!--  row   -->
+        
+            <fieldset class="border p-2">
+                <legend class="w-auto label-form"> Date d'ouverture des plis</legend>
+        
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            
+                                  <mat-form-field appearance="fill" class="example-full-width feild">
+                                    <mat-label>Start Date:</mat-label>
+                                    <input matInput type="date" id="startDate" formControlName="startDate" />
+                                  </mat-form-field>
+                      
+                                 
+                                
+                        </div>
+                    </div>
+        
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            
+                                 
+                                  <mat-form-field appearance="fill" class="example-full-width feild">
+                                    <mat-label>End Date:</mat-label>
+                                    <input matInput type="date" id="endDate" formControlName="endDate" />
+                                  </mat-form-field>
+                                
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        
+            <!--  row   -->
+            <button  (click)="onSubmit()"
+            class="btn submit-button btn-block   kt-font-bold kt-font-transform-u p-3">
+      <i class="la la-search-plus"></i>
+      {{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+    </button>
+          </form>
+          
+        <!--  col-md-6   -->
+      </div>
+      <div class="mt-4 mb-4">
+        <!-- <button (click)="onSubmit()"
+        class="btn submit-button btn-block p-4">
+                  <i class="la la-search-plus"></i>
+                  {{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+                </button> -->
+
+        <!-- <button type="submit" class="btn submit-button btn-block p-4">Rachercher</button> -->
+             </div>                   
+    <div class="row ">
+    <div class="col-12">
+        <div class="card " >
+            
+                <div class="table-responsive ">
+                     <table id="exportData" mat-table [dataSource]="dataSourceTraveaux" class="mat-elevation-z8" matSort style="width: 100%">
+                        <ng-container matColumnDef="objet">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="objet">
+                                {{ "PAGES.MARCHE.AO.OBJET" | translate }}
+                            </th>
+                            <td mat-cell class="objet" *matCellDef="let row">
+                                {{ row.objet ? (row.objet?.length > 80 ? (row.objet | slice : 0 : 80) + "..." : row.objet) : "-" }}
+                                <a href="javascript:void(0);" *ngIf="row.objet?.length > 80" matTooltip="{{ row.objet }}"><i class="fas fa-info-circle"></i></a>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="typePrestation">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="typePrestation">Catégorie</th>
+                            <td mat-cell class="typePrestation" *matCellDef="let row">
+                                {{ row.typePrestation.libelle ? row.typePrestation.libelle : "-" }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="natureAo">
+                            <th mat-header-cell *matHeaderCellDef style="text-align: center;">Nature appel d'offre</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{ row.natureAo?.libelle ? row.natureAo?.libelle : "-" }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="periodeLancement">
+                            <th mat-header-cell *matHeaderCellDef style="text-align: center;">date de lancement</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{ row.periodeLancementFormated ? row.periodeLancementFormated : "-" }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CoordonneServiceConcerne">
+                            <th mat-header-cell *matHeaderCellDef style="text-align: center;">Service gestionnaire</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{ row.coordonneServiceConcerne ? row.coordonneServiceConcerne : "-" }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th class="actions"  mat-header-cell *matHeaderCellDef>{{ "PAGES.PROGRAMME.ACTIONS" | translate }}</th>
+                            <td class="actions" mat-cell *matCellDef="let row">
+                                <a href="javascript:;" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>
+                                <span>
+                                    <a href="javascript:;" *ngxPermissionsOnly="['accessToAddEditProgrammePrevisionnelModule']" (click)="edit(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.MARCHE.AO.UPDATE_EB' | translate }}"><i class="la la-edit"></i></a>
+                                </span>
+                                <span> </span>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table> 
+                </div>
+                
+        </div>
+        <kt-custom-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+        (pageSizeEvent)="getPageInNewSize($event)">
+    </kt-custom-pagination>
+    </div>
+</div>
+
+   </div> 
+   </div>
+
+</div>

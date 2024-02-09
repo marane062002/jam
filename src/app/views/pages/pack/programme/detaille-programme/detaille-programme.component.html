@@ -1,0 +1,272 @@
+<div class="kt-portlet__body">
+	<!-- Start :: Expansion panel -->
+	<mat-accordion class="example-headers-align panel-space" multi>
+		<mat-expansion-panel [expanded]="true">
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>info</mat-icon>&nbsp;{{ "PAGES.PROGRAMME.DETAIL_PROGRAMME" | translate }}
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<table class="table pj" width="100%">
+				<tbody>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.PROJET" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.nameProjet }}</span>
+							<span *ngIf="language == 'ar'">{{ programme.nameProjetAr }}</span>
+						</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</th>
+						<td class="donnee_show">{{ programme.date | date: "dd/MM/yyyy" }}</td>
+						<th>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</th>
+						<td class="donnee_show">{{ programme.dateFin| date: "dd/MM/yyyy" }}</td>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.ORIENTATIONS_STRATEGIQUES" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.orientationStrategique }}</span>
+							<span *ngIf="language == 'ar'">{{ programme.orientationStrategiqueAr }}</span>
+						</td>
+						<th>{{ "PAGES.PROGRAMME.CODE_ORIENTATION" | translate }} :</th>
+						<td class="donnee_show">{{ programme.codeOrientation }}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.AXE" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.axe}}</span>
+							<span *ngIf="language == 'ar'">{{ programme.axeAr}}</span>
+						</td>
+						<th>{{ "PAGES.PROGRAMME.CODE_AXE" | translate }} :</th>
+						<td class="donnee_show">{{ programme.codeAxe }}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.OBJECTIFS_STRATEGIQUES" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.objectifStrategique }}</span>
+							<span *ngIf="language == 'ar'">{{ programme.objectifStrategiqueAr }}</span>
+						</td>
+						<th>{{ "PAGES.PROGRAMME.OBJECTIFS_OPERATIONNELS" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.objectifOperationnel }}</span>
+							<span *ngIf="language == 'ar'">{{ programme.objectifOperationnelAr }}</span>
+						</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.NUMERO_PROJET" | translate }} :</th>
+						<td class="donnee_show">{{ programme.numeroprojet }}</td>
+						<th>{{ "PAGES.PROGRAMME.CODE_PROJET" | translate }} :</th>
+						<td class="donnee_show">{{ programme.codeProjet }}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.NATURE_PROJET" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.nature }}</span>
+							<span *ngIf="language == 'ar'">{{ programme.natureAr }}</span>
+						</td>
+						<th>{{ "PAGES.PROGRAMME.NIVEAU" | translate }} :</th>
+						<td class="donnee_show">
+							{{ programme.niveau }}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE" | translate }} :</th>
+						<td class="donnee_show">{{ programme.maitreOuvrage }}</td>
+						<th>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE_DELEGUE" | translate }} :</th>
+						<td class="donnee_show">{{ programme.maitreOuvrageDelegue }}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.LIEU" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.localisation }}</span>
+							<span *ngIf="language == 'ar'">{{ programme.localisationAr }}</span>
+						</td>
+						<th>{{ "PAGES.PROGRAMME.CHEF_PROJET" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngIf="language == 'fr'">{{ programme.chefProjet }}</span>
+							<span *ngIf="language == 'ar'">{{ programme.chefProjetAr }}</span>
+						</td>
+					</tr>
+					<tr>
+						<th>cout</th>
+						<td class="donnee_show">{{ programme.cout }}</td>
+						<th>{{ "PAGES.PROGRAMME.ETAT_AVANCEMENT_PROJET" | translate }} :</th>
+						<td class="donnee_show">
+							<button [style.background-color]="getTypeColor(programme.etatAvancement)" color="#ff"
+								mat-raised-button matBadge="8" matBadgePosition="before" matBadgeColor="accent">
+								{{ "PAGES.PROGRAMME." + programme.etatAvancement | translate }}
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</mat-expansion-panel>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>playlist_add_check</mat-icon>&nbsp; {{ "PAGES.PROGRAMME.SOUS_PROJET" | translate }}
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<table style="width: 100%;" id="exportData" mat-table [dataSource]="dataSource1" class="mat-elevation-z8"
+				matSort>
+				<ng-container matColumnDef="object">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.OBJECT" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row" class="num"> {{row.object}} </td>
+				</ng-container>
+				<ng-container matColumnDef="numero">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.NUMERO" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.numero? row.numero : "-" }}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="constibutionC">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.COUT" | translate }}</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.constibutionC? row.constibutionC : "-" }}
+					</td>
+				</ng-container>
+				<!-- <ng-container matColumnDef="constibutionP">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>contribution Partenaires</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.constibutionP? row.constibutionP : "-" }}
+					</td>
+				</ng-container> -->
+
+
+
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+				<!-- footer data -->
+			</table>
+		</mat-expansion-panel>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>repeat</mat-icon>&nbsp;{{ "PAGES.PROGRAMME.PHASES" | translate }} </mat-panel-title>
+			</mat-expansion-panel-header>
+			<table style="width: 100%;" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+				matSort>
+				<ng-container matColumnDef="phase">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.PHASE" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row" class="num"> {{row.phase?.name}} </td>
+				</ng-container>
+				<ng-container matColumnDef="bgcomune">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.CONTRIBUTION_COMUNE" |
+						translate }}</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.contributionCommune ? row.contributionCommune : row.contributionCommuneP2?
+						row.contributionCommuneP2 : '-'}}
+					</td>
+				</ng-container>
+				<ng-container matColumnDef="bgpartenaires">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.CONTRIBUTION_PARTENAIRES"
+						| translate }}</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.contributionPartenaires? row.contributionPartenaires : row.contributionPartenairesP2?
+						row.contributionPartenairesP2 : '-' }}
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="totalCA1">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.COUT_TOTAL_PREMIERE_ANNEE"
+						| translate }}</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.totalContributionPremiereAnnee? row.totalContributionPremiereAnnee :
+						row.totalContributionPremiereAnneeP2? row.totalContributionPremiereAnneeP2 : '-' }}
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="totalCA2">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.COUT_TOTAL_DEUXIEME_ANNEE"
+						| translate }}</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.totalContributionDeuxiemeAnnee? row.totalContributionDeuxiemeAnnee :
+						row.totalContributionDeuxiemeAnneeP2 ? row.totalContributionDeuxiemeAnneeP2 : '-' }}
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="totalCA3">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+						"PAGES.PROGRAMME.COUT_TOTAL_TROISIEME_ANNEE" | translate }}</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.totalContributionTroisiemeAnnee? row.totalContributionTroisiemeAnnee :
+						row.totalContributionTroisiemeAnneeP2? row.totalContributionTroisiemeAnneeP2 : '-' }}
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="totalC">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.PROGRAMME.COUT_TOTAL" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row" class="Annee">
+						{{ row.totalContribution? row.totalContribution : row.totalContributionPh2?
+						row.totalContributionPh2 : '-' }}
+					</td>
+				</ng-container>
+
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				<!-- footer data -->
+			</table>
+		</mat-expansion-panel>
+
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>repeat</mat-icon>&nbsp;{{ "PAGES.PROGRAMME.PIECE_JOINTE" | translate }} </mat-panel-title>
+			</mat-expansion-panel-header>
+			<div class="kt-portlet__body">
+				<div class="row ex3">
+					<div class="col-md-12 show_port">
+						<table *ngIf="files" class="table pj" width="100%">
+							<thead>
+								<tr>
+									<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+									<td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+									</td>
+									<td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_DISPATCHING' | translate }}</td>
+									<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+									<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of files | async">
+									<td class="file_icon"><img style="height: 25px !important;"
+											src="./assets/media/files/{{FileExtension(item.name)}}"
+											matTooltip="{{FileName(item.name)}}"></td>
+									<td> {{FileName(item.name) | slice:0:20}}</td>
+									<td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+									<td>{{item.fSize/1000}} ko</td>
+									<td>
+										<button type="button"
+											(click)="onClickPjName(FileExtension(item.name),item.idAlfresco,item.id)"
+											class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+											matTooltip="{{FileName(item.name)}}"><i
+												class="flaticon-download-1"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</mat-expansion-panel>
+
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>repeat</mat-icon>&nbsp;{{ "PAGES.PROGRAMME.FICHE_PROJET" | translate }} </mat-panel-title>
+
+			</mat-expansion-panel-header>
+			<button (click)="imprimerFicheProjet()" type="button" class="btn btn-export"
+				matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }} {{ 'PAGES.PROGRAMME.FICHE_PROJET' | translate }} ">
+				<i _ngcontent-clk-c12="" class="icon la la-file-pdf-o"></i>{{ 'PAGES.GENERAL.DOWNLOAD' |
+				translate
+				}}
+			</button>
+		</mat-expansion-panel>
+
+	</mat-accordion>
+</div>

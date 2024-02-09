@@ -1,0 +1,91 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.ACTIVITE.TITRE_INDEX' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button (click)="exportTable()" type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'MENU.ACTIVITE_COMMUNALE' | translate }}">
+                        <i class="flaticon2-download text-success"></i>
+                    </button>
+                    <a href="javascript:; " *ngxPermissionsOnly="['canCreateActivite']" (click)="addActiviteCommune()" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.ACTIVITE.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="example-header">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+        </mat-form-field>
+    </div>
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- dateActivite Column -->
+        <ng-container matColumnDef="dateActivite">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ACTIVITE.DATE_ACTIV' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.dateActivite | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <!-- populationImpactee  Column -->
+        <ng-container matColumnDef="populationImpactee">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ACTIVITE.POPULATION' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.populationImpactee}} </td>
+        </ng-container>
+        <!-- objet  Column -->
+        <ng-container matColumnDef="objet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ACTIVITE.OBJET' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.objet}} </td>
+        </ng-container>
+        <!-- numAutorisation  Column -->
+        <ng-container matColumnDef="numAutorisation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ACTIVITE.NUM_AUTORISATION' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.numAutorisation}} </td>
+        </ng-container>
+        <!-- typeActivites  Column -->
+        <ng-container matColumnDef="typeActivites">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ACTIVITE.TYPE_ACTIVITE' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.typeActivites.libelle}} </td>
+        </ng-container>
+        <!-- enPartenariat  Column -->
+        <ng-container matColumnDef="enPartenariat">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.ACTIVITE.PARTENARIAT_AVEC' | translate }}</th>
+            <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.enPartenariat != null; else elseBlock1">
+					<span *ngIf="row.enPartenariat=='institution'; else elseBlock">
+						{{ 'PAGES.ACTIVITE.INSTITUTION' | translate }}
+					</span>
+                <ng-template #elseBlock>
+                    {{ 'PAGES.ACTIVITE.ASSOCIATION' | translate }}
+                </ng-template>
+                </span>
+                <ng-template #elseBlock1>
+                    -
+                </ng-template>
+            </td>
+        </ng-container>
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" routerLink="/activites/show-activites-commune/{{row.id}}" *ngxPermissionsOnly="['canShowActivite']" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="icon la la-search-plus"></i></button>
+                <button type="button" (click)="editActivities(row)" *ngxPermissionsOnly="['canUpdateActivite']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button type="button" (click)="deleteActivities(row.id)" *ngxPermissionsOnly="['canDeleteActivite']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

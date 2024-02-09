@@ -1,0 +1,232 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head kt-bg-portlet-5">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fas fa-layer-group"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						وثائقي</h3>
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<form>
+							<label class="input-group-btn">
+								<span class="btn btn-primary">
+									إضافة وثائق <input type="file" (change)="save($event,idUser)" style="display: none;"
+										multiple>
+									&nbsp; &nbsp;
+									<i class="fas fa-file-upload"></i>
+								</span>
+							</label>
+							<!----     <input type="text" class="form-control" readonly>-->
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<br>
+			<br>
+			<div *ngIf="isLoadingForDownload" style="display: flex; justify-content: center; align-items: center; padding: 0 0 59px; color: #2e8cf1;">
+				<mat-progress-spinner color="warning" backdropEnabled="false" mode="indeterminate"
+					aria-label="جاري التحميل">
+				</mat-progress-spinner>
+				<div style="position:relative; top: -0px; left: 75px;">جاري <br> التحميل</div>
+
+			</div>
+
+			<div class="kt-portlet__body kt-portlet__body--fit">
+				<div style="
+				/* font-weight: bold; */
+				font-size: unset;
+				/* margin-left: 86%; */
+				text-align: initial;
+				background-color: #1b5a9c;
+				color: #fff;
+				padding: 5px 25px;
+				"> <i class="fas fa-user-lock"></i>&nbsp; &nbsp; وثائقي الخاصة </div>
+				<div class="example-header">
+					<!----   <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                      </mat-form-field>-->
+				</div>
+
+				<div class="example-container mat-elevation-z8">
+
+					<mat-table [dataSource]="dataSource" matSort>
+
+						<!-- ID Column -->
+						<!-- <ng-container matColumnDef="id">
+							<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم
+								الوثيقة </mat-header-cell>
+							<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+						</ng-container> -->
+
+						<!-- Progress Column -->
+						<ng-container matColumnDef="nom">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>  الوثيقة </mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+						</ng-container>
+
+
+						<ng-container matColumnDef="actions">
+							<mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<a href="javascript:;" (click)="downloadpj(row.idAlfresco)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+									matTooltip="تحميل"><i class="fas fa-file-download"></i></a>
+								<a href="javascript:;" (click)="partagerDocument(row.idAlfresco,row.name)"
+									class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+									matTooltip="مشاركة"><i class="fas fa-share-alt"></i></a>
+								<a href="javascript:;" (click)="deletepj(row.id)"
+									class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+									matTooltip="حذف"><i class="la la-trash"></i></a>
+							</mat-cell>
+						</ng-container>
+
+
+
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;">
+						</mat-row>
+					</mat-table>
+
+					<mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+				</div>
+
+			</div>
+
+			<br>
+
+			<div *ngIf="ShowSuccessShare" class="alert alert-success">
+				<strong style="
+                /* justify-content: center; */
+                display: flex;
+                align-items: center;
+                margin-right: 40%;
+            ">لقد تمت مشاركة الوثيقة بنجاح !</strong>
+			</div>
+
+			<div *ngIf="isLoadingForShare" style="display: flex; justify-content: center; align-items: center">
+				<mat-progress-spinner color="warning" mode="indeterminate" aria-label="جاري الإرسال">
+				</mat-progress-spinner>
+				<div style="position:relative; top: -0px; left: 75px;">جاري <br> الإرسال</div>
+
+			</div>
+
+			<div *ngIf="isSend" class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-select class="form-control" name="divisionAo"
+									(selectionChange)="onChangeDivision($event)" placeholder="القسم">
+									<mat-option *ngFor="let item of divisions" value="{{item.id}}">{{item.libelle}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-select class="form-control" name="criticiterec"
+									(selectionChange)="onChangeService($event)" placeholder="المصلحة ">
+									<mat-option *ngFor="let item of services" value="{{item.id}}">{{item.libelle}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-select class="form-control" name="crit"
+									(selectionChange)="onChangePersonnel($event)" placeholder="المستخدم">
+									<mat-option *ngFor="let item of personnels" value="{{item.id}}"> {{item.nom}}
+										{{item.prenom}} </mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<button id="bSend" (click)="share()" class="btn btn-success btn-md btn-tall btn-wide">
+								إرسال <i class="la la-share"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br>
+			<br>
+
+
+			<div class="kt-portlet__body kt-portlet__body--fit">
+				<div style="
+				/* font-weight: bold; */
+				font-size: unset;
+				/* margin-left: 86%; */
+				text-align: initial;
+				background-color: #1b5a9c;
+				color: #fff;
+				padding: 5px 25px;"><i class="fas fa-share-alt"></i> &nbsp; &nbsp; وثائقي المشتركة </div>
+				<div class="example-header">
+					<!----   <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                  </mat-form-field>-->
+				</div>
+
+				<div class="example-container mat-elevation-z8">
+
+					<mat-table [dataSource]="dataSource1" matSort>
+
+						<!-- ID Column -->
+						<!-- <ng-container matColumnDef="id">
+							<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم
+								الوثيقة </mat-header-cell>
+							<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+						</ng-container> -->
+
+						<!-- Progress Column -->
+						<ng-container matColumnDef="nom">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }} </mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+						</ng-container>
+
+						<!-- Progress Column -->
+						<ng-container matColumnDef="nomUserSource">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>  مرسل الوثيقة </mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.nomUserSource}} </mat-cell>
+						</ng-container>
+
+
+
+						<ng-container matColumnDef="actions">
+							<mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								<a href="javascript:;" (click)="downloadpjPartage(row.idAlfresco)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+									matTooltip="تحميل"><i class="fas fa-file-download"></i></a>
+								<a href="javascript:;" (click)="deletepjpartage(row.id)"
+									class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+									matTooltip="حذف"><i class="la la-trash"></i></a>
+							</mat-cell>
+						</ng-container>
+
+
+
+						<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns1;">
+						</mat-row>
+					</mat-table>
+
+					<mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,130 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-3">
+        <div class="kt-portlet__head-label">
+            <h2 class="kt-portlet__head-title">
+                {{ 'PAGES.GESTION_CHEVILLARDS.LISTE_CHEVILLARDS' | translate }}
+            </h2>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button  type="button"
+                        class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                        matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.AFFAIRE.TITRE_INDEX' | translate }}">
+                        <i class="flaticon2-download text-success"></i>
+                    </button>
+                    <a href="javascript:; " (click)="addChevillard()" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="example-header  col-md-4">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event)" placeholder="{{ 'TRANSLATOR.SEARCHE' | translate }}">
+        </mat-form-field>
+    </div>
+
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-2" matSort>
+
+        <!-- Num Column -->
+
+        <!-- Nom Column -->
+        <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="nom">{{ 'PAGES.GESTION_CHEVILLARDS.NOM' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="nom">
+                {{ row.nom }}
+
+            </td>
+        </ng-container>
+
+        <!-- Prénom Column -->
+        <!-- <ng-container matColumnDef="prenom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="prenom">{{ 'PAGES.GESTION_CHEVILLARDS.PRENOM' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="prenom">
+                {{ row.prenom}}
+
+            </td>
+        </ng-container> -->
+
+        <!-- Date de naissance Column -->
+        <!-- <ng-container matColumnDef="dateNaissance">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dateNaissance">{{ 'PAGES.GESTION_CHEVILLARDS.DATE_NAISSANCE' |
+                translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="dateNaissance">
+                {{ row.dateNaissance | date:'yyyy-MM-dd' }}
+
+            </td>
+        </ng-container> -->
+
+        <!-- Téléphone Column -->
+        <ng-container matColumnDef="telephone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="telephone">{{ 'PAGES.GESTION_CHEVILLARDS.TELEPHONE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="telephone">
+                {{ row.telephone}}
+            </td>
+        </ng-container>
+
+        <!-- CIN Column -->
+        <ng-container matColumnDef="cin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="cin">{{ 'PAGES.GESTION_CHEVILLARDS.CIN' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="cin">
+                {{ row.cin}}
+            </td>
+        </ng-container>
+
+        <!-- CIN Column -->
+        <ng-container matColumnDef="adresse">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="adresse">{{ 'PAGES.GESTION_CHEVILLARDS.ADRESSE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="adresse">
+                {{ row.adresse }}
+            </td>
+        </ng-container>
+
+        <!-- pour exporter excel -->
+
+        <!-- pour exporter excel -->
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ 'PAGES.GENERAL.ACTIONS' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="actionsBtn action">
+
+                <button type="button" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+                    matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"> <a href="javascript:; "
+                        (click)="updateChevillard(row.id)">
+                        <i class="icon la la-edit"></i>
+                    </a></button>
+                <button type="button" (click)="delete(row.id)"
+                    class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                    matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- footer data -->
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false"
+        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <!-- <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card> -->
+    <!-- <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="totalItems"
+        [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"
+        (page)="pageChanged($event)"></mat-paginator> -->
+
+    <mat-paginator [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"></mat-paginator>
+    <hr>
+</div>

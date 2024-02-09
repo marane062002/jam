@@ -1,0 +1,176 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					<span *ngIf="isUpdate">{{ "PAGES.PROGRAMME.MODIFICATION_PROJET" | translate }}</span>
+					<span *ngIf="!isUpdate">{{ "PAGES.PROGRAMME.AJOUT_PROJET" | translate }}</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+	<form action="" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.AXE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="axe" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.NUMERO" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="numero"
+							matInput /> </mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="projet"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="mod" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<input matInput class="form-control form-control-solid form-control-lg" formControlName="dateDebut"
+						[matDatepicker]="picker1" [min]="minDate" placeholder="{{
+										'PAGES.PROGRAMME.DATE_DEBUT' | translate
+									}} :" />
+					<mat-datepicker-toggle matSuffix [for]="picker1">
+					</mat-datepicker-toggle>
+					<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+				</mat-form-field>
+			</div>
+			<div class="col-md-3 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<input matInput class="form-control form-control-solid form-control-lg" formControlName="dateFin" [matDatepicker]="picker2"
+						placeholder="{{
+										'PAGES.PROGRAMME.DATE_FIN' | translate
+									}} : " />
+					<mat-datepicker-toggle matSuffix [for]="picker2">
+						
+					</mat-datepicker-toggle>
+					<mat-datepicker touchUi="true" #picker2></mat-datepicker>
+				</mat-form-field>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DELAI" | translate }} :</mat-label>
+						<input readonly type="text" class="form-control-solid form-control-lg" formControlName="delai"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.EMPLACEMENT" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="emplacement"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<a href="javascript:; " (click)="addEmplacement()" class="btn btn-sm btn-info btn-elevate btn-icon-sm">
+					<i style="color:white" class="la la-plus"></i>
+				</a>
+			</div>
+			<div class="table" *ngIf="tabEmplacement.length>0" style="width:30%">
+				<table class="table table-bordered">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col" style="text-align: center">{{ "PAGES.PROGRAMME.EMPLACEMENT" | translate }}
+							</th>
+							<th scope="col" style="text-align:center">{{ "PAGES.PROGRAMME.ACTIONS" | translate }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of tabEmplacement; let i=index">
+							<td scope="row" style="text-align:center">{{ item }}</td>
+							<td scope="row" style="text-align:center">
+								<button type="button" (click)="deleteEmplacement(i)"
+									class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="icon la la-trash"></i></button>
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.CONSISTANCE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="consistance"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<a href="javascript:; " (click)="addConsistance()" class="btn btn-sm btn-info btn-elevate btn-icon-sm">
+					<i style="color:white" class="la la-plus"></i>
+				</a>
+			</div>
+			<div class="table" *ngIf="tabConsistance.length>0" style="width:30%">
+				<table class="table table-bordered">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col" style="text-align: center">{{ "PAGES.PROGRAMME.CONSISTANCE" | translate }}
+							</th>
+							<th scope="col" style="text-align:center">{{ "PAGES.PROGRAMME.ACTIONS" | translate }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of tabConsistance; let i=index">
+							<td scope="row" style="text-align:center">{{ item }}</td>
+							<td scope="row" style="text-align:center"> <button type="button"
+									(click)="deleteConsistance(i)"
+									class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="icon la la-trash"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="kt-portlet__heads">
+			<div class="kt-portlet__head-label text-right">
+				<button _ngcontent-dkp-c41="" (click)="RetourEmbalages()"
+					class="btn btn-info btn-md btn-tall btn-wide bg-primary kt-font-transform-u" type="reset">
+					<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+					RETOUR</button>
+
+				<button _ngcontent-dkp-c41=""
+					class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+					{{ "PAGES.PROGRAMME.SAVE" | translate }}
+				</button>
+			</div>
+		</div>
+		<div class="espace_bloc"></div>
+
+	</form>
+</div>

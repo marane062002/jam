@@ -1,0 +1,52 @@
+<div class="kt-portlet__body">
+    <div class="kt-section">
+        <div class="example-header  col-md-4">
+            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+            </mat-form-field>
+        </div>
+
+        <div class="example-container mat-elevation-z8">
+
+            <mat-table [dataSource]="dataSource" matSort>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                </ng-container>
+                <!-- libelle Column -->
+                <!-- date Column -->
+                <ng-container matColumnDef="datePaiement">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.DATE_PAIEMENT' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.datePaiement|date:'dd/MM/yyyy'}} </mat-cell>
+                </ng-container>
+
+                <!-- duree Column -->
+                <ng-container matColumnDef="dureeActe">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.DUREE' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.dureeActe}} {{ 'PAGES.GENERAL.YEARS' | translate }}</mat-cell>
+                </ng-container>
+
+                <!-- montant Column -->
+                <ng-container matColumnDef="montantLouer">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.MONTANT_LOYER' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.montantLouer|macurrency}} </mat-cell>
+                </ng-container>
+                <!-- Action Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <button (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="icon la la-search-plus"></i></button>
+                        <button (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="icon la la-edit"></i></button>
+                        <button (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>

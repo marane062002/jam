@@ -1,0 +1,55 @@
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+    <div class="kt-portlet__head-label">
+    <span class="kt-portlet__head-icon">
+    <i class="flaticon-plus kt-font-inverse-brand"></i>
+    </span>
+    &nbsp;
+    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+    {{ 'PAGES.Gestion.parc.reparation.new.title' | translate }}
+    </h3>
+    </div>
+    </div>
+    
+    <form class="" [formGroup]="formReparation" (ngSubmit)="ajouterInfoReparation(formReparation.value)"><!-- </form> (ngSubmit)="createArticle(FormArticle.value)"> -->
+    <div class="form-group row mb-1">
+    <div class="col-md-6 show_port input-group">
+    <mat-form-field class="example-full-width" >
+    <mat-select class="form-control" name="unite" formControlName ="vehicule" placeholder="{{ 'PAGES.Gestion.parc.reparation.matricule' | translate }}">
+    <mat-option *ngFor="let item of listVehucile" [value]="item">
+    {{ item.matricule}}
+    </mat-option>
+    </mat-select>
+    </mat-form-field>
+    </div>
+    <div class="col-md-6">
+    <div class="form-group">
+    <mat-form-field class="example-full-width">
+    <input formControlName="dateReparation" matInput name="dateReparation" class="form-control" type="datetime-local" placeholder="dd/mm/yyyy"
+    placeholder="{{ 'PAGES.Gestion.parc.reparation.dateReparation' | translate }}" >
+    </mat-form-field>
+    </div>
+    </div>
+    </div>
+    <div class="form-group row mb-1">
+    <div class="col-md-12">
+    <div class="form-group">
+    <mat-form-field class="example-full-width">
+    <mat-label>{{ 'PAGES.Gestion.parc.reparation.commentaire' | translate }}</mat-label>
+    <input formControlName="commentaire" matInput type="text" class="form-control" name="commentaire"
+    placeholder="{{ 'PAGES.Gestion.parc.reparation.commentaire' | translate }}" >
+    </mat-form-field>
+    </div>
+    </div>
+    
+    
+    
+    
+    </div>
+    <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+    </form>
+    </div>

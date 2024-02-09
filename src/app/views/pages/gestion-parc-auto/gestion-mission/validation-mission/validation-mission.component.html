@@ -1,0 +1,443 @@
+<div class="main-content container">
+    <div class="breadcrumb">
+        <h1 class="mr-2">Gestion des missions</h1>
+    </div>
+    <!-- card of depot -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card text-left">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="myIconTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold" [class.active]="tabID == 1" (click)="displayTab(1)" data-toggle="tab" role="tab">Mes demandes </a>
+                        </li>
+                        <li class="nav-item"  *ngIf=" fonctionnaire.role?.id!=5">
+                            <a class="nav-link font-weight-bold" [class.active]="tabID == 4" (click)="displayTab(4)" data-toggle="tab" role="tab">Mes demandes en Instatnce</a>
+                        </li>
+                        <li class="nav-item"  *ngIf=" fonctionnaire.role?.id!=5">
+                            <a class="nav-link font-weight-bold" [class.active]="tabID == 2" (click)="displayTab(2)" data-toggle="tab" role="tab">Demandes traitées</a>
+                        </li>
+                       <li class="nav-item" *ngIf="fonctionnaire.role?.id!=1">
+                            <a class="nav-link font-weight-bold" [class.active]="tabID == 3" (click)="displayTab(3)" data-toggle="tab" role="tab">Demandes validées</a>
+                        </li> 
+                    </ul>
+                    <div class="tab-content">
+            
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                        <div class="body">
+                          <div class="form-group row justify-content-center mb-1">
+                              <div class="col-md-3 form-group ">
+                                  <label>Numéro de la demande :</label>
+                                  <input class="form-control" type="text" placeholder="Numéro de la demande">
+                              </div>
+                              <div class="col-md-2 col-lg-2 form-group">
+                                  <label>&nbsp;</label>
+                                  <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 col-lg-12 dos">
+                            <div class="text-right w-50 float-right"  *ngIf=" fonctionnaire.role?.id!=5">
+                                <button (click)="modalAjouterDemandeMission(ajouterDemandeMission)" class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-ajouter-modal-lg"><i class="nav-icon i-Add font-weight-bold"></i>&nbsp; Ajouter une demande</button>
+                            </div>
+                            <div class="p-3 mt-3 border-grey background-table br-10">
+                              <div>
+                                <div class="table-responsive">
+                                  <span *ngIf=" demandes.length ==  0" class="text-danger">Aucune mission existe</span>
+                                  <table class="table text-center mb-0" id="user_table" *ngIf=" demandes.length > 0 ">
+                                    <thead>
+                                      <tr class="no-border">
+                                        <th scope="col">N° de la demande</th>
+                                        <th scope="col">Date départ</th>
+                                        <th scope="col">Date retour</th>
+                                        <th scope="col">Moyen de transport</th>
+                               
+                                        <th scope="col">Statut</th>
+                                        <th scope="col">Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let demande of demandes | slice: (page - 1) * pageSize  : page * pageSize">
+                                        <th scope="row">{{ demande.numdemande ?   demande.numdemande : '-' }}</th>
+                                        <td>
+                                          {{ demande.dateDepart ?  (demande.dateDepart | date:'dd/MM/yyyy')  : '-' }}
+                                        </td>
+                                        <td>
+                                            {{ demande.dateRetour ?  (demande.dateRetour | date:'dd/MM/yyyy')  : '-' }}
+                                          </td>
+                                        <td>{{ demande.moyenTransport ?   demande.moyenTransport : '-' }}</td>
+                                        <td  [ngStyle]="demande.statusDemande?.code=='8' || demande.statusDemande?.code=='9'  ?{'color': 'red'} : {'color': 'green'}">{{ demande.statusDemande?.libelle ?   demande.statusDemande?.libelle : '-' }}</td>
+                                         <td>
+                                         <span class="text-success mr-2"  (click)="openModalDetaillLivraiAttent(detailLivres,demande)"
+                                            ><i class="nav-icon i-Eye-Scan font-weight-bold"></i>
+                                          </span> 
+                                          <span class="text-warning mr-2"  *ngIf="tabID==4"  (click)="modifierDemande(modifierMission,demande)" 
+                                            ><i class="nav-icon i-Data-Settings font-weight-bold"></i>
+                                          </span> 
+                                          <span class="text-warning mr-2" *ngIf="demande.statusDemande?.code =='6' && demande.isaffectionCarburent && fonctionnaire.id ==demande.fonctionaire_id " (click)="telechargeDoucument(demande.id)" 
+                                          ><i class="nav-icon i-Data-Download font-weight-bold"></i>
+                                        </span>                                            
+                                          
+                                          <span class="text-warning mr-2"  *ngIf="tabID==1 &&  demande.statusDemande?.code=='9' && fonctionnaire.id ==demande.fonctionaire_id"  (click)="modifierDemande(modifierMission,demande)" 
+                                            ><i class="nav-icon i-Data-Settings font-weight-bold"></i>
+                                          </span> 
+                                          <span class="text-primary mr-2"  *ngIf="tabID==4 "  (click)="TransferDemande(demande.id)"
+                                          ><i class="nav-icon i-Data-Sharing   font-weight-bold"></i>
+                                        </span>
+                                        </td> 
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  
+                                        <div class="col-md-12">
+                                            <nav aria-label="Page navigation example"  >
+                                                
+                                                <ul class="pagination justify-content-end mb-0 mt-2">
+                                                        <select style="    width: 40px; margin-right: 10px; border-radius: 5px;" (change)="chnageSizeEvent($event)">
+                                                            <option *ngFor="let size of [5,10,15,20, 25,30]"  [value]="size"  >{{size}}</option>
+                                                        </select>
+                                                
+                                                    <li class="page-item"><a class="page-link"  tabindex="-1" (click)="chnagePageEvent(currentPage)" *ngIf="currentPage!=0">Précédent</a></li>
+                                                    <li class="page-item"><a class="page-link"  (click)="chnagePageEvent(currentPage-1)" *ngIf="currentPage!=0" >{{currentPage}}</a></li>
+                                                    <li class="page-item active"><a class="page-link" (click)="chnagePageEvent(currentPage)" >{{currentPage+1}} <span class="sr-only">(current)</span></a></li>
+                                                    <li class="page-item"><a class="page-link" (click)="chnagePageEvent(currentPage+1)" *ngIf="totalPages>currentPage+1">{{currentPage+2}}</a></li>
+                                                    <li class="page-item"><a class="page-link" (click)="chnagePageEvent(currentPage+1)" *ngIf="totalPages>currentPage+1">Suivant</a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                                            </div>
+                              </div>
+                            </div>
+                          </div>
+                    <!--   <div [ngSwitch]="tabID">
+                        <div *ngSwitchCase="4" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-icon-tab">
+                            <data-table 
+                            [currentPage]="currentPage"
+                            [totalPages]="totalPages"
+                            [datasource]="demandesEninstance" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Mes Demandes en intances'"
+                            [titleButton]="' Ajouter une demande'"
+                            (detail)="openModalDetaillLivraiAttent(detailLivres,$event)"
+                            (ajouterElement)="modalAjouterDemandeMission(ajouterDemandeMission)"
+                            (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)"
+                            (deleteElement)="supprimerDemandeMission($event)">
+                           </data-table>
+                          </div>
+                        <div *ngSwitchCase="1" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-icon-tab">
+                            <data-table 
+                            [currentPage]="currentPage"
+                            [totalPages]="totalPages"
+                            [datasource]="demandesNonTraitee" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste mes Demandes'"
+                            [titleButton]="' Ajouter une demande'"
+                            (detail)="openModalDetaillLivraiAttent(detailLivres,$event)"
+                            (ajouterElement)="modalAjouterDemandeMission(ajouterDemandeMission)"
+                            (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)"
+                            (deleteElement)="supprimerDemandeMission($event)">
+                           </data-table>
+                          </div>
+                          <div *ngSwitchCase="2" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-icon-tab">
+                           
+                            <data-table 
+                            [currentPage]="currentPage"
+                            [totalPages]="totalPages"
+                            [datasource]="demandesAcceptees" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des Demandes Traitées'"
+                            [titleButton]="' Ajouter une demande'"
+                            (detail)="openModalDetaillLivraiAttent(detailLivres,$event)"
+                            (ajouterElement)="modalAjouterDemandeMission(ajouterDemandeMission)"
+                            (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)"
+                            (deleteElement)="supprimerDemandeMission($event)">
+                    </data-table>
+                          </div>
+
+                          <div *ngSwitchCase="3" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-icon-tab">
+                            <data-table 
+                            [currentPage]="currentPage"
+                            [totalPages]="totalPages"
+                            [datasource]="demandesNonTraitee" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des Demandes Validées'"
+                            [titleButton]="' Ajouter une demande'"
+                            (detail)="openModalDetaillLivraiAttent(detailLivres,$event)"
+                            (ajouterElement)="modalAjouterDemandeMission(ajouterDemandeMission)"
+                            (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)"
+                            (deleteElement)="supprimerDemandeMission($event)">
+                    </data-table>
+                          </div>
+                            
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+      <!--begin: Modal detail -->
+      <ng-template #detailLivres let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <!-- <h5 class="modal-title" id="exampleModalCenterTitle"></h5> -->
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+                
+                <div class="form-group row mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Numéro de la demande :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.numdemande}}</label>
+  
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Type de la mission :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.typemIsion}}</label>
+                        </div>
+  
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Parcours :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.parcours}}</label>
+  
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Véhicule :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.vehicule?.matricule}}</label>
+                        </div>
+  
+                      <!--   <div class="row">
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Montant départ :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">200 MAD</label>
+  
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Compteur :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">2000</label>
+                        </div> -->
+  
+                        <div class="row">
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de départ :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.dateDepart}}</label>
+  
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de retour :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">{{demandeMission.dateRetour}}</label>
+                        </div>
+  
+                        <!-- <div class="row">
+                          <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de Livraison :</label>
+                          <label class="col-sm-3 col-form-label f-s-13">2021-10-13 10:00</label>
+                        </div> -->
+                    </div>
+                    <div class="row" *ngIf="demandeMission.statusDemande?.code ==9">
+                      <label class="col-sm-6col-form-label text-dark font-weight-bold f-s-13"> {{demandeMission.textModifie}}</label>
+                    </div>
+
+                    <div class="row" *ngIf="demandeMission.statusDemande?.code ==8">
+                      <label class="col-sm-6 col-form-label text-dark font-weight-bold f-s-13">{{demandeMission.textRejtee}}</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            
+            <button class="btn btn-outline-warning ml-2 font-weight-bold"  *ngIf="demandeMission.statusDemande?.code !=6 && demandeMission.statusDemande?.code !=7 && demandeMission.statusDemande?.code !=8 && demandeMission.statusDemande?.code !=9"   (click) ="AmodifierMission()"  > à Modifier  </button>
+            <button class="btn btn-outline-danger ml-2 font-weight-bold"  *ngIf="demandeMission.statusDemande?.code !=6 && demandeMission.statusDemande?.code !=7 && demandeMission.statusDemande?.code !=8 && demandeMission.statusDemande?.code !=9  "  (click) ="rejeteMission()" > Rejeter </button>
+              <button class="btn btn-outline-success ml-2 font-weight-bold"  *ngIf="demandeMission.statusDemande?.code !=6 && demandeMission.statusDemande?.code !=7 && demandeMission.statusDemande?.code !=8 && demandeMission.statusDemande?.code !=9 "   (click) ="validerMission()" > Valider </button>
+              <button class="btn btn-outline-secondary ml-2 font-weight-bold"   (click)="close()" >   Annuler  </button>
+         <!--    <button class="btn btn-outline-danger m-1" type="button" data-dismiss="modal" (click)="rejeteMission()"><i class="nav-icon i-Close font-weight-bold"></i> Rejeté</button>
+            <button class="btn btn-outline-success ml-2" type="button" data-dismiss="modal" (click)="validerMission()"><i class="nav-icon i-Yes font-weight-bold"></i> Valider</button> -->
+        </div>
+        
+      </ng-template>
+    <!--end: Modal detail -->
+  
+      <!--begin: Modal modifier -->
+      <ng-template #modifierMission let-c="close" let-d="dismiss">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Modification demande</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+          </div>
+          <form class="" [formGroup]="formDemandeMision" (ngSubmit)="updateMisssion(formDemandeMision.value)">
+            <div class="modal-body">
+              <div class="form-group row mb-1">
+                  <div class="col-md-4 form-group ">
+                    <label>N° Mision :</label>
+                    <input class="form-control" type="text"  formControlName="numdemande"  readonly>
+                </div>
+                  <div class="col-md-4 form-group ">
+                      <label>Moyen de transport :</label>
+                      <select class="form-control" formControlName="moyenTransport">
+                        <option value="" disabled selected>sélectionner Moyen de transport</option>
+                        <option value="voiture">voiture</option>
+                        <option value="camion">camion</option>
+                      </select>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <label>Responsable mission :</label>
+                    <!-- <select class="form-control" formControlName="resbonsable_id" >
+                      <option value="" disabled selected>sélectionner  le Responsable</option>
+                      <option *ngFor="let f of listFonctionnaire"  [value]="f.id">{{f.nom}}</option>  
+                    </select> --> 
+                    <ng-multiselect-dropdown  [placeholder]="'Responsable de mission '" [(ngModel)]="selectedItemsRes"   [ngModelOptions]="{standalone: true}"  [settings]="dropdownSettings"  [data]="listFonctionnaire"
+                    (onSelect)="onItemSelectResponsable($event)">
+                </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>Accompagnateurs :</label>
+                        <ng-multiselect-dropdown  [placeholder]="'Accompagnateurs'"        formControlName="accompagnateurs" [settings]="dropdownSettingsAcom"  [data]="listFonctionnaireAcc"
+                        (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                    </div>
+                  <div class="col-md-4 form-group ">
+                      <label>Date de départ :</label>
+                      <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateDepart">
+                  </div>
+                  <div class="col-md-4 form-group "  *ngIf="formDemandeMision.value.dateDepart">
+                      <label>Date de retour :</label>
+                      <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateRetour" [min]="formDemandeMision.value.dateDepart">
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <label>Date Arrive Lettre :</label>
+                    <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateArriveLettre">
+                  </div>
+                  
+                  <div class="col-md-4 form-group">
+                      <label>Entite Bénéficiaire :</label>
+                      <select class="form-control" formControlName="entitrBEneficaire">
+                        <option value="" disabled selected>sélectionner Entite Bénéficiaire</option>
+                        <option  *ngFor="let u of SousentitelistDTO" value="u.id">{{u.libelle}}</option>
+                      </select>
+                  </div>
+                  <div class="col-md-4 form-group">
+                      <label>Type Mission :</label>
+                      <select class="form-control" formControlName="typemIsion">
+                        <option value="" disabled selected>sélectionner Type Mission</option>
+                        <option value="Reunion">Reunion</option>
+                        <option value="Evaluation" >Evaluation</option>
+                        <option value="Visite"> Visite</option>
+                      </select>
+                  </div>
+                  <div class="col-md-4 form-group">
+                      <label>Motif :</label>
+                      <input class="form-control" type="text" placeholder="Motif" formControlName="motif">
+                  </div>
+                  <div class="col-md-4 form-group">
+                      <label>Parcours :</label>
+                      <input class="form-control" type="text" placeholder="Parcours" formControlName="parcours">
+                  </div>
+              </div>
+           
+            </div>
+            <div class="modal-footer">
+                <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button> -->
+                <button class="btn btn-primary ml-2" type="submit" ><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+            </div>
+            </form>
+          
+      </ng-template>
+      <!--end: Modal modifier -->
+
+      <ng-template #ajouterDemandeMission let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter une demande de mission</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+        <form class="" [formGroup]="formDemandeMision" (ngSubmit)="ajouterMission(formDemandeMision.value)">
+        <div class="modal-body">
+          <div class="form-group row mb-1">
+              <div class="col-md-4 form-group ">
+                <label>N° Mision :</label>
+                <input class="form-control" type="text"  formControlName="numdemande"  readonly>
+            </div>
+              <div class="col-md-4 form-group ">
+                  <label>Moyen de transport :</label>
+                  <select class="form-control" formControlName="moyenTransport">
+                    <option value="" disabled selected>sélectionner Moyen de transport</option>
+                    <option value="voiture">voiture</option>
+                    <option value="camion">camion</option>
+                  </select>
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Responsable mission :</label>
+                <!-- <select class="form-control" formControlName="resbonsable_id" >
+                  <option value="" disabled selected>sélectionner  le Responsable</option>
+                  <option *ngFor="let f of listFonctionnaire"  [value]="f.id">{{f.nom}}</option>  
+                </select> -->
+                <ng-multiselect-dropdown  [placeholder]="'Responsable mission'"    [settings]="dropdownSettings"  [data]="listFonctionnaire"
+                (onSelect)="onItemSelectResponsable($event)">
+            </ng-multiselect-dropdown>
+                
+                </div>
+                <div class="col-md-4 form-group">
+                    <label>Accompagnateurs :</label>
+                    <ng-multiselect-dropdown  [placeholder]="'Accompagnateurs'"    formControlName="accompagnateurs" [settings]="dropdownSettingsAcom"  [data]="listFonctionnaireAcc"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                </div>
+              <div class="col-md-4 form-group ">
+                  <label>Date de départ :</label>
+                  <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateDepart">
+              </div>
+              <div class="col-md-4 form-group "  *ngIf="formDemandeMision.value.dateDepart">
+                  <label>Date de retour :</label>
+                  <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateRetour" [min]="formDemandeMision.value.dateDepart">
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Date Arrive Lettre :</label>
+                <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="dateArriveLettre">
+              </div>
+              
+              <div class="col-md-4 form-group">
+                  <label>Entite Bénéficiaire :</label>
+                  <select class="form-control" formControlName="entitrBEneficaire">
+                    <option value="" disabled selected>sélectionner Entite Bénéficiaire</option>
+                    <option  *ngFor="let u of SousentitelistDTO" value="u.id">{{u.libelle}}</option>
+                  </select>
+              </div>
+              <div class="col-md-4 form-group">
+                  <label>Type Mission :</label>
+                  <select class="form-control" formControlName="typemIsion">
+                    <option value="" disabled selected>sélectionner Type Mission</option>
+                    <option value="Reunion">Reunion</option>
+                    <option value="Evaluation" >Evaluation</option>
+                    <option value="Visite"> Visite</option>
+                  </select>
+              </div>
+              <div class="col-md-4 form-group">
+                  <label>Motif :</label>
+                  <input class="form-control" type="text" placeholder="Motif" formControlName="motif">
+              </div>
+              <div class="col-md-4 form-group">
+                  <label>Parcours :</label>
+                  <input class="form-control" type="text" placeholder="Parcours" formControlName="parcours">
+              </div>
+     <!--          <div class="col-md-4 form-group">
+                <label>Destination :</label>
+                <ng-multiselect-dropdown
+                    [placeholder]="'Engagements'"
+                    [settings]="dropdownSettings"
+                    [data]="dropdownList"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+              </div> -->
+    
+            <!--   <div class="map-container" #map></div> -->
+          </div>
+       
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary ml-2" type="submit"  ><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+        </div>
+        </form>
+       </ng-template>
+  </div>

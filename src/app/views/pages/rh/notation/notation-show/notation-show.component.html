@@ -1,0 +1,174 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                                {{ 'PAGES.NOTATION.INFOS' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                                <a *ngxPermissionsOnly="['canCreateNotation']" routerLink="/notation/notation-new"class="btn btn-outline-success btn-bold btn-sm">
+                                    <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                                </a>
+                                <a href="#" *ngxPermissionsOnly="['canUpdateNotation']" (click)="update(notation?.id)" class="btn btn-warning btn-sm btn-bold">
+                                     <i class="fas fa-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                                </a>
+                                <a href="#" *ngxPermissionsOnly="['canDeleteNotation']"  (click)="delete(notation?.id)" class="btn btn-danger btn-sm btn-bold">
+                                    <i class="fas fa-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section  -->
+<div *ngIf="notation" class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                       
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.NOTATION.INFOS' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.PERSONNEL.NOM' | translate }} :</th>
+                                        <td>{{personnel?.nom}}</td>
+                                        <th>{{ 'PAGES.PERSONNEL.PRENOM' | translate }} :</th>
+                                        <td>{{ personnel?.prenom}}</td>
+                                    </tr>
+                                   
+                                    <tr>
+                                        <th>{{ 'PAGES.PERSONNEL.MATRICULE' | translate }} :</th>
+                                        <td>{{personnel?.matricule}}</td>
+
+                                        <th> {{ 'PAGES.NOTATION.ANNEENOTATION' | translate }} :</th>
+                                        <td>{{notation.annee?.libelle}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.NOTATION.NOTATION' | translate }} :</th>
+                                        <td>{{notation?.notation}}</td>
+                                        <th>
+                                                {{ 'PAGES.NOTATION.APPRECIATION' | translate }} :</th>
+                                        <td>{{notation?.appreciation}}</td>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+<!-- end:: Content -->
+<!-- begin:: Content section  -->
+<!-- <div *ngIf="personnel" class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-4">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="far fa-folder-open kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.PERSONNEL.INFO_GENERAL' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="kt-section tab_content">
+                            <div class="kt-section__content">
+                                <ngb-tabset class="vue_globale">
+                                    <ngb-tab matTooltip="{{ 'PAGES.PERSONNEL.INFOADM' | translate }}">
+                                        <ng-template ngbTabContent>
+                                            <div class="row">
+                                                <div class="col-md-12 show_port">
+                                                    <table class="table pj" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>{{ 'PAGES.PERSONNEL.MATRICULE' | translate }} :</th>
+                                                                <td>{{personnel.matricule}}</td>
+
+                                                                <th>{{ 'PAGES.ORGANISATION.DIVISION' | translate }} :</th>
+                                                                <td>{{personnel.idDivision}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{ 'PAGES.ORGANISATION.SERVICE' | translate }} :</th>
+                                                                <td>{{personnel.idService}}</td>
+
+                                                                <th> {{ 'PAGES.PERSONNEL.DATE_EMBAUCHE' | translate }} :</th>
+                                                                <td>{{personnel.dateEmbauche|date:'yyyy-MM-dd'}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{ 'PAGES.PERSONNEL.GRADE' | translate }} :</th>
+                                                                <td>{{personnel.grade}}</td>
+                                                                <th>
+                                                                        {{ 'PAGES.PERSONNEL.ECHELLE' | translate }} :</th>
+                                                                <td>{{personnel.echelle}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>{{ 'PAGES.PERSONNEL.ECHLON' | translate }} :</th>
+                                                                <td>{{personnel.echlon}}</td>
+                                                                <th>
+                                                                        {{ 'PAGES.PERSONNEL.TYPE' | translate }} :</th>
+                                                                <td>{{personnel.typePersonnel?personnel.typePersonnel.libelle:'-'}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th> {{ 'PAGES.PERSONNEL.NIVEAU_AC' | translate }} :</th>
+                                                                <td>{{personnel.niveauAcademique?personnel.niveauAcademique.libelle:'-'}}</td>
+                                                                
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="espace_bloc"></div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngb-tab>
+                                  
+                                </ngb-tabset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- end:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                       <!--  <button type="button" class="btn btn-info"><i class="fa fa-print"></i> {{ 'PAGES.GENERAL.PRINT' | translate }}</button> -->
+                        <button *ngxPermissionsOnly="['accessToIndexNotation']" routerLink="/notation/notation-index"  class="btn btn-label-dark" ><i
+                                class="flaticon2-list-2"></i>  {{ 'MENU.LISTENOTATIONS' | translate }}</button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

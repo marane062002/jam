@@ -1,0 +1,48 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head w-b-5">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">{{ "PAGES.GESTION_PESEE.TITLE" | translate }}</h2>
+		</div>
+	</div>
+</div>
+
+<form [formGroup]="TypePeseeForm">
+
+	<div class="row ">
+
+		<div class="form-check col-md-4 mb-4">
+			<input class="form-check-input" formControlName="typePesee" type="radio" name="typePesee"
+				id="flexRadioDefault1" value="manuelle" (change)="change1($event)">
+			<label class="form-check-label" for="flexRadioDefault1">
+				{{ 'PAGES.PESEE.MANUELLE' | translate }}
+			</label>
+		</div>
+		<div class="form-check col-md-4 mb-4">
+			<input class="form-check-input" formControlName="typePesee" type="radio" name="typePesee"
+				id="flexRadioDefault2" (change)="change2($event)" value="automatique">
+			<label class="form-check-label" for="flexRadioDefault2">{{ 'PAGES.PESEE.AUTOMATIQUE' | translate }}</label>
+		</div>
+
+
+	</div>
+</form>
+<div class="kt-portlet__heads">
+	<div *ngIf="language=='fr'" class="kt-portlet__head-label" align="right">
+
+		<button mat-button type="button" (click)="confirmbox()"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<i class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}
+		</button>
+
+	</div>
+	<div *ngIf="language=='ar'" class="kt-portlet__head-label" align="left">
+
+		<button mat-button type="button" (click)="confirmbox()"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<i class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}
+		</button>
+
+	</div>
+</div>

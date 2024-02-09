@@ -1,0 +1,159 @@
+<!-- begin:: Content -->
+<div *ngIf="detailscourrier" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-multimedia-2"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.DATE' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.date ? (detailscourrier.date | date :
+                                'dd/MM/yyyy') : '-'}}
+                            </td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.HEURE' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.heure ? detailscourrier.heure : '-'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.LIEU' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.lieu ? detailscourrier.lieu : '-'}}
+                            </td>
+                            <!-- <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.MEMBRES_COMMISSION' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">
+                                <span *ngFor="let item of detailscourrier.membresCommission">
+                                    <span>{{item ? item : "-"}}</span><br>
+                                </span>
+                            </td> -->
+                            <th>{{ 'PAGES.BUREAU_ORDRE.RESPONSABLE_DISPATCHING' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.responsableDispatching ?
+                                detailscourrier.responsableDispatching : '-'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.DELAI' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.delai ? detailscourrier.delai : '-'}}
+                            </td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ORDRE_JOUR' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.ordreJour ? detailscourrier.ordreJour
+                                : '-'}}
+                            </td>
+                        </tr>
+                      <!--   <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.RESPONSABLE_DISPATCHING' | translate }} :
+                            </th>
+                            <td colspan="4" class="donnee_show">{{detailscourrier.responsableDispatching ?
+                                detailscourrier.responsableDispatching : '-'}}
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div><br><br>
+
+        <div class="kt-portlet__head kt-bg-portlet-2">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="flaticon-multimedia-2"></i>
+                </span> &nbsp;
+                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                    {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.TITRE_INDEX' | translate }}
+                </h3>
+            </div>
+        </div><br>
+
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation" matSort
+                    class="table pj" style="" width="100%">
+                    <ng-container matColumnDef="idDivision">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.ORGANISATION.DIVISION' | translate }} </th>
+                        <td mat-cell *matCellDef="let row">{{row?.division?row.division:'---'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="idPersonne">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.MEMBRE_COMMISSION' | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row?.personnelInterne?row.personnelInterne:'-'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="typeDestinataire">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.DESTINATAIRE' | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row?.typeDestinataire?row.typeDestinataire:'-'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="designation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.DESIGNATION' | translate }} </th>
+                        <td mat-cell *matCellDef="let row"> {{row?.designation?row.designation:'-'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="statutConvocation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.REPONSE' | translate }} </th>
+                        <td mat-cell *matCellDef="let row">
+                            <span
+                                *ngIf="row?.statutConvocation=='EN_ATTENTE_REPONSE' || row?.statutConvocation=='في انتظار الرد'"
+                                class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
+                                style="background-color: rgba(2, 44, 160, 0.767) !important; width: 100px;">{{
+                                "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.EN_ATTENTE_REPONSE" |
+                                translate }}</span>
+                            <span *ngIf="row?.statutConvocation=='PRESENCE' || row?.statutConvocation=='حضور'"
+                                class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
+                                style="background-color: rgb(2, 160, 15) !important;width: 100px;">{{
+                                "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.PRESENCE" | translate
+                                }}</span>
+                            <span *ngIf="row?.statutConvocation=='ABSENCE' || row?.statutConvocation=='غياب'"
+                                class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
+                                style="background-color: rgb(235, 4, 4) !important;width: 100px;">{{
+                                "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ABSENCE" | translate
+                                }}</span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div *ngIf="data_size == 0 && loading == false"
+                    style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                </div>
+                <mat-card *ngIf="loading" style="display: flex; justify-content: center; align-items: center">
+                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                    </mat-progress-spinner>
+                </mat-card>
+                <mat-paginator [length]="data_size" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,20]"
+                    showFirstLastButtons></mat-paginator>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+            class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+            (click)="back()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>

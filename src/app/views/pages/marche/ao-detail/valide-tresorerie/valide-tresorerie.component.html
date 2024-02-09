@@ -1,0 +1,446 @@
+
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label"  >
+		<form class="row" [formGroup]="visa" (submit)="onSubmit(visa.value)" >
+			<div class="col-md-12">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<input matInput readonly	type="text" 	class="form-control"	 formControlName="note" placeholder="{{	'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_NOTE'	| translate	}} :"
+
+						/>
+						<mat-icon matSuffix
+							><i class="far fa-keyboard"></i
+						></mat-icon>
+					</mat-form-field>
+				</div>
+			</div>
+			<!-- <button 	type="submit" 	_ngcontent-dkp-c41=""	class="	btn btn-success btn-md btn-tall btn-wide	kt-font-bold kt-font-transform-u"	>
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{
+					"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.VALIDATION"
+						| translate
+				}}
+			</button> -->
+		</form>
+
+	
+	</div>
+<!--      <div class="espace_bloc text text-success"   >
+		{{ "PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DEJA_VALIDE" | translate }}
+	</div> -->
+</div>
+
+
+
+
+	<!--
+<form
+	*ngxPermissionsOnly="['validateTresorerie']"
+	class="kt-form"
+	autocomplete="off"
+	#form="ngForm"
+	(submit)="onSubmit(form)"
+>
+
+	<div class="card text-cente">
+		<div class="card-header" style="text-align: justify">
+			<span class="kt-portlet__head-icon">
+				<i class="far fa-thumbs-up"></i>
+			</span>
+			{{ "PAGES.MARCHE.PROCESSUS_VALIDATION.VAL_TRESORIER" | translate }}
+		</div>
+		<div
+			class="card-body"
+			*ngIf="ao?.statutAo?.statutAo == 3 && !ao.isValideTresorerie"
+		>
+			<div class="row">
+				<div class="col-md-12">
+					<form [formGroup]="eventEditForm" novalidate>
+						<div class="form-group">
+							<mat-radio-group
+								style="position: absolute; right: 50%"
+								[(ngModel)]="selectedStatus"
+								formControlName="completed"
+							>
+								<mat-radio-button [value]="0">
+									{{
+										"PAGES.MARCHE.PROCESSUS_VALIDATION.VALIDER"
+											| translate
+									}}</mat-radio-button
+								>
+								<mat-radio-button [value]="1">
+									{{
+										"PAGES.MARCHE.PROCESSUS_VALIDATION.REFUSER"
+											| translate
+									}}</mat-radio-button
+								>
+							</mat-radio-group>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<form>
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<input
+									matInput
+									type="date"
+									class="form-control"
+									placeholder="{{
+										'PAGES.MARCHE.ECHANTILLONS.DATE'
+											| translate
+									}}:"
+									[(ngModel)]="
+										formDataDg.dateOuvertureDesPlis
+									"
+									required
+								/>
+								<mat-icon matSuffix
+									><i class="far fa-keyboard"></i
+								></mat-icon>
+							</mat-form-field>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<textarea
+								rows="4"
+								maxlength="255"
+								#input
+								matInput
+								type="text"
+								class="form-control"
+								name="cinpp"
+								placeholder="{{
+									'PAGES.MARCHE.PROCESSUS_VALIDATION.OBSERVATION'
+										| translate
+								}}:"
+								[(ngModel)]="formDataDg.reserve"
+								required
+							></textarea>
+							<mat-icon matSuffix
+								><i class="fas fa-keyboard"></i
+							></mat-icon>
+							<mat-hint align="end"
+								>{{ input.value?.length || 0 }}/255</mat-hint
+							>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="card-body"
+			*ngxPermissionsOnly="['accessToIndexValidationTresorerie']"
+		>
+			<div class="kt-portlet__body kt-portlet__body--fit">
+				<div
+					*ngIf="sizeDS1 > 0"
+					class="example-container mat-elevation-z8"
+				>
+					<mat-table [dataSource]="dataSource" matSort>
+
+						<ng-container matColumnDef="dateReponse">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{
+									"PAGES.MARCHE.PROCESSUS_VALIDATION.DATE_REPONSE"
+										| translate
+								}}
+							</mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								{{ row.date | date: "dd/MM/yyyy" }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="reserve">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{
+									"PAGES.MARCHE.PROCESSUS_VALIDATION.OBSERVATION"
+										| translate
+								}}
+							</mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								{{ row.reserve }}
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="valide">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{
+									"PAGES.MARCHE.PROCESSUS_VALIDATION.IS_VALIDE"
+										| translate
+								}}
+							</mat-header-cell>
+							<mat-cell *matCellDef="let row">
+								{{ row.valide == true ? "Oui" : "Non" }}
+							</mat-cell>
+						</ng-container>
+
+						<mat-header-row
+							*matHeaderRowDef="displayedColumns"
+						></mat-header-row>
+						<mat-row
+							*matRowDef="let row; columns: displayedColumns"
+						>
+						</mat-row>
+					</mat-table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="espace_bloc"></div>
+
+	<div
+		class="card text-cente"
+		*ngIf="ao?.statutAo?.statutAo == 3 && !ao.isValideTresorerie"
+	>
+		<div class="card-header" style="text-align: justify">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			{{ "PAGES.INTERVENTION_RAPIDE.PJ" | translate }}
+		</div>
+		<div class="card-body">
+
+			<div class="row">
+				<div class="col-md-3 show_port input-group">
+					<mat-form-field class="example-full-width">
+						<mat-select
+							class="form-control"
+							name="unite"
+							[(ngModel)]="formPj.type"
+							placeholder="{{
+								'PAGES.MARCHE.AO.PJ.TYPE' | translate
+							}}"
+						>
+							<mat-option
+								*ngFor="let item of unites"
+								[value]="item"
+								>{{ item.libelle }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="col-md-6 show_port input-group">
+					<form
+						style="
+							display: -webkit-inline-box;
+							margin-inline-start: 98px;
+							padding-top: 27px;
+						"
+					>
+						<label class="input-group-btn">
+							<span class="btn btn-info">
+								{{ "PAGES.ATTCHEMENTS.SELECT_FILE" | translate
+								}}<input
+									type="file"
+									(change)="save($event)"
+									id="customFile"
+									style="display: none"
+									multiple
+								/>
+							</span>
+						</label>
+						<input
+							id="test"
+							type="text"
+							class="form-control"
+							readonly
+						/>
+					</form>
+				</div>
+				<div class="col-md-3" style="padding-top: 27px">
+					<button
+						class="btn btn-primary"
+						type="button"
+						(click)="validerPj()"
+						style="position: absolute; right: 0px"
+					>
+						{{ "PAGES.GENERAL.SAVE" | translate }}
+					</button>
+				</div>
+			</div>
+
+			<div class="espace_bloc"></div>
+
+			<div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+				<mat-table [dataSource]="dataSource1" matSort>
+
+					<ng-container matColumnDef="type">
+						<mat-header-cell
+							class="firt_column chikaya_th"
+							*matHeaderCellDef
+							mat-sort-header
+						>
+							{{
+								"PAGES.MARCHE.AO.PJ.TYPE" | translate
+							}}</mat-header-cell
+						>
+						<mat-cell *matCellDef="let row" class="chikaya_td">
+							{{ row.type.libelle }}
+						</mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="nomDoc">
+						<mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.INTERVENTION_RAPIDE.PJ" | translate }}
+						</mat-header-cell>
+						<mat-cell *matCellDef="let row">
+							{{ row.selecetedFile[0].name }}
+						</mat-cell>
+					</ng-container>
+
+					<mat-header-row
+						*matHeaderRowDef="displayedColumns1"
+					></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns1">
+					</mat-row>
+				</mat-table>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="card text-cente" *ngIf="dsf">
+		<div class="card-header" style="text-align: justify">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			{{ "PAGES.INTERVENTION_RAPIDE.PJ" | translate }}
+		</div>
+		<div class="card-body">
+			<table
+				id="exportData"
+				mat-table
+				[dataSource]="dataSourceF"
+				class="mat-elevation-z8"
+				style="width: -webkit-fill-available"
+				matSort
+			>
+
+				<ng-container matColumnDef="icon">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ "PAGES.ATTCHEMENTS.FORMAT" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row">
+						<img
+							class="file_icon"
+							src="./assets/media/files/{{
+								FileExtension(row.name)
+							}}"
+							matTooltip="{{ FileName(row.name) }}"
+						/>
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="name">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row">
+						{{ FileName(row.name) | slice: 0:20 }}
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="type">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ "PAGES.MARCHE.AO.PJ.TYPE" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row">
+						{{ row.type.libelle }}
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="dateFile">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ "PAGES.ATTCHEMENTS.DATE_CREATION" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row">
+						{{ row.dateFile | date: "dd/MM/yyyy HH:mm" }}
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="fSize">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header>
+						{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}
+					</th>
+					<td mat-cell *matCellDef="let row">
+						{{ row.fSize / 1000 }} ko
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+					<td mat-cell *matCellDef="let row">
+						<button
+							type="button"
+							(click)="onClickPjName(row.idAlfresco, row.id)"
+							class="
+								btn
+								btn-sm
+								btn-clean
+								btn-icon
+								btn-success
+								btn-icon-md
+								btn_table_download
+							"
+							matTooltip="{{ FileName(row.name) }}"
+						>
+							<i class="flaticon-download-1"></i>
+						</button>
+					</td>
+				</ng-container>
+				<tr mat-header-row *matHeaderRowDef="displayedColumnsF"></tr>
+				<tr
+					mat-row
+					*matRowDef="let row; columns: displayedColumnsF"
+				></tr>
+			</table>
+			<mat-paginator
+				[length]="dataSourceF.data.length"
+				[pageSize]="5"
+				[pageIndex]="0"
+				[pageSizeOptions]="[5, 10, 50]"
+				showFirstLastButtons
+			></mat-paginator>
+			<hr />
+
+		</div>
+	</div>
+
+	<div class="espace_bloc"></div>
+	<hr />
+
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			*ngIf="ao?.statutAo?.statutAo == 3 && !ao.isValideTresorerie"
+			type="submit"
+			class="btn btn-success"
+			matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+		>
+			<i class="icon la la-floppy-o"></i
+			>{{ "PAGES.GENERAL.SAVE" | translate }}
+		</button>
+		<button
+			_ngcontent-dkp-c41=""
+			class="btn btn-info btn-md"
+			type="reset"
+			(click)="back()"
+		>
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+
+</form>
+-->

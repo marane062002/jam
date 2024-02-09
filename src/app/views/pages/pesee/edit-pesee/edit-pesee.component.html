@@ -1,0 +1,335 @@
+<div autocomplete="off">
+
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.PESEE.EDIT" | translate }}
+				</h2>
+			</div>
+		</div>
+	</div>
+
+
+	<form [formGroup]="PeseeForm">
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container" formGroupName="vehicule">
+					<div class="input-group date">
+					<label>{{ 'PAGES.VEHICULE.IMM' | translate }} :</label>
+					<mat-form-field class="example-full-width">
+						<input type="text" class="form-control" aria-label="Number" placeholder="{{ 'PAGES.PESEE.N_Imm' | translate }} :" matInput formControlName="id" [matAutocomplete]="auto" required>
+						<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChangeV($event)" [displayWith]="getvehicule.bind(this)">
+							<mat-option *ngFor="let option of filteredBanks | async" [value]="option.id">
+								{{option?.numVehicule}}
+							</mat-option>
+							<mat-option *ngIf="showButton">
+								Aucun résultat trouvé !
+								<button mat-button class="btn btn-success btn-elevate btn-icon-sm" (click)="addvehicule($event)">
+									Ajouter <mat-icon matSuffix><i class="la la-plus"></i></mat-icon>
+								</button>
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>
+							{{ "PAGES.PESEE.NOMCONDUCTEUR" | translate }} :
+						</label>
+						<input matInput class="form-control" type="text" formControlName="nomConducteur" required />
+					</mat-form-field>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>
+							{{ "PAGES.PESEE.DATE" | translate }} :
+						</label>
+						<input matInput class="form-control" [value]="datePesee" type="datetime-local" formControlName="date" required />
+					</mat-form-field>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container" formGroupName="hangar">
+					<mat-form-field class="example-full-width">
+						<label>{{ "PAGES.PESEE.HANGAR" | translate }} :
+						</label>
+						<mat-select class="form-control" formControlName="id">
+							<mat-option *ngFor="let hangar of Hangar" [value]="hangar.id">{{hangar.lib}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{ "PAGES.PESEE.POIDS_T" | translate }} :
+						</label>
+						<input matInput type="number" formControlName="poidGlobal" class="form-control form-control-solid form-control-lg" (focusout)="onSelectionChangePT($event.target.value)" required />
+					</mat-form-field>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container date">
+					<mat-form-field class="example-full-width">
+						<label>{{ 'PAGES.VEHICULE.TARRA' | translate }} :
+						</label>
+						<input matInput type="number" class="form-control form-control-solid form-control-lg" formControlName="tarra" required readonly />
+					</mat-form-field>
+	
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{ "PAGES.PESEE.NUM" | translate }} :
+						</label>
+						<input matInput formControlName="numBon" type="number" class="form-control form-control-solid form-control-lg"  [value]="maxIds" readonly disabled />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{ "PAGES.PESEE.POIDS_E" | translate }} :
+						</label>
+						<input matInput type="number" [value]="poidEmballage" readonly disabled class="form-control" formControlName="poidEmballageTotal" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{ "PAGES.PESEE.PENALITE" | translate }} :
+						</label>
+						<input matInput class="form-control" formControlName="penalite" readonly />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container" formGroupName="mondataire">
+					<mat-form-field class="example-full-width">
+						<label>Mondataire :
+						</label>
+						<mat-select class="form-control" formControlName="id" >
+							<mat-option *ngFor="let mondataire of Mondataires" [value]="mondataire.id"  >{{mondataire.fullname}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+		
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row" *ngIf="num_genre">
+			<div class="col-md-4">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>N° :
+						</label>
+						<input matInput class="form-control" formControlName="numGenre" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+		<button mat-button color="primary" (click)="addEnregistrement()">
+			<mat-icon>add</mat-icon>{{ "PAGES.PESEE.AJOUTENREG" | translate }} :
+		</button>
+		<div formGroupName="PeseeProduitForm">
+			<div class="example-container mat-elevation-z8 mb-5">
+				<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort style="color:rgb(96, 197, 211);">
+					<ng-container matColumnDef="NumProduit">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.NUMPROD" | translate }} :</th>
+						<td mat-cell *matCellDef="let row; let i = index;" class="num">
+
+							<input type="text" class="form-control" aria-label="Number" [readonly]="!row.isEdit" matInput [matAutocomplete]="auto" [value]="row.produit.refProduit" required>
+							<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChange($event,i)">
+								<mat-option *ngFor="let option of data" [value]="option.refProduit">
+									{{option.refProduit }}
+								</mat-option>
+							</mat-autocomplete>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="TypeProduit">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.TYPEPROD" | translate }} :
+						</th>
+						<td mat-cell *matCellDef="let row; let i = index;" class="num">
+							<input type="text" [matAutocomplete]="auto" [value]="row.produit.lib" matInput [readonly]="!row.isEdit" class="form-control" required>
+							<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChangeType($event,i)">
+								<mat-option *ngFor="let option of data" [value]="option.lib">
+									{{option.lib }}
+								</mat-option>
+							</mat-autocomplete>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="Prix">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.PRIX" | translate }} : </th>
+						<td mat-cell *matCellDef="let row" class="num">
+							<input type="number" class="form-control" matInput [matAutocomplete]="auto" [readonly]="!row.isEdit" [value]="row.produit.tarif" required>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="PoidsNet">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.POIDNET" | translate }} : </th>
+						<td mat-cell *matCellDef="let row; let i = index" class="num">
+							<input pattern="[0-9]" class="form-control" [value]="row.poidNetProduit" matInput (focusout)="changeTotalPoidNet($event,i)" [readonly]="!row.isEdit" (keyup.backspace)="deleteTestPoidNet($event.target.value,i)" required>
+						</td>
+					</ng-container>
+					<ng-container matColumnDef="TypeEmballage">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.TYPEEMBAL" | translate }} :
+						</th>
+						<td mat-cell *matCellDef="let row;let i=index" class="num">
+							<input type="text" class="form-control" [value]="row.emballage.description"  [readonly]="!row.isEdit" matInput [matAutocomplete]="auto" required>
+							<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChangeE($event,i)">
+								<mat-option *ngFor="let option of Emb " [value]="option.description">
+									{{option.description}}
+								</mat-option>
+							</mat-autocomplete>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="Quantite">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.QUANT" | translate }} :
+						</th>
+						<td mat-cell *matCellDef="let row;let i =index" class="num">
+							<input type="number" class="form-control" [value]="row.quantiteProduit" required matInput (focusout)="changeTotalQuantite($event,i)" (keyup.backspace)="ondeleteQ($event.target.value,i)" [readonly]="!row.isEdit">
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="Total">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ "PAGES.PESEE.TOTAL" | translate }} :
+						</th>
+						<td mat-cell *matCellDef="let row" class="num">
+							<input type="number" [disabled]="row.Edit" [readonly]="!row.isEdit" class="form-control" required [value]="row.totalProduit" (input)="ondeleteT($event.target.value,i)" matInput>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="actions" class="num">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ 'PAGES.GENERAL.ACTIONS' | translate }} </th>
+						<td mat-cell *matCellDef="let row; let i = index;" class="num">
+							<div class="btn-edit">
+								<button mat-button *ngIf="!row.isEdit" (click)="isEditChange(row)">
+									Edit<i class="icon la la-edit"></i>
+								</button>	
+
+								<button type="button" (click)="deleteRow(i)" *ngIf="!row.isEdit" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+
+								<button mat-button (click)="editRow(row)" *ngIf="row.isEdit">
+									Done<i class="icon la la-check"></i>
+								</button>
+							</div>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns; "></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+
+			</div>
+		</div>
+
+
+
+		<mat-card class="example-card mt-8 mb-5">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label>{{ "PAGES.PESEE.TOTAL_P_N" | translate }} :
+							</label>
+							<input disabled readonly matInput type="text" class="form-control" placeholder="" [value]="totalPoidNet" />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<mat-form-field>
+						<label>{{ "PAGES.PESEE.CHFRTRANSACTION" | translate }} :
+						</label>
+						<input matInput type="text" disabled readonly class="form-control" placeholder="" [value]="chiffreTransaction" />
+					</mat-form-field>
+				</div>
+
+				<div class="col-md-3" >
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label>{{ "PAGES.PESEE.TAXE_P" | translate }} :
+							</label>
+							<input style="background-color: #33cc33;" disabled readonly matInput type="text" class="form-control" placeholder="" [value]="taxe" formControlName="taxe" />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="form-group fv-plugins-icon-container date">
+						<mat-form-field class="example-full-width">
+							<label> {{ "PAGES.PESEE.RESTE" | translate }} :
+							</label>
+							<input matInput type="number" [value]="RestePoid" class="form-control" placeholder="" formControlName="restePoid" disabled readonly />
+
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+		</mat-card>
+
+		<div class="kt-portlet__heads">
+			<div class="kt-portlet__head-label" align="right">
+
+				<button mat-button type="button" (click)="annuler()" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i class="la la-recycle"></i>
+					{{ 'PAGES.GENERAL.RETOUR' | translate }}
+				</button>
+				<button mat-button type="button" (click)="confirmbox()" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}
+				</button>
+
+			</div>
+		</div>
+	</form>
+</div>

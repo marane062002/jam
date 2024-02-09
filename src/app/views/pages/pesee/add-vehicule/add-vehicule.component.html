@@ -1,0 +1,202 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head w-b-5">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">{{ 'PAGES.VEHICULE.AJOUT' | translate }}</h2>
+		</div>
+	</div>
+
+</div>
+<form [formGroup]="vehiculesaveform">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.REF_TRANSPORT' | translate }} :
+					</label>
+					<input matInput type="number" class="form-control form-control-solid form-control-lg" name="ref" formControlName="refTransport"
+						[value]="maxId" readonly  />
+				</mat-form-field>
+
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+
+
+		<div class="col-md-6" style="margin-top: 20px;">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="input-group date">
+					<label class="title1">{{ 'PAGES.VEHICULE.IMM' | translate }}<span>*</span> :</label>
+					<div class="input-group">
+						<input id="numerOrderVehicule" type="text" class="form-control requird"
+							formControlName="numVehiculeNumbers" placeholder="xxxxx" maxlength="5" required>
+
+						<select id="imm" class="custom-select form-control" formControlName="numVehiculeAlphabet"
+							required>
+							<option *ngFor="let Cit of series" [value]="Cit.name">{{ Cit.name }}</option>
+						</select>
+						<input type="text" class="form-control subfield subfield-two-numbers"
+							formControlName="numVehiculeTwoNumbers" maxlength="2" required />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.CARTE_GRISE' | translate }} :
+					</label>
+					<input matInput type="number" name="ref" id="refId" class="form-control"
+						formControlName="numCarteGrise" placeholder="" class="form-control" />
+				</mat-form-field>
+
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.NOM' | translate }}<span>*</span> :
+					</label>
+					<input matInput type="text" class="form-control" placeholder="" formControlName="nomConducteur" />
+				</mat-form-field>
+
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.CIN' | translate }} :</label>
+					<input matInput type="text" class="form-control" placeholder="" formControlName="numCnie" />
+				</mat-form-field>
+				<button mat-raised-button color="primary" type="button" (click)="addNumCnieField()">{{
+					'PAGES.VEHICULE.AJOUTCIN' | translate }}</button>
+			</div>
+		</div>
+
+		<div *ngFor="let numCnieControl of numCniesArray.controls; let i = index" class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.CIN' | translate }} : </label>
+					<input matInput type="text" class="form-control" placeholder="" [formControl]="numCnieControl" />
+				</mat-form-field>
+				<button mat-icon-button color="warn" (click)="removeNumCnieField(i)">
+					<mat-icon>close</mat-icon>
+				</button>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.PERMIS' | translate }} :</label>
+					<input matInput type="text" class="form-control" placeholder="" formControlName="numPermi" />
+				</mat-form-field>
+				<button mat-raised-button color="primary" type="button" (click)="addNumPermisField()">{{
+					'PAGES.VEHICULE.AJOUTPERMIS' | translate }}:</button>
+			</div>
+		</div>
+
+		<div *ngFor="let numPermisControl of numPermisArray.controls; let i = index" class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.PERMIS' | translate }} :</label>
+					<input matInput type="text" class="form-control" placeholder="" [formControl]="numPermisControl" />
+				</mat-form-field>
+				<button mat-icon-button color="warn" (click)="removeNumPermisField(i)">
+					<mat-icon>close</mat-icon>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+
+
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.TARRA' | translate }} :
+					</label>
+					<input matInput type="number" class="form-control" placeholder="" id="tarra" formControlName="tarra"
+						(mouseout)="onSelectionChangeTarra($event.target.value )" />
+				</mat-form-field>
+
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container date">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.GENRE' | translate }} :
+					</label>
+
+					<mat-select class="form-control" id="genre" formControlName="genre" disabled readonly>
+						<mat-option value="Pick-up">Pick-up</mat-option>
+						<mat-option value="Camion">Camion</mat-option>
+						<mat-option value="Canter">Canter</mat-option>
+						<mat-option value="Autre">Autre</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row">
+
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container date">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.TEL' | translate }} :
+					</label>
+					<input matInput type="tel" class="form-control" id="phone" name="phone" formControlName="tel" />
+					<!-- pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" /> -->
+				</mat-form-field>
+
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container date">
+				<mat-form-field class="example-full-width">
+					<label>{{ 'PAGES.VEHICULE.MESSAGE' | translate }} :
+					</label>
+					<input matInput type="text" class="form-control" formControlName="message" />
+				</mat-form-field>
+
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="row mb-3" align="right">
+		<div class="col-md-12">
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label">
+					<button mat-button type="button" (click)="  resetForm()"
+						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						<i class="la la-recycle"></i>
+						{{ 'PAGES.GENERAL.RETOUR' | translate }}
+					</button>
+					<button mat-button (click)="onSubmit()"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						<i class="icon la la-floppy-o"></i>
+						{{ 'PAGES.GENERAL.SAVE' | translate }}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

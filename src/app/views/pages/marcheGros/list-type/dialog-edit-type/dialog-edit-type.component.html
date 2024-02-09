@@ -1,0 +1,79 @@
+<div novalidate autocomplete="off">
+
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Modifier type Produit
+				</h2>
+			</div>
+		</div>
+	</div>
+	<form [formGroup]="typeform">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label> Réf Article Produit </label>
+						<input matInput type="number" formControlName="numArticleProduit"
+							class="form-control form-control-solid form-control-lg" name="address1" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label> Nom Article Produit </label>
+						<input matInput type="text" formControlName="nomArticleProduit"
+							class="form-control form-control-solid form-control-lg" name="address1" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container " formGroupName="categorieProduit">
+					<mat-form-field class="example-full-width" formControlName="id">
+						<label> Catégorie </label>
+
+
+
+
+						<input matInput type="text" [value]="Cat.nomCategori"
+							class="form-control form-control-solid form-control-lg" [matAutocomplete]="auto" required />
+						<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChange($event)"
+							[displayWith]="getvehicule.bind(this)">
+
+
+
+							<mat-option *ngFor="let item of categori" [value]="item.id">
+								{{item.nomCategori}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="kt-portlet__heads">
+			<div class="kt-portlet__head-label" align="bottom">
+				<button mat-button type="button" (click)="resetForm()"
+					class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i class="la la-recycle"></i>
+					Retour
+				</button>
+				<button mat-button type="button" (click)="onSubmit()"
+					class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i class="icon la la-floppy-o"></i>
+					Enregistrer
+				</button>
+
+			</div>
+		</div>
+	</form>
+</div>

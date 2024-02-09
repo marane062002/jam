@@ -1,0 +1,112 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-bus-stop"></i>
+			</span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.PROJET_URBANISME.TITRE_INDEX' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="addProjetUrbanisme()" *ngxPermissionsOnly="['canCreateProjetUrb']" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.PROJET_URBANISME.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="example-header">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+        </mat-form-field>
+    </div>
+    <table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- numProjet Column -->
+        <ng-container matColumnDef="numProjet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.NUM_PROJET' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.numProjet}} </td>
+        </ng-container>
+        <!-- nomProjet Column -->
+        <ng-container matColumnDef="nomProjet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.NOM_PROJET' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.nomProjet}} </td>
+        </ng-container>
+        <!-- objet Column -->
+        <ng-container matColumnDef="objet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.OBJET' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.objet}} </td>
+        </ng-container>
+        <!-- dateDemarrageTravaux  Column -->
+        <ng-container matColumnDef="dateDemarrageTravaux">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.DATE_DEMARRAGE' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.dateDemarrageTravaux | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <!-- dateFinTravaux  Column -->
+        <ng-container matColumnDef="dateFinTravaux">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.DATE_FIN_TRAVAUX' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.dateFinTravaux | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <!-- budgetProjet  Column -->
+        <ng-container matColumnDef="budgetProjet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.BUDGET_PROJET' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.budgetProjet | macurrency}} </td>
+            <!--| macurrency -->
+        </ng-container>
+        <!-- responsableReception  Column -->
+        <!-- <ng-container matColumnDef="responsableReception">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.RESPONSABLE_RECEPTION' | translate }}</th>
+			<td mat-cell *matCellDef="let row"> {{row.responsableReception}} </td>
+		</ng-container> -->
+
+        <!-- typeProjetUrbanisme  Column -->
+        <!-- <ng-container matColumnDef="typeProjetUrbanisme">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.TYPE' | translate }}</th>
+			<td mat-cell *matCellDef="let row"> {{row.typeProjetUrbanisme}} </td>
+		</ng-container> -->
+
+        <!-- statutProjetUrbanisme  Column -->
+        <!-- <ng-container matColumnDef="statutProjetUrbanisme">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.STATUT' | translate }}</th>
+			<td mat-cell *matCellDef="let row"> {{row.statutProjetUrbanisme}} </td>
+		</ng-container> -->
+
+        <!-- promotteur  Column -->
+        <!-- <ng-container matColumnDef="promotteur">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.RESULTAT_INTERVENTION' | translate }}</th>
+			<td mat-cell *matCellDef="let row"> {{row.promotteur}} </td>
+		</ng-container> -->
+
+        <!-- idMarche  Column -->
+        <!-- <ng-container matColumnDef="idMarche">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.PROJET_URBANISME.RESULTAT_INTERVENTION' | translate }}</th>
+			<td mat-cell *matCellDef="let row"> {{row.idMarche}} </td>
+		</ng-container> -->
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" routerLink="/projet-urbanisme/show-projet-urbanisme/{{row.id}}" *ngxPermissionsOnly="['canShowProjetUrb']" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="icon la la-search-plus"></i></button>
+                <button type="button" (click)="editProjetUrbanisme(row)" *ngxPermissionsOnly="['canUpdateProjetUrb']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button type="button" (click)="deleteProjetUrbanisme(row.id)" *ngxPermissionsOnly="['canDeleteProjetUrb']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

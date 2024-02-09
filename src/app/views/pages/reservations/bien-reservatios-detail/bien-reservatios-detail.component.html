@@ -1,0 +1,116 @@
+
+<!-- begin:: Content section 2 -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            معلومات عن ملكية الجماعة 
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>إسم الملكية  :</th>
+                                        <td class="donnee_show kt-font-warning kt-font-bold">
+                                            {{bien.objetDemandeAutorisation}}
+                                        </td>
+
+                                        <th>نوع  الملكية  :</th>
+                                        <td class="donnee_show kt-font-danger kt-font-bold">
+                                            {{bien.typebiendemandeReservation.libelle}}
+                              
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>العنوان  :</th>
+                                        <td class="donnee_show">
+                                            {{bien.adresse}}
+                                        </td> 
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+			<div class="kt-portlet">
+				<div class="kt-portlet__head kt-bg-portlet-5">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-home"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+                            فضاأت ملكية الجماعة
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+						<thead>
+							<tr>
+								<td width= "50%">رقم فضاء الملكية </td>
+                                <td>تسمية فضاء الملكية</td>
+                                <td> القيمة</td>
+							</tr>
+						</thead>
+							<tbody> 
+								<tr *ngFor="let item of espaces">
+									<td> {{item[0]}}</td>
+									<td>{{item[1]}}
+                                                    </td> 
+                                                    <td>  MAD {{item[2]}}  </td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					</div>
+					
+				</div>
+			</div>	
+		</div>
+    </div>
+</div>
+<!-- end:: Content -->
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		
+	</div>
+</div>
+<!-- end:: Content -->
+
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                      
+                    <!----    <button (click)="onSubmit()" type="button" class="btn btn-info"><i class="fa fa-print"></i> الطبع</button>-->
+                        <button *ngxPermissionsOnly="['accessToIndexReservation']" type="button" class="btn btn-label-dark" routerLink="/reservations/bienreservations-list"><i
+                                class="flaticon2-list-2"></i>  
+                                 لائحة
+                                 ملكيات الجماعة </button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

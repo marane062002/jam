@@ -1,0 +1,128 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					<span *ngIf="!isUpdate">{{ "PAGES.PARTIE_PRENANTE.AJOUTER_P_P" | translate }}</span>
+					 <span *ngIf="isUpdate">{{ "PAGES.PARTIE_PRENANTE.MODIFIER_P_P" | translate }}</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+	<form [formGroup]="formPP" (ngSubmit)="onSubmit()">
+	<div class="col-xl-12 col-xxl-6">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						
+						<mat-label>{{ "PAGES.PARTIE_PRENANTE.NOM" | translate }} :</mat-label>
+						<input
+							type="text"
+							class="form-control form-control-solid form-control-lg"
+							name="address1"
+							matInput
+							formControlName="nom"
+						/>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PARTIE_PRENANTE.PRENOM" | translate }} :</mat-label>
+						<input
+							type="text"
+							class="form-control form-control-solid form-control-lg"
+							name="address1"
+							formControlName="prenom"
+							matInput
+						/>
+					</mat-form-field>
+
+					<div class="fv-plugins-message-container"></div>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PARTIE_PRENANTE.EMAIL" | translate }} :</mat-label>
+						<input
+							type="text"
+							class="form-control form-control-solid form-control-lg"
+							formControlName="email"
+							matInput
+						/>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PARTIE_PRENANTE.TEL" | translate }} :</mat-label>
+						<input
+							type="text"
+							class="form-control form-control-solid form-control-lg"
+							formControlName="tel"
+							matInput
+						/>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+            <div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PARTIE_PRENANTE.ORGANISME" | translate }} :</mat-label>
+						<input
+							type="text"
+							class="form-control form-control-solid form-control-lg"
+							formControlName="organisme"
+							matInput
+						/>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="kt-portlet__heads">
+			<div class="kt-portlet__head-label text-right">
+				<button
+					href="javascript:; "
+					(click)="RetourEmbalages()"
+					_ngcontent-dkp-c41=""
+					class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				>
+					<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+					{{ "PAGES.PARTIE_PRENANTE.RETOUR" | translate }}
+				</button>
+				<button
+					_ngcontent-dkp-c41=""
+					class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				>
+					<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+					{{ "PAGES.PARTIE_PRENANTE.SAVE" | translate }}
+				</button>
+			</div>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	</form>
+</div>
+

@@ -1,0 +1,123 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-multimedia-2"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.TITRE_INDEX' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <a href="javascript:; " (click)="addNewCourrierConvocation()"
+                        class="btn btn-success btn-elevate btn-icon-sm"
+                        matTooltip="{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.TITRE_NEW' | translate }}">
+                        <i class="la la-plus"></i> {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="example-header col-md-4">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)"
+                placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+        </mat-form-field>
+    </div>
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.DATE' |
+                translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span *ngIf="row.date!=null">{{row.date | date:'dd/MM/yyyy'}}</span>
+                <span *ngIf="row.date==null">{{'-'}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="heure">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.HEURE' |
+                translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {{row.heure ? row.heure :'-'}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lieu">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.LIEU' |
+                translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row.lieu ? row.lieu :'-'}} </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="membresCommission">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.MEMBRES_COMMISSION' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <span *ngFor="let item of row.membresCommission">
+                    <span>{{item ? item : "-"}}</span><br>
+                </span>
+            </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="delai">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.DELAI' |
+                translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row.delai ? row.delai :'-'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ordreJour">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ORDRE_JOUR' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row.ordreJour ? row.ordreJour :'-'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" (click)="showCourrierConvocation(row)"
+                    class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                    matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                        class="icon la la-search-plus"></i></button>
+                <button type="button" (click)="editCourrierConvocation(row)"
+                    class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+                    matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button type="button" (click)="deleteCourrierSortant(row.id)"
+                    class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                    matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+                <span *ngIf="row.statut=='En cours de distribution' || row.statut=='في انتظار التوجيه'">
+                    <button type="button" (click)="destinataireCourrierConvocation(row)"
+                        class="btn btn-sm btn-clean btn-icon btn-primary btn-icon-md btn_table_send"
+                        matTooltip="{{ 'PAGES.BUREAU_ORDRE.DISPATCH_ACTION_NO' | translate }}"><i
+                            class="icon la la-paper-plane"></i></button>
+                </span>
+                <span *ngIf="row.statut=='Courrier distribué' || row.statut=='تم التوجيه'">
+                    <button type="button" class="btn btn-sm btn-icon btn-icon-md btn_table_dispatching"
+                        matTooltip="{{ 'PAGES.BUREAU_ORDRE.DISPATCH_ACTION_OK' | translate }}"><i
+                            class="fa fa-toggle-on"></i></button>
+                </span>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false"
+        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"
+        [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

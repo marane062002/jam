@@ -1,0 +1,145 @@
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+            <i class="fas fa-flag-checkered kt-font-inverse-brand"></i>
+          </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.TITRE_INDEX' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-wrapper">
+                                <div class="kt-portlet__head-actions">
+                                    <a href="javascript:;" (click)="nouveauTravaux()" class="btn btn-success btn-elevate btn-icon-sm">
+                                        <i class="la la-plus"></i> {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.TITRE_NEW' | translate }}
+                                    </a>
+                                    &nbsp;
+                                    <a href="javaScript:;" (click)="newAMT()" class="btn btn-success btn-elevate btn-icon-sm">
+                                        <i class="la la-plus"></i>{{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.TITRE_NEW_AMT' | translate }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="ShowForm">
+                    <div class="espace_bloc"></div>
+                    <h4 class="title-style2" *ngIf="travaux">
+                        {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.TITRE_NEW' | translate }}
+                    </h4>
+                    <h4 class="title-style2" *ngIf="amt">
+                        {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.TITRE_NEW_AMT' | translate }}
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="prcTarvaux" placeholder="{{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.POURCENTAGE_TRAVAUX' | translate }} :" [(ngModel)]="travauxSupp.purcentageTravaux" />
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="mtTravaux" placeholder="{{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.MONTANT_TRAVAUX' | translate }} :" [(ngModel)]="travauxSupp.mtTravaux" />
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" name="delaiTravaux" placeholder="{{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.DELAI_SUPPLIMENTAIRE' | translate }} :" [(ngModel)]="travauxSupp.delaiSupplimentaire" />
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary  " type="button" (click)="onClickTS($event)">{{
+            'PAGES.GENERAL.SAVE' | translate }}</button>
+                </div>
+                <!-- ****************************************************** -->
+                <div *ngIf="showListeTravauxSupp">
+                    <div class="espace_bloc"></div>
+                    <h4 class="title-style">
+                        {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.TITRE_INDEX' | translate }}
+                    </h4>
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- Purcentage Travaux -->
+                            <ng-container matColumnDef="purcentageTravaux">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.POURCENTAGE_TRAVAUX' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.purcentageTravaux}} %</mat-cell>
+                            </ng-container>
+
+                            <!-- Montant Travaux -->
+                            <ng-container matColumnDef="mtTravaux">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.MONTANT_TRAVAUX' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    {{ (row.mtTravaux !== null) ? (row.mtTravaux | macurrency) : "-" }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <!-- delaiSupplimentaire -->
+                            <ng-container matColumnDef="delaiSupplimentaire">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.DELAI_SUPPLIMENTAIRE' | translate }} </mat-header-cell>
+                                <mat-cell class="objet" *matCellDef="let row"> {{row.delaiSupplimentaire}} </mat-cell>
+                            </ng-container>
+
+                            <!-- type -->
+                            <ng-container matColumnDef="type">
+                                <mat-header-cell *matHeaderCellDef>
+                                    {{ 'PAGES.MARCHE.TRAVAUX_SUPPLIMENTAIRES.TYPE' | translate }} </mat-header-cell>
+                                <mat-cell class="objet" *matCellDef="let row"> {{row.type}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" (click)="editTravauxSupp(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                                    <a href="javascript:;" (click)="deleteTravauxSupp(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                                    <a (click)="generateDecisionAugmentation(row.id)" *ngIf="row.type == 'AMT' " type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="Décision d’augmentation">
+                                        <i class="flaticon2-download text-success"></i>
+                                    </a>
+                                    <a (click)="generateAvenant(row.id)" *ngIf="row.type == 'Travaux' " type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="Avenant">
+                                        <i class="flaticon2-download text-success"></i>
+                                    </a>
+                                    <a (click)="generateCertifAvenant(row.id)" *ngIf="row.type == 'Travaux' " type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="Certificat Avenant">
+                                        <i class="flaticon2-download text-success"></i>
+                                    </a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </mat-table>
+                        <div *ngIf="sizeData == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+                <!-- ****************************************************** -->
+            </div>
+        </div>
+    </div>
+</div>

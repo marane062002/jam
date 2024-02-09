@@ -1,0 +1,65 @@
+.form-group label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin-left: 15px !important;
+}
+
+.isPresident-radio {
+    text-align: right !important;
+}
+
+.notif-success {
+    color: #155724 !important; // green
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+    .mat-simple-snackbar-action {
+        color: #155724 !important;
+    }
+}
+
+input:read-only {
+    background-color: #e9ecef00; //#e9ecef00
+    //border: 1px solid #888;
+}
+
+.numStyle {
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #2b58a5e0;
+    font-size: large;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+}
+
+.num {
+    font-family: sans-serif;
+    padding: 0 10px;
+    margin-bottom: initial;
+}
+
+.searchSelect {
+    text-align: right;
+    border: 1px solid #CCC;
+    display: initial;
+    margin: 3px;
+    width: -webkit-fill-available;
+}
+
+.search-icon {
+    position: fixed;
+    /* display: flex; */
+    top: 4%;
+    padding-right: 10px;
+    color: #d4cece !important;
+}
+
+.form-group label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    margin-left: 15px !important;
+}
+
+.isRefuse-radio {
+    text-align: right !important;
+}

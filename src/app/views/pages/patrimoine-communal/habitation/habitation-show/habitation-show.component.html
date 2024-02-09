@@ -1,0 +1,294 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'PAGES.GENERAL.HABITATION_SHOW' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a routerLink="/habitation/habitation-new" class="btn btn-outline-success btn-bold btn-sm">
+                            <i class="fas fa-user-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                        </a>
+                        <a (click)="update(habitation?.id)" class="btn btn-warning btn-sm btn-bold">
+                            <i class="fas fa-user-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                        </a>
+                        <a (click)="delete(habitation?.id)" class="btn btn-danger btn-sm btn-bold">
+                            <i class="fas fa-user-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section  -->
+<div *ngIf="habitation">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                                <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                            </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.HABITATION_FICHE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NOM_HABITATION' | translate }} :</th>
+                                        <td colspan="3">{{habitation.nomHabitation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NUM_HABITATION' | translate }} :</th>
+                                        <td>{{ habitation.numHabitation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.TYPE_HABITATION' | translate }} :</th>
+                                        <td>{{ habitation.typeHabitation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.STATUT_LEGAL_HABIT' | translate }} :</th>
+                                        <td>{{ habitation.statutLegalHabitation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :</th>
+                                        <td>{{habitation.localisation}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NB_MAGASINS' | translate }} :</th>
+                                        <td>{{habitation.nombreAppartement}}</td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DATE_DEBUT_EXPLOITATION' | translate }} :</th>
+                                        <td>{{habitation.dateDebutExploitation|date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DESCRIPTION' | translate }} :</th>
+                                        <td>{{habitation.description}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :</th>
+                                        <td>{{habitation.observation}}</td>
+
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="habitation">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <mat-tab-group dynamicHeight [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+                    <mat-tab *ngFor="let tab of asyncTabs | async">
+                        <ng-template mat-tab-label>{{tab.label | translate }}</ng-template>
+                        <!-- {{tab.content}} -->
+
+                        <!-- PRESENCE TAB -->
+                        <div *ngIf="tab.content == 1">
+                            <div *ngIf="selected.value==0">
+                                <kt-tab-appartement></kt-tab-appartement>
+                            </div>
+                        </div>
+
+                        <!-- PERMANENCE TAB -->
+                        <!-- <div *ngIf="tab.content == 2">
+                <div *ngIf="selected.value==1">
+                        <kt-tab-mvmtransaction></kt-tab-mvmtransaction>
+                </div>
+            </div> -->
+
+
+
+                    </mat-tab>
+                    <!-- <mat-tab label="Grid View">
+          </mat-tab> -->
+                </mat-tab-group>
+
+                <!--   <div *ngIf="habitation" >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__head kt-bg-portlet-4">
+                            <div class="kt-portlet__head-label">
+                                <span class="kt-portlet__head-icon">
+                                    <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                                </span>
+                                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                        {{ 'PAGES.GENERAL.HABITATIONS_PJS' | translate }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div *ngIf="habitation.appartements" class="kt-portlet__body">
+                                <div class="row">
+                                        <div class="kt-section tab_content">
+                                            <div class="kt-section__content">
+                                                <ngb-tabset class="vue_globale">
+                                                    <ngb-tab matTooltip="{{ 'PAGES.GENERAL.APPARTEMENTS' | translate }}">
+                                                        <ng-template ngbTabContent>
+                            <div class="row">
+                                <div class="col-md-12 show_port">
+                                    <table class="table" width="100%">
+                                        <thead>
+                                            <tr>
+                                                    <th>#</th>
+                                                    <th>{{ 'PAGES.GENERAL.NUM_APPARTEMENT' | translate }}</th>
+                                                    <th>{{ 'PAGES.GENERAL.DATE_DEBUT_EXPLOITATION' | translate }}</th>
+                                                    <th>{{ 'PAGES.GENERAL.SITUATION' | translate }}</th>
+                                                    <th>{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} </th>
+                                                   
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let appt of habitation.appartements">
+                                               <td>{{appt.id}}</td>
+                                               <td>{{appt.numAppartement}}</td>
+                                               <td>{{appt.debutExploitation|date:'dd/MM/yyyy'}}</td>
+                                               <td>{{appt.situation}}</td>
+                                               <td>{{appt.superficie}}</td>
+                                               <td>
+                                                    <button  routerLink="/habitation/appartement-show/{{appt.id}}" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="icon la la-search-plus"></i></button>
+                                                    <button routerLink="/habitation/appartement-edit/{{appt.id}}" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="icon la la-edit"></i></button>
+                               
+                                                     <button class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+                                               </td>
+                                               
+                                            </tr>
+                                           
+                                           
+                                        </tbody>
+                                    </table> -->
+                <!--  <div class="espace_bloc"></div>
+                                    <a routerLink="/habitation/{{habitation.id}}/phase-new" class="btn btn-outline-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                            <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.AJOUTER_MAGASIN' | translate }}
+                                    </a> -->
+                <!--   </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab> -->
+                <!-- *************************Decision********************* -->
+                <!-- <ngb-tab matTooltip="{{ 'PAGES.GENERAL.DECISION' | translate }}">
+                            <ng-template ngbTabContent>
+<div class="row">
+    <div class="col-md-12 show_port">
+            <table class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td width= "50%">{{ 'PAGES.GENERAL.DECISION' | translate }}</td>
+                            <td>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}</td>
+                        </tr>
+                    </thead>
+                        <tbody *ngIf="pjs"> 
+                            <tr *ngFor="let item of pjs">
+                                <td> {{item.name}}</td>
+                                <td>
+                                        <button type="button" class="btn btn_piecejoint_down" (click)="onClickPjName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+        
+    </div>
+</div>
+</ng-template>
+</ngb-tab> -->
+                <!-- *************************Photos********************* -->
+                <!-- <ngb-tab matTooltip="{{ 'PAGES.GENERAL.PHOTOS' | translate }}">
+        <ng-template ngbTabContent>
+<div class="row">
+<div class="col-md-12 show_port">
+<table class="table pj" width="100%">
+<thead>
+    <tr>
+        <td width= "50%">{{ 'PAGES.GENERAL.PHOTOS' | translate }}</td>
+        <td>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}</td>
+    </tr>
+</thead>
+    <tbody *ngIf="photos">
+        <tr *ngFor="let item of photos">
+            <td> {{item.name}}</td>
+            <td>
+                    <button type="button" class="btn btn_piecejoint_down" (click)="onClickPhotoName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+</div>
+</ng-template>
+</ngb-tab> -->
+                <!--  </ngb-tabset>
+            </div>
+        </div>
+    </div>
+                         </div> -->
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end:: Content -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label" align="right">
+
+                    <!-- <button type="button" class="btn btn-info"><i class="fa fa-print"></i> {{ 'PAGES.GENERAL.PRINT' | translate }}</button> -->
+
+                    <button routerLink="/habitation/habitation-index" class="btn btn-label-dark"><i
+                                    class="flaticon2-list-2"></i>  {{ 'MENU.LISTEHABITATIONS' | translate }}</button>
+                </div>
+                <div class="espace_bloc"></div>
+            </div>
+        </div>
+    </div>
+</div>

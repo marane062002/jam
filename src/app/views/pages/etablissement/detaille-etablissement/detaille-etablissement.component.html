@@ -1,0 +1,199 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1 col-md-12">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			&nbsp;
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Détails de l'etablissement N°:
+			</h2>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-12">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations de l'etablissement 
+					  
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-6 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Nom de l'établissement :</th>
+								<td class="donnee_show">{{ etablissementDetails?.nom }}</td>
+							</tr>
+							<tr>
+								<th>Type :</th>
+								<td class="donnee_show">{{ etablissementDetails?.typeControleSanitaire.libelle }}</td>
+							</tr>
+							<tr>
+								<th>Description :</th>
+								<td class="donnee_show">{{ etablissementDetails?.description }}</td>
+							</tr>
+							<tr>
+								<th>Sous-type :</th>
+								<td class="donnee_show">{{ etablissementDetails?.sousType.libelle }}</td>
+							</tr>
+							<tr>?
+								<th>Commune :</th>
+								<td class="donnee_show">{{ etablissementDetails?.commune.libelle }}</td>
+							</tr>
+							<tr>
+								<th>Arrondissement :</th>
+								<td class="donnee_show">{{ etablissementDetails?.arrondissement.libelle }}</td>
+							</tr>
+							<tr>
+								<th>Quartier :</th>
+								<td class="donnee_show">{{ etablissementDetails?.quartier.libelle }}</td>
+							</tr>
+							<tr>
+								<th>Activités :</th>
+								<td class="donnee_show">{{ etablissementDetails?.activite }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-6 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Tél :</th>
+								<td class="donnee_show">{{ etablissementDetails?.tel }}</td>
+							</tr>
+							<tr>
+								<th>Fax :</th>
+								<td class="donnee_show">{{ etablissementDetails?.fax }}</td>
+							</tr>
+							<tr>
+								<th>Date de création :</th>
+								<td class="donnee_show">{{ etablissementDetails?.dateCreation }}</td>
+							</tr>
+							<tr>
+								<th>Propriétaire :</th>
+								<td class="donnee_show">{{etablissementDetails?.prenomProp}} {{ etablissementDetails?.nomProp }}</td>
+							</tr>
+							<tr>
+								<th>CIN Propriétaire :</th>
+								<td class="donnee_show">{{etablissementDetails?.cinPro}}</td>
+							</tr>
+							<tr>
+								<th>RS :</th>
+								<td class="donnee_show">{{etablissementDetails?.rs}}</td>
+							</tr>
+							<tr>
+								<th>RC :</th>
+								<td class="donnee_show">{{etablissementDetails?.rc}}</td>
+							</tr>
+							<tr>
+								<th>IF :</th>
+								<td class="donnee_show">{{etablissementDetails?.ifiscal}}</td>
+							</tr>
+							<tr>
+								<th>Adresse :</th>
+								<td class="donnee_show">{{etablissementDetails?.adresse}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-6">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations de propriétaires
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Nom :</th>
+								<td class="donnee_show"> {{ etablissementDetails?.nomProp }}</td>
+							</tr>
+							<tr>
+								<th>Prénom :</th>
+								<td class="donnee_show">{{etablissementDetails?.prenomProp}}</td>
+							</tr>
+							<tr>
+								<th>CIN :</th>
+								<td class="donnee_show">{{etablissementDetails?.cinPro}}</td>
+							</tr>
+							<tr>
+								<th>Tél :</th>
+								<td class="donnee_show">{{etablissementDetails?.telProp}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="kt-portlet portlet-1 col-md-6">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Informations de gérants
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Nom :</th>
+								<td class="donnee_show">{{etablissementDetails?.nomGerant}}</td>
+							</tr>
+							<tr>
+								<th>Prénom :</th>
+								<td class="donnee_show">{{etablissementDetails?.prenomGerant}}</td>
+							</tr>
+							<tr>
+								<th>CIN :</th>
+								<td class="donnee_show">{{etablissementDetails?.cinGerant}}</td>
+							</tr>
+							<tr>
+								<th>Tél :</th>
+								<td class="donnee_show">{{etablissementDetails?.telGerant}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="RetourEmbalages()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+	</div>
+</div>
+<div class="espace_bloc"></div>
+<!-- end:: Content -->

@@ -1,0 +1,127 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <!--Begin::Section-->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="socicon-buffer"></i>
+						</span> &nbsp;
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.MARCHE.AO.TITRE_INDEX' | translate }}
+                        </h3>
+                    </div>
+                    <!-- <div class="kt-portlet__head-toolbar">
+						<div class="kt-portlet__head-wrapper">
+							<div *ngxPermissionsOnly="['canCreateAo']" class="kt-portlet__head-actions">
+								&nbsp;
+								<a href="javascript:; " (click)="nouvelleao()"
+									class="btn btn-success btn-elevate btn-icon-sm">
+									<i class="la la-plus"></i>
+									{{ 'PAGES.MARCHE.AO.TITRE_NEW' | translate }}
+								</a>
+							</div>
+						</div>
+					</div> -->
+
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="kt-portlet__body kt-portlet__body--fit">
+
+                        <div class="example-header col-md-4">
+                            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="example-container mat-elevation-z8">
+
+                            <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="nbJourMaintienOffre">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="nbJourMaintienOffre">
+                                        {{ 'PAGES.MARCHE.AO.NBR_JOUR_MAINTIEN_OFFRE' | translate }} </th>
+                                    <td mat-cell class="maintienOffre" *matCellDef="let row"> {{row[0]}}{{ 'PAGES.MARCHE.AO.JOURS' | translate }}</td>
+                                </ng-container>
+
+                                <!-- numAo -->
+                                <ng-container matColumnDef="numAo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="numAo">
+                                        {{ 'PAGES.MARCHE.AO.NUM_AO' | translate }}</th>
+                                    <td mat-cell class="numAo" *matCellDef="let row"> {{row[2]}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="objet">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="objet">
+                                        {{ 'PAGES.MARCHE.AO.OBJET' | translate }} </th>
+                                    <td mat-cell class="objet" *matCellDef="let row"> {{(row[3].length>70)? (row[3] | slice:0:57)+' ...':(row[3]) }} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="dateOverturePlis">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="dateOuvertureplis">
+                                        {{ 'PAGES.MARCHE.AO.DATE_OUVERTURE_PLIS' | translate }} </th>
+                                    <td mat-cell class="maintienOffre" *matCellDef="let row"> {{row[4]|date: 'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="statutAo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.AO.STATUT' | translate }}</th>
+                                    <td mat-cell class="statuAo" *matCellDef="let row"> {{(row[5].length>48)? (row[5] | slice:0:44)+' ...':(row[5]) }} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="typeMarche">
+                                    <th mat-header-cell class="td_mail" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.AO.TYPE_AO' | translate }}</th>
+                                    <td mat-cell class="typeAo" *matCellDef="let row"> {{(row[6].length>28)? (row[6] | slice:0:24)+' ...':(row[6]) }} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef></th>
+                                    <td mat-cell class="actionAO" *matCellDef="let row">
+                                        <a href="javascript:;" *ngxPermissionsOnly="['canShowAo']" (click)="showao(row[1])" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+											class="la la-search-plus"></i></a>
+                                        <span *ngxPermissionsOnly="['canUpdateAoBySg']">
+										<a href="javascript:;" *ngIf="row[7] == 1" (click)="editao(row[1])"
+											class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+											matTooltip="تعديل طلب العروض الأولي"><i class="la la-edit"></i></a>
+									</span>
+                                        <span *ngxPermissionsOnly="['canUpdateAoBySm']"> <a href="javascript:;"
+											(click)=" editSm(row[0])" *ngIf="row[7] == 2 || row[7] == 4"
+											class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"
+											matTooltip="تعديل طلب العروض المرسل لمصلحة الأعمال الإدارية"><i
+												class="fa fa-cog"></i></a> </span>
+
+                                        <span *ngxPermissionsOnly="['canUpdateAoBySg']">
+										<a href="javascript:;" (click)="deleteAo(row[1])" *ngIf="row[7] == 2"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+												class="la la-trash"></i></a>
+									</span>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                </tr>
+                            </table>
+                            <div *ngIf="sizeData == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                                </mat-progress-spinner>
+                            </mat-card>
+                            <mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

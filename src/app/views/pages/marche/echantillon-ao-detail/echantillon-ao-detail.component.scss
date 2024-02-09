@@ -1,0 +1,20 @@
+.pj th {
+    width: 12% !important;
+    text-transform: lowercase !important;
+}
+tr.mat-header-row {
+    height: 33px !important;
+}
+tr.mat-header-cell {
+	height: 33px !important;
+}
+tr.mat-footer-row, tr.mat-row {
+    height: 40px;
+}
+.title-ligneEchantillonTable{
+	text-align: center;
+    color: #ffffff;
+    background-color: #2a5599;
+    padding: 7px;
+    font-size: inherit;
+}

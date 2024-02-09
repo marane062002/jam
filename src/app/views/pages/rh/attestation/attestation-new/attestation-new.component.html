@@ -1,0 +1,130 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                                {{ 'MENU.AJOUTERATTESTATION' | translate }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<!-- begin:: Content section 2 -->
+ <!--begin::Form-->
+ <form [formGroup]="demandeForm" (submit)="onSubmit()" class="kt-form">
+      
+              
+<div class="kt-container">
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                        
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.GENERAL.FORM_ATTESTATION' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                        
+
+                    <div class="row">
+                       
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="type" placeholder="{{ 'PAGES.ATTESTATION.TYPE' | translate }} :">
+                                            <mat-option [value]=null>---{{ 'PAGES.ATTESTATION.TYPE' | translate }}---</mat-option>
+                                            <mat-option *ngFor="let type of types" [value]="type">
+                                                {{type.libelle}}
+                                            </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('type','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error> 
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                     <textarea matInput type="text" class="form-control" 
+                                        formControlName="note" placeholder="{{ 'PAGES.ATTESTATION.NOTE' | translate }} :" 
+                                        Rows="5"
+	                                   >
+                                            </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                   
+                       
+    
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div  class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-5">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-attachment"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.GENERAL.ADD_PJS' | translate }}
+                        </h3>
+                    </div>
+                </div>
+<div class="kt-portlet__body"> 
+    <div class="row">
+        <div class="col-md-6 show_port input-group">
+            <!-- file upload :: begin -->
+            <form enctype="multipart/form-data" method="POST" [formGroup]="pjsForm">
+                <label class="input-group-btn">
+                    <span class="btn btn-brand">
+                        {{ 'PAGES.GENERAL.PJS_DOC' | translate }}<input type="file" name="file"
+                            (change)="fileChange($event)" formControlName="_file" id="customFile"
+                            style="display: none;" multiple>
+                    </span>
+                </label>
+                <input type="text" class="form-control" readonly>
+            </form>
+           
+            <!-- file upload :: end -->
+        </div>
+       
+    </div>
+
+    <div class="kt-form__actions">
+        <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': isloading}" class="btn btn-success btn-md btn-tall btn-wide">
+                {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+        </button>
+        <button type="reset" class="btn btn-secondary btn-md btn-tall btn-wide">
+                {{ 'PAGES.GENERAL.RESET' | translate }} <i class="fas fa-times"></i>
+        </button>
+        <button type="button" class="btn btn-brand btn-md btn-tall btn-wide">
+                {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>

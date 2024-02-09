@@ -1,0 +1,173 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="kt-portlet">
+          <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+              <h3 class="">
+                إضافة ممتلك للجماعة
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- begin:: Content section 2 -->
+  <div class="kt-container">
+    <div class="row">
+      <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+          <div class="kt-portlet__head kt-bg-portlet-3">
+            <div class="kt-portlet__head-label">
+              <span class="kt-portlet__head-icon">
+                <i class="fas fa-address-card kt-font-inverse-brand"></i>
+              </span>
+              <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                معلومات ممتلك الجماعة
+              </h3>
+            </div>
+          </div>
+          <div class="kt-portlet__body">
+            <form class="kt-form" autocomplete="off" #form="ngForm" (submit)="onSubmitForm()">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                      <input matInput type="text" class="form-control" name="prenompp" placeholder="الاسم :" [(ngModel)]="bien.objetDemandeAutorisation"  required>
+                      <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select  name ="canalReponseRec"  [(ngModel)]="bien.typebiendemandeReservation.id" matInput class="form-control" placeholder="نوع الممتلك ">
+                                <mat-option *ngFor="let item of typeAll" [value]="item.id">{{item.libelle}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+              </div>
+             <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                      <input matInput type="text" class="form-control"  [(ngModel)]="bien.adresse" name="cinpp"   placeholder="العنوان  :"  required>
+                      <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                    </mat-form-field>
+                  </div>
+                </div>
+           <!----     <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select  name ="canalReponseRec" [(ngModel)]="bien.arrondissement" matInput class="form-control" placeholder="الدائرة  ">
+                                <mat-option *ngFor="let item of allcanalReponse" [value]="item.id">{{item.libelle}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select  name ="canalReponseRec"  [(ngModel)]="bien.quartier" matInput class="form-control" placeholder="الحي">
+                                <mat-option *ngFor="let item of allcanalReponse" [value]="item.id">{{item.libelle}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                  </div>-->
+              </div>
+
+              <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                    <table class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td >رقم فضاء الملكية </td>
+                            <td>تسمية فضاء الملكية</td>
+                            <td> القيمة</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                        <tbody>
+                            <tr *ngFor="let item of espaces">
+                                <td> {{item[0]}}</td>
+                                <td>{{item[1]}}
+                                                </td>
+                                                <td>dh {{item[2]}} </td>
+                                             <!---   <td>    <a href="javascript:;" (click)="deletepp(item[0])" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                                                </td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+            </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <button class="btn btn-outline-brand kt-margin-b-20" type="button" (click)="addItem()" style="margin-right: 5px;">إضافة فضاء</button>
+                    <form [formGroup]="myForm" >
+                        <div formArrayName="arr" *ngFor="let a of myForm.get('arr')['controls']; let i = index">
+                          <div [formGroupName]="i" style="margin-bottom: 10px;">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <div class="my-auto col-md-2">
+                                            <label for="name">اسم الفضاء:</label>
+                                        </div>
+                                        <div class="my-auto col-md-10">
+                                    <input MatInput type="text" class="form-control" name="name" formControlName="espace">
+                                </div>
+                            </div>
+                                </div>
+                                <div class="col-md-5">
+                                  <div class="row">
+                                      <div class="my-auto col-md-2">
+                                          <label for="name"> القيمة:</label>
+                                      </div>
+                                      <div class="my-auto col-md-10">
+                                  <input MatInput type="text" class="form-control" name="price" formControlName="prix">
+                              </div>
+                          </div>
+                              </div>
+                                <div class="my-auto col-md-2">
+                                    <button class="btn btn-danger btn-icon" (click)="removeGroup(i)"><i class="fas fa-window-close"></i>
+                                        </button>
+                                </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <br>
+
+                                          </form>
+
+                  </div>
+                </div>
+              </div>
+              <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                  <button type="submit" class="btn btn-success btn-md btn-tall btn-wide">
+                    حفظ <i class="far fa-save"></i>
+                  </button>
+             <!---     <button type="submit" class="btn btn-secondary btn-md btn-tall btn-wide">
+                    إلغاء <i class="fas fa-times"></i>
+                  </button>
+                  <button type="submit" class="btn btn-brand btn-md btn-tall btn-wide">
+                    الرجوع <i class="fas fa-undo-alt"></i>
+                  </button>-->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

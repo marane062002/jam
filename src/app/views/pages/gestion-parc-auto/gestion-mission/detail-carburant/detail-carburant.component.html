@@ -1,0 +1,346 @@
+<div class="main-content container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="p-3">
+            <div class="row">
+              <div class="col-md-10 col-lg-10 col-sm-12 col-xs-12 mb-4 h4">Affectation Carburant/Carbucartes</div>
+            </div>
+         
+            <div class="row justify-content-center">
+              <div class="col-md-11 col-lg-11 col-sm-12 col-xs-12">
+                <form class="pl-5 pt-3 pr-0 pb-2 border-grey br-10 mb-4 mt-3">
+
+                  <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row justify-content-center">
+                       
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Numéro de la demande :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">5/2021</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Type Mission :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">REUNION</label>
+
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row  mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row ">
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de départ :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">14/10/2021</label>
+                       
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date de retour :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">14/10/2021</label>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row justify-content-center">
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Responsable mission :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">Visiteur DRA</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Entite Bénéficiaire :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">A</label>
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row  mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row ">
+                       
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Véhicule affecté :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">PEUGEOT - M 102030</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Chauffeur affecté :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">Visiteur DRA</label>
+                      
+                       </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row  mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row ">
+                       
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Parcours :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">rabat casa</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Montant vignettes :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">200 MAD</label>
+                      
+                       </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+            <!-- <div class="row mt-3 mb-3 ml-2 mr-2 justify-content-end">
+               <div class="col-2 text-center">
+                 <button  type="button" class="btn btn-success btn-block font-weight-bold"><i class="i-Yes mr-1 font-weight-bold"></i> Répondre</button>
+               </div>
+     
+             </div> -->
+
+            <ul class="nav nav-tabs" id="myIconTab" role="tablist">
+              <li class="nav-item">
+                  <a class="nav-link font-weight-bold" [class.active]="tabID == 1" (click)="displayTab(1)" data-toggle="tab" role="tab">Liste des Vignettes</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link font-weight-bold" [class.active]="tabID == 2" (click)="displayTab(2)" data-toggle="tab" role="tab">Liste des Carbucartes</a>
+              </li>
+            </ul>
+
+            
+            <div *ngIf="tabID == 1;then templateVignettes; else templateCarbucartes"></div>
+            <!--begin: liste des vignettes-->
+            <ng-template #templateVignettes class="tab-pane fade" role="tabpanel">
+              <div class="tab-pane fade show active" id="profileIcon" role="tabpanel" aria-labelledby="profile-icon-tab">
+                <!-- <button class="btn btn-primary mt-5 float-right" type="button" data-toggle="modal" data-target=".bd-ajouter-modal-lg"><i class="nav-icon i-Add font-weight-bold"></i></button> -->
+                <div class="p-4 background-color-light border-grey br-10-bl br-10-br">
+                    <div class="table-responsive">
+                        <table class="table text-center">
+                            <thead>
+                              <tr class="no-border">
+                                  <th scope="col">Montant</th>
+                                  <th scope="col">Code barre</th>
+                                  <th scope="col">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let vignette of vignettes">
+                                  <td>{{vignette.montant}}</td>
+                                  <td>{{vignette.codeBarre}}</td>
+                                  <td>
+                                    <a class="text-primary mr-2" (click)="openModalAjouterVignettes(ajouterVignette)"><i class="nav-icon i-Receipt-3 font-weight-bold"></i></a>
+                                    <a class="text-primary mr-2" (click)="openModalModifierVignettes(modiferVignette)"><i class="nav-icon i-Pen-5 font-weight-bold"></i></a>
+                                  </td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              </div>
+            </ng-template>
+            <!--end: liste des vignettes-->
+
+            <!--begin: liste des Carbucartes-->
+            <ng-template #templateCarbucartes class="tab-pane fade" role="tabpanel">
+              <div class="tab-pane fade show active" id="invoice" role="tabpanel" aria-labelledby="profile-icon-tab">
+                <div class="p-4 background-color-light border-grey br-10-bl br-10-br">
+                    <div class="table-responsive">
+                        <table class="table text-center">
+                            <thead>
+                              <tr class="no-border">
+                                  <th scope="col">Carte</th>
+                                  <th scope="col">Solde initial</th>
+                                  <th scope="col">Solde de départ</th>
+                                  <th scope="col">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let carbuCarte of carbuCartes">
+                                <td>{{carbuCarte.carte}}</td>
+                                <td>{{carbuCarte.soldeInitial}}</td>
+                                <td>{{carbuCarte.soldeDepart}}</td>
+                                <td>
+                                  <a class="text-primary mr-2" (click)="openModalAjouterCarburant(ajouterCarbuCarte)"><i class="nav-icon i-Credit-Card-3 font-weight-bold"></i></a>
+                                  <a class="text-primary mr-2" (click)="openModalModifierCarburant(modifierCarbuCarte)"><i class="nav-icon i-Pen-5 font-weight-bold"></i></a>
+                                </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                    </div>
+                </div>
+             </div>
+            </ng-template>
+            <!--end: liste des Carbucartes-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--begin:ajouter carbucartes-->
+  <ng-template #ajouterCarbuCarte let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter des Carbucartes</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <label>Carbucarte :</label>
+          <select class="form-control">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary ml-2" type="button"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+  </ng-template>
+  <!--end:ajouter carbucartes-->
+
+  <!--begin:modifier carbucartes-->
+  <ng-template #modifierCarbuCarte let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Modifier Carbucarte</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12">
+          <label>Carbucarte :</label>
+          <select class="form-control">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary ml-2" type="button"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+  </ng-template>
+  <!--end:modifier carbucartes-->
+
+  <!--begin:ajouter Vignettes-->
+  <ng-template #ajouterVignette let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter des Vignettes</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="row col-md-4">
+          <div class="col-md-12">
+            <label>Nombre de saisie vectorielle :</label>
+            <select class="form-control" [(ngModel)]="addVectorielle" (change)="ajouterNombreVectorielle()">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="row col-md-8">
+          <ng-container *ngFor="let v of ajouterVectorielles">
+            <div class="col-md-6">
+              <label>Première vignette :</label>
+              <input class="form-control" type="text" placeholder="Première vignette">
+            </div>
+            <div class="col-md-6">
+              <label>Dernière vignette :</label>
+              <input class="form-control" type="text" placeholder="Dernière vignette">
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row col-md-4">
+          <div class="col-md-12">
+            <label>Nombre de vignette :</label>
+            <select class="form-control" [(ngModel)]="addVignette" (change)="ajouterNombreVignette()">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="row col-md-8">
+          <ng-container *ngFor="let vign of ajouterLisVignettes">
+            <div class="col-md-12">
+              <label>Vignette numéro :</label>
+              <input class="form-control" type="text" placeholder="Vignette numéro">
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+  </ng-template>
+  <!--end:ajouter Vignettes-->
+  <!--begin:modifier Vignettes-->
+  <ng-template #modiferVignette let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modifier Vignette</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="row col-md-4">
+          <div class="col-md-12">
+            <label>Nombre de saisie vectorielle :</label>
+            <select class="form-control" [(ngModel)]="updateVectorielle" (change)="modifierNombreVectorielle()">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="row col-md-8">
+          <ng-container *ngFor="let v of modifierVectorielles">
+            <div class="col-md-6">
+              <label>Première vignette :</label>
+              <input class="form-control" type="text" placeholder="Première vignette">
+            </div>
+            <div class="col-md-6">
+              <label>Dernière vignette :</label>
+              <input class="form-control" type="text" placeholder="Dernière vignette">
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row col-md-4">
+          <div class="col-md-12">
+            <label>Nombre de vignette :</label>
+            <select class="form-control" [(ngModel)]="updateVignette" (change)="modifierNombreVignette()">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="row col-md-8">
+          <ng-container *ngFor="let vign of modifierLisVignettes">
+            <div class="col-md-12">
+              <label>Vignette numéro :</label>
+              <input class="form-control" type="text" placeholder="Vignette numéro">
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+  </ng-template>
+  <!--end:modifier Vignettes-->
+</div>
+
+
+

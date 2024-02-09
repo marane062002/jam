@@ -1,0 +1,89 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.Gestion.Stock.sortie.details.title' | translate }} 
+					</h3>
+				</div>
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">
+            <div class="m-1 float-right">
+              <button _ngcontent-dkp-c41="" (click)="livreSortie(sortie.id)" matTooltip="{{ 'PAGES.GENERAL.VAlIDE' | translate }}"
+              class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+              <i _ngcontent-dkp-c41="" class="icon la la-check"></i>
+              </button>
+              <button _ngcontent-dkp-c41="" (click)="telechargeDoucument(sortie.id)" matTooltip="{{ 'PAGES.GENERAL.PRINT' | translate }}"
+              class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+              <i _ngcontent-dkp-c41="" class="icon la la-print"></i>
+              </button>
+          </div>
+          </h3>
+        </div>
+			</div>
+			<div class="kt-portlet__body">
+
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table" width="100%">
+							<tbody>
+								<tr>
+									<th> {{ 'PAGES.Gestion.Stock.sortie.numDemande' | translate }}</th>
+									<td class="donnee_show">{{sortie?.demandeFourniture?.numeroDemande ? sortie?.demandeFourniture?.numeroDemande :'-'}}</td>
+									<th> {{ 'PAGES.Gestion.Stock.sortie.codeAnalytique' | translate }}</th>
+									<td class="donnee_show">
+										{{sortie?.demandeFourniture.codeAnalytique ? sortie?.demandeFourniture.codeAnalytique  :'-'}}
+									</td>
+									<th> {{ 'PAGES.Gestion.Stock.sortie.status' | translate }}</th>
+									<td class="donnee_show">{{sortie?.status ? sortie?.status:'-'}}</td>
+								
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+        <br>
+        <br>
+            <div class="row">
+					  <div class="col-md-12 show_port">
+                    <!-- <span *ngIf=" listDemandesFourniture?.length ===  0" class="text-danger">Aucun article exist</span> -->
+                    <table class="table" id="user_table">
+                      <thead>
+                        <tr class="no-border">
+                          <th scope="col">{{ 'PAGES.Gestion.Stock.Article.numero' | translate }}</th>
+                          <th scope="col">{{ 'PAGES.Gestion.Stock.Article.categorie' | translate }}</th>
+                          <th scope="col">{{ 'PAGES.Gestion.Stock.Article.designation' | translate }}</th>
+                          <th scope="col">{{ 'PAGES.Gestion.Stock.Article.quantiteDemande' | translate }}</th>
+                          <th scope="col">{{ 'PAGES.Gestion.Stock.Article.quantiteLivre' | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let demande of listDemandesFourniture ">
+                          <th scope="row">{{ demande.article?.numeroArticle ?   demande.article?.numeroArticle : '-' }}</th>
+                          <td>
+                            {{ demande.article?.categorieArticle?.libelleFr ?   demande.article?.categorieArticle?.libelleFr : '-' }}
+                          </td>
+                          <td>{{ demande.article?.designation ?   demande?.article?.designation : '-' }}</td>
+                          <td>{{ demande.quantiteDemande ?   demande.quantiteDemande : '-' }}</td>
+                          <td>{{ demande.quantiteLivre ?   demande.quantiteLivre : '-' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+        
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

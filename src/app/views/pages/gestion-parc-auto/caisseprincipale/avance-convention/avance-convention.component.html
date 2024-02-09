@@ -1,0 +1,211 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">Avances Sur Convention</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                            <div class="form-group row justify-content-center mb-1">
+                                <div class="col-md-3 form-group ">
+                                    <label>N° de convention :</label>
+                                    <input class="form-control" type="text" placeholder="Numéro de convention">
+                                </div>
+                                <div class="col-md-2 col-lg-2 form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                    <data-table 
+                            [datasource]="listeAvanceConventions" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des Avances Sur Convention'"
+                            [titleButton]="' Ajouter Avances Sur Convention'"
+                            [currentPage]="currentPage"
+                            [totalPages]="totalPages"
+                            (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)"
+                            (ajouterElement)="modalAjouterAvancesConvention(ajouterAvancesConvention)"
+                            (detail)="modalDetailAvancesConvention(detailAvancesConvention,$event)"
+                            (selectUpdateElement)="modalModifierAvancesConvention(modifierAvancesConvention,$event)"
+                            (deleteElement)="supprimerAvancesConvention($event)">
+                    </data-table>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    <ng-template #modifierAvancesConvention let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Modification  Avance Sur Convention</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+          <form  [formGroup]="formAvanceConvention" (submit)="updateAvanceConvention(formAvanceConvention.value)">
+           <div class="form-group row mb-1">
+             <!--  <div class="col-md-4 form-group ">
+                  <label>Type :</label>
+                  <select class="form-control">
+                    <option>Nouvelle convention</option>
+                    <option>Report</option>
+                    <option>Echange</option>
+                  </select>
+              </div> -->
+              <div class="col-md-4 form-group ">
+              <label>Type :</label>
+              <select class="form-control" formControlName="type" (change)="selectedTypeConvention($event)">
+                <option value="" selected disabled>Selectioner type Convention</option>
+                <option value="C">Carburant</option>
+                <option value="R">Réparation</option>
+                <option value="VTT">VTT</option>
+                <option value="VTA">VTA</option>
+              </select>
+              </div>
+              <div class="col-md-4 form-group " formGroupName="convention">
+              <label>Convention :</label>
+              <select class="form-control" formControlName="id" >
+                <option value="" selected disabled>Selectioner  Convention</option>
+                <option *ngFor="let c of listeConventions" [value]="c.id">{{c.numero}}</option>
+              </select>
+              </div>
+              <div class="col-md-4 form-group " >
+                  <label>Date :</label>
+                  <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="date">
+              </div>
+    
+              <div class="col-md-4 form-group" >
+                <label>Numéro :</label>
+                <input class="form-control" type="text" placeholder="Numéro" formControlName="numero">
+              </div>
+           
+              <div class="col-md-4 form-group" >
+                  <label>Montant en MAD:</label>
+                  <input class="form-control" type="number" placeholder="Montant" formControlName="montant" >
+              </div>
+              <div class="col-md-4 form-group">
+                  <label>Année :</label>
+                  <input class="form-control" type="number" placeholder="Année" formControlName="annee">
+             
+          </div>
+        </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary ml-2" type="submit" [disabled]="!formAvanceConvention.valid"><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier bqfjjfhh</button>
+        </div>
+          </form>
+        </div>
+        
+      
+    </ng-template>
+
+   <!--  Modal ajouter -->
+   <ng-template #ajouterAvancesConvention let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Nouvelle Avance Sur Convention</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+
+    <form  [formGroup]="formAvanceConvention" (submit)="createAvanceConvention(formAvanceConvention.value)">
+        <!--  <div class="col-md-4 form-group ">
+             <label>Type :</label>
+             <select class="form-control">
+               <option>Nouvelle convention</option>
+               <option>Report</option>
+               <option>Echange</option>
+             </select>
+         </div> -->
+         <div class="form-group row mb-1 " style="padding: 15px;">
+         <div class="col-md-4 form-group ">
+         <label>Type :</label>
+         <select class="form-control" formControlName="type" (change)="selectedTypeConvention($event)">
+           <option value="" selected disabled>Selectioner type Convention</option>
+           <option value="C">Carburant</option>
+           <option value="R">Réparation</option>
+           <option value="VTT">VTT</option>
+           <option value="VTA">VTA</option>
+         </select>
+         </div>
+         <div class="col-md-4 form-group " formGroupName="convention">
+         <label>Convention :</label>
+         <select class="form-control" formControlName="id" >
+           <option value="" selected disabled>Selectioner type Convention</option>
+           <option *ngFor="let c of listeConventions" [value]="c.id">{{c.numero}}</option>
+         </select>
+         </div>
+         <div class="col-md-4 form-group " >
+             <label>Date :</label>
+             <input class="form-control" type="date" placeholder="dd-mm-yyyy" formControlName="date">
+         </div>
+
+         <div class="col-md-4 form-group" >
+           <label>Numéro :</label>
+           <input class="form-control" type="text" placeholder="Numéro" formControlName="numero">
+         </div>
+      
+         <div class="col-md-4 form-group" >
+             <label>Montant en MAD:</label>
+             <input class="form-control" type="number" placeholder="Montant" formControlName="montant" >
+         </div>
+         <div class="col-md-4 form-group">
+             <label>Année :</label>
+             <input class="form-control" type="number" placeholder="Année" formControlName="annee">
+         </div>
+     </div>
+     <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="submit"   [disabled]="!formAvanceConvention.valid"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+     </form>
+
+  
+   </ng-template>
+   <!-- modal detail-->
+   <ng-template #detailAvancesConvention let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5>Detail d'une  avance sur  convention</h5>
+    </div>
+    <div class="modal-body">
+        <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+            
+            <div class="form-group row mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Convention :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{conventionAvance.convention.numero}}</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Numéro :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{conventionAvance.numero}}</label>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Montant :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{conventionAvance.montant}} MAD</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Année :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{conventionAvance.annee}}</label>
+                    </div>
+
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Date :</label>
+                      <label class="col-sm-3 col-form-label f-s-13">{{conventionAvance.date}}</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-secondary m-1" type="button" data-dismiss="modal" (click)="close()"><i class="nav-icon i-Close font-weight-bold"></i> Annuler</button>
+   <!--      <button class="btn btn-outline-danger m-1" type="button" data-dismiss="modal"><i class="nav-icon i-Close font-weight-bold"></i> Rejeté</button>
+        <button class="btn btn-outline-success ml-2" type="button" data-dismiss="modal"><i class="nav-icon i-Yes font-weight-bold"></i> Valider l'Avance Sur Convention</button>
+    --> </div>
+   </ng-template>
+
+</div>
+

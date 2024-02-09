@@ -1,0 +1,257 @@
+<!-- begin:: Content -->
+    <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="">
+                                {{ 'MENU.EDITHABITATION' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- begin:: Content section 2 -->
+     <!--begin::Form-->
+<form [formGroup]="habitationForm" (submit)="onSubmit()" class="kt-form">
+    <div class="row">
+            <div class="col-lg-12 col-md-offset-2">
+                <div class="kt-portlet portlet-3">
+                    <div class="kt-portlet__head kt-bg-portlet-3">
+                        <div class="kt-portlet__head-label">
+                           
+                            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                    {{ 'PAGES.GENERAL.FORM_HABITATION' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="nomHabitation" placeholder="{{ 'PAGES.GENERAL.NOM_HABITATION' | translate }} :" required>
+                                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('nomHabitation','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="numHabitation" placeholder="{{ 'PAGES.GENERAL.NUM_HABITATION' | translate }} :" required>
+                                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('numHabitation','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="numConservationFonciere" placeholder="{{ 'PAGES.GENERAL.numConservationFonciere' | translate }} :" required>
+                                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('numConservationFonciere','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" formControlName="natureHabitation" placeholder="{{ 'PAGES.GENERAL.Nature_Habitation' | translate }} :">
+                                                    <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---</mat-option>
+                                                    <mat-option  value="منزل" >منزل</mat-option>
+                                                    <mat-option  value="شقة">شقة</mat-option>                                                  
+                                                    
+                                            </mat-select>
+                                           
+                                        </mat-form-field>
+                                    </div>
+                            </div> 
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" formControlName="typeHabitation" placeholder="{{ 'PAGES.GENERAL.TYPE_HABITATION' | translate }} :">
+                                                    <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---</mat-option>
+                                                    <mat-option  value="سكن وظيفي" >سكن وظيفي</mat-option>
+                                                    <mat-option  value="سكن جماعي عمومي">سكن جماعي عمومي</mat-option>                                                  
+                                                    
+                                            </mat-select>
+                                           
+                                        </mat-form-field>
+                                    </div>
+                            </div>                                
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" formControlName="statutLegalHabitation" placeholder="{{ 'PAGES.GENERAL.STATUT_LEGAL_HABIT' | translate }} :">
+                                                    <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---</mat-option>
+                                                    <mat-option  value="في طور التفويت" >في طور التفويت</mat-option>
+                                                    <mat-option  value="مفوتة">مفوتة</mat-option>                                                  
+                                                    
+                                            </mat-select>
+                                           
+                                        </mat-form-field>
+                                    </div>
+                            </div>   
+                                                                                     
+                        </div>
+                       
+                        <div class="row">   
+                             <div class="col-md-6">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput type="number" class="form-control" formControlName="nombreAppartement" (change)="ajouterAppartements()" placeholder="{{ 'PAGES.GENERAL.NB_APPARTEMENT' | translate }} :"   >
+                                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="number" class="form-control" formControlName="superficie" placeholder="{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :"  >
+                                        <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                        
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" class="form-control" formControlName="localisation" placeholder="{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :"  >
+                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group date">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput class="form-control" [matDatepicker]="picker"
+                                                        placeholder="{{ 'PAGES.GENERAL.DATE_DEBUT_EXPLOITATION' | translate }} :"  formControlName="dateDebutExploitation" required  >
+                                                    <mat-datepicker-toggle matSuffix matSuffix [for]="picker">
+                                                        <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                                        </mat-icon>
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                                   
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                           
+                           
+                                
+                            </div>
+                           
+                            
+                                
+                            
+                    
+                    <div class="row">
+                            <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                                <textarea matInput type="text" class="form-control" formControlName="description" placeholder="{{ 'PAGES.GENERAL.DESCRIPTION' | translate }} :"  
+                                                Rows="5"
+                                                >
+                                                     </textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div> -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <textarea matInput type="text" class="form-control" 
+                                        formControlName="observation" placeholder="{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :" 
+                                        Rows="5"
+	                                   >
+                                            </textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                           
+                                
+                            </div>
+                </div>
+               
+  
+</div>
+
+<!-- <div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-3">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="fas fa-address-card kt-font-inverse-brand"></i>
+            </span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                    {{ 'PAGES.GENERAL.PJS' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-4 show_port">
+               
+                <form enctype="multipart/form-data" method="POST" [formGroup]="addDocForm">
+                    <label class="text-muted">{{ 'PAGES.GENERAL.PJS_DECISION' | translate }}</label>
+                    <div>
+                        <input type="file" name="file" (change)="fileChange($event)" formControlName="_file"
+                            id="customFile" multiple>
+                    </div>
+                </form> 
+              
+            </div>
+            <div class="col-md-4 show_port">
+              
+                <form enctype="multipart/form-data" method="POST" [formGroup]="addPhotosForm">
+                    <label class="text-muted">{{ 'PAGES.GENERAL.PJS_PHOTOS' | translate }}</label>
+                    <div>
+                        <input type="file" name="file2" (change)="filePhotosChange($event)" formControlName="_file2"
+                            id="customFile" multiple>
+                    </div>
+                </form>
+              
+            </div>
+        </div>
+    </div>
+    </div> -->
+
+        <div class="kt-portlet portlet-3">
+               
+        <div class="kt-portlet__body">
+                       
+            <div class="kt-form__actions">
+                  
+                <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-success btn-md btn-tall btn-wide">
+                    {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+            </button>
+            <button type="button" *ngxPermissionsOnly="['accessToHabitationModule']" (click)="back()" class="btn btn-brand btn-md btn-tall btn-wide">
+                {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+           </button>
+            </div>
+        </div>
+    </div>
+   
+    </div>
+    </div>
+</form>
+  
+   

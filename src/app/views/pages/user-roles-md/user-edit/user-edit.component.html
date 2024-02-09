@@ -1,0 +1,237 @@
+<!-- begin:: Content -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<h3 class="">
+						{{ 'PAGES.GENERAL.EDIT_USER' | translate }}
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- begin:: Content section 2 -->
+
+<!--begin::Form-->
+<form class="kt-form" [formGroup]="registerForm" (submit)="onSubmit()" autocomplete="off">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							{{ 'PAGES.GENERAL.FORM_USER' | translate }}
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+
+									<input matInput type="text" placeholder="{{ 'AUTH.INPUT.USERNAME' | translate }}"
+										formControlName="username" readonly />
+
+									<!--  <mat-error *ngIf="isControlHasError('username','minlength')">
+                                                                            <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+                                                                        </mat-error>
+                                                                        <mat-error *ngIf="isControlHasError('username','maxlength')">
+                                                                            <strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+                                                                        </mat-error> -->
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+
+									<input matInput type="text" placeholder="{{ 'PAGES.GENERAL.FULLNAME' | translate }}"
+										formControlName="fullname" />
+									<mat-error *ngIf="isControlHasError('fullname','required')">
+										<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+									</mat-error>
+
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" formControlName="idDivision"
+										placeholder="{{ 'PAGES.ORGANISATION.DIVISION' | translate }}"
+										(selectionChange)="onChangeDivision()">
+										<mat-option [value]=0>---{{ 'PAGES.ORGANISATION.DIVISION' | translate }}---
+										</mat-option>
+										<mat-option *ngFor="let d of divisions" [value]="d.id">
+											{{d?.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" formControlName="idService"
+										placeholder="{{ 'PAGES.ORGANISATION.SERVICE' | translate }}"
+										(selectionChange)="onChangeService()">
+										<mat-option [value]=0>---{{ 'PAGES.ORGANISATION.SERVICE' | translate }}---
+										</mat-option>
+										<mat-option *ngFor="let s of services" [value]="s.id">
+											{{s?.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" formControlName="idPersonnel"
+										placeholder="{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}"
+										(selectionChange)="onChangePersonnel()">
+										<mat-option [value]=0>---{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}---
+										</mat-option>
+										<mat-option *ngFor="let p of personnels" [value]="p.id">
+											{{p?.nom}} {{p?.prenom}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+
+					</div>
+					<div class="row" style="text-align: right;">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-checkbox [formControl]="changePasse" (change)="changePassword()">
+									{{ 'PAGES.GENERAL.CHANGE_PASSWORD' | translate }}</mat-checkbox>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" [hidden]="!changePasse.value">
+
+
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+
+									<input matInput type="password"
+										placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}" formControlName="password"
+										autocomplete="off" />
+									<mat-error *ngIf="isControlHasError('password','required')">
+										<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+									</mat-error>
+									<!--  <mat-error *ngIf="isControlHasError('password','minlength')">
+                            <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+                        </mat-error>
+                        <mat-error *ngIf="isControlHasError('password','maxlength')">
+                            <strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+                        </mat-error> -->
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}</mat-label>
+									<input matInput type="password"
+										placeholder="{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}"
+										formControlName="passeConfirmed" autocomplete="off" />
+									<mat-error *ngIf="isControlHasError('passeConfirmed','required')">
+										<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+									</mat-error>
+									<!--   <mat-error *ngIf="isControlHasError('passeConfirmed','minlength')">
+                            <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+                        </mat-error>
+                        <mat-error *ngIf="isControlHasError('passeConfirmed','maxlength')">
+                            <strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+                        </mat-error> -->
+									<mat-error
+										*ngIf="registerForm.get('passeConfirmed').errors && registerForm.get('passeConfirmed').errors.passeConfirmed">
+										<strong>الرمز السري غير متطابق.</strong>
+									</mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-md-6">
+							<div class="form-group">
+
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" [compareWith]="compare"
+										placeholder="{{ 'MENU.ROLES' | translate }}" formControlName="roles" multiple>
+										<mat-option *ngFor="let role of roles" [value]="role">{{role.title}}
+										</mat-option>
+									</mat-select>
+
+								</mat-form-field>
+
+							</div>
+						</div>
+						<div class="col-md-6" >
+							<div class="form-group"  >
+								<mat-form-field class="example-full-width">
+								  
+									<mat-select class="form-control" formControlName="idHangar" placeholder="{{ 'PAGES.PESEE.HANGAR' | translate }}">
+										<mat-option *ngFor="let hangar of Hangar" [value]="hangar.id">{{hangar.lib}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+			
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
+
+					<!--begin::Action-->
+					<!-- <div class="kt-form__actions">
+
+							<button type="submit"
+								[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+								class="btn btn-success btn-md btn-tall btn-wide">
+								{{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+							</button>
+							<button type="reset" class="btn btn-secondary btn-md btn-tall btn-wide">
+                                {{ 'PAGES.GENERAL.RESET' | translate }} <i class="fas fa-times"></i>
+                        </button>
+							<button type="button" class="btn btn-brand btn-md btn-tall btn-wide">
+								{{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+							</button>
+						</div> -->
+					<!--end::Action-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button type="submit" _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+				class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+				class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+				(click)="backList()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

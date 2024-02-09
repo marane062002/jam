@@ -1,0 +1,91 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Liste des communes</h2>
+		</div>
+        <div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a
+						href="javascript:; "
+						(click)="addStatut()"
+						class="btn btn-outline-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+        </div>
+    </div>
+            <!-- <div class="example-header col-md-4">
+                <i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+                >&nbsp;
+                <mat-form-field>
+                    <input
+                        matInput
+                       
+                        placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+                    />
+                </mat-form-field>
+            </div> -->
+		
+	
+
+	<table
+		id="exportData"
+		mat-table
+		[dataSource]="commune"
+		class="mat-elevation-z8"
+		matSort>
+		<ng-container matColumnDef="Id">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+			<td mat-cell *matCellDef="let row" class="num">{{ row.id }}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Libelle">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Libellé</th>
+			<td mat-cell *matCellDef="let row" class="Libelle">
+				{{ row.libelle }}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Description">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Description
+			</th>
+			<td mat-cell *matCellDef="let row" class="Description">
+				{{ row.description }}
+			</td>
+		</ng-container>
+
+	<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+					(click)="DetailsStatut(row.id)"
+				>
+					<i class="icon la la-search-plus"></i>
+				</button>
+				<button
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					(click)="ModifierStatut(row.id)"
+                    class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+
+
+</div>

@@ -1,0 +1,64 @@
+<div>
+    <div class="kt-portlet__head-label">   <h4>Programme prévisionnel	</h4></div>
+ 
+    <table class="table pj" width="100%">
+        <tbody>
+            <tr>
+                <th>{{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }}:</th>
+                <td>{{programmePrevisionnel?.typePrestation?.libelle ? programmePrevisionnel?.typePrestation?.libelle: '-'}}</td>
+                <th>Date du projet :</th>
+                <td>								{{programmePrevisionnel?.dateProjet | date: "dd/MM/yyyy" : "-"}}</td>
+
+            </tr>
+            <tr>
+                <th>Sous Catégorie :</th>
+                <td>{{programmePrevisionnel?.sousTypePrestation ? programmePrevisionnel?.sousTypePrestation: '-'}}</td>
+                <th>Objet du marché :</th>
+                <td>{{programmePrevisionnel?.objet ? programmePrevisionnel?.objet: '-'}}</td>
+            </tr>
+            <tr>
+                <th *ngIf="programmePrevisionnel?.typePrestation.id==1 || programmePrevisionnel?.typePrestation.id==3">Lieu d'execution :</th>
+                <td *ngIf="programmePrevisionnel?.typePrestation.id==1 || programmePrevisionnel?.typePrestation.id==3">{{programmePrevisionnel?.lieuExecution ? programmePrevisionnel?.lieuExecution:'-'}}</td>
+                <th *ngIf="programmePrevisionnel?.typePrestation.id==2">Lieu de Livraison :</th>
+                <td *ngIf="programmePrevisionnel?.typePrestation.id==2">{{programmePrevisionnel?.lieuLivraison ? programmePrevisionnel?.lieuLivraison :'-'}}</td>
+           
+                <th>Période prévue pour le lancement :</th>
+                <td>{{programmePrevisionnel?.periodeLancement ?programmePrevisionnel?.periodeLancement:'-'}}</td>
+
+
+                
+
+
+            </tr>
+            <tr>
+                <th>Mode de passation:</th>
+                <td>{{programmePrevisionnel?.natureAo?.libelle ?programmePrevisionnel?.natureAo?.libelle:'-'}}</td>
+                <th *ngIf="programmePrevisionnel?.natureAo?.id==6">Autres :</th>
+                <td *ngIf="programmePrevisionnel?.natureAo?.id==6">{{programmePrevisionnel?.modePassation?programmePrevisionnel?.modePassation:'-' }}</td> 
+            </tr>
+            <tr>
+              
+
+                <th *ngIf="programmePrevisionnel?.typePrestation.id==2">Quantité :</th>
+                <td *ngIf="programmePrevisionnel?.typePrestation.id==2">{{programmePrevisionnel?.quantite ? programmePrevisionnel?.quantite :'-'}}</td>
+           
+    <th>Coordonnées du service concerné:</th>
+    <td>{{programmePrevisionnel?.coordonneServiceConcerne?programmePrevisionnel?.coordonneServiceConcerne:'-' }}</td>
+</tr>
+<tr>
+    <th>Marché destinés aux PME:</th>
+    <td>{{programmePrevisionnel?.marcheDestinePME?programmePrevisionnel?.marcheDestinePME:'-' }}</td>
+</tr>
+
+
+            <!-- <tr>
+                <th>Allotissement :</th>
+                <td>{{programmePrevisionnel.existanceAllotisse}}</td>
+            </tr> -->
+
+
+            
+        </tbody>
+    </table>
+  
+</div>

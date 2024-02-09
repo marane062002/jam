@@ -1,0 +1,113 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-multimedia-2"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.TITRE_INDEX' | translate }}
+            </h3>
+        </div>
+    </div>
+    <hr>
+    <div class="export-align">
+        <div class="kt-portlet__head-actions">
+            <button (click)="exportTable()" type="button" class="btn btn-export" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.TITRE_INDEX' | translate }}">
+				<i _ngcontent-clk-c12="" class="icon la la-file-excel-o"></i>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}
+			</button>
+        </div>
+    </div>
+    <div class="example-header col-md-4">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+        </mat-form-field>
+    </div>
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- numero Column -->
+        <!-- <ng-container matColumnDef="numero">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.NUMERO' | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row"> {{row.numero}} </td>
+		</ng-container> -->
+        <!-- type Column -->
+        <ng-container matColumnDef="typeCourrier">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.TYPE_ORIGINE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row?.typeCourrier.libelle?row.typeCourrier.libelle:'-'}} </td>
+        </ng-container>
+        <!-- dateRefuse Column -->
+        <ng-container matColumnDef="dateRefuse">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.DATE_REFUSE' | translate }}</th>
+            <td mat-cell *matCellDef="let row">{{row.dateRefuse | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <!-- nombreCopie Column -->
+        <ng-container matColumnDef="nombreCopie">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.NOMBRE_COPIES' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row?.nombreCopie?row.nombreCopie:'-'}} </td>
+        </ng-container>
+        <!-- idDispatching Column -->
+        <ng-container matColumnDef="objet">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.OBJET' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row?.objet?row.objet:'-'}} </td>
+        </ng-container>
+        <!-- destinataire Column -->
+        <ng-container matColumnDef="destinataire">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.LIBELLE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row?.destinataire?row.destinataire:'-'}} </td>
+        </ng-container>
+        <!-- motifRefus Column -->
+        <ng-container matColumnDef="motif">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.MOTIF_REFUSE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{row?.motif?row.motif:'-'}} </td>
+        </ng-container>
+        <!-- criticiteCourrier Column -->
+        <ng-container matColumnDef="criticiteCourrier">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.BUREAU_ORDRE.CRITICITE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <div *ngIf="row.criticiteCourrier!=null">
+                    <span *ngIf="row.criticiteCourrier.id==1; else elseBlock">
+						<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide"
+							style="background-color: rgb(248, 35, 35) !important;">
+							{{row.criticiteCourrier.libelle}}
+						</span>
+                    </span>
+                    <ng-template #elseBlock>
+                        <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" style="background-color: rgba(2, 160, 120, 0.767) !important;">
+							{{row.criticiteCourrier.libelle}}
+						</span>
+                    </ng-template>
+                </div>
+            </td>
+        </ng-container>
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" (click)="detailsCourrierSortant(row)" *ngxPermissionsOnly="['canShowCourrierSortant']" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+						class="icon la la-search-plus"></i></button>
+                <!-- <button type="button" (click)="editCourrierSortant(row)"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button> -->
+                <button type="button" (click)="deleteCourrierSortant(row.id)" *ngxPermissionsOnly="['canDeleteCourrierSortant']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

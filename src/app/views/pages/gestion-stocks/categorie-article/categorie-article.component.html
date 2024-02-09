@@ -1,0 +1,239 @@
+
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-multimedia-2"></i>
+						</span> &nbsp;
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.Gestion.Stock.categorieArticle.title' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:; "  (click)=" addNow()" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i>    {{ 'PAGES.Gestion.Stock.categorieArticle.add' | translate }} 
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="example-header">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <div class="example-container mat-elevation-z8">
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="numero">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.categorieArticle.numero' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.numero?row.numero:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="libelleFr">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.categorieArticle.libelleFr' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.libelleFr?row.libelleFr:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="libelleAr">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.categorieArticle.libelleAr' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.libelleAr? row.libelleAr:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let row">
+                                   <!--  <a href="javascript:;" *ngxPermissionsOnly="['canShowAutorisation']" (click)="showAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+											class="la la-search-plus"></i></a>
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canUpdateAutorisation']" (click)="editAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+											class="la la-edit"></i></a>
+                                   <a href="javascript:;" *ngxPermissionsOnly="['canDeleteAutorisation']" (click)=" deleteAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+											class="la la-trash"></i></a> -->
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+
+                        <div *ngIf="datasize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+   <!--begin:Modal ajouter 
+   <ng-template #detailFournisseur let-c="close" let-d="dismiss">
+        <div class="modal-body">
+            <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+                
+                <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Nom du fournisseur :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.nom}}</label>
+
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Site web :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.siteWeb}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">E-mail :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.email}}</label>
+
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Téléphone :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.telephone}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">libelleAr :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.ville}}</label>
+
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Province :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.province}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Adresse :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.adresse}}</label>
+
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Code postal :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.codePostal}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Taux de remise :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.tauxRemise}}%</label>
+
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Info bancaire :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.infoBancaire}}</label>
+                        </div>
+                    </div>
+                </div>
+
+            </form> 
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">fermer</button>
+          < <button class="btn btn-outline-success ml-2" type="button"><i class="nav-icon i-Download font-weight-bold"></i>&nbsp;Télécharger</button>
+        </div>
+   </ng-template>
+   end:Modal detail -->
+
+
+   <!--begin:Modal ajouter 
+    <ng-template #ajouterCotegorieAticle let-c="close" let-d="dismiss">
+
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter une catégorie d'article </h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="categorieArticle" (ngSubmit)="createCatArticle(categorieArticle.value)">
+                        <div class="form-group row mb-1">
+
+                            <div class="col-md-4 form-group ">
+                                <label>N° catégorie :</label>
+                                <input class="form-control" type="text" placeholder="numéro   catégorie d'article" formControlName="numero">
+                                <p class="alert alert-danger" *ngIf="categorieArticle.controls['numero'].hasError('minlength') && categorieArticle.controls['numero'].errors && categorieArticle?.get('numero')?.touched ">
+                                               
+                                    Numéro de catégorie d'article  doit comporter au moins 3 caractères.
+                                </p>
+                                <p class="alert alert-danger" *ngIf="categorieArticle.controls['numero'].hasError('maxlength') && categorieArticle?.get('numero')?.touched ">
+                                    Numéro de catégorie d'article    ne peut pas dépasser 3 caractères.
+                                </p>
+                                <p class="alert alert-danger" *ngIf="categorieArticle.controls['numero'].hasError('required') && categorieArticle.controls['numero'].dirty">
+                                    Ce champ est  obligatoire 
+                                </p>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>libele en francais  :</label>
+                                <input class="form-control" type="text" placeholder="libele en francais" formControlName="libelleFr">
+                                <p class="alert alert-danger" *ngIf="categorieArticle.controls['libelleFr'].hasError('required') && categorieArticle.controls['libelleFr'].dirty">
+                                    Ce champ est  obligatoire 
+                                </p>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>libele en arabe  :</label>
+                                <input class="form-control" type="text" placeholder="libele en arabe " formControlName="libelleAr">
+                                <p class="alert alert-danger" *ngIf="categorieArticle.controls['libelleAr'].hasError('required') && categorieArticle.controls['libelleAr'].dirty">
+                                    Ce champ est  obligatoire 
+                                </p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary ml-2" type="submit" [disabled]="!categorieArticle.valid"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+                        </div>
+        </form>
+        </div>
+
+
+   </ng-template>
+   <!--end:Modal ajouter -->
+
+  
+
+   <!--begin:Modal detail 
+   <ng-template #detailCotegorieAticle let-c="close" let-d="dismiss">
+        <div class="modal-body">
+            <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+                
+                <div class="form-group row justify-content-center mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center" style="margin-bottom: 10px;">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">N° catégorie:</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{categorieArticl.numero}}</label>
+
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">libele en francais :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{categorieArticl.libelleFr}}</label>
+                        </div>
+                    </div><div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">libele en arabe:</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{categorieArticl.libelleAr}}</label>
+                        </div>
+                    </div>
+                </div>
+            </form> 
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+        </div>
+   </ng-template>
+  end:Modal detail -->
+</div>

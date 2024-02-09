@@ -1,0 +1,324 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                        </span>
+                        <h2 class="kt-portlet__head-title">
+                            <!-- {{ "PAGES.PRECONTENTIEUX.LISTE_DEMANDE" | translate }} -->
+                           Réintégration
+                        </h2>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:; "  (click)=" modalAjouterReintegration(ajouterReintegration)" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i>    Ajouter une Réintégration
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="example-header col-md-4">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+                </div>
+      
+            <div class="example-container mat-elevation-z8">
+                <table id="exportData" mat-table [dataSource]="listReintegration" class="mat-elevation-z8" matSort>
+                    <!-- ID Column -->
+                   
+                    <ng-container matColumnDef="numeroMagasin">
+                        <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> N° magasin </th>
+                        <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.magasin?.numeroMagasin? row?.magasin?.numeroMagasin:"-"}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="numeroDemande">
+                        <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>Ref.B.S </th>
+                        <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.sortie?.demandeFourniture?.numeroDemande ? row?.sortie?.demandeFourniture?.numeroDemande :"-"}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="codeAnalytique">
+                        <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>Code Analytiq </th>
+                        <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.codeAnalytique ? row?.codeAnalytique:"-"}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> Date </th>
+                        <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.date ? row?.date:"-"}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> action </th>
+                        <td mat-cell *matCellDef="let row">
+                            <a href="javascript:;"(click)="modalDetailReintegration(detailTransfert,row)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                                    class="la la-search-plus"></i></a>
+                            <a href="javascript:;"  (click)="modalModifierReintegration(modifierReintegration,row)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                    class="la la-edit"></i></a>
+                           <a href="javascript:;" (click)=" deleteAutorisation(row?.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                    class="la la-trash"></i></a>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                </table>
+
+                <div *ngIf="listReintegration.length == 0" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                </div>
+                <mat-card *ngIf="isLoading2" style="display: flex; justify-content: center; align-items: center">
+                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                    </mat-progress-spinner>
+                </mat-card>
+                <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                <hr>
+            </div>
+        </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #ajouterReintegration let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter réintégration</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <form class="" [formGroup]="formReintegration" (ngSubmit)="createTransfert(formReintegration.value)">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-4" formGroupName="sortie">
+                <label>Ref.B.S :</label>
+                <select class="form-control" (change)="selectCommande($event)"  formControlName="id" > 
+                    <option disabled selected value="">Séléctionner un Ref.B.S</option>
+                    <option *ngFor="let c  of listSorties" [value]="c.demandeFourniture.id">{{c.demandeFourniture.numeroDemande}}</option>
+                </select>
+            </div>
+            <div class="col-md-4 "  formGroupName="magasin">
+                <label>N° magasin réceptionnaire  :</label>
+                <select class="form-control" formControlName="id">
+                    <option disabled selected value="">Séléctionner un magasin</option>
+                    <option *ngFor="let m of listMagasins" [value]="m.id">{{m.numeroMagasin}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Code analytique :</label>
+                <input class="form-control" type="text" formControlName=""  />
+            </div>
+          
+        </div>
+        <div class="row"> 
+            <div class="col-md-3"  formGroupName="article">
+                <label>N° article:</label>
+                <select class="form-control" formControlName="id" (change)="selectArticle($event)" >
+                    <option *ngFor="let m of listArticle" [value]="m?.id">{{m?.id}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Quantité :</label>
+                <input class="form-control" type="number"  formControlName="quantite">
+            </div>
+            <div class="col-md-3">
+                <label>Quantité livrée :</label>
+                <input class="form-control" type="text"  [value]="quanitieLivre" readonly>
+            </div>
+            <div class="col-md-3">
+                <label>Date Réintégration :</label>
+                <input class="form-control" type="date" formControlName="date"/>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="submit" [disabled]="!formReintegration.valid">Ajouter</button>
+    </div>
+    </form>
+    <div class="row">
+        <div class="col-md-12 col-lg-12 dos">
+          <div class="p-3 mt-3 border-grey background-table br-10">
+            <div>
+              <div class="table-responsive">
+                <span *ngIf=" saveArticleWithQTEList.length ==  0" class="text-danger">Aucun article existe</span>
+                <table class="table text-center mb-0" id="user_table" *ngIf=" saveArticleWithQTEList.length > 0 ">
+                  <thead>
+                    <tr class="no-border">
+                        <th scope="col">N° magasin  </th>
+                      <th scope="col">N° d'article</th>
+                      <th scope="col">Quantité</th>
+                      <th scope="col">Rayonnage</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let article of saveArticleWithQTEList ; let i = index">
+                        <td> {{ article.reintegration?.magasin?.id ?  article.reintegration?.magasin?.id:"-" }}</td>
+                      <td>{{ article.article?.id ? article.article?.id :"-" }}</td>
+                      <td>{{ article.quantite ? article.quantite :"-" }}</td>
+                      <td>{{ article.rayonnage}}</td>
+                      <td><button class="btn btn-outline-danger" (click)="supprimerArticle(i)" ><i class="nav-icon i-Close-Window font-weight-bold"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button class="btn btn-success ml-2" (click)="createReintegration()"><i class="nav-icon i-Right font-weight-bold"></i>&nbsp;Enregister</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </ng-template>
+  <!--end: Modal ajouter -->
+
+  <!--begin: Modal modifier -->
+  <ng-template #modifierReintegration let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modifier réintégration</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Ref.B.S :</label>
+                <select class="form-control">
+                    <option>0001</option>
+                    <option>0002</option>
+                    <option>0003</option>
+                </select>
+            </div>
+            <div class="col-md-6 form-group ">
+                <label>N° d'article :</label>
+                <select class="form-control">
+                    <option>A123</option>
+                    <option>B123</option>
+                    <option>C123</option>
+                    <option>D123</option>
+                    <option>E123</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Code analytique :</label>
+                <input class="form-control" type="text" placeholder="Code analytique" />
+            </div>
+            <div class="col-md-6">
+                <label>N° magasin réceptionnaire : :</label>
+                <select class="form-control">
+                    <option>AB11</option>
+                    <option>CD22</option>
+                    <option>EF33</option>
+                </select>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-md-6">
+                <label>Désignation :</label>
+                <input class="form-control" type="text" placeholder="Désignation">
+            </div>
+            <div class="col-md-6">
+                <label>Quantité :</label>
+                <input class="form-control" type="number" placeholder="Quantité">
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-md-6">
+                <label>Date Réintégration :</label>
+                <input class="form-control" type="date" placeholder="yyyy-mm-dd" />
+            </div>
+            <div class="col-md-6">
+                <label>Etat :</label>
+                <input class="form-control" type="text" placeholder="etat">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button">Modifier</button>
+    </div>
+  </ng-template>
+  <!--end: Modal modifier -->
+
+  <!--begin: Modal detail -->
+  <ng-template #detailReintegration let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <div class="p-3  background-color-light border-grey br-10">
+            <h2 class="text-center">Bon de Réintégration</h2>
+        </div>
+        <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">N° d'article :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{reintergation.article?.numeroArticle}}</label>
+
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">N° magasin réceptionnaire :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{reintergation.magasin?.numeroMagasin}}</label>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Code analytique :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{reintergation.codeAnalytique}}</label>
+
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Date Réintégration :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{reintergation.date}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Désignation :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{reintergation.designation}}</label>
+
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Quantité :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{reintergation.quantite}}</label>
+                    </div>
+                </div>
+            </div>
+           <!--  <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Ref.B.S  :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">Numéro</label>
+
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Etat :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">Numéro</label>
+                    </div>
+                </div>
+            </div>  -->
+        </form>  
+        <div class="p-3 mt-2 background-color-light border-grey br-10">
+            <div class="form-group row mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <label class="col-sm-6 col-form-label text-dark font-weight-bold f-s-13">Le Responsable du centre analytique :</label>
+                        <label class="col-sm-2 col-form-label f-s-13"><br></label>
+
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Le Magasin :</label>
+                        <label class="col-sm-2 col-form-label f-s-13"><br></label>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+        <button class="btn btn-outline-success ml-2" type="button" (click)="telechargeDoucument(reintergation.id)"><i class="nav-icon i-Download font-weight-bold"></i>&nbsp;Télécharger</button>
+    </div>
+  </ng-template>

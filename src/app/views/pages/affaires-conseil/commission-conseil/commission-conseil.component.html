@@ -1,0 +1,257 @@
+<!-- begin:: Content -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-3">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fa fa-users"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						لجنة جديدة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<form class="kt-form" autocomplete="off" #form="ngForm">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="prepp"
+										[(ngModel)]="formData.nomCommission" placeholder=" اسم اللجنة  :" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" placeholder="الاختصاص  :"
+										[(ngModel)]="formData.objectif" name="nompp" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="kt-portlet__head-toolbar">
+						<div class="kt-portlet__head-wrapper">
+							<div class="kt-portlet__head-actions">
+								&nbsp;
+								<a href="javascript:; " (click)="nouvelleLigne()"
+									class="btn btn-success btn-elevate btn-icon-sm">
+									<i class="la la-plus"></i>
+									إضافة
+									أعضاء اللجنة </a>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="showRadio">
+						<!-- <div class="row">
+							<div class="col-md-12">
+								<form [formGroup]="eventEditForm" novalidate>
+									<div class="form-group">
+										<mat-radio-group [(ngModel)]="selectedStatus" formControlName="completed">
+											<mat-radio-button [value]="0"> إضافة موظف </mat-radio-button>
+											<mat-radio-button [value]="1"> إضافة منتخب </mat-radio-button>
+										</mat-radio-group>
+									</div>
+								</form>
+							</div>
+						</div> -->
+						<!-- <div *ngIf="!selectedStatus" class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="divisionAo"
+											(selectionChange)="onChangeDivision($event)"
+											[(ngModel)]="formDataPersonnel.idDivision" placeholder="القسم">
+											<mat-option *ngFor="let item of divisions" [value]="item.id">
+												{{item.libelle}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="criticiterec"
+											(selectionChange)="onChangeService($event)"
+											[(ngModel)]="formDataPersonnel.idService" placeholder="المصلحة ">
+											<mat-option *ngFor="let item of services" [value]="item.id">
+												{{item.libelle}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="crit"
+											(selectionChange)="onChangeofOptionsPerso($event)"
+											[(ngModel)]="formDataPersonnel.idPersonnel" placeholder=" اسم الموظف ">
+											<mat-option *ngFor="let item of personnels" [value]="item">{{item.nom}}
+												{{item.prenom}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="critici"
+											(selectionChange)="onChangeofOptionsRole($event)"
+											[(ngModel)]="formDataPersonnel.role.id" placeholder=" الدور  ">
+											<mat-option *ngFor="let item of roleCommissionAll" value="{{item.id}}">
+												{{item.libelle}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<button type="button" class="btn btn-outline-primary"
+								style="float: left; margin-left: 25px !important;"
+								(click)="addPersonnelCommission()">تأكيد إضافة الموظف </button>
+						</div> -->
+						<div *ngIf="selectedStatus">
+							<br>
+							<br>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<mat-select class="form-control" name="membreSession"
+												[(ngModel)]="formDataMembresCommission.membre"
+												placeholder="عضو في الدورة :">
+												<mat-option *ngFor="let item of membresCommission" [value]="item">
+													{{item.membre.nom}} {{item.membre.prenom}}</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<mat-select class="form-control" name="critici"
+												(selectionChange)="onChangeofOptionsRole($event)"
+												[(ngModel)]="formDataMembresCommission.role.id" placeholder=" الدور  ">
+												<mat-option *ngFor="let item of roleCommissionAll" value="{{item.id}}">
+													{{item.libelle}}</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+								<button type="button" class="btn btn-outline-primary"
+									style="float: left; margin-left: 25px !important;"
+									(click)="addMembreConseil($event)">تأكيد إضافة العضو </button>
+							</div>
+							<!--  <button  type="button" class="btn btn-outline-primary" (click)="onClickPE($event)">تأكيد</button>-->
+						</div>
+
+					</div>
+					<br>
+					<br>
+
+					<div class="row">
+						<!-- <div class="col-md-6">
+							<div class="kt-portlet__body kt-portlet__body--fit">
+
+								<div class="example-container mat-elevation-z8">
+
+									<mat-table [dataSource]="dataSource1" matSort>
+
+
+										<ng-container matColumnDef="nom">
+											<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef
+												mat-sort-header> الموظف </mat-header-cell>
+											<mat-cell class="firt_column chikaya_th" *matCellDef="let row ">
+												{{row.idPersonnel.nom}} {{row.idPersonnel.prenom}} </mat-cell>
+										</ng-container>
+
+										<ng-container matColumnDef="actions">
+											<mat-header-cell *matHeaderCellDef mat-sort-header> حذف الموظف
+											</mat-header-cell>
+											<mat-cell *matCellDef="let row ; let i = index">
+												<a href="javascript:;" (click)="deletePersonnel(row ,i)"
+													class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+													matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+											</mat-cell>
+										</ng-container>
+
+										<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+										<mat-row *matRowDef="let row; columns: displayedColumns;">
+										</mat-row>
+									</mat-table>
+
+								</div>
+
+							</div>
+						</div> -->
+
+						<div class="col-md-12">
+							<div class="kt-portlet__body kt-portlet__body--fit">
+
+								<div class="example-container mat-elevation-z8">
+
+									<mat-table [dataSource]="dataSource" matSort>
+
+
+										<ng-container matColumnDef="nom">
+											<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef
+												mat-sort-header> العضو </mat-header-cell>
+											<mat-cell class="firt_column chikaya_th" *matCellDef="let row ">
+												{{row.membre.membre.nom}} {{row.membre.membre.prenom}} </mat-cell>
+										</ng-container>
+
+										<!-- <ng-container matColumnDef="role">
+											<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef
+												mat-sort-header> الصفة </mat-header-cell>
+											<mat-cell class="firt_column chikaya_th" *matCellDef="let row ">
+												{{row.membre.role.libelle}} </mat-cell>
+										</ng-container> -->
+
+										<ng-container matColumnDef="actions">
+											<mat-header-cell *matHeaderCellDef mat-sort-header>
+											</mat-header-cell>
+											<mat-cell *matCellDef="let row ; let i = index">
+												<a href="javascript:;" (click)="deleteMembre(row ,i)"
+													class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+													matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+											</mat-cell>
+										</ng-container>
+
+										<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+										<mat-row *matRowDef="let row; columns: displayedColumns;">
+										</mat-row>
+									</mat-table>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" type="button" (click)="send()"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="button" (click)="backList()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

@@ -1,0 +1,141 @@
+<div class="kt-portlet__body">
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-wrapper">
+            <div class="kt-portlet__head-actions">
+                &nbsp;
+                <a href="javascript:; " *ngxPermissionsOnly="['canAddPrestataireConsultation']" (click)="nouvelleLigne()" class="btn btn-success btn-elevate btn-icon-sm">
+                    <i class="la la-plus"></i>{{ 'PAGES.MARCHE.PRESTATAIRE.TITRE_NEW' | translate }}</a>
+            </div>
+        </div>
+    </div>
+    <div class="espace_bloc"></div>
+    <div class="row" *ngxPermissionsOnly="['accessToIndexPrestataireAo']">
+        <div *ngIf="showArticleRef" class="col-md-4">
+            <div class="form-group">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" name="typelll" (selectionChange)="onChangeofOptions1($event)" placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.NUM_RC' | translate }}">
+                            <div class="cursor">
+                                <input class="form-control" name="srch" (keyup)="onKey($event.target.value)" autofocus>
+                                <i></i> </div>
+                            <mat-option *ngFor="let item of dataArray" value="{{item.id}}">
+                                {{item.rc}} ---- {{item.nom}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            </div>
+            <div *ngIf="showArticleRef" class="col-md-4">
+            <mat-form-field class="example-full-width"	>
+											<input	matInput	type="number"	class="form-control"
+												name="nomAr"
+												placeholder="{{
+													'PAGES.montantPropose'
+														| translate
+												}} :"
+												[(ngModel)]="montantPropose"
+												required
+											/>
+											<mat-icon matSuffix
+												><i class="far fa-keyboard"></i
+											></mat-icon>
+										</mat-form-field>
+        </div>
+        <div id="swapFire" *ngIf="showArticleRef" class="col-md-4"><button style="/* float: right; */margin-top: 24px !important;/* width: 100px !important; */;" class="btn btn-primary" (click)="send()"><i class="fas fa-check"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }} </button>
+        </div>
+    </div>
+    <div  class="kt-portlet__body kt-portlet__body--fit">
+
+        <div class="example-container mat-elevation-z8">
+            <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="rc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.prestataire.rc?row.prestataire.rc:"-"}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="nom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }}
+                    </th>
+                    <td mat-cell *matCellDef="let row"> {{row.prestataire.nom?row.prestataire.nom:"-"}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="mail">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.MARCHE.PRESTATAIRE.EMAIL' | translate }}</th>
+                    <td mat-cell *matCellDef="let row"> {{row.prestataire.mail?row.prestataire.mail:"-"}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tel">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }}</th>
+                    <td mat-cell *matCellDef="let row"> {{row.prestataire.tel?row.prestataire.tel:"-"}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="idFisc">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.MARCHE.PRESTATAIRE.IF' | translate }}</th>
+                    <td mat-cell *matCellDef="let row"> {{row.prestataire.idFisc?row.prestataire.idFisc:"-"}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ice">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'PAGES.MARCHE.PRESTATAIRE.ICE' | translate }}</th>
+                    <td mat-cell *matCellDef="let row"> {{row.prestataire.ice?row.prestataire.ice:"-"}} </td>
+                </ng-container>
+                <ng-container matColumnDef="pourcentage">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Pourcentage(%)</th>
+                    <td mat-cell *matCellDef="let row"> {{row.pourcentageOffer | number:'2.1-3'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="statut">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>statut</th>
+                    <td mat-cell *matCellDef="let row"> {{row.statut?row.statut?.libelle:"-"}} </td>
+                </ng-container>
+                <ng-container matColumnDef="actions" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <td mat-cell *matCellDef="let row" >
+                        <a href="javascript:;" *ngxPermissionsOnly="['accessToIndexPrestataireAo']"(click)="deletePrestation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                        <div *ngIf="row.statut!=null">
+                            <a href="javascript:;"  *ngxPermissionsOnly="['accessToIndexPrestataireAo']"(click)="lettreMaintien(row.id,row.prestataire.nom,row.statut?.libelle)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md" ><i class="la la-print"></i></a>
+
+                        </div>
+                        <div *ngIf="accepter == false && row?.statut?.libelle!='Accepté'">
+                        <a href="javascript:;" *ngxPermissionsOnly="['accessToIndexPrestataireAo']" (click)="valideofferDeposer(row.id)" class="btn btn-sm  btn-icon btn-success btn-icon-md" matTooltip="accepter l'offer"><i class="la la-plus"></i></a>
+                      </div>
+                      <div *ngIf="refuser == false && row?.statut?.libelle!='Réfusé'">
+                        <a href="javascript:;" *ngxPermissionsOnly="['accessToIndexPrestataireAo']" (click)="refuseofferDeposer(row.id)" class="btn btn-sm  btn-icon btn-danger btn-icon-md" matTooltip="refusé l'offer "><i class="la la-recycle"></i></a>
+                    </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+            </table>
+            <div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+            </div>
+            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                </mat-progress-spinner>
+            </mat-card>
+            <mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+            <hr>
+        </div>
+    </div>
+</div>
+<!-- end:: card section 2 -->
+<hr>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head-label" align="right">
+    <button _ngcontent-dkp-c41="" class="btn btn-info btn-md" type="reset" (click)="back()">
+		<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+		{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+</div>
+<!--Action Section :: end-->

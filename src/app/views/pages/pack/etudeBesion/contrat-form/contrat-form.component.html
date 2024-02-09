@@ -1,0 +1,543 @@
+<!-- begin:: Content section 2 -->
+
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<!-- <span class="kt-portlet__head-icon">
+							<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
+						</span> -->
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						Ajouter un	contrat de droit public						</h3>
+					</div> 
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>{{ 'PAGES.MARCHE.AO.OBJET' | translate }}</label>
+									<input matInput  required type="text" class="form-control" name="objet" [(ngModel)]="Contrat.objet"  placeholder="" >
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Reférence du contrat</label>
+									<input matInput  required type="number" class="form-control" name="refDeContrat" [(ngModel)]="Contrat.refDeContrat"  placeholder="" >
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						
+					<!-- </div>
+					<div class="row"> -->
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+									<label> {{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }} :</label>
+                                    <mat-select class="form-control" [(ngModel)]="Contrat.typePrestation.id" name="typePrestation" (selectionChange)="onChangeTypePrestationAo($event)" placeholder="" >
+                                        <mat-option *ngFor="let item of lisTypePrestationAo" value="{{item.id}}">
+                                            {{item.libelle}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+						<!-- <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Cout du contrat</label>
+									<input matInput  required type="number" class="form-control" name="cout" [(ngModel)]="Contrat.cout"  placeholder="" >
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div> -->
+					<!-- </div>
+				
+					<div class="row"> -->
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Délai de livraison :</label>
+									<input matInput class="form-control"  name="delaiLivraison"
+										[(ngModel)]="Contrat.delaiLivraison" type="text"
+										placeholder="">
+										<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>{{ 'PAGES.MARCHE.BC.DATE_RECEPTION' | translate }}</label>
+									<input matInput class="form-control" [matDatepicker]="picker" name="dateLivraison"
+										[(ngModel)]="Contrat.dateLivraison"
+										placeholder="">
+									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+					<!-- </div>
+					<div class="row"> -->
+						
+				
+						<!-- <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Raison sociale :</label>
+									<input type="text" matInput class="form-control"  name="raisonSociale"
+										[(ngModel)]="Contrat.raisonSociale"
+										placeholder="">
+										<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div> -->
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Population Cible :</label>
+									<input type="text" matInput class="form-control"  name="populationCible"
+										[(ngModel)]="Contrat.populationCible"
+										placeholder="">
+										<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div>
+					<!-- </div>
+					<div class="row">
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Montant du contrat :</label>
+									<input type="number" matInput class="form-control"  name="montantDeContrat"
+										[(ngModel)]="Contrat.montantDeContrat"
+										placeholder="">
+										<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div> -->
+					
+						<div class="col-md-6" >
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Estimation :</label>
+									<input type="number" matInput class="form-control"  name="estimation"
+										[(ngModel)]="Contrat.estimation"
+										placeholder="">
+										<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> {{ 'PAGES.MARCHE.AO.TYPE_AO' | translate }}:
+									</label>
+									<mat-select class="form-control" name="typeMarche" [(ngModel)]="Contrat.typeMarche.id" (selectionChange)="onChangeTypeMarche($event)" placeholder="">
+										<mat-option *ngFor="let item of typeMarcheAll" value="{{item.id}}">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div> 
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Numéro du marché</label>
+									<input matInput  required type="number" class="form-control" name="cout" [(ngModel)]="Contrat.numMarche"  placeholder="" >
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					
+					</div> -->
+						<!-- <div class="row" *ngIf="isVisible11==true">
+							<div class="col-md-6" >
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<label>{{
+											'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TYPE'
+												| translate
+										}}</label>
+										<mat-select
+											class="form-control"
+											name="typePrestAo"
+											(selectionChange)="onChangeType($event)"
+											placeholder=""
+										>
+											<mat-option
+												value="Consultation Architecturale Ouvert"
+											>
+												Consultation Architecturale Ouvert
+											</mat-option>
+											<mat-option
+												value="Consultation Architecturale négocié"
+											>
+												Consultation Architecturale négocié
+											</mat-option>
+											
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+						
+						</div> -->
+						<!-- <div class="row" *ngIf="isVisible12==true">
+							<div
+							class="kt-portlet__head-toolbar"
+							style="padding-bottom: 6px"
+						>
+							<div class="kt-portlet__head-wrapper">
+								<div class="kt-portlet__head-actions">
+									<a
+										href="javascript:; "
+										(click)="openDialogLotMarche()"
+										class="btn btn-success btn-elevate btn-icon-sm"
+									>
+										<i class="la la-plus"></i> Nouveau lot
+									</a>
+								</div>
+							</div>
+						</div>
+						<table class="table pj" width="100%">
+							<thead style="background-color: #eaeaea">
+								<tr>
+									<td class="boder-table">Lot</td>
+									<td class="boder-table">Objet (Fr)</td>
+									<td class="boder-table">caution</td>
+									<td class="boder-table">Montant (Dhs)</td>
+									<td class="boder-table">Actions</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of lotMarcheDataSource">
+									<td class="boder-table">{{ item.numLot }}</td>
+									<td class="boder-table">
+										{{
+											item.objetFr
+												? item.objetFr.length > 50
+													? (item.objetFr | slice: 0:50) +
+													  "..."
+													: item.objetFr
+												: "-"
+										}}
+										<a
+											href="javascript:void(0);"
+											*ngIf="item.objetFr.length > 50"
+											matTooltip="{{ item.objetFr }}"
+											><i class="fas fa-info-circle"></i
+										></a>
+									</td>
+								
+									<td class="boder-table">
+										{{
+											item.caution
+												? (item.caution | macurrency)
+												: 0
+										}}
+									</td>
+									<td class="boder-table">
+										{{ item.budget | macurrency }}
+									</td>
+									<td class="boder-table" let i=index>
+										<button
+											type="button"
+											(click)="deleteLotMArche(i)"
+											class="
+												btn
+												btn-sm
+												btn-clean
+												btn-icon
+												btn-danger
+												btn-icon-md
+												btn_table_delete
+											"
+											matTooltip="{{
+												'PAGES.GENERAL.DELETE' | translate
+											}}"
+										>
+											<i class="icon la la-trash"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</div> -->
+				</div>
+			</div>
+		</div>
+		<!-- BEGIN :: ATTCHEMENETS -->
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<!-- <span class="kt-portlet__head-icon">
+							<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
+						</span> -->
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<!-- start section::edit file form -->
+							<div class="row">
+								<div class="col-md-2 show_port input-group">
+									<mat-form-field class="example-full-width">
+										<label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+										<mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+											<mat-option *ngFor="let item of unites" [value]="item">{{item.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+								<div class="col-md-2" *ngIf="isVisible13==true">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<label> Label:
+											</label>
+											<input matInput type="text" class="form-control" name="LabelPj"    [(ngModel)]="formPj.LabelPj" placeholder="" >
+				
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-6 show_port input-group">
+									<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+										<label class="input-group-btn">
+											<span class="btn btn-info">
+												{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" (change)="save($event)" id="customFile" style="display: none;" multiple>
+											</span>
+										</label>
+										<input id="test" type="text" class="form-control" readonly>
+									</form>
+								</div>
+								<div class="col-md-2" style="padding-top: 27px;">
+									<button class="btn btn-primary" type="button" (click)="validerPj()" style="position: absolute;right: 0px;">
+										{{ 'PAGES.GENERAL.SAVE' | translate }}
+									</button>
+								</div>
+							</div>
+							
+							<!-- end section::edit file form -->
+							<hr>
+							<!-- begin::file datasource -->
+							<div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+	
+								<mat-table [dataSource]="dataSource1" matSort>
+									<!-- type Column -->
+								<ng-container matColumnDef="type">
+									<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+										{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+									<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+								</ng-container>
+								<!-- label Column -->
+								<ng-container matColumnDef="label">
+									<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+										Label</mat-header-cell>
+									<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.LabelPj?row.LabelPj:"-"}} </mat-cell>
+								</ng-container>
+									<!-- file name Column -->
+									<ng-container matColumnDef="nomDoc">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>
+											{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+										<mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+									</ng-container>
+									<ng-container matColumnDef="actions">
+										<mat-header-cell *matHeaderCellDef mat-sort-header>
+											{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+										</mat-header-cell>
+										<mat-cell *matCellDef="let row; let i=index">
+											<button type="button" (click)="onDeletePj(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+												<i class="icon la la-trash"></i>
+											</button>
+										</mat-cell>
+									</ng-container>
+	
+									<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+									<mat-row *matRowDef="let row; columns: displayedColumns1;">
+									</mat-row>
+								</mat-table>
+	
+							</div>
+							<!-- end::file datasource -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+
+				<div class="kt-portlet__head-label">
+					
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						La gestion des prestataires
+					</h3>
+				</div>
+			</div>
+
+			<div class="kt-portlet__head-toolbar">
+				<div class="kt-portlet__head-wrapper">
+					<div class="kt-portlet__head-actions">
+						&nbsp;
+						<a href="javascript:; "  (click)="nouvelleLigne()" class="btn btn-success btn-elevate btn-icon-sm">
+							<i class="la la-plus"></i>{{ 'PAGES.MARCHE.PRESTATAIRE.TITRE_NEW' | translate }}</a>
+					</div>
+				</div>
+			</div><br><br>
+			<div class="espace_bloc"></div>
+			<div class="row" >
+				<div  class="col-md-4" *ngIf="showArticleRef">
+					<div class="form-group">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-select #mySelect class="form-control" name="typelll" (selectionChange)="onChangeofOptions1($event)" placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.NUM_RC' | translate }}">
+									<div class="cursor">
+										<input class="form-control" name="srch" (keyup)="onKey($event.target.value)" autofocus>
+										<i></i> </div>
+									<mat-option *ngFor="let item of dataArray" value="{{item.id}}">
+										{{item.rc}} ---- {{item.nom}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+					</div>
+					<div  class="col-md-4" *ngIf="showArticleRef">
+					<mat-form-field class="example-full-width"	>
+													<input	matInput	type="number"	class="form-control"
+														name="nomAr"
+														placeholder="{{
+															'PAGES.montantPropose'
+																| translate
+														}} :"
+														[(ngModel)]="montantPropose"
+														required
+													/>
+													<mat-icon matSuffix
+														><i class="far fa-keyboard"></i
+													></mat-icon>
+												</mat-form-field>
+				</div>
+				<div id="swapFire" *ngIf="showArticleRef"  class="col-md-4"><button style="/* float: right; */margin-top: 24px !important;/* width: 100px !important; */;" class="btn btn-primary" (click)="send()"><i class="fas fa-check"></i>
+						{{ 'PAGES.GENERAL.SAVE' | translate }} </button>
+				</div>
+			</div>
+			<div  class="kt-portlet__body kt-portlet__body--fit">
+		
+				<div class="example-container mat-elevation-z8">
+					<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+		
+						<ng-container matColumnDef="rc">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}
+							</th>
+							<td mat-cell *matCellDef="let row"> {{row.rc?row.rc:"-"}} </td>
+						</ng-container>
+		
+						<ng-container matColumnDef="nom">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }}
+							</th>
+							<td mat-cell *matCellDef="let row"> {{row.nom?row.nom:"-"}}</td>
+						</ng-container>
+		
+						<ng-container matColumnDef="mail">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.MARCHE.PRESTATAIRE.EMAIL' | translate }}</th>
+							<td mat-cell *matCellDef="let row"> {{row.mail?row.mail:"-"}} </td>
+						</ng-container>
+		
+						<ng-container matColumnDef="tel">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }}</th>
+							<td mat-cell *matCellDef="let row"> {{row.tel?row.tel:"-"}} </td>
+						</ng-container>
+		
+						<ng-container matColumnDef="idFisc">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.MARCHE.PRESTATAIRE.IF' | translate }}</th>
+							<td mat-cell *matCellDef="let row"> {{row.idFisc?row.idFisc:"-"}}
+							</td>
+						</ng-container>
+		
+						<ng-container matColumnDef="ice">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.MARCHE.PRESTATAIRE.ICE' | translate }}</th>
+							<td mat-cell *matCellDef="let row"> {{row.ice?row.ice:"-"}} </td>
+						</ng-container>
+						<ng-container matColumnDef="montant">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header> {{
+								'PAGES.montantPropose'
+									| translate
+							}} :</th>
+							<td mat-cell *matCellDef="let row"> {{row.montantPropose?row.montantPropose:"-"}} </td>
+						</ng-container>
+					
+						<ng-container matColumnDef="actions" >
+							<th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+							<td mat-cell *matCellDef="let row" >
+								<a href="javascript:;" (click)="deletePrestation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+								
+						</td> 
+						</ng-container>
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;">
+						</tr>
+					</table>
+					<div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+						{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+					</div>
+					<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+						<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+						</mat-progress-spinner>
+					</mat-card>
+					<mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+					<hr>
+				</div>
+			</div></div>
+		</div> -->
+		<!-- end:: card section 2 -->
+		<hr>
+		<!--Action Section :: begin-->
+		<!-- <div class="kt-portlet__head-label" align="right">
+			<button _ngcontent-dkp-c41="" class="btn btn-info btn-md" type="reset" (click)="back()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div> -->
+		<!--Action Section :: end-->		<!-- END :: ATTCHEMENETS -->
+	</div>
+	<!--Action Section :: begin--> 
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit"
+				(click)="onEditBC()">
+				<i class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<!-- <button class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+				(click)="backList()">
+				<i class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button> -->
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

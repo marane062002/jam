@@ -1,0 +1,365 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter un mort naturel:
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<form *ngIf="info" class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nom</mat-label>
+								<input
+                                    readonly
+                                    [value]="info.nom"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prénom</mat-label>
+								<input
+                                [value]="info.prenom"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN</mat-label>
+								<input
+                                [value]="info.cin"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nationalité</mat-label>
+                                <input
+                                readonly
+                                [value]="info.nationalite"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								<!-- <mat-select
+									matNativeControl
+                                    formControlName="nationalite"
+									class="form-control"
+								> -->
+                                <!-- <mat-option  value="Marocain">Marocain</mat-option>
+                                <mat-option *ngIf="ajoutForm.get('nationalite').value === 'Autre'" value="Autre">Autre -->
+                                    <!-- <input
+                                    formControlName="nationalite"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/> -->
+                                <!-- </mat-option>
+                                
+								</mat-select> -->
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date de naissance</mat-label>
+								<input
+                                [value]="info.date | date"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Sexe</mat-label>
+                                <input
+                                [value]="info.sexe"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								<!-- <mat-select
+                                formControlName="sexe"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option  value="Homme">Homme</mat-option>
+                                <mat-option  value="Femme">Femme</mat-option>
+
+								</mat-select> -->
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Commune: </label>
+                                <input
+                               
+                                readonly  [value]="info.commune.libelle"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								<!-- <mat-select
+                                aria-readonly="true"
+                                formControlName="commune"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option *ngFor="let c of info.commune" [value]="c"></mat-option>
+								</mat-select> -->
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Arrondissement: </label>
+                                <input
+                                [value]="info.arrondissement.libelle"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								<!-- <mat-select
+									matNativeControl 
+									class="form-control"
+                                    formControlName="arrondissement"
+								>
+                                 <mat-option *ngFor="let arr of arrondissement" [value]="arr">{{arr.libelle}}</mat-option>
+									
+								</mat-select> -->
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Quartier: </mat-label>
+                                <input
+                                [value]="info.quartier.libelle"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								<!-- <mat-select
+                                formControlName="quartier"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option *ngFor="let q of quartier" [value]="q">{{q.libelle}}</mat-option>
+                            </mat-select> -->
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Lieu de décés</mat-label>
+								<input
+                                [value]="info.lieu"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Adresse de résidence</mat-label>
+								<input
+                                [value]="info.adresseResidence"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Constateur</mat-label>
+                                <input
+                                [value]="info.constateur.nom"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								<!-- <mat-select
+									matNativeControl
+									class="form-control"
+                                    formControlName="constateur"
+
+								>
+                                <mat-option *ngFor="let cnst of constateur" [value]="cnst">{{cnst.nom}}</mat-option>
+								</mat-select> -->
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Cause</mat-label>
+                                <input
+                                [value]="info.cause"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Constater à</mat-label>
+                                <input
+                                [value]="info.constater"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date de décés</mat-label>
+								<input
+                                [value]="info.dateDeces"
+									readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Description de décés</mat-label>
+                                <input
+                                [value]="info.descriptionDec"
+                                readonly
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+								
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									<button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u mt-1"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+								
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

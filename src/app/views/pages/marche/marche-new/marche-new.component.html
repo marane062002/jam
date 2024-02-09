@@ -1,0 +1,279 @@
+<!-- begin:: Content -->
+<form class="kt-form" autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="fa fa-handshake"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							{{ 'PAGES.MARCHE.MARCHE.LIBELLE' | translate }}
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="numMarche"
+										[(ngModel)]="formData.numMarche"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.NUM_MARCHE' | translate }} :" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="objetMarche"
+										[(ngModel)]="formData.objet"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }} :" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="mntAdj"
+										[(ngModel)]="formData.mntAdjucataire"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.MONTANT_PROPOSE' | translate }}:" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="cautDef"
+										[(ngModel)]="formData.cautionDefinitive"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.CAUTION_DEFINITIVE' | translate }}:"
+										required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="modePassMarche"
+										[(ngModel)]="formData.modePassation.id"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.MODE_PASSATION' | translate }}">
+										<mat-option *ngFor="let item of AllModePassation" [value]="item.id">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" [disabled]=true class="form-control" name="mntEngage"
+										[(ngModel)]="formData.mntEngage"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.MONTANT_ENGAGE' | translate }}:">
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="prctRetenu"
+										[(ngModel)]="formData.prctRetenu"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.POURCENTAGE_RETENU' | translate }}:"
+										required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="plafondRetenu"
+										[(ngModel)]="formData.plafondRetenu"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.PLAFOND_RETENU' | translate }} :" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="divisionMarche"
+										(selectionChange)="onChangeDivision($event)" [(ngModel)]="formData.division"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.DIVISION' | translate }} ">
+										<mat-option *ngFor="let item of divisions" [value]="item.id">{{checkLang=='ar'?item.libelle:item.libelleFR}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="serviceMarche" [(ngModel)]="formData.service"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.SERVICE' | translate }}  ">
+										<mat-option *ngFor="let item of services" [value]="item.id">{{checkLang=='ar'?item.libelle:item.libelleFR}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<textarea matInput type="text" class="form-control" name="descMarche"
+										[(ngModel)]="formData.descriptif"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.DESCRIPTIF' | translate }} :"
+										required></textarea>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput class="form-control" [matDatepicker]="picker1"
+										name="dateDebutMarche" [(ngModel)]="formData.dateDebutMarche"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.DATE_DEBUT_MARCHE' | translate }}  ">
+									<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput class="form-control" [matDatepicker]="picker2" name="Notif"
+										[(ngModel)]="formData.dateNotification"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.DATE_NOTIFICATION' | translate }}  ">
+									<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker2></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="number" class="form-control"
+										placeholder="{{ 'PAGES.MARCHE.MARCHE.DELAIS_EXECUTION' | translate }}"
+										[(ngModel)]="formData.delaisExecution" name="delaisExecution">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<h4 class="table-prix">
+						{{ 'PAGES.MARCHE.MARCHE.ADJUCATAIRE' | translate }}
+					</h4>
+					<br>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="nom"
+										placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }} :"
+										[(ngModel)]="prestataire.nom" required />
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="tel"
+										placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }} :"
+										[(ngModel)]="prestataire.tel" />
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="mail"
+										placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.EMAIL' | translate }}  :"
+										[(ngModel)]="prestataire.mail" />
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="rcr"
+										placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}  :"
+										[(ngModel)]="prestataire.rc" />
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="ice"
+										placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.ICE' | translate }} :"
+										[(ngModel)]="prestataire.ice" />
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="idFisc"
+										placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.IF' | translate }} :"
+										[(ngModel)]="prestataire.idFisc" />
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<textarea matInput type="text" class="form-control" name="adresse"
+										placeholder="{{ 'PAGES.MARCHE.PRESTATAIRE.ADRESSE' | translate }}    :"
+										[(ngModel)]="prestataire.adresse"></textarea>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button _ngcontent-dkp-c41=""
+				class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<!-- <button _ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button> -->
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

@@ -1,0 +1,295 @@
+<!-- 
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="kt-portlet">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<h3 class="">
+							رقم المرحلة :   
+							 {{phase.id}}
+						</h3>
+					</div>
+					<div class="kt-portlet__head-label">
+						<h3 class="">
+							وضع المرحلة : <span class="kt-font-brand kt-font-bold">   {{phase.statut.libelle}}</span>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-lg-6">	
+			<div class="kt-portlet">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon2-checking kt-font-inverse-brand"></i>
+						</span>
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							معلومات  مرحلة الصفقة
+						</h3>
+					</div>
+				</div>
+			
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									الموضوع :
+								</div>
+								<div class="col-md-9 my-auto">
+									{{phase.intitule}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									النسبة المئوية : 
+								</div>
+								<div class="col-md-9 my-auto">
+									{{phase.budget}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									المدة : 
+								</div>
+								<div class="col-md-9 my-auto">
+									{{phase.duree}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									تاريخ البدء:
+								</div>
+								<div class="col-md-3 my-auto">
+									{{phase.dateDebut |date: 'yyyy-MM-dd'}}
+								</div>
+								<div class="col-md-3 my-auto kt-font-bold">
+									الموعد النهائي
+								</div>
+								<div class="col-md-3 my-auto">
+									{{phase.dateEcheance |date: ' hh:mm'}}
+								</div>
+                            </div>
+                            <div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									ملاحظات : 
+								</div>
+								<div class="col-md-9 my-auto">
+									{{phase.remarques}}
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div class="col-lg-6">	
+			<div class="kt-portlet">
+				<div class="kt-portlet__head kt-bg-portlet-4">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-information kt-font-inverse-brand"></i>
+						</span>
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							فاتورة مرحلة الصفقة
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									رقم الفاتورة :
+								</div>
+								<div class="col-md-9 my-auto">
+									{{facture.NumFacture}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									تاريخ التلقي :
+								</div>
+								<div class="col-md-3 my-auto">
+									{{facture.reclamation.dateDebutTraitement |date: 'dd/MM/yyyy '}}
+								</div>
+								<div class="col-md-3 my-auto kt-font-bold">
+									المدة النهائية للدفع :
+								</div>
+								<div class="col-md-3 my-auto">
+									{{reclamation.reclamation.dateDebutTraitement |date: 'hh:mm'}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									الموعد النهائي :
+								</div>
+								<div class="col-md-3 my-auto">
+									{{reclamation.reclamation.dateFinTraitement |date: 'dd/MM/yyyy  '}}
+								</div>
+								<div class="col-md-3 my-auto kt-font-bold">
+									ساعةالانتهاء :
+								</div>
+								<div class="col-md-3 my-auto">
+									{{reclamation.reclamation.dateFinTraitement |date: ' hh:mm'}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold ">
+									تاريخ الإغلاق :
+								</div>
+								<div class="col-md-3 my-auto">
+									{{reclamation.reclamation.cloture |date: 'dd/MM/yyyy '}}
+								</div>
+								<div class="col-md-3 my-auto kt-font-bold">
+									ساعة الإغلاق :
+								</div>
+								<div class="col-md-3 my-auto">
+									{{reclamation.reclamation.cloture |date: 'hh:mm'}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									قناة الإجابة :
+								</div>
+								<div class="col-md-9 my-auto">
+									{{reclamation.reclamation.canalreponse.libelle}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									ملاحظات :
+								</div>
+								<div class="col-md-9 my-auto">
+									{{reclamation.reclamation.observations}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="kt-portlet">
+				<div class="kt-portlet__head kt-bg-portlet-5">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-attachment"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							الوثائق المرفقة
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+						<thead>
+							<tr>
+								<td width= "50%">الوثائق المرفقة</td>
+								<td>التحميل</td>
+							</tr>
+						</thead>
+							<tbody> 
+								<tr *ngFor="let item of pjs">
+									<td> {{item.name }}</td>
+									<td>
+											<button type="button" class="btn btn_piecejoint_down" (click)="onClickPjName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					</div>
+					
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="kt-portlet">
+				<div class="kt-portlet__head kt-bg-portlet-5">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-attachment"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							
+						الوثائق المرفقة 
+						للمعالجة</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+						<thead>
+							<tr>
+								<td width= "50%"> 
+									الوثائق المرفقة
+									للمعالجة
+								</td>
+								<td>التحميل</td>
+							</tr>
+						</thead>
+							<tbody>
+								<tr *ngFor="let item of pjstraitement">
+									<td> {{item.name}}</td>
+									<td>
+											<button type="button" class="btn btn_piecejoint_down" (click)="onClickPjTraitementName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					</div>
+					
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label" align="right">
+						<button type="button" class="btn btn-info"><i class="fa fa-print"></i> الطبع</button>
+						<button type="button" class="btn btn-label-dark" routerLink="/reclamations/reclamation-detail"><i class="flaticon2-list-2"></i> لائحة الشكايات</button>
+					</div>
+					<div class="espace_bloc"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>-->

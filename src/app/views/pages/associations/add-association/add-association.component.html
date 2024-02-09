@@ -1,0 +1,332 @@
+<!--begin::Form-->
+<form novalidate [formGroup]="addForm" autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<span class="kt-portlet__head-icon">
+					<i class="fas fa-address-card kt-font-inverse-brand"></i>
+				</span>
+				<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.ASSOCIATION.TITRE_SHOW" | translate }}
+				</h3>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<!-- 1 ======================================= -->
+			<div class="row">
+				<div class="col-md-2">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="prioriter" placeholder="{{ 'PAGES.ASSOCIATION.NUM_SEQ' | translate }} :" />
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="nom" placeholder="{{ 'PAGES.ASSOCIATION.NOM' | translate }} :" required />
+							<mat-error *ngIf="isControlHasError('nom', 'required')">
+								<strong>{{ "AUTH.VALIDATION.REQUIRED_FIELD" | translate }}</strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group" style="margin: 20px 5px">
+						<mat-checkbox formControlName="isInterest" class="example-margin">{{ "PAGES.ASSOCIATION.PUBLIC_INTEREAT" | translate }}</mat-checkbox>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="villeActivite" (selectionChange)="villeChanged($event)" placeholder="{{ 'PAGES.ASSOCIATION.VILLE' | translate }} :">
+								<mat-option [value]="null"> ---{{ "PAGES.ASSOCIATION.VILLE" | translate }}---</mat-option>
+								<mat-option *ngFor="let ville of villes" [value]="ville">
+									{{ ville.libelle }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="communeActivite" (selectionChange)="arrondissementChanged()" placeholder="{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }} :">
+								<mat-option [value]="null"> ---{{ "PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT" | translate }}--- </mat-option>
+								<mat-option *ngFor="let arr of arrondissements" [value]="arr.id">
+									{{ arr.libelle }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-12" id="autreAnnxe">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="autreAnnexe" placeholder="{{ 'PAGES.ASSOCIATION.FICHE_DEPOT.AUTRE_ANNEXE' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- Adresse -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control" class="example-full-width">
+							<textarea rows="4" #inputAddresse maxlength="255" class="form-control" formControlName="adresseLocal" name="adresseLocal" matInput placeholder="{{ 'PAGES.ASSOCIATION.ADRESSE' | translate }} :"></textarea>
+							<mat-hint align="end">{{ inputAddresse.value?.length || 0 }}/255</mat-hint>
+							<mat-icon matSuffix><i class="fas fa-map-marker-alt"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- Email,fax,agence,numCompte -->
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="email" placeholder="{{ 'PAGES.ASSOCIATION.EMAIL' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="fax" placeholder="{{ 'PAGES.ASSOCIATION.TEL' | translate }} :" />
+							<mat-icon matSuffix><i class="fas fa-phone-square-alt"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="agenceBanquaire" placeholder="{{ 'PAGES.ASSOCIATION.AGENCE_BANQUAIRE' | translate }} :" />
+							<mat-icon matSuffix><i class="fas fa-landmark"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="numeroCompte" placeholder="{{ 'PAGES.ASSOCIATION.N_COMPTE' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- 3 ======================================= -->
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="nomPresident" placeholder="{{ 'PAGES.ASSOCIATION.NOM_PRESIDENT' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker1" placeholder="{{ 'PAGES.ASSOCIATION.DATE_CREATION' | translate }} :" formControlName="dateCreation" />
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+									<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i> </mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker2" placeholder="{{ 'PAGES.ASSOCIATION.DATE_PV_CHANGEMENT_BUREAU' | translate }} :" formControlName="datePvChangementBureau" />
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker2">
+									<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i> </mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker2></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="periodiciteBureau" placeholder="{{ 'PAGES.ASSOCIATION.PERIODICITE' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- 5 ======================================= -->
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="statutAssociation" placeholder="{{ 'PAGES.ASSOCIATION.STATUT' | translate }} :">
+								<mat-option [value]="null">---{{ "PAGES.ASSOCIATION.STATUT" | translate }}--- </mat-option>
+								<mat-option *ngFor="let statut of statuts" [value]="statut">
+									{{ statut.libelle }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<!-- <div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="classement" placeholder="{{ 'PAGES.ASSOCIATION.CLASSEMENT' | translate }} :">
+								<mat-option [value]="null"> ---{{ "PAGES.ASSOCIATION.CLASSEMENT" | translate }}--- </mat-option>
+								<mat-option *ngFor="let c of classements" [value]="c.libelle">
+									{{ c.libelle }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div> -->
+
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="typeActiviteAssociation" (selectionChange)="typeChanged()" placeholder="{{ 'PAGES.ASSOCIATION.TYPE_ACTIVITE' | translate }} :">
+								<mat-option [value]="null"> ---{{ "PAGES.ASSOCIATION.TYPE_ACTIVITE" | translate }}---</mat-option>
+								<mat-option *ngFor="let type of typeActivites" [value]="type">
+									{{ type.libelle }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<!-- classification de l'association -->
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.ASSOCIATION.CLASSIFICATION" | translate }} :</mat-label>
+							<mat-select class="form-control" formControlName="classification">
+								<mat-option value="نشاط مستمر">{{ "PAGES.ASSOCIATION.X" | translate }}</mat-option>
+								<mat-option value="نشطة">{{ "PAGES.ASSOCIATION.Y" | translate }}</mat-option>
+								<mat-option value="متوسطة النشاط">{{ "PAGES.ASSOCIATION.Z" | translate }} </mat-option>
+								<mat-option value="موسمية النشاط">{{ "PAGES.ASSOCIATION.E" | translate }}</mat-option>
+								<mat-option value="جامدة النشاط">{{ "PAGES.ASSOCIATION.F" | translate }}</mat-option>
+								<mat-option value="بدون تصنيف">{{ "PAGES.ASSOCIATION.G" | translate }} </mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row" id="autreSpecialite">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="autreType" placeholder="{{ 'PAGES.ASSOCIATION.FICHE_DEPOT.AUTRE_SPECIALITE' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="number" class="form-control" formControlName="nbrMembreBureau" placeholder="{{ 'PAGES.ASSOCIATION.NBR_MEMBRE_BUREAU' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="number" class="form-control" formControlName="nbrHomme" placeholder="{{ 'PAGES.ASSOCIATION.NBR_HOMME' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="number" class="form-control" formControlName="nbrFemme" placeholder="{{ 'PAGES.ASSOCIATION.NBR_FEMME' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<!-- <div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="specialisation" placeholder="{{ 'PAGES.ASSOCIATION.SPECIALISATION' | translate }} :" />
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div> -->
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control" class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" formControlName="observations" name="observations" matInput placeholder="{{ 'PAGES.ASSOCIATION.OBSERVATION' | translate }} :"></textarea>
+							<mat-hint align="end">{{ input.value?.length || 0 }}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- *********** Information fiche de depot *************-->
+</form>
+<!-- end :: section form -->
+
+<!-- end section attachements-->
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.GENERAL.ATTACHEMENT" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-6 show_port input-group">
+				<form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm" style="display: -webkit-inline-box; margin-inline-start: 98px">
+					<label class="input-group-btn">
+						<span class="btn btn-info"> {{ "PAGES.ATTCHEMENTS.SELECT_FILE" | translate }}<input type="file" name="file" (change)="fileChange($event)" formControlName="_file" id="customFile" style="display: none" multiple /> </span>
+					</label>
+					<input type="text" class="form-control" readonly />
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End attachement section-->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onSubmit()" [disabled]="addForm.invalid" [ngClass]="{ 'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading }">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ "PAGES.GENERAL.SAVE" | translate }}
+		</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ "PAGES.GENERAL.RESET" | translate }}
+		</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

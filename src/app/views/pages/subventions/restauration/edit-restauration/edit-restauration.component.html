@@ -1,0 +1,151 @@
+<form novalidate [formGroup]="addForm" autocomplete="off">
+
+
+    <!-- begin section -->
+    <div class="kt-portlet portlet-3">
+        <div class="kt-portlet__head kt-bg-portlet-1">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="fas fa-utensils  kt-font-inverse-brand"></i>
+                </span>
+                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                    {{ 'PAGES.SUBVENTION.RESTAU' | translate }}
+                </h3>
+            </div>
+        </div>
+        <!-- < class="kt-portlet__body" formGroupName="restauration"> -->
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="nombrepersonne" placeholder="{{ 'PAGES.SUBVENTION.NBR_PERSONNE' | translate }} :" value="">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group" formGroupName="fournisseurRestauration">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="id" placeholder="{{ 'PAGES.SUBVENTION.FOURNISSEUR' | translate }} :" required>
+                                <mat-option [value]=null>
+                                    ---{{ 'PAGES.SUBVENTION.FOURNISSEUR' | translate }}---
+                                </mat-option>
+                                <mat-option *ngFor="let frs of fournisseurs" [value]="frs.id">
+                                    {{frs.nom}} {{frs.prenom}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('fournisseurRestauration','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="totalHT" placeholder="{{ 'PAGES.SUBVENTION.TOTAL_HT' | translate }} :" value="">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="totalTTC" placeholder="{{ 'PAGES.SUBVENTION.TOTAL_TTC' | translate }} :" value="">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- begin:: Content -->
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-attachment"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <!-- start section::edit file form -->
+                <div class="row">
+                    <div class="col-md-6 show_port input-group">
+                        <form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm" style="display: -webkit-inline-box;margin-inline-start: 98px;">
+                            <label class="input-group-btn">
+                                <span class="btn btn-info">
+                                    {{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+                                        (change)="fileChange($event)" formControlName="_file" id="customFile"
+                                        style="display: none;" multiple>
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" readonly>
+                        </form>
+                    </div>
+                    <!-- <button type="button"
+									class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="flaticon-refresh"></i></button> -->
+
+                </div>
+                <!-- end section::edit file form -->
+                <hr>
+                <table *ngIf="files" class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+                            <td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+                            </td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+                            <td class="title_td"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of files | async">
+                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}" matTooltip="{{FileName(item.name)}}"></td>
+                            <td> {{FileName(item.name) | slice:0:20}}</td>
+                            <td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{item.fSize/1000}} ko</td>
+                            <td>
+                                <button type="button" (click)="onClickPjName(item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+                                <button type="button" (click)="onDeleteFile(item.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                        class="icon la la-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="start">
+                    <p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+                    <mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" [disabled]="addForm.invalid" (click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+            {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

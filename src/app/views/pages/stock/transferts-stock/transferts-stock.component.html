@@ -1,0 +1,332 @@
+
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+                
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                        </span>
+                        <h2 class="kt-portlet__head-title">
+                            <!-- {{ "PAGES.PRECONTENTIEUX.LISTE_DEMANDE" | translate }} -->
+                            {{ 'PAGES.Gestion.Stock.Article.Transferts.title' | translate }}
+                        </h2>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:; "  (click)="modalAjouterTransfert(ajouterTransfert)" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i>    {{ 'PAGES.Gestion.Stock.Article.Transferts.add' | translate }} 
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="kt-portlet__body kt-portlet__body--fit">
+
+                    <div class="row">
+                        <div class="example-header col-md-4">
+                            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="example-container mat-elevation-z8">
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="magasinlivreur">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> Numéro du magasin livreur </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.magasinlivreur? row?.magasinlivreur?.numeroMagasin:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="magasindestination">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>Numéro du magasin destination </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.magasindestination ? row?.magasindestination?.numeroMagasin :"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="dateTransfet">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> Date de transfert </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.dateTransfet ? row?.dateTransfet:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="observation">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> Observations </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row?.observation ? row?.observation:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> action </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a href="javascript:;"(click)="modalDetailTransfert(detailTransfert,row)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+									class="la la-search-plus"></i>
+                                    </a>
+                                   <a href="javascript:;" (click)=" deleteAutorisation(row?.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+									class="la la-trash"></i>
+                                    </a>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+
+                        <div *ngIf="datasize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <ng-template #detailTransfert let-c="close" let-d="dismiss">
+        <div class="modal-body">
+          <div class="p-3  background-color-light border-grey br-10">
+              <h2 class="text-center">Bon de Transfert</h2>
+          </div>
+          <div class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+              <div class="form-group row justify-content-center mb-0">
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row justify-content-center">
+                          <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">N° magasin livreur :</label>
+                          <label class="col-sm-2 col-form-label f-s-13">{{transfer.magasinlivreur.numeroMagasin}}</label>
+    
+                          <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">N° magasin destination :</label>
+                          <label class="col-sm-2 col-form-label f-s-13">{{transfer.magasindestination.numeroMagasin}}</label>
+                          <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Date :</label>
+                          <label class="col-sm-2 col-form-label f-s-13">{{transfer.dateTransfet}}</label>
+                      </div>
+                  </div>
+              </div>
+          </div>  
+          <div class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center" *ngFor="let article of listDetailTransfer" >
+                        <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">N° Article:</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{article.article.numeroArticle}}</label>
+                        <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Quantité:</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{article.quantite}}</label>
+                        <label class="col-sm-2 col-form-label text-dark font-weight-bold f-s-13">Rayonnage :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{article.rayonnage}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>  
+          <div class="p-3 mt-2 background-color-light border-grey br-10">
+              <div class="form-group row justify-content-center mb-0">
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <div class="row justify-content-center">
+                          <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Signature du livreur :</label>
+                          <label class="col-sm-2 col-form-label f-s-13"><br><br><br></label>
+    
+                          <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Signature du demandeur:</label>
+                          <label class="col-sm-2 col-form-label f-s-13"><br><br><br></label>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+          <button class="btn btn-outline-success ml-2" type="button" (click)="telechargeDoucument(transfer.id)"><i class="nav-icon i-Download font-weight-bold"></i>&nbsp;Télécharger</button>
+        </div>
+      </ng-template>
+      <!--end: Modal detail -->
+    
+      <!--begin: Modal modifier -->
+      <ng-template #modifierTransfert let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Modifier transfert</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row"> 
+          <div class="col-md-6">
+            <label>N° magasin livreur :</label>
+            <select class="form-control">
+                <option>A511</option>
+                <option>C622</option>
+                <option>E933</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label>N° magasin destination :</label>
+            <select class="form-control">
+                <option>AB11</option>
+                <option>CD22</option>
+                <option>EF33</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group ">
+                <label>N° d'article :</label>
+                <select class="form-control">
+                    <option>A123</option>
+                    <option>B123</option>
+                    <option>C123</option>
+                    <option>D123</option>
+                    <option>E123</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+              <label>Designation :</label>   
+                
+              <input class="form-control" type="text" placeholder="Designation" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Unité :</label>
+                <input class="form-control" type="text" placeholder="Unité" />
+            </div>
+            <div class="col-md-6">
+                <label>Quantité :</label>
+                <input class="form-control" type="number" placeholder="Quantité" />
+            </div>
+        </div>
+    
+        <div class="row"> 
+            <div class="col-md-6">
+                <label>Date de transfert :</label>
+                <input class="form-control" type="text" placeholder="yyyy-mm-dd" />
+            </div>
+        </div>
+    
+        <div class="row"> 
+            <div class="col-md-12">
+                <label>Observations :</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button> -->
+          <button class="btn btn-primary ml-2" type="button">Modifier</button>
+      </div>
+      </ng-template>
+      
+      <ng-template #ajouterTransfert let-c="close" let-d="dismiss">
+
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Ajouter transfert</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+    
+     
+        <form class="" [formGroup]="formTransfer" (ngSubmit)="createTransfert(formTransfer.value)">
+          <div class="row"> 
+            <!-- <div class="col-md-6">
+                <label>N° Transfer :</label>
+                <input class="form-control" type="text" placeholder="N° Transfer"   formControlName="numeroTransfert"/>
+            </div> -->
+            <div class="col-md-4"  formGroupName="magasinlivreur" >
+              <label>N° magasin livreur :</label>
+              <select class="form-control" (change)="SlectedMagasinLivereur($event)" formControlName="id" [disabled]="saveArticleWithQTEList.length > 0" >
+                  <option *ngFor=" let m of listMagasins" [value]="m.id">{{m.numeroMagasin}}</option>
+              </select>
+            </div>
+            <div class="col-md-4" formGroupName="magasindestination">
+              <label>N° magasin destination :</label>
+              <select class="form-control"  formControlName="id">
+                <option *ngFor=" let m of listMagasinDestination" [value]="m.id">{{m.numeroMagasin}}</option>
+              </select>
+            </div>
+              <div class="col-md-4 form-group " formGroupName="article">
+                  <label>N° d'article :</label>
+                  <select class="form-control"  formControlName="id"  (change)="selectArtilce($event)">
+                <option *ngFor="let article of listArtickeStock" [value]="article.article.id">{{article.article.numeroArticle}}</option>
+                  </select>
+              </div>
+             <!--  <div class="col-md-4 " >
+                <label>Designation :</label>
+                <input class="form-control" type="text" placeholder="Designation"   formControlName="disignation" readonly/>
+              </div>
+              <div class="col-md-4 ">
+                  <label>Unité :</label>
+                  <input class="form-control" type="text" placeholder="Unité"  formControlName="unite"   readonly/>
+              </div> -->
+              <div class="col-md-4">
+                  <label>Quantité :</label>
+                  <input class="form-control" type="number" formControlName="quantite" (blur)="checkQuanititeMin($event)"/>
+              </div>
+              <div class="col-md-4">
+                <label>Rayonnage :</label>
+                <input class="form-control" type="text" formControlName="rayannage"/>
+            </div>
+    
+          
+              <div class="col-md-4">
+                  <label>Date de transfert :</label>
+                  <input class="form-control" type="date" formControlName="dateTransfet"/>
+              </div>
+       
+          </div>
+          <div class="row"> 
+              <div class="col-md-12">
+                  <label>Observations :</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  formControlName="observation"></textarea>
+              </div>
+          </div>
+        
+        <div class="col-md-12 form-group text-right">
+            <button class="btn btn-outline-primary mt-4"  type="submit" [disabled]="!formTransfer.valid"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+         </div>
+        </form>
+    
+        
+    <div class="row">
+        <div class="col-md-12 col-lg-12 dos">
+          <div class="p-3 mt-3 border-grey background-table br-10">
+            <div>
+              <div class="table-responsive">
+                <span *ngIf=" saveArticleWithQTEList.length ==  0" class="text-danger">Aucun article existe</span>
+                <table class="table text-center mb-0" id="user_table" *ngIf=" saveArticleWithQTEList.length > 0 ">
+                  <thead>
+                    <tr class="no-border">
+                    <th scope="col">N° magasin livreur </th>
+                    <th scope="col">N° magasin destination</th>
+                    <th scope="col">N° d'article</th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Rayonnage</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let article of saveArticleWithQTEList ; let i = index">
+                        <td> {{ article.transfer?.magasinlivreur?.id ?  article.transfer?.magasinlivreur?.id:"-" }}</td>
+                        <th scope="row">{{  article.transfer?.magasindestination?.id ?  article.transfer?.magasindestination?.id:"-" }}</th>
+                      <td>{{ article.article?.id ? article.article?.id :"-" }}</td>
+                      <td>{{ article.quantite ? article.quantite :"-" }}</td>
+                      <td>{{ article.rayonnage}}</td>
+                      <td><button class="btn btn-outline-danger" (click)="supprimerArticle(i)" ><i class="nav-icon i-Close-Window font-weight-bold"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button class="btn btn-primary ml-2" (click)="saveArticleTransfer()"><i class="nav-icon i-Right font-weight-bold"></i>&nbsp;Transfert</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    
+      </ng-template>

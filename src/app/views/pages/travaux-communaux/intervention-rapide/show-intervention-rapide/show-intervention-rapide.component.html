@@ -1,0 +1,133 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-info"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.INTERVENTION_RAPIDE.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="editIntervention()" *ngxPermissionsOnly="['canUpdateIntervention']" class="btn btn-warning btn-elevate btn-icon-sm">
+                        <i class="la la-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.OBJET' | translate }} :</th>
+                            <td class="donnee_show">{{details.objet}}</td>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.DATE_PRISE_CHARGE' | translate }} :</th>
+                            <td class="donnee_show">{{details.datePriseEnCharge | date:'dd/MM/yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.ADRESSE' | translate }} :</th>
+                            <td class="donnee_show" colspan="4">{{details.adresseIntervention}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.DATE_DEBUT' | translate }} :</th>
+                            <td class="donnee_show">{{details.dateDebut | date:'dd/MM/yyyy'}}
+                            </td>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.HEUR_DEBUT' | translate }} :</th>
+                            <td class="donnee_show">{{details.heurDebutIntervention | slice:0:5}}&nbsp;&nbsp;<i class="flaticon2-time"></i></td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.DATE_FIN' | translate }} :</th>
+                            <td class="donnee_show">{{details.dateFin | date:'dd/MM/yyyy'}}</td>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.HEUR_FIN' | translate }} :</th>
+                            <td class="donnee_show">{{details.heurFinIntervention | slice:0:5}}&nbsp;&nbsp;<i class="flaticon2-time"></i></td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.TYPE' | translate }} :</th>
+                            <td class="donnee_show">{{details.typeIntervention}}</td>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.STATUT' | translate }} :</th>
+                            <td class="donnee_show">{{details.statutIntervention}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }} :</th>
+                            <td class="donnee_show">{{details.commune}}</td>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.RESULTAT_INTERVENTION' | translate }} :</th>
+                            <td class="donnee_show">{{details.resultatIntervention}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INTERVENTION_RAPIDE.REMARQUE' | translate }} :</th>
+                            <td class="donnee_show" colspan="4">{{details.remarque}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table *ngIf="files" class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+                            <td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+                            </td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of files | async">
+                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}" matTooltip="{{FileName(item.name)}}"></td>
+                            <td> {{FileName(item.name) | slice:0:20}}</td>
+                            <td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{item.fSize/1000}} ko</td>
+                            <td>
+                                <button type="button" (click)="onClickPjName(item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="start">
+                    <p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+                    <mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin :: Action -->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end :: action -->

@@ -1,0 +1,498 @@
+<div novalidate autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Programme de vaccination :</h2>
+			</div>
+		</div>
+	</div>
+
+	<mat-horizontal-stepper #stepper>
+		<mat-step label="Infos générales">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Type de vaccination:</mat-label>
+							<mat-select [formControl]="typeVaccinationControl" matNativeControl class="form-control">
+								<mat-option *ngFor="let type of typeVaccinantion" [value]="type.id">
+									{{ type.libelle }}
+								  </mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Type de déclaration:</mat-label>
+							<mat-select [formControl]="typeDeclarationControl" matNativeControl class="form-control">
+								<mat-option *ngFor="let type of typeDecalration" [value]="type.id">
+									{{ type.libelle }}
+								  </mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<label> Date de morsure: </label>
+								<input [(ngModel)]="dateMorsure"  matInput type="date" class="form-control" placeholder="" />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<label> Date de traitement: </label>
+							<input matInput [(ngModel)]="dateTraitement" type="date" class="form-control" placeholder="" />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Lieu de la morsure:</mat-label>
+							<input [(ngModel)]="lieuMorsure" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Animal:</mat-label>
+							<mat-select [formControl]="animalControl" matNativeControl class="form-control">
+								<mat-option *ngFor="let type of animal" [value]="type.id">
+									{{ type.libelle }}
+								  </mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Nombre d'animaux capturé:</mat-label>
+							<input [(ngModel)]="NbranimauxCapture" type="number" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Traitement effectué:</mat-label>
+							<mat-select [formControl]="traitementEffectueControl" matNativeControl class="form-control-lg">
+								<mat-option *ngFor="let type of traitementEffectue" [value]="type.id">
+									{{ type.libelle }}
+								  </mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<label> Description: </label>
+								<input [(ngModel)]="description" matInput type="text" class="form-control" placeholder="" />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pb-5" data-wizard-type="step-content">
+				<h4 class="mb-10 font-weight-bold text-dark"></h4>
+				<div class="kt-portlet">
+					<div class="kt-portlet__head kt-bg-portlet-5">
+						<div class="kt-portlet__head-label">
+							<span class="kt-portlet__head-icon">
+								<i class="flaticon-attachment"></i>
+							</span>
+							&nbsp;
+							<h3 class="kt-portlet__head-title">
+								Pièce jointe:
+								<i class="la la-cloud-upload"></i>
+							</h3>
+						</div>
+					</div>
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-6 show_port input-group">
+								<form enctype="multipart/form-data" method="POST" style="display: -webkit-inline-box; margin-inline-start: 98px">
+									<label class="input-group-btn">
+										<span class="btn btn-info">
+											Sélectionner un fichier
+											<input (change)="handleFileInput($event)" type="file" name="pieceJointe" formControlName="_file" id="customFile" style="display: none" multiple />
+										</span>
+									</label>
+									<input type="text" class="form-control" readonly />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<h2 class="kt-portlet__head-title kt-font-inverse-brand">Type de l'animal :</h2>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-3">
+					<label class="checkbox-inline" style="padding-left: 20px"
+						>Connu
+						<input [(ngModel)]="connu" value="true" type="radio" name="radio" />
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="col-md-3">
+					<label class="checkbox-inline" style="padding-left: 20px"
+						>Inconnu
+						<input [(ngModel)]="connu" value="false" type="radio" name="radio" />
+						<span class="checkmark"></span>
+					</label>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+			<div *ngIf="connu == 'true'">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nom:</mat-label>
+								<input [(ngModel)]="nom" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prénom:</mat-label>
+								<input [(ngModel)]="prenom" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date de naissance:</mat-label>
+								<input [(ngModel)]="dateNaissaance" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN:</mat-label>
+								<input [(ngModel)]="cin" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N° Bulletin:</mat-label>
+								<input [(ngModel)]="NumBulletin" type="number" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nationalité:</mat-label>
+								<mat-select [formControl]="nationaliteControl" matNativeControl class="form-control">
+									<mat-option value="Marocain">Marocain</mat-option>
+									<mat-option value="Algérien">Algérien</mat-option>
+									<mat-option value="Argentin">Argentin</mat-option>
+									<mat-option value="Espagnol">Espagnol</mat-option>
+									<mat-option value="Français">Français </mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label text-right">
+					<button href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="EtapeDernier()">
+						<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+						Retour
+					</button>
+					<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active" matStepperNext>
+						<i _ngcontent-dlp-c41 class="icon la la-plus-circle"></i>
+						Suivant
+					</button>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
+		</mat-step>
+		<mat-step label="Infos victime">
+			<div class="container" style="border: 2px solid SteelBlue; margin-bottom: 25px">
+				<div style="font-size: 20px; margin-top: 20px; margin-bottom: 10px">
+					<mat-label>Statut de la victime: </mat-label>
+					<div class="form-check form-check-inline">
+						<label class="form-check-label" for="inlineCheckbox2">Mineur </label>
+						<input [(ngModel)]="minneur" class="form-check-input" type="radio" name="radio1" id="inlineCheckbox2" value="Mineur" style="margin-left: 10px" />
+					</div>
+					<div class="form-check form-check-inline">
+						<label class="form-check-label" for="inlineCheckbox2">Majeur </label>
+						<input class="form-check-input" [(ngModel)]="minneur" type="radio" name="radio1" id="inlineCheckbox2" value="Majeur" style="margin-left: 10px" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nom:</mat-label>
+								<input [(ngModel)]="nomVictime" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prénom:</mat-label>
+								<input [(ngModel)]="prenomVictime" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date de naissance:</mat-label>
+								<input [(ngModel)]="dateNaissanceVictime" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN:</mat-label>
+								<input [(ngModel)]="cinVictime" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label> Sexe: </mat-label>
+								<mat-select [formControl]="sexeControl" class="form-control" >
+									<mat-option value="Homme"> Homme </mat-option>
+									<mat-option value="Femme"> Femme </mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Addresse:</mat-label>
+								<input [(ngModel)]="adresse" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="minneur == 'Mineur'">
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<mat-label> Nom du tuteur: </mat-label>
+									<input [(ngModel)]="nomTuteur" matInput type="text" class="form-control" placeholder="" />
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prénom du tuteur:</mat-label>
+								<input [(ngModel)]="prenomTuteur" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN du tuteur:</mat-label>
+								<input [(ngModel)]="cinTuteur" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de vaccination:</mat-label>
+							<input [(ngModel)]="dateVaccinanation" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Statut de vaccination:</mat-label>
+							<mat-select [formControl]="statutVaccinationControl" matNativeControl class="form-control">
+								<mat-option *ngFor="let type of statut" [value]="type.id">
+									{{ type.libelle }}
+								  </mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date prévue du premier appel:</mat-label>
+							<input [(ngModel)]="datePrevuePremierAppel" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Statut premier rappel:</mat-label>
+							<mat-select [formControl]="statutPrmierRappelControl" matNativeControl class="form-control">
+								<mat-option value="premier rappel 1">premier rappel 1</mat-option>
+								<mat-option value="premier rappel 2">premier rappel 2</mat-option>
+								<mat-option value="premier rappel 3">premier rappel 3</mat-option>
+								<mat-option value="premier rappel 4">premier rappel 4</mat-option>
+								<mat-option value="premier rappel 5">premier rappel 5</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date réelle du premier rappel:</mat-label>
+							<input [(ngModel)]="dateReellePremierRappel" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date prévue du dernier rappel:</mat-label>
+							<input [(ngModel)]="datePrevueDernierRappel" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Statut dernier rappel:</mat-label>
+							<mat-select [formControl]="statutDernierRappelControl" matNativeControl class="form-control">
+								<mat-option value="premier dernier 1">premier dernier 1</mat-option>
+								<mat-option value="premier dernier 2">premier dernier 2</mat-option>
+								<mat-option value="premier dernier 3">premier dernier 3</mat-option>
+								<mat-option value="premier dernier 4">premier dernier 4</mat-option>
+								<mat-option value="premier dernier 5">premier dernier 5</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date réelle du dernier rappel:</mat-label>
+							<input [(ngModel)]="dateReelleDernierRappel" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label text-right">
+					<button href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" matStepperPrevious>
+						<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+						Retour
+					</button>
+					<button (click)="CreateVaccination()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active">
+						<i class="icon la la-floppy-o"></i>
+						Enregistrer
+					</button>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
+		</mat-step>
+	</mat-horizontal-stepper>
+</div>

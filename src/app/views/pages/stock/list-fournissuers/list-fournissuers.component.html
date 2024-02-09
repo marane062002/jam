@@ -1,0 +1,177 @@
+
+
+
+
+
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+             
+
+
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                        </span>
+                        <h2 class="kt-portlet__head-title">
+                            <!-- {{ "PAGES.PRECONTENTIEUX.LISTE_DEMANDE" | translate }} -->
+                            {{ 'PAGES.Gestion.Stock.fournisseurs.title' | translate }}
+                        </h2>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:; "  (click)=" addNow()" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i>      {{ 'PAGES.Gestion.Stock.fournisseurs.add' | translate }} 
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="kt-portlet__body kt-portlet__body--fit">
+                    <div class="example-header col-md-4">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <div class="example-container mat-elevation-z8">
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="nom">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.fournisseurs.nom' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.nom?row.nom:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="adresse">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.fournisseurs.adresse' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.adresse?row.adresse:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="ville">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.fournisseurs.ville' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.ville? row.ville:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="telephone">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.fournisseurs.telephone' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.telephone?row.telephone:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="infoBancaire">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.fournisseurs.infoBancaire' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.infoBancaire?row.infoBancaire:"-"}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="siteWeb">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.fournisseurs.siteWeb' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.siteWeb?row.siteWeb:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="tauxRemise">
+                                <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.Stock.fournisseurs.tauxRemise' | translate }} </th>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.tauxRemise?row.tauxRemise:"-"}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <!-- <a href="javascript:;"  (click)="showAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+											class="la la-search-plus"></i></a> -->
+                                    <a href="javascript:;"  (click)="modalModifierTransfert(detailFournisseur,row)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                        class="la la-search-plus"></i></a>
+                                   <a href="javascript:;" (click)=" supprimerFournisseur(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+											class="la la-trash"></i></a>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+
+                        <div *ngIf="datasize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                        </div>
+                        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                            </mat-progress-spinner>
+                        </mat-card>
+                        <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                        <hr>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+
+         
+   
+</div>
+</div>
+
+
+
+<ng-template #detailFournisseur let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+            
+            <!-- <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Nom du fournisseur :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.nom}}</label>
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Site web :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.siteWeb}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">E-mail :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.email}}</label>
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Téléphone :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.telephone}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Ville :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.ville}}</label>
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Province :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.province}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Adresse :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.adresse}}</label>
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Code postal :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.codePostal}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-center mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row justify-content-center">
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Taux de remise :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.tauxRemise}}%</label>
+                        <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Info bancaire :</label>
+                        <label class="col-sm-2 col-form-label f-s-13">{{fournisseur.infoBancaire}}</label>
+                    </div>
+                </div>
+            </div> -->
+
+        </form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">fermer</button>    </div>
+    </ng-template>

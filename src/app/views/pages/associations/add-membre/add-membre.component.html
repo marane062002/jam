@@ -1,0 +1,176 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="fas fa-address-card kt-font-inverse-brand"></i>
+			</span>
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ 'PAGES.MEMBRE_BUREAU.TITRE_NEW' | translate }}
+			</h3>
+		</div>
+	</div>
+
+	<form novalidate [formGroup]="addForm" autocomplete="off">
+		<div class="kt-portlet__body">
+			<!-- 1 ======================================= -->
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="nom"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.NOM' | translate }} :" required>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+							<mat-error *ngIf="isControlHasError('nom','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="prenom"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.PRENOM' | translate }} :" required>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+							<mat-error *ngIf="isControlHasError('prenom','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="cin"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.CIN' | translate }} :">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+							<!-- <mat-error *ngIf="isControlHasError('cin','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="fonction"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.ROLE' | translate }} :">
+								<mat-option [value]=null>---{{ 'PAGES.MEMBRE_BUREAU.ROLE' | translate }}---
+								</mat-option>
+								<mat-option value="الرئيس">الرئيس</mat-option>
+								<mat-option value="نائب الرئيس">نائب الرئيس</mat-option>
+								<mat-option value="الأمين">الأمين</mat-option>
+								<mat-option value="نائب الأمين">نائب الأمين</mat-option>
+								<mat-option value="الكاتب العام">الكاتب العام</mat-option>
+								<mat-option value="نائب الكاتب العام">نائب الكاتب العام</mat-option>
+								<mat-option value="مستشار">مستشار</mat-option>
+							</mat-select>
+							<!-- <mat-error *ngIf="isControlHasError('fonction','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="sexe"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.SEXE' | translate }} :">
+								<mat-option [value]=null>---{{ 'PAGES.MEMBRE_BUREAU.SEXE' | translate }}---
+								</mat-option>
+								<mat-option value="ذكر">ذكر</mat-option>
+								<mat-option value="أنثى">أنثى</mat-option>
+							</mat-select>
+							<!-- <mat-error *ngIf="isControlHasError('sexe','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="trancheAge"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.TRANCHE_AGE' | translate }} :">
+								<mat-option [value]=null>---{{ 'PAGES.MEMBRE_BUREAU.TRANCHE_AGE' | translate }}---
+								</mat-option>
+								<mat-option value="18-25">18-25</mat-option>
+								<mat-option value="26-35">26-35</mat-option>
+								<mat-option value="36-45">36-45</mat-option>
+								<mat-option value=">46">فوق 46 سنة</mat-option>
+							</mat-select>
+							<!-- <mat-error *ngIf="isControlHasError('trancheAge','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="niveauScolaire"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.NIVEAU_SCOLAIRE' | translate }} :">
+								<mat-option [value]=null>---{{ 'PAGES.MEMBRE_BUREAU.NIVEAU_SCOLAIRE' | translate }}---
+								</mat-option>
+								<mat-option value="إبتدائي">إبتدائي</mat-option>
+								<mat-option value="ثانوي">ثانوي</mat-option>
+								<mat-option value="عالي">عالي</mat-option>
+							</mat-select>
+							<!-- <mat-error *ngIf="isControlHasError('niveauScolaire','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="poste"
+								placeholder="{{ 'PAGES.MEMBRE_BUREAU.FONCTION' | translate }} :">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- 3 ======================================================= -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" name="adresse" matInput
+								formControlName="adresse" placeholder="{{ 'PAGES.MEMBRE_BUREAU.ADRESSE' | translate }}"></textarea>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</div>
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			[disabled]="addForm.invalid" (click)="onSubmit()"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

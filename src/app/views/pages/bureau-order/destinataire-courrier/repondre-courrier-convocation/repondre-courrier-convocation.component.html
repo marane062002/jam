@@ -1,0 +1,117 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-1">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-multimedia-2 kt-font-inverse-brand"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.TITRE_ANSWER' | translate }}
+            </h3>
+        </div>
+    </div>
+    <form novalidate [formGroup]="answerForm" autocomplete="off">
+        <!-- <p>{{addForm.value | json}}</p> -->
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.REPONSE" | translate }} :</mat-label>
+                        <mat-select (selectionChange)="onStatutConvocationChange($event)" class="form-control"
+                            placeholder="" formControlName="statutConvocation">
+                            <mat-option [value]="'PRESENCE'">{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.PRESENCE" |
+                                translate }} </mat-option>
+                            <mat-option [value]="'ABSENCE'">{{ "PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ABSENCE" |
+                                translate }} </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.MOTIF' | translate }} :</mat-label>
+                            <input matInput type="text" formControlName="motif" class="form-control" name="motif"
+                                placeholder="">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- Action section-->
+        </div>
+    </form>
+    
+    <div class="kt-portlet portlet-3">
+        <div class="kt-portlet__head kt-bg-portlet-1">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="flaticon-multimedia-2 kt-font-inverse-brand"></i>
+                </span> &nbsp;
+                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                    {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-12 show_port">
+                    <table class="table pj" width="100%">
+                        <thead>
+                            <tr>
+                                <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+                                <td class="title_td">{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.ACTIONS' | translate }}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>La convocation à la réunion de la commission</td>
+                                <td>
+                                    <button type="button" (click)="downloadConvocationReunionCommission()"
+                                        class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+                                        matTooltip="{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}"><i
+                                            class="flaticon-download-1"></i></button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="isRappelConvocation==true">
+                                <td>Rappel de la convocation à la réunion de la commission</td>
+                                <td>
+                                    <button type="button" (click)="downloadRappelConvocationReunionCommission()"
+                                        class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+                                        matTooltip="{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}"><i
+                                            class="flaticon-download-1"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- End:: content section-->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <span *ngIf="isNotModified==false">
+            <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+                class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onSubmit()"
+                [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+                <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+                {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+            <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}"
+                class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+                (click)="onReset()">
+                <i _ngcontent-dlp-c41 class="la la-recycle"></i>
+                {{ 'PAGES.GENERAL.RESET' | translate }}</button>
+        </span>
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+            class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+            (click)="backList()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

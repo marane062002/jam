@@ -1,0 +1,54 @@
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head mb-10">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon2-plus-1"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.Stock.categorieArticle.new.title' | translate }}
+            </h3>
+        </div>
+    </div>
+
+    
+
+<form [formGroup]="categorieArticle" (ngSubmit)="createCatArticle(categorieArticle.value)">
+    <div class="form-group row mb-1">
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input formControlName="numero" matInput type="text" class="form-control" name="nom"
+                        placeholder="{{ 'PAGES.Gestion.Stock.categorieArticle.numero'| translate }}" >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input formControlName="libelleAr" matInput type="text" class="form-control" name="nom"
+                        placeholder="{{ 'PAGES.Gestion.Stock.categorieArticle.libelleAr'| translate }}" >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input formControlName="libelleFr" matInput type="text" class="form-control" name="nom"
+                        placeholder="{{ 'PAGES.Gestion.Stock.categorieArticle.libelleFr'| translate }}" >
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+    <div class="m-1 float-right">
+        <button _ngcontent-dkp-c41="" type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+        class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"  >
+        <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" -->
+        <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+        {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+    </div>
+</form>
+</div>

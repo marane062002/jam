@@ -1,0 +1,273 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-4">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-multimedia-2 kt-font-inverse-brand"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.TITRE_EDIT' | translate }}
+			</h3>
+		</div>
+	</div>
+	<form novalidate [formGroup]="editForm">
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="numero" matInput type="text" class="form-control" name="numero"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.NUMERO' | translate }}" >
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input formControlName="reference" matInput type="text" class="form-control" name="reference"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.REFERENCE' | translate }}" >
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input formControlName="dateExpedetion" matInput class="form-control"
+									name="dateExpedetion" [matDatepicker]="picker"
+									placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.DATE_EXPIDITION' | translate }}">
+								<mat-datepicker-toggle matSuffix [for]="picker">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class class="row">
+				<!-- <div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="number" formControlName="nombreCopie" class="form-control"
+								name="nombreCopie" placeholder="{{ 'PAGES.BUREAU_ORDRE.NOMBRE_COPIES' | translate }}"
+								disabled="true">
+							<mat-icon matSuffix><i class="flaticon-file-2"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div> -->
+
+			</div>
+			<!-- +++++++++++ -->
+			<!-- <div class="row">
+				<div class="col-md-6">
+					<div class="form-group" formGroupName="criticiteCourrier">
+						<mat-form-field class="example-full-width">
+							<mat-select formControlName="id" name="criticiteEntr" class="form-control"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.CRITICITE' | translate }}">
+								<mat-option *ngFor="let criticite of criticiteCourrier" [value]="criticite.id">
+									{{criticite?.libelle}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6" id="coursier">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select formControlName="coursier" name="coursier" class="form-control"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.COURSIER' | translate }}">
+								<mat-option value="موزع المراسلات الإدارية">
+									{{ 'PAGES.BUREAU_ORDRE.COURSIER' | translate }}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div> -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="idDivision"
+								(selectionChange)="onChangeDivision()"
+								placeholder="{{ 'PAGES.ORGANISATION.DIVISION' | translate }}">
+								<mat-option>---{{ 'PAGES.ORGANISATION.DIVISION' | translate }}---
+								</mat-option>
+								<mat-option *ngFor="let d of divisions" [value]="d.id">
+									{{d?.libelle}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="idService"
+								(selectionChange)="onChangeService()"
+								placeholder="{{ 'PAGES.ORGANISATION.SERVICE' | translate }}">
+								<mat-option>---{{ 'PAGES.ORGANISATION.SERVICE' | translate }}---
+								</mat-option>
+								<mat-option *ngFor="let s of services" [value]="s.id">
+									{{s?.libelle}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="idPersonnel"
+								placeholder="{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}">
+								<mat-option>---{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}---
+								</mat-option>
+								<mat-option *ngFor="let p of personnels" [value]="p.id">
+									{{p?.nom}} {{p?.prenom}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6" formGroupName="typeCourrier">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select matNativeControl formControlName="id" class="form-control"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }}"
+								(selectionChange)="onChangeTypeCourrier()">
+								<mat-option *ngFor="let type of typeCourrier" [value]="type.id">
+									{{type.libelle}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" formControlName="destinataire" class="form-control"
+								name="destinataire"
+								placeholder="{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.LIBELLE' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" name="objet" matInput
+								formControlName="objet" placeholder="{{ 'PAGES.BUREAU_ORDRE.OBJET' | translate }}"
+								required></textarea>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- End field section-->
+		</div>
+	</form>
+</div>
+<!-- end:section form -->
+
+<!-- begin:: Content -->
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<!-- start section::edit file form -->
+				<div class="row">
+					<div class="col-md-6 show_port input-group">
+						<form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm"
+							style="display: -webkit-inline-box;margin-inline-start: 98px;">
+							<label class="input-group-btn">
+								<span class="btn btn-info">
+									{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+										(change)="fileChange($event)" formControlName="_file" id="customFile"
+										style="display: none;" multiple>
+								</span>
+							</label>
+							<input type="text" class="form-control" readonly>
+						</form>
+					</div>
+					<!-- <label class="input-group-btn" >
+									<span class="btn btn-danger" (click)="resetFileField()" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+										{{ 'PAGES.GENERAL.DELETE' | translate }}
+									</span>
+								</label> -->
+				</div>
+				<!-- end section::edit file form -->
+				<hr>
+				<table *ngIf="files" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+							<td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+							</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+							<td class="title_td"></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of files | async">
+							<td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}"
+									matTooltip="{{FileName(item.name)}}"></td>
+							<td> {{FileName(item.name)  | slice:0:20}}</td>
+							<td  style="direction: initial;">{{item.dateFile  | date:'dd/MM/yyyy HH:mm'}}</td>
+							<td  style="direction: initial;">{{getFormattedFileSize(item.fSize)}}</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco,item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+								<button type="button" (click)="onDeleteFile(item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="icon la la-trash"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div *ngIf="start">
+					<p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+					<mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onSubmit()"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+			class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="backList()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

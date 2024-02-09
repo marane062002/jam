@@ -1,0 +1,218 @@
+
+  <!-- begin:: Content section 2 -->
+  <div class="kt-container">
+    <div class="row">
+      <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+          <div class="kt-portlet__head kt-bg-portlet-3">
+            <div class="kt-portlet__head-label">
+              <span class="kt-portlet__head-icon">
+                <i class="fas fa-book-open kt-font-inverse-brand"></i>
+              </span>
+              <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                تفاصيل المقرر
+              </h3>
+            </div> 
+          </div>
+          <div class="kt-portlet__body">
+            <div class="row">
+              <div class="col-md-12 show_port">
+              <table class="table pj" width="100%">
+                  <tbody>
+                    <tr>
+                        <th> 
+                         الرقم الداخلي  :</th>
+                      <td class="donnee_show">
+                        {{decision.id}}
+                      </td>
+                      <th>رقم المقرر
+                            :</th>
+                      <td class="donnee_show">
+                        {{decision.numDecision  }} </td>  <th>
+                           المقرر:</th>
+                        <td class="donnee_show">
+                          {{decision.decision }} </td>
+                       
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="espace_bloc"></div>
+              </div>
+            </div>
+          </div>
+       </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kt-container">
+    <div class="row">
+      <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+          <div class="kt-portlet__head kt-bg-portlet-4">
+            <div class="kt-portlet__head-label">
+              <span class="kt-portlet__head-icon">
+                <i class="fas fa-book-open kt-font-inverse-brand"></i>
+              </span>
+              <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                تفاصيل
+                النقطة 
+              </h3>
+            </div>
+          </div>
+          <div class="kt-portlet__body">
+
+            <div class="row">
+              <div class="col-md-12 show_port">
+              <table class="table pj" width="100%">
+                  <tbody>
+                    <tr>
+                      <th>رقم الدورة :</th>
+                      <td  class="donnee_show"> {{point.session.id}}</td>
+                      <th>موضوع النقطة : </th>
+                      <td class="donnee_show">
+                        {{point.objet}} 
+                      </td>
+                      <th>
+                        التوصيات   :</th>
+                      <td>{{point.typeVote}}  </td>
+                    </tr>
+                    <tr>
+                      <th>الميزانية المقدرة  :</th>
+                      <td class="donnee_show">
+                        {{point.budget  |macurrency}} </td>  <th>
+                         تاريخ الإنجاز :</th>
+                        <td class="donnee_show">
+                          {{point.dateRealisation |date: 'dd/MM/yyyy'}} </td>
+                        <th> المصدر:
+                        </th>
+                      <td class="donnee_show">
+                          {{point.source}}
+                      </td>
+                    </tr>
+                    <tr *ngIf="choix1">
+                      <th>القسم   :</th>
+                      <td >
+                        {{point.division }} 
+                      </td>
+                      <th>المصلحة   :</th>
+                      <td >
+                        {{point.service }} 
+                      </td>
+                      <th>الموظف   :</th>
+                      <td >
+                        {{point.personnel }} 
+                      </td>
+                    </tr>
+                    <tr *ngIf="choix2">
+                      <th> عضو المكتب 
+                       :</th>
+                      <td colspan="4">
+                        {{point.membreBureau.membre.nom }} {{point.membreBureau.membre.prenom}}
+                      </td>
+                    </tr>
+                    <tr *ngIf="choix4">
+                      <th>مصدر آخر  :</th>
+                      <td colspan="4">
+                        {{point.sourceExterne }} 
+                      </td>
+                    </tr>
+                    <tr>
+                        <th>الصنف:</th>
+                        <td class="donnee_show">
+                          {{point.type.libelle}} </td>  <th>
+                            اللجان
+                            المكلفة :</th>
+                          <td colspan="3" class="donnee_show">
+                           {{nomCommissions}} </td>
+                      </tr>
+                      <tr>
+                        <th>تأثير النقطة : </th>
+                        <td colspan="4" class="donnee_show">
+                          {{point.impacte}} </td> 
+                      </tr>
+
+                      <tr>
+                        <th>ملاحظات عن النقطة : </th>
+                        <td colspan="4" class="donnee_show">
+                          {{point.observations}} </td> 
+                      </tr>
+                      <tr>
+                        <th>
+                          التوصيات   :</th>
+                        <td>{{point.typeVote}}  </td>
+                      </tr>
+                      <tr>
+                        <th>المصوتون بنعم  :</th>
+                        <td  class="donnee_show"> {{point.voteOui}}</td>
+                        <th>المصوتون بلا : </th>
+                        <td class="donnee_show">
+                          {{point.voteNon}} 
+                        </td>
+                        <th>عدم المصوتين   :</th>
+                        <td>{{point.pasVote}}  </td>
+                      </tr>
+
+                  </tbody>
+                </table>
+                <div class="espace_bloc"></div>
+              </div>
+            </div>
+          </div>   
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- begin:: Content section 2 -->
+    <div class="kt-container">
+      <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+          <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head kt-bg-portlet-3">
+              <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                  <i class="fas fa-book-open kt-font-inverse-brand"></i>
+                </span>
+                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                   المآل 
+                </h3>
+              </div>
+            </div>
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off" #form="ngForm" >
+           <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                  <mat-form-field class="example-full-width">
+                    <textarea matInput type="text" class="form-control" placeholder="المآل   :"
+                     [(ngModel)]="resultatDecision.resultat" name="resultat"  required></textarea>
+                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control"  name ="typesession"  [(ngModel)]="resultatDecision.statut" placeholder="الوضعية  :">
+                            <mat-option *ngFor="let item of statutResultat" [value]="item">{{item}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+                </div>
+           </div>
+           <div class="kt-portlet__foot">
+            <div class="kt-form__actions">
+              <button type="button" (click)="send()" class="btn btn-success btn-md btn-tall btn-wide">
+                حفظ 
+                <i class="far fa-save"></i> </button>
+            </div>
+          </div>
+          </form>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+
+  

@@ -1,0 +1,496 @@
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-file-invoice-dollar kt-font-inverse-brand"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_FACTURE_PHASE_MARCHE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div *ngxPermissionsOnly="['canCreateFacturePhaseMarche']" class="kt-portlet__head-actions">
+                            <button matTooltip="{{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.TITRE_INDEX' | translate }}" class="btn btn-success btn-md" (click)="addLigneDecompte()">{{
+                                'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.TITRE_INDEX' | translate }}</button>
+                            <button [disabled]="noAction1" matTooltip="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.TITRE_INDEX' | translate }}" class="btn btn-success btn-md" (click)="nouvelleLigne()">{{
+                                'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.TITRE_INDEX' | translate }}</button>
+                            <button [disabled]="noAction2" matTooltip="{{ 'PAGES.MARCHE.MARCHE.DECOMPTE_MARCHE.TITRE_INDEX' | translate }}" class="btn btn-info btn-md" (click)="onClickDecompteDefinitForm()">{{
+                                'PAGES.MARCHE.MARCHE.DECOMPTE_MARCHE.TITRE_INDEX' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BeginForm :: Decompte-definitif -->
+                <div *ngIf="showCreateDecompteDefinitif">
+                    <div class="espace_bloc"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.NUM_FACTURE' | translate }}:" name="numOP" [(ngModel)]="decompteDefinitif.numFacture">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="pickerDF" name="dateEffetOM" [(ngModel)]="decompteDefinitif.echeancePaiement" placeholder=" {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }}">
+                                    <mat-datepicker-toggle matSuffix [for]="pickerDF"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #pickerDF></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.DECOMPTE_MARCHE.MONTANT' | translate }} :" name="decMTTC" [(ngModel)]="decompteDefinitif.mntTtc">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="decoStatut" [(ngModel)]="decompteDefinitif.statutFacture" placeholder="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.STATUT' | translate }}">
+                                        <mat-option *ngFor="let item of statutFacture" value="{{item}}">{{item}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" (click)="onSaveDecompteDefinitif($event)">{{
+                        'PAGES.GENERAL.SAVE' | translate }}</button>
+                </div>
+                <!-- EndForm :: Decompte-definitif -->
+
+                <!-- BeginForm decomptes marche :: add row -->
+                <div *ngIf="showCreateDecomptesMarche">
+                    <div class="espace_bloc"></div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.NUM_FACTURE' | translate }}:" name="nFact" [(ngModel)]="decomptesMarche.numFacture">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="pickerDecoMarche" name="dateEffetDECM" [(ngModel)]="decomptesMarche.echeancePaiement" placeholder=" {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.DATE_EFFET' | translate }}">
+                                    <mat-datepicker-toggle matSuffix [for]="pickerDecoMarche"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #pickerDecoMarche></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" name="StatutDM" [(ngModel)]="decomptesMarche.statutFacture" placeholder="{{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.STATUT' | translate }}">
+                                        <mat-option *ngFor="let item of statutFacture" value="{{item}}">{{item}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.MONTANT_DECOMPTE' | translate }} :" name="montantDeco" [(ngModel)]="decomptesMarche.mntTtc">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.MANTANT_RETENU' | translate }} :" name="montantRet" [(ngModel)]="decomptesMarche.mntRetenu">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.MONTANT_PAYER' | translate }}  :" name="montantPay" [(ngModel)]="decomptesMarche.mntApayer">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-primary" (click)="onSaveDecomptesMarche($event)">{{
+                        'PAGES.GENERAL.SAVE' | translate }}</button>
+                </div>
+                <!-- EndForm decomptes marche :: add row -->
+
+                <!-- BeginTable :: phase-Marche -->
+                <div *ngIf="selectedStatus && tabPhase">
+                    <div class="espace_bloc"></div>
+                    <!-- Begin-Table :: phase-marche -->
+                    <div class="example-container mat-elevation-z8">
+                        <h4 class="title-red-style">
+                            {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PHASE_MARCHE' | translate }}
+                        </h4>
+                        <mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="budget">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.TAUX_PAHSE' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.budget }} %</mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="dateDebut">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_DEBUT' | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.dateDebut |date: 'dd/MM/yyyy'}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="dateEcheance">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.dateEcheance |date: 'dd/MM/yyyy'}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="statut">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.STATUT' | translate }} </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.statut.libelle}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button type="button" class="btn btn-outline-primary" (click)="onClickPhase(row.id,row.budget)">{{
+                                        'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.TITRE_NEW' | translate }}</button>
+                                </mat-cell>
+                            </ng-container>
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </mat-table>
+                        <mat-paginator [length]="sizeDataPNF" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                    </div>
+                    <!-- End-Table :: phase-marche -->
+
+                    <!-- Begin-FORM :: decompte-phase-marche -->
+                    <div *ngIf="showCreateFacturePhase">
+                        <div class="espace_bloc"></div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.NUMERO_PHASE' | translate }} :" name="nompp" [(ngModel)]="facturePhase.phase.id" readonly>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.NUM_FACTURE' | translate }}:" name="numOP" [(ngModel)]="facturePhase.numFacture">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="divisionAo" [(ngModel)]="facturePhase.statutFacture" placeholder="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.STATUT' | translate }}">
+                                            <mat-option *ngFor="let item of statutFacture" value="{{item}}">{{item}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput class="form-control" [matDatepicker]="picker1" name="dateEffetOM" [(ngModel)]="facturePhase.dateReception" placeholder=" {{ 'PAGES.MARCHE.BC.DATE_RECEPTION' | translate }} ">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.DELAIS_EXECUTION' | translate }} :" name="hfj" [(ngModel)]="facturePhase.delaisPaiement">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput class="form-control" [matDatepicker]="picker2" name="dateEffetOM" [(ngModel)]="facturePhase.echeancePaiement" placeholder=" {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }}">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.MONTANT_PHASE' | translate }} :" name="KLSnompp" [(ngModel)]="facturePhase.mntTtc" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.MANTANT_RETENU' | translate }} :" name="HSnumOP" [(ngModel)]="facturePhase.mntRetenu" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.MONTANT_PAYER' | translate }}  :" name="numozpjOP" [(ngModel)]="facturePhase.mntApayer" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder=" {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.OBSERVATION' | translate }}   :" name="KLSnompp" [(ngModel)]="facturePhase.remarques">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-outline-primary" (click)="onClickOP($event)">{{
+                            'PAGES.GENERAL.SAVE' | translate }}</button>
+                    </div>
+                    <!-- End-FORM :: decompte-phase-marche -->
+                </div>
+                <!-- EndTable :: phase-Marche -->
+
+                <!-- BeginDataSource :: DECOMPTE-DEFINITIF -->
+                <div *ngIf="showDecompteTable">
+                    <div class="espace_bloc"></div>
+                    <div *ngxPermissionsOnly="['accessToIndexFacturePhaseMarche']" class="kt-portlet__body kt-portlet__body--fit">
+                        <h4 class="title-style">
+                            {{ 'PAGES.MARCHE.MARCHE.DECOMPTE_MARCHE.TITRE_INDEX' | translate }}
+                        </h4>
+                        <div class="example-container mat-elevation-z8">
+                            <mat-table [dataSource]="dataSourceDecompteDefinitif" matSort>
+                                <!-- ID Column -->
+                                <ng-container matColumnDef="numFacture">
+                                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.NUM_FACTURE' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.numFacture}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Progress Column -->
+                                <ng-container matColumnDef="mntTtc">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.DECOMPTE_MARCHE.MONTANT' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.mntTtc | macurrency}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="echeancePaiement">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.echeancePaiement |date: 'dd/MM/yyyy'}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="statutFacture">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.STATUT' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.statutFacture}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <a href="javascript:;" (click)="editDecompteDefinitif(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                                class="la la-edit"></i></a>
+                                        <a href="javascript:;" (click)="deleteDecompteDefinitif(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                                class="la la-trash"></i></a>
+                                    </mat-cell>
+                                </ng-container>
+                                <mat-header-row *matHeaderRowDef="displayedColumnsDecompteDef"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumnsDecompteDef;">
+                                </mat-row>
+                            </mat-table>
+                            <mat-paginator [length]="sizeDataDD" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+                <!-- EndDataSource :: DECOMPTE-DEFINITIF -->
+
+                <!-- BeginDataSource :: DECOMPTES-MARCHE -->
+                <div *ngIf="showDecomptesMarche">
+                    <div class="espace_bloc"></div>
+                    <div *ngxPermissionsOnly="['accessToIndexFacturePhaseMarche']" class="kt-portlet__body kt-portlet__body--fit">
+                        <h4 class="title-style">
+                            {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.TITRE_INDEX' | translate }}
+                        </h4>
+                        <div class="example-container">
+                            <table id="exportData" mat-table [dataSource]="dataSourceDecomptesMarche" class="mat-elevation-z8" matSort>
+
+                                <!-- N DECOMPTE Column -->
+                                <ng-container matColumnDef="numFacture">
+                                    <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.NUM_FACTURE' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.numFacture}} </td>
+                                </ng-container>
+
+                                <!-- MONTANT DECOMPTE Column -->
+                                <ng-container matColumnDef="mntTtc">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.MONTANT_DECOMPTE' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.mntTtc | macurrency}} </td>
+                                </ng-container>
+
+                                <!-- MONTANT PAYE Column -->
+                                <ng-container matColumnDef="mntApayer">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.MONTANT_PAYER' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.mntApayer | macurrency}} </td>
+                                </ng-container>
+
+                                <!-- MONATANT RETENU Column -->
+                                <ng-container matColumnDef="mntRetenu">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.MANTANT_RETENU' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.mntRetenu | macurrency}} </td>
+                                </ng-container>
+
+                                <!-- DATE EFFET Column -->
+                                <ng-container matColumnDef="echeancePaiement">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.DATE_EFFET' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.echeancePaiement | date: 'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- STATUT Column -->
+                                <ng-container matColumnDef="statutFacture">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.LES_DECOMPTES_MARCHE.STATUT' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.statutFacture}} </td>
+                                </ng-container>
+
+                                <!-- ACTION Column -->
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <a href="javascript:;" (click)="editDecomptesMarche(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                                class="la la-edit"></i></a>
+                                        <a href="javascript:;" (click)="deleteDecompteDefinitif(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                                class="la la-trash"></i></a>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsDecomptesMarche"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsDecomptesMarche;"></tr>
+                            </table>
+                            <mat-paginator [length]="sizeData" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+                <!-- EndDataSource :: DECOMPTES-MARCHE -->
+
+                <!-- BeginDataSource :: DECOMPTE-PHASE-MARCHE -->
+                <div *ngIf="showPhaseTable">
+                    <div class="espace_bloc"></div>
+                    <div *ngxPermissionsOnly="['accessToIndexFacturePhaseMarche']" class="kt-portlet__body kt-portlet__body--fit">
+                        <h4 class="title-style">
+                            {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.TITRE_INDEX' | translate }}
+                        </h4>
+                        <div class="example-container mat-elevation-z8">
+                            <mat-table [dataSource]="dataSourceFacture" matSort>
+                                <!-- ID Column -->
+                                <ng-container matColumnDef="NumFacture">
+                                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.NUM_FACTURE' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.numFacture}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Progress Column -->
+                                <ng-container matColumnDef="mntTtc">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.MONTANT_PHASE' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.mntTtc | macurrency}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="mntRetenu">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.MANTANT_RETENU' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.mntRetenu | macurrency}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="mntApayer">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.MONTANT_PAYER' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.mntApayer | macurrency}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="echeancePaiement">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.PHASE_MARCHE.DATE_EFFET' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.echeancePaiement |date: 'dd/MM/yyyy'}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="statut">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.MARCHE.FACTURE_PHASE_MARCHE.STATUT' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.statutFacture}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <!-- <a href="javascript:;" (click)="editReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+												class="la la-edit"></i></a>
+                                        <a href="javascript:;" (click)="deleteReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+												class="la la-trash"></i></a> -->
+                                    </mat-cell>
+                                </ng-container>
+                                <mat-header-row *matHeaderRowDef="displayedColumnsFacture"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumnsFacture;">
+                                </mat-row>
+                            </mat-table>
+                            <mat-paginator [length]="sizeDataPM" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+                <!-- EndDataSource :: DECOMPTE-PHASE-MARCHE -->
+
+            </div>
+        </div>
+    </div>
+</div>

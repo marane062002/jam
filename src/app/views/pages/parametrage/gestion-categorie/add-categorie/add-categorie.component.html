@@ -1,0 +1,53 @@
+<!-- begin:: Content section 2 -->
+
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<!-- <span class="kt-portlet__head-icon">
+							<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
+						</span> -->
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						Ajouter Catégorie				</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Libellé</label>
+									<input matInput  required type="text" class="form-control" name="libelle" [(ngModel)]="categorie.libelle"  placeholder="" >
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	
+	
+		
+	</div>
+	<!--Action Section :: begin--> 
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit"
+				(click)="onSubmit()">
+				<i class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<!-- <button class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+				(click)="backList()">
+				<i class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button> -->
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

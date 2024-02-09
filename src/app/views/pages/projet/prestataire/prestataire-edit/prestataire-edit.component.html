@@ -1,0 +1,284 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        <!--  GENERAL.PAGES.EDIT_PRESTATAIRE   -->
+                        {{ 'PAGES.GENERAL.EDIT_PRESTATAIRE' | translate }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- begin:: Content section 2 -->
+<!--begin::Form-->
+<form [formGroup]="prestataireForm" (submit)="onSubmit()" class="kt-form" autocomplete="off">
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.PERSONNEL.CARTEID' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="raisonSociale"
+                                        placeholder="{{ 'PAGES.PRESTATAIRE.RS' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('raisonSociale','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="adresse"
+                                        placeholder="{{ 'PAGES.GENERAL.ADRESSE' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('adresse','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="teleFixe"
+                                        placeholder="{{ 'PAGES.PERSONNEL.TEL_FIX' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="fas fa-phone-alt"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('teleFixe','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="tel" class="form-control" formControlName="teleGsm"
+                                        placeholder="{{ 'PAGES.PERSONNEL.TEL_GSM' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-phone-alt"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="tel" class="form-control" formControlName="fax"
+                                        placeholder="{{ 'PAGES.GENERAL.FAX' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-phone-alt"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+
+                                    <input matInput type="email" class="form-control" formControlName="email"
+                                        placeholder="{{ 'PAGES.PERSONNEL.EMAIL' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-at"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('email','email')">
+                                        <strong>{{ 'AUTH.VALIDATION.INVALID_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isControlHasError('email','minlength')">
+                                        <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 6</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="siteWeb"
+                                        placeholder="{{ 'PAGES.GENERAL.SITE_WEB' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-at"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="contact"
+                                        placeholder="{{ 'PAGES.GENERAL.CONTACT' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-phone-alt"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-offset-2">
+                <div class="kt-portlet portlet-3">
+                    <div class="kt-portlet__head kt-bg-portlet-4">
+                        <div class="kt-portlet__head-label">
+                            <span class="kt-portlet__head-icon">
+                                <i class="far fa-folder-open kt-font-inverse-brand"></i>
+                            </span>
+                            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'PAGES.PERSONNEL.INFOADM' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="numeroPatente"
+                                            placeholder="{{ 'PAGES.PRESTATAIRE.NUM_PATENTE' | translate }} :" required>
+                                        <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('numeroPatente','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+                                        <!-- <mat-error *ngIf="isControlHasError('matricule','matriculeTaken')">
+                                                <strong>{{ 'AUTH.VALIDATION.ALREADY_EXIST' | translate }}</strong>
+                                            </mat-error> -->
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control"
+                                            formControlName="identifiantFiscale"
+                                            placeholder="{{ 'PAGES.PRESTATAIRE.ID_FISCAL' | translate }} :" required>
+                                        <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('identifiantFiscale','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" formControlName="rc"
+                                            placeholder="{{ 'PAGES.PRESTATAIRE.RC' | translate }} :" required>
+                                        <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('rc','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control"
+                                            formControlName="villeRegistreCommerce"
+                                            placeholder="{{ 'PAGES.PRESTATAIRE.VILLE_RC' | translate }} :" required>
+                                        <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('villeRegistreCommerce','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.PJS' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+
+                        <div class="col-md-4 show_port input-group">
+                            <!-- file upload :: begin -->
+                            <form enctype="multipart/form-data" method="POST" [formGroup]="addForm2">
+                                <label class="input-group-btn">
+                                    <span class="btn btn-brand">
+                                        {{ 'PAGES.GENERAL.PJS_DOC' | translate }}<input type="file" name="file"
+                                            (change)="fileChange2($event,'DOC')" formControlName="_file" id="customFile"
+                                            style="display: none;" multiple>
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" readonly>
+
+                            </form>
+                        </div>
+                        <!-- file upload :: end -->
+
+                        <div class="col-md-12 show_port">
+                            <table class="table pj">
+                                <thead>
+                                    <tr>
+                                        <td>{{ 'PAGES.GENERAL.PJ' | translate }}</td>
+                                        <td>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of pjs">
+                                        <td> {{item.name}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn_piecejoint_down"
+                                                (click)="onClickPjName(item.idAlfresco,item.id)"><i
+                                                    class="icon la la-cloud-download"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet portlet-3">
+
+                <div class="kt-portlet__body">
+
+                    <div class="kt-form__actions">
+                        <button type="submit"
+                            [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+                            class="btn btn-success btn-md btn-tall btn-wide">
+                            {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                        </button>
+                        <button type="button" *ngxPermissionsOnly="['accessToPrestataireModule']"
+                            routerLink="/prestataire/prestataire-index" class="btn btn-brand btn-md btn-tall btn-wide">
+                            {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,190 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'MENU.AJOUTERTOILETTE' | translate }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section 2 -->
+<!--begin::Form-->
+<form [formGroup]="toiletteForm" (submit)="onSubmit()" class="kt-form">
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.FORM_TOILETTE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="nomToilette" placeholder="{{ 'PAGES.GENERAL.NOM_TOILETTE' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('nomToilette','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="localisation" placeholder="{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="numToilette" placeholder="{{ 'PAGES.GENERAL.NUM_TOILETTE' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('numToilette','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group date">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput class="form-control" [matDatepicker]="picker" placeholder="{{ 'PAGES.GENERAL.DATE_DEBUT_EXPLOITATION' | translate }} :" formControlName="dateDebutExploitation">
+                                        <mat-datepicker-toggle matSuffix matSuffix [for]="picker">
+                                            <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                            </mat-icon>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group date">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput class="form-control" [matDatepicker]="finexp" placeholder="{{ 'PAGES.GENERAL.DATE_FIN_EXPLOITATION' | translate }} :" formControlName="dateFinExploitation">
+                                        <mat-datepicker-toggle matSuffix matSuffix [for]="finexp">
+                                            <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                            </mat-icon>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker touchUi="true" #finexp></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="number" class="form-control" formControlName="nombreToilette" placeholder="{{ 'PAGES.GENERAL.NB_TOILETTE' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="number" class="form-control" formControlName="superficie" placeholder="{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput type="text" class="form-control" formControlName="description" placeholder="{{ 'PAGES.GENERAL.DESCRIPTION' | translate }} :" Rows="5">
+                                                 </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput type="text" class="form-control" formControlName="observation" placeholder="{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :" Rows="5">
+                                        </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.PJS' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-4 show_port input-group">
+                            <!--  file upload :: begin -->
+                            <form enctype="multipart/form-data" method="POST" [formGroup]="addForm">
+                                <label class="input-group-btn">
+                                    <span class="btn btn-brand">
+                                        {{ 'PAGES.GENERAL.PJS_DECISION' | translate }}<input type="file" name="file"
+                                            (change)="fileChange1($event,'DEC')" formControlName="_file" id="customFile"
+                                            style="display: none;">
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" readonly>
+                            </form>
+                            <!--  file upload :: end -->
+                        </div>
+                        <div class="col-md-4 show_port input-group">
+                            <!-- file upload :: begin -->
+                            <form enctype="multipart/form-data" method="POST" [formGroup]="addForm2">
+                                <label class="input-group-btn">
+                                    <span class="btn btn-brand">
+                                        {{ 'PAGES.GENERAL.PJS_DOC' | translate }}<input type="file" name="file"
+                                            (change)="fileChange2($event,'DOC')" formControlName="_file" id="customFile"
+                                            style="display: none;" multiple>
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" readonly>
+                            </form>
+                            <!-- file upload :: end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Action Section :: begin-->
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label" align="right">
+            <button type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}" class="btn btn-success" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+                <i class="icon la la-floppy-o"></i>
+                {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+            <button matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}" class="btn btn-secondary" type="reset">
+                <i class="la la-recycle"></i>
+                {{ 'PAGES.GENERAL.RESET' | translate }}</button>
+            <button type="button" *ngxPermissionsOnly="['accessToToiletteModule']" routerLink="/toilette/toilette-index" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info">
+                <i class="icon la la-list"></i>
+                {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        </div>
+    </div>
+    <!--Action Section :: end-->
+</form>

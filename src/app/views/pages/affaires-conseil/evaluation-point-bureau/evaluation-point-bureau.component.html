@@ -1,0 +1,245 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head kt-bg-portlet-3">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="fas fa-book-open kt-font-inverse-brand"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        تقييم النقط من طرف المكتب
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body kt-portlet__body--fit">
+
+                <div class="example-header">
+                    <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                    </mat-form-field>
+                </div>
+
+                <div class="example-container mat-elevation-z8">
+
+                    <mat-table [dataSource]="dataSource" matSort>
+
+
+                        <!-- Progress Column -->
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم النقطة
+                            </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.id}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="session">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> الدورة
+                            </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.session.nomSession}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="objet">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                موضوع النقطة </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.objet}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="budget">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                الميزانية المقدرة
+                            </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.budget | macurrency}}
+                            </mat-cell>
+                        </ng-container>
+
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="dateRealisation">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                تاريخ الإنجاز </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+                                {{row.dateRealisation |date: 'dd/MM/yyyy'}} </mat-cell>
+                        </ng-container>
+
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="statut">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>وضعية النقطة </mat-header-cell>
+                            <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.statut.libelle}}
+                            </mat-cell>
+                        </ng-container>
+
+
+
+
+
+                        <!-- Fav Column -->
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> <button type="button" class="btn btn-outline-primary" (click)="onClickEvaluer(row)">تقييم النقطة </button>
+                            </mat-cell>
+                        </ng-container>
+
+
+
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                    <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                </div>
+
+                <div *ngIf="showEval">
+                    <div class="kt-portlet__body">
+                        <form class="kt-form" autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input [disabled]="true" matInput type="text" class="form-control" name="prepp" [(ngModel)]="formData.session.nomSession" placeholder=" الدورة :" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" placeholder="موضوع النقطة :" [(ngModel)]="formData.objet" name="objetPoint" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                            <!--- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" placeholder="معلومات عن النقطة :" [(ngModel)]="formData.description" name="descriptionPoint" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" placeholder="الميزانية المقدرة  :" [(ngModel)]="formData.budget" name="budgetPoint" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                            <!--- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control" [matDatepicker]="picker" name="dateRealisation" [(ngModel)]="formData.dateRealisation" placeholder=" تاريخ الإنجاز :    ">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            {{formData.dateRealisation | date:'dd/MM/yyyy'}}
+                                            <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" placeholder=" مصدر النقطة :" [(ngModel)]="formData.source" name="sourcePoint" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" placeholder="تأثير النقطة :" [(ngModel)]="formData.impacte" name="impacte" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" name="statutpoint" [(ngModel)]="formData.statut" placeholder=" وضعية النقطة :">
+                                                <mat-option *ngFor="let item of statutsPoints" [value]="item">
+                                                    {{item.libelle}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [disabled]="true" type="text" class="form-control" placeholder="الصنف :" [(ngModel)]="formData.type.libelle" name="typepoint">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput [disabled]="true" type="text" class="form-control" placeholder="اللجنةالمكلفة  :" [(ngModel)]="formData.commission.nomCommission" name="commpoint">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" placeholder="ملاحظات عن النقطة :" [(ngModel)]="formData.observations" name="observations" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" style="position: left !important;" (click)="validerEvaluation()" class="btn btn-outline-primary btn-md btn-tall btn-wide">
+								حفظ
+							</button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-12 my-auto kt-margin-b-10">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <form>
+                                    <label class="input-group-btn">
+										<span class="btn btn-brand">
+											اختيار وثائق مرفقة <input type="files" style="display: none;">
+										</span>
+									</label>
+                                    <input type="text" class="form-control piece_demande" readonly>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button type="button" (click)="send()" class="btn btn-success ">
+					حفظ <i class="far fa-save"></i>
+				</button>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

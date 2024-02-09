@@ -1,0 +1,40 @@
+.transaction-lines {
+    line-height: 2.5;
+    padding-right: 15px;
+    margin-right: 15px;
+}
+
+
+.transaction-line{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.right-checkbox {
+    margin-left:auto;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-side,
+.right-side {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.icons-container {
+    margin-left: 3cm;
+    margin-top: 4cm;
+    display: flex;
+    gap: 3cm;
+}
+
+.print-icon-display,
+.save-icon-display {
+    transform: scale(4);
+}

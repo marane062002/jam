@@ -1,0 +1,191 @@
+<form class="kt-form" autocomplete="off" #form="ngForm" (submit)="form.form.valid && onSubmit(form)">
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-user-ok"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							تحديث بيانات المنتخب
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="prenompp"
+										placeholder="الاسم :" [(ngModel)]="formData.membre.prenom" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" placeholder="النسب :" name="nompp"
+										[(ngModel)]="formData.membre.nom" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="cinpp"
+										[(ngModel)]="formData.membre.cin" placeholder="البطاقة الوطنية :" required>
+									<mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" placeholder="العنوان :"
+										name="adressepp" [(ngModel)]="formData.membre.adresse" required>
+									<mat-icon matSuffix><i class="fas fa-map-marked-alt"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="email" class="form-control" placeholder="البريد الإلكتروني :"
+										name="emailpp" [(ngModel)]="formData.membre.mail" required>
+									<mat-icon matSuffix><i class="fas fa-at"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" placeholder="الهاتف المحمول :"
+										name="teleGsmpp" [(ngModel)]="formData.membre.tele" required>
+									<mat-icon matSuffix><i class="fas fa-mobile-alt"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="situationFamiliale"
+										[(ngModel)]="formData.membre.situationFamiliale"
+										placeholder="الحالة العائلية :">
+										<mat-option *ngFor="let item of situationFamill" [value]="item.id">
+											{{item.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="niveauScolaire"
+										[(ngModel)]="formData.membre.niveauScolaire" placeholder="المستوى الدراسي :">
+										<mat-option *ngFor="let item of niveauScolaire" [value]="item.id">
+											{{item.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" placeholder="المهنة :"
+										name="profession" [(ngModel)]="formData.membre.profession">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput class="form-control" placeholder="الانتماء السياسي   :" name="parti"
+										[(ngModel)]="formData.membre.parti" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" placeholder="المقاطعة  :"
+										name="arrondissement" [(ngModel)]="formData.membre.arrondissement" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="typesession" [(ngModel)]="formData.role.id"
+										placeholder="الصفة :">
+										<mat-option *ngFor="let item of rolesAll" [value]="item.id">{{item.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="actif" [(ngModel)]="formData.membre.actif"
+										placeholder="الوضعية:">
+										<mat-option *ngFor="let item of statutElu" [value]="item.id">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="remarques"
+										placeholder="ملاحظات :" [(ngModel)]="formData.membre.remarques">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button _ngcontent-dkp-c41=""
+				class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit"
+				[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				type="reset" (click)="back()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+
+</form>

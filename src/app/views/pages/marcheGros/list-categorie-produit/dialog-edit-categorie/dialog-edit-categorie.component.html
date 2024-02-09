@@ -1,0 +1,49 @@
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-3">
+        <div class="kt-portlet__head-label">
+            <h2 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{'PAGES.CATEGORIE.EDIT' | translate}}
+            </h2>
+        </div>
+    </div>
+</div>
+<form [formGroup]="catsaveform">
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group fv-plugins-icon-container">
+            <mat-form-field class="example-full-width">
+                <label> {{'PAGES.CATEGORIE.REF_CAT' | translate}} </label>
+                <input matInput type="number" class="form-control form-control-solid form-control-lg" formControlName="refCategori" name="address1" required/>
+            </mat-form-field>
+            <div class="fv-plugins-message-container"></div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group fv-plugins-icon-container">
+            <mat-form-field class="example-full-width">
+                <label> {{'PAGES.CATEGORIE.NOM_CAT' | translate}} </label>
+                <input matInput type="text" class="form-control form-control-solid form-control-lg" formControlName="nomCategori"name="address1" required/>
+            </mat-form-field>
+            <div class="fv-plugins-message-container"></div>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__heads">
+    <div class="kt-portlet__head-label" align="bottom">
+        <button mat-button type="button" (click)="resetForm()"
+            class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+            <i class="la la-recycle"></i>
+            {{ 'PAGES.GENERAL.RETOUR' | translate }}
+        </button>
+
+		<button type="button" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		 [disabled]="!catsaveform.valid" (click)="onSubmit()">
+		 <i class="icon la la-floppy-o"></i>
+		 {{ 'PAGES.GENERAL.EDIT' | translate }}
+		</button>
+
+
+    </div>
+</div>
+</form>

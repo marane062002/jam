@@ -1,0 +1,125 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<!-- begin:: Content -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="kt-portlet">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<h3 class="kt-portlet__head-title">
+							رقم الدورة :
+							{{formData.numSession}}
+						</h3>
+					</div>
+					<div class="kt-portlet__head-label">
+						<h3 class="kt-portlet__head-title">
+							وضع الدورة : <span class="kt-font-brand kt-font-bold"> {{formData.statut}}</span>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon2-files-and-folders"></i>
+						</span>
+						<h3 class="kt-portlet__head-title">
+							تعديل الدورة
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" name="prepp"
+										[(ngModel)]="formData.numSession" placeholder=" رقم الدورة :" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput type="text" class="form-control" placeholder="إسم الدورة  :"
+										[(ngModel)]="formData.nomSession" name="nompp" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+									<!--- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select [disabled]="true" class="form-control" name="typesession"
+										[(ngModel)]="formData.type" placeholder="نوع الدورة :">
+										<mat-option *ngFor="let item of typeSession" [value]="item">{{item}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput class="form-control" [matDatepicker]="picker"
+										name="dateDebutSession" [(ngModel)]="formData.dateDebutSession"
+										placeholder=" تاريخ البداية :    ">
+									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput class="form-control" [matDatepicker]="picker1" name="dateFin"
+										[(ngModel)]="formData.dateFinSession" placeholder=" تاريخ النهاية :">
+									<mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="statuutsession" [(ngModel)]="formData.statut"
+										placeholder="وضعية الدورة :">
+										<mat-option *ngFor="let item of statutSession" [value]="item">{{item}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button _ngcontent-dkp-c41=""
+				class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button"
+				(click)="send()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+			<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				type="reset" (click)="back()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

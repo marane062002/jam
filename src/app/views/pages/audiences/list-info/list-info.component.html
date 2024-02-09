@@ -1,0 +1,94 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-3">
+        <div class="kt-portlet__head-label">
+            <h2 class="kt-portlet__head-title">
+                {{ 'PAGES.GESTION_JOURNEE.LIST_JOURNEE' | translate }}
+            </h2>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button  type="button"
+                        class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                        matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.AFFAIRE.TITRE_INDEX' | translate }}">
+                        <i class="flaticon2-download text-success"></i>
+                    </button>
+                    <a href="javascript:; " (click)="addJournee()" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.GESTION_JOURNEE.AJOUTER' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="example-header  col-md-4">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'TRANSLATOR.SEARCHE' | translate }}">
+        </mat-form-field>
+    </div>
+
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-2" matSort>
+        <!-- Num Column -->
+        <!-- Date Column -->
+        <ng-container matColumnDef="dateJournee">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="dateJournee">{{ 'PAGES.GESTION_JOURNEE.DATE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="dateJournee">
+                {{ row.dateJournee | date:'yyyy-MM-dd'}}
+            </td>
+        </ng-container>
+        <!-- Chevillard Column -->
+        <ng-container matColumnDef="chevillards">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="chevillards">{{ 'PAGES.GESTION_JOURNEE.CHEVILLARD' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="chevillards">
+                {{row.chevillards?.nom}} {{row.chevillards?.prenom}}
+                <!-- {{ row.chevillards?.nom }}
+				*ngFor="let n of nom" [value]="n.id">{{n.nom}} {{n.prenom}} -->
+            </td>
+        </ng-container>
+        <!-- Espèce Column -->
+        <ng-container matColumnDef="nombreT">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="nombreT">{{ 'PAGES.GESTION_JOURNEE.NOMBRE_TETES' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="nombreT">
+                {{ row.nombreT }}
+
+            </td>
+        </ng-container>
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ 'PAGES.GESTION_JOURNEE.ACTIONS' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="actionsBtn action">
+
+                <button type="button" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+                    matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"> <a href="javascript:; "
+                        (click)="updateJournee(row.id)">
+                        <i class="icon la la-edit"></i>
+                    </a></button>
+                <button type="button" (click)="delete(row.id)"
+                    class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                    matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- footer data -->
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false"
+        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <!-- <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card> -->
+    <!-- <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="totalItems"
+        [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"
+        (page)="pageChanged($event)"></mat-paginator> -->
+
+
+    <mat-paginator [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"></mat-paginator>    
+    <hr>
+</div>

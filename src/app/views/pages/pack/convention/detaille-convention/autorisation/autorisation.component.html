@@ -1,0 +1,241 @@
+<div class="kt-portlet__body">
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-wrapper">
+            <div class="kt-portlet__head-actions">
+                <a href="javascript:; " (click)="openDialog(0)" class="btn btn-success btn-elevate btn-icon-sm">
+                    <i class="la la-plus"></i> {{ 'PAGES.MARCHE.convention.TITRE_NEW' | translate }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="Ajouter" class="espace_bloc">
+        <form [formGroup]="formconflit" class="kt-form" autocomplete="off" (ngSubmit)="onSubmit()">
+            <div	class="Radio"style="	display: flex;	flex-wrap: wrap;	margin-left: -15px;	justify-content: center;"	>
+                <div class="col-md-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            [(ngModel)]="Visible"
+                            name="Visible1"
+                            [value]="0"
+                            [ngModelOptions]="{standalone: true}"
+                            [checked]="isSelected"
+                            (change)="selectedConvontion1($event)"
+                        />
+                        <label>
+                            <h5>{{ "PAGES.CONVENTION.AUTORISATION.PARTIE_PRENANTE" | translate }}</h5>
+                        </label>
+                    </div>
+                </div>
+    
+                <div class="col-md-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            [(ngModel)]="Visible"
+                            [ngModelOptions]="{standalone: true}"
+                            name="Visible1"
+                            [value]="1"
+                            [checked]="!isSelected"
+                            (change)="selectedConvontion($event)"
+                        />
+                        <label>
+                            <h5>{{ "PAGES.CONVENTION.AUTORISATION.AUTRE" | translate }}</h5>
+                        </label>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6" *ngIf="Visible==0">
+                    <div class="form-group fv-plugins-icon-container">
+                    
+                            <mat-form-field class="example-full-width"  formGroupName="partiePreneur">
+                                <mat-select class="form-control" formControlName="id" placeholder="{{ 'PAGES.MARCHE.convention.PP' | translate }} :">
+                                    <mat-option *ngFor="let item of listPP" [value]="item.id">
+                                        {{item.nom}}  {{item.prenom}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        <div class="fv-plugins-message-container"></div>
+    
+                        <div class="fv-plugins-message-container"></div>
+                    </div>
+                </div>
+                <div formGroupName="pexternal" *ngIf="Visible==1" class="col-md-3"  >
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ 'PAGES.MARCHE.convention.nom' | translate }} </mat-label>
+                            <input
+                                type="text"
+                                class="form-control form-control-solid form-control-lg"
+                                name="address1"
+                                formControlName="nom"
+                                matInput
+                            />
+                        </mat-form-field>
+    
+                        <div class="fv-plugins-message-container"></div>
+    
+                        <div class="fv-plugins-message-container"></div>
+                    </div>
+                </div>
+                <div formGroupName="pexternal" *ngIf="Visible==1" class="col-md-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ 'PAGES.MARCHE.convention.prenom' | translate }} </mat-label>
+                            <input
+                                type="text"
+                                class="form-control form-control-solid form-control-lg"
+                                name="address1"
+                                formControlName="prenom"
+                                matInput
+                            />
+                        </mat-form-field>
+    
+                        <div class="fv-plugins-message-container"></div>
+    
+                        <div class="fv-plugins-message-container"></div>
+                    </div>
+                </div>
+    
+                <div class="col-md-6">
+                    <div class="form-group fv-plugins-icon-container">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>{{ 'PAGES.MARCHE.convention.autorisation' | translate }} : </mat-label>
+                            <input
+                                type="text"
+                                class="form-control form-control-solid form-control-lg"
+                                name="address1"
+                                formControlName="authorisation"
+                                matInput
+                            />
+                        </mat-form-field>
+    
+                        <div class="fv-plugins-message-container"></div>
+    
+                        <div class="fv-plugins-message-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kt-portlet__head">
+				<div class="kt-portlet__head-label" align="right">
+					<button
+						type="submit"
+						_ngcontent-dkp-c41=""
+						class="
+							btn btn-success btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						"
+					>
+						<i
+							_ngcontent-dkp-c41=""
+							class="icon la la-floppy-o"
+						></i>
+						{{ "PAGES.GENERAL.SAVE" | translate }}
+					</button>
+					<button
+						_ngcontent-dkp-c41=""
+						class="
+							btn btn-info btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						"
+						(click)="annuler()"
+					>
+						<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+						{{ "PAGES.GENERAL.EXIT" | translate }}
+					</button>
+					<button
+						_ngcontent-dkp-c41=""
+						class="
+							btn btn-secondary btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						"
+						type="reset"
+					>
+						<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+						{{ "PAGES.GENERAL.RESET" | translate }}
+					</button>
+				</div>
+				<div class="espace_bloc"></div>
+			</div>
+        </form>
+    </div>
+
+    <!-- begin:: content section datasource -->
+    <!-- <div *ngIf="dataSize > 0"> -->
+    <div class="kt-portlet__body">
+        <div class="kt-portlet__body kt-portlet__body--fit">
+
+
+            <div class="example-container mat-elevation-z8">
+
+                <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Nom">
+                        <th class="num" mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                            'PAGES.MARCHE.convention.nom' | translate }} </th>
+                        <td class="num" mat-cell *matCellDef="let row"> {{row?.partiePreneur?.nom}}
+                            {{row?.pexternal?.nom}}</td>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Prenom">
+                        <th class="objet" mat-header-cell *matHeaderCellDef mat-sort-header> {{
+                            'PAGES.MARCHE.convention.prenom' | translate }} </th>
+                        <td class="objet" mat-cell *matCellDef="let row"> {{row?.partiePreneur?.prenom }}
+                            {{row?.pexternal?.prenom}} </td>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="organisme">
+                        <th class="tva" mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                            'PAGES.MARCHE.convention.organisme' | translate }} </th>
+                        <td class="tva" mat-cell *matCellDef="let row"> {{row.partiePreneur?.organisme}} </td>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="autorisation">
+                        <th class="prixU" mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                            'PAGES.MARCHE.convention.autorisation' | translate }} </th>
+                        <td class="prixU" mat-cell *matCellDef="let row"> {{row.authorisation}} </td>
+                    </ng-container>
+
+
+
+                    <ng-container matColumnDef="actions">
+                        <th class="action" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                        <td class="action" mat-cell *matCellDef="let row">
+                            <!----  <a href="javascript:;" (click)="showReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>-->
+                            <a href="javascript:;" (click)="openDialog(row.id)"
+                                class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+                                matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                            <a href="javascript:;" (click)="delete(row.id)"
+                                class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                                matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                </table>
+                <div *ngIf="dataSize == 0 && isLoading == false"
+                    style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                </div>
+                <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                    </mat-progress-spinner>
+                </mat-card>
+                <mat-paginator [length]="dataSize" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10,50]"
+                    showFirstLastButtons></mat-paginator>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <!-- begin:: table des prix -->
+
+
+    <!-- end:: table des prix -->
+    <!-- </div> -->
+</div>

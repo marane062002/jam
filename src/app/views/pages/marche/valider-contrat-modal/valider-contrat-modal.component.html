@@ -1,0 +1,46 @@
+<form class="kt-form" autocomplete="off" #form="ngForm"  (submit)="onSubmit(form)">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label class="requiredLabel">Référence du Contrat :</label>
+                    <input matInput type="number" class="form-control" required (focus)="onInputFocus4()" (blur)="onInputBlur4()" placeholder="" [(ngModel)]="contrat.refDeContrat" name="refDeContrat">
+                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group date">
+                    <mat-form-field class="example-full-width">
+                        <label class="requiredLabel"> Date Ouverture Plis :
+                        </label>
+                        <input matInput class="form-control" required (click)="picker1.open()" name="dateOuverturePlis"  [(ngModel)]="contrat.dateOuverturePlis" [matDatepicker]="picker1" />
+                        <mat-hint>JJ/MM/AAAA</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker1">
+                            <mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
+                            </mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                    </mat-form-field>
+    
+                </div>
+            </div>
+        </div> -->
+        
+    </div>
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label d-flex justify-content-end" >
+            <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+                <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+                {{ 'PAGES.GENERAL.NEXT' | translate }}</button>
+            <button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset">
+                <i _ngcontent-dlp-c41 class="la la-recycle"></i>
+                {{ 'PAGES.GENERAL.RESET' | translate }}</button>
+            <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="backList()">
+                <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+                {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        </div>
+        <div class="espace_bloc"></div>
+    </div>
+</form>

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title class="title-style">معاينة المراسلة الصادرة رقم : {{data.title}}</h1>
+<div class="mat-typography">
+    <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center;margin: 148px;">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </div>
+    <pdf-viewer [src]="pdfSrc" [original-size]="false" [show-all]="true" [autoresize]="false" [show-borders]="true">
+    </pdf-viewer>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>إغلاق</button>
+</mat-dialog-actions>

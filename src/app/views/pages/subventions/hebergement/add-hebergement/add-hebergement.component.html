@@ -1,0 +1,159 @@
+<form novalidate [formGroup]="addForm" autocomplete="off">
+   
+    <!-- ------------------------------------------------------------------------------------------------------------------>
+
+    <!-- end section -->
+    <div class="kt-portlet portlet-3">
+        <div class="kt-portlet__head kt-bg-portlet-4">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="fa fa-bed kt-font-inverse-brand"></i>
+                </span>
+                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                    {{ 'PAGES.SUBVENTION.HEBERG' | translate }}
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body" formGroupName="hebergement">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="date" class="form-control" formControlName="date" placeholder="{{ 'PAGES.SUBVENTION.DATE' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('nombreNuitee','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="organismeAccueil" placeholder="{{ 'PAGES.SUBVENTION.ORGANISME' | translate }} :" required>
+                                <mat-option [value]=null>
+                                    ---{{ 'PAGES.SUBVENTION.ORGANISME' | translate }}---
+                                </mat-option>
+                                <mat-option *ngFor="let org of organismes" [value]="org">
+                                    {{org.nom}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('organismeAccueil','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="nombrePersonne" placeholder="{{ 'PAGES.SUBVENTION.NBR_PERSONNE' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('nombrePersonne','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="nombreChambre" placeholder="{{ 'PAGES.SUBVENTION.NBR_CHAMBRE' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('nombreChambre','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="nombreNuitee" placeholder="{{ 'PAGES.SUBVENTION.NBR_NUITEE' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('nombreNuitee','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="totalHt" placeholder="{{ 'PAGES.SUBVENTION.TOTAL_HT' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('totalHt','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="totalTTC" placeholder="{{ 'PAGES.SUBVENTION.TOTAL_TTC' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('totalTTC','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- end section attachements-->
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-attachment"></i>
+            </span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.GENERAL.ATTACHEMENT' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-6 show_port input-group">
+                <form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm" style="display: -webkit-inline-box;margin-inline-start: 98px;">
+                    <label class="input-group-btn">
+                        <span class="btn btn-info">
+                            {{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+                                (change)="fileChange($event)" formControlName="_file" id="customFile"
+                                style="display: none;" multiple>
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" readonly>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End attachement section-->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" [disabled]="addForm.invalid" (click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+            {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="onReset()">
+            <i _ngcontent-dlp-c41 class="la la-recycle"></i>
+            {{ 'PAGES.GENERAL.RESET' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

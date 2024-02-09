@@ -1,0 +1,176 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<span class="kt-portlet__head-icon">
+					<i class="fas fa-address-card kt-font-inverse-brand"></i>
+				</span>
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">{{ "PAGES.FESTIVALES.ADD_FESTIVALE" | translate }}</h2>
+			</div>
+		</div>
+	</div>
+	<form [formGroup]="addForm">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label> {{ "PAGES.SUBVENTION.NOM_FESTIVALE" | translate }} : </mat-label>
+						<input matInput type="text" class="form-control" formControlName="nomFestival" placeholder="" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label> {{ "PAGES.SUBVENTION.ID" | translate }} : </mat-label>
+						<input matInput type="text" formControlName="numLocalAssociation" class="form-control form-control-solid form-control-lg" name="address" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<input matInput class="form-control" [matDatepicker]="picker1" placeholder="{{ 'PAGES.FESTIVALES.DATE_ORGANISATION' | translate }} :" formControlName="dateOrganisation" />
+							<mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+								<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i> </mat-icon>
+							</mat-datepicker-toggle>
+							<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control" (selectionChange)="nomChanged($event)" formControlName="organisateurs" placeholder="{{ 'PAGES.FESTIVALES.ORGRANISATEUR' | translate }} :">
+							<mat-option [value]="null">---{{ "PAGES.FESTIVALES.ORGRANISATEUR" | translate }}--- </mat-option>
+							<mat-option *ngFor="let champ of ChampOrganisation" [value]="champ">
+								{{ champ.libelle }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="row" *ngIf="isVisibleNomass == true">
+			<div class="col-md-12">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label> {{ "PAGES.FESTIVALES.NOM" | translate }} : </mat-label>
+						<input matInput formControlName="nomOrg" type="text" class="form-control form-control-solid form-control-lg" name="nomAss" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" *ngIf="isVisibleAss == true">
+			<div class="col-md-6">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control" formControlName="nomChoix" (selectionChange)="typeChanged($event)" placeholder="{{ 'PAGES.SUBVENTION.NOM_ASSOCIATION' | translate }} :">
+							<mat-option [value]="null"> ---{{ "PAGES.SUBVENTION.NOM_ASSOCIATION" | translate }}---</mat-option>
+							<mat-option *ngFor="let type of listAssociations" [value]="type">
+								{{ type.nom }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<div class="input-group date">
+						<mat-form-field class="example-full-width">
+							<input matInput class="form-control" placeholder="{{ 'PAGES.SUBVENTION.ID' | translate }} :" readonly [value]="valueAssociation" formControlName="test" />
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label> {{ "PAGES.FESTIVALES.LOCAL_ORG" | translate }} : </mat-label>
+						<input matInput type="text" class="form-control form-control-solid form-control-lg" formControlName="localOrganisation" name="address1" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control" formControlName="champOrganisation" (selectionChange)="natureChanged($event)" placeholder="{{ 'PAGES.FESTIVALES.CHAMPACT' | translate }} :">
+							<mat-option [value]="null">---{{ "PAGES.FESTIVALES.CHAMPACT" | translate }}--- </mat-option>
+							<mat-option *ngFor="let organisateur of organisateurs" [value]="organisateur">
+								{{ organisateur.libelle }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<div class="row" *ngIf="isVisibleNature == true">
+			<div class="col-md-12">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label> {{ "PAGES.FESTIVALES.NATURE" | translate }} : </mat-label>
+						<input matInput type="text" formControlName="nature" class="form-control form-control-solid form-control-lg" name="nature" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label> {{ "PAGES.FESTIVALES.BUDJET_EVENEMENT" | translate }} : </mat-label>
+						<input matInput type="text" formControlName="budgetEvenement" class="form-control form-control-solid form-control-lg" name="numPro" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label> {{ "PAGES.FESTIVALES.subventionCommunMar" | translate }} : </mat-label>
+						<input matInput type="text" formControlName="subventionCommunMar" class="form-control form-control-solid form-control-lg" name="address" />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<!--Action Section :: begin-->
+		<div class="kt-portlet__head">
+			<div class="kt-portlet__head-label" align="right">
+				<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="addFestivale()" [disabled]="addForm.invalid" [ngClass]="{ 'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading }">
+					<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+					{{ "PAGES.GENERAL.SAVE" | translate }}
+				</button>
+				<button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="onReset()">
+					<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+					{{ "PAGES.GENERAL.RESET" | translate }}
+				</button>
+				<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+					<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+					{{ "PAGES.GENERAL.EXIT" | translate }}
+				</button>
+			</div>
+			<div class="espace_bloc"></div>
+		</div>
+		<!--Action Section :: end-->
+	</form>
+</div>

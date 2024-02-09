@@ -1,0 +1,362 @@
+<!-- begin:: Content section 2 -->
+<!-- <div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-4">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fas fa-info  kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TITRE_SHOW' | translate }}
+					</h3>
+				</div>
+				<div class="kt-portlet__head-toolbar">
+					<div class="kt-portlet__head-wrapper">
+						<div class="kt-portlet__head-actions">
+							<button _ngcontent-dkp-c41="" (click)="onEdit()"
+								matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"
+								class="btn btn-warning tn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+								<i _ngcontent-dkp-c41="" class="icon la la-edit"></i>
+								{{ 'PAGES.GENERAL.EDIT' | translate }}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.OBJET' | translate }} :</th>
+									<td colspan="4" class="donnee_show">
+										{{consultation.objet}}
+									</td>
+								</tr>
+								<tr>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.BUDGET_ESTIMATIF' | translate }} :
+									</th>
+									<td class="donnee_show">
+										{{consultation.budgetGlobalPropose  | macurrency}} </td>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DATE_DEBUT' | translate }} :</th>
+									<td class="donnee_show">
+										{{consultation.dateDebutConsultation |date: 'dd/MM/yyyy'}} </td>
+								</tr>
+								<tr>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TYPE' | translate }} : </th>
+									<td class="donnee_show">
+										{{consultation.type.libelle }}
+									</td>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.SEUIL_MINIMAL' | translate }} :
+									</th>
+									<td>
+										{{consultation.seuilMinimal}} </td>
+								</tr>
+								<tr>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DIVISION' | translate }} :</th>
+									<td class="donnee_show">
+										{{divisionLibelle}} </td>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.SERVICE' | translate }} :</th>
+									<td>
+										{{serviceLibelle}} </td>
+								</tr>
+								<tr>
+									<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DESCRIPTION' | translate }} :</th>
+									<td colspan="4" class="donnee_show">
+										{{consultation.description}} </td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="espace_bloc"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-1">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fas fa-trophy kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.LIBELLE' | translate }}
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<form class="kt-form" autocomplete="off" #form="ngForm">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<table class="table pj" width="100%">
+								<tbody>
+									<tr>
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.NOM_PRESTATAIRE' | translate }}
+											:</th>
+										<td class="donnee_show">
+											{{OffreAdjucataire.prestataire.nom}} </td>
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.NUM_RC' | translate }}
+											:</th>
+										<td>
+											{{OffreAdjucataire.prestataire.rc}} </td>
+									</tr>
+									<tr>
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.TEL' | translate }}
+											:</th>
+										<td>
+											{{OffreAdjucataire.prestataire.tel}} </td>
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.EMAIL' | translate }}
+											:</th>
+										<td colspan="2">
+											{{OffreAdjucataire.prestataire.mail}}</td>
+									</tr>
+									<tr>
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.ADRESSE' | translate }}
+											:</th>
+										<td colspan="4">
+											{{OffreAdjucataire.prestataire.adresse}}</td>
+									</tr>
+									<tr>
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.TVA' | translate }}
+											:</th>
+										<td colspan="4" class="donnee_show">
+											% {{tva}}</td>
+									</tr>
+									<tr>
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.MHT' | translate }}
+											:</th>
+										<td class="donnee_show" style="font: bold; color:blue">
+											{{OffreAdjucataire.commande.mntTotal | macurrency}} </td>
+
+										<th>{{ 'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.ADJUDICATAIRE.MTTC' | translate }}
+											:</th>
+										<td class="donnee_show" style="font: bold; color:blue">
+											{{OffreAdjucataire.commande.mntTtc | macurrency}} </td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-3">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.MARCHE.BC.BC' | translate }}
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<form class="kt-form" autocomplete="off" #form="ngForm">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<table class="table pj" width="100%">
+								<tbody>
+									<tr>
+										<!-- <th>
+											Reference :</th>
+										<td>
+											{{bonCommande.refDeBC?bonCommande.refDeBC:'-'}} </td> -->
+
+											<th>
+												{{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }} :</th>
+											<td>
+												{{bonCommande.typePrestation?.libelle?bonCommande.typePrestation?.libelle:'-'}} </td>
+
+												<th>{{ 'PAGES.MARCHE.AO.OBJET' | translate }} :</th>
+										<td>{{bonCommande.objet?bonCommande.objet:'-'}}</td>
+	
+									</tr>
+									<tr>
+								
+										<th>{{ 'PAGES.MARCHE.BC.DATE_DEVIS' | translate }}:</th>
+										<td>{{bonCommande.dateDevis?bonCommande.dateDevis:'-'}}</td>
+										<th>{{ 'PAGES.MARCHE.BC.LIEUX_DEVIS' | translate }} :</th>
+										<td>{{bonCommande.lieuxDevis?bonCommande.lieuxDevis:'-'}}</td>
+									</tr>
+									<tr>
+										
+										<th>Délai de livraison :</th>
+										<td>{{bonCommande.delaiLivraison?bonCommande.delaiLivraison:'-'}}</td>
+										<th>
+											{{ 'PAGES.MARCHE.BC.DATE_RECEPTION' | translate }} :</th>
+										<td>
+											{{bonCommande.dateLivraison | date:'dd/MM/yyyy'}} </td>
+									</tr>
+									<tr>
+										
+
+											<th>
+												Bordeureau de prix :</th>
+											<td>
+												{{bonCommande.bordereauPrix?bonCommande.bordereauPrix:'-'}} </td>
+
+												<th>Raison sociale :</th>
+										<td>{{bonCommande.raisonSociale?bonCommande.raisonSociale:'-'}}</td>
+
+
+									</tr> 
+									<tr>
+										
+										<th>Montant du bon de commande :</th>
+										<td>{{bonCommande.montantDeBC?bonCommande.montantDeBC:'-'}}</td>
+										<th *ngxPermissionsOnly="['canShowBonCommande']">estimation :</th>
+										<td *ngxPermissionsOnly="['canShowBonCommande']">{{bonCommande.estimation?bonCommande.estimation:'-'}}</td>
+									</tr>
+									<tr   >
+										
+									</tr>
+								</tbody>
+							</table>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-4">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="far fa-folder kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<!-- BEGIN:: content pj -->
+				<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+					<!-- icon Column -->
+					<ng-container matColumnDef="icon">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.ATTCHEMENTS.FORMAT' | translate }}</th>
+						<td mat-cell *matCellDef="let row"><img class="file_icon"
+								src="./assets/media/files/{{FileExtension(row.name)}}"
+								matTooltip="{{FileName(row.name)}}"></td>
+					</ng-container>
+					<!-- name  Column -->
+					<ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}</th>
+						<td mat-cell *matCellDef="let row">{{FileName(row.name)  | slice:0:20}}</td>
+					</ng-container>
+					<!-- type  Column -->
+					<ng-container matColumnDef="type">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.MARCHE.AO.PJ.TYPE' | translate }}</th>
+						<td mat-cell *matCellDef="let row">{{row.type.libelle}}</td>
+					</ng-container>
+						<!-- type  Column -->
+						<ng-container matColumnDef="label">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								Label</th>
+							<td mat-cell *matCellDef="let row">{{row.label?row.label:'-'}}</td>
+						</ng-container>
+					<!-- dateFile  Column -->
+					<ng-container matColumnDef="dateFile">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}
+						</th>
+						<td mat-cell *matCellDef="let row">{{row.dateFile  | date:'dd/MM/yyyy HH:mm'}}</td>
+					</ng-container>
+					<!-- fSize  Column -->
+					<ng-container matColumnDef="fSize">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}
+						</th>
+						<td mat-cell *matCellDef="let row"> {{row.fSize/1000}} ko</td>
+					</ng-container>
+					<!-- Action Column -->
+					<ng-container matColumnDef="actions">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+						<td mat-cell *matCellDef="let row">
+							<button type="button" (click)="onClickPjName(row.idAlfresco,row.id)"
+								class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+								matTooltip="{{FileName(row.name)}}"><i class="flaticon-download-1"></i></button>
+							<!-- <button type="button" (click)="onDeleteFile(row.id)"
+								class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+								matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+									class="icon la la-trash"></i></button> -->
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				<div *ngIf="dataSource.data.length == 0 && isLoading == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="5" [pageIndex]="0"
+					[pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+				<hr>
+				<!-- END:: content pj -->
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12 col-md-offset-2" *ngxPermissionsOnly="['canShowBonCommande']">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-3">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						Statut du bon de commande
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<form [formGroup]="statut" > 
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" name="crit"  placeholder="{{ 'PAGES.MARCHE.AO.TAB_360.TAB_STATUT' | translate }}" formControlName="statut" (selectionChange)="updateStatut($event)">
+										<mat-option value="ANNULE" > annulé</mat-option>
+										<mat-option value="ADJUGE"  > adjugé</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+				
+				
+					</div>
+				 
+				
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Action Section :: begin-->
+<!-- <div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="backList()">
+			<i class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div> -->
+<!--Action Section :: end-->

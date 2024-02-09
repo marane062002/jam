@@ -1,0 +1,250 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        {{ 'PAGES.MARCHE.MARCHE.NUM_MARCHE' | translate }} : {{marche != null?marche?.numMarche:"-"}}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        {{ 'PAGES.MARCHE.MARCHE.STATUT' | translate }} : <span class="kt-font-brand kt-font-bold">
+                            {{marche?.statutMarche != null?marche?.statutMarche:"-"}}</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end :: content section top -->
+<!-- begin:: Content section details -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fa fa-handshake kt-font-inverse-brand"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TITRE_SHOW' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-label">
+                        <button (click)="showAO()" type="button" class="btn
+                        btn-sm
+                        btn-clean
+                        btn-icon
+                        btn-success
+                        btn-icon-md
+                        btn_table_show" matTooltip="AO">
+                            <i class="la la-search-plus"></i>
+                    </button>
+                    <button (click)="showHitory()" type="button" class="btn btn-sm btn-clean btn-icon btn_table_print btn-icon-md" matTooltip="information">
+                        <i class="fas fa-info-circle text-primary"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.OBJET' | translate }} :</th>
+                                    <td class="donnee_show" colspan="4">{{marche?.objet}}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.MONTANT_MARCHE' | translate }}:</th>
+                                    <td class="donnee_show">
+                                        {{marche?.mntAdjucataire | macurrency}}
+                                    </td>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.MODE_PASSATION' | translate }} :</th>
+                                    <td class="donnee_show" colspan="1">
+                                        {{marche?.modePassation.libelle}} </td>
+                                    <th>
+                                </tr>
+                                 <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.DATE_DEBUT_MARCHE' | translate }} :</th>
+                                    <td class="donnee_show">
+                                        {{marche?.dateDebutMarche |date: 'dd/MM/yyyy'}} </td>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.DELAIS_EXECUTION' | translate }} :</th>
+                                    <td class="donnee_show" colspan="2">
+                                        {{marche?.delaisExecution}} (Jrs)</td>
+                                </tr>
+                              <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.DATE_NOTIFICATION' | translate }} :</th>
+                                    <td class="donnee_show" colspan="4">
+                                        {{(marche?.dateNotification != null) ? (marche?.dateNotification |date: 'dd/MM/yyyy') : "-"}}
+                                    </td>
+                                </tr>
+                               <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.CAUTION_DEFINITIVE' | translate }} :</th>
+                                    <td class="donnee_show">
+                                        {{(marche?.cautionDefinitive != null)?(marche?.cautionDefinitive | macurrency):"-"}}
+                                    </td>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.POURCENTAGE_RETENU' | translate }}:</th>
+                                    <td class="donnee_show" colspan="2">
+                                        {{marche?.prctRetenu?marche?.prctRetenu:0}} %
+                                    </td>
+                                </tr>
+                                  <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.PLAFOND_RETENU' | translate }} :</th>
+                                    <td>{{marche?.plafondRetenu?marche?.plafondRetenu:0}} % </td>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.MONTANT_ENGAGE' | translate }} :</th>
+                                    <td class="donnee_show" colspan="2">
+                                        {{(marche?.mntEngage != null)?(marche?.mntEngage | macurrency):"-"}} </td>
+                                </tr>
+                                 <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.DIVISION' | translate }} :</th>
+                                    <td class="donnee_show">
+                                        {{divisionLibelle?divisionLibelle:"-"}} </td>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.SERVICE' | translate }} :</th>
+                                    <td class="donnee_show" colspan="2">
+                                        {{serviceLibelle?serviceLibelle:"-"}} </td>
+                                </tr>
+                               <tr>
+                                    <th>{{ 'PAGES.MARCHE.MARCHE.DESCRIPTIF' | translate }} :</th>
+                                    <td class="donnee_show" colspan="4">
+                                        {{marche?.descriptif?marche?.descriptif:"-"}} </td>
+                                </tr>
+                                <tr>
+                                    <th style="color: #ff2a1d;text-transform: uppercase !important;">{{ 'PAGES.MARCHE.MARCHE.ADJUCATAIRE' | translate }} :</th>
+                                    <td class="donnee_show" colspan="4">
+                                        <!-- {{marche?.adjucataire.nom?marche?.adjucataire.nom:"-"}} -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4 class="vue360">Modules marché</h4>
+                         <mat-tab-group (selectedTabChange)="tabClick($event)" animationDuration="2000ms">
+                            <mat-tab *ngxPermissionsOnly="['canAddDocPrestataire']" class="tab-color">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddDocAdminAdj()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_DOC_ADMIN_ADJUCATAIRE' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_DOC_ADMIN_ADJUCATAIRE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                           <mat-tab *ngxPermissionsOnly="['accessToLivrable']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddEngagApprob()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ENGAGEMENT_APPROBATION_MARCHE' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_ENGAGEMENT_APPROBATION_MARCHE' | translate
+                                        }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToPhaseMarche']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddPhase()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PHASE_MARCHE' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_PHASE_MARCHE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToOrdreService']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddOrdreService()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ORDRE_SERVICE_TOOLTIP' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_ORDRE_SERVICE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToOrdreArretReprise']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddOrdreArretReprise()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ARRET_REPRISE_TOOLTIP' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_ARRET_REPRISE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToCommissionMarche']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddComiteMarche()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_COMITE_MARCHE' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_COMITE_MARCHE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToFacturePhaseMarche']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddFacture()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_FACTURE_PHASE_MARCHE' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_FACTURE_PHASE_MARCHE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToLivrable']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddLivrable()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_LIVRABLE_PHASE_MARCHE' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_LIVRABLE_PHASE_MARCHE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToLivrable']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddReceptions()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_RECEPTIONS' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_RECEPTIONS' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToLivrable']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddMisEnDemeureResiliation()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_MISE_EN_DEMEURE_RESILIATION' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_MISE_EN_DEMEURE_RESILIATION' | translate
+                                        }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToLivrable']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddTravauxSupplimentaires()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_AVENANTS' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_AVENANTS_TITLE' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToLivrable']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddPenalitesEtInterets()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PENALITES_ET_INTERETS' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_PENALITES_ET_INTERETS' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                            <mat-tab *ngxPermissionsOnly="['accessToLivrable']">
+                                <ng-template mat-tab-label>
+                                    <span (click)="AddPJ()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PJ' | translate }}">{{
+                                        'PAGES.MARCHE.MARCHE.TAB_360.TAB_PJ' | translate }}</span>
+                                </ng-template>
+                            </mat-tab>
+                        </mat-tab-group> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content section details -->
+<!-- begin:: Content section 2 -->
+<!-- <div class="kt-portlet__foot">
+                    <div>
+
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" *ngxPermissionsOnly="['canAddDocPrestataire']" (click)="AddDocAdminAdj()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_DOC_ADMIN_ADJUCATAIRE' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_DOC_ADMIN_ADJUCATAIRE' | translate }}</button>
+
+                            <button type="button" (click)="AddEngagApprob()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ENGAGEMENT_APPROBATION_MARCHE' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ENGAGEMENT_APPROBATION_MARCHE' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToPhaseMarche']" (click)="AddPhase()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PHASE_MARCHE' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PHASE_MARCHE' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToOrdreService']" (click)="AddOrdreService()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ORDRE_SERVICE_TOOLTIP' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ORDRE_SERVICE' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToOrdreArretReprise']" (click)="AddOrdreArretReprise()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ARRET_REPRISE_TOOLTIP' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ARRET_REPRISE' | translate }}
+                            </button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToCommissionMarche']" (click)="AddComiteMarche()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_COMITE_MARCHE' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_COMITE_MARCHE' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToFacturePhaseMarche']" (click)="AddFacture()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_FACTURE_PHASE_MARCHE' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_FACTURE_PHASE_MARCHE' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToLivrable']" (click)="AddLivrable()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_LIVRABLE_PHASE_MARCHE' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_LIVRABLE_PHASE_MARCHE' | translate }}</button>
+
+                           
+                            <button type="button" *ngxPermissionsOnly="['accessToLivrable']" (click)="AddReceptions()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_RECEPTIONS' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_RECEPTIONS' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToLivrable']" (click)="AddMisEnDemeureResiliation()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_MISE_EN_DEMEURE_RESILIATION' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_MISE_EN_DEMEURE_RESILIATION' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToLivrable']" (click)="AddTravauxSupplimentaires()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_AVENANTS' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_AVENANTS_TITLE' | translate }}</button>
+
+                            <button type="button" *ngxPermissionsOnly="['accessToLivrable']" (click)="AddTravauxSupplimentaires()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PENALITES_ET_INTERETS' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PENALITES_ET_INTERETS' | translate }}</button>
+                           
+
+                            <button type="button" *ngxPermissionsOnly="['accessToLivrable']" (click)="AddPJ()" matTooltip="{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PJ' | translate }}" class="btn btn-info tab-marche">{{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_PJ' | translate }}
+                            </button>
+                        </div> 
+
+                    </div>
+                </div>-->
+                <router-outlet></router-outlet>

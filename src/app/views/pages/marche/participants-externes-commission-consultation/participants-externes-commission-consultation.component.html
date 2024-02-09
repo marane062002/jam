@@ -1,0 +1,72 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+		<div class="col-lg-12">
+			<div class="kt-portlet portlet-1">
+				<div class="kt-portlet__head kt-bg-portlet-1">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="fas fa-users kt-font-inverse-brand"></i>
+						</span>
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+              {{ 'PAGES.MARCHE.COMMISSIONS.MEMBRE_EXTERNE' | translate }}
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+                    <div class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSourcePE" matSort>
+
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="nom">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>{{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.NOM' | translate }}</mat-header-cell>
+                            <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.personneExterne.nom}} </mat-cell>
+                          </ng-container>
+
+                          <!-- Progress Column -->
+                          <ng-container matColumnDef="organisme">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ORGANISME' | translate }} </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.personneExterne.organisme}} </mat-cell>
+                          </ng-container>
+
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="tele">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.TEL' | translate }}   </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.personneExterne.tele}} </mat-cell>
+                          </ng-container>
+
+                           <!-- Progress Column -->
+                           <ng-container matColumnDef="role">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ROLE' | translate }}  </mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.role.libelle}} </mat-cell>
+                          </ng-container>
+
+                            <!-- Fav Column -->
+                            <ng-container matColumnDef="present">
+                              <mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT' | translate }} </mat-header-cell>
+                              <mat-cell *matCellDef="let row">
+                                <div *ngIf="row.present==true">  Oui </div>
+                                <div *ngIf="row.present==false">  Non </div>
+                             </mat-cell>
+                            </ng-container>
+
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="justif">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>  {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE' | translate }}  </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.justif}} </mat-cell>
+                              </ng-container>
+
+
+                          <mat-header-row *matHeaderRowDef="displayedColumnsPE"></mat-header-row>
+                          <mat-row *matRowDef="let row; columns: displayedColumnsPE;">
+                          </mat-row>
+                        </mat-table>
+
+                        <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                      </div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>

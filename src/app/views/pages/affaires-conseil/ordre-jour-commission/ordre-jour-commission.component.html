@@ -1,0 +1,144 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon2-calendar-9"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						لائحة جداول أعمال اللجان
+					</h3>
+				</div>
+				<div class="kt-portlet__head-toolbar">
+					<div class="kt-portlet__head-wrapper">
+						<div class="kt-portlet__head-actions">
+							&nbsp;
+							<button (click)="exportTable()" type="button" class="btn btn-export"
+								matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;جدول أعمال اللجان">
+								<i _ngcontent-clk-c12=""
+									class="icon la la-file-excel-o"></i>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__body">
+				<form class="kt-form" autocomplete="off" #form="ngForm">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" (selectionChange)="onChangeofOptions()"
+										name="statuutsession" [(ngModel)]="idCommission" placeholder="اللجنة:">
+										<mat-option *ngFor="let item of Commissions" value="{{item.id}}">
+											{{item.nomCommission}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" (selectionChange)="onChangeofOptions()"
+										name="statuutsession" [(ngModel)]="idSession" placeholder="الدورة :">
+										<mat-option *ngFor="let item of Sessions" value="{{item.id}}">
+											{{item.nomSession}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</form>
+
+				<hr>
+
+				<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+					<!-- Progress Column -->
+					<!-- <ng-container matColumnDef="id">
+                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم النقطة    </mat-header-cell>
+                    <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.id}} </mat-cell>
+                  </ng-container> -->
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="objet">
+						<th class="theader" mat-header-cell *matHeaderCellDef mat-sort-header> تقديم النقطة </th>
+						<td mat-cell *matCellDef="let row"> {{row.objet}} </td>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="type">
+						<th class="theader" mat-header-cell *matHeaderCellDef mat-sort-header>
+							صنف النقطة </th>
+						<td mat-cell *matCellDef="let row"> {{row.type.libelle}} </td>
+					</ng-container>
+
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="statut">
+						<th class="theader" mat-header-cell *matHeaderCellDef mat-sort-header> وضعية النقطة </th>
+						<td mat-cell *matCellDef="let row"> {{row.statut.libelle}} </td>
+					</ng-container>
+
+					<ng-container matColumnDef="recommandation">
+						<th class="theader" mat-header-cell *matHeaderCellDef mat-sort-header>
+							التوصيات </th>
+						<td mat-cell *matCellDef="let row ; let element; let i = index">
+							<mat-form-field floatLabel="never">
+								<textarea matInput type="text" matAutosizeMinRows=2
+									matAutosizeMaxRows=5 name="test" [value]="row.typeVote"
+									[(ngModel)]="row.typeVote"></textarea>
+							</mat-form-field>
+						</td>
+					</ng-container>
+
+					<!-- Action Column -->
+					<ng-container matColumnDef="actions">
+						<th class="theader" mat-header-cell *matHeaderCellDef></th>
+						<td mat-cell *matCellDef="let row">
+							<button type="button" (click)="showPoint(row.id)"
+								class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+								matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+									class="fab fa-buffer"></i></button>
+							<button type="button"
+								class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+								matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+									class="icon la la-edit"></i></button>
+							<button type="button"
+								class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+								matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+									class="icon la la-trash"></i></button>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				<div *ngIf="dataSize == 0 && isLoading == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]"
+					showFirstLastButtons></mat-paginator>
+				<hr>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			(click)="valider()" type="button"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

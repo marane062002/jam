@@ -1,0 +1,354 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter une inhumation :
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Type :</mat-label>
+								<mat-select
+								[formControl]="typeControl"
+									matNativeControl
+									class="form-control"
+								>
+								<mat-option *ngFor="let typec of type" [value]="typec.id"> 
+									{{ typec.libelle }}
+								</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Sexe :</mat-label>
+								<mat-select
+								    [formControl]="sexeControl"
+									matNativeControl
+									class="form-control"
+								>
+									<mat-option value="Homme">Homme</mat-option>
+									<mat-option value="Femme">Femme</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Commune: </label>
+								<mat-select
+								[formControl]="communeControl"
+									matNativeControl
+									class="form-control"
+								>
+								<mat-option *ngFor="let typec of commune" [value]="typec.id"> 
+									{{ typec.libelle }}
+								</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Arrondissement: </label>
+								<mat-select
+								[formControl]="arrondisControl"
+									matNativeControl
+									class="form-control"
+								>
+								<mat-option *ngFor="let typec of arrondissement" [value]="typec.id"> 
+									{{ typec.libelle }}
+								</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Quartier :</mat-label>
+								<mat-select [formControl]="quartierControl" matNativeControl class="form-control">
+									<mat-option *ngFor="let typec of quartier" [value]="typec.id">
+										{{ typec.libelle }}
+									</mat-option>
+								</mat-select>
+								
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date d'enterrement :</mat-label>
+								<input
+								[(ngModel)]="dateEnterment"
+									type="date"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Lieu d'enterrement :</mat-label>
+								<input
+								   [(ngModel)]="lieuEnter"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Lieu de récupération :</mat-label>
+								<input
+								[(ngModel)]="lieuRecup"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="pb-5" data-wizard-type="step-content">
+					<h4 class="mb-10 font-weight-bold text-dark"></h4>
+					<div class="kt-portlet">
+						<div class="kt-portlet__body">
+							<div class="row">
+								<div class="col-md-12 show_port input-group">
+									<form
+										enctype="multipart/form-data"
+										method="POST"
+										style="
+											display: -webkit-inline-box;
+											margin-inline-start: 98px;
+										"
+									>
+										<label class="input-group-btn">
+											Pièce jointe
+											<span class="btn btn-info">
+												Sélectionner un fichier
+												<input
+												(change)="handleFileInput($event)"
+													type="file"
+													name="file"
+													formControlName="_file"
+													id="customFile"
+													style="display: none"
+													multiple
+												/>
+											</span>
+										</label>
+										<input
+											type="text"
+											class="form-control"
+											readonly
+										/>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="kt-portlet portlet-3">
+					<div class="kt-portlet__head kt-bg-portlet-3">
+						<div class="kt-portlet__head-label">
+							<h2
+								class="kt-portlet__head-title kt-font-inverse-brand"
+							>
+								Origine:
+							</h2>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-3">
+						<label class="checkbox-inline" style="padding-left: 20px">
+						  Connu
+						  <input [(ngModel)]="connu" value="true" type="radio" name="radio" />
+						  <span class="checkmark"></span>
+						</label>
+					  </div>
+					  <div class="col-md-3">
+						<label class="checkbox-inline" style="padding-left: 20px">
+						  Inconnu
+						  <input [(ngModel)]="connu" value="false" type="radio" name="radio" />
+						  <span class="checkmark"></span>
+						</label>
+					  </div>
+					  
+					<div class="col-md-3"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nom:</mat-label>
+								<input
+								[(ngModel)]="nom"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prénom:</mat-label>
+								<input
+								[(ngModel)]="prenom"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date de naissance:</mat-label>
+								<input
+								[(ngModel)]="dateNaissance"
+									type="date"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN:</mat-label>
+								<input
+								[(ngModel)]="cin"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N° Bulletin:</mat-label>
+								<input
+								[(ngModel)]="numBulletin"
+									type="number"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nationalité:</mat-label>
+								<mat-select
+								[formControl]="nationalite"
+									matNativeControl
+									class="form-control"
+								>
+									<mat-option value="Marocain">Marocain</mat-option>
+									<mat-option value="Algérien">Algérien</mat-option>
+									<mat-option value="Argentin">Argentin</mat-option>
+									<mat-option value="Espagnol">Espagnol</mat-option>
+									<mat-option value="Français">Français </mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									<button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+									<button
+									  (click)="createEnterrement()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dlp-c41
+											class="icon la la-floppy-o"
+										></i>
+										ENREGISTRER
+									</button>
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

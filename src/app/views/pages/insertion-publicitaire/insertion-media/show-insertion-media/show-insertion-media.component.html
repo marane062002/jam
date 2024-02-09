@@ -1,0 +1,64 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="fas fa-newspaper"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.INSERT_PUB.MEDIA.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="editMedias()" *ngxPermissionsOnly="['canUpdateMedias']" class="btn btn-warning btn-elevate btn-icon-sm">
+                        <i class="la la-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.INSERT_PUB.MEDIA.NOM' | translate }} :</th>
+                            <td class="donnee_show">{{details.nom}}</td>
+                            <th>{{ 'PAGES.INSERT_PUB.MEDIA.CONTACT' | translate }} :</th>
+                            <td class="donnee_show">{{details.contact}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INSERT_PUB.MEDIA.TYPE' | translate }} :</th>
+                            <td class="donnee_show">{{details.supportPublicitaire.nomSupport}}
+                            </td>
+                            <th>{{ 'PAGES.INSERT_PUB.MEDIA.MAIL' | translate }} :</th>
+                            <td class="donnee_show">{{details.mail}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.INSERT_PUB.MEDIA.TEL' | translate }} :</th>
+                            <td class="donnee_show">{{details.tel}}</td>
+                            <th>{{ 'PAGES.INSERT_PUB.MEDIA.SITE' | translate }} :</th>
+                            <td class="donnee_show">{{details.site}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin :: Action -->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end:: action -->

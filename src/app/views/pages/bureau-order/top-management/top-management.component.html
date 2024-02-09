@@ -1,0 +1,321 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-1">
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'TRANSLATOR.TOP_MANAGEMENT' | translate }}
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<mat-card class="example-card mt-8 mb-5">
+					<form [formGroup]="searchForm">
+						<div class="row">
+							<div class="col-md-4 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</mat-label>
+									<input type="date" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="dateDebut" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-4 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</mat-label>
+									<input type="date" class="form-control form-control-solid form-control-lg"
+										name="address1" formControlName="dateFin" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-4 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.BUREAU_ORDRE.VOLUME_TOTAL_COURRIER" | translate }}
+										:</mat-label>
+									<input readonly type="text" class="form-control form-control-solid form-control-lg"
+										formControlName="volumeTotalCourrier" matInput />
+								</mat-form-field>
+							</div>
+							<div class="col-md-4 form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>{{ "PAGES.BUREAU_ORDRE.PERIODE_DE" | translate }} :</mat-label>
+									<input readonly type="text" class="form-control form-control-solid form-control-lg"
+										formControlName="periodeDe" matInput />
+								</mat-form-field>
+							</div>
+							<!-- ORIGINE -->
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select name="typeOrigine" formControlName="typeOrigine" class="form-control"
+										placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_INTERNE_EXTERNE' | translate }} :"
+										>
+										<mat-option value="Entrant">
+											{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.LIBELLE' | translate }}</mat-option>
+										<mat-option value="Sortant">
+											{{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.LIBELLE' | translate }}</mat-option>
+											<mat-option value="Convocation">
+												{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.LIBELLE' | translate }}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<!-- TYPE -->
+						<div class="col-md-4">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control" formControlName="type"
+										placeholder="{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} :">
+										<mat-option *ngFor="let type of types" [value]="type.id">
+											{{type.libelle}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						</div>
+						<div class="row">
+							<div class="col-md-9"></div>
+
+							<div class="col-md-3 form-group fv-plugins-icon-container">
+								<div class="kt-portlet__head-label text-center">
+									<button (click)="appliquer()" _ngcontent-dkp-c41=""
+										class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+										{{'PAGES.PROGRAMME.STATISTIQUE.APPLIQUER'| translate}} </button>
+									<button (click)="reset()" _ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+										{{'PAGES.PROGRAMME.STATISTIQUE.REINITIALISER'| translate}} </button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</mat-card>
+
+
+				<div class="row">
+					<div class="col-md-6">
+						<mat-card class="example-card mt-8 mb-5">
+							<mat-card-header>
+								<mat-card-title>
+									<h4 style="font-weight: bold;color:#696969">{{ "PAGES.BUREAU_ORDRE.VUE_GLOBAL" |
+										translate }}</h4>
+								</mat-card-title>
+							</mat-card-header>
+							<mat-card-content>
+								<p style="color:#b3b3b3">{{ "PAGES.BUREAU_ORDRE.TEMPS_MOYEN_TRAITEMENT_COURRIER" |
+									translate }} :</p>
+								<div class="info-container">
+									<div *ngIf="inHour==true"><span
+											style="color:#696969;font-weight: bold;">{{tempsMoyemParCourrierH}}H</span>
+										{{ "PAGES.BUREAU_ORDRE.PAR_COURRIER" | translate }}</div>
+									<div *ngIf="inMinutes==true"><span
+											style="color:#696969;font-weight: bold;">{{tempsMoyemParCourrierMin}}Min</span>
+										{{ "PAGES.BUREAU_ORDRE.PAR_COURRIER" | translate }}</div>
+									<div style="color:#b3b3b3">{{ "PAGES.BUREAU_ORDRE.TYPE_COURRIER_PLUS_TRAITE" |
+										translate }} :<span style="color: #808aff">{{typeCourrierPlusTraite}}</span>
+										<span class="circle">{{pourcentageCourrierPlusTraite}}%</span>
+									</div>
+								</div>
+								<p style="color: #b3b3b3;">{{ "PAGES.BUREAU_ORDRE.TAUX_TRAITEMENT_COURRIERS" |
+									translate}} :</p>
+								<div style="display: flex; height: 100px;">
+									<div [style.width]="dynamicWidth1" *ngIf="dynamicWidth1!='0%'"
+										style="background-color: #b1ffa6; height: 100%; text-align: center; display: flex; align-items: center; justify-content: center;">
+										<span style="color: #000000;font-weight: bold;">{{ "PAGES.BUREAU_ORDRE.TRAITES"
+											| translate }}: {{ dynamicWidth1
+											}}</span>
+									</div>
+									<div [style.width]="dynamicWidth2" *ngIf="dynamicWidth2!='0%'"
+										style="background-color: #fecfb5; height: 100%; text-align: center; display: flex; align-items: center; justify-content: center;">
+										<span style="color: #000000;font-weight: bold;">{{
+											"PAGES.BUREAU_ORDRE.NON_TRAITES" | translate }}: {{ dynamicWidth2
+											}}</span>
+									</div>
+									<div [style.width]="dynamicWidth3" *ngIf="dynamicWidth3!='0%'"
+										style="background-color: #3191df; height: 100%; text-align: center; display: flex; align-items: center; justify-content: center;">
+										<span style="color: #000000;font-weight: bold;">{{
+											"PAGES.BUREAU_ORDRE.CLOTURED" | translate }}: {{ dynamicWidth3
+											}}</span>
+									</div>
+								</div>
+								<div style="text-align: center;margin-top: 10px;color: #b3b3b3;">{{
+									"PAGES.BUREAU_ORDRE.TOTAL_DE" | translate }}
+									{{totalCourrier}} {{ "PAGES.BUREAU_ORDRE.COURRIERS" | translate }}</div>
+							</mat-card-content>
+						</mat-card>
+					</div>
+
+					<div class="col-md-6">
+						<mat-card class="example-card mt-8 mb-5">
+							<mat-card-header>
+								<mat-card-title>
+									<h4 style="font-weight: bold;color:#696969">{{
+										"PAGES.BUREAU_ORDRE.PERFORMANCES_INDIVIDUELLES" | translate }}</h4>
+								</mat-card-title>
+							</mat-card-header>
+							<mat-card-content>
+
+								<table id="exportData" mat-table [dataSource]="dataSource2" class="mat-elevation-z8"
+									matSort style="width: 100%;">
+									<ng-container matColumnDef="nomComplet">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.NOM_COMPLET' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">
+											<span>{{row.nom}}</span>
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="courriersTraites">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.COURRIERS_TRAITES'|
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">{{row.paramPCT}}
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="courriersNonTraites">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.COURRIERS_NON_TRAITES' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">{{row.paramPCNT}}
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="performance">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.PERFORMANCE' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">
+											{{row.performanceP ? row.performanceP : '0'}} {{'%'}}
+										</td>
+									</ng-container>
+									<tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+									<tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+								</table>
+								<mat-card *ngIf="isLoading2 && dataSource2.data.length==0"
+									style="display: flex; justify-content: center; align-items: center">
+									<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+									</mat-progress-spinner>
+								</mat-card>
+								<div *ngIf="sizeData == 0 && isLoading2 == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+									{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+								</div>
+							<!--     <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+									<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+									</mat-progress-spinner>
+								</mat-card> -->
+								<!-- <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.totalElements"  [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+								 -->
+							 <kt-custom-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()"
+							 (pageSizeEvent)="getPageInNewSize($event)">
+							</kt-custom-pagination>
+								<!-- <mat-paginator [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"
+									matTable="table2" #paginator2></mat-paginator> -->
+							</mat-card-content>
+						</mat-card>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-6">
+						<mat-card class="example-card mt-8 mb-5" style="height: 100%;">
+							<mat-card-header>
+								<mat-card-title>
+									<h4 style="font-weight: bold;color:#696969">{{
+										"PAGES.BUREAU_ORDRE.TENDANCE_TRAITEMENT_TYPE_COURRIER" | translate }}
+									</h4>
+								</mat-card-title>
+							</mat-card-header><br>
+							<mat-card-content>
+								<div class="row">
+									<div class="col-md-2 show_port">
+									</div>
+									<div class="col-md-8 show_port">
+										<div Style="pointer-events: none;">
+											<canvas id="canvas"></canvas>
+										</div>
+									</div>
+									<div class="col-md-2 show_port">
+									</div>
+								</div>
+							</mat-card-content>
+						</mat-card>
+					</div>
+
+					<div class="col-md-6">
+						<mat-card class="example-card mt-8 mb-5" style="height: 100%;">
+							<mat-card-header>
+								<mat-card-title>
+									<h4 style="font-weight: bold;color:#696969">{{
+										"PAGES.BUREAU_ORDRE.PERFORMANCE_PAR_ENTITE" | translate }}</h4>
+								</mat-card-title>
+							</mat-card-header><br>
+							<mat-card-content>
+								<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+									matSort style="width: 100%;">
+									<ng-container matColumnDef="nomEntite">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.NOM_ENTITE' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">
+											<span>{{row.libelle}}</span>
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="courriersTraites">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.COURRIERS_TRAITES'|
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">{{row.paramECT}}
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="courriersNonTraites">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.COURRIERS_NON_TRAITES' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">{{row.paramECNT}}
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="performance">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.PERFORMANCE' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">
+											{{row.performanceE ? row.performanceE : '0'}} {{'%'}}
+										</td>
+									</ng-container>
+									<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+									<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+								</table>
+								<mat-card *ngIf="isLoading && dataSource.data.length==0"
+									style="display: flex; justify-content: center; align-items: center">
+									<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+									</mat-progress-spinner>
+								</mat-card>
+								<mat-paginator [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"
+									matTable="table" #paginator></mat-paginator>
+							</mat-card-content>
+						</mat-card>
+					</div>
+				</div>
+				<br><br><br>
+				<div class="row">
+					<div class="col-md-6">
+						<mat-card class="example-card mt-8 mb-5" style="height: 100%;">
+							<mat-card-header>
+								<mat-card-title>
+									<h4 style="font-weight: bold;color:#696969">Nombre total des courriers sortants:{{totalCourrierSortant}}</h4>
+								</mat-card-title>
+							</mat-card-header><br>
+						
+						</mat-card>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

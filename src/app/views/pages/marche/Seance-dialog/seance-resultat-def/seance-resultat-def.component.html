@@ -1,0 +1,206 @@
+<h4 class="kt-portlet__head-title " style="text-align: center;">
+	Les séances
+</h4>
+
+
+
+<mat-horizontal-stepper class=""  #stepper>
+    <mat-step label="La seance avant derniere" >
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-12 show_port">
+                    <!-- start section::edit file form -->
+                    <div class="row">
+                    
+                        <div class="col-md-4 show_port input-group" *ngIf="formData?.avantDerniereSeance==true">
+                            <mat-form-field class="example-full-width">
+                                <label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+                                <mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type" placeholder="">
+                                    <mat-option *ngFor="let item of typePjSeanceAvantDerniere" [value]="item">{{item}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="col-md-4 show_port input-group">
+                            <form class="d-flex" style="margin-top: 27px;">
+                                <label >
+                                    <span class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show">
+                            <a type="button" (click)="getUpdatedUrl()" target="_blank"  matTooltip="{{ 'PAGES.PRECONTENTIEUX.TELECHARGER' | translate }}">
+                                <i class="la la-download"></i></a> </span>
+                            </label>
+                           
+                        </form>
+                            
+                        </div>
+        
+        
+                        <!-- <div class="col-md-4 show_port input-group">
+                            <i class="la la-upload"><a type="file" (click)="handleFile($event)" target="_blank" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.PRECONTENTIEUX.PARCOURIR' | translate }}">
+                                                </a>	</i>
+                            
+                        </div> -->
+                                      
+                        <div class="col-md-4 show_port input-group">
+                            <form class="d-flex" style="margin-top: 27px;">
+                                <label >
+                                    <span class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show">
+                                        <i class="la la-upload"><input type="file" (change)="handleFile($event)" id="customFile" style="display: none;" multiple></i>
+                                    </span>
+                                </label>
+                               
+                            </form>
+                        </div>
+                    
+                       
+                    </div>
+        
+                    <!-- end section::edit file form -->
+                    <hr>
+                    <!-- begin::file datasource -->
+                    <div  class="example-container mat-elevation-z8">
+        
+                        <mat-table [dataSource]="dataSource1" matSort>
+                            <ng-container matColumnDef="type">
+                                <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type}} </mat-cell>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="nomDoc">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row; let i=index">
+                                    <button type="button" (click)="onDeletePj(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+                                        <i class="icon la la-trash"></i>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+        
+                            <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                            </mat-row>
+                        </mat-table>
+        
+                    </div>
+        
+                    <!-- <div class="col-md-2" style="padding-top: 27px;">
+                        <button class="btn btn-primary" type="button" (click)="validerPj()" style="width: 100%;">
+                            {{ 'PAGES.GENERAL.SAVE' | translate }}
+                        </button>
+                    </div> -->
+                    <!-- end::file datasource -->
+                </div>
+            </div>
+        </div>
+<br>
+        <button  (click)="saveStepOne()"
+            class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+           Suivant
+        </button>
+    </mat-step>
+
+    <mat-step label="La derniére séance" >
+        <div class="kt-portlet__body">
+            <div class="row">
+                <div class="col-md-12 show_port">
+                    <!-- start section::edit file form -->
+                    <div class="row">
+                    
+                        <div class="col-md-4 show_port input-group" *ngIf="formData?.derniereSeance==true">
+                            <mat-form-field class="example-full-width">
+                                <label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+                                <mat-select class="form-control" name="unite" (selectionChange)="selectedTypePJDernier($event.value)" [(ngModel)]="formPjD.type" placeholder="">
+                                    <mat-option *ngFor="let item of typePjSeanceDerniere" [value]="item">{{item}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="col-md-4 show_port input-group">
+                            <form class="d-flex" style="margin-top: 27px;">
+                                <label >
+                                    <span class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show">
+                            <a type="button" (click)="getUpdatedUrlDernier()" target="_blank"  matTooltip="{{ 'PAGES.PRECONTENTIEUX.TELECHARGER' | translate }}">
+                                <i class="la la-download"></i></a> </span>
+                            </label>
+                           
+                        </form>
+                            
+                        </div>
+        
+        
+                        <!-- <div class="col-md-4 show_port input-group">
+                            <i class="la la-upload"><a type="file" (click)="handleFile($event)" target="_blank" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.PRECONTENTIEUX.PARCOURIR' | translate }}">
+                                                </a>	</i>
+                            
+                        </div> -->
+                                      
+                        <div class="col-md-4 show_port input-group">
+                            <form class="d-flex" style="margin-top: 27px;">
+                                <label >
+                                    <span class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show">
+                                        <i class="la la-upload"><input type="file" (change)="handleFileDernier($event)" id="customFile" style="display: none;" multiple></i>
+                                    </span>
+                                </label>
+                               
+                            </form>
+                        </div>
+                    
+                       
+                    </div>
+        
+                    <!-- end section::edit file form -->
+                    <hr>
+                    <!-- begin::file datasource -->
+                    <div  class="example-container mat-elevation-z8">
+        
+                        <mat-table [dataSource]="dataSource2" matSort>
+                            <ng-container matColumnDef="type">
+                                <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type}} </mat-cell>
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="nomDoc">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row; let i=index">
+                                    <button type="button" (click)="onDeletePjDernier(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+                                        <i class="icon la la-trash"></i>
+                                    </button>
+                                </mat-cell>
+                            </ng-container>
+        
+                            <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                            </mat-row>
+                        </mat-table>
+        
+                    </div>
+        
+                    <!-- <div class="col-md-2" style="padding-top: 27px;">
+                        <button class="btn btn-primary" type="button" (click)="validerPj()" style="width: 100%;">
+                            {{ 'PAGES.GENERAL.SAVE' | translate }}
+                        </button>
+                    </div> -->
+                    <!-- end::file datasource -->
+                </div>
+            </div>
+        </div>
+    </mat-step>
+
+   
+</mat-horizontal-stepper>

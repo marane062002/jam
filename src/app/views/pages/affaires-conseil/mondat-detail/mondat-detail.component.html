@@ -1,0 +1,166 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-calendar"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        تفاصيل المُدَّة الإنتدابية
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <tbody>
+                                <tr>
+                                    <!-- <th>
+										الرقم الداخلي :</th>
+									<td class="donnee_show">
+										{{mondat.id}}
+									</td> -->
+                                    <th>تاريخ البداية :</th>
+                                    <td class="donnee_show">
+                                        {{mondat.dateDebutMondat | date: 'dd/MM/yyyy'}} </td>
+
+                                    <th>
+                                        تاريخ النهاية :</th>
+                                    <td class="donnee_show">
+                                        {{mondat.dateFinMondat |date: 'dd/MM/yyyy'}} </td>
+                                    <th>
+                                        وضع المُدَّة الإنتدابية :</th>
+                                    <td class="donnee_show">
+                                        {{mondat.statut }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-users-1"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        أعضاء االمدة الإنتدابية
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            &nbsp;
+                            <a href="javascript:; " (click)="nouveauElu()" class="btn btn-success btn-elevate btn-icon-sm">
+                                <i class="la la-plus"></i> إضافة منتخب
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- tableau des membres : begin -->
+            <hr>
+            <div class="export-align">
+                <div class="kt-portlet__head-actions">
+                    <button (click)="exportTable()" type="button" class="btn btn-export" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;أعضاء االمدة الإنتدابية">
+						<i _ngcontent-clk-c12=""
+							class="icon la la-file-excel-o"></i>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}
+					</button>
+                </div>
+            </div>
+            <div class="example-header">
+                <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+            <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                <ng-container matColumnDef="prenom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> الاسم </th>
+                    <td mat-cell *matCellDef="let row"> {{row.membre.prenom}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> النسب </th>
+                    <td mat-cell *matCellDef="let row"> {{row.membre.nom}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="cin">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> البطاقة الوطنية </th>
+                    <td mat-cell *matCellDef="let row"> {{row.membre.cin}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="niveauScolaire">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> المستوى الدراسي </th>
+                    <td mat-cell *matCellDef="let row"> {{getNiveauScolaire(row.membre.niveauScolaire)}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="tele">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        الهاتف المحمول </th>
+                    <td mat-cell *matCellDef="let row"> {{row.membre.tele}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        الصفة </th>
+                    <td mat-cell *matCellDef="let row"> {{row.role.libelle}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="statut">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        الوضع </th>
+                    <td mat-cell *matCellDef="let row">{{getStatutElus(row.membre.actif)}}
+                    </td>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <td mat-cell *matCellDef="let row">
+                        <button type="button" (click)="showElu(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+								class="icon la la-search-plus"></i></button>
+                        <button type="button" (click)="editElu(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                        <button type="button" (click)="deleteElu(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+								class="icon la la-trash"></i></button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div *ngIf="dataLenght== 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+            </div>
+            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                </mat-progress-spinner>
+            </mat-card>
+            <mat-paginator [length]="dataLenght" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+            <hr>
+            <!-- tableau des membres : end -->
+        </div>
+    </div>
+
+    <!--Action Section :: begin-->
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label" align="right">
+            <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        </div>
+        <div class="espace_bloc"></div>
+    </div>
+    <!--Action Section :: end-->

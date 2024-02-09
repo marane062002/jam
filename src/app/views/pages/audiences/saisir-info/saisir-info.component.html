@@ -1,0 +1,144 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.GESTION_JOURNEE.SAISIR_INFORMATIONS_JOURNEE" | translate }}
+				</h2>
+			</div>
+		</div>
+	</div>
+	<!-- <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form" #formJournee="ngForm"> -->
+	<form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form" #formJournee="ngForm"
+		[formGroup]="journeeSaveForm">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_JOURNEE.DATE' | translate}} :</label>
+						<input matInput class="form-control" formControlName="dateJournee" class="form-control"
+							type="datetime-local" placeholder="" required />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container" formGroupName="chevillards">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_JOURNEE.CHEVILLARDS' | translate}} :</label>
+						<mat-select class="form-control" placeholder="" formControlName="id"
+							(selectionChange)="setMultipleSelectChevillards()" [(value)]="ValueIdChevillards" required>
+							<mat-option *ngFor="let chevillard of chevillards"
+								[value]="chevillard.id">{{chevillard.nom}} {{chevillard.prenom}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-3" formGroupName="journeeEspeces">
+				<div class="form-group fv-plugins-icon-container" formGroupName="espece">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_JOURNEE.ESPECES' | translate}} :</label>
+						<mat-select class="form-control" placeholder="" formControlName="id"
+							(selectionChange)="setMultipleSelectEspeces()" [(value)]="ValueIdEspeces" required>
+							<mat-option *ngFor="let espece of especes" [value]="espece.id">{{espece.espece}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container" formGroupName="journeeEspeces">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_JOURNEE.NOMBRE' | translate}} :</label>
+						<input type="number" formControlName="nombreBetes" matInput class="form-control"
+							class="form-control" placeholder="" required />
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button type="button" [disabled]="!formJournee.valid" class="btn btn-success btn-elevate btn-icon-sm"
+					data-wizard-type="action-submit" (click)="onAdd()">
+					<i class="la la-plus"></i>
+					{{'PAGES.PROGRAMME.AJOUTER' | translate}}
+				</button>
+			</div>
+		</div>
+		<hr>
+
+		<!-- <div class="example-header  col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'Rechercher' | translate }}">
+		</mat-form-field>
+	</div> -->
+		<div class="table">
+			<table class="table table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<!-- <th scope="col" style="text-align:center">Date</th>
+					<th scope="col" style="text-align:center">Chevillard</th> -->
+						<th scope="col" style="text-align:center">{{'PAGES.GESTION_ESPECES.ESPECE' | translate}}</th>
+						<th scope="col" style="text-align:center">{{'PAGES.GESTION_JOURNEE.NOMBRE' | translate}}</th>
+						<th scope="col" style="text-align:center">{{'PAGES.PROGRAMME.ACTIONS' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of listEspeces">
+						<!-- <td scope="row" style="text-align:center">{{item.dateJournee}}</td>
+					<td scope="row" style="text-align:center">{{item.chevillards?.id}}</td> -->
+						<td scope="row" style="text-align:center">{{item.espece.id}}</td>
+						<td scope="row" style="text-align:center">{{item.nombreBetes}}</td>
+						<td style="text-align:center">
+							<button type="button" class="btn btn-success" (click)="onEdit(item)"><i
+									class="fas fa-edit"></i></button>
+							<button type="button" class="btn btn-danger" (click)="onDelete(item)"><i
+									class="far fa-trash-alt"></i></button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button type="button" [disabled]="isCalculated" (click)="validateAdd()" class="btn btn-success btn-elevate btn-icon-sm"
+					data-wozard-type="action-submit">
+					<i class="fa fa-check"></i>
+					{{'PAGES.GESTION_JOURNEE.VALIDER' | translate}}
+				</button>
+			</div>
+		</div>
+		<div class="row mr-12" style="justify-content:center">
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<label>{{'PAGES.GESTION_JOURNEE.NOMBRE_TOTAL_BETES' | translate}} : {{nombre}}</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button type="button" (click)="back()" class="btn btn-primary" data-wizard-type="action-prev">
+					<i class="la la-angle-left"></i>
+					{{'PAGES.GENERAL.EXIT' | translate}}
+				</button>
+				<button [disabled]="validatedAdd==false" type="button" class="btn btn-success btn-elevate btn-icon-sm"
+					data-wizard-type="action-submit" (click)="onSubmitAll()">
+					<i class="la la-plus"></i>
+					{{'PAGES.GENERAL.SAVE' | translate}}
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,357 @@
+<div novalidate autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Modifier établissement:
+				</h2>
+			</div>
+		</div>
+	</div>
+	<div novalidate autocomplete="off">
+		<mat-horizontal-stepper #stepper>
+			<mat-step label="Informations établissements">
+				<!-- <div class="row">
+					<div class="col-md-6 form-group text-center">
+						<div class="form-group fv-plugins-icon-container">
+							<input type="radio" [(ngModel)]="checkedChoisi" id="morale" value="MORALE" class="form-control-solid mr-2" name="radio" />
+							<label for="morale">Personne morale</label>
+						</div>
+					</div>
+					<div class="col-md-6 text-center form-group">
+						<div class="form-group fv-plugins-icon-container">
+							<input type="radio" [(ngModel)]="checkedChoisi" value="PHYSIQUE" class="form-control-solid mr-2" name="radio" />
+							<label>Personne physique</label>
+						</div>
+					</div>
+				</div> -->
+				<div class="row">
+					<div class="col-md-6" *ngIf="this.etablissementDetails.personne == 'MORALE'">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Raison social:</mat-label>
+								<input [(ngModel)]="rs" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="this.etablissementDetails.personne == 'MORALE'">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Registre de commerce:</mat-label>
+								<input [(ngModel)]="rc" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div class="col-md-6" *ngIf="this.etablissementDetails.personne == 'PHYSIQUE'">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nom :</mat-label>
+								<input [(ngModel)]="nom" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="this.etablissementDetails.personne == 'PHYSIQUE'">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prénom :</mat-label>
+								<input [(ngModel)]="prenom"  type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div class="col-md-6" *ngIf="this.etablissementDetails.personne == 'PHYSIQUE'">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN :</mat-label>
+								<input [(ngModel)]="cin"  type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Description :</mat-label>
+								<input [(ngModel)]="description" [value]="etablissementDetails.description" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+							  <mat-label>Type:</mat-label>
+							  <mat-select  [formControl]="typeControl">
+								<mat-option *ngFor="let type of types" [value]="type.id">
+								  {{ type.libelle }}
+								</mat-option>
+							  </mat-select>
+							</mat-form-field>
+						  </div>
+						  
+						  
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Sous-type:</mat-label>
+								<mat-select [formControl]="stypeControl">
+									<mat-option *ngFor="let type of stypes" [value]="type.id">
+									  {{ type.libelle }}
+									</mat-option>
+								  </mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label> Commune: </mat-label>
+								<mat-select [formControl]="communeControl">
+									<mat-option *ngFor="let type of commune" [value]="type.id">
+									  {{ type.libelle }}
+									</mat-option>
+								  </mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label> Arrondissement: </mat-label>
+								<mat-select [formControl]="arrondissementControl">
+									<mat-option *ngFor="let type of arrondissement" [value]="type.id">
+									  {{ type.libelle }}
+									</mat-option>
+								  </mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Quartier: </mat-label>
+								<mat-select [formControl]="quartierControl">
+									<mat-option *ngFor="let type of quartier" [value]="type.id">
+									  {{ type.libelle }}
+									</mat-option>
+								  </mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Activités:</mat-label>
+								<input [(ngModel)]="activites" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Tél:</mat-label>
+								<input [(ngModel)]="tel" type="tel" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Fax:</mat-label>
+								<input [(ngModel)]="fax" type="tel" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Identité fiscale:</mat-label>
+								<input [(ngModel)]="idf"  type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Adresse:</mat-label>
+								<input [(ngModel)]="adresse" [value]="etablissementDetails.adresse" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+							</mat-form-field>
+						</div>
+					</div>
+					
+				</div>
+				<div class="m-6 text-center purple" *ngIf="Visible == 1">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select class="form-control-lg" placeholder="Convention">
+										<mat-option [value]="null">Convention A</mat-option>
+										<mat-option [value]="''">Convention B</mat-option>
+										<mat-option [value]="''">Convention C</mat-option>
+										<mat-option [value]="''">Convention D </mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="kt-portlet__heads">
+					<div class="kt-portlet__head-label text-right">
+						<button href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="RetourEmbalages()">
+							<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+							Retour
+						</button>
+						<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active" matStepperNext>
+							<i _ngcontent-dlp-c41 class="icon la la-plus-circle"></i>
+							Suivant
+						</button>
+					</div>
+				</div>
+				<div class="espace_bloc"></div>
+			</mat-step>
+			<mat-step label="Informations détaillées">
+				<div class="card p-3">
+					<h5 class="text-center">Informations du propriétaires :</h5>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Nom :</mat-label>
+									<input [(ngModel)]="nomprop" [value]="etablissementDetails.nomProp" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Prénom :</mat-label>
+									<input [(ngModel)]="prenomprop" [value]="etablissementDetails.prenomProp" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>CIN :</mat-label>
+									<input [(ngModel)]="cinprop" [value]="etablissementDetails.cinPro" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Tél :</mat-label>
+									<input [(ngModel)]="telprop" [value]="etablissementDetails.telProp" type="tel" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card p-3 mt-5">
+					<h5 class="text-center">Informations du gérant :</h5>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Nom :</mat-label>
+									<input [(ngModel)]="nomgerant" [value]="etablissementDetails.nomGerant" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Prénom :</mat-label>
+									<input [(ngModel)]="prenomgerant" [value]="etablissementDetails.prenomGerant" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>CIN :</mat-label>
+									<input [(ngModel)]="cingerant" [value]="etablissementDetails.cinGerant" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Tél :</mat-label>
+									<input [(ngModel)]="telgerant" [value]="etablissementDetails.telGerant" type="tel" class="form-control-solid form-control-lg" name="address1" matInput />
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="kt-portlet__heads">
+					<div class="kt-portlet__head-label text-right">
+						<button
+							href="javascript:; "
+							_ngcontent-dkp-c41=""
+							class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+							matStepperPrevious
+						>
+							<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+							Retour
+						</button>
+						<button
+						    (click)="updateEtab()"
+							_ngcontent-dkp-c41=""
+							class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active"
+						>
+							<i class="icon la la-floppy-o"></i>
+							Enregistrer
+						</button>
+					</div>
+				</div>
+				<div class="espace_bloc"></div>
+			</mat-step>
+		</mat-horizontal-stepper>
+	</div>
+</div>

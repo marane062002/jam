@@ -1,0 +1,87 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ 'PAGES.GESTION_ARRETES_FISCALS.AJOUTER_ARRETE_FISCAL' | translate }}
+				</h2>
+			</div>
+		</div>
+	</div>
+	<form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form" [formGroup]="arreteFiscalSaveForm">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_ARRETES_FISCALS.CODE_NATURE' | translate}} :</label>
+						<input matInput type="number" class="form-control"
+							placeholder=""
+							formControlName="codeNature" />
+						<mat-error *ngIf="isControlHasError('codeNature','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_ARRETES_FISCALS.LIBELLE' | translate}} :</label>
+						<input matInput type="text" class="form-control"
+							placeholder=""
+							formControlName="libelle" />
+						<mat-error *ngIf="isControlHasError('libelle','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container" formGroupName="espece">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_ARRETES_FISCALS.TYPE_ESPECE' | translate}} :</label>
+						<mat-select class="form-control"
+							placeholder=""
+							formControlName="id">
+							<mat-option *ngFor="let type of type" [value]="type.id">{{type.espece}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<label>{{'PAGES.GESTION_ARRETES_FISCALS.TARIF' | translate}} :</label>
+						<textarea matInput class="form-control"
+							placeholder=""
+							formControlName="tarif">
+						</textarea>
+						<mat-error *ngIf="isControlHasError('tarif','required')">
+							<strong>{{'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+						</mat-error>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button type="button" (click)="back()" class="btn btn-primary" data-wizard-type="action-prev">
+					<i class="la la-angle-left"></i>
+					{{'PAGES.GENERAL.EXIT' | translate}}
+				</button>
+				<button mat-button (click)="onSubmit()" type="button" class="btn btn-success btn-elevate btn-icon-sm"
+					data-wizard-type="action-submit">
+					<i class="la la-plus"></i>
+					{{'PAGES.GENERAL.SAVE' | translate}}
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

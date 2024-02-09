@@ -1,0 +1,15 @@
+.headers-align .mat-expansion-panel-header-title,
+.headers-align .mat-expansion-panel-header-description {
+	flex-basis: 0;
+}
+
+.headers-align .mat-expansion-panel-header-description {
+	justify-content: space-between;
+	align-items: center;
+}
+.requiredLabel::after {
+    content: "*";
+    color: red;
+    size: 12px;
+  }
+  

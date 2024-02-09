@@ -1,0 +1,60 @@
+<!-- begin:: Content -->
+<div *ngIf="detailOrigine" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-buildings"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button _ngcontent-dkp-c41="" (click)="editOriginCourrierSortant()" *ngxPermissionsOnly="['canUpdateOrigineCourrier']" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}" class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						<i _ngcontent-dkp-c41="" class="icon la la-edit"></i>
+						{{ 'PAGES.GENERAL.EDIT' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- *ngIf="detailOrigine" -->
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.NOM' | translate }} :</th>
+                            <td class="donnee_show">{{detailOrigine.raisonSociale}}</td>
+                            <th>{{ 'PAGES.SUBVENTION.MAIL' | translate }} :</th>
+                            <td class="donnee_show">{{detailOrigine.mail}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.SUBVENTION.FAX' | translate }} :</th>
+                            <td class="donnee_show">{{detailOrigine.tel}}</td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.TEL' | translate }} :</th>
+                            <td class="donnee_show">{{detailOrigine.fax}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.ORIGINE_COURRIER.ADRESSE' | translate }} :</th>
+                            <td colspan="4" class="donnee_show">{{detailOrigine.adresse}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<!-- begin::section actions -->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end::section actions -->

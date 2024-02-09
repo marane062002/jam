@@ -1,0 +1,15 @@
+import { DemandeFournitureDTO } from "./DemandeFournitureDTO";
+import { SaveArticleWithQTE } from "./SaveArticleWithQTEDTO";
+
+export interface ISaveDemandeFournitureDTO {
+    demandeFournitureDTO ?: DemandeFournitureDTO | null;
+    saveArticleWithQTE ?: SaveArticleWithQTE[] | null;
+  
+}
+export class SaveDemandeFournitureDTO  implements ISaveDemandeFournitureDTO{
+    constructor(
+       public demandeFournitureDTO ?: DemandeFournitureDTO | null,
+       public saveArticleWithQTE ?: SaveArticleWithQTE[] | null,
+     
+    ){}
+}

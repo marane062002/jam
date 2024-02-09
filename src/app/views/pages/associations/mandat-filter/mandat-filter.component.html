@@ -1,0 +1,207 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head kt-bg-portlet-1">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="flaticon-search"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'MENU.STATS.CONTROL.SEARCHE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <form novalidate [formGroup]="searchForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="statut"
+                                        placeholder="{{ 'PAGES.ASSOCIATION.STATUT' | translate }} :">
+                                        <mat-option [value]=null>---{{ 'PAGES.ASSOCIATION.STATUT' | translate }}---
+                                        </mat-option>
+                                        <mat-option *ngFor="let statut of statuts" [value]="statut.id">
+                                            {{statut.libelle}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select multiple class="form-control" [(ngModel)]="selectedOptionsTA" formControlName="type" (selectionChange)="addTypeActivite($event.value)"
+                                        placeholder="{{ 'PAGES.ASSOCIATION.TYPE_ACTIVITE' | translate }} :" multiple>
+                                        <mat-option [value]=null>
+                                            ---{{ 'PAGES.ASSOCIATION.TYPE_ACTIVITE' | translate }}---</mat-option>
+                                        <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                                        <mat-option *ngFor="let type of typeActivites" [value]="type.id">
+                                            {{type.libelle}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <button (click)="onSubmit()" class="btn btn-dark"><i class="flaticon-search-1"></i>{{
+                        'PAGES.GENERAL.FILTER' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end::row-content-top -->
+<!-- start::row-content -->
+<!-- start::dataTable -->
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-profile"></i>
+            </span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ "PAGES.ASSOCIATION.TITRE_INDEX" | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="refresh()" class="btn btn-warning">
+                        <i class="flaticon-refresh"></i>
+                        {{ "MENU.STATS.CONTROL.REFRESH" | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="espace_bloc"></div> -->
+    <br>
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+        <!-- nom Column -->
+        <ng-container matColumnDef="num">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="num">
+                {{ 'PAGES.ASSOCIATION.NUM_SEQ' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="num"> {{row.prioriter}} </td>
+        </ng-container>
+
+        <!-- nom Column -->
+        <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="nom">{{ 'PAGES.ASSOCIATION.NOM' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="nom">
+                {{ row.nom? ((row.nom.length>25)? (row.nom | slice:0:25)+ '...':(row.nom)) : "-" }}
+                <a href="javascript:void(0);" *ngIf="row.nom.length>25" matTooltip="{{ row.nom }}"><i
+                        class="fas fa-info-circle"></i></a>
+            </td>
+        </ng-container>
+
+        <!-- email  Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="mail">
+                {{ 'PAGES.ASSOCIATION.EMAIL' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="mail">
+                {{ row.email? ((row.email.length>20)? (row.email | slice:0:17)+ '...':(row.email)) : "-" }}
+                <a href="javascript:void(0);" *ngIf="row.email.length>20" matTooltip="{{ row.email }}"><i
+                        class="fas fa-info-circle"></i></a>
+            </td>
+        </ng-container>
+
+        <!-- typeActiviteAssociation  Column -->
+        <ng-container matColumnDef="typeActiviteAssociation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="spec">
+                {{ 'PAGES.ASSOCIATION.TYPE_ACTIVITE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="spec">
+                {{row?.typeActiviteAssociation?row.typeActiviteAssociation.libelle:"-"}} </td>
+        </ng-container>
+
+        <!-- Adresse local Column -->
+        <ng-container matColumnDef="adresseLocal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="local">
+                {{ 'PAGES.ASSOCIATION.ADRESSE' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="local">
+                {{ row.adresseLocal? ((row.adresseLocal.length>25)? (row.adresseLocal | slice:0:25)+
+                '...':(row.adresseLocal)) : "-" }}
+                <a href="javascript:void(0);" *ngIf="row.adresseLocal.length>25" matTooltip="{{ row.adresseLocal }}"><i
+                        class="fas fa-info-circle"></i></a>
+            </td>
+        </ng-container>
+
+        <!-- Fax / Num Tel Column -->
+        <ng-container matColumnDef="fax">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tel">{{ 'PAGES.ASSOCIATION.TEL' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="tel"> {{row?.fax?row.fax:"-"}}</td>
+        </ng-container>
+
+        <!-- President Column -->
+        <ng-container matColumnDef="nomPresident">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="president">
+                {{ 'PAGES.ASSOCIATION.NOM_PRESIDENT' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="president">
+                {{ row.nomPresident? ((row.nomPresident.length>10)? (row.nomPresident | slice:0:15)+
+                '...':(row.nomPresident)) : "-" }}
+                <a href="javascript:void(0);" *ngIf="row.nomPresident.length>10" matTooltip="{{ row.nomPresident }}"><i
+                        class="fas fa-info-circle"></i></a>
+            </td>
+        </ng-container>
+
+        <!-- pour exporter excel -->
+        <ng-container matColumnDef="dateCreation">
+            <th hidden mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ التأسيس</th>
+            <td hidden mat-cell *matCellDef="let row"> {{row.dateCreation | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="datePvChangementBureau">
+            <th hidden mat-header-cell *matHeaderCellDef mat-sort-header>إنتهاء صلاحية المكتب</th>
+            <td hidden mat-cell *matCellDef="let row"> {{row.datePvChangementBureau | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="annexeAdministratif">
+            <th hidden mat-header-cell *matHeaderCellDef mat-sort-header>الملحقة</th>
+            <td hidden mat-cell *matCellDef="let row"> {{row.annexeAdministratif}} </td>
+        </ng-container>
+        <!-- pour exporter excel -->
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="action"></th>
+            <td mat-cell *matCellDef="let row" class="actionsBtn action">
+                <button type="button" routerLink="/associations/show-association/{{row.id}}"
+                    *ngxPermissionsOnly="['canShowAssociation']"
+                    class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                    matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                        class="icon la la-search-plus"></i></button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- footer data -->
+    </table>
+    <div *ngIf="datasize == 0 && isLoading == false"
+        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <!-- start: BOTTOM -->
+    <div class="mat-table__bottom">
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="5" showFirstLastButtons>
+        </mat-paginator>
+    </div>
+    <!-- end: BOTTOM -->
+
+
+
+</div>
+<!-- end::dataTable -->
+<!-- end:: row-content -->

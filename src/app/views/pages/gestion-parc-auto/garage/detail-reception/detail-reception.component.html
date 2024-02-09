@@ -1,0 +1,329 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ 'PAGES.Gestion.parc.reception.details.title' | translate }} 
+					</h3>
+				</div>
+				<div class="kt-portlet__head-label">
+					<h3 class="kt-portlet__head-title">
+					  <div class="m-1 float-right">
+					</div>
+					</h3>
+				  </div>
+
+			</div>
+			<div class="kt-portlet__body">
+
+                <form [formGroup]="formDemandeMision">
+
+                  <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input  matInput type="text" class="form-control" value="{{demandeMission?.numdemande}}"
+                                        placeholder="{{ 'PAGES.Gestion.parc.newDemande.numdemande' | translate }}"  readonly>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                              <mat-form-field class="example-full-width">
+                                  <input  matInput type="text" class="form-control" value="{{demandeMission?.typemIsion}}"
+                                      placeholder="{{ 'PAGES.Gestion.parc.newDemande.typemIsion' | translate }}"  readonly>
+                              </mat-form-field>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <input  matInput type="text" class="form-control" value="{{demandeMission?.dateDepart | date: 'dd/MM/yyyy'}}"
+                                    placeholder="{{ 'PAGES.Gestion.parc.newDemande.datedepart' | translate }}"  readonly>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                          <mat-form-field class="example-full-width">
+                              <input  matInput type="text" class="form-control" value="{{demandeMission?.dateRetour | date: 'dd/MM/yyyy'}}"
+                                  placeholder="{{ 'PAGES.Gestion.parc.newDemande.dateRetour' | translate }}"  readonly>
+                          </mat-form-field>
+                      </div>
+                  </div>
+                      
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input  matInput type="text" class="form-control" value="{{demandeMission?.vehicule?.matricule}}"
+                                placeholder="{{ 'PAGES.Gestion.parc.car.matricule' | translate }}"  readonly>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <input  matInput type="text" class="form-control" value="{{demandeMission?.parcours}}"
+                              placeholder="{{ 'PAGES.Gestion.parc.newDemande.parcours' | translate }}"  readonly>
+                      </mat-form-field>
+                  </div>
+              </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                          <mat-form-field class="example-full-width">
+                              <input  matInput type="text" class="form-control" value="{{demandeMission?.solde}} MAD"
+                                  placeholder="{{ 'PAGES.Gestion.parc.reception.solde' | translate }}"  readonly>
+                          </mat-form-field>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input  matInput type="text" class="form-control" value="{{soldeConsome}} MAD"
+                                placeholder="{{ 'PAGES.Gestion.parc.reception.soldeConsome' | translate }}"  readonly>
+                        </mat-form-field>
+                    </div>
+                </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                              <mat-form-field class="example-full-width">
+                                  <input formControlName="compteur" matInput type="text" class="form-control" name="numero"
+                                      placeholder="{{ 'PAGES.Gestion.parc.car.compteur' | translate }}" >
+                              </mat-form-field>
+                          </div>
+                      </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                          <mat-form-field class="example-full-width">
+                              <input  formControlName="dateReception" matInput type="date" class="form-control" name="numero"
+                                  placeholder="{{ 'PAGES.Gestion.parc.reception.dateReception' | translate }}" >
+                          </mat-form-field>
+                      </div>
+                  </div>
+                      
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input  matInput type="text" class="form-control" value="{{demandeMission?.dateLivre | date: 'dd/MM/yyyy'}}"
+                                placeholder="{{ 'PAGES.Gestion.parc.reception.date' | translate }}"  readonly>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-4 show_port input-group">
+                  <mat-form-field class="example-full-width"  >
+                      <mat-select class="form-control" name="unite" formControlName ="etat"  placeholder="{{ 'PAGES.Gestion.parc.reception.etat' | translate }}" >
+
+                          <mat-option  value="EN_DISPONIBLE">En Disponible</mat-option >
+                          <mat-option  value="EN_DOTATION">EN DOTATION</mat-option >
+                          <mat-option  value="EN_MISSION">EN MISSION</mat-option >
+                          <mat-option  value="EN_REPARATION">EN REPARATION</mat-option >
+                      </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <input   formControlName ="observation"   matInput type="text" class="form-control"
+                              placeholder="{{ 'PAGES.Gestion.parc.reception.Observation' | translate }}" >
+                      </mat-form-field>
+                  </div>
+              </div>
+                  </div>
+                
+                
+                </form>
+              </div>
+            </div>
+           <div class="row">
+            <mat-tab-group     style="width: 100%;">
+              <mat-tab label="{{ 'PAGES.Gestion.parc.reception.details.vignette' | translate }} ">
+                <div class="p-4 background-color-light border-grey br-10-bl br-10-br">
+                  <div class="table-responsive">
+                      <table class="table text-center">
+                          <thead>
+                            <tr class="no-border">
+                              <th scope="col">Némuro</th>
+                                <th scope="col">Code barre</th>
+                                <th scope="col">Montant</th>
+                                <th scope="col">Actions</th>
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let vignette of vignettesEnabled">
+                              <td>{{vignette.numeroArticle}}</td>
+                                <td>{{vignette.designation}}</td>
+                                <td>{{vignette.prix}}</td>
+                                <td>                                   
+                                   <button class="text-danger mr-2"  (click)="deleteVignette(vignette)"><i class="nav-icon i-Close-Window font-weight-bold"></i></button>
+                                </td>
+                               
+                               
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          
+              <div class="p-4 background-color-light border-grey br-10-bl br-10-br mt-3">
+                <div class="table">
+                    <table class="table text-center">
+                        <thead>
+                          <tr class="no-border">
+                            <th scope="col">Némuro</th>
+                              <th scope="col">Code barre</th>
+                              <th scope="col">Montant</th>
+                              <th scope="col">Actions</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let vignette of vignettesDisabled">
+                            <td>{{vignette.numeroArticle}}</td>
+                              <td>{{vignette.designation}}</td>
+                              <td>{{vignette.prix}}</td>
+                              <td> 
+
+                              </td>
+                             
+                             
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+              </mat-tab>
+              <mat-tab label="{{ 'PAGES.Gestion.parc.reception.details.carte' | translate }}">
+                <form [formGroup]="formSouche" (ngSubmit)="submitSouche()">
+         
+
+                  <div formArrayName="souches" class="p-4 background-color-light border-grey br-10-bl br-10-br">
+                    <div *ngFor="let souche of soucheArray().controls; let i=index">
+                        <div class="form-group row mb-1" [formGroupName]="i">
+                          <div class="col-md-4 form-group ">
+                            <div class="form-group">
+                              <mat-form-field class="example-full-width">
+                                  <input   formControlName ="Reference"   matInput type="text" class="form-control"
+                                      placeholder="{{ 'PAGES.Gestion.parc.reception.Reference' | translate }}" >
+                              </mat-form-field>
+                          </div>
+                          </div>
+                          <div class="col-md-4 form-group ">
+                            <div class="form-group">
+                              <mat-form-field class="example-full-width">
+                                  <input   formControlName ="Montant"   matInput type="number" class="form-control"
+                                      placeholder="{{ 'PAGES.Gestion.parc.reception.Montant' | translate }}" >
+                              </mat-form-field>
+                          </div>
+                          </div>
+                          <div class="col-md-3 form-group ">
+                            <div class="form-group">
+                              <mat-form-field class="example-full-width">
+                                  <input   formControlName ="dateSouche"   matInput type="date" class="form-control"
+                                      placeholder="{{ 'PAGES.Gestion.parc.reception.dateSouche' | translate }}" >
+                              </mat-form-field>
+                          </div>
+                          </div>
+                          <div class="col-md-1    form-group" >                    
+                            <button class="btn btn-outline-danger mt-4" (click)="deleteArticle(i)">
+                              <!-- <i class="nav-icon i-Close-Window font-weight-bold"></i> -->
+                              <i _ngcontent-dkp-c41="" class="icon la la-trash"></i>
+                            </button>
+                        </div> 
+    
+                        </div>
+                
+                </div><!-- 
+                <div class="text-right w-100 float-right my-2">
+                  <button class="btn btn-success" type="button" data-toggle="modal" data-target=".bd-ajouter-modal-lg" (click)="addSuches()">ajouter</button>
+                </div> -->
+                <div class="m-1 float-right" *ngIf="tabID!=2 && tabID!=4" (click)="addSuches()">
+                  <button _ngcontent-dkp-c41="" type="submit"  matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+                  class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+                  <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+                  <i _ngcontent-dkp-c41="" class="icon la la-search-plus"></i>
+                  </button>
+                </div>
+                
+                  </div>
+                </form>
+              </mat-tab>
+              <mat-tab label="{{ 'PAGES.Gestion.parc.reception.details.souche' | translate }}"> <div class="p-4 background-color-light border-grey br-10-bl br-10-br">
+                <div class="table">
+                    <table class="table text-center">
+                        <thead>
+                          <tr class="no-border">
+                              <th scope="col">Carte</th>
+                              <th scope="col">Solde origine</th>
+                              <th scope="col">Solde de départ</th>
+                              <th scope="col">Solde restante</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr >
+                            <td >{{carteJawaz.reference}}</td>
+                            <td>{{carteJawaz.soldedepart}}</td>
+                             <td>{{carteJawaz.soldeactuel}}</td> 
+                            <td>  <input type="number" placeholder="solde  restante" [(ngModel)]="soldeCarteJawaz" (change)="onchangeSoldeCarte($event)">
+                            </td>
+                          </tr>
+                       </tbody>
+                    </table>
+                </div>
+            </div></mat-tab>
+            <mat-tab label="{{ 'PAGES.Gestion.parc.reception.details.accessoireVehicule' | translate }}">
+              <div class="p-4 background-color-light border-grey br-10-bl br-10-br">
+                <div class="table-responsive">
+                    <table class="table text-center">
+                        <thead>
+                          <tr class="no-border">
+                              <th scope="col">accessoire</th>
+                              <th scope="col">etat</th>
+                              <th scope="col">actions</th>
+                          </tr>
+                        </thead>
+                      
+                          <tbody>
+                            <tr *ngFor="let a of listAccessoireVehicule">
+                              <td>{{a.accessoireVehicule.name}}</td>
+                                <td>{{a.status}}</td>
+                                <td> 
+                                  <button class="btn btn-outline-danger mt-4" (click)="deleteAccessoire(a)"><i class="nav-icon i-Close-Window font-weight-bold"></i></button></td>
+                            </tr>
+                      
+                    </table>
+                </div>
+            </div>
+            </mat-tab>
+            </mat-tab-group>
+
+          </div>
+
+         
+            
+
+          </div>
+          <div class="m-1 float-right" *ngIf="tabID==2" (click)="SouvgarderSouche()">
+            <button _ngcontent-dkp-c41="" type="submit"  matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+            class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+            <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+            {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+          </div>
+          <div class="m-1 float-right" *ngIf="tabID!=2 && tabID!=4" (click)="receptionner()">
+            <button _ngcontent-dkp-c41="" type="submit"  matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+            class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+            <!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+            <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+            {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+          </div>
+</div>
+
+
+
+

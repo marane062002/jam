@@ -1,0 +1,56 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+    <!-- <button class="close" mat-button (click)="onNoClick()">X</button> -->
+    <h3 mat-dialog-title style="
+	text-align: center;
+    font-size: 15px !important;
+    border-bottom: 1px solid #d0cdcd;
+    color: #0a3552;
+    padding-bottom: 5px;">SECTEURS</h3>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" (selectionChange)="getSecteurChange($event)" name="secteur" [(ngModel)]="formData.secteur" placeholder="Secteur :">
+                            <mat-option *ngFor="let item of secteurList" [value]="item.id">{{item.libelle}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" name="classe" [(ngModel)]="formData.classe" placeholder="Classe :">
+                            <mat-option *ngFor="let item of classeList" [value]="item.id">{{item.libelle}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" name="qualifications" [(ngModel)]="formData.qualifications" placeholder="Qualification :" multiple>
+                            <mat-option *ngFor="let item of qualification" [value]="item.id">{{item.libelle}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label" align="right">
+                <button [disabled]="form.invalid" type="submit" [mat-dialog-close]="formData" cdkFocusInitial class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                    <i class="icon la la-floppy-o"></i>
+                    {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                <button mat-dialog-close type="reset" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onNoClick()">
+                    <i class="icon la la-close"></i>
+                    {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,289 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="fas fa-info-circle kt-font-inverse-brand"></i>
+			</span>
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ 'PAGES.MARCHE.COMMISSIONS.OFFRE_PRESTATAIRE' | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div *ngIf="idtypeCommission==1">
+			<div class="example-container mat-elevation-z8">
+
+				<mat-table [dataSource]="dataSource">
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="NomOrganisme">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row"> {{row.prestataire.nom?row.prestataire.nom:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="rc">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row"> {{row.prestataire.rc?row.prestataire.rc:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="tele">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row"> {{row.prestataire.tel?row.prestataire.tel:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Fav Column -->
+					<ng-container matColumnDef="deposee">
+						<mat-header-cell *matHeaderCellDef>{{ 'PAGES.MARCHE.COMMISSIONS.IS_DEPOT' | translate }}
+						</mat-header-cell>
+						<mat-cell *matCellDef="let row">
+							<div *ngIf="row.deposee==true"> Oui </div>
+							<div *ngIf="row.deposee==false"> Non </div>
+						</mat-cell>
+					</ng-container>
+					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns;">
+					</mat-row>
+				</mat-table>
+				<div *ngIf="dataSize == 0 && isLoading == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator [length]="dataSize" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]"
+					showFirstLastButtons></mat-paginator>
+			</div>
+		</div>
+		<div *ngIf="idtypeCommission==2">
+			<div class="example-container mat-elevation-z8">
+
+				<mat-table [dataSource]="dataSourceODEvAdmin">
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="NomOrganisme">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row2"> {{row2.prestataire.nom?row2.prestataire.nom:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="rc">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row2"> {{row2.prestataire.rc?row2.prestataire.rc:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="tele">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row2"> {{row2.prestataire.tel?row2.prestataire.tel:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Fav Column -->
+					<ng-container matColumnDef="statut">
+						<mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.STATUT' | translate }}
+						</mat-header-cell>
+						<mat-cell *matCellDef="let row2"> {{row2.statut.libelle?row2.statut.libelle:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="reserve">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.COMMISSIONS.OBSERVATION' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row2"> {{row2.reserve?row2.reserve:"-"}} </mat-cell>
+					</ng-container>
+
+
+					<mat-header-row *matHeaderRowDef="displayedColumnsODEvAdmin"></mat-header-row>
+					<mat-row *matRowDef="let row2; columns: displayedColumnsODEvAdmin;">
+					</mat-row>
+				</mat-table>
+				<div *ngIf="dataSize2 == 0 && isLoading2 == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading2" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator [length]="dataSize2" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]"
+					showFirstLastButtons></mat-paginator>
+			</div>
+		</div>
+		<div *ngIf="idtypeCommission==3">
+			<div class="example-container mat-elevation-z8">
+
+				<mat-table [dataSource]="dataSourceODEvTechnique">
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="NomOrganisme">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row3"> {{row3.prestataire.nom?row3.prestataire.nom:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="rc">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row3"> {{row3.prestataire.rc?row3.prestataire.rc:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="tele">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row3"> {{row3.prestataire.tel?row3.prestataire.tel:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="statut">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.COMMISSIONS.NOTE' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row3"> {{row3.noteTechnique?row3.noteTechnique:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Fav Column -->
+					<ng-container matColumnDef="reserve">
+						<mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.STATUT' | translate }}
+						</mat-header-cell>
+						<mat-cell *matCellDef="let row3"> {{row3.statutTechnique.libelle?row3.statutTechnique.libelle:"-"}} </mat-cell>
+					</ng-container>
+
+					<mat-header-row *matHeaderRowDef="displayedColumnsODEvAdmin"></mat-header-row>
+					<mat-row *matRowDef="let row3; columns: displayedColumnsODEvAdmin;">
+					</mat-row>
+				</mat-table>
+
+				<div *ngIf="dataSize3 == 0 && isLoading3 == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading3" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator [length]="dataSize3" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]"
+					showFirstLastButtons></mat-paginator>
+			</div>
+		</div>
+		<div *ngIf="idtypeCommission==4">
+			<div class="example-container mat-elevation-z8">
+
+				<mat-table [dataSource]="dataSourceODEvFinanciere">
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="NomOrganisme">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row4"> {{row4.prestataire.nom?row4.prestataire.nom:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="rc">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row4"> {{row4.prestataire.rc?row4.prestataire.rc:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="tele">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row4"> {{row4.prestataire.tel?row4.prestataire.tel:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="statut">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.COMMISSIONS.MONTANT_PRPOSE' | translate }} </mat-header-cell>
+						<mat-cell *matCellDef="let row4"> {{(row4.montantPropose != null)?(row4.montantPropose |macurrency):"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Fav Column -->
+					<ng-container matColumnDef="reserve">
+						<mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.NOTE_FINANCIERE' | translate }}
+						</mat-header-cell>
+						<mat-cell *matCellDef="let row4"> {{row4.noteFinanciere?row4.noteFinanciere:"-"}} </mat-cell>
+					</ng-container>
+
+
+					<mat-header-row *matHeaderRowDef="displayedColumnsODEvAdmin"></mat-header-row>
+					<mat-row *matRowDef="let row4; columns: displayedColumnsODEvAdmin;">
+					</mat-row>
+				</mat-table>
+
+				<div *ngIf="dataSize4 == 0 && isLoading4 == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading4" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator [length]="dataSize4" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]"
+					showFirstLastButtons></mat-paginator>
+			</div>
+		</div>
+		<div *ngIf="idtypeCommission==5">
+			<div class="example-container mat-elevation-z8">
+
+				<mat-table [dataSource]="dataSourceODEvFinale">
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="NomOrganisme">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row5"> {{row5.prestataire.nom?row5.prestataire.nom:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Name Column -->
+					<ng-container matColumnDef="rc">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row5"> {{row5.prestataire.rc?row5.prestataire.rc:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Progress Column -->
+					<ng-container matColumnDef="tele">
+						<mat-header-cell *matHeaderCellDef>
+							{{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }}</mat-header-cell>
+						<mat-cell *matCellDef="let row5"> {{row5.prestataire.tel?row5.prestataire.tel:"-"}} </mat-cell>
+					</ng-container>
+
+					<!-- Fav Column -->
+					<ng-container matColumnDef="reserve">
+						<mat-header-cell *matHeaderCellDef>{{ 'PAGES.MARCHE.COMMISSIONS.NOTE_FINAL' | translate }}
+						</mat-header-cell>
+						<mat-cell *matCellDef="let row5"> {{row5.noteFinale?row5.noteFinale:"-"}} </mat-cell>
+					</ng-container>
+
+					<mat-header-row *matHeaderRowDef="displayedColumnsODEvFinale"></mat-header-row>
+					<mat-row *matRowDef="let row5; columns: displayedColumnsODEvFinale;">
+					</mat-row>
+				</mat-table>
+
+				<div *ngIf="dataSize5 == 0 && isLoading5 == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading5" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator [length]="dataSize5" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]"
+					showFirstLastButtons></mat-paginator>
+			</div>
+		</div>
+
+	</div>
+</div>

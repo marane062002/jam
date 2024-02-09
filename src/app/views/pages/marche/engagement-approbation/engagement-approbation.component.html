@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="fas fa-flag-checkered kt-font-inverse-brand"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ENGAGEMENT_APPROBATION_MARCHE' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-wrapper">
+                                <div class="kt-portlet__head-actions">
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canEngageMarche']" (click)="showEngagementForm()" class="btn btn-success btn-elevate btn-icon-sm">
+										{{ 'PAGES.MARCHE.MARCHE.ENGAGEMENT_APPROBATION_MARCHE.ENGAGEMENT_MARCHE' |
+										translate }}
+									</a>
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canApprouveMarche']" (click)="showApprobationForm()" class="btn btn-success btn-elevate btn-icon-sm">
+										{{ 'PAGES.MARCHE.MARCHE.ENGAGEMENT_APPROBATION_MARCHE.APPROBATION_MARCHE' |
+										translate }}
+									</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div *ngIf="engagement">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker1" name="dateEngagement" [(ngModel)]="marche.dateEngagement" placeholder="{{  'PAGES.MARCHE.MARCHE.DATE_ENGAGEMENT' | translate  }}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary  " type="button" (click)="engagerMarcher()">{{
+						'PAGES.GENERAL.SAVE' | translate }}</button>
+                    <div class="espace_bloc"></div>
+                </div>
+                <div *ngIf="approbation">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker2" name="dateApprobation" [(ngModel)]="marche.dateApprobation" placeholder="{{  'PAGES.MARCHE.MARCHE.DATE_APPROBATION' | translate  }}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker3" name="dateNotifApprobation" [(ngModel)]="marche.dateNotifApprobation" placeholder="{{  'PAGES.MARCHE.MARCHE.DATE_NOTIF_APPROBATION' | translate  }}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker3></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary  " type="button" (click)="approuverMarcher()">{{
+						'PAGES.GENERAL.SAVE' | translate }}</button>
+                    <div class="espace_bloc"></div>
+                </div>
+                <!-- ****************************************************** -->
+                <div *ngIf="showList">
+                    <div *ngxPermissionsOnly="['canEngageMarche']" class="kt-portlet__body kt-portlet__body--fit">
+                        <h4 class="title-style">
+                            {{ 'PAGES.MARCHE.MARCHE.TAB_360.TAB_ENGAGEMENT_APPROBATION_MARCHE' | translate }}
+                        </h4>
+                        <div class="example-container mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource" matSort>
+                                <!-- numMarche -->
+                                <ng-container matColumnDef="numMarche">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        {{ 'PAGES.MARCHE.MARCHE.NUM_MARCHE' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row?.numMarche?row.numMarche:"-" }}
+                                    </td>
+                                </ng-container>
+
+                                <!-- dateEngagement -->
+                                <ng-container matColumnDef="dateEngagement">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        {{ 'PAGES.MARCHE.MARCHE.DATE_ENGAGEMENT' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ (row.dateEngagement !== null) ? (row.dateEngagement | date: 'dd/MM/yyyy') : "-" }}
+                                    </td>
+                                </ng-container>
+
+                                <!-- dateApprobation -->
+                                <ng-container matColumnDef="dateApprobation">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        {{ 'PAGES.MARCHE.MARCHE.DATE_APPROBATION' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ (row.dateApprobation !== null) ? (row.dateApprobation | date: 'dd/MM/yyyy') : "-" }}
+                                    </td>
+                                </ng-container>
+
+                                <!-- dateNotifApprobation -->
+                                <ng-container matColumnDef="dateNotifApprobation">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        {{ 'PAGES.MARCHE.MARCHE.DATE_NOTIF_APPROBATION' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ (row.dateNotifApprobation !== null) ? (row.dateNotifApprobation | date: 'dd/MM/yyyy') : "-" }}
+                                    </td>
+                                </ng-container>
+
+                                <!-- statut marché -->
+                                <ng-container matColumnDef="statutMarche">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        {{ 'PAGES.MARCHE.MARCHE.STATUT' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row?.statutMarche?row.statutMarche.libelle:"-" }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef> </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <!-- 
+										<a href="javascript:;" (click)="showReclamation(row.id)"
+											class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+											matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>
+										<a href="javascript:;" (click)="editReclamation(row.id)"
+											class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+											matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a> 
+										<a href="javascript:;" (click)="deleteMDR(row.id)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+												class="la la-trash"></i></a>
+											-->
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                </tr>
+                            </table>
+                            <div *ngIf="sizeData == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                                </mat-progress-spinner>
+                            </mat-card>
+                            <mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+                <!-- ***************************************************** -->
+            </div>
+        </div>
+    </div>
+</div>

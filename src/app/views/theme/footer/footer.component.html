@@ -1,0 +1,27 @@
+<!-- begin:: Footer -->
+<div class="kt-footer kt-footer--extended kt-grid__item" id="kt_footer">
+	<div class="kt-footer__bottom">
+		<div class="kt-container" [ngClass]="{ 'kt-container--fluid': fluid }">
+			<div class="kt-footer__wrapper">
+				<div class="kt-footer__logo">
+					<div class="kt-footer__copyright">
+						{{ today | date: "yyyy" }}&nbsp;©&nbsp;
+						{{ "PAGES.GENERAL.COMMUNE_MARRAKECH" | translate }} 
+					<!-- 	{{ "PAGES.GENERAL.CREER_PAR" | translate }}
+						<a href="https://brome-conseil.com/" target="_blank"
+							>Brome & HVC</a
+						> -->
+					</div>
+					<div class="kt-footer__img">
+						<img
+							class="logo-footer"
+							src="./assets/media/logos/logo.png"
+							alt="logo jamaati"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Footer -->

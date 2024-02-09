@@ -1,0 +1,170 @@
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-plus kt-font-inverse-brand"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.Stock.entree.new.title' | translate }}
+            </h3>
+        </div>
+    </div>
+
+        <form class=""  [formGroup]="formEntree" (ngSubmit)="createEntree(formEntree.value)">
+            <div class="form-group row mb-1">
+               
+              <!--   <div class="col-md-3 show_port input-group">
+                    <mat-form-field class="example-full-width"  formGroupName="reference">
+                        <mat-select class="form-control" name="unite" formControlName="id"    placeholder="{{ 'PAGES.Gestion.Stock.entree.reference' | translate }}">
+                            <mat-option *ngFor="let item of listReference" [value]="item.id">
+                           <span>{{item.libelle}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="numMarche" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.entree.numMarche' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 show_port input-group">
+                    <mat-form-field class="example-full-width"  formGroupName="magasin">
+                        <mat-select class="form-control" name="unite" formControlName="id"    placeholder="{{ 'PAGES.Gestion.Stock.entree.magasin' | translate }}">
+                            <mat-option *ngFor="let item of listMagasins" [value]="item.id">
+                           <span>{{item.numeroMagasin}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="codeAnalytique" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.entree.codeAnalytique' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+            <div class="col-md-3 show_port input-group">
+                <mat-form-field class="example-full-width"  formGroupName="fournisseur" >
+                    <mat-select class="form-control" name="unite"   formControlName="id"      placeholder="{{ 'PAGES.Gestion.Stock.entree.fournisseur' | translate }}">
+                        <mat-option *ngFor="let item of listFournisseur" [value]="item.id">
+                       <span>{{item.nom}}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 show_port input-group">
+                <mat-form-field class="example-full-width" >
+                    <mat-select class="form-control" name="unite"   (selectionChange)='selectArtilce($event)'    placeholder="{{ 'PAGES.Gestion.Stock.entree.article' | translate }}">
+                        <mat-option *ngFor="let item of listArticle" [value]="item">
+                       <span>{{item.numeroArticle}}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="quantite" matInput type="text" class="form-control" name="numero"
+                            placeholder="{{ 'PAGES.Gestion.Stock.entree.quantite' | translate }}" >
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="rayonnage" matInput type="text" class="form-control" name="numero"
+                            placeholder="{{ 'PAGES.Gestion.Stock.entree.rayonnage' | translate }}" >
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="prixAchat" matInput type="text" class="form-control" name="numero"
+                            placeholder="{{ 'PAGES.Gestion.Stock.entree.prixAchat' | translate }}" >
+                    </mat-form-field>
+                </div>
+            </div>
+         
+            <div class="col-md-3">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input formControlName="tva" matInput type="text" class="form-control" name="numero"
+                            placeholder="{{ 'PAGES.Gestion.Stock.entree.tva' | translate }}" >
+                    </mat-form-field>
+                </div>
+            </div>
+            
+
+            </div>
+            
+         <div class="float-right">
+            <button _ngcontent-dkp-c41="" type="submit" matTooltip="{{ 'PAGES.GENERAL.ADD' | translate }}"
+            class="btn btn-outline-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+           <!--  [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+            <i _ngcontent-dkp-c41="" class="icon  la-search-plus"></i>
+            {{ 'PAGES.GENERAL.ADD' | translate }}</button> 
+        </div>
+        </form>  
+        <div class="row">
+            <div class="col-md-12 col-lg-12 dos">
+              <div class="p-3 mt-3 border-grey background-table br-10">
+                <div>
+                  <div class="table">
+                   <!--  <span *ngIf=" saveArticleWithQTEList.length ==  0" class="text-danger">Aucun article existe</span> -->
+                    <table class="table text-center mb-0" id="user_table" *ngIf=" saveArticleWithQTEList.length > 0 ">
+                      <thead>
+                        <tr class="no-border">
+                            <th scope="col">N° marche</th>
+                          <th scope="col">N° d'article</th>
+                          <th scope="col">N° magasin</th>
+                          <th scope="col">Code analytique </th>
+                          <th scope="col">Quantité</th>
+                          <th scope="col">Rayonnage</th>
+                          <th scope="col">Action</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let article of saveArticleWithQTEList ; let i = index">
+                            <td>   {{ article.entree?.numMarche ? article.entree?.numMarche:"-" }}</td>
+                            <th scope="row">{{ article.article?.numeroArticle ? article.article?.numeroArticle:"-" }}</th>
+                          <td>{{ article.entree?.magasin?.numeroMagasin ? article.entree?.magasin?.numeroMagasin:"-" }}</td>
+                          <td>{{ article.entree?.codeAnalytique ? article.entree?.codeAnalytique :"-" }}</td>
+                          <td>{{ article.quantite }}</td>
+                          <td>{{ article.rayonnage? article.rayonnage:"-" }}</td>
+                          <td>
+                            
+                          <button _ngcontent-dkp-c41="" (click)="supprimerArticle(i)" 
+                                    class="btn btn-danger btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+                                    <i _ngcontent-dkp-c41="" class="icon la la-trash"></i>
+                                   </button> 
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+
+   
+
+    <div class="m-1 float-centre">
+        <button _ngcontent-dkp-c41="" (click)="createEntreeWithAtcle()" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+        class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+       <!--  [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+        <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+        {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+    </div>
+
+
+</div>
+

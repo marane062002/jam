@@ -1,0 +1,328 @@
+<form novalidate [formGroup]="addForm" autocomplete="off">
+ <!--
+
+     <div class="kt-portlet portlet-3">
+         <div class="kt-portlet__head kt-bg-portlet-3">
+             <div class="kt-portlet__head-label">
+                 <span class="kt-portlet__head-icon">
+                     <i class="fa fa-university kt-font-inverse-brand"></i>
+                 </span>
+                 <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                     {{ 'PAGES.SUBVENTION.TITRE_SHOW_COMM' | translate }}
+                 </h3>
+             </div>
+         </div>
+
+         <div class="kt-portlet__body">
+             <div class="row">
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <div class="input-group date">
+                             <mat-form-field class="example-full-width">
+                                 <input matInput class="form-control" placeholder="{{ 'PAGES.SUBVENTION.DATE_SUB' | translate }} :" formControlName="anneeSubvention">
+                             </mat-form-field>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <div class="input-group date">
+                             <mat-form-field class="example-full-width">
+                                 <input matInput class="form-control" [matDatepicker]="picker1" placeholder="{{ 'PAGES.SUBVENTION.DATE_SORT' | translate }} :" formControlName="dateSortSubvention">
+                                 /* <mat-error *ngIf="isControlHasError('dateSortSubvention','required')">
+                                     <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                 </mat-error> */
+                                 <mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+                                     <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                     </mat-icon>
+                                 </mat-datepicker-toggle>
+                                 <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                             </mat-form-field>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-3" id="Montant">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <input matInput type="number" class="form-control" formControlName="montantSubvention" placeholder="{{ 'PAGES.SUBVENTION.MONTANT' | translate }} :">
+                            /* <mat-error *ngIf="isControlHasError('montantSubvention','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error> */
+                             <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                         </mat-form-field>
+                     </div>
+                 </div>
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <mat-select class="form-control" formControlName="etatSubvention" placeholder="{{ 'PAGES.SUBVENTION.ETAT_SUBV' | translate }} :" required>
+                                 <mat-option [value]=null>
+                                     ---{{ 'PAGES.SUBVENTION.ETAT_SUBV' | translate }}---</mat-option>
+                                 <mat-option *ngFor="let stat of statuts" [value]="stat">
+                                     {{stat.libelle}}
+                                 </mat-option>
+                             </mat-select>
+                             <mat-error *ngIf="isControlHasError('etatSubvention','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error>
+                         </mat-form-field>
+                     </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <div class="input-group date">
+                             <mat-form-field class="example-full-width">
+                                 <input matInput class="form-control" [matDatepicker]="picker4" placeholder="{{ 'PAGES.SUBVENTION.DATE_DEPOT' | translate }} :" formControlName="dateDepotDemande">
+                                 /* <mat-error *ngIf="isControlHasError('dateDepotDemande','required')">
+                                     <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                 </mat-error> */
+                                 <mat-datepicker-toggle matSuffix matSuffix [for]="picker4">
+                                     <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                     </mat-icon>
+                                 </mat-datepicker-toggle>
+                                 <mat-datepicker touchUi="true" #picker4></mat-datepicker>
+                             </mat-form-field>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <input matInput type="text" class="form-control" formControlName="nomProjet" placeholder="{{ 'PAGES.SUBVENTION.NOM_PROJEt' | translate }} :">
+                             /* <mat-error *ngIf="isControlHasError('nomProjet','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error> */
+                             <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                         </mat-form-field>
+                     </div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <input matInput type="text" class="form-control" formControlName="adresse" placeholder="{{ 'PAGES.SUBVENTION.ADRESSE_PROJET' | translate }} :">
+                             /* <mat-error *ngIf="isControlHasError('adresse','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error> */
+                             <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                         </mat-form-field>
+                     </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <input matInput type="text" class="form-control" formControlName="responsableProjet" placeholder="{{ 'PAGES.SUBVENTION.RESPONSABLE_PROJEt' | translate }} :">
+                             /* <mat-error *ngIf="isControlHasError('responsableProjet','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error> */
+                             <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                         </mat-form-field>
+                     </div>
+                 </div>
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <input matInput type="text" class="form-control" formControlName="telResProjet" placeholder="{{ 'PAGES.SUBVENTION.TEL_RESP_PROJE' | translate }} :">
+                             /* <mat-error *ngIf="isControlHasError('telResProjet','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error> */
+                             <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                         </mat-form-field>
+                     </div>
+                 </div>
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <input matInput type="number" class="form-control" formControlName="dureeprojet" placeholder="{{ 'PAGES.SUBVENTION.DUREE_PROJET' | translate }} :">
+                             /* <mat-error *ngIf="isControlHasError('dureeprojet','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error> */
+                             <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                         </mat-form-field>
+                     </div>
+                 </div>
+                 <div class="col-md-3">
+                     <div class="form-group">
+                         <mat-form-field class="example-full-width">
+                             <input matInput type="number" class="form-control" formControlName="montantDemande" placeholder="{{ 'PAGES.SUBVENTION.MONTANT_DEMANDE' | translate }} :">
+                             /* <mat-error *ngIf="isControlHasError('montantDemande','required')">
+                                 <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                             </mat-error> */
+                             <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                         </mat-form-field>
+                     </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-md-12">
+                     <div class="form-group">
+                         <mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control" class="example-full-width">
+                             <textarea rows="2" #input maxlength="255" class="form-control" formControlName="note" name="note" matInput placeholder="{{ 'PAGES.SUBVENTION.NOTE' | translate }} :"></textarea>
+                             <mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+                         </mat-form-field>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ -->
+
+    <!-- begin section -->
+    <div class="kt-portlet portlet-3">
+        <div class="kt-portlet__head kt-bg-portlet-5">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+					<i class="fas fa-print"></i>
+				</span>
+                <h3 class="kt-portlet__head-title">
+                    {{ 'PAGES.SUBVENTION.IMPRESSION' | translate }}
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body" formGroupName="impression">
+            <div class="row">
+				<div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="fournisseurImpression" placeholder="{{ 'PAGES.SUBVENTION.FOURNISSEUR_IMPRESSION' | translate }} :" required>
+                                <mat-option [value]=null>
+                                    ---{{ 'PAGES.SUBVENTION.FOURNISSEUR_IMPRESSION' | translate }}---
+                                </mat-option>
+                                <mat-option *ngFor="let frs of fournisseurs_impression" [value]="frs">
+                                    {{frs.nom}} {{frs.prenom}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('fournisseurImpression','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="service" placeholder="{{ 'PAGES.SUBVENTION.SERVICE' | translate }} :">
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+			<div class="row">
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="typeService" placeholder="{{ 'PAGES.SUBVENTION.TYPE_SERVICE' | translate }} :">
+
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker4" placeholder="{{ 'PAGES.SUBVENTION.DATE_IMPRESSION' | translate }} :" formControlName="dateImpression">
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker4">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker4></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+
+			</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="totalHt" placeholder="{{ 'PAGES.SUBVENTION.TOTAL_HT' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('totalHt','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="number" class="form-control" formControlName="totalTTC" placeholder="{{ 'PAGES.SUBVENTION.TOTAL_TTC' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('totalTTC','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control" class="example-full-width">
+							<textarea rows="2" #input maxlength="255" class="form-control" formControlName="note" name="note" matInput placeholder="{{ 'PAGES.SUBVENTION.NOTE' | translate }} :"></textarea>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</form>
+
+
+<!-- end section attachements-->
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.GENERAL.ATTACHEMENT' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-6 show_port input-group">
+                <form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm" style="display: -webkit-inline-box;margin-inline-start: 98px;">
+                    <label class="input-group-btn">
+						<span class="btn btn-info">
+							{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+								(change)="fileChange($event)" formControlName="_file" id="customFile"
+								style="display: none;" multiple>
+						</span>
+					</label>
+                    <input type="text" class="form-control" readonly>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End attachement section-->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" [disabled]="addForm.invalid" (click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

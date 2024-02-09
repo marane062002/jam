@@ -1,0 +1,134 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-container">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-1">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="flaticon-multimedia-2 kt-font-inverse-brand"></i>
+						</span>
+						&nbsp;
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+							{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.TITRE_NEW' | translate }}
+						</h3>
+					</div>
+				</div>
+				<form novalidate [formGroup]="editForm" autocomplete="off">
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select name="typeDestinataire"
+											(selectionChange)="selectionChanged()" formControlName="typeDestinataire"
+											class="form-control"
+											placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_INTERNE_EXTERNE' | translate }}">
+											<mat-option value="in">
+												{{ 'PAGES.BUREAU_ORDRE.ORIGINE_IN' | translate }}</mat-option>
+											<mat-option value="out">
+												{{ 'PAGES.BUREAU_ORDRE.ORIGINE_OUT' | translate }}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-6" *ngIf="showExterne">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select formControlName="partenaire" matNativeControl
+											class="form-control"
+											placeholder="{{ 'PAGES.BUREAU_ORDRE.PARTENAIRE' | translate }}">
+											<mat-option *ngFor="let origin of partenaires" [value]="origin.id">
+												{{origin?.raisonSociale}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<div class="row" *ngIf="showInterne">
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" formControlName="idDivision"
+											(selectionChange)="onChangeDivision()"
+											placeholder="{{ 'PAGES.ORGANISATION.DIVISION' | translate }}">
+											<mat-option>---{{ 'PAGES.ORGANISATION.DIVISION' | translate }}---
+											</mat-option>
+											<mat-option *ngFor="let d of divisions" [value]="d.id">
+												{{d?.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" formControlName="idService"
+											(selectionChange)="onChangeService()"
+											placeholder="{{ 'PAGES.ORGANISATION.SERVICE' | translate }}">
+											<mat-option>---{{ 'PAGES.ORGANISATION.SERVICE' | translate }}---
+											</mat-option>
+											<mat-option *ngFor="let s of services" [value]="s.id">
+												{{s?.libelle}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" formControlName="idPersonnel"
+											placeholder="{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}">
+											<mat-option>---{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}---
+											</mat-option>
+											<mat-option *ngFor="let p of personnels" [value]="p.id">
+												{{p?.nom}} {{p?.prenom}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<!-- Action section-->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End:: content section-->
+
+<!--Action Section :: begin-->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label" align="right">
+						<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+							class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+							(click)="onSubmit()"
+							[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+							<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+							{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+						<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}"
+							class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+							type="reset" (click)="onReset()">
+							<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+							{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+						<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+							class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+							(click)="backList()">
+							<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+							{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+					</div>
+					<div class="espace_bloc"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Action Section :: end-->

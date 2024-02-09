@@ -1,0 +1,441 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head" kt-bg-portlet->
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        رقم طلب الرخصة : {{autorisation.id}}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        وضع طلب الرخصة : <span class="kt-font-brand kt-font-bold">
+							{{autorisation.statutdemandeautorisation.libelle}}
+						</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-book"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        معلومات عن طلب الرخصة
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th>موضوع الترخيص :</th>
+                                    <td class="donnee_show" colspan="4">
+                                        {{autorisation.objet}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>تاريخ الترخيص:</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.dateDemande | date:"dd/MM/yyyy"}}
+                                    </td>
+                                    <th>نوع الترخيص :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.typeAutorisation.typeAutorisation}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>المقاطعة :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.arrondissement}}
+                                    </td>
+                                    <th>المنطقة :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.zone}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>العنوان :</th>
+                                    <td class="donnee_show" colspan="4">
+                                        {{autorisation.adresseAuto}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>تاريخ البدء :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.dateDebut | date:"dd/MM/yyyy"}}
+                                    </td>
+
+                                    <th>تاريخ النهاية :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.dateFin | date:"dd/MM/yyyy"}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>ساعة بداية الترخيص :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.dateDebut | date:"HH:mm"}}
+                                    </td>
+                                    <th>ساعة نهاية الترخيص :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.dateFin | date:"HH:mm"}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-book"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        معلومات عن ملكية الجماعة
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th>نوع الملكية :</th>
+                                    <td class="donnee_show ">
+                                        {{autorisation.typeAutorisation.typeAutorisation?autorisation.typeAutorisation.typeAutorisation:"-"}}
+                                    </td>
+
+                                    <th> الملكية :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.objetdemandeautorisation.objetDemandeAutorisation}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>الفضاء :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.espace.espace}}
+                                    </td>
+
+                                    <th> العنوان :</th>
+                                    <td class="donnee_show">
+                                        {{autorisation.objetdemandeautorisation.adresse}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div align="right">
+                            <!---   <button  type="button" class="btn btn-brand">التفاصيل</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end:: Content -->
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-6" id="pppp">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-avatar"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        معلومات عن مقدم الطلب
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table pj" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <th>الاسم :</th>
+                                            <td class="donnee_show"> {{autorisation.ppsourceautorisation.prenom}}</td>
+
+                                            <th>النسب :</th>
+                                            <td class="donnee_show"> {{autorisation.ppsourceautorisation.nom}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>البطاقة الوطنية :</th>
+                                            <td class="donnee_show">{{autorisation.ppsourceautorisation.cin}}</td>
+
+                                            <th>الهاتف المحمول :</th>
+                                            <td class="donnee_show"> {{autorisation.ppsourceautorisation.telephoneGsm}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div align="right">
+                            <!----  <button id="btnDetailpp" style="display:none" type="button" class="btn btn-brand">التفاصيل</button>
+                                <button id="btnDetailpm" style="display:none" type="button"
+                                    class="btn btn-brand">التفاصيل</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- content::info demandeur -->
+    <div class="col-lg-6" id="pmmm">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-avatar"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        معلومات عن مقدم الطلب
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table pj" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <th>إسم الشركة: </th>
+                                            <td class="donnee_show">{{autorisation.pmsourceautorisation.nom}}
+                                            </td>
+                                            <th>الهاتف المحمول :</th>
+                                            <td class="donnee_show"> {{autorisation.pmsourceautorisation.teleGsm}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th> السجل التجاري:</th>
+                                            <td class="donnee_show">
+                                                {{autorisation.pmsourceautorisation.rc}}</td>
+                                            <th> معرف الضريبة: </th>
+                                            <td class="donnee_show">
+                                                {{autorisation.pmsourceautorisation.identifiantFiscal}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div align="right">
+                            <!----  <button id="btnDetailpp" style="display:none" type="button" class="btn btn-brand">التفاصيل</button>
+							<button id="btnDetailpm" style="display:none" type="button"
+								class="btn btn-brand">التفاصيل</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- content::info demandeur -->
+    <div class="col-lg-6">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-book"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        معلومات المعالجة
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table pj" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <th>الوضع :</th>
+                                            <td class="donnee_show">
+                                                {{autorisation.statutdemandeautorisation.libelle}}
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th>ملاحظات :</th>
+                                            <td class="donnee_show">
+                                                {{autorisation.note}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<div class="row" *ngIf="tableResponsable">
+
+    <div class="col-lg-12">
+        <div class="kt-portlet portlet-1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon2-protected"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        المسؤول عن تتبع الأشغــال
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <thead style="background-color: #f3f5f7;">
+                                <tr>
+                                    <td width="60%" style="font-weight: 600;color: #0c0c98;">المكـــان</td>
+                                    <td width="30%" style="font-weight: 600;color: #0c0c98;">المسـؤول</td>
+                                    <td width="10%" style="font-weight: 600;color: #0c0c98;">الهــاتف</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tableResponsable">
+                                    <td>
+                                        <li>{{item.locale?item.locale:"-"}}</li>
+                                    </td>
+                                    <td> {{item.responsable?item.responsable:"-"}}</td>
+                                    <td> {{item.telResponsable?item.telResponsable:"-"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-bg-portlet-5">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-attachment"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        الوثائق المرفقة
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <thead>
+                                <tr>
+                                    <td width="50%">الوثائق المرفقة</td>
+                                    <td>التحميل</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of pjs">
+                                    <td> {{item.name }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn_piecejoint_down" (click)="onClickPjName(item.idAlfresco,item.id)"><i
+												class="icon la la-cloud-download"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head kt-bg-portlet-5">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="flaticon-attachment"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+
+                        الوثائق المرفقة للمعالجة
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12 show_port">
+                        <table class="table pj" width="100%">
+                            <thead>
+                                <tr>
+                                    <td width="50%">
+                                        الوثائق المرفقة للمعالجة
+                                    </td>
+                                    <td>التحميل</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of pjstraitement">
+                                    <td> {{item.name}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn_piecejoint_down" (click)="onClickPjTraitementName(item.idAlfresco,item.id)"><i
+												class="icon la la-cloud-download"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end:: Content -->
+>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button *ngxPermissionsOnly="['accessToIndexAutorisation']" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button" routerLink="/autorisations/autorisations-list">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        <button type="button" (click)="printGenerator()" matTooltip="{{ 'PAGES.GENERAL.PRINT' | translate }}" class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<i class="icon la la-print"></i>
+			{{ 'PAGES.GENERAL.PRINT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

@@ -1,0 +1,826 @@
+<form class="kt-form" autocomplete="off" #form="ngForm" (submit)=" onSubmit(form)">
+	<!-- begin:: Content -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="socicon-buffer"></i>
+						</span> &nbsp;
+						<h3 class="kt-portlet__head-title">
+							Créer une consultation
+						</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label class="requiredLabel">{{ 'PAGES.MARCHE.AO.OBJET' | translate }}</label>
+									<input matInput type="text" class="form-control" name="objet"
+										[(ngModel)]="formData.objet" #objet="ngModel" placeholder="" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label class="requiredLabel">{{ 'PAGES.MARCHE.AO.OBJET_ARABE' | translate }}
+									</label>
+									<input matInput type="text" class="form-control" name="objetAR"
+										[pattern]="arabicPattern" [(ngModel)]="formData.objetAR" #objet="ngModel"
+										placeholder="" required>
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+
+								</mat-form-field>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="input-group date">
+									<mat-form-field class="example-full-width">
+										<label> {{ 'PAGES.BESOINCONSULTATION.PROGRAMME' | translate }} :
+										</label>
+										<mat-select class="form-control" (selectionChange)="selectedPAC($event)">
+											<mat-option value="0"> Non</mat-option>
+											<mat-option value="1"> Oui</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6" *ngIf="isVisible == true">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Orientation :</label>
+									<mat-select class="form-control-lg" placeholder=""
+										(selectionChange)="selectedCodeOrientation($event)">
+										<mat-option *ngFor="let item of codeOrientations"
+											[value]="item">{{item}}</mat-option>
+
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+
+					</div>
+					<div class="row" *ngIf="isVisible == true">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Code projet :</label>
+									<mat-select class="form-control-lg" placeholder=""
+										(selectionChange)="selectedCodeProjet($event)">
+										<mat-option *ngFor="let item of listprogramme"
+											[value]="item.codeProjet">{{item.codeProjet}}</mat-option>
+
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Intitulé du projet :</label>
+									<input matInput type="text" placeholder="" name="programme" [value]="projet"
+										class="form-control" readonly />
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<!--====================================================================================================================================================-->
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="input-group date">
+									<mat-form-field class="example-full-width">
+										<label>{{ 'PAGES.BESOINCONSULTATION.CONVENTION' | translate }} :
+										</label>
+										<mat-select class="form-control" (selectionChange)="selectedConvention($event)">
+											<mat-option value="0"> Non</mat-option>
+											<mat-option value="1"> Oui</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+								</div>
+							</div>
+						</div>
+						<!-- <div class="Radio col-md-6" style="	display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		"> -->
+						<!-- <div class="col-md-2">
+								<div class="form-group fv-plugins-icon-container">
+									<label>
+										<h5>Convention</h5>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-md-1">
+								<div class="form-group fv-plugins-icon-container">
+									<input class="form-check-input" type="radio" [(ngModel)]="isVisible3" name="isVisible3" [value]="0" [checked]="isSelected" />
+									<label>
+										<h6>Non</h6>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-md-1">
+								<div class="form-group fv-plugins-icon-container">
+									<input class="form-check-input" type="radio" [(ngModel)]="isVisible3" name="isVisible3" [value]="1" [checked]="!isSelected" />
+									<label>
+										<h6>Oui</h6>
+									</label>
+								</div>
+							</div>
+							<div class="col-md-8"></div> -->
+						<div class="col-md-6 text-center purple" *ngIf="isVisible3 == true">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<label>{{ 'PAGES.BESOINCONSULTATION.CONVENTION' | translate }} :</label>
+											<mat-select class="form-control-lg" name="convention" placeholder=""
+												[(ngModel)]="formData.convention.id">
+												<mat-option *ngFor="let item of listConvention"
+													[value]="item.id">{{item.object }}</mat-option>
+
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- </div> -->
+					</div>
+
+					<!--====================================================================================================================================================-->
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Estimation HT</label>
+									<input matInput type="number" class="form-control" placeholder=""
+										[(ngModel)]="formData.estimationHT" name="estimationHT"
+										(blur)="CalculerEstimation()">
+
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Taxe TVA</label>
+									<input matInput type="number" class="form-control" placeholder=""
+										[(ngModel)]="formData.taxeTVA" name="taxeTVA" (blur)="CalculerEstimation()">
+
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>{{ 'PAGES.MARCHE.AO.estimation' | translate }}</label>
+									<input readonly matInput type="number" class="form-control"
+										(focus)="onInputFocus2()" (blur)="onInputBlur2()" #nompp="ngModel"
+										placeholder="" [(ngModel)]="formData.estimation" name="estimation"
+										(blur)="changeEstimation($event)">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>{{ 'PAGES.MARCHE.AO.BUDGET_ESTIMATIF' | translate }}</label>
+									<input matInput type="text" class="form-control" #nompp="ngModel" placeholder=""
+										[(ngModel)]="formData.budgetEstimatif" name="nompp">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>{{ 'PAGES.MARCHE.AO.CAUTION_PROVISOIRE' | translate }} </label>
+									<input matInput type="number" class="form-control" name="caution"
+										(focus)="onInputFocus3()" (blur)="onInputBlur3()" [(ngModel)]="formData.caution"
+										#objet="ngModel" placeholder="">
+									<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Budget </label>
+									<mat-select class="form-control" (selectionChange)="selectedTypeBudget($event)">
+										<mat-option value="Fonctionnement"> Fonctionnement</mat-option>
+										<mat-option value="Equipement"> Equipement</mat-option>
+									</mat-select>
+
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					</div>
+					<!-- ================================================================================================================================================================= -->
+					<!-- ================================================================================================================================================================= -->
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Réservé :
+									</label>
+									<mat-select class="form-control" (selectionChange)="selectedReserve($event)">
+										<mat-option value="0"> Non</mat-option>
+										<mat-option value="1"> Oui</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="isVisible2 == true">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> {{ "PAGES.BESOINCONSULTATION.TYPE_AO" | translate }} :
+								</label>
+								<mat-select class="form-control" name="typeAo" placeholder=""
+									(selectionChange)="selectedReservea($event)">
+									<mat-option *ngFor="let item of typesAO" value="{{item.id}}">
+										{{item.libelle}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> {{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }}:
+								</label>
+								<mat-select class="form-control" name="typePrestAo"
+									(selectionChange)="onChangeTypePrestationAo($event)" placeholder="">
+									<mat-option *ngFor="let item of lisTypePrestationAo" value="{{item.id}}">
+										{{item.libelle}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> {{ 'PAGES.MARCHE.AO.TYPE_AO' | translate }}:
+								</label>
+								<mat-select class="form-control" name="typeMarche"
+									(selectionChange)="onChangeTypeMarche($event)" placeholder="">
+									<mat-option *ngFor="let item of typeMarcheAll" value="{{item.id}}">
+										{{item.libelle}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6" *ngIf="isVisible11==true">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label>{{
+									'PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.TYPE'
+									| translate
+									}}</label>
+								<mat-select class="form-control" name="typePrestAo"
+									(selectionChange)="onChangeType($event)" placeholder="">
+									<mat-option value="Consultation Architecturale Ouvert">
+										Consultation Architecturale Ouvert
+									</mat-option>
+									<mat-option value="Consultation Architecturale négocié">
+										Consultation Architecturale négocié
+									</mat-option>
+
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+
+				</div>
+				<div class="row" *ngIf="isVisible12==true">
+					<div class="kt-portlet__head-toolbar" style="padding-bottom: 6px">
+						<div class="kt-portlet__head-wrapper">
+							<div class="kt-portlet__head-actions">
+								<a href="javascript:; " (click)="openDialogLotMarche()"
+									class="btn btn-success btn-elevate btn-icon-sm">
+									<i class="la la-plus"></i> Nouveau lot
+								</a>
+							</div>
+						</div>
+					</div>
+					<!-- start::table-secteur -->
+					<table class="table pj" width="100%">
+						<thead style="background-color: #eaeaea">
+							<tr>
+								<td class="boder-table">Lot</td>
+								<td class="boder-table">Objet (Fr)</td>
+								<td class="boder-table">caution</td>
+								<td class="boder-table">Montant (Dhs)</td>
+								<td class="boder-table">Actions</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of lotMarcheDataSource">
+								<td class="boder-table">{{ item.numLot }}</td>
+								<td class="boder-table">
+									{{
+									item.objetFr
+									? item.objetFr.length > 50
+									? (item.objetFr | slice: 0:50) +
+									"..."
+									: item.objetFr
+									: "-"
+									}}
+									<a href="javascript:void(0);" *ngIf="item.objetFr.length > 50"
+										matTooltip="{{ item.objetFr }}"><i class="fas fa-info-circle"></i></a>
+								</td>
+								<!-- <td class="boder-table">
+								{{ item.objetAr? ((item.objetAr.length>50)? (item.objetAr | slice:0:50)+ '...':(item.objetAr)) : "-" }}
+								<a href="javascript:void(0);" *ngIf="item.objetAr.length>50" matTooltip="{{ item.objetAr }}"><i class="fas fa-info-circle"></i></a>
+							</td> -->
+								<td class="boder-table">
+									{{
+									item.caution
+									? (item.caution | macurrency)
+									: 0
+									}}
+								</td>
+								<td class="boder-table">
+									{{ item.budget | macurrency }}
+								</td>
+								<td class="boder-table" let i=index>
+									<!-- <button
+									type="button"
+									(click)="editLotMarche(i)"
+									class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-warning
+										btn-icon-md
+										btn_table_edit
+									"
+									matTooltip="{{
+										'PAGES.GENERAL.EDIT' | translate
+									}}"
+								>
+									<i class="icon la la-edit"></i>
+								</button> -->
+									<button type="button" (click)="deleteLotMArche(i)" class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-danger
+										btn-icon-md
+										btn_table_delete
+									" matTooltip="{{
+										'PAGES.GENERAL.DELETE' | translate
+									}}">
+										<i class="icon la la-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- end::table-secteur -->
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> Mode de passation:
+								</label>
+								<mat-select class="form-control" name="modePassation" placeholder=""
+									(selectionChange)="selectedmodePassation($event)">
+									<mat-option *ngFor="let item of natureAoAll" value="{{item.id}}">
+										{{item.libelle}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="isVisible1==true">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> Autres:
+								</label>
+								<input matInput type="text" class="form-control" name="autres"
+									[(ngModel)]="formData.modePassation" placeholder="">
+
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> {{ 'PAGES.MARCHE.AO.NATURE_PRIX' | translate }}:
+								</label>
+								<mat-select class="form-control" name="naturePrix" [(ngModel)]="formData.naturePrix"
+									(selectionChange)="selectedNaturePrix($event)">
+									<mat-option *ngFor="let item of naturePrix" value="{{item}}">
+										{{item}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="isVisible6==true">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Formule :
+									</label>
+									<input matInput type="text" class="form-control" name="autres"
+										[(ngModel)]="formData.formule" placeholder="">
+
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Qualification :
+									</label>
+									<mat-select class="form-control" (selectionChange)="selectedQualification($event)">
+										<mat-option value="0"> Non</mat-option>
+										<mat-option value="1"> Oui</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="isVisible4==true">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Classification :
+									</label>
+									<mat-select class="form-control" (selectionChange)="selectedClassification($event)">
+										<mat-option value="0"> Non</mat-option>
+										<mat-option value="1"> Oui</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row" *ngIf="isVisible9 == true">
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Liste des Qualifications :
+									</label>
+									<mat-select class="form-control" name="qualification"
+										[(ngModel)]="formData.qualification.id"
+										(selectionChange)="selectedListeQualifications($event)">
+										<mat-option *ngFor="let item of ListeQualifications" value="{{item.id}}">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Liste des classes :
+									</label>
+									<mat-select class="form-control" name="classification"
+										[(ngModel)]="formData.classification.id">
+										<mat-option *ngFor="let item of classes" value="{{item.id}}">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Agrément :
+									</label>
+									<mat-select class="form-control" (selectionChange)="selectedAgrement($event)">
+										<mat-option value="0"> Non</mat-option>
+										<mat-option value="1"> Oui</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="isVisible5==true">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label>Liste des Agrément :
+									</label>
+									<mat-select multiple class="form-control" name="agrements"
+										(selectionChange)="selectedAgrementList($event.value)">
+										<mat-option *ngFor="let item of ListAgrement" value="{{item.id}}">
+											{{item.agrement}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Echantillon/prospectus :
+									</label>
+									<mat-select class="form-control" (selectionChange)="selectedEchantillon($event)">
+										<mat-option value="0"> Non</mat-option>
+										<mat-option value="1"> Oui</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-md-6" *ngIf="isVisible7==true">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Date :
+									</label>
+									<input matInput class="form-control" (click)="picker1.open()"
+										[(ngModel)]="formData.dateEchantillon" name="dateEchantillon"
+										[matDatepicker]="picker1" />
+									<mat-hint>JJ/MM/AAAA</mat-hint>
+									<mat-datepicker-toggle matSuffix [for]="picker1">
+										<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
+										</mat-icon>
+									</mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="isVisible7==true">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> Adresse:
+								</label>
+								<input matInput type="text" class="form-control" name="adresseEchantillon"
+									[(ngModel)]="formData.adresseEchantillon" placeholder="">
+
+							</mat-form-field>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Visite des lieux:
+									</label>
+									<mat-select class="form-control" (selectionChange)="selectedVisiteLieux($event)">
+										<mat-option value="0"> Non</mat-option>
+										<mat-option value="1"> Oui</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="isVisible8==true">
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> Adresse (visite des lieux):
+								</label>
+								<input matInput type="text" class="form-control" name="AdresseVisiteLieux"
+									[(ngModel)]="formData.adresseVisite" placeholder="">
+
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-6" *ngIf="isVisible8==true">
+						<div class="form-group">
+							<div class="input-group date">
+								<mat-form-field class="example-full-width">
+									<label> Date (visite des lieux) :
+									</label>
+									<input matInput class="form-control" (click)="picker1.open()"
+										[(ngModel)]="formData.dateVisite" name="dateVisiteLieux"
+										[matDatepicker]="picker1" />
+									<mat-hint>JJ/MM/AAAA</mat-hint>
+									<mat-datepicker-toggle matSuffix [for]="picker1">
+										<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
+										</mat-icon>
+									</mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+								</mat-form-field>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-md-6" *ngIf="isVisible8==true">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> Traitement:
+								</label>
+								<input matInput type="text" class="form-control" name="Traitement"
+									[(ngModel)]="formData.traitementVisite" placeholder="">
+
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- begin:: Content section 2 -->
+	<div class="kt-portlet">
+		<div class="kt-portlet__head kt-bg-portlet-5">
+			<div class="kt-portlet__head-label">
+				<span class="kt-portlet__head-icon">
+					<i class="flaticon-attachment"></i>
+				</span>
+				<h3 class="kt-portlet__head-title">
+					{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+				</h3>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<!-- start section::edit file form -->
+					<div class="row">
+						<div class="col-md-2 show_port input-group">
+							<mat-form-field class="example-full-width">
+								<label>{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }} :</label>
+								<mat-select class="form-control" name="unite"
+									(selectionChange)="selectedTypePJ($event.value)" [(ngModel)]="formPj.type"
+									placeholder="">
+									<mat-option *ngFor="let item of unites" [value]="item">{{item.libelle}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div class="col-md-2" *ngIf="isVisible13==true">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Label:
+									</label>
+									<input matInput type="text" class="form-control" name="label"
+										[(ngModel)]="formPj.label" placeholder="">
+
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6 show_port input-group">
+							<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+								<label class="input-group-btn">
+									<span class="btn btn-info">
+										{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
+											(change)="save($event)" id="customFile" style="display: none;" multiple>
+									</span>
+								</label>
+								<input id="test" type="text" class="form-control" value="" readonly>
+							</form>
+						</div>
+						<div class="col-md-2" style="padding-top: 27px;">
+							<button class="btn btn-primary" type="button" (click)="validerPj()"
+								style="position: absolute;right: 0px;">
+								{{ 'PAGES.GENERAL.SAVE' | translate }}
+							</button>
+						</div>
+					</div>
+					<!-- end section::edit file form -->
+					<hr>
+					<!-- begin::file datasource -->
+					<div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+
+						<mat-table [dataSource]="dataSource1" matSort>
+							<!-- type Column -->
+							<ng-container matColumnDef="type">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+									{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+								<mat-cell *matCellDef="let row" class="chikaya_td">
+									{{row.type.libelle?row.type.libelle:'-'}} </mat-cell>
+							</ng-container>
+							<!-- label Column -->
+							<ng-container matColumnDef="label">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+									Label</mat-header-cell>
+								<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.label?row.label:'-'}}
+								</mat-cell>
+							</ng-container>
+							<!-- file name Column -->
+							<ng-container matColumnDef="nomDoc">
+								<mat-header-cell *matHeaderCellDef mat-sort-header>
+									{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+							</ng-container>
+							<ng-container matColumnDef="actions">
+								<mat-header-cell *matHeaderCellDef mat-sort-header>
+									{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+								</mat-header-cell>
+								<mat-cell *matCellDef="let row; let i=index">
+									<button type="button" (click)="onDeletePj(i)"
+										class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+										matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+										<i class="icon la la-trash"></i>
+									</button>
+								</mat-cell>
+							</ng-container>
+
+							<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+							<mat-row *matRowDef="let row; columns: displayedColumns1;">
+							</mat-row>
+						</mat-table>
+
+					</div>
+					<!-- end::file datasource -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end:: Content section 2 -->
+	<!--Action Section :: begin-->
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button _ngcontent-dkp-c41=""
+				class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit"
+				[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+				<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.NEXT' | translate }}</button>
+			<!-- <button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset">
+				<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+				{{ 'PAGES.GENERAL.RESET' | translate }}</button> -->
+			<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+				type="reset" (click)="backList()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

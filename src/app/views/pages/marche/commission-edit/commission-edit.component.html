@@ -1,0 +1,69 @@
+<form autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+    <!-- begin:: Content section 2 -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-squares-4"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{commission.typeCommission.libelle}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control" [matDatepicker]="picker2" name="dateCommission" [(ngModel)]="commission.dateOuveture" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.DATE_DEBUT' | translate }}:">
+                                            <mat-datepicker-toggle matSuffix [for]="picker2">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="kt-portlet__foot">
+                                <div>
+                                    <br>
+                                    <div class="btn-group special" role="group" aria-label="Basic example">
+                                        <button type="button" (click)="ShowPI()" class="btn btn-secondary">{{
+                                            'PAGES.MARCHE.COMMISSIONS.MEMBRE_INTERNE' | translate }}</button>
+                                        <button type="button" (click)="ShowPE()" class="btn btn-secondary">{{
+                                            'PAGES.MARCHE.COMMISSIONS.MEMBRE_EXTERNE' | translate }}</button>
+                                        <button type="button" (click)="ShowOffreDeposee()" class="btn btn-secondary">{{
+                                            'PAGES.MARCHE.COMMISSIONS.OFFRE_PRESTATAIRE' | translate }}</button>
+                                        <!-- <button type="button" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.DOCUMENTS_ATTACHER' | translate }}</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <router-outlet></router-outlet>
+    <!--Action Section :: begin-->
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label" align="right">
+            <button type="submit" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                <i class="icon la la-floppy-o"></i>{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+            <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button" (click)="backList(commission.ao.id)">
+                <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+                {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        </div>
+        <div class="espace_bloc"></div>
+    </div>
+    <!--Action Section :: end-->
+</form>

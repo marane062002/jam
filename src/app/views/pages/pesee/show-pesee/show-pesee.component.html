@@ -1,0 +1,627 @@
+<div class="kt-portlet portlet-1 col-md-12">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			&nbsp;
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.PESEE.TITRE_DETAILS" | translate }}
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.PERSONNEL.INFO_GENERAL" | translate }}
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<!-- <tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>{{ "PAGES.PESEE.NUM" | translate }} :</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2" [value]="showPesee.numBon"
+										disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>{{ "PAGES.PESEE.DATE" | translate }} :</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2" [value]="showPesee.date"
+										disabled />
+								</td>
+							</tr>
+
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>{{ "PAGES.PESEE.MATR" | translate }} :</th>
+								<td class="donnee_show">
+									<input [value]="formatNumVehicule(showPesee.vehicule)" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>
+									{{ "PAGES.PESEE.CONDUCTEUR" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.vehicule.nomConducteur" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>
+									{{ "PAGES.PESEE.HANGAR" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.hangar.lib" disabled />
+								</td>
+							</tr> -->
+
+
+							<tr  style="text-align: left;">
+								<th>{{ "PAGES.PESEE.NUM" | translate }} :</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2" [value]="showPesee.numBon"
+										disabled />
+								</td>
+							</tr>
+							<tr  style="text-align: left;">
+								<th>{{ "PAGES.PESEE.DATE" | translate }} :</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2" [value]="showPesee.date"
+										disabled />
+								</td>
+							</tr>
+
+							<tr  style="text-align: left;">
+								<th>{{ "PAGES.PESEE.MATR" | translate }} :</th>
+								<td class="donnee_show">
+									<input [value]="formatNumVehicule(showPesee.vehicule)" disabled />
+								</td>
+							</tr>
+							<tr  style="text-align: left;">
+								<th>
+									{{ "PAGES.PESEE.CONDUCTEUR" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.vehicule.nomConducteur" disabled />
+								</td>
+							</tr>
+							<tr  style="text-align: left;">
+								<th>
+									{{ "PAGES.PESEE.HANGAR" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.hangar.lib" disabled />
+								</td>
+							</tr>
+							<tr  style="text-align: left;">
+								<th>
+									Mondataire :
+								</th>
+								<td class="donnee_show">
+									<input [value]="mondataire" disabled />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.PESEE.POIDS" | translate }}
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_V" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.vehicule.tarra" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_T" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.poidGlobal" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_E" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.poidEmballageTotal" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_N" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;font-weight: bold;color: #000;"
+										class="backs3" [value]="showPesee.totalPoidNet" disabled />
+								</td>
+							</tr>
+
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_V" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.vehicule.tarra" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_T" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.poidGlobal" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_E" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input [value]="showPesee.poidEmballageTotal" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th>
+									{{ "PAGES.PESEE.POIDS_N" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;font-weight: bold;color: #000;"
+										class="backs3" [value]="showPesee.totalPoidNet" disabled />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-10">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.PESEE.PRODUITS" | translate }}
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<div class="kt-portlet-box">
+						<table class="table">
+							<tbody *ngFor="let option of PeseeProduit">
+								<tr *ngIf="language=='ar'" style="text-align: right;">
+									<th>{{ "PAGES.PESEE.NUMPROD" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.CATEGORIE" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.TYPE" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.SOUS_TYPE" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.PRIX" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.POIDS_NET" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.TOTAL" | translate }} :</th>
+								</tr>
+								<tr *ngIf="language=='fr'" style="text-align: left;">
+									<th>{{ "PAGES.PESEE.NUMPROD" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.CATEGORIE" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.TYPE" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.SOUS_TYPE" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.PRIX" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.POIDS_NET" | translate }} :</th>
+									<th>{{ "PAGES.PESEE.TOTAL" | translate }} :</th>
+								</tr>
+								<tr *ngIf="language=='fr'" style="text-align: left;">
+									<td class="donnee_show">
+										<input style="border: 0px solid #ffffff;" class="backs1"
+											[value]="option.produit.refProduit" disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs"
+											[value]="option.produit.typeProduit.categorieProduit.nomCategori"
+											disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs" [value]="option.produit.typeProduit.nomArticleProduit"
+											disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs" [value]="option.produit.lib" disabled />
+									</td>
+									<td class="donnee_show">
+										<input style="border: 0px solid #ffffff;" class="backs1"
+											[value]="option.produit.tarif" disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs" [value]="option.poidNetProduit" disabled />
+									</td>
+									<td class="donnee_show">
+										<input style="border: 0px solid #ffffff;" class="backs1"
+											[value]="option.totalProduit" disabled />
+									</td>
+								</tr>
+								<tr *ngIf="language=='ar'" style="text-align: right;">
+									<td class="donnee_show">
+										<input style="border: 0px solid #ffffff;" class="backs1"
+											[value]="option.produit.refProduit" disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs"
+											[value]="option.produit.typeProduit.categorieProduit.nomCategori"
+											disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs" [value]="option.produit.typeProduit.nomArticleProduit"
+											disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs" [value]="option.produit.lib" disabled />
+									</td>
+									<td class="donnee_show">
+										<input style="border: 0px solid #ffffff;" class="backs1"
+											[value]="option.produit.tarif" disabled />
+									</td>
+									<td class="donnee_show">
+										<input class="backs" [value]="option.poidNetProduit" disabled />
+									</td>
+									<td class="donnee_show">
+										<input style="border: 0px solid #ffffff;" class="backs1"
+											[value]="option.totalProduit" disabled />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__head kt-bg-portlet-2">
+			<div class="kt-portlet__head-label">
+				&nbsp;
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.PESEE.TOTAL_PAYER" | translate }}
+				</h2>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th style="color: #5e5d5d;">
+									{{ "PAGES.PESEE.TOTAL_P_N" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2"
+										[value]="showPesee.totalPoidNet" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th style="color: #5e5d5d;">
+									{{ "PAGES.PESEE.MONTANT_T_M" | translate }}
+									:
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2"
+										[value]="chiffreTransaction" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th style="color: #5e5d5d;">
+									{{ "PAGES.PESEE.TAXE_P" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;font-weight: bold;color: #000;"
+										class="backs4" [value]="showPesee.taxe" disabled />
+								</td>
+							</tr>
+
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th style="color: #5e5d5d;">
+									{{ "PAGES.PESEE.TOTAL_P_N" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2"
+										[value]="showPesee.totalPoidNet" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th style="color: #5e5d5d;">
+									{{ "PAGES.PESEE.MONTANT_T_M" | translate }}
+									:
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;" class="backs2"
+										[value]="chiffreTransaction" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th style="color: #5e5d5d;">
+									{{ "PAGES.PESEE.TAXE_P" | translate }} :
+								</th>
+								<td class="donnee_show">
+									<input style="border: 0px solid #ffffff;font-weight: bold;color: #000;"
+										class="backs4" [value]="showPesee.taxe" disabled />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<table *ngIf="language=='fr'" class="table" style="margin-left:-230px;">
+						<tbody style="border-collapse: collapse; border: none;">
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th class="thshow"
+									style="border: 0px solid #ffffff;margin: 0 !important;padding: 5px !important;">
+									{{ "PAGES.PESEE.PART_COMMUNE" | translate }} :</th>
+								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
+									<input style="border: 0px solid #ffffff;width: 180px;font-weight: bold;color: #000;"
+										class="backs5" [value]="showPesee.partCommune" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='fr'" style="text-align: left;">
+								<th style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
+									{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} : :</th>
+								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
+									<input style="width: 180px;font-weight: bold;color: #000;"
+										[value]="showPesee.partMondataire" disabled />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table *ngIf="language=='ar'" class="table" style="margin-right:-150px;">
+						<tbody style="border-collapse: collapse; border: none;">
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th class="thshow"
+									style="border: 0px solid #ffffff;margin: 0 !important;padding: 5px !important;">
+									{{ "PAGES.PESEE.PART_COMMUNE" | translate }} :</th>
+								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
+									<input style="border: 0px solid #ffffff;width: 180px;font-weight: bold;color: #000;"
+										class="backs5" [value]="showPesee.partCommune" disabled />
+								</td>
+							</tr>
+							<tr *ngIf="language=='ar'" style="text-align: right;">
+								<th style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
+									{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} : :</th>
+								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
+									<input style="width: 180px;font-weight: bold;color: #000;"
+										[value]="showPesee.partMondataire" disabled />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class="kt-portlet portlet-1 col-md-5">
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="espace_bloc"></div>
+				<div class="col-md-12 show_port">
+					<div class="icons-container">
+						<button mat-icon-button color="primary">
+							<svg class="save-icon-display" height="18px" version="1.1" viewBox="0 0 24 24" width="20px"
+								xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm-2.29 8.29 1.29 1.3V6h2v5.59l1.29-1.29 1.41 1.41-3.7 3.7-3.71-3.7ZM16 18H8v-2h8Z"
+									data-name="Layer 2" fill="#2692eb" class="fill-000000"></path>
+							</svg>
+						</button>
+						<button mat-icon-button color="primary">
+							<svg class="print-icon-display" height="18px" version="1.1" viewBox="0 0 20 18" width="20px"
+								xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M17 5H3C1.3 5 0 6.3 0 8v6h4v4h12v-4h4V8c0-1.7-1.3-3-3-3Zm-3 11H6v-5h8v5Zm3-7c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1Zm-1-9H4v4h12V0Z"
+									fill="#19aee0" fill-rule="evenodd" class="fill-000000"></path>
+							</svg>
+						</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</div>
+
+<div class="kt-portlet__head">
+	<div *ngIf="language=='fr'" class="kt-portlet__head-label" align="right">
+		<div class="kt-portlet portlet-1 col-md-5">
+			<div class="kt-portlet__body">
+				<div *ngIf="language=='fr'" class="row" style="margin-left:-300px;margin-top: -117px;">
+					<div class="col-md-12 show_port">
+						<div class="icons-container">
+							<button mat-icon-button color="primary" (click)="printCourrierEntrant(showPesee)">
+								<svg class="save-icon-display" height="18px" version="1.1" viewBox="0 0 24 24"
+									width="20px" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm-2.29 8.29 1.29 1.3V6h2v5.59l1.29-1.29 1.41 1.41-3.7 3.7-3.71-3.7ZM16 18H8v-2h8Z"
+										data-name="Layer 2" fill="#000000" class="fill-000000"></path>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="back()">
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+
+	<div *ngIf="language=='ar'" class="kt-portlet__head-label" align="right">
+		<div class="kt-portlet portlet-1 col-md-5">
+			<div class="kt-portlet__body">
+				<div *ngIf="language=='ar'" class="row" style="margin-right:1000px;margin-top: 19px;">
+					<div class="col-md-12 show_port">
+						<div class="icons-container">
+							<button mat-icon-button color="primary" (click)="printCourrierEntrant(showPesee)">
+								<svg class="save-icon-display" height="98px" version="1.1" viewBox="0 0 24 24"
+									width="100px" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm-2.29 8.29 1.29 1.3V6h2v5.59l1.29-1.29 1.41 1.41-3.7 3.7-3.71-3.7ZM16 18H8v-2h8Z"
+										data-name="Layer 2" fill="#000000" class="fill-000000"></path>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="language=='ar'" class="kt-portlet__head-label" align="left">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="back()">
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<div style="overflow: hidden; height: 0">
+	<div id="htmlData">
+		<div class="toprint">
+			<div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
+				<div class="col-md-3">
+					<img style="width:500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+				</div>
+				<div class="col-md-6"></div>
+				<div class="col-md-3">
+					<img style="width:200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+				</div>
+			</div><br><br>
+			<div class="row">
+				<table class="table"
+					style="width: 70%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr>
+						<th style="border: none;"> {{ "PAGES.PESEE.HANGAR" | translate }}</th>
+						<th class="table-bordered dashed-line">{{toPrint?.hangar.numHangar}}
+						</th>
+						<th style="border: none;">{{ "PAGES.PESEE.DATE" | translate }}</th>
+						<th class="table-bordered dashed-line">{{toPrint?.date}}  {{toPrint?.heure}}</th>
+					</tr>
+					<tr>
+						<th style="border: none;">{{ "PAGES.PESEE.NUM" | translate }}</th>
+						<th class="table-bordered dashed-line">{{toPrint?.numBon}}</th>
+						<th style="border: none;">{{ "PAGES.PESEE.CONDUCTEUR" | translate }}
+						</th>
+						<th class="table-bordered dashed-line">{{toPrint?.nomConducteur}}
+						</th>
+					</tr>
+				</table>
+			</div><br>
+			<div class="row">
+				<table class="table table-bordered dashed-line" style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.MATR" | translate }}</th>
+						<th colspan="2">{{toPrint?.vehicule.numVehicule}}</th>
+					</tr>
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.CONDUCTEUR" | translate }}</th>
+						<th colspan="2">{{toPrint?.vehicule.nomConducteur}}</th>
+					</tr>
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.MONDATAIRE" | translate }}</th>
+						<th colspan="2">{{toPrint?.mondataire}}</th>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PESEE.POIDS_T" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_V" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_E" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_N" | translate }}</th>
+					</tr>
+					<tr>
+						<td>{{toPrint?.poidGlobal}}</td>
+						<td>{{toPrint?.vehicule.tarra}}</td>
+						<td>{{toPrint?.poidEmballageTotal}}</td>
+						<td>{{toPrint?.totalPoidNet}}</td>
+					</tr>
+				</table>
+			</div><br>
+			<div class="row">
+				<table class="table table-bordered"
+					style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr>
+						<th>{{ "PAGES.PESEE.NUMPROD" | translate }}</th>
+						<th>{{ "PAGES.PESEE.CATEGORIE" | translate }}</th>
+						<th>{{ "PAGES.PESEE.TYPE" | translate }}</th>
+						<th>{{ "PAGES.PESEE.SOUS_TYPE" | translate }}</th>
+						<th>{{ "PAGES.PESEE.PRIX" | translate }}</th>
+						<th>{{ "PAGES.PESEE.POIDS_NET" | translate }}</th>
+						<th>{{ "PAGES.PESEE.TOTAL" | translate }}</th>
+					</tr>
+					<tr *ngFor="let item of toPrint?.peseeProduits">
+						<td>{{item.produit.refProduit}}</td>
+						<td>{{item.produit.typeProduit.categorieProduit.nomCategori}}</td>
+						<td>{{item.produit.typeProduit.nomArticleProduit}}</td>
+						<td>{{item.produit.description}}</td>
+						<td>{{item.produit.tarif}}</td>
+						<td>{{item.poidNetProduit}}</td>
+						<td>{{item.totalProduit}}</td>
+					</tr>
+					<tr>
+						<th colspan="2">{{ "PAGES.PESEE.NBPROD" | translate }}</th>
+						<th>{{toPrint?.peseeProduits.length}}</th>
+						<th colspan="3">{{ "PAGES.PESEE.MONTANT_T_M" | translate }}</th>
+						<th>{{toPrint?.chiffreTransaction}}</th>
+					</tr> 
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_COMMUNE" | translate }} :</th>
+						<th>{{toPrint?.partCommune}}</th>
+					</tr>
+
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} :</th>
+						<th>{{toPrint?.partMondataire}}</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

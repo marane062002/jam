@@ -1,0 +1,152 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="fa fa-building"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.TITRE_NEW' | translate }}
+			</h3>
+		</div>
+	</div>
+	<form novalidate [formGroup]="addForm" autocomplete="off">
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="" class="form-control" formControlName="raisonSociale" name="raisonSociale"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.RAISONSOCIALE' | translate }}" required>
+							<mat-error *ngIf="isControlHasError('raisonSociale','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="contact" name="contact"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.CONTACT' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="" class="form-control" formControlName="teleFixe" name="teleFixe"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.TELEFIXE' | translate }}" required>
+							<mat-error *ngIf="isControlHasError('teleFixe','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+							</mat-error>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="teleGsm" name="teleGsm"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.TELEGSM' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="fax" name="fax"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.FAX' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="email" class="form-control" formControlName="eMail" name="eMail"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.EMAIL' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="" class="form-control" formControlName="rc" name="rc"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.RC' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="numeroPatente" name="numeroPatente"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.NUMEROPATENTE' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="identifiantFiscal" name="identifiantFiscal"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.IDENTIFIANTFISCAL' | translate }}">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="tel" class="form-control" formControlName="siteWeb" name="siteWeb"
+								placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.SITEWEB' | translate }}">
+							<mat-icon matSuffix><i class="fas fa-phone-alt"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="2" #input maxlength="255" class="form-control" name="adresse" matInput
+								formControlName="adresse" placeholder="{{ 'PAGES.ACTIVITE.PERSONNE_MORALE.ADRESSE' | translate }}"></textarea>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onSubmit()"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}"
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+			class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="backList()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

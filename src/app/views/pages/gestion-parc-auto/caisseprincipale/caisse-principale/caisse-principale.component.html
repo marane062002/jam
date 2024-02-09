@@ -1,0 +1,161 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">Caisse Principale</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+                      <!-- <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                            <div class="form-group row justify-content-center mb-1">
+                                <div class="col-md-3 form-group ">
+                                    <label>N° facture :</label>
+                                    <input class="form-control" type="text" placeholder="Numéro facture">
+                                </div>
+                                <div class="col-md-2 col-lg-2 form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div> -->
+
+                      <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-icon-tab">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 dos">
+                                <div class="card o-hidden mb-4">
+                                    <div class="card-header d-flex align-items-center border-0">
+                                      <h3 class="w-50 float-left card-title m-0">Liste des Missions traitées</h3>
+                                      <div class="text-right w-50 float-right">
+                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-ajouter-modal-lg" (click)="modalAlimentationCaisse(alimentationCaisse)"><i class="nav-icon i-Add font-weight-bold"></i>Alimentation de la caisse</button>
+                                      </div>
+                                    </div>
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class=" table text-center" id="user_table">
+                                                <thead>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Total avance</th>
+                                                    <th scope="col">Total vignette</th>
+                                                    <th scope="col">Montant restant dans la caisse</th>
+                                                    <th scope="col">Montant consommé dans les autres caisses</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of caissePrincipale">
+                                                      <td>{{item.typeVignette}}</td>
+                                                      <td>{{item.totalAvance}}</td>
+                                                      <td>{{item.totalVignette}}</td>
+                                                      <td>{{item.montantRestant}}</td>
+                                                      <td>{{item.montantConsomme}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <button class="btn btn-outline-danger mr-2" type="button" data-dismiss="modal"><i class="nav-icon i-File-Excel font-weight-bold"></i>PDF</button>
+                                    <button class="btn btn-outline-success" type="button" data-dismiss="modal"><i class="nav-icon i-File-Excel font-weight-bold"></i>EXCEL</button>
+                                  </div>
+                        
+                                  <div class="col-md-12">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end mb-0 mt-2">
+                                            <li class="page-item"><a class="page-link" href="#" tabindex="-1">Précédent</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item active"><a class="page-link" href="#">2 <span class="sr-only">(current)</span></a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
+                                        </ul>
+                                    </nav>
+                                  </div>
+
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+   <!--  Modal ajouter -->
+  <ng-template #alimentationCaisse let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Alimentation de la caisse </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="row col-md-4">
+          <div class="col-md-12">
+            <label>Nombre de saisie vectorielle :</label>
+            <select class="form-control" [(ngModel)]="vectorielle" (change)="nombreVectorielle()">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="row col-md-8">
+          <ng-container *ngFor="let v of vectorielles">
+            <div class="col-md-6">
+              <label>Première vignette :</label>
+              <input class="form-control" type="text" placeholder="Première vignette">
+            </div>
+            <div class="col-md-6">
+              <label>Dernière vignette :</label>
+              <input class="form-control" type="text" placeholder="Dernière vignette">
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row col-md-4">
+          <div class="col-md-12">
+            <label>Nombre de vignette :</label>
+            <select class="form-control" [(ngModel)]="vignette" (change)="nombreVignette()">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+        </div>
+        <div class="row col-md-8">
+          <ng-container *ngFor="let vign of vignettes">
+            <div class="col-md-12">
+              <label>Vignette numéro :</label>
+              <input class="form-control" type="text" placeholder="Vignette numéro">
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row col-md-4">
+          <div class="col-md-12">
+            <label>Conventions :</label>
+            <select class="form-control">
+              <option>Avance n°1</option>
+              <option>Avance n°2</option>
+              <option>Avance n°3</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+  </ng-template>
+</div>
+
+

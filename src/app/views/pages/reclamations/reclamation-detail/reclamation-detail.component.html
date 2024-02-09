@@ -1,0 +1,441 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            رقم الشكاية : {{reclamation.reclamation.id}}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            وضع الشكاية : <span class="kt-font-brand kt-font-bold">   {{reclamation.reclamation.statutReclamation.libelle}}</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section 2 -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-file-2 kt-font-inverse-brand"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            نوع الشكاية
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>الخطورة :</th>
+                                        <td class="donnee_show kt-font-warning kt-font-bold"> {{reclamation.reclamation.severite.libelle}}</td>
+                                        <th>الحرجية :</th>
+                                        <td class="donnee_show kt-font-danger kt-font-bold">{{reclamation.reclamation.criticite.libelle}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>النوع :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.typeReclamation.libelle}}
+                                        </td>
+                                        <th>النوع الفرعي :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.soustypeReclamation.libelle}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-2">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-avatar"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title">
+                            معلومات عن مقدم الطلب
+                        </h3>
+                    </div>
+                    <!---	<div class="kt-portlet__head-toolbar">
+						<div class="kt-portlet__head-actions">
+							<a routerLink="/PersonnePhysiqueForm" id ="btnAddpp" style="display:none" href="#" class="btn btn-success btn_rec">
+								<i class="flaticon2-add-1"></i>إضافة
+							</a>
+							<a id ="btnChangepp" (click)="editpp(reclamation.pps.id)" style="display:none"  class="btn btn-warning btn_rec">
+								<i class="flaticon-edit"></i>تغيير
+              </a>
+              <a id ="btnAddpm"  routerLink="/PersonneMoraleForm" style="display:none" href="#" class="btn btn-success btn_rec">
+								إضافة
+							</a>
+							<a id ="btnChangepm"  (click)="editpp(reclamation.pms.id)"style="display:none" href="#" class="btn btn-warning btn_rec">
+								تغيير
+							</a>
+						</div>
+					</div>-->
+                </div>
+
+                <div class="kt-portlet__body">
+
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%" id="pppp" style="display:none">
+                                <tbody>
+                                    <tr>
+                                        <th>الاسم :</th>
+                                        <td>
+                                            {{reclamation.pps.prenom}}
+                                        </td>
+                                        <th>النسب :</th>
+                                        <td>
+                                            {{reclamation.pps.nom}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>البطاقة الوطنية :</th>
+                                        <td>{{reclamation.pps.cin}}</td>
+                                        <th>الهاتف المحمول :</th>
+                                        <td>
+                                            {{reclamation.pps.telephoneGsm}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table pj" width="100%" id="pmmm" style="display:none">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            معرف الضريبة:
+                                        </th>
+                                        <td>
+                                            {{reclamation.pms.rc}}
+                                        </td>
+                                        <th>
+                                            السجل التجاري:
+                                        </th>
+                                        <td>
+                                            {{reclamation.pms.identifiantFiscal}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Numero Patente:
+                                        </th>
+                                        <td>{{reclamation.pms.numeroPatente}}</td>
+                                        <th>الهاتف المحمول :</th>
+                                        <td>
+                                            {{reclamation.pms.teleGsm}}
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div align="right">
+                                <!---  <button id ="btnDetailpp" (click)="showpp(reclamation.pps.id)" style="display:none" type="button" class="btn btn-brand">التفاصيل</button>
+                <button id ="btnDetailpm" (click)="showpm(reclamation.pms.id)" style="display:none" type="button" class="btn btn-brand">التفاصيل</button>-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<!-- begin:: Content section 3 -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon2-checking kt-font-inverse-brand"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            معلومات الشكاية
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th> قناة الشكاية :</th>
+                                        <td colspan="2" class="donnee_show"> {{reclamation.reclamation.canal.libelle}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>وصف قصير :</th>
+                                        <td colspan="2" class="donnee_show">
+                                            {{reclamation.reclamation.descriptionCourte}}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>وصف طويل :</th>
+                                        <td colspan="2" class="donnee_show">
+                                            {{reclamation.reclamation.descriptionLongue}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th>تاريخ تسجيل الشكاية :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.dateDepot |date: 'yyyy-MM-dd'}} </td>
+                                        <th>ساعة تسجيل الشكاية</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.dateDepot |date: ' HH:mm'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+                <!----	<div class="kt-portlet__body">
+					<div class="row">
+						<div class="col-md-12 show_port">
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									قناة الشكاية :
+								</div>
+								<div >
+									{{reclamation.reclamation.canal.libelle}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									وصف قصير :
+								</div>
+								<div >
+									{{reclamation.reclamation.descriptionCourte}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									وصف طويل :
+								</div>
+								<div >
+									{{reclamation.reclamation.descriptionLongue}}
+								</div>
+							</div>
+							<mat-divider></mat-divider>
+							<div class="row info-data">
+								<div class="col-md-3 my-auto kt-font-bold">
+									تاريخ تسجيل الشكاية :
+								</div>
+								<div class="col-md-3 my-auto">
+									{{reclamation.reclamation.dateDepot |date: 'yyyy-MM-dd'}}
+								</div>
+								<div class="col-md-3 my-auto kt-font-bold">
+									ساعة تسجيل الشكاية
+								</div>
+								<div class="col-md-3 my-auto">
+									{{reclamation.reclamation.dateDepot |date: ' hh:mm'}}
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>-->
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-4">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-information kt-font-inverse-brand"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            معلومات المعالجة
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th> الوضع :</th>
+                                        <td class="donnee_show kt-font-warning kt-font-bold"> {{reclamation.reclamation.statutReclamation.libelle}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>تاريخ بدء المعالجة :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.dateDebutTraitement |date: 'dd/MM/yyyy '}}
+                                        </td>
+                                        <th>ساعة بدء المعالجة :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.dateDebutTraitement |date: 'HH:mm'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>تاريخ الانتهاء :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.dateFinTraitement |date: 'dd/MM/yyyy '}}
+                                        </td>
+                                        <th> ساعةالانتهاء :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.dateFinTraitement |date: ' HH:mm'}}
+                                    </tr>
+                                    <tr>
+                                        <th>تاريخ الإغلاق :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.cloture |date: 'dd/MM/yyyy '}}
+                                        </td>
+                                        <th> ساعة الإغلاق :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.cloture |date: 'HH:mm'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>قناة الإجابة :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.canalreponse.libelle}}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>ملاحظات :</th>
+                                        <td class="donnee_show">
+                                            {{reclamation.reclamation.observations}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-5">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-attachment"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title">
+                            الوثائق المرفقة
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <thead>
+                                    <tr>
+                                        <td width="50%">الوثائق المرفقة</td>
+                                        <td>التحميل</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of pjs">
+                                        <td> {{item.name }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn_piecejoint_down" (click)="onClickPjName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-5">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+							<i class="flaticon-attachment"></i>
+						</span>
+                        <h3 class="kt-portlet__head-title">
+
+                            الوثائق المرفقة للمعالجة
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <thead>
+                                    <tr>
+                                        <td width="50%">
+                                            الوثائق المرفقة للمعالجة
+                                        </td>
+                                        <td>التحميل</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of pjstraitement">
+                                        <td> {{item.name}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn_piecejoint_down" (click)="onClickPjTraitementName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                        <!---	<button type="button" class="btn btn-info"><i class="fa fa-print"></i> الطبع</button>-->
+                        <button *ngxPermissionsOnly="['accessToIndexReclamation']" type="button" class="btn btn-label-dark" routerLink="/reclamations/reclamation-detail"><i class="flaticon2-list-2"></i> لائحة الشكايات</button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

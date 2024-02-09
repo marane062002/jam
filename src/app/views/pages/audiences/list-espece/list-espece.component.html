@@ -1,0 +1,88 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-3">
+        <div class="kt-portlet__head-label">
+            <h2 class="kt-portlet__head-title">
+                {{ 'PAGES.GESTION_ESPECES.LISTE_ESPECES' | translate }}
+            </h2>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button  type="button"
+                        class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                        matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.AFFAIRE.TITRE_INDEX' | translate }}">
+                        <i class="flaticon2-download text-success"></i>
+                    </button>
+                    <a href="javascript:; " (click)="addEspece()" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="example-header  col-md-4">
+        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'TRANSLATOR.SEARCHE' | translate }}">
+        </mat-form-field>
+    </div>
+
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-2" matSort>
+
+        <!-- Num Column -->
+
+        <!-- Nom Column -->
+        <ng-container matColumnDef="espece">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="espece">{{ 'PAGES.GESTION_ESPECES.ESPECE' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="espece">
+                {{ row.espece }}
+
+            </td> 
+        </ng-container>
+
+        <!-- Prénom Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="description">{{ 'PAGES.GESTION_ESPECES.DESCRIPTION' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let row" class="description">
+                {{ row.description}}
+
+            </td>
+        </ng-container>
+        <!-- pour exporter excel -->
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ 'PAGES.GENERAL.ACTIONS' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="actionsBtn action">
+
+                <button type="button" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+                    matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"> <a href="javascript:; "
+                        (click)="editEspece(row.id)">
+                        <i class="icon la la-edit"></i>
+                    </a></button>
+                <button type="button" (click)="delete(row.id)"
+                    class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                    matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- footer data -->
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false"
+        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <!-- <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card> -->
+    <!-- <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="totalItems"
+        [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5,10,20,50]" showFirstLastButtons
+        (page)="pageChanged($event)"></mat-paginator> -->
+
+    <mat-paginator [pageSizeOptions]="[5,10,20,50]"  [showFirstLastButtons]="true"></mat-paginator>
+    <hr>
+</div>

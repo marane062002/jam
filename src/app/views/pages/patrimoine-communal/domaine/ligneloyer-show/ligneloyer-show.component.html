@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'PAGES.GENERAL.LIGNE_LOYER_SHOW' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+
+                        <a *ngxPermissionsOnly="['canUpdateDomainePublic']" (click)="update(ligneloyer?.id)" class="btn btn-warning btn-sm btn-bold">
+                            <i class="fas fa-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                        </a>
+                        <a *ngxPermissionsOnly="['canDeleteDomainePublic']" (click)="delete(ligneloyer?.id)" class="btn btn-danger btn-sm btn-bold">
+                            <i class="fas fa-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section  -->
+<div *ngIf="ligneloyer">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                                <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                            </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.LIGNE_LOYER_INFOS' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.ANNEE' | translate }} :</th>
+                                        <td>{{ligneloyer?.anneeLoyer}}</td>
+                                        <th>{{ 'PAGES.GENERAL.MOIS_LOYER' | translate }} :</th>
+                                        <td>{{ ligneloyer?.moisLoyer}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.ETAT_REGLEMENT' | translate }} :</th>
+                                        <td>{{ligneloyer.etatReglement=='false'?'غير مدفوع': 'مدفوع'}}</td>
+
+                                        <th> {{ 'PAGES.GENERAL.DATE_PAIEMENT' | translate }} :</th>
+                                        <td>{{ligneloyer?.datePaiement|date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+
+                                        <th>{{ 'PAGES.GENERAL.NUM_RECU' | translate }} :</th>
+                                        <td>{{ligneloyer?.numRecu}}</td>
+                                        <th>{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :</th>
+                                        <td>{{ligneloyer?.observation}}</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- 
+        **********************index pjs*****************************************************
+     -->
+<div *ngIf="pjs">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-5">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                                    <i class="flaticon-attachment"></i>
+                                </span>
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.GENERAL.PJS' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <thead>
+                                    <tr>
+                                        <td width="50%">{{ 'PAGES.GENERAL.PJ' | translate }}</td>
+                                        <td>{{ 'PAGES.GENERAL.TYPE' | translate }}</td>
+                                        <td>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of pjs">
+                                        <td> {{item.name}}</td>
+                                        <td>{{findLibelleType(item.type)?.libelle}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn_piecejoint_down" (click)="onClickPjName(item.idAlfresco,item.id)"><i class="icon la la-cloud-download"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label" align="right">
+                    <!-- <button *ngIf="demande?.statut?.rang == 5"  type="button" class="btn btn-info"><i class="fa fa-print"></i> {{ 'PAGES.GENERAL.PRINT' | translate }}</button> -->
+
+
+
+                    <button (click)='back(ligneloyer.loyer.id)' class="btn btn-brand btn-md btn-tall btn-wide">  {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i></button>
+
+                </div>
+                <div class="espace_bloc"></div>
+            </div>
+        </div>
+    </div>
+</div>

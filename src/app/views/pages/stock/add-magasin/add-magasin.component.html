@@ -1,0 +1,68 @@
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-plus kt-font-inverse-brand"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.Stock.empalacement.new.title' | translate }}
+            </h3>
+        </div>
+    </div>
+   <br>
+    <form [formGroup]="formMagasin"  (ngSubmit)="createMagasin(formMagasin.value)">
+            <div class="form-group row mb-1">
+                <div class="col-md-3 show_port input-group">
+
+                    <mat-form-field class="example-full-width"  formGroupName="entityMagasin">
+                        <mat-select class="form-control" formControlName="id" placeholder="{{ 'PAGES.Gestion.Stock.empalacement.entite' | translate }}">
+                            <mat-option *ngFor="let item of listEntiryMagasin" [value]="item.id">
+                                {{item.libelle}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="numeroMagasin" matInput type="text" class="form-control" name="numeroMagasin"
+                                placeholder="{{ 'PAGES.Gestion.Stock.empalacement.numeroMagasin' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="adresse" matInput type="text" class="form-control" name="adresse"
+                                placeholder="{{ 'PAGES.Gestion.Stock.empalacement.adresse' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="ville" matInput type="text" class="form-control" name="ville"
+                                placeholder="{{ 'PAGES.Gestion.Stock.empalacement.ville' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+
+            </div>
+              
+               
+               
+                <div class="m-1 float-right">
+                    <button _ngcontent-dkp-c41="" type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+                    class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+                   <!--  [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+                    <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+                    {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+                </div>
+                
+        </form>
+  
+
+</div>
+

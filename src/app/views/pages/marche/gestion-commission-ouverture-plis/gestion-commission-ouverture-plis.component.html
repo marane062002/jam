@@ -1,0 +1,412 @@
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+	<!--Begin::Section-->
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile">
+				<div class="
+						kt-portlet__head
+						kt-portlet__head--lg
+						kt-portlet__head--noborder
+						kt-portlet__head--break-sm
+					">
+					<div class="kt-portlet__head-label">
+						<span class="kt-portlet__head-icon">
+							<i class="far fa-newspaper"></i>
+						</span>
+						&nbsp;
+						<h3 class="kt-portlet__head-title">
+							{{ "PAGES.MARCHE.AO.TITRE_INDEX" | translate }}
+						</h3>
+
+					</div>
+					<div class="kt-portlet__head-toolbar">
+						<div class="kt-portlet__head-wrapper">
+							<div class="kt-portlet__head-actions">
+								&nbsp;
+								<button (click)="exportTable()" type="button" class="
+										btn
+										btn-sm
+										btn-clean
+										btn-icon
+										btn-success
+										btn-icon-md
+										btn_table_show
+									" matTooltip="{{
+										'PAGES.GENERAL.DOWNLOAD' | translate
+									}}&nbsp;{{
+										'PAGES.MARCHE.AO.TITRE_INDEX_BC'
+											| translate
+									}}">
+									<i class="flaticon2-download text-success"></i>
+								</button>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+		
+
+				<div class="kt-portlet__body">
+
+
+					<div class="kt-portlet__body kt-portlet__body--fit">
+						<div class="example-header col-md-4">
+							<i class="
+									flaticon-search-magnifier-interface-symbol
+									text-dark
+								"></i>&nbsp;
+							<mat-form-field>
+								<input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{
+										'PAGES.GENERAL.FILTER' | translate
+									}}" />
+							</mat-form-field>
+						</div>
+						
+					</div>
+               
+				</div>
+                <div>
+                    <div>
+                        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                            matSort style="width: 100%;">
+                            <!-- NUM AO -->
+                            <!-- <ng-container matColumnDef="numAo">
+                            <th
+                                mat-header-cell
+                                *matHeaderCellDef
+                                mat-sort-header
+                                class="numAo"
+                            >
+                                {{
+                                    "PAGES.MARCHE.AO.NUM_AO" | translate
+                                }}
+                            </th>
+                            <td
+                                mat-cell
+                                class="numAo"
+                                *matCellDef="let row"
+                            >
+                                {{ row[7] ? row[7] : "-" }}
+                            </td>
+                        </ng-container> -->
+                            <!-- RefAO -->
+
+                            <!-- OBJET -->
+                            <ng-container matColumnDef="objet">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="objet">
+                                    {{
+                                    "PAGES.MARCHE.AO.OBJET" | translate
+                                    }}
+                                </th>
+                                <td mat-cell class="objet" *matCellDef="let row">
+                                    {{
+                                    row.objet
+                                    ? row.objet?.length > 80
+                                    ? (row.objet | slice: 0:80) +
+                                    "..."
+                                    : row.objet
+                                    : "-"
+                                    }}
+                                    <a href="javascript:void(0);" *ngIf="row.objet?.length > 80"
+                                        matTooltip="{{ row.objet }}"><i class="fas fa-info-circle"></i></a>
+                                </td>
+                            </ng-container>
+
+                            <!-- BUDGET ESTIMATIF -->
+                            <ng-container matColumnDef="budgetEstimatif">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="budgetEstimatif">
+                                    {{
+                                    "PAGES.MARCHE.AO.BUDGET_ESTIMATIF"
+                                    | translate
+                                    }}
+                                </th>
+                                <td mat-cell class="budgetEstimatif" *matCellDef="let row">
+                                    {{
+                                    row.budgetEstimatif !== null
+                                    ? (row.budgetEstimatif )
+                                    : 0
+                                    }}
+                                </td>
+                            </ng-container>
+
+                            <!-- STATUT AO -->
+                            <ng-container matColumnDef="statutAo">
+                                <th class="statutAo" mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{
+                                    "PAGES.MARCHE.AO.STATUT" | translate
+                                    }}
+                                </th>
+                                <td class="statutAo" mat-cell *matCellDef="let row">
+                                    {{ row.statutAo?.libelle ? row.statutAo?.libelle : "-" }}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="etatCommentaire">
+                                <th class="etatCommentaire" mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{
+                                    "PAGES.MARCHE.AO.STATUT_COMMENTAIRE" | translate
+                                    }}
+                                </th>
+                                <td class="statutAo" mat-cell *matCellDef="let row">
+                                   
+                                <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" *ngIf="row.etatCommentaire=='VALIDE'"> {{ row.etatCommentaire ? row.etatCommentaire : "-" }}</span>
+                                <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--secondary kt-badge--wide" *ngIf="row.etatCommentaire=='EN_ATTENTE_DE_PRISE_EN_CHARGE_DU_SERVICE_MARCHE'"> {{ row.etatCommentaire ? row.etatCommentaire : "-" }}</span>
+                                <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--warning kt-badge--wide" *ngIf="row.etatCommentaire=='COMMENTAIRE_A_VERIFIER'"> {{ row.etatCommentaire ? row.etatCommentaire : "-" }}</span>
+                                <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide" *ngIf="row.etatCommentaire=='EN_ATTENTE_VALIDATION'"> {{ row.etatCommentaire ? row.etatCommentaire : "-" }}</span>
+                                </td>
+                            </ng-container>
+
+                            <!-- TYPE MARCHE -->
+                            <ng-container matColumnDef="typeMarche">
+                                <th class="typeMarche" mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{
+                                    "PAGES.MARCHE.AO.TYPE_AO"
+                                    | translate
+                                    }}
+                                </th>
+                                <td class="typeMarche" mat-cell *matCellDef="let row">
+                                    {{ row.typeMarche?.libelle ? row.typeMarche?.libelle : "-" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- ****************************** -->
+                            <!-- **** les colonnes cachées **** -->
+
+                            <!-- nature -->
+                            <ng-container matColumnDef="natureAo">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Nature Ao
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.natureAo?.libelle ? row.natureAo?.libelle : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- objetAR -->
+                            <ng-container matColumnDef="objetAR">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Objet (Ar)
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.objetAR ? row.objetAR : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- caution -->
+                            <ng-container matColumnDef="caution">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Caution
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{
+                                    row.caution !== null
+                                    ? (row.caution | macurrency)
+                                    : 0
+                                    }}
+                                </td>
+                            </ng-container>
+
+                            <!-- division -->
+                            <!-- <ng-container matColumnDef="division">
+                        <th hidden mat-header-cell *matHeaderCellDef>
+                            Division</th>
+                        <td hidden mat-cell *matCellDef="let row"> {{row[10]?row[10]:"N/a"}} </td>
+                    </ng-container> -->
+
+                            <!-- dateReception -->
+                            <ng-container matColumnDef="dateReception">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Date de reception
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{
+                                    row.dateReception !== null
+                                    ? (row.dateReception | date: "dd/MM/yyyy")
+                                    : "N/a"
+                                    }}
+                                </td>
+                            </ng-container>
+
+                            <!-- dateOuverturePlis -->
+                            <ng-container matColumnDef="dateOuverturePlis">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Date Ouverture de plis
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{
+                                    row.dateOuverturePlis !== null
+                                    ? (row.dateOuverturePlis | date: "dd/MM/yyyy")
+                                    : "N/a"
+                                    }}
+                                </td>
+                            </ng-container>
+
+                            <!-- heureOuverturePlis -->
+                            <ng-container matColumnDef="heureOuverturePlis">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Heure Ouverture de plis
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{
+                                    row[12] !== null
+                                    ? (row[12] | date: "HH:mm")
+                                    : "N/a"
+                                    }}
+                                </td>
+                            </ng-container>
+
+                            <!-- isValideDg -->
+                            <ng-container matColumnDef="isValideDg">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Validation DG
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.isValideDg ? row.isValideDg : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- isValideTresorerie -->
+                            <ng-container matColumnDef="isValideTresorerie">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Validation Tresorerie
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ rowisValideTresorerie ? rowisValideTresorerie : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- isValideSG -->
+                            <ng-container matColumnDef="isValideSG">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Validation SG
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.isValideSG ? row.isValideSG : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- modePassation -->
+                            <ng-container matColumnDef="modePassation">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Mode de passation
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.modePassation ? row.modePassation : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- typeAO -->
+                            <ng-container matColumnDef="typeAO">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Type AO
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.typeAO ? row.typeAO : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- naturePrix -->
+                            <ng-container matColumnDef="naturePrix">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Nature de prix
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.naturePrix ? row.naturePrix : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- sousTypePrestation -->
+                            <ng-container matColumnDef="sousTypePrestation">
+                                <th hidden mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    Sous type prestation
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.sousTypePrestation?.libelle ? row.sousTypePrestation?.libelle : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- typePrestation -->
+                            <ng-container matColumnDef="typePrestation">
+                                <th hidden mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    Type prestation
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.sousTypePrestation?.typePrestation?.libelle ? row.sousTypePrestation?.typePrestation?.libelle : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- motifAnnulation -->
+                            <ng-container matColumnDef="motifAnnulation">
+                                <th hidden mat-header-cell *matHeaderCellDef>
+                                    Motif d'annulation
+                                </th>
+                                <td hidden mat-cell *matCellDef="let row">
+                                    {{ row.motifAnnulation ? row.motifAnnulation : "N/a" }}
+                                </td>
+                            </ng-container>
+
+                            <!-- **** les colonnes cachées **** -->
+                            <!-- ****************************** -->
+
+                            <ng-container matColumnDef="actions">
+                                <th class="actions" mat-header-cell *matHeaderCellDef>{{
+                                    "PAGES.PROGRAMME.ACTIONS" | translate }}</th>
+                                <td class="actions" mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" (click)="showao(row.id)" class="
+                                        btn
+                                        btn-sm
+                                        btn-clean
+                                        btn-icon 
+                                        btn-success
+                                        btn-icon-md
+                                        btn_table_show
+                                    " matTooltip="{{
+                                        'PAGES.GENERAL.DETAILS'
+                                            | translate
+                                    }}"><i class="la la-search-plus"></i></a>
+
+
+                                    <a href="javascript:;" (click)="showRefAndDate(row.id)" class="
+                                    btn
+                                    btn-sm
+                                    btn-clean
+                                    btn-icon 
+                                    btn-success
+                                    btn-icon-md
+                                    btn_table_show
+                                " matTooltip="{{
+                                    'PAGES.GENERAL.DETAILS'
+                                        | translate
+                                }}"><i class="icon fa fa-eye"></i></a>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="
+                                let row;
+                                columns: displayedColumns
+                            "></tr>
+                        </table>
+                    </div>
+                
+                    <div *ngIf="sizeData2 == 0 && isLoading == false" style="
+                            display: flex;
+                            justify-content: center;
+                            padding: 2%;
+                            color: orangered;
+                        ">
+                        {{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+                    </div>
+                    <!-- <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                    </mat-progress-spinner>
+                </mat-card> -->
+
+                    <mat-paginator [length]="sizeData2" [pageSize]="5" [pageIndex]="0"
+                        [pageSizeOptions]="[5, 10, 50]"
+                        showFirstLastButtons></mat-paginator>
+                    <hr />
+                </div>
+			</div>
+		</div>
+	</div>
+</div>

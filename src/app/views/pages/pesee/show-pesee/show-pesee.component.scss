@@ -1,0 +1,47 @@
+.dashed-line {
+  border: 2px dashed #000;
+  /* Adjust the width and color as needed */
+  height: 0;
+  /* Adjust the height of the element */
+  text-align: center;
+  margin: 20px auto;
+  border-collapse: collapse,
+}
+
+/* Dotted line style */
+.dotted-line {
+  border: 2px dotted #000;
+  /* Adjust the width and color as needed */
+  width: 300px;
+  /* Adjust the width of the element */
+  height: 0;
+  /* Adjust the height of the element */
+  margin: 10px 0;
+  /* Adjust margin as needed */
+}
+
+.backs {
+  max-width: 110px;
+
+}
+
+.backs1 {
+  max-width: 110px;
+  background-color: rgba(202, 200, 200, 0.805);
+}
+
+.backs2 {
+  background-color: rgba(202, 200, 200, 0.805);
+}
+
+.backs3 {
+  background-color: rgba(11, 149, 235, 0.805);
+}
+
+.backs4 {
+  background-color: rgba(11, 149, 235, 0.805);
+}
+
+.backs5 {
+  background-color: rgba(66, 226, 141, 0.805);
+}

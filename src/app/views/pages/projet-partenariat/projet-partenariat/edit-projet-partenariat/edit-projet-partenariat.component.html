@@ -1,0 +1,243 @@
+<form novalidate [formGroup]="editForm">
+
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<span class="kt-portlet__head-icon">
+					<i class="fas fa-address-card kt-font-inverse-brand"></i>
+				</span>
+				<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ 'PAGES.PROJET_PART.TITRE_NEW' | translate }}
+				</h3>
+			</div>
+		</div>
+		<div class="kt-portlet__body">
+			<!-- 1 ============== nomProjet | dateDemarrage========================= -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="nomProjet"
+								placeholder="{{ 'PAGES.PROJET_PART.NOM_PROJ' | translate }} :" value="">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker3"
+									placeholder="{{ 'PAGES.PROJET_PART.DATE_DEMMARAGE' | translate }} :"
+									formControlName="dateDemarrage">
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker3">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker3></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 3 =================dateFin | budgetAlloue====================== -->
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker1"
+									placeholder="{{ 'PAGES.PROJET_PART.DATE_FIN' | translate }} :"
+									formControlName="dateFin">
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+									<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+									</mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="budgetAlloue"
+								placeholder="{{ 'PAGES.PROJET_PART.BUDGET_ALLOUE' | translate }} :" value="">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+
+			<!-- 5 =================== idCommune | typeProjetPartenariat==================== -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="idCommune"
+								placeholder="{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }} :">
+								<mat-option [value]=null>
+									---{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }}---
+								</mat-option>
+								<mat-option *ngFor="let arr of arrondissements" [value]="arr.id">
+									{{arr.libelle}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group" formGroupName="typeProjetPartenariat">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control" formControlName="id"
+								placeholder="{{ 'PAGES.PROJET_PART.TYP_PROJ' | translate }} :">
+								<mat-option [value]=null>
+									---{{ 'PAGES.PROJET_PART.TYP_PROJ' | translate }}---</mat-option>
+								<mat-option *ngFor="let type of types" [value]="type.id">
+									{{type.libelle}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="populationImpactee"
+								placeholder="{{ 'PAGES.PROJET_PART.POPULATION' | translate }} :" value="">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- 3 =================== finaliteProjet | populationImpactee | objet==================== -->
+			<div class="row">
+
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control"
+								formControlName="finaliteProjet" name="finaliteProjet" matInput
+								placeholder="{{ 'PAGES.PROJET_PART.FINALITE_PROJET' | translate }} :"></textarea>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<mat-form-field hintLabel="{{ 'PAGES.GENERAL.COMMENTAIRE' | translate }}" class="form-control"
+							class="example-full-width">
+							<textarea rows="4" #input maxlength="255" class="form-control" formControlName="objet"
+								name="objet" matInput
+								placeholder="{{ 'PAGES.PROJET_PART.OBJET' | translate }} :"></textarea>
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+							<mat-hint align="end">{{input.value?.length || 0}}/255</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</form>
+<!-- end:: section form -->
+
+<!-- begin:: Content -->
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<!-- start section::edit file form -->
+				<div class="row">
+					<div class="col-md-6 show_port input-group">
+						<form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm"
+							style="display: -webkit-inline-box;margin-inline-start: 98px;">
+							<label class="input-group-btn">
+								<span class="btn btn-info">
+									{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+										(change)="fileChange($event)" formControlName="_file" id="customFile"
+										style="display: none;" multiple>
+								</span>
+							</label>
+							<input type="text" class="form-control" readonly>
+						</form>
+					</div>
+					<!-- <button type="button"
+									class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="flaticon-refresh"></i></button> -->
+
+				</div>
+				<!-- end section::edit file form -->
+				<hr>
+				<table *ngIf="files" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+							<td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+							</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+							<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+							<td class="title_td"></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of files | async">
+							<td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}"
+									matTooltip="{{FileName(item.name)}}"></td>
+							<td> {{FileName(item.name)  | slice:0:20}}</td>
+							<td>{{item.dateFile  | date:'dd/MM/yyyy HH:mm'}}</td>
+							<td>{{item.fSize/1000}} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco,item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+								<button type="button" (click)="onDeleteFile(item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="icon la la-trash"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div *ngIf="start">
+					<p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+					<mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			[disabled]="editForm.invalid" (click)="onSubmit()"
+			[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

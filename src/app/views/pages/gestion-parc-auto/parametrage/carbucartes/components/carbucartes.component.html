@@ -1,0 +1,275 @@
+<div class="main-content container">
+    <div class="breadcrumb">
+        <h1 class="mr-2">Carte Carbucartes</h1>
+    </div>
+    <!-- card of depot -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card text-left">
+                <div class="card-body">
+                    <div class="tab-content" id="myIconTabContent">
+                        <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                            <div class="header">
+                                <h5 class="title">La zone de recherche.</h5>
+                            </div>
+                            <div class="body">
+                                <div class="form-group row justify-content-center mt-4">
+
+                                    <div class="form-group row mb-1">
+                                        <div class="col-md-4 form-group ">
+                                            <label>N° Carbucarte : :</label>
+                                            <input class="form-control" type="text" placeholder="Référence" name="reference" id="field_reference" data-cy="reference" [(ngModel)]="carteCarbucarteCriteria.reference">
+                                        </div>
+
+                                        <div class="col-md-4 form-group ">
+                                            <label>Code PIN :</label>
+                                            <input class="form-control" type="text" placeholder="Code PIN" name="pin" id="field_pin" data-cy="pin" [(ngModel)]="carteCarbucarteCriteria.pin">
+                                        </div>
+
+                                        <div class="col-md-4 form-group ">
+                                            <label>Année :</label>
+                                            <input class="form-control" type="text" placeholder="Année" name="annee" id="field_annee" data-cy="annee" [(ngModel)]="carteCarbucarteCriteria.annee">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="footer" style="padding-top: 2px !important;">
+                                <div class="row">
+                                    <div class="col-md-10 col-lg-10 form-group"></div>
+                                    <div class="col-md-2 col-lg-2 form-group">
+                                        <label>&nbsp;</label>
+                                        <button class="btn btn-primary font-weight-bold btn-block" (click)="searchBy()"><i
+                        class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <data-table [currentPage]="ngbPaginationPage" [totalPages]="itemsPerPage" [datasource]="carteCarbucartes" [headers]="headerData" [actions]="actions" [titleTable]="' Liste des Cartes Carbucarte'" [titleButton]="' Ajouter Carte Carbucarte'" (page)="pageCurrentChange($event)"
+                            (size)="sizeCurrentChange($event)" (ajouterElement)="modalAjouterCarteCarbucarte(ajouterCarteCarbucarte)" (detail)="modalDetailCarteCarbucarte(detailCarteCarbucarte,$event)" (selectUpdateElement)="modalModifierCarteCarbucarte(modifierCarteCarbucarte,$event)"
+                            (deleteElement)="modalSupprimerCarteCarbucarte(supprimerCarteCarbucarte,$event)">
+                        </data-table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #supprimerCarteCarbucarte let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Confirmation de suppression</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span
+          aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+
+            <p id="pa-delete-CarteCarbucarte-heading">
+                Êtes-vous certain de vouloir supprimer la carte Carbucarte {{carteCarbucarte.reference}} ?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <button class="btn btn-primary ml-2" type="button" (click)="supprimerInfoCarteCarbucarte()"><i
+          class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Supprimer</button>
+        </div>
+    </ng-template>
+
+    <ng-template #modifierCarteCarbucarte let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Modification d'une Carte Carbucarte</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span
+          aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <form name="editForm" role="form" novalidate [formGroup]="editForm">
+                <div class="form-group row mb-1">
+
+                    <div class="col-md-4 form-group ">
+                        <label>Référence :</label>
+                        <input class="form-control" type="text" placeholder="Référence" name="reference" id="field_reference" data-cy="reference" formControlName="reference">
+                        <div *ngIf="editForm.get('reference')!.invalid && (editForm.get('reference')!.dirty || editForm.get('reference')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('reference')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Montant initial :</label>
+                        <input class="form-control" type="text" placeholder="Montant initial" name="montant" id="field_montant" data-cy="montant" formControlName="montant">
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Montant final :</label>
+                        <input class="form-control" type="text" placeholder="Montant final">
+                    </div>
+
+                    <!-- 
+                    <div class="col-md-4 form-group ">
+                        <label>Véhicule :</label>
+                        <input class="form-control" type="text" placeholder="Véhicule">
+                    </div>
+                    -->
+
+                    <div class="col-md-4 form-group ">
+                        <label>Code PIN :</label>
+                        <input class="form-control" type="text" placeholder="Code PIN" name="pin" id="field_pin" data-cy="pin" formControlName="pin">
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Année :</label>
+                        <input class="form-control" type="number" placeholder="Année" name="annee" id="field_annee" data-cy="annee" formControlName="annee">
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Date d'acquisition :</label>
+                        <input class="form-control" type="date" placeholder="dd-mm-yyyy">
+                    </div>
+
+
+                    <div class="col-md-4 form-group ">
+                        <label>Solde de départ :</label>
+                        <input class="form-control" type="number" placeholder="Solde de départ :" name="soldedepart" id="field_soldedepart" data-cy="soldedepart" formControlName="soldedepart">
+                        <div *ngIf="editForm.get('soldedepart')!.invalid && (editForm.get('soldedepart')!.dirty || editForm.get('soldedepart')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldedepart')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldedepart')?.errors?.min">
+                                Ce champ doit être au moins égal à 0.
+                            </p>
+                            <p class="alert alert-danger" [hidden]="!editForm.get('soldedepart')?.errors?.number">
+                                Ce champ doit être un nombre.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Solde actuel :</label>
+                        <input class="form-control" type="number" placeholder="Solde actuel" name="soldeactuel" id="field_soldeactuel" data-cy="soldeactuel" formControlName="soldeactuel">
+                        <div *ngIf="editForm.get('soldeactuel')!.invalid && (editForm.get('soldeactuel')!.dirty || editForm.get('soldeactuel')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldeactuel')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldeactuel')?.errors?.min">
+                                Ce champ doit être au moins égal à 0.
+                            </p>
+                            <p class="alert alert-danger" [hidden]="!editForm.get('soldeactuel')?.errors?.number">
+                                Ce champ doit être un nombre.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button> -->
+            <button class="btn btn-primary ml-2" type="button" (click)="modifierInfoCarteCarbucarte()"><i
+          class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+        </div>
+    </ng-template>
+
+    <!--  Modal ajouter -->
+    <ng-template #ajouterCarteCarbucarte let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Nouveau Carte Jawaz</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span
+          aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <form name="editForm" role="form" novalidate [formGroup]="editForm">
+                <div class="form-group row mb-1">
+
+
+
+                    <div class="col-md-4 form-group ">
+                        <label>Référence :</label>
+                        <input class="form-control" type="text" placeholder="Référence" name="reference" id="field_reference" data-cy="reference" formControlName="reference">
+                        <div *ngIf="editForm.get('reference')!.invalid && (editForm.get('reference')!.dirty || editForm.get('reference')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('reference')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Solde de départ :</label>
+                        <input class="form-control" type="number" placeholder="Solde de départ :" name="soldedepart" id="field_soldedepart" data-cy="soldedepart" formControlName="soldedepart">
+                        <div *ngIf="editForm.get('soldedepart')!.invalid && (editForm.get('soldedepart')!.dirty || editForm.get('soldedepart')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldedepart')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldedepart')?.errors?.min">
+                                Ce champ doit être au moins égal à 0.
+                            </p>
+                            <p class="alert alert-danger" [hidden]="!editForm.get('soldedepart')?.errors?.number">
+                                Ce champ doit être un nombre.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Solde actuel :</label>
+                        <input class="form-control" type="number" placeholder="Solde actuel" name="soldeactuel" id="field_soldeactuel" data-cy="soldeactuel" formControlName="soldeactuel">
+                        <div *ngIf="editForm.get('soldeactuel')!.invalid && (editForm.get('soldeactuel')!.dirty || editForm.get('soldeactuel')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldeactuel')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                            <p class="alert alert-danger" *ngIf="editForm.get('soldeactuel')?.errors?.min">
+                                Ce champ doit être au moins égal à 0.
+                            </p>
+                            <p class="alert alert-danger" [hidden]="!editForm.get('soldeactuel')?.errors?.number">
+                                Ce champ doit être un nombre.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button> -->
+            <button class="btn btn-primary ml-2" type="button" (click)="ajouterInfoCarteCarbucarte()"><i
+          class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+        </div>
+    </ng-template>
+    <!-- modal detail-->
+    <ng-template #detailCarteCarbucarte let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">détail d'une Carte Jawaz</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span
+          aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+
+                <div class="form-group row mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Référence
+                :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">{{carteCarbucarte.reference}}</label>
+
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Solde actuel :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">{{carteCarbucarte.soldeactuel}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row mb-0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13"> Solde de départ :</label>
+                            <label class="col-sm-3 col-form-label f-s-13">{{carteCarbucarte.soldeactuel}}</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+        </div>
+    </ng-template>
+</div>

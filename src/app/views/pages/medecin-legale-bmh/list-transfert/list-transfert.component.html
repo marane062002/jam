@@ -1,0 +1,129 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Liste des Transferts :</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+                    
+					<a
+						href="javascript:; "
+                        (click)="add()"
+						class="btn btn-outline-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table
+		ID="exportData"
+		mat-table
+		[dataSource]="transfert"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="ID">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				{{row.id}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="PointDepart">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Point de Depart
+			</th>
+			<td mat-cell *matCellDef="let row" class="pointDepart">
+				{{row.pointDepart}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="PointArrive">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Point d'Arriver</th>
+			<td mat-cell *matCellDef="let row" class="pointArrive">
+				{{row.pointArrive}}
+			</td>
+		</ng-container>
+
+
+        <ng-container matColumnDef="NumBulletin">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>N Bullettin</th>
+			<td mat-cell *matCellDef="let row" class="numBulletin">
+				{{row.numBulletin}}
+			</td>
+		</ng-container>
+
+        <ng-container matColumnDef="LieuInhumation">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Lieu d'inhumation</th>
+			<td mat-cell *matCellDef="let row" class="lieuInhumation">
+				{{row.lieuInhumation}}
+			</td>
+		</ng-container>
+
+        <ng-container matColumnDef="remarque">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Remarque</th>
+			<td mat-cell *matCellDef="let row" class="remarque">
+				{{row.remarque}}
+			</td>
+		</ng-container>
+
+        <ng-container matColumnDef="vehicule">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Vehicule de transport</th>
+			<td mat-cell *matCellDef="let row" class="vehicule">
+				{{
+					row.vehicule
+                    ?row.vehicule.libelle
+                    :"-"
+				}}
+			</td>
+		</ng-container>
+
+        <ng-container matColumnDef="conducteur">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Conducteur</th>
+			<td mat-cell *matCellDef="let row" class="conducteur">
+				{{
+					row.conducteur
+                    ?row.conducteur.nom
+                    :"-"
+				}}
+			</td>
+		</ng-container>
+
+
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+                <!-- (click)="ModifierAssociation()" -->
+				<button
+                (click)="Details(row.id)"
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+				>
+					<i class="icon la la-search-plus"></i>
+				</button>
+				<button
+                (click)="Modifier(row.id)"
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+				>
+					<i class="icon la la-edit"></i>
+				</button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	
+	<hr />
+</div>

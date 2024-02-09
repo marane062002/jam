@@ -1,0 +1,197 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="kt-portlet">
+        <div class="kt-portlet__head">
+          <div class="kt-portlet__head-label">
+            <h3 class="">
+              إضافة ممتلك للجماعة
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- begin:: Content section 2 -->
+<div class="kt-container">
+  <div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+      <div class="kt-portlet portlet-3">
+        <div class="kt-portlet__head kt-bg-portlet-3">
+          <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+              <i class="fas fa-address-card kt-font-inverse-brand"></i>
+            </span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+              معلومات ممتلك الجماعة 
+            </h3>
+          </div>
+        </div>
+        <div class="kt-portlet__body">
+          <form class="kt-form" autocomplete="off" #form="ngForm" (submit)="onSubmitForm(form)">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="text" class="form-control" name="prenompp" placeholder="الاسم :" [(ngModel)]="formData.objetDemandeAutorisation"  required>
+                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-md-6">
+
+                  <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <mat-select  name ="canalReponseRec"  [(ngModel)]="formData.typebiendemandeReservation.id" matInput class="form-control" placeholder="نوع الممتلك ">
+                           
+                              <mat-option *ngFor="let item of typeAll" value="{{item.id}}">{{item.libelle}}</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+            </div>
+           <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="text" class="form-control"  [(ngModel)]="formData.adresse" name="cinpp"   placeholder="العنوان  :"  required>
+                    <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+             <!---- <div class="col-md-4">
+                  <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <mat-select  name ="canalReponseRec" [(ngModel)]="formData.arrondissement" matInput class="form-control" placeholder="الدائرة  ">
+                              <mat-option *ngFor="let item of allcanalReponse" [value]="item.id">{{item.libelle}}</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <mat-select  name ="canalReponseRec"  [(ngModel)]="formData.quartier" matInput class="form-control" placeholder="الحي">
+                              <mat-option *ngFor="let item of allcanalReponse" [value]="item.id">{{item.libelle}}</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div>
+                </div>-->
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <button class="btn btn-outline-brand kt-margin-b-20" type="button" (click)="addItem()" style="margin-right: 5px;">إضافة فضاء</button>
+                  <form [formGroup]="myForm" >
+                      <div formArrayName="arr" *ngFor="let a of myForm.get('arr')['controls']; let i = index">
+                        <div [formGroupName]="i" style="margin-bottom: 10px;">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <div class="row">
+                                      <div class="my-auto col-md-2">
+                                          <label for="name">اسم الفضاء:</label>
+                                      </div>
+                                      <div class="my-auto col-md-10">
+                                  <input MatInput type="text" class="form-control" name="name" formControlName="espace">
+                              </div>
+                          </div>
+                              </div>
+                              <div class="col-md-5">
+                                <div class="row">
+                                    <div class="my-auto col-md-2">
+                                        <label for="name"> القيمة:</label>
+                                    </div>
+                                    <div class="my-auto col-md-10">
+                                <input MatInput type="text" class="form-control" name="price" formControlName="prix">
+                            </div>
+                        </div>
+                            </div>
+                              <div class="my-auto col-md-2">
+                                  <button class="btn btn-danger btn-icon" (click)="removeGroup(i)"><i class="fas fa-window-close"></i> 
+                                      </button>
+                              </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <br>
+                      
+                                        </form>
+                 <!---<form class="example-form" [formGroup]="myForm">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <button class="btn btn-outline-brand" (click)="addGroup()"><i class="fas fa-user-plus"></i> إضافة مرسل
+                                  آخر</button>
+                              <div formArrayName="times"
+                                  *ngFor="let time of myForm.controls.times?.value; let i = index">
+                                  <div [formGroupName]="i">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div class="form-group">
+                                                  <textarea class="form-control"  placeholder="Username" formControlName="espace"></textarea>
+                                                 
+                                              </div>
+                                          </div>
+                                        
+                                          
+                                       
+                                          <button class="btn btn-danger" (click)="removeGroup(i)"><i class="fas fa-user-times"></i> حذف
+                                              مرسل</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </form>-->
+                <!--- <form [formGroup]="form">
+ 
+                        <button (click)="addCreds()">Add</button>
+                
+                        <div formArrayName="credentials" *ngFor="let creds of form.controls.credentials?.value; let i = index">
+                          <ng-container [formGroupName]="i">
+                            <input placeholder="Username" formControlName="espace">
+                           
+                          </ng-container>
+                        </div>
+                
+                      
+                    </form>-->
+               <!----  <form class="example-form" [formGroup]="form">
+                  <button class="btn btn-outline-brand" (click)="addCreds()"><i class="fas fa-user-plus"></i> إضافة مرسل
+                      آخر</button> 
+                      <div formArrayName="credentials" *ngFor="let creds of form.controls.credentials?.value; let i = index">
+                          <ng-container [formGroupName]="i">
+                            <input placeholder="Username" formControlName="espace">
+                            <mat-form-field class="example-full-width">
+                              <input matInput type="email" class="form-control" placeholder="البريد الإلكتروني :" [formControl]="email" name="emailpp"  required>
+                              <mat-icon matSuffix><i class="fas fa-at"></i></mat-icon>
+                            </mat-form-field>
+                          </ng-container>
+                        </div>    
+                      </form>-->
+                </div>
+              </div>
+            </div>
+            <div class="kt-portlet__foot">
+              <div class="kt-form__actions">
+                <button type="submit" class="btn btn-success btn-md btn-tall btn-wide">
+                  حفظ <i class="far fa-save"></i>
+                </button>
+             <!---   <button type="submit" class="btn btn-secondary btn-md btn-tall btn-wide">
+                  إلغاء <i class="fas fa-times"></i>
+                </button>
+                <button type="submit" class="btn btn-brand btn-md btn-tall btn-wide">
+                  الرجوع <i class="fas fa-undo-alt"></i>
+                </button>-->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  

@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "D:\\projet CM\\cm-front"
+		},
+		{
+			"path": "D:\\projet CM util\\CUM\\Commune Urbaine de Marrakech"
+		},
+		{
+			"path": "D:\\projet CM\\cm-web"
+		},
+		{
+			"path": "D:\\projet CM util\\angular-auth-ngrx"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}

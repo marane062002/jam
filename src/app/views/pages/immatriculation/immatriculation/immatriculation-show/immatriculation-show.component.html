@@ -1,0 +1,142 @@
+<div class="form-group">
+
+    <!-- begin:: Content -->
+    <div *ngIf="immatriculation">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="">
+                                {{ 'PAGES.GENERAL.IMMATRICULATION_FICHE' | translate }}
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-actions">
+                                <a *ngxPermissionsOnly="['canCreateImmatriculation']" routerLink="/immatriculation/immatriculation-new" class="btn btn-outline-success btn-bold btn-sm">
+                                    <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                                </a>
+                                <a *ngxPermissionsOnly="['canUpdateImmatriculation']" (click)="update(immatriculation?.id)" class="btn btn-warning btn-sm btn-bold">
+                                    <i class="fas fa-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                                </a>
+                                <a *ngxPermissionsOnly="['canDeleteImmatriculation']" (click)="delete(immatriculation?.id)" class="btn btn-danger btn-sm btn-bold">
+                                    <i class="fas fa-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- begin:: Content section  -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.IMMATRICULATION_ID' | translate }} {{immatriculation.id}}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+
+                    <div class="row">
+
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th># :</th>
+                                        <td>{{immatriculation.id}}</td>
+                                      <!--   <th>{{ 'PAGES.GENERAL.NUM_DOSSIER_INT' | translate }} :</th>
+                                        <td>{{immatriculation.numDossierInterne}}</td> -->
+                                        <th>{{ 'PAGES.GENERAL.NUM_DOSSIER_URB' | translate }} :</th>
+                                        <td>{{ immatriculation.numDossierUrbanisme}}</td>
+                                    </tr>
+                                    <tr>
+
+                                        <th> {{ 'PAGES.GENERAL.NUM_DOSSIER_CF' | translate }} :</th>
+                                        <td>{{immatriculation.numDossierCf}}</td>
+                                        <th>{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :</th>
+                                        <td>{{immatriculation.superficier}}</td>
+                                    </tr>
+                                    <tr>
+
+
+                                        <th>{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :</th>
+                                        <td>{{immatriculation.localisation}}</td>
+                                        <th>{{ 'PAGES.GENERAL.TYPE' | translate }} :</th>
+                                        <td>{{immatriculation.type}}</td>
+                                    </tr>
+                                    <tr>
+
+                                        <th>{{ 'PAGES.GENERAL.ETAT_IMMATRICULATION' | translate }} :</th>
+                                        <td>{{immatriculation.etat?.libelle}}</td>
+
+
+                                        <th>{{ 'PAGES.GENERAL.REMARQUE' | translate }} :</th>
+                                        <td colspan="3">{{immatriculation.remarque}}</td>
+                                    </tr>
+                                 
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+
+                    <mat-table [dataSource]="dataSource1" matSort>
+                        <!-- type Column -->
+                        <ng-container matColumnDef="type">
+                            <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.MARCHE.AO.PJ.TYPE' | translate }}</mat-header-cell>
+                            <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+                        </ng-container>
+                        <!-- file name Column -->
+                        <ng-container matColumnDef="nomDoc">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="dow">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+                            <mat-cell *matCellDef="let row"> 
+                                <button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]= "!row.idAlfresco"
+                                [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+                                <i class="flaticon-download-1"></i></button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                        </mat-row>
+                    </mat-table>
+                  
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                        <button *ngxPermissionsOnly="['accessToIndexImmatriculation']" routerLink="/immatriculation/immatriculation-index" class="btn btn-label-dark"><i
+                                        class="flaticon2-list-2"></i>  {{ 'MENU.LISTEIMMATRICULATIONS' | translate }}</button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>

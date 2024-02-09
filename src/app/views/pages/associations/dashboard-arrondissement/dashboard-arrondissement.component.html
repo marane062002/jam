@@ -1,0 +1,232 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-search"></i>
+			</span>
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "MENU.STATS.CONTROL.SEARCHE" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<form novalidate [formGroup]="searchForm">
+			<div class="row">
+				<!-- A -->
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker1" placeholder="{{ 'PAGES.ASSOCIATION.DATE_START' | translate }} :" formControlName="dateDebut" />
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+									<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i> </mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker1></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+
+				<!-- A -->
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="input-group date">
+							<mat-form-field class="example-full-width">
+								<input matInput class="form-control" [matDatepicker]="picker2" [min]="searchForm.controls.dateDebut.value" placeholder="{{ 'PAGES.ASSOCIATION.DATE_END' | translate }} :" formControlName="dateFin" />
+								<mat-datepicker-toggle matSuffix matSuffix [for]="picker2">
+									<mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i> </mat-icon>
+								</mat-datepicker-toggle>
+								<mat-datepicker touchUi="true" #picker2></mat-datepicker>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select class="form-control-lg" placeholder="{{ 'PAGES.SUBVENTION.TYPE_SUBV' | translate }} :" #selectedValueDemandeur>
+								<mat-option [value]="0"> {{ "PAGES.ASSOCIATION.AIDE_FINANCE" | translate }} </mat-option>
+								<mat-option [value]="1">{{ "PAGES.ASSOCIATION.Support_logistique" | translate }}</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<!-- <div *ngIf="formDemanderessSubmitted && fd.typePerAdversaire.errors">
+						<div class="invalid-input" *ngIf="fd.typePerAdversaire.errors.required">{{
+							"PAGES.AFFAIRE.TYPE_PERSONNE_OBLIGATOIRE" | translate }}</div>
+					</div> -->
+					</div>
+				</div>
+
+				<!-- du -->
+				<!-- du -->
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.ACQUISITION.RAYONNEMENT" | translate }} : </mat-label>
+							<mat-select multiple class="form-control" formControlName="activite_de_rayonnement">
+								<mat-option value="محلي">{{ "PAGES.SUBVENTION.D" | translate }}</mat-option>
+								<mat-option value="جهوي">{{ "PAGES.SUBVENTION.E" | translate }}</mat-option>
+								<mat-option value="وطني">{{ "PAGES.SUBVENTION.F" | translate }} </mat-option>
+								<mat-option value="دولي">{{ "PAGES.SUBVENTION.G" | translate }} </mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<mat-select multiple class="form-control" formControlName="arrondissement" placeholder="{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }} :">
+								<mat-option [value]="null"> ---{{ "PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT" | translate }}--- </mat-option>
+								<mat-option *ngFor="let arr of listArrondissements" [value]="arr.libelle">
+									{{ arr.libelle }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="row">
+				<div class="col-md-6 form-group">
+					<ng-multiselect-dropdown placeholder="{{ 'PAGES.ACQUISITION.RAYONNEMENT' | translate }} " [settings]="dropdownSettings" [data]="dropdownList" name="directions2" [(ngModel)]="directions2"> </ng-multiselect-dropdown>
+				</div>
+				<div class="col-md-6 form-group">
+					<ng-multiselect-dropdown formControlName="arrondissement" placeholder="{{ 'PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT' | translate }} " [settings]="dropdownDirtionSetting" [data]="listArrondissements" (onSelect)="onItemSelectDirection($event)" (onSelectAll)="onSelectAllDirection($event)" name="directions" [(ngModel)]="directions"> </ng-multiselect-dropdown>
+				</div>
+			</div> -->
+
+			<!--==========================================================================================================-->
+
+			<!--==========================================================================================================-->
+		</form>
+		<div class="row">
+			<button *ngIf="selectedValueDemandeur.value == 1" (click)="onSubmit3()" class="btn btn-dark"><i class="flaticon-search-1"></i>{{ "PAGES.GENERAL.FILTER" | translate }}</button>
+			<button *ngIf="selectedValueDemandeur.value == 0" (click)="onSubmit()" class="btn btn-dark"><i class="flaticon-search-1"></i>{{ "PAGES.GENERAL.FILTER" | translate }}</button>
+		</div>
+	</div>
+</div>
+<!-- end::row-content-top -->
+<!-- start::row-content -->
+<div class="row">
+	<!-- start::dataTable -->
+	<div class="col-lg-12">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-2">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-tabs"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.ASSOCIATION.TITRE_INDEX" | translate }}
+					</h3>
+				</div>
+				<div class="kt-portlet__head-toolbar">
+					<div class="kt-portlet__head-wrapper">
+						<div class="kt-portlet__head-actions">
+							&nbsp;
+							<a href="javascript:; " (click)="refresh()" class="btn btn-warning">
+								<i class="flaticon-refresh"></i>
+								{{ "MENU.STATS.CONTROL.REFRESH" | translate }}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<div class="kt-portlet">
+							<mat-table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+								<!-- NATURE_ACTIVITE Column -->
+								<ng-container matColumnDef="natureSubvention">
+									<mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+										{{ "PAGES.LOGISTIQUE.NATURE_ACTIVITE" | translate }}
+									</mat-header-cell>
+									<mat-cell *matCellDef="let row" class="mat-column"> {{ row.natureActivite }}</mat-cell>
+								</ng-container>
+								<!-- NATURE_ACTIVITE Column -->
+								<!-- <ng-container matColumnDef="natureActivite">
+									<mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+										{{ "PAGES.LOGISTIQUE.NATURE_ACTIVITE" | translate }}
+									</mat-header-cell>
+									<mat-cell *matCellDef="let row" class="mat-column"> {{ row.natureActivite }}</mat-cell>
+								</ng-container> -->
+
+								<!-- nbAssociation Column -->
+								<ng-container matColumnDef="nbAssociation">
+									<mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+										{{ "PAGES.SUBVENTION.NOM_ASSOCIATION" | translate }}
+									</mat-header-cell>
+									<mat-cell *matCellDef="let row" class="mat-column">{{ row.nomAssociation }} </mat-cell>
+								</ng-container>
+
+								<ng-container matColumnDef="activite_de_rayonnement">
+									<mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+										{{ "PAGES.ACQUISITION.RAYONNEMENT" | translate }}
+									</mat-header-cell>
+									<mat-cell *matCellDef="let row" class="mat-column"> {{ row.activite_de_rayonnement }} </mat-cell>
+								</ng-container>
+
+								<ng-container matColumnDef="arrondissement">
+									<mat-header-cell *matHeaderCellDef mat-sort-header class="mat-column">
+										{{ "PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT" | translate }}
+									</mat-header-cell>
+									<mat-cell *matCellDef="let row" class="mat-column"> {{ row.arrondissement }} </mat-cell>
+								</ng-container>
+
+								<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+								<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+							</mat-table>
+							<div *ngIf="sizeData == 0 && isLoading == false" style="display: flex; justify-content: center; padding: 2%; color: orangered">
+								{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+							</div>
+							<!-- <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+								<mat-progress-spinner color="primary" mode="indeterminate" diameter="50"> </mat-progress-spinner>
+							</mat-card> -->
+							<mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+							<hr />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end::dataTable -->
+</div>
+
+<div class="row">
+	<!-- start::dataTable -->
+	<!-- <div class="col-lg-6">
+		<div class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-2">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-tabs"></i>
+					</span>
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.ASSOCIATION.TITRE_INDEX" | translate }}
+					</h3>
+				</div>
+				<div class="kt-portlet__head-toolbar">
+					<div class="kt-portlet__head-wrapper"></div>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<mat-select class="form-control" formControlName="type" placeholder="{{ 'MENU.STATS.ass' | translate }} :">
+									<mat-option *ngFor="let ass of listAssocaition" [value]="ass.id" (onSelectionChange)="selectAssoication($event)"> {{ ass.nom }} </mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<!-- end::dataTable -->
+</div>
+<!-- end:: row-content -->

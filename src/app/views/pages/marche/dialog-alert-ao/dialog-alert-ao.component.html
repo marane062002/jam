@@ -1,0 +1,49 @@
+<div class="example-container mat-elevation-z8">
+    <table id="exportData"  mat-table   [dataSource]="dataSource"  class="mat-elevation-z8" matSort >
+        <!-- NUM AO -->
+        <ng-container matColumnDef="numAo">
+            <th  mat-header-cell *matHeaderCellDef t-sort-header class="numAo"  >
+                {{ "PAGES.MARCHE.AO.NUM_AO" | translate}}
+            </th>
+            <td mat-cell class="numAo"  *matCellDef="let row"  >    {{ row.numAo}}</td>
+        </ng-container>
+
+        <!-- OBJET -->
+        <ng-container matColumnDef="objet">
+            <th   mat-header-cell   *matHeaderCellDef     mat-sort-headerclass="objet" >
+                {{ "PAGES.MARCHE.AO.OBJET" | translate   }}
+            </th>
+            <td mat-cell  class="objet" *matCellDef="let row" >   {{ row.objet}}     </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <th class="actions"   mat-header-cell   *matHeaderCellDef  > actions </th>
+            <td class="actions"  mat-cell   *matCellDef="let row" style=" display: flex;" >
+               <a href="javascript:;"  *ngxPermissionsOnly="['canShowAo']"  (click)="showao(row.id)" class="  btn  btn-sm  btn-clean btn-icon  btn-success btn-icon-md btn_table_show"  matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate   }}" >
+                   <i class="la la-search-plus"></i ></a>
+        
+               <!--  <a href="javascript:;"    class="  btn  btn-sm  btn-clean btn-icon  btn-icon-md  btn_table_send"  matTooltip="refresher l'alert " >
+                    <i class="la la-calendar-check-o"></i ></a> -->
+                <a  *ngIf="iscommision" href="javascript:;"   class="  btn  btn-sm  btn-clean btn-icon  btn-danger btn-icon-md  	btn_table_delete"  matTooltip="supprimer l'alert" (click)="deletealert(row.id)" >
+                    <i class="la la-dashcube"></i ></a>
+                <a  *ngIf="ismaintien" href="javascript:;"   class="  btn  btn-sm  btn-clean btn-icon  btn-danger btn-icon-md  	btn_table_delete"  matTooltip="supprimer l'alert" (click)="deletealertMaintein(row.id)" >
+                            <i class="la la-dashcube"></i ></a>
+             </td>
+        </ng-container>
+        <tr mat-header-row  *matHeaderRowDef="displayedColumns"
+        ></tr>
+        <tr  mat-row  *matRowDef="   let row;  columns: displayedColumns "
+        ></tr>
+    </table>
+    <div   *ngIf="sizeData == 0 && isLoading == false" style="  display: flex;   justify-content: center;    padding: 2%; color: orangered; " >
+        {{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+    </div>
+
+    <mat-paginator
+        [length]="sizeData"
+        [pageSize]="5"
+        [pageIndex]="0"
+        [pageSizeOptions]="[5, 10, 50]"
+        showFirstLastButtons
+    ></mat-paginator>
+    <hr />
+</div>

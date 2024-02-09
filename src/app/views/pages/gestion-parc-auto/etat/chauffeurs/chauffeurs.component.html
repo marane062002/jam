@@ -1,0 +1,108 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">Chauffeurs</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+                    
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                            <div class="form-group row justify-content-center mb-1">
+                                <div class="col-md-3 form-group ">
+                                    <label>N° Chauffeurs :</label>
+                                    <input class="form-control" type="text" placeholder="Numéro Chauffeurs">
+                                </div>
+                                <div class="col-md-2 col-lg-2 form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                    <data-table 
+                            [datasource]="listCartesJawaz" 
+                            [headers]="headerData" 
+                            [titleTable]="' Liste des chauffeurs'"
+                            [titleButton]="' Ajouter Chauffeurs'"
+                            (ajouterElement)="modalAjouterChauffeur(ajouterChauffeur)"
+                            (detail)="modalDetailChauffeur(detailChauffeur,$event)"
+                            (selectUpdateElement)="modalModifierChauffeur(modifierChauffeur,$event)"
+                            (deleteElement)="supprimerChauffeur($event)">
+                    </data-table>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <ng-template #modifierChauffeur let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Modification d'une Carte Jawaz</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row mb-1">
+        <div class="col-md-4 form-group ">
+          <label>Référence :</label>
+          <input class="form-control" type="text" placeholder="Référence">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Solde de départ :</label>
+          <input class="form-control" type="text" placeholder="Solde de départ">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Solde actuel :</label>
+          <input class="form-control" type="text" placeholder="Solde actuel">
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary ml-2" type="button">Modifier</button>
+    </div>
+  </ng-template>
+
+   <!--  Modal ajouter -->
+  <ng-template #ajouterChauffeur let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Nouvelle Carte Jawaz</h5>
+      <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row mb-1">
+        <div class="col-md-4 form-group ">
+          <label>Référence :</label>
+          <input class="form-control" type="text" placeholder="Référence">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Solde de départ :</label>
+          <input class="form-control" type="text" placeholder="Solde de départ">
+        </div>
+
+        <div class="col-md-4 form-group ">
+          <label>Solde actuel :</label>
+          <input class="form-control" type="text" placeholder="Solde actuel">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+  </ng-template>
+   <!-- modal detail-->
+  <ng-template #detailChauffeur let-c="close" let-d="dismiss">
+  
+  </ng-template>
+
+
+</div>
+

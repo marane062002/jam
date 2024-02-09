@@ -1,0 +1,386 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "Modifier Une Facture" | translate }}
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<table
+		id="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8 mt-2 w-100"
+		matSort
+	>
+		<!-- nom Column -->
+		<ng-container matColumnDef="num">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="num">
+				{{ "Id" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				{{ row.num }}
+			</td>
+		</ng-container>
+
+		<!-- nom Column -->
+		<ng-container matColumnDef="nom">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="nom">
+				{{ "Chevillard" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="nom">
+				{{
+					row.nom
+						? row.nom.length > 25
+							? (row.nom | slice: 0:25) + "..."
+							: row.nom
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.nom.length > 25"
+					matTooltip="{{ row.nom }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<!-- email  Column -->
+
+		<ng-container matColumnDef="dateDebut">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="dateDebut"
+			>
+				{{ "Commentaire" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="dateDebut">
+				{{
+					row.tribunal
+						? row.tribunal.length > 10
+							? (row.tribunal | slice: 0:15) + "..."
+							: row.tribunal
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.tribunal.length > 10"
+					matTooltip="{{ row.tribunal }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<!-- typeActiviteAssociation  Column -->
+		<ng-container matColumnDef="typeAffaire">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="typeAffaire"
+			>
+				{{ "Date Du Jour" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="typeAffaire">
+				{{
+					row.dateDebut
+						? row.dateDebut.length > 10
+							? (row.dateDebut | slice: 0:15) + "..."
+							: row.dateDebut
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.dateDebut.length > 10"
+					matTooltip="{{ row.dateDebut }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="demandresse">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="demandresse"
+			>
+				{{ "Sous Espéce" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="demandresse">
+				{{
+					row.tribunal
+						? row.tribunal.length > 10
+							? (row.tribunal | slice: 0:15) + "..."
+							: row.tribunal
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.tribunal.length > 10"
+					matTooltip="{{ row.tribunal }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<!-- Fax / Num Tel Column -->
+		<ng-container matColumnDef="tribunal">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="tribunal"
+			>
+				{{ "Nombre" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="tribunal">
+				{{
+					row.demandresse
+						? row.demandresse.length > 20
+							? (row.demandresse | slice: 0:17) + "..."
+							: row.demandresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.demandresse.length > 20"
+					matTooltip="{{ row.demandresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+			-->
+		</ng-container>
+		<!-- President Column -->
+		>
+
+		<ng-container matColumnDef="defendresse">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="defendresse"
+			>
+				Espéce
+			</th>
+			<td mat-cell *matCellDef="let row" class="defendresse">
+				{{
+					row.defendresse
+						? row.defendresse.length > 20
+							? (row.defendresse | slice: 0:17) + "..."
+							: row.defendresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.defendresse.length > 20"
+					matTooltip="{{ row.defendresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="poids">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="poids">
+				{{ "Poids" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="poids">
+				{{
+					row.defendresse
+						? row.defendresse.length > 20
+							? (row.defendresse | slice: 0:17) + "..."
+							: row.defendresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.defendresse.length > 20"
+					matTooltip="{{ row.defendresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="retrait">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="retrait"
+			>
+				{{ "retrait" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="retrait">
+				{{
+					row.defendresse
+						? row.defendresse.length > 20
+							? (row.defendresse | slice: 0:17) + "..."
+							: row.defendresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.defendresse.length > 20"
+					matTooltip="{{ row.defendresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Description">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="Description"
+			>
+				{{ "Description" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="Description">
+				{{
+					row.defendresse
+						? row.defendresse.length > 20
+							? (row.defendresse | slice: 0:17) + "..."
+							: row.defendresse
+						: "-"
+				}}
+				<a
+					href="javascript:void(0);"
+					*ngIf="row.defendresse.length > 20"
+					matTooltip="{{ row.defendresse }}"
+					><i class="fas fa-info-circle"></i
+				></a>
+			</td>
+		</ng-container>
+		<!-- pour exporter excel -->
+
+		<!-- pour exporter excel -->
+
+		<!-- Action Column -->
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				{{ "Actions" | translate }}
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action"></td
+		></ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	>
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+
+	<mat-paginator
+		*ngIf="dataSource != undefined && dataSource.data != undefined"
+		[length]="dataSource.data.length"
+		[pageSize]="5"
+		[pageIndex]="0"
+		[pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons
+	></mat-paginator>
+
+	<hr />
+
+	<form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<input
+							matInput
+							type="text"
+							class="form-control"
+							placeholder="retrait"
+						/>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<input
+							matInput
+							type="number"
+							class="form-control"
+							placeholder="Montant"
+						/>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+            
+			<div class="col-md-12">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<textarea
+							matInput
+							class="form-control"
+							placeholder="Description"
+						>
+						</textarea>
+					</mat-form-field>
+					<div class="fv-plugins-message-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex justify-content-between mt-5 pt-10">
+			<div class="mr-2"></div>
+			<div>
+				<button
+					type="button"
+					(click)="back()"
+					class="btn btn-primary"
+					data-wizard-type="action-prev"
+				>
+					<i class="la la-angle-left"></i>
+					Retour
+				</button>
+
+				<button
+					type="button"
+					(click)="add()"
+					class="btn btn-success btn-elevate btn-icon-sm"
+					data-wizard-type="action-submit"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="bi bi-pen"
+						viewBox="0 0 16 16"
+					>
+						<path
+							d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
+						/>
+					</svg>
+					Modifier
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

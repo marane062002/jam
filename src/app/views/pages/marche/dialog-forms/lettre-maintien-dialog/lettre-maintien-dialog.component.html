@@ -1,0 +1,36 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+    <!-- <button class="close" mat-button (click)="onNoClick()">X</button> -->
+    <h3 mat-dialog-title style="
+	text-align: center;
+    font-size: 15px !important;
+    border-bottom: 1px solid #d0cdcd;
+    color: #0a3552;
+    padding-bottom: 5px;">Lettre du maintien</h3>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" name="prestataire" [(ngModel)]="formData.prestataire" placeholder="Prestataire">
+                            <mat-option *ngFor="let p of prestataires" [value]="p.nom">
+                                {{p.nom}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label" align="right">
+                <button [disabled]="form.invalid" type="submit" [mat-dialog-close]="formData" cdkFocusInitial class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                    <i class="icon la la-print"></i>
+                    {{ 'PAGES.GENERAL.PRINT' | translate }}</button>
+                <button mat-dialog-close type="reset" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onNoClick()">
+                    <i class="icon la la-close"></i>
+                    {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</form>

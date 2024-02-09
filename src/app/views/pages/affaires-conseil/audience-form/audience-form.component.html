@@ -1,0 +1,389 @@
+<!-- begin:: Content -->
+<div class="row">
+	<div class="col-lg-12 col-md-offset-2">
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="fa fa-handshake"></i>
+					</span>
+					<h3 class="kt-portlet__head-title">
+						إضافة جلسة
+					</h3>
+				</div>
+			</div>
+			<div class="kt-portlet__body">
+				<form class="kt-form" autocomplete="off" #form="ngForm">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<mat-select (selectionChange)="onChangeofOptionsSession($event)"
+										class="form-control" name="idsession" [(ngModel)]="formData.session.id"
+										placeholder=" رقم الدورة:">
+										<mat-option *ngFor="let item of sessionIds" [value]="item.id">
+											{{item.nomSession}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<input matInput class="form-control" [matDatepicker]="picker" name="dateRealisation"
+										[(ngModel)]="formData.dateAudience" placeholder=" تاريخ الإنجاز :    ">
+									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+									<mat-datepicker touchUi="true" #picker></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-3"><label style="margin-top: 30px;">ساعة بدء
+											الجلسة : </label></div>
+									<div class="col-md-9">
+										<div class="example-full-width">
+											<ngb-timepicker name="timeDebutAudience" [(ngModel)]="timeDebutAudience">
+											</ngb-timepicker>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-3"><label style="margin-top: 30px;">ساعة نهاية
+											الجلسة : </label></div>
+									<div class="col-md-9">
+										<div class="example-full-width">
+											<ngb-timepicker name="timeFinAudience" [(ngModel)]="timeFinAudience">
+											</ngb-timepicker>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<br>
+					<br>
+					<div class="example-container mat-elevation-z8">
+
+						<mat-table [dataSource]="dataSource" matSort>
+
+
+							<!-- Progress Column -->
+							<!-- <ng-container matColumnDef="id">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+									رقم النقطة
+								</mat-header-cell>
+								<mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.id}}
+								</mat-cell>
+							</ng-container> -->
+
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="objet">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+									موضوع النقطة </mat-header-cell>
+								<mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.objet}}
+								</mat-cell>
+							</ng-container>
+
+
+							<!-- <ng-container matColumnDef="budget">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+									الميزانية المقدرة
+								</mat-header-cell>
+								<mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+									{{row.budget | macurrency}} </mat-cell>
+							</ng-container>
+
+							<ng-container matColumnDef="dateRealisation">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+									تاريخ الإنجاز </mat-header-cell>
+								<mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+									{{row.dateRealisation |date: 'dd/MM/yyyy'}} </mat-cell>
+							</ng-container> -->
+
+
+
+							<!-- Name Column -->
+							<ng-container matColumnDef="statut">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef>وضعية النقطة
+								</mat-header-cell>
+
+								<mat-cell class="firt_column chikaya_th" *matCellDef="let row">
+									{{row.statut.libelle}} </mat-cell>
+
+								<!---   <mat-cell class="firt_column chikaya_th" *matCellDef="let row"> {{row.statut.libelle}} </mat-cell>-->
+							</ng-container>
+
+							<ng-container matColumnDef="actions">
+								<mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+								<mat-cell *matCellDef="let row">
+									<button *ngIf="row.audience==null" type="button" class="btn btn-outline-primary"
+										(click)="addPointAudience(row)"> إضافة النقطة
+										للجلسة </button>
+									<button *ngIf="row.audience!=null" type="button" class="btn btn-outline-danger"
+										(click)="deletePointAudience(row)">حذف النقطة
+										من الجلسة </button>
+
+								</mat-cell>
+							</ng-container>
+
+							<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+							<mat-row *matRowDef="let row; columns: displayedColumns;">
+							</mat-row>
+						</mat-table>
+						<div *ngIf="dataSize == 0 && isLoading == false"
+							style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+							{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+						</div>
+						<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+							<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+							</mat-progress-spinner>
+						</mat-card>
+						<mat-paginator [length]="dataSize" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]"
+							showFirstLastButtons></mat-paginator>
+						<hr>
+					</div>
+					<br>
+					<br>
+					<div class="kt-portlet__head-toolbar">
+						<div class="kt-portlet__head-wrapper">
+							<div class="kt-portlet__head-actions">
+								&nbsp;
+								<a href="javascript:; " (click)="nouvelleLigne()"
+									class="btn btn-success btn-elevate btn-icon-sm">
+									<i class="la la-plus"></i>
+									إضافة
+									المدعوين </a>
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+					<div *ngIf="showRadio">
+						<div class="row">
+							<div class="col-md-12">
+								<form [formGroup]="eventEditForm" novalidate>
+									<div class="form-group">
+										<mat-radio-group [(ngModel)]="selectedStatus" formControlName="completed">
+											<mat-radio-button [value]="0"> إضافة موظف </mat-radio-button>
+											<mat-radio-button [value]="1"> إضافة مصلحة خارجية </mat-radio-button>
+										</mat-radio-group>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div *ngIf="!selectedStatus" class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="divisionAo"
+											(selectionChange)="onChangeDivision($event)"
+											[(ngModel)]="formDataPersonnel.division" placeholder="القسم">
+											<mat-option *ngFor="let item of divisions" [value]="item.id">
+												{{item.libelle}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="criticiterec"
+											(selectionChange)="onChangeService($event)"
+											[(ngModel)]="formDataPersonnel.service" placeholder="المصلحة ">
+											<mat-option *ngFor="let item of services" [value]="item.id">
+												{{item.libelle}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" name="crit"
+											[(ngModel)]="formDataPersonnel.personnel" placeholder=" اسم الموظف ">
+											<mat-option *ngFor="let item of personnels" [value]="item">{{item.nom}}
+												{{item.prenom}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+						<button type="button" class="btn btn-outline-primary" (click)="addPersonnelAudience()">تأكيد
+							إضافة الموظف </button>
+
+						<div *ngIf="selectedStatus">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<input matInput type="text" class="form-control" name="prenompp"
+												placeholder="الاسم :" [(ngModel)]="formDataPE.prenom" required>
+											<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<input matInput type="text" class="form-control" placeholder="النسب :"
+												name="nompp" [(ngModel)]="formDataPE.nom" required>
+											<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<input matInput type="text" class="form-control" name="cinpp"
+												[(ngModel)]="formDataPE.cin" placeholder="البطاقة الوطنية :" required>
+											<mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<input matInput type="text" class="form-control" name="telePE"
+												[(ngModel)]="formDataPE.tele" placeholder="الهاتف  :" required>
+											<mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<input matInput type="text" class="form-control" name="nomOrganisme"
+												[(ngModel)]="formDataPE.organisme" placeholder=" اسم الهيئة  :"
+												required>
+											<mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<mat-form-field class="example-full-width">
+											<input matInput type="text" class="form-control" name="mailMC"
+												[(ngModel)]="formDataPE.mail" placeholder=" البريد الإلكتروني   :"
+												required>
+											<mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+										</mat-form-field>
+									</div>
+								</div>
+							</div>
+							<button type="button" class="btn btn-outline-primary"
+								(click)="addPersonneExterneAudience()">تأكيد</button>
+							<br>
+						</div>
+
+					</div>
+
+					<br>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="kt-portlet__body kt-portlet__body--fit">
+
+								<div class="example-container mat-elevation-z8">
+
+									<mat-table [dataSource]="dataSource1" matSort>
+
+
+										<ng-container matColumnDef="nom">
+											<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef
+												mat-sort-header> الموظف </mat-header-cell>
+											<mat-cell class="firt_column chikaya_th" *matCellDef="let row ">
+												{{row.personnel.nom}} {{row.personnel.prenom}} </mat-cell>
+										</ng-container>
+
+										<ng-container matColumnDef="actions">
+											<mat-header-cell *matHeaderCellDef mat-sort-header> حذف الموظف
+											</mat-header-cell>
+											<mat-cell *matCellDef="let row ; let i = index">
+												<a href="javascript:;" (click)="deletePersonnel(row ,i)"
+													class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+													matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+											</mat-cell>
+										</ng-container>
+
+										<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+										<mat-row *matRowDef="let row; columns: displayedColumns1;">
+										</mat-row>
+									</mat-table>
+
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="kt-portlet__body kt-portlet__body--fit">
+
+								<div class="example-container mat-elevation-z8">
+
+									<mat-table [dataSource]="dataSource2" matSort>
+
+
+										<ng-container matColumnDef="nom">
+											<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef
+												mat-sort-header> المدعو الخارجي </mat-header-cell>
+											<mat-cell class="firt_column chikaya_th" *matCellDef="let row ">
+												{{row.nom}} {{row.prenom}} </mat-cell>
+										</ng-container>
+
+										<ng-container matColumnDef="actions">
+											<mat-header-cell *matHeaderCellDef mat-sort-header> حذف المدعو الخارجي
+											</mat-header-cell>
+											<mat-cell *matCellDef="let row ; let i = index">
+												<a href="javascript:;" (click)="deletePersonneExterne(row ,i)"
+													class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+													matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+											</mat-cell>
+										</ng-container>
+
+										<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+										<mat-row *matRowDef="let row; columns: displayedColumns1;">
+										</mat-row>
+									</mat-table>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button type="button" (click)="send()"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+		<button _ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="button"
+			(click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+		<button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="button" (click)="backList()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

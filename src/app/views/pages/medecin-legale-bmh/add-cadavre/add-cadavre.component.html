@@ -1,0 +1,288 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter un cadavre :
+				</h2>
+			</div>
+		</div>
+	</div>
+
+    <form [formGroup]="ajoutForm" action="">
+	<div  class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N° deces:</mat-label>
+								<input
+                                    readonly
+                                    [value]="info.numDeces"
+									class="form-control-solid form-control-lg"
+									name="matricule"
+									matInput
+								>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                    <div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date  :</mat-label>
+								<input
+                                formControlName="date"
+									type="datetime-local"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Statut :</mat-label>
+								<input 
+                                type="text" 
+                                formControlName="statut"
+                                class="form-control-solid form-control-lg"
+                                matInput>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Observation :</mat-label>
+								<input 
+                                type="text" 
+                                formControlName="observation"
+                                class="form-control-solid form-control-lg"
+                                matInput>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-md-4">
+						<div class="form-group fv-plugins-icon-container">
+							<section class="example-section">
+								<p>Autorisation du procureur :</p>
+                                <mat-radio-group formControlName="autorizationProcureur">
+                                    <mat-radio-button  value="true">Oui</mat-radio-button>
+                                    <mat-radio-button  value="false">Non</mat-radio-button>
+                                  </mat-radio-group>
+							</section>
+
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+                </div>
+				<div class="row aa">
+					<div class="pb-5" data-wizard-type="step-content">
+						<h4 class="mb-10 font-weight-bold text-dark"></h4>
+						<div class="kt-portlet">
+							<div class="kt-portlet__body">
+								<div class="row">
+									<div
+										class="col-md-12 show_port input-group"
+									>
+										<form
+											enctype="multipart/form-data"
+											method="POST"
+											style="
+												display: -webkit-inline-box;
+												margin-inline-start: 98px;
+											"
+										>
+											<label class="input-group-btn">
+												<span class="btn btn-info">
+													Sélectionner un fichier
+													<input
+														type="file"
+														name="file"
+														formControlName="_file"
+														id="customFile"
+														style="display: none"
+														multiple
+													/>
+												</span>
+											</label>
+											<input
+												type="text"
+												class="form-control"
+												readonly
+											/>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<div novalidate autocomplete="off">
+		<!-- {{addForm.value |json}} -->
+		<div class="kt-portlet portlet-3">
+			<div class="kt-portlet__head kt-bg-portlet-3">
+				<div class="kt-portlet__head-label">
+					<h2 class="kt-portlet__head-title kt-font-inverse-brand">Fourgon mortuaire :</h2>
+				</div>
+			</div>
+		</div>
+	
+		<form [formGroup]="ajoutForm" action="">
+			<div class="row">
+			<div class="col-md-12">
+				<div class="form-group fv-plugins-icon-container">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Matricule :</mat-label>
+									<mat-select formControlName="fourgon">
+										<mat-option *ngFor="let f of fourgon" [value]="f">{{f.matricule}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Conducteur :</mat-label>
+									<mat-select
+									formControlName="conducteurObstacle"
+										matNativeControl
+										class="form-control"
+									>
+									<mat-option value="conventione">Conducteur Conventioné</mat-option>
+									<mat-option  value="saisonier">Conducteur Saisonier</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+						</div>
+						 <div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<div *ngIf="ajoutForm.get('conducteurObstacle').value === 'conventione'">
+								<!-- Ajoutez ici les champs spécifiques pour Conducteur Conventioné -->
+								<mat-form-field class="example-full-width">
+									<mat-select formControlName="conducteur">
+										<mat-option *ngFor="let c of conducteur" [value]="c">{{c.nom}} {{c.prenom}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+									</div>
+									</div>
+						 </div>
+						 
+								<div *ngIf="ajoutForm.get('conducteurObstacle').value === 'saisonier'">
+									<!-- Ajoutez ici les champs spécifiques pour Conducteur Conventioné -->
+									<div class="row">
+											<div class="col-md-6">
+												<div class="form-group fv-plugins-icon-container">
+													<mat-form-field class="example-full-width">
+														<mat-label>Nom :</mat-label>
+															<input matInput formControlName="nom" placeholder="Champ 1 pour Conducteur Saisonier">
+													</mat-form-field>
+													</div>
+												</div> 
+												<div class="col-md-6">
+													<div class="form-group fv-plugins-icon-container">
+														<mat-form-field class="example-full-width">
+															<mat-label>Prenom :</mat-label>
+															<input matInput formControlName="prenom" placeholder="Champ 1 pour Conducteur Saisonier">
+													</mat-form-field>
+														</div>
+													</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group fv-plugins-icon-container">
+																<mat-form-field class="example-full-width">
+																	<mat-label>CIN :</mat-label>
+																	<input matInput formControlName="cin" placeholder="Champ 1 pour Conducteur Saisonier">
+															</mat-form-field>
+																</div>
+															</div> 
+															<div class="col-md-6">
+																<div class="form-group fv-plugins-icon-container">
+																	<mat-form-field class="example-full-width">
+																		<mat-label>Tel :</mat-label>
+																		<input matInput formControlName="tel" placeholder="Champ 1 pour Conducteur Saisonier">
+																</mat-form-field>
+																	</div>
+																</div>
+														</div>
+									</div>
+									
+					
+					<div class="row">
+						<div data-wizard-type="step-content">
+							<h4 class="font-weight-bold text-dark"></h4>
+							<div class="kt-portlet">
+								<div class="kt-portlet__body">
+								
+										<div class="col-md-9 show_port input-group">
+											<form enctype="multipart/form-data" method="POST" style="display: -webkit-inline-box; margin-inline-start: 98px">
+												<label class="input-group-btn">
+													Pièce jointe :
+													<span class="btn btn-info">
+														Sélectionner un fichier
+														<input type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
+													</span>
+												</label>
+												<input type="text" class="form-control" readonly />
+											</form>
+										</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row aa">
+						<div class="col-md-12">
+							<div class="form-group fv-plugins-icon-container">
+								<div class="kt-portlet__heads">
+									<div class="kt-portlet__head-label text-right">
+										<button href="javascript:; " (click)="RetourEmbalages()" _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+											<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+											Retour
+										</button>
+										<button _ngcontent-tvp-c13="" (click)="ajouter()" class="btn btn-success btn-tall btn-wide kt-font-bold kt-font-transform-u" href="javascript:; "> Enregistrer</button>
+									    
+										<button _ngcontent-tvp-c13="" (click)="transfert()"  _ngcontent-dkp-c41="" class="btn btn-success btn-tall btn-wide kt-font-bold kt-font-transform-u" href="javascript:; "> Transfert </button>
+										<button _ngcontent-tvp-c13="" (click)="enterrement()" class="btn btn-success btn-tall btn-wide kt-font-bold kt-font-transform-u" href="javascript:; "> Enterrement </button>
+									</div>
+								</div>
+								<div class="espace_bloc"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</form>
+		
+	</div>
+	
+</form>
+
+

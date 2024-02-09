@@ -1,0 +1,342 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">
+				{{ "PAGES.PROGRAMME.RETROPLANNING_PROJET" | translate }}
+			</h2>
+		</div>
+		<!-- <div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+
+					<a href="javascript:; " (click)="addNew()" class="btn btn-success btn-elevate btn-icon-sm">
+						<i class="la la-plus"></i> {{ "PAGES.PROGRAMME.AJOUTER" | translate }}
+					</a>
+				</div>
+			</div>
+		</div> -->
+	</div>
+	<div class="   ">
+		<form action="" class=" row" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+			<div class="">
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.AXE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="axe" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.NUMERO_PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="numero"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.PROJET" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="projet"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.EMPLACEMENT" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="emplacement"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.CONSISTANCE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="consistance"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="mod" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</mat-label>
+						<input type="date" class="form-control-solid form-control-lg" formControlName="dateDebut"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</mat-label>
+						<input type="date" class="form-control-solid form-control-lg" formControlName="dateFin"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.DELAI" | translate }} :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg" formControlName="delai"
+							matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-9" style="margin-top: 15px;;">
+			</div>
+			<div class="col-md-3" style="margin-top: 15px;;">
+				<button _ngcontent-dkp-c41=""
+					class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i _ngcontent-dlp-c41 class=" la la-search-plus"></i>
+					{{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+				</button>
+			</div>
+			<div class="col-md-3" style="margin-top: 15px;;">
+				<button (click)="initForm()" _ngcontent-dkp-c41=""
+					class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i _ngcontent-dlp-c41 class="icon la "></i>
+					{{ "PAGES.PROGRAMME.REINITIALISER" | translate }}
+				</button>
+			</div>
+			<div class="col-md-3" style="margin-top: 15px;;">
+
+				<button style="background-color: #7174cc;" (click)="exportTable()" type="button" class="btn btn-export"
+					matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }} ">
+					<i style="color: #ffffff;" _ngcontent-clk-c12="" class="icon la la-file-excel-o"></i><span style="color: #ffffff;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate
+					}}</span>
+				</button>
+			</div>
+
+
+
+		</form>
+
+	</div><br>
+	<!-- <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+		<ng-container matColumnDef="numero">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.NUMERO_PROJET' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.numero ? row.numero : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="axe">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.AXE' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.axe ? row.axe : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="projet">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.PROJET' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.projet ? row.projet : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="emplacement">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.EMPLACEMENT' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.emplacement">
+					<span>{{item ? item : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="consistance">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.CONSISTANCE' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.consistance">
+					<span>{{item ? item : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="mod">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.MAITRE_OUVRAGE' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.mod ? row.mod : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="dateDebut">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.DATE_DEBUT' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.dateDebut ? row.dateDebut : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="dateFin">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.DATE_FIN' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.dateFin ? row.dateFin : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="delai">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ 'PAGES.PROGRAMME.DELAI' | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.delai ? row.delai : "-"}}</td>
+		</ng-container>
+
+
+
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ "PAGES.PROGRAMME.ACTIONS" |
+				translate }}</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button type="button" routerLink="/parametrages/add-type-fichier"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" (click)="Details(row)"
+					matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+						class="icon la la-search-plus"></i></button>
+				<button type="button" routerLink="/parametrages/add-type-fichier" (click)="update(row)"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+				<button type="button" (click)="delete(row.id)"
+					class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+					matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	</table> -->
+	<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+		<ng-container matColumnDef="nature">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Nature</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.nature ? row.nature : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="theme">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Théme</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.theme ? row.theme : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="Soustheme">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Sous théme</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.sousTheme ? row.sousTheme : "-"}}</td>
+		</ng-container>
+		
+		<ng-container matColumnDef="codeProjet">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Code Projet</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.codeProjet ? row.codeProjet : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="projet">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+			 Projet</th>
+			<td mat-cell *matCellDef="let row" class="num">{{row.nameProjet ? row.nameProjet : "-"}}</td>
+		</ng-container>
+		<ng-container matColumnDef="numSP">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+			 Numéro Sous Projet</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span>{{item.numero ? item.numero : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+
+
+		<ng-container matColumnDef="SP">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+			Sous Projet</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span>{{item.object ? item.object : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="MOD">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE_DELEGUE" | translate }} </th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span>{{item.maitreOuvrageDelegue ? item.maitreOuvrageDelegue : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="convention">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				convention </th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span *ngIf="language == 'fr'">
+						{{ item?.convention?.object }}
+					</span>
+					<span *ngIf="language == 'ar'">
+						{{ item?.convention?.objectAr }}
+					</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="etatAvancement">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.ETAT_AVANCEMENT_PROJET" | translate }} </th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span>{{item.etatAvancement ? item.etatAvancement : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="cout">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.COUT" | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span>{{item.constibutionC ? item.constibutionC : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="dateDebut">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span>{{item.dateDebut ? item.dateDebut : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="dateFin">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} </th>
+			<td mat-cell *matCellDef="let row" class="num">
+				<span *ngFor="let item of row.sousProjets">
+					<span>{{item.dateFine ? item.dateFine : "-"}}</span><br>
+				</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ "PAGES.PROGRAMME.ACTIONS" |
+				translate }}</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button type="button" routerLink="/parametrages/add-type-fichier"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" (click)="Details(row)"
+					matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+						class="icon la la-search-plus"></i></button>
+				<!-- <button type="button" routerLink="/parametrages/add-type-fichier" (click)="update(row)"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+				<button type="button" (click)="delete(row.id)"
+					class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+					matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button> -->
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+		<!-- footer data -->
+	</table>
+	<div *ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+		{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+	</div>
+	<mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons (page)="handlePageEvent($event)"></mat-paginator>
+	<hr>
+</div>

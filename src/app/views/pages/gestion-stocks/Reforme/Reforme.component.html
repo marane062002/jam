@@ -1,0 +1,42 @@
+<div class="main-content container">
+    <div class="breadcrumb">
+        <h1 class="mr-2">Réforme des stocks</h1>
+    </div>
+    <!-- card of depot -->
+    <div class="row col-md-12">
+        <div class="col-md-12 mb-4">
+            <div class="card text-left">
+                <div class="card-body">
+                    <div class="tab-content" id="myIconTabContent">
+                        <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                            <div class="body">
+                                <form class="">
+                                    <div class="form-group row justify-content-center mb-1">
+                                     
+                                                <div class="col-md-4 form-group ">
+                                                        <label>N° magasin : </label>
+                                                        <ng-multiselect-dropdown     [placeholder]="'N° magasin'"  [settings]="dropdownSettingsMagasin" [data]="listMagasins"  (onSelect)="selectMagasin($event)"  >
+                                                        </ng-multiselect-dropdown> 
+                                        
+                                                  
+                                            </div>
+                                      
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <data-table 
+                                [datasource]="listReforme" 
+                                [headers]="headerData" 
+                                [actions]="actions"
+                                [titleTable]="'Liste des articles à rotation lente'"
+                                [titleButtonDelete]="' Réformer'"
+                                (selectedItems)="deleteArticle($event)">
+                        </data-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

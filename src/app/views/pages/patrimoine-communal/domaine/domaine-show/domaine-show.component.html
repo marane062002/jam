@@ -1,0 +1,200 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'PAGES.GENERAL.DOMAINE_SHOW' | translate }}
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a *ngxPermissionsOnly="['canCreateDomainePublic']" routerLink="/domaine/domaine-new" class="btn btn-outline-success btn-bold btn-sm">
+                            <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                        </a>
+                        <a *ngxPermissionsOnly="['canUpdateDomainePublic']" (click)="update(domaine?.id)" class="btn btn-warning btn-sm btn-bold">
+                            <i class="fas fa-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                        </a>
+                        <a *ngxPermissionsOnly="['canDeleteDomainePublic']" (click)="delete(domaine?.id)" class="btn btn-danger btn-sm btn-bold">
+                            <i class="fas fa-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- begin:: Content section  -->
+<div *ngIf="domaine">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.DOMAINE_FICHE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NOM_DOMAINE' | translate }} :</th>
+                                        <td>{{domaine.nomDomaine}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NUM_DOMAINE' | translate }} :</th>
+                                        <td>{{domaine.numDomaine}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NUM_AUTORISATION' | translate }} :</th>
+                                        <td>{{domaine.numAutorisation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.EXPLOITEUR' | translate }} :</th>
+                                        <td>{{ domaine.exploiteur}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.TYPE' | translate }} :</th>
+                                        <td>{{ domaine.typeDomaine}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.STATUT' | translate }} :</th>
+                                        <td>{{ domaine.statut}}</td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DATE_AUTORISATION' | translate }} :</th>
+                                        <td>{{domaine.dateAutorisation|date:'dd/MM/yyyy'}}</td>
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DATE_DEBUT_EXPLOITATION' | translate }} :</th>
+                                        <td>{{domaine.dateDebutExploitation|date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DATE_FIN_EXPLOITATION' | translate }} :</th>
+                                        <td>{{domaine.dateFinExploitation|date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <!-- <tr>
+                                                <th>{{ 'PAGES.GENERAL.DUREE_EXPLOITATION' | translate }} :</th>
+                                                <td>{{domaine.dureeExploitation}}</td>
+                                                                                    
+                                        </tr> -->
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DESCRIPTION' | translate }} :</th>
+                                        <td>{{domaine.description}}</td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <th>{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :</th>
+                                        <td>{{domaine.observation}}</td>
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="domaine">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+
+                <div class="kt-portlet__head kt-bg-portlet-4">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.DOMAINE_TABS' | translate }}
+                        </h3>
+                    </div>
+
+                </div>
+                <mat-tab-group dynamicHeight [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+                    <mat-tab *ngFor="let tab of asyncTabs | async">
+                        <ng-template mat-tab-label>{{tab.label | translate }}</ng-template>
+                        <!-- {{tab.content}} -->
+                        <!-- PJS TAB -->
+                        <div *ngIf="tab.content == 2">
+                            <div *ngIf="selected.value==1">
+                                <kt-tab-pjs></kt-tab-pjs>
+                            </div>
+                        </div>
+                        <!-- BENIFIC TAB -->
+                        <div *ngIf="tab.content == 1">
+                            <div *ngIf="selected.value==0">
+                                <kt-tab-loyer></kt-tab-loyer>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </mat-tab>
+                    <!-- <mat-tab label="Grid View">
+              </mat-tab> -->
+                </mat-tab-group>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                        <!--  <button type="button" class="btn btn-info"><i class="fa fa-print"></i> {{ 'PAGES.GENERAL.PRINT' | translate }}</button> -->
+                        <button *ngxPermissionsOnly="['accessToIndexDomainePublic']" routerLink="/domaine/domaine-index" class="btn btn-label-dark"><i
+                                    class="flaticon2-list-2"></i>  {{ 'MENU.LISTEDOMAINES' | translate }}</button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>

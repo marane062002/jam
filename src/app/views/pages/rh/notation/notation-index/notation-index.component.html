@@ -1,0 +1,139 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{ 'MENU.LISTENOTATIONS' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div *ngxPermissionsOnly="['canCreateNotation']" class="kt-portlet__head-actions">
+                <a routerLink="/notation/notation-new" class="btn btn-outline-success btn-bold btn-sm">
+                    <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="kt-section">
+            <div class="example-header">
+                <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+            <form [formGroup]="filterForm" class="kt-form">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select class="form-control" formControlName="compagne">
+                                    <mat-option [value]=0>---{{ 'PAGES.NOTATION.ANNEENOTATION' | translate }}---</mat-option>
+                                    <mat-option *ngFor="let c of compagnes" [value]="c.id">
+                                        {{c.libelle}}: {{c.anneeNotation}} / {{c.moisDebut}} -- {{c.anneeNotation}} / {{c.moisFin}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select class="form-control" formControlName="division" (selectionChange)="onChangeDivision()">
+                                    <mat-option [value]=0>---{{ 'PAGES.ORGANISATION.DIVISION' | translate }}---</mat-option>
+                                    <mat-option *ngFor="let d of divisions" [value]="d.id">
+                                        {{d?.libelle}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select class="form-control" formControlName="service" (selectionChange)="onChangeService()">
+                                    <mat-option [value]=0>---{{ 'PAGES.ORGANISATION.SERVICE' | translate }}---</mat-option>
+                                    <mat-option *ngFor="let s of services" [value]="s.id">
+                                        {{s?.libelle}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select class="form-control" formControlName="personnel" (selectionChange)="onChangePersonnel()">
+                                    <mat-option [value]=0>---{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}---</mat-option>
+                                    <mat-option *ngFor="let p of personnels" [value]="p.id">
+                                        {{p?.nom}} {{p?.prenom}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="button" (click)="doFilter()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-label-dark"><i
+                                        class="flaticon-search-1"></i>{{ 'PAGES.GENERAL.FILTER' | translate }}
+                                </button>
+                    </div>
+                </div>
+                <br>
+                <mat-divider></mat-divider>
+                <br>
+                <br>
+            </form>
+            <div class="example-container mat-elevation-z8">
+
+                <mat-table [dataSource]="dataSource" matSort>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                    </ng-container>
+                    <!-- Matricule Column -->
+                    <ng-container matColumnDef="matricule">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.MATRICULE' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.personnel.matricule}} </mat-cell>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nom">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.NOM' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.personnel.nom}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="prenom">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.PRENOM' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.personnel.prenom}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Compagne Column -->
+                    <ng-container matColumnDef="annee">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.NOTATION.ANNEENOTATION' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.annee}} </mat-cell>
+                    </ng-container>
+                    <!-- Note Column -->
+                    <ng-container matColumnDef="notation">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.NOTATION.NOTATION' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.notation}} </mat-cell>
+                    </ng-container>
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button *ngxPermissionsOnly="['canShowNotation']" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="icon la la-search-plus"></i></button>
+                            <button *ngxPermissionsOnly="['canUpdateNotation']" (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="icon la la-edit"></i></button>
+                            <!-- <button class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"><i class="icon la la-print"></i></button> -->
+                            <button *ngxPermissionsOnly="['canDeleteNotation']" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

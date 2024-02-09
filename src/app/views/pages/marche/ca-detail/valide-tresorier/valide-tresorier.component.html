@@ -1,0 +1,50 @@
+<div class="kt-portlet__head">
+	<div
+		*ngIf="!consultationArchitecturale.isValideTresorerie"
+		class="kt-portlet__head-label"
+	>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<input
+							matInput
+							type="text"
+							class="form-control"
+							name="numero"
+							placeholder="{{
+								'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_NOTE'
+									| translate
+							}} :"
+							[(ngModel)]="noteForm.noteTreroserie"
+						/>
+						<mat-icon matSuffix
+							><i class="far fa-keyboard"></i
+						></mat-icon>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+		<button
+			type="submit"
+			_ngcontent-dkp-c41=""
+			class="
+				btn btn-success btn-md btn-tall btn-wide
+				kt-font-bold kt-font-transform-u
+			"
+			(click)="valideParTresorier()"
+		>
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{
+				"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.VALIDATION"
+					| translate
+			}}
+		</button>
+	</div>
+	<div
+		*ngIf="consultationArchitecturale.isValideTresorerie"
+		class="espace_bloc text text-success"
+	>
+		{{ "PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.DEJA_VALIDE" | translate }}
+	</div>
+</div>

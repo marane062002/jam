@@ -1,0 +1,126 @@
+
+
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head mb-10">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon icon-10x">
+                <i class="flaticon2-plus-1"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.Stock.Article.new.title' | translate }}
+            </h3>
+        </div>
+    </div>
+
+
+    <form class="" [formGroup]="FormVignette"  (submit)="onSubmit(FormVignette.value)">
+            <div class="form-group row mb-1">
+               
+                <div class="col-md-6 show_port input-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control"      formControlName="magasin"   placeholder="{{ 'PAGES.Gestion.Stock.Article.magasin' | translate }}">
+                            <mat-option *ngFor="let item of listMagasins" [value]="item.id">
+                           <span>{{item.numeroMagasin}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="rayonnage" matInput type="text" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.Article.rayonnage' | translate }}" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-6 show_port input-group">
+                    <mat-form-field class="example-full-width"  >
+                        <mat-select class="form-control"     formControlName="type"  (selectionChange)="selectTypeSaisie($event)"  placeholder="{{ 'PAGES.Gestion.Stock.Article.Type' | translate }}">
+
+                                    <mat-option    value="v">Saisie vectorielle </mat-option >
+                                    <mat-option    value="u">Saisie unitaires  </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="numberSaisie" matInput type="number" class="form-control" name="numero"
+                                placeholder="{{ 'PAGES.Gestion.Stock.Article.numberSaisie' | translate }}"   (blur)="changeNumberSaisie($event)" >
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div> 
+            <div>
+                <div formArrayName="vignettes">
+                    <div *ngFor="let aa of getFormVignettes().controls; let i=index">
+                                    <div class="form-group row " [formGroupName]="i">
+                                        
+                                        <div class="col-md-6"  *ngIf="typesaisie==='v'">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="first" matInput type="text" class="form-control" name="numero"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.first' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6"  *ngIf="typesaisie==='v'">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="latest" matInput type="text" class="form-control" name="numero"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.latest' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6"  *ngIf="typesaisie==='u'">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input formControlName="first" matInput type="text" class="form-control" name="numero"
+                                                        placeholder="{{ 'PAGES.Gestion.Stock.Article.first' | translate }}" >
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- <div class="col-md-6 form-group"  *ngIf="FormVignette.value.type==='v'">
+                                            <label> premiere vignette : <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" placeholder="premiere vignette"  formControlName="first" >
+                                            <p class="alert alert-danger" *ngIf="!getFormVignettes().controls[i].get('first')?.valid">
+                                                Le code à barre de la vignette incorrect
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6 form-group" *ngIf="FormVignette.value.type==='v'">
+                                            <label>	derniere vignette : <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" placeholder="derniere vignette"  formControlName="latest">
+                                            <p class="alert alert-danger" *ngIf="!getFormVignettes().controls[i].get('latest')?.valid">
+                                                Le code à barre de la vignette incorrect
+                                            </p>
+                                        </div>  -->
+                                      <!--   <div class="col-md-6 form-group" *ngIf="FormVignette.value.type==='u'">
+                                            <label> vignette numero : <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" placeholder="vignette numero"  formControlName="first">
+                                            <p class="alert alert-danger" *ngIf="!getFormVignettes().controls[i].get('first')?.valid">
+                                                Le code à barre de la vignette incorrect
+                                            </p>
+                                        </div>  -->
+                                    </div>
+                    </div>
+                </div>
+            
+                
+            </div>
+          
+                <div class="m-1 float-right">
+                    <button _ngcontent-dkp-c41="" type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+                    class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+                    <i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+                    {{ 'PAGES.GENERAL.SAVE' | translate }}</button> 
+                </div>
+                
+        </form>
+  
+
+</div>
+    

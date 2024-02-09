@@ -1,0 +1,79 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-search-magnifier-interface-symbol"></i>
+			</span>
+            <div class="col-md-4">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <button *ngIf="dataSource.data.length > 0" (click)="exportTable()" type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.LOCAUX.TITRE_INDEX' | translate }}">
+						<i class="flaticon2-download text-success"></i>
+					</button>
+                    <a href="javascript:; " (click)="addLocal()" *ngxPermissionsOnly="['canCreateLocaux']" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.LOCAUX.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="exportDataLocaux" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <!-- nomLocal Column -->
+        <ng-container matColumnDef="nomLocal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.LOCAUX.NOM_LOCAL' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.nomLocal}} </td>
+        </ng-container>
+        <!-- adresseLocal  Column -->
+        <ng-container matColumnDef="adresseLocal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.LOCAUX.ADESS_LOCAl' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.adresseLocal}} </td>
+        </ng-container>
+        <!-- dateDemrrageGestion  Column -->
+        <ng-container matColumnDef="dateDemrrageGestion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.LOCAUX.DATE_DEMM_GEST' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.dateDemrrageGestion | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <!-- dateFinGestion  Column -->
+        <ng-container matColumnDef="dateFinGestion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.LOCAUX.DATE_FIN_GEST' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.dateFinGestion | date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <!-- typeLocal  Column -->
+        <ng-container matColumnDef="typeLocal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.LOCAUX.TYPE_LOC' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.typeLocal}} </td>
+        </ng-container>
+        <!-- statutGestion  Column -->
+        <ng-container matColumnDef="statutGestion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.LOCAUX.STAT_GEST' | translate }}</th>
+            <td mat-cell *matCellDef="let row"> {{row.statutGestion}} </td>
+        </ng-container>
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td mat-cell *matCellDef="let row">
+                <button type="button" routerLink="/locaux/show-locaux/{{row.id}}" *ngxPermissionsOnly="['canShowLocaux']" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+						class="icon la la-search-plus"></i></button>
+                <button type="button" (click)="editLocaux(row)" *ngxPermissionsOnly="['canUpdateLocaux']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+                <button type="button" (click)="deleteLocaux(row.id)" *ngxPermissionsOnly="['canDeleteLocaux']" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+    </div>
+    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+        </mat-progress-spinner>
+    </mat-card>
+    <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    <hr>
+</div>

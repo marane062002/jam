@@ -1,0 +1,69 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{ 'MENU.LISTEPERMANENCES' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div *ngxPermissionsOnly="['canCreatePermanence']" class="kt-portlet__head-actions">
+                <a routerLink="/permanence/permanence-new" class="btn btn-outline-success btn-bold btn-sm">
+                    <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="kt-section">
+            <div class="example-header">
+                <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+            <div class="example-container mat-elevation-z8">
+
+                <mat-table [dataSource]="dataSource" matSort>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                    </ng-container>
+                    <!-- Progress Column -->
+                    <ng-container matColumnDef="matricule">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.MATRICULE' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.matricule}} </mat-cell>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nom">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.NOM' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.nom}} </mat-cell>
+                    </ng-container>
+                    <!-- Color Column -->
+                    <ng-container matColumnDef="prenom">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.PRENOM' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.prenom}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="date">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.DATE' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.date|date:'yyyy-MM-dd'}} </mat-cell>
+                    </ng-container>
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button *ngxPermissionsOnly="['canShowPermanence']" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="icon la la-search-plus"></i></button>
+                            <button *ngxPermissionsOnly="['canUpdatePermanence']" (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="icon la la-edit"></i></button>
+                            <!-- <button class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"><i class="icon la la-print"></i></button> -->
+                            <button *ngxPermissionsOnly="['canDeletePermanence']" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

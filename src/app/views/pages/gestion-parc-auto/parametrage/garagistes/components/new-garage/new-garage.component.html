@@ -1,0 +1,131 @@
+
+<!-- modal detail
+<ng-template #detailGaragiste let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">détail d'un Garagiste</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+        <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+            <div class="form-group row mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Nom du garage
+                            :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{garagiste.nomFr}}</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Adresse :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{garagiste.nomFr}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Téléphone :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{garagiste.telephone}}</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">Personne à
+                            contacter :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{garagiste.contact}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-0">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13"> Adresse :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{garagiste.adresse}}</label>
+
+                        <label class="col-sm-3 col-form-label text-dark font-weight-bold f-s-13">RC :</label>
+                        <label class="col-sm-3 col-form-label f-s-13">{{garagiste.rc}}</label>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+    </div>
+</ng-template>
+-->
+
+<!-- <div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="flaticon-plus kt-font-inverse-brand"></i>
+            </span>
+            &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.Gestion.parc.garagistes.new.title' | translate }}
+            </h3>
+        </div>
+    </div> -->
+
+
+    <div class="kt-portlet portlet-3 ">
+        <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="flaticon-plus kt-font-inverse-brand"></i>
+                </span> &nbsp;
+                <h3 class="kt-portlet__head-title">
+                    {{ 'PAGES.Gestion.parc.garagistes.new.title' | translate }}
+                </h3>
+            </div>
+        </div>
+    <form name="editForm" role="form" novalidate [formGroup]="garageForm" (ngSubmit)="ajouterGarage()">
+        <div class="form-group row mb-1">
+          <div class="col-md-4">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <input formControlName="nomFr" matInput type="text" class="form-control" name="nom"
+                        placeholder="{{ 'PAGES.Gestion.parc.garagistes.nomFr' | translate }}" >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+              <mat-form-field class="example-full-width">
+                  <input formControlName="telephone" matInput type="text" class="form-control" name="numero"
+                      placeholder="{{ 'PAGES.Gestion.parc.garagistes.telephone' | translate }}" >
+              </mat-form-field>
+          </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <input formControlName="contact" matInput type="text" class="form-control" name="contact"
+                    placeholder="{{ 'PAGES.Gestion.parc.garagistes.contact' | translate }}" >
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="form-group row mb-1">
+    <div class="col-md-4">
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <input formControlName="adresse" matInput type="text" class="form-control" 
+                    placeholder="{{ 'PAGES.Gestion.parc.garagistes.adresse' | translate }}" >
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <mat-form-field class="example-full-width">
+                <input formControlName="rc" matInput type="text" class="form-control" name="contact"
+                    placeholder="{{ 'PAGES.Gestion.parc.garagistes.rc' | translate }}" >
+            </mat-form-field>
+        </div>
+    </div>
+
+</div>
+<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}"
+class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+<!-- [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"> -->
+<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+    </form>
+</div>

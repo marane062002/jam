@@ -1,0 +1,65 @@
+.btn_table_send i {
+    color: #3d94fb !important;
+}
+
+.btn.btn-clean.active,
+.btn.btn-clean:active,
+.btn.btn-clean:hover,
+.show>.btn.btn-clean {
+    color: #178be7;
+    background: #007bff;
+}
+
+.btn.btn-icon.btn-warning i {
+    color: #fd7e14 !important;
+}
+
+.btn.btn-icon.btn-warning.active i,
+.btn.btn-icon.btn-warning:focus i,
+.btn.btn-icon.btn-warning:hover i {
+    color: #ffffff !important;
+}
+
+.btn_table_dispatching i {
+    color: hsl(120, 97%, 59%) !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+}
+
+.fixe {
+    text-align: right !important;
+}
+
+.btn-export {
+    color: #ffffff !important;
+    background-color: #3875e7 !important;
+    padding: 5px 20px !important;
+}
+
+.btn-refresh {
+    color: #5a5a5a !important;
+    background-color: #e7e5e2 !important;
+    // padding: 5px 20px !important;
+}
+
+.export-align {
+    margin-left: 2% !important;
+}
+
+// style matToolTip
+::ng-deep .mat-tooltip {
+    font-size: 12px;
+    background: #ebedf2;
+    color: #2a5599 !important;
+    border: 1px solid #d7d8da;
+    text-align: center;
+}
+
+.filter-btn {
+    width: inherit;
+    padding: 12px 0 9px 0;
+}
+
+.search-btn {
+    padding: 3px 8px 1px 9px;
+}

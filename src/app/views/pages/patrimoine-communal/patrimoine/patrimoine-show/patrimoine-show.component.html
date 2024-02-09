@@ -1,0 +1,508 @@
+<!-- begin:: Content section  -->
+<div *ngIf="patrimoine">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.GENERAL.PATRIMOINE_SHOW' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                            <a *ngxPermissionsOnly="['canCreatePatrimoine']" (click)="add()"
+                                class="btn btn-outline-success btn-bold btn-sm">
+                                <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                            </a>
+                            <a *ngxPermissionsOnly="['canUpdatePatrimoine']" (click)="update(patrimoine?.id)"
+                                class="btn btn-warning btn-sm btn-bold">
+                                <i class="fas fa-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                            </a>
+                            <a *ngxPermissionsOnly="['canDeletePatrimoine']" (click)="delete(patrimoine?.id)"
+                                class="btn btn-danger btn-sm btn-bold">
+                                <i class="fas fa-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                            </a>
+                            <a (click)="showHitory()" class="btn btn-primary btn-sm btn-bold">
+                                <i class="fas fa-info-circle"></i> {{ 'PAGES.GENERAL.INFO' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.NUM_ENREGISTREMENT' | translate }} :</th>
+                                        <td >{{
+                                            patrimoine.numEnregistrement?patrimoine.numEnregistrement:"-"}}</td>
+                                        <th>{{ 'PAGES.GENERAL.DATE_ENREGISTREMENT' | translate }} :</th>
+                                        <td >{{(patrimoine.dateEnregistrement !=
+                                            null)?(patrimoine.dateEnregistrement|date:'dd/MM/yyyy'): "-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.ORGANISATION.DIVISION' | translate }} :</th>
+                                        <td >{{divisionLibelle?divisionLibelle:"-"}}</td>
+                                        <th>{{ 'PAGES.GENERAL.CLASSE' | translate }} :</th>
+                                        <td>{{patrimoine.classeMarche?patrimoine.classeMarche:"-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.STATUT' | translate }} :</th>
+                                        <td>
+                                            <span *ngIf="patrimoine.statutMarche==='1'">immatriculé </span>
+                                            <span *ngIf="patrimoine.statutMarche==='2'">non immatriculé </span>
+                                            <span *ngIf="patrimoine.statutMarche==='3'"> en cours d’immatriculation </span>
+                                        </td>
+                                        <th>{{ 'PAGES.GENERAL.STATUT_MARCHE' | translate }} :</th>
+                                        <td>{{patrimoine.statutMarche?patrimoine.statutMarche:"-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.nature_Patrimoine' | translate }} :</th>
+                                        <td >{{patrimoine.naturePAtrimoine?patrimoine.naturePAtrimoine:"-"}}
+                                        </td>
+                                        <th> {{ 'PAGES.GENERAL.TYPE_PATRIMOINE' | translate }} :</th>
+                                        <td >{{patrimoine.type?.libelle?patrimoine.type?.libelle:"-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.ORIGINE_PATRIMOINE' | translate }} :</th>
+                                        <td >
+                                            {{patrimoine.originPatrimoin?.libelle?patrimoine.originPatrimoin?.libelle:"-"}}
+                                        </td>
+                                        <th></th>
+                                        <td> </td>
+                                    </tr>
+                                    <!-- <th></th>
+                                        <td> </td> -->
+                                    <!-- </tr> -->
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.TYPESPACEVERT' | translate }} :</th>
+                                        <td > {{patrimoine.typeEspaceVert?patrimoine.typeEspaceVert:"-"}}
+                                        </td>
+                                        <th>{{ 'PAGES.GENERAL.CATEGORIEMARCHE' | translate }} :</th>
+                                        <td >
+                                            <span *ngIf="patrimoine.categorieMarche==='MARCHEGROS'"> {{
+                                                'PAGES.GENERAL.MARCHEGROS' | translate }} </span>
+                                            <span *ngIf="patrimoine.categorieMarche==='MARCHEPRES'"> {{
+                                                'PAGES.GENERAL.MARCHEPRES' | translate }} </span>
+                                            <span *ngIf="patrimoine.categorieMarche==='MARCHEAUTRE'"> {{
+                                                'PAGES.GENERAL.MARCHEAUTRE' | translate }} </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.TYPEMARCHE' | translate }} :</th>
+                                        <td >
+                                            <span *ngIf="patrimoine.typeCategorieMarche==='1'"> السمك </span>
+                                            <span *ngIf="patrimoine.typeCategorieMarche==='2'"> الخضر والفواكه</span>
+                                            <span *ngIf="patrimoine.typeCategorieMarche==='3'"> الحبوب </span>
+                                        </td>
+
+                                        <th>{{ 'PAGES.GENERAL.CATEGORIEVOIE' | translate }} :</th>
+
+                                        <td >
+                                            <span *ngIf="patrimoine.categorieVoies==='1'"> طرق التهيئة</span>
+                                            <span *ngIf="patrimoine.categorieVoies==='2'"> طرق التجزئة</span>
+                                            <span *ngIf="patrimoine.categorieVoies==='3'"> المسالك </span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.Spec_Patrimoin' | translate }} :</th>
+                                        <td >{{patrimoine.typeSpecialite?patrimoine.typeSpecialite:"-"}}</td>
+                                        <th>{{ 'PAGES.GENERAL.Ref_fonc' | translate }} :</th>
+                                        <td >
+                                            {{patrimoine.refFonciere.libelle?patrimoine.refFonciere.libelle:"-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.VILLE' | translate }} :</th>
+                                        <td >{{patrimoine.ville.libelle?patrimoine.ville.libelle:"-"}}</td>
+                                        <th>{{ 'PAGES.GENERAL.ARRONDISSEMENT' | translate }} :</th>
+                                        <td >
+                                            {{patrimoine.arrondissement?.libelle?patrimoine.arrondissement.libelle:"-"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.ADRESSE' | translate }} :</th>
+                                        <td >{{patrimoine.adresse?patrimoine.adresse:"-"}}</td>
+                                        <th>{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :</th>
+                                        <td >{{patrimoine.superficie?patrimoine.superficie:"-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.PRIX_AQUISITION' | translate }} :</th>
+                                        <td >{{(patrimoine.prixAquisition != null)?(patrimoine.prixAquisition
+                                            | macurrency): "-"}}</td>
+                                        <th>{{ 'PAGES.GENERAL.NUM_ENREGISTREMENT_CF' | translate }} :</th>
+                                        <td>{{patrimoine.numEnregistrementCF?patrimoine.numEnregistrementCF:"-"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DATE_INSCRIPTION_CF' | translate }} :</th>
+                                        <td>{{(patrimoine.dateEnreCF !=
+                                            null)?(patrimoine.dateEnreCF|date:'dd/MM/yyyy'):"-"}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                    <div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSource1" matSort>
+                            <!-- file name Column -->
+                            <ng-container matColumnDef="nomDoc">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="dow">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    {{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <button type="button" (click)="onClickPj(row.name,row.idAlfresco,row.id)"
+                                        [disabled]="!row.idAlfresco"
+                                        [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }"
+                                        class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+                                        <i class="flaticon-download-1"></i></button>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                            </mat-row>
+                        </mat-table>
+                    </div>
+                </div>
+                <hr>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="panel-title" style="color: #2a79b1">
+                            {{ "PAGES.CONVENTION.DETAIL" | translate }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="col-md-12 show_port">
+                        <br />
+                        <div class="kt-portlet__foot">
+                            <mat-tab-group>
+
+                                <mat-tab label="{{'PAGES.MARCHE.convention.TAB_360.MAGASIN' | translate	}}">
+                                    <div class="kt-portlet__body">
+
+
+                                        <!-- begin:: content section datasource -->
+                                        <!-- <div *ngIf="dataSize > 0"> -->
+                                        <div class="kt-portlet__body">
+                                            <div class="kt-portlet__body kt-portlet__body--fit">
+
+
+                                                <div class="example-container mat-elevation-z8">
+
+                                                    <table id="exportData" mat-table [dataSource]="dataSource"
+                                                        class="mat-elevation-z8" matSort>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="Nom">
+                                                            <th class="num" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header>{{ 'PAGES.GENERAL.NUM_MAG' | translate
+                                                                }} </th>
+                                                            <td class="num" mat-cell *matCellDef="let row">
+                                                                {{row.numMagasin ? row.numMagasin : '-'}} </td>
+                                                        </ng-container>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="Prenom">
+                                                            <th class="objet" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header> {{ 'PAGES.GENERAL.SUPERFICIE' |
+                                                                translate }} </th>
+                                                            <td class="objet" mat-cell *matCellDef="let row">
+                                                                {{row.superficieMag ? row.superficieMag : '-'}} </td>
+                                                        </ng-container>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="organisme">
+                                                            <th class="tva" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header>{{ 'PAGES.GENERAL.LOCALISATION' |
+                                                                translate }} </th>
+                                                            <td class="tva" mat-cell *matCellDef="let row">
+                                                                {{row.localisation ? row.localisation : '-'}} </td>
+                                                        </ng-container>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="autorisation">
+                                                            <th class="prixU" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header>{{ 'PAGES.GENERAL.NOM_LOC' | translate
+                                                                }} </th>
+                                                            <td class="prixU" mat-cell *matCellDef="let row">
+                                                                {{row.nomLocataireMAG ? row.nomLocataireMAG : ''}} </td>
+                                                        </ng-container>
+
+                                                        <ng-container matColumnDef="actions">
+                                                            <th class="action" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header></th>
+                                                            <td class="action" mat-cell *matCellDef="let row">
+                                                                <a href="javascript:;" (click)="showPj(row.id)"
+                                                                    class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                                                                    matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                                                                        class="la la-search-plus"></i></a>
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- <ng-container matColumnDef="actions">
+                                                            <th class="action" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                                                            <td class="action" mat-cell *matCellDef="let row">
+                                                                <a href="javascript:;" (click)="showReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>
+                                                                <a href="javascript:;" (click)="openDialog(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                                                                <a href="javascript:;" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                                                            </td>
+                                                        </ng-container> -->
+                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                                        </tr>
+                                                    </table>
+                                                    <div *ngIf="dataSize == 0 && isLoading == false"
+                                                        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                                        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                                                    </div>
+                                                    <mat-card *ngIf="isLoading"
+                                                        style="display: flex; justify-content: center; align-items: center">
+                                                        <mat-progress-spinner color="primary" mode="indeterminate"
+                                                            diameter="50">
+                                                        </mat-progress-spinner>
+                                                    </mat-card>
+                                                    <mat-paginator [length]="dataSize" [pageSize]="3" [pageIndex]="0"
+                                                        [pageSizeOptions]="[3,5,10,50]"
+                                                        showFirstLastButtons></mat-paginator>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="dataSource3" class="example-container mat-elevation-z8">
+                                            <mat-table [dataSource]="dataSource3" matSort>
+                                                <ng-container matColumnDef="nomDoc">
+                                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                        {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate
+                                                        }}</mat-header-cell>
+                                                    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="dow">
+                                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                        {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate
+                                                        }}</mat-header-cell>
+                                                    <mat-cell *matCellDef="let row">
+                                                        <button type="button"
+                                                            (click)="onClickPj2(row.name,row.idAlfresco,row.id)"
+                                                            [disabled]="!row.idAlfresco"
+                                                            [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }"
+                                                            class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+                                                            <i class="flaticon-download-1"></i></button>
+                                                    </mat-cell>
+                                                </ng-container>
+
+                                                <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                                                </mat-row>
+                                            </mat-table>
+                                        </div>
+                                        <!-- begin:: table des prix -->
+
+
+                                        <!-- end:: table des prix -->
+                                        <!-- </div> -->
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="{{'PAGES.MARCHE.convention.TAB_360.SEANCE' | translate	}}">
+                                    <div class="kt-portlet__body">
+
+
+                                        <!-- begin:: content section datasource -->
+                                        <!-- <div *ngIf="dataSize > 0"> -->
+                                        <div class="kt-portlet__body">
+                                            <div class="kt-portlet__body kt-portlet__body--fit">
+
+
+                                                <div class="example-container mat-elevation-z8">
+
+                                                    <table id="exportData" mat-table [dataSource]="dataSource2"
+                                                        class="mat-elevation-z8" matSort>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="Nom">
+                                                            <th class="num" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header>{{ 'PAGES.GENERAL.NUM_SEANCE' |
+                                                                translate }} </th>
+                                                            <td class="num" mat-cell *matCellDef="let row">
+                                                                {{row.numSeance ? row.numSeance : '-'}}</td>
+                                                        </ng-container>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="Prenom">
+                                                            <th class="objet" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header> {{ 'PAGES.GENERAL.SUPERFICIE' |
+                                                                translate }} </th>
+                                                            <td class="objet" mat-cell *matCellDef="let row">
+                                                                {{row.superficieSeance ? row.superficieSeance : '-'}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="organisme">
+                                                            <th class="tva" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header>{{ 'PAGES.GENERAL.LOCALISATION' |
+                                                                translate }} </th>
+                                                            <td class="tva" mat-cell *matCellDef="let row">
+                                                                {{row.localisation ? row.localisation : '-'}} </td>
+                                                        </ng-container>
+                                                        <!-- Name Column -->
+                                                        <ng-container matColumnDef="autorisation">
+                                                            <th class="prixU" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header>{{ 'PAGES.GENERAL.NOM_LOC' | translate
+                                                                }} </th>
+                                                            <td class="prixU" mat-cell *matCellDef="let row">
+                                                                {{row.nomLocSeance ? row.nomLocSeance : '-'}} </td>
+                                                        </ng-container>
+
+                                                        <ng-container matColumnDef="actions">
+                                                            <th class="action" mat-header-cell *matHeaderCellDef
+                                                                mat-sort-header></th>
+                                                            <td class="action" mat-cell *matCellDef="let row">
+                                                                <a href="javascript:;" (click)="showPj2(row.id)"
+                                                                    class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+                                                                    matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                                                                        class="la la-search-plus"></i></a>
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!-- <ng-container matColumnDef="actions">
+                                                            <th class="action" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                                                            <td class="action" mat-cell *matCellDef="let row">
+                                                                <a href="javascript:;" (click)="showReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>
+                                                                <a href="javascript:;" (click)="openDialog(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                                                                <a href="javascript:;" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+                                                            </td>
+                                                        </ng-container> -->
+                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                                                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;">
+                                                        </tr>
+                                                    </table>
+                                                    <div *ngIf="dataSize2 == 0 && isLoading2 == false"
+                                                        style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                                        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                                                    </div>
+                                                    <mat-card *ngIf="isLoading2"
+                                                        style="display: flex; justify-content: center; align-items: center">
+                                                        <mat-progress-spinner color="primary" mode="indeterminate"
+                                                            diameter="50">
+                                                        </mat-progress-spinner>
+                                                    </mat-card>
+                                                    <mat-paginator [length]="dataSize2" [pageSize]="3" [pageIndex]="0"
+                                                        [pageSizeOptions]="[3,5,10,50]"
+                                                        showFirstLastButtons></mat-paginator>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="dataSource4" class="example-container mat-elevation-z8">
+                                            <mat-table [dataSource]="dataSource4" matSort>
+                                                <ng-container matColumnDef="nomDoc">
+                                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                        {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate
+                                                        }}</mat-header-cell>
+                                                    <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="dow">
+                                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                        {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate
+                                                        }}</mat-header-cell>
+                                                    <mat-cell *matCellDef="let row">
+                                                        <button type="button"
+                                                            (click)="onClickPj3(row.name,row.idAlfresco,row.id)"
+                                                            [disabled]="!row.idAlfresco"
+                                                            [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }"
+                                                            class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+                                                            <i class="flaticon-download-1"></i></button>
+                                                    </mat-cell>
+                                                </ng-container>
+
+                                                <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                                                </mat-row>
+                                            </mat-table>
+                                        </div>
+                                        <!-- begin:: table des prix -->
+
+
+                                        <!-- end:: table des prix -->
+                                        <!-- </div> -->
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                        <router-outlet></router-outlet>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<div *ngIf="patrimoine">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-4">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.PATRIMOINE_MVM' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div *ngxPermissionsOnly="['canCreateMvMlocation']" class="kt-portlet__head-actions">
+                            <a (click)="newMvmL(patrimoine.id)" class="btn btn-outline-success btn-bold btn-sm">
+                                <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.AJOUTER_MVML' | translate }}
+                            </a>
+                        </div>
+                        <div *ngxPermissionsOnly="['canCreateMvMtransaction']" class="kt-portlet__head-actions">
+                            <a (click)="newMvmT(patrimoine.id)" class="btn btn-outline-success btn-bold btn-sm">
+                                <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.AJOUTER_MVMT' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <ng-container *ngIf="(asyncTabs | async) === null">
+                        {{ 'PAGES.GENERAL.LOADING' | translate }}
+                    </ng-container>
+
+                    <mat-tab-group dynamicHeight [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+                        <mat-tab *ngFor="let tab of asyncTabs | async">
+                            <ng-template mat-tab-label>{{tab.label | translate }}</ng-template>
+                          
+
+                          
+                            <div *ngIf="tab.content == '1'">
+                                <div *ngIf="selected.value==0">
+                                    <kt-tab-mvmlocation></kt-tab-mvmlocation>
+                                </div>
+                            </div>
+
+                            PERMANENCE TAB -
+                            <div *ngIf="tab.content === '2'">
+                                <div *ngIf="selected.value==1">
+                                    <kt-tab-mvmtransaction></kt-tab-mvmtransaction>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label" align="right">
+                    <button *ngxPermissionsOnly="['accessToIndexPatrimoine']" routerLink="/patrimoine/patrimoine-index"
+                        class="btn btn-label-dark"><i class="flaticon2-list-2"></i> {{ 'MENU.LISTEPATRIMOINES' |
+                        translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

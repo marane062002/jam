@@ -1,0 +1,133 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Liste des organismes de transport :</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+                    
+					<a
+						href="javascript:; "
+                        (click)="add()"
+						class="btn btn-outline-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table
+		ID="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="ID">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+			<td mat-cell *matCellDef="let row" class="num">
+				{{row.id}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Raison sociale">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>
+				Raison sociale
+			</th>
+			<td mat-cell *matCellDef="let row" class="Raison sociale">
+				{{row.raisonSociale}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="Type">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+			<td mat-cell *matCellDef="let row" class="Type">
+				{{row.type
+                  ?row.type.libelle
+                   : '-'}}
+			</td>
+		</ng-container>
+        <ng-container matColumnDef="RC">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>RC</th>
+			<td mat-cell *matCellDef="let row" class="RC">
+				{{row.rc}}
+			</td>
+		</ng-container>
+        <ng-container matColumnDef="IF">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>IF</th>
+			<td mat-cell *matCellDef="let row" class="IF">
+				{{row.iff}}
+			</td>
+		</ng-container>
+        <ng-container matColumnDef="ICE">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>ICE</th>
+			<td mat-cell *matCellDef="let row" class="ICE">
+				{{row.ice}}
+			</td>
+		</ng-container>
+        <ng-container matColumnDef="Adresse">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</th>
+			<td mat-cell *matCellDef="let row" class="Adresse">
+				{{row.adresse}}
+			</td>
+		</ng-container>
+        <ng-container matColumnDef="Tel">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Tel</th>
+			<td mat-cell *matCellDef="let row" class="Tel">
+				{{row.tel}}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+                <!-- (click)="ModifierAssociation()" -->
+				<button
+                (click)="Details(row.id)"
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+				>
+					<i class="icon la la-search-plus"></i>
+				</button>
+				<button
+                (click)="Modifier(row.id)"
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+				>
+					<i class="icon la la-edit"></i>
+				</button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div
+	*ngIf="dataSource.data.length == 0 && isLoading == false"
+	style="
+		display: flex;
+		justify-content: center;
+		padding: 2%;
+		color: orangered;
+	"
+></div>
+<mat-paginator
+*ngIf="dataSource != undefined && dataSource.data != undefined"
+[length]="totalRecords"
+[pageSize]="pageSize"
+[pageIndex]="currentPage"
+(page)="onPaginatorChange($event)"
+[pageSizeOptions]="pageSizeOptions"
+[showFirstLastButtons]="true"
+></mat-paginator>
+	<hr />
+</div>

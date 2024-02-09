@@ -1,0 +1,95 @@
+<div class="main-content container">
+    <div class="breadcrumb">
+        <h1 class="mr-2">modifier une demande de fourniture</h1>
+    </div>
+    <!-- card of depot -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card text-left">
+                <div class="card-body">
+                    <form [formGroup]="demandeFournitureFormGroup">
+                    <div class="tab-content" id="myIconTabContent">
+                        <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                            <div class="body">
+                                <div class="form-group row mb-1">
+                               <div class="col-md-6 form-group">
+                                        <label>N° Demande  de fourniture:</label>
+                                        <input class="form-control" type="text" placeholder="N° Demande de fourniture" formControlName = "numeroDemande" >
+                                        <span *ngIf="demandeFournitureFormGroup?.get('numeroDemande')?.touched && demandeFournitureFormGroup?.get('numeroDemande')?.hasError('required')" class="badge badge-danger p-2 mt-2">Veuillez renseigner ce champ</span
+                                            >
+                                    </div>
+                                    <div class="col-md-6 form-group ">
+                                        <label>Code analytique :</label>
+                                        <input class="form-control" type="text" placeholder="Code analytique" formControlName = "codeAnalytique" >
+                                        <span *ngIf="demandeFournitureFormGroup?.get('codeAnalytique')?.touched && demandeFournitureFormGroup?.get('codeAnalytique')?.hasError('required')" class="badge badge-danger p-2 mt-2">Veuillez renseigner ce champ</span
+                                            >
+                                    </div>
+                                </div>
+                                <div formArrayName="articleStockArray">
+                                    <div *ngFor="let article of articleStockArray().controls; let i=index">
+                                        <div class="form-group row mb-1" [formGroupName]="i">
+                                            <div class="col-md-3 form-group" formGroupName="magasin"  >
+                                                <label>N° magasin :</label>
+                                                <select  class="form-control"  formControlName="id" >
+                                                    <option *ngFor="let m of magazinListDTO" [value]="m.id" disabled>{{m.numeroMagasin}}</option>                   
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 form-group  " formGroupName="article">
+                                                <label>N° d'article :</label>
+
+                                                <input  class="form-control "list="courses" name="course" id="course" formControlName="numeroArticle"    (change)="onchangeLoadArticle($event,i)" (ngModelChange)="changeInputSelect($event)"  (focus)="focusInputSelect($event)">
+                                                <datalist id="courses" >
+                                                    <option *ngFor="let article of articleStockMaps" [value]="article.numeroArticle"  > {{article.numeroArticle}} ---- {{article.designation}}</option>      
+                                                </datalist>
+                                               <!--   <select  class="form-control "    formControlName="id" >
+                                                    <option *ngFor="let article of articleStockMaps" [value]="article.id"  > {{article.numeroArticle}} --------- {{article.designation}}</option>      
+                                                </select> -->
+                                            </div>
+                                            <div class="col-md-3 form-group">
+                                                <label>Quantité demandée :</label>
+                                                <input class="form-control" type="number" placeholder="Quantité demandée" formControlName = "quantiteDemande"  (blur)="checkQuanititeMin($event, i)">
+                                            </div>
+                                             <div class="col-md-3    form-group" *ngIf="false">
+                                                <label>Quantité livrée :</label>
+                                                <input class="form-control" type="number" placeholder="Quantité livrée" >
+                                            </div> 
+                                            <div class="col-md-1    form-group" >
+                                             
+                                                <button class="btn btn-outline-danger mt-4" (click)="deleteArticle(i)"><i class="nav-icon i-Close-Window font-weight-bold"></i></button>
+                                            </div> 
+
+                                           
+                                        </div>
+                                    
+                                      
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12 form-group text-right">
+                                    <button class="btn btn-outline-success mt-4" (click)="newArticle()"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+                                 </div> 
+                         
+                            </div>
+                        </div>
+                        <div class="p-3 mt-2 background-color-light border-grey br-10" *ngIf="isLogistique">
+                            <div class="row col-md-12">
+                                <div class="col-md-12 form-group" >
+                                    <label>Observation :</label>
+                                    <textarea class="form-control" type="text" formControlName = "observation"></textarea>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="m-1 float-right">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary" type="button" (click) ="modiferDemande()" ><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  -->
+  

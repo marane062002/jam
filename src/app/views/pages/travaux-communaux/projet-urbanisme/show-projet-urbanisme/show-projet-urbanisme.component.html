@@ -1,0 +1,194 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-info"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.PROJET_URBANISME.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="editProjetUrbanisme()" *ngxPermissionsOnly="['canUpdateProjetUrb']" class="btn btn-warning btn-elevate btn-icon-sm">
+                        <i class="la la-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.PROJET_URBANISME.NUM_PROJET' | translate }} :</th>
+                            <td class="donnee_show">{{details.numProjet}}</td>
+                            <th>{{ 'PAGES.PROJET_URBANISME.NOM_PROJET' | translate }} :</th>
+                            <td class="donnee_show">{{details.nomProjet}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.PROJET_URBANISME.OBJET' | translate }} :</th>
+                            <td class="donnee_show">{{details.objet}}</td>
+                            <th>{{ 'PAGES.PROJET_URBANISME.DATE_DEMARRAGE' | translate }} :</th>
+                            <td class="donnee_show">
+                                {{details.dateDemarrageTravaux | date:'dd/MM/yyyy'}}
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.PROJET_URBANISME.DATE_RECEPTION' | translate }} :</th>
+                            <td class="donnee_show">
+                                {{details.dateReception | date:'dd/MM/yyyy'}}
+                            </td>
+                            <th>{{ 'PAGES.PROJET_URBANISME.DATE_FIN_TRAVAUX' | translate }} :</th>
+                            <td class="donnee_show">
+                                {{details.dateFinTravaux | date:'dd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.PROJET_URBANISME.PROMOTEUR' | translate }} :</th>
+                            <td class="donnee_show">{{details.promotteur}}</td>
+                            <th>{{ 'PAGES.PROJET_URBANISME.BUDGET_PROJET' | translate }} :</th>
+                            <td class="donnee_show">{{details.budgetProjet | macurrency}}</td>
+                            <!-- | macurrency -->
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.PROJET_URBANISME.RESPONSABLE_RECEPTION' | translate }} :</th>
+                            <td class="donnee_show">{{details.responsableReception}}</td>
+                            <th>{{ 'PAGES.PROJET_URBANISME.MARCHE' | translate }} :</th>
+                            <td class="donnee_show">{{details.idMarche}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.PROJET_URBANISME.TYPE' | translate }} :</th>
+                            <td class="donnee_show">{{details.typeProjetUrbanisme}}</td>
+                            <th>{{ 'PAGES.PROJET_URBANISME.STATUT' | translate }} :</th>
+                            <td class="donnee_show">{{details.statutProjetUrbanisme}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-info"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.ADRESSAGE.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <div class="example-header">
+                    <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                    </mat-form-field>
+                </div>
+                <table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort width="100%">
+                    <!-- numVoix Column -->
+                    <ng-container matColumnDef="numVoix">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.ADRESSAGE.NUM_VOIX' | translate }}</th>
+                        <td mat-cell *matCellDef="let row"> {{row.numVoix}} </td>
+                    </ng-container>
+                    <!-- nomPropose Column -->
+                    <ng-container matColumnDef="nomPropose">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.ADRESSAGE.NOM_PRPOSE' | translate }}</th>
+                        <td mat-cell *matCellDef="let row"> {{row.nomPropose}} </td>
+                    </ng-container>
+                    <!-- statutAdressage Column -->
+                    <ng-container matColumnDef="statutAdressage">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{ 'PAGES.ADRESSAGE.STATUT_ADRESSAGE' | translate }}</th>
+                        <td mat-cell *matCellDef="let row">
+                            {{checkLang=='ar'?row.statutAdressage.libelle:row.statutAdressage.libelleFR}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                </div>
+                <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                    </mat-progress-spinner>
+                </mat-card>
+                <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table *ngIf="files" class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+                            <td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+                            </td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of files | async">
+                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}" matTooltip="{{FileName(item.name)}}"></td>
+                            <td> {{FileName(item.name) | slice:0:20}}</td>
+                            <td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{item.fSize/1000}} ko</td>
+                            <td>
+                                <button type="button" (click)="onClickPjName(item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="start">
+                    <p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+                    <mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin :: Action -->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end :: action -->

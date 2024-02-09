@@ -1,0 +1,47 @@
+<div class="main-content container">
+    <div class="breadcrumb">
+        <h1 class="mr-2">Réapprovisionnement</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card text-left">
+              <div class="card-body">
+                    <div class="tab-content" id="myIconTabContent">
+
+                        <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                            <div class="body">
+                                    <div class="form-group row justify-content-center mb-1">
+                                        <div class="col-md-3 form-group ">
+                                                <label>N° magasin : </label>
+                                                <ng-multiselect-dropdown     [placeholder]="'N° magasin'"  [settings]="dropdownSettings" [data]="listMagasins"  (onSelect)="selectFournisseur($event)"  >
+                                                </ng-multiselect-dropdown> 
+                                
+                                            </div> 
+                                       <!--      <label>N° magasin:</label>
+                                            <input class="form-control" type="text" placeholder="Numéro d'article">
+                                        </div>
+                                        <div class="col-md-2 col-lg-2 form-group">
+                                            <label>&nbsp;</label>
+                                            <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                        </div> -->
+                                   
+                                
+                            </div>
+                        </div>
+                        </div>
+
+                        <data-table
+                                [datasource]="listReapprovisionnement" 
+                                [headers]="headerData" 
+                                [titleTable]="'Liste des Réapprovisionnement'">
+                        </data-table>
+
+                    </div>
+              </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

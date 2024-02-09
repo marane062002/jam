@@ -1,0 +1,182 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                                {{ 'MENU.AJOUTERPRESENCE' | translate }} 
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-container">
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-2">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="fas fa-clipboard-list kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                {{ 'MENU.AJOUTERPRESENCE' | translate }} 
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <form [formGroup]="presenceForm" (submit)="onSubmit()" class="kt-form" autocomplete="off">
+                           
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder=" {{ 'PAGES.GENERAL.LIBELLE' | translate }} :"
+                                            formControlName="libelle">
+                                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        <mat-error *ngIf="isControlHasError('libelle','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                       
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="input-group date">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control" [matDatepicker]="picker"
+                                                placeholder="{{ 'PAGES.GENERAL.DATE' | translate }} :" formControlName="date">
+                                            <mat-datepicker-toggle matSuffix matSuffix [for]="picker">
+                                                <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                                </mat-icon>
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                            <mat-error *ngIf="isControlHasError('date','required')">
+                                                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" formControlName="heuraire" placeholder="{{ 'PAGES.GENERAL.PERIODE' | translate }} :">
+                                                <mat-option [value]=null>---{{ 'PAGES.GENERAL.PERIODE' | translate }}---</mat-option>
+                                                <mat-option *ngFor="let heuraire of heuraires" [value]="heuraire">
+                                                        {{heuraire.libelle}} 
+                                                </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="isControlHasError('heuraire','required')">
+                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group"> 
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" [formControl]="division" (selectionChange)=getServices($event)>
+                                                <mat-option [value]=0>---{{ 'PAGES.ORGANISATION.DIVISION' | translate }}---</mat-option>
+                                                <mat-option *ngFor="let division of divisions " value={{division.id}}>
+                                                        {{division.libelle}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                                <mat-select class="form-control" [formControl]="service" >
+                                                        <mat-option [value]=0>---{{ 'PAGES.ORGANISATION.SERVICE' | translate }}---</mat-option>
+                                                        <mat-option *ngFor="let service of services " value={{service.id}}>
+                                                                {{service.libelle}}
+                                                        </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" (click)="filter()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" class="btn btn-label-dark"><i
+                                            class="flaticon-search-1"></i>{{ 'PAGES.GENERAL.FILTER' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                          <br>
+                        <mat-divider></mat-divider>
+                        <div class="row mt-5">
+                            <div class="col-md-12 table-responsive-lg">
+                                <table class="table table-bordered">
+                                    <thead class="my-auto thead-bg">
+                                        <th scope="col">{{ 'PAGES.PERSONNEL.MATRICULE' | translate }}</th>
+                                        <th scope="col">{{ 'PAGES.PERSONNEL.NOM' | translate }}</th>
+                                        <th scope="col">{{ 'PAGES.PERSONNEL.PRENOM' | translate }}</th>
+                                        <th scope="col">{{ 'PAGES.PRESENCE.ABSENT' | translate }}</th>
+                                        <th scope="col">{{ 'PAGES.PRESENCE.MOTIF' | translate }}</th>
+                                        <th scope="col">{{ 'PAGES.GENERAL.DESCRIPTION' | translate }}</th>
+                                    </thead>
+                                    <tbody  *ngIf="personnels" formArrayName="lignesPresence">
+                                    <tr *ngFor="let personnel of personnels; let i = index" [formGroupName]="i">
+                                        <td class="my-auto mx-auto">
+                                           {{personnel.matricule}}
+                                        </td>
+                                        <td class="my-auto mx-auto">
+                                            {{personnel.nom}} 
+                                        </td>
+                                        <td class="my-auto mx-auto">
+                                                {{personnel.prenom}}
+                                            </td>
+                                        <td>
+                                            <mat-checkbox formControlName="absent" (change)="isAbsent($event,i)"></mat-checkbox>
+                                        </td>
+                                        <td>
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select formControlName="motif" class="form-control">
+                                                        <mat-option [value]=null>---{{ 'PAGES.PRESENCE.MOTIF' | translate }}---</mat-option>
+                                                        <mat-option *ngFor="let motif of motifs " [value]="motif">
+                                                                {{motif.libelle}} 
+                                                            </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <mat-form-field>
+                                                <textarea rows="3" formControlName="descriptif" class="form-control" matInput  matAutosizeMinRows="3" matAutosizeMaxRows="10"></textarea>
+                                            </mat-form-field>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </div>    
+                        </div>    
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': isloading}" class="btn btn-success btn-md btn-tall btn-wide">
+                                        {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                                </button>
+                                <button type="reset" class="btn btn-secondary btn-md btn-tall btn-wide">
+                                        {{ 'PAGES.GENERAL.RESET' | translate }} <i class="fas fa-times"></i>
+                                </button>
+                                <button type="button" class="btn btn-brand btn-md btn-tall btn-wide">
+                                        {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

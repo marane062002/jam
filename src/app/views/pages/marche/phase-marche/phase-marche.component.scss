@@ -1,0 +1,42 @@
+.objet {
+	width: 24% !important;
+	padding: 0 10px 0 5px !important;
+}
+
+.duree {
+    width: 10% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.tauxPhase {
+    width: 14% !important;
+    padding: 0 5px 0 0px !important;
+}
+
+.dateDebut {
+	width: 10% !important;
+	padding: 0 5px 0 0px !important;
+}
+
+.dateEffet {
+	width: 10% !important;
+	padding: 0 5px 0 0px !important;
+}
+
+.observation {
+	width: 20% !important;
+	padding: 0 5px 0 0px !important;
+}
+
+.statut {
+	width: 8% !important;
+	padding: 0 5px 0 0px !important;
+}
+
+.actions {
+	width: 12% !important;
+}
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+    padding-right: 5px !important;
+}

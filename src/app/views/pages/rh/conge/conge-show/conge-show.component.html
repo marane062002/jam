@@ -1,0 +1,128 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            {{ 'PAGES.CONGE.TITRE_SHOW' | translate }}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                            <a routerLink="/conge/conge-new" class="btn btn-outline-success btn-bold btn-sm">
+                                <i class="fas fa-user-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
+                            </a>
+                            <a href="#" class="btn btn-warning btn-sm btn-bold">
+                                <i class="fas fa-user-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                            </a>
+                            <a href="#" class="btn btn-danger btn-sm btn-bold">
+                                <i class="fas fa-user-times"></i> {{ 'PAGES.GENERAL.DELETE' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section  -->
+<div *ngIf="demande" class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.CONGE.INFOS' | translate }}
+
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ 'PAGES.PERSONNEL.NOM' | translate }} :</th>
+                                        <td>{{demande.personnel?.nom}}</td>
+                                        <th>{{ 'PAGES.PERSONNEL.PRENOM' | translate }} :</th>
+                                        <td>{{ demande.personnel?.prenom}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>{{ 'PAGES.CONGE.TYPE' | translate }} :</th>
+                                        <td>{{demande.type?.libelle}}</td>
+                                        <th>{{ 'PAGES.CONGE.DROITS' | translate }} :</th>
+                                        <td>{{ conge?.droits}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>{{ 'PAGES.CONGE.CONSOME' | translate }} :</th>
+                                        <td>{{ conge?.consome}}</td>
+
+                                        <th> {{ 'PAGES.CONGE.RESTE' | translate }} :</th>
+                                        <td>{{ conge?.reste}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DATE_DEMANDE' | translate }} :</th>
+                                        <td>{{demande?.dateDemande|date:'dd/MM/yyyy'}}</td>
+
+                                        <th>{{ 'PAGES.CONGE.DUREE' | translate }} :</th>
+                                        <td>{{demande?.duree}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'PAGES.GENERAL.DATED' | translate }} :</th>
+                                        <td>{{demande?.dateDebut|date:'dd/MM/yyyy'}}</td>
+
+                                        <th>{{ 'PAGES.GENERAL.DATEF' | translate }} :</th>
+                                        <td>{{demande?.dateFin|date:'dd/MM/yyyy'}}</td>
+                                    </tr>
+                                    <tr>
+
+
+                                        <th>{{ 'PAGES.GENERAL.STATUT_DEMANDE' | translate }} :</th>
+                                        <td colspan="3">{{demande.statut?.libelle}}</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end:: Content -->
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                        <ng-container *ngxPermissionsOnly="['canCancelDemandeConge']">
+                            <button *ngIf="!demande?.statut?.finale" (click)="cancel()" type="button" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': isloading}" class="btn btn-label-dark"><i class="flaticon2-list-2"></i> {{ 'PAGES.GENERAL.ANNULER_DEMANDE' | translate }}</button>
+                        </ng-container>
+                        <ng-container *ngxPermissionsOnly="['canValidateDemandeConge']">
+                            <button *ngIf="!demande?.statut?.finale" (click)="validate()" type="button" class="btn btn-label-dark"><i class="flaticon2-list-2"></i> {{ 'PAGES.GENERAL.VALIDER_DEMANDE' | translate }}</button>
+                        </ng-container>
+                        <ng-container *ngxPermissionsOnly="['accessToIndexDemandeConge']">
+                            <button routerLink="/conge/conge-index" class="btn btn-label-dark"><i
+                                           class="flaticon2-list-2"></i>  {{ 'MENU.LISTECONGES' | translate }}</button>
+                        </ng-container>
+
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

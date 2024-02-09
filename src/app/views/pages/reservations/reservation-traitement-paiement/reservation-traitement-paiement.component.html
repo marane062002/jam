@@ -1,0 +1,373 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            رقم  طلب الحجز :
+                            {{autorisation.id}}
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-label">
+                        <h3 class="">
+                            وضع  طلب الحجز : <span class="kt-font-brand kt-font-bold">
+                                {{autorisation.statutReservation.libelle}}
+                              </span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section 2 -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            معلومات عن طلب الحجز
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>موضوع الحجز  :</th>
+                                        <td class="donnee_show  kt-font-bold">
+                                            {{autorisation.objet}}
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>تاريخ البدء :</th>
+                                        <td class="donnee_show">
+                                            {{autorisation.dateDebut | date: 'yyyy-MM-dd '}}
+                                        </td>
+
+                                        <th>تاريخ النهاية  :</th>
+                                        <td class="donnee_show">
+                                            {{autorisation.dateFin | date: 'yyyy-MM-dd '}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>ساعة البدء :</th>
+                                        <td class="donnee_show">
+                                            {{autorisation.dateDebut | date: 'HH:mm '}}
+                                        </td>
+
+                                        <th>ساعة النهاية  :</th>
+                                        <td class="donnee_show">
+                                            {{autorisation.dateFin | date: 'HH:mm '}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>الوصف   :</th>
+                                        <td class="donnee_show kt-font-bold">
+                                            {{autorisation.description}}
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+             <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-2">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-avatar"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title">
+                            معلومات عن مقدم الطلب
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                          <!----  <a routerLink="/PersonnePhysiqueForm" id="btnAddpp" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a routerLink="/PersonnePhysiqueForm" id="btnAddpm" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a id="btnChangepp" id="btnChangepp" class="btn btn-warning btn_rec" style="display:none">
+                               تغيير
+                            </a>
+                            <a id="btnChangepp" id="btnChangepm" style="display:none" class="btn btn-warning btn_rec">
+                              تغيير
+                            </a>-->
+                            <!-- <a id="btnAddpm" routerLink="/PersonneMoraleForm" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a id="btnChangepm" (click)="editpp(reclamation.pms.id)" style="display:none" href="#"
+                                class="btn btn-warning btn_rec">
+                                <i class="flaticon-edit"></i>تغيير
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kt-portlet__body">
+
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%" id="pppp" style="display:none">
+                                <tbody>
+                                    <tr>
+                                        <th>الاسم :</th>
+                                        <td class="kt-font-bold"> {{ppSourceAutorisation.prenom}}</td>
+
+                                        <th>النسب :</th>
+                                        <td class="kt-font-bold">   {{ppSourceAutorisation.nom}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>البطاقة الوطنية :</th>
+                                        <td class="kt-font-bold">{{ppSourceAutorisation.cin}}</td>
+
+                                        <th>الهاتف المحمول :</th>
+                                        <td class="kt-font-bold"> {{ppSourceAutorisation.telephoneGsm}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table pj" width="100%" id="pmmm" style="display:none">
+                                <tbody>
+                                    <tr>
+                                        <th> معرف الضريبة: </th>
+                                        <td> {{pmSourceAutorisation.rc}}</td>
+                                        <th> السجل التجاري:</th>
+                                        <td>    {{pmSourceAutorisation.identifiantFiscal}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Numero Patente: </th>
+                                        <td>{{pmSourceAutorisation.numeroPatente}}</td>
+                                        <th>الهاتف المحمول :</th>
+                                        <td> {{pmSourceAutorisation.teleGsm}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                            <div align="right">
+                                <!--<button id="btnDetailpp" style="display:none" type="button" class="btn btn-brand">التفاصيل</button>
+                                <button id="btnDetailpm" style="display:none" type="button"
+                                    class="btn btn-brand">التفاصيل</button>-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<!-- begin:: Content section 2 -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            معلومات عن ملكية الجماعة
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>نوع الملكية :</th>
+                                        <td class="donnee_show kt-font-warning kt-font-bold">
+                                            {{autorisation.espaceReservation.bienReservation.typebiendemandeReservation.libelle}}
+                                        </td>
+
+                                        <th> الملكية :</th>
+                                        <td class="donnee_show kt-font-danger kt-font-bold">
+                                            {{autorisation.espaceReservation.bienReservation.objetDemandeAutorisation}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>الفضاء  :</th>
+                                        <td class="donnee_show">
+                                            {{autorisation.espaceReservation.espace}}
+                                        </td>
+
+                                        <th> الثمن   :</th>
+                                        <td class="donnee_show">
+                                            {{autorisation.espaceReservation.prix}}
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                            <div align="right">
+                             <!----   <button id="btnDetailbien
+                                " type="button" class="btn btn-brand">التفاصيل</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head kt-bg-portlet-4">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            معلومات المعالجة
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+											<mat-select [(ngModel)]="autorisation.statutReservation.id"  name ="statutrec"  matInput class="form-control" placeholder="الوضع">
+												<mat-option *ngFor="let item of allStatAut" [value]="item.id">{{item.libelle}}</mat-option>
+											</mat-select>
+										</mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+<div id ="paiementblock" class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="kt-portlet portlet-1">
+                <div class="kt-portlet__head kt-bg-portlet-1">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            معلومات عن الدفع
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput type="text" class="form-control" name="prenompp" placeholder="ثمن الحجز:" [(ngModel)]="autorisation.paiement.montant" required>
+                                      <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    </mat-form-field>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control" [matDatepicker]="picker2" name="dateFinTraitement" [(ngModel)]="autorisation.paiement.delais" placeholder="الموعد النهائي للدفع">
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                              </div>
+                             <div class="row">
+                                <div class="col-md-12">
+                                        <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <input matInput class="form-control" [matDatepicker]="picker" name="dateDepotgg" [(ngModel)]="autorisation.paiement.dateGenerationPaiement" placeholder="تاريخ تحديدالدفع ">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                     <mat-datepicker touchUi="true" #picker></mat-datepicker>
+
+                                               <!---- <input matInput class="form-control" [matDatepicker]="picker" [(ngModel)]="autorisation.paiement.dateGenerationPaiement" name="dateDepot" placeholder="تاريخ تحديدالدفع
+                                                ">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker touchUi="true" #picker4></mat-datepicker>-->
+
+                                            </mat-form-field>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput type="text" class="form-control" name="prenompp" placeholder="رقم التوصيل :" [(ngModel)]="autorisation.paiement.numRecu" required>
+                                      <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    </mat-form-field>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control" [matDatepicker]="picker4" name="dateFinTraitement" [(ngModel)]="autorisation.paiement.datePaiement" placeholder="تاريخ الدفع">
+                                            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #picker4></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label" align="right">
+                        <div (click)="onSubmit()" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-submit">
+							حفظ
+						</div>
+                    <!---    <button type="button" class="btn btn-info"><i class="fa fa-print"></i> الطبع</button>-->
+                        <button *ngxPermissionsOnly="['accessToIndexReservation']" type="button" class="btn btn-label-dark" routerLink="/reservations/reservations-list"><i
+                                class="flaticon2-list-2"></i>
+                                 لائحة
+                                 طلبات الحجوزات </button>
+                    </div>
+                    <div class="espace_bloc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

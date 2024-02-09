@@ -1,0 +1,491 @@
+<!-- begin:: Content -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="">
+                        {{ 'MENU.AJOUTERPATRIMOINE' | translate }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin:: Content section 2 -->
+<!--begin::Form-->
+<form [formGroup]="patrimoineForm" (submit)="onSubmit()" class="kt-form">
+    <div class="row">
+        <div class="col-lg-12 col-md-offset-2">
+            <div class="kt-portlet portlet-3">
+                <div class="kt-portlet__head kt-bg-portlet-3">
+                    <div class="kt-portlet__head-label">
+
+                        <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                            {{ 'PAGES.GENERAL.FORM_PATRIMOINE' | translate }}
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="numEnregistrement"
+                                        placeholder="{{ 'PAGES.GENERAL.NUM_ENREGISTREMENT' | translate }} :">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('numEnregistrement','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="input-group date">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput class="form-control" [matDatepicker]="picker"
+                                            placeholder="{{ 'PAGES.GENERAL.DATE_ENREGISTREMENT' | translate }} :"
+                                            formControlName="dateEnregistrement">
+                                        <mat-datepicker-toggle matSuffix matSuffix [for]="picker">
+                                            <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                            </mat-icon>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                        <mat-error *ngIf="isControlHasError('dateEnregistrement','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="idDivision"
+                                        placeholder="{{ 'PAGES.ORGANISATION.DIVISION' | translate }} :" required>
+                                        <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                        </mat-option>
+                                        <mat-option *ngFor="let d of divisions" [value]="d.id">
+                                            {{d.libelle}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('idDivision','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="classeMarche"
+                                        placeholder="{{ 'PAGES.GENERAL.CLASSE' | translate }} :" required>
+                                        <mat-option value="OUI">Oui </mat-option>
+                                        <mat-option value="NON">Non </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('idDivision','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="statutMarche"
+                                        placeholder="{{ 'PAGES.GENERAL.STATUT' | translate }} :" required>
+                                        <mat-option value="1">immatriculé </mat-option>
+                                        <mat-option value="2">non immatriculé </mat-option>
+                                        <mat-option value="3">en cours d’immatriculation </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('idDivision','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="naturePAtrimoine"
+                                        placeholder="{{ 'PAGES.GENERAL.nature_Patrimoine' | translate }} :">
+                                        <mat-option [value]=null> ---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                        </mat-option>
+                                        <mat-option value="publique">{{ 'PAGES.GENERAL.PUBLIQUE' | translate }}
+                                        </mat-option>
+                                        <mat-option value="prive">{{ 'PAGES.GENERAL.PRIVE' | translate }} </mat-option>
+                                    </mat-select>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="type"
+                                        placeholder="{{ 'PAGES.GENERAL.TYPE_PATRIMOINE' | translate }} :" required>
+                                        <div *ngIf="patrimoineForm.value.naturePAtrimoine != null">
+                                            <mat-option [value]=null>---{{ 'PAGES.GENERALVIDE' | translate }} ---
+                                            </mat-option>
+                                            <mat-option *ngFor="let t of getTypesByNaturePAtrimoine()" [value]="t"
+                                                (onSelectionChange)="onSelecteTypePatrimoine($event)">
+                                                {{t.libelle}}
+                                            </mat-option>
+                                        </div>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('type','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- categorie MArche-->
+                        <div class="col-md-3"
+                            *ngIf=" patrimoineForm.value.type!=null && patrimoineForm.value.type.id == 16">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="categorieMarche"
+                                        placeholder="{{ 'PAGES.GENERAL.CATEGORIEMARCHE' | translate }} :">
+                                        <div *ngIf="patrimoineForm.value.naturePAtrimoine != null">
+                                            <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                            </mat-option>
+                                            <mat-option value="MARCHEGROS"> {{ 'PAGES.GENERAL.MARCHEGROS' | translate }}
+                                            </mat-option>
+                                            <mat-option value="MARCHEPRES"> {{ 'PAGES.GENERAL.MARCHEPRES' | translate
+                                                }}</mat-option>
+                                            <mat-option value="MARCHEAUTRE"> {{ 'PAGES.GENERAL.MARCHEAUTRE' | translate
+                                                }} </mat-option>
+                                        </div>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('type','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- typeCategorieMarche-->
+                        <div class="col-md-3"
+                            *ngIf=" patrimoineForm.value.categorieMarche!=null && patrimoineForm.value.categorieMarche ==='MARCHEGROS'">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="typeCategorieMarche"
+                                        placeholder="{{ 'PAGES.GENERAL.TYPEMARCHE' | translate }} :">
+                                        <div *ngIf="patrimoineForm.value.naturePAtrimoine != null">
+                                            <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                            </mat-option>
+                                            <mat-option value="1"> السمك </mat-option>
+                                            <mat-option value="2"> الخضر والفواكه</mat-option>
+                                            <mat-option value="3">الحبوب </mat-option>
+                                        </div>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('type','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- categorieVoies-->
+                        <div class="col-md-3"
+                            *ngIf=" patrimoineForm.value.type!=null && patrimoineForm.value.type.id == 11">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+
+                                    <mat-select class="form-control" formControlName="categorieVoies"
+                                        placeholder="{{'PAGES.GENERAL.CATEGORIEVOIE' | translate }} :">
+                                        <div *ngIf="patrimoineForm.value.naturePAtrimoine != null">
+                                            <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate
+                                                }}---</mat-option>
+                                            <mat-option value="1"> طرق التهيئة</mat-option>
+                                            <mat-option value="2"> طرق التجزئة</mat-option>
+                                            <mat-option value="3"> المسالك </mat-option>
+                                        </div>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('type','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- typeEspaceVert-->
+                        <div class="col-md-3"
+                            *ngIf=" patrimoineForm.value.type!=null && patrimoineForm.value.type.id == 13">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+
+                                    <mat-select class="form-control" formControlName="typeEspaceVert"
+                                        placeholder="{{'PAGES.GENERAL.TYPESPACEVERT' | translate }} :">
+                                        <div *ngIf="patrimoineForm.value.naturePAtrimoine != null">
+                                            <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate
+                                                }}---</mat-option>
+                                            <mat-option value="1">حدائق التجزئة. </mat-option>
+                                            <mat-option value="2">حدائق كبرى </mat-option>
+                                        </div>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('type','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3"
+                            *ngIf=" patrimoineForm.value.type!=null && patrimoineForm.value.type.id == 11">
+                            <button mat-raised-button color="primary" style="width: 80%;" (click)="openDialog()"> {{
+                                'PAGES.GENERAL.JOUTERTYPE' | translate }}</button>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control"
+                                        formControlName="originPatrimoinText"
+                                        placeholder="{{ 'PAGES.GENERAL.ORIGINE_PATRIMOINE' | translate }} :" required>
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                                <!--
+									<mat-form-field class="example-full-width">
+										<mat-select class="form-control" formControlName="originPatrimoin" placeholder="{{ 'PAGES.GENERAL.ORIGINE_PATRIMOINE' | translate }} :" required>
+											<mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+											</mat-option>
+											<mat-option *ngFor="let o of origines" [value]="o">
+												{{o.libelle}}
+											</mat-option>
+										</mat-select>
+										<mat-error *ngIf="isControlHasError('originPatrimoin','required')">
+											<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+										</mat-error>
+									</mat-form-field>
+								-->
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="refFonciere"
+                                        placeholder="{{ 'PAGES.GENERAL.Ref_fonc' | translate }} :" required>
+                                        <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                        </mat-option>
+                                        <mat-option *ngFor="let r of references" [value]="r">
+                                            {{r.libelle}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('refFonciere','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control"
+                                        formControlName="numEnregistrementCF"
+                                        placeholder="{{ 'PAGES.GENERAL.NUM_ENREGISTREMENT_CF' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="input-group date">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput class="form-control" [matDatepicker]="pickerR"
+                                            placeholder="{{ 'PAGES.GENERAL.DATE_INSCRIPTION_CF' | translate }} :"
+                                            formControlName="dateEnreCF">
+                                        <mat-datepicker-toggle matSuffix matSuffix [for]="pickerR">
+                                            <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                            </mat-icon>
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker touchUi="true" #pickerR></mat-datepicker>
+                                        <mat-error *ngIf="isControlHasError('dateEnreCF','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="libelle"
+                                        placeholder="{{ 'PAGES.GENERAL.LIBELLE' | translate }} :">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('libelle','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="typeSpecialite"
+                                        placeholder="{{ 'PAGES.GENERAL.Spec_Patrimoin' | translate }} :">
+                                    <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                    <mat-error *ngIf="isControlHasError('typeSpecialite','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" (selectionChange)="onSelectVille()"
+                                        formControlName="ville" placeholder="{{ 'PAGES.GENERAL.VILLE' | translate }} :"
+                                        required>
+                                        <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                        </mat-option>
+                                        <mat-option *ngFor="let v of villes" [value]="v">
+                                            {{ v.libelle }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="isControlHasError('ville','required')">
+                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select class="form-control" formControlName="arrondissement"
+                                        placeholder="{{ 'PAGES.GENERAL.ARRONDISSEMENT' | translate }} :" required>
+                                        <mat-option [value]=null>---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                        </mat-option>
+                                        <mat-option *ngFor="let arr of arrondissements" [value]="arr">
+                                            {{ arr.libelle }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" class="form-control" formControlName="adresse"
+                                        placeholder="{{ 'PAGES.GENERAL.ADRESSE' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="number" class="form-control" formControlName="prixAquisition"
+                                        placeholder="{{ 'PAGES.GENERAL.PRIX_AQUISITION' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="number" class="form-control" formControlName="superficie"
+                                        placeholder="{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :">
+                                    <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput type="text" class="form-control" formControlName="observation"
+                                        placeholder="{{ 'PAGES.GENERAL.OBSERVATION' | translate }} :" Rows="5">
+                                            </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <!-- start section::edit file form -->
+                <div class="row">
+                    <div class="col-md-6 show_port input-group">
+                        <form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+                            <label class="input-group-btn">
+                                <span class="btn btn-info">
+                                    {{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
+                                        (change)="save($event)" id="customFile" style="display: none;" multiple>
+                                </span>
+                            </label>
+                            <input id="test" type="text" class="form-control" readonly>
+                        </form>
+                    </div>
+                    <div class="col-md-3" style="padding-top: 27px;">
+                        <button class="btn btn-info" type="button" (click)="validerPj()"
+                            style="position: absolute;right: 0px;">
+                            {{ 'PAGES.GENERAL.SAVE' | translate }}
+                        </button>
+                    </div>
+                </div>
+                <!-- end section::edit file form -->
+                <!-- begin::file datasource -->
+                <div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+
+                    <mat-table [dataSource]="dataSource1" matSort>
+                        <ng-container matColumnDef="nomDoc">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+                            <mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let row; let i=index">
+                                <button type="button" (click)="onDeletePj(i)"
+                                    class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                                    matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+                                    <i class="icon la la-trash"></i>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns1;">
+                        </mat-row>
+                    </mat-table>
+
+                </div>
+                <!-- end::file datasource -->
+            </div>
+        </div>
+    </div><br><br>
+    <!--Action Section :: begin-->
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label" align="right">
+            <button type="submit" matTooltip="{{ 'PAGES.GENERAL.SAVE' | translate }}" class="btn btn-success"
+                [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+                <i class="icon la la-floppy-o"></i>
+                {{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+            <button matTooltip="{{ 'PAGES.GENERAL.RESET' | translate }}" class="btn btn-secondary" type="reset"> <i
+                    _ngcontent-dlp-c41 class="la la-recycle"></i> {{ 'PAGES.GENERAL.RESET' | translate }}</button>
+            <button type="button" *ngxPermissionsOnly="['accessToIndexPatrimoine']"
+                (click)=back() matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+                class="btn btn-info" type="reset">
+                <i class="icon la la-list"></i>
+                {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        </div>
+    </div>
+    <!--Action Section :: end-->
+</form>

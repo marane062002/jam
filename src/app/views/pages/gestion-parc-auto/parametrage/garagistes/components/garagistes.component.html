@@ -1,0 +1,239 @@
+<div class="ww-100">
+   
+
+<div class="kt-content kt-grid__item kt-grid__item--fluid">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+              <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                  <div class="kt-portlet__head-label">
+                      <span class="kt-portlet__head-icon">
+            <i class="flaticon-layer"></i>
+          </span> &nbsp;
+                      <h3 class="kt-portlet__head-title">
+                          {{ 'PAGES.Gestion.parc.garagistes.title' | translate }}
+                      </h3>
+                  </div>
+                  <div class="kt-portlet__head-toolbar">
+                      <div class="kt-portlet__head-wrapper">
+                          <div class="kt-portlet__head-actions">
+                              &nbsp;
+                              <a href="javascript:; "  (click)=" addNow()" class="btn btn-success btn-elevate btn-icon-sm">
+                                  <i class="la la-plus"></i>    {{ 'PAGES.Gestion.parc.garagistes.add' | translate }} 
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="kt-portlet__body kt-portlet__body--fit">
+                  <div class="example-header col-md-4">
+                      <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                      <mat-form-field>
+                          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                      </mat-form-field>
+                  </div>
+                  <div class="example-container mat-elevation-z8">
+                      <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                  
+                          
+                          <ng-container matColumnDef="nomFr">
+                              <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.garagistes.nomFr' | translate }} </th>
+                              <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.nomFr?row.nomFr:"-"}} </td>
+                          </ng-container>
+                          <ng-container matColumnDef="telephone">
+                            <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.garagistes.telephone' | translate }} </th>
+                            <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.telephone?row.telephone:"-"}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="contact">
+                          <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.garagistes.contact' | translate }} </th>
+                          <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.contact?row.contact:"-"}} </td>
+                      </ng-container>
+                          <ng-container matColumnDef="adresse">
+                              <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.garagistes.adresse' | translate }} </th>
+                              <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.adresse?row.adresse:"-"}} </td>
+                          </ng-container>
+                          <ng-container matColumnDef="rc">
+                            <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> {{ 'PAGES.Gestion.parc.garagistes.rc' | translate }} </th>
+                            <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.rc ? row.rc :"-"}} </td>
+                        </ng-container>
+
+
+                          <ng-container matColumnDef="actions">
+                              <th mat-header-cell *matHeaderCellDef>Action</th>
+                              <td mat-cell *matCellDef="let row">
+                                    <a href="javascript:;"  (click)="showGaragistes(showGaragiste,row)"  class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                                        class="la la-search-plus"></i></a>
+                                  <!-- <a href="javascript:;" *ngxPermissionsOnly="['canUpdateAutorisation']" (click)="editAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                    class="la la-edit"></i></a> -->
+                    <a href="javascript:;"(click)=" deleteAutorisation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                        class="la la-trash"></i></a> 						
+
+                              </td>
+                          </ng-container>
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                          </tr>
+                      </table>
+
+                      <div *ngIf="datasize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                          {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                      </div>
+                      <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                          <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                          </mat-progress-spinner>
+                      </mat-card>
+                      <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                      <hr>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+    <ng-template #supprimerGaragiste let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Confirmation de suppression</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span
+                    aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+
+            <p id="pa-delete-garagiste-heading">
+                Êtes-vous certain de vouloir supprimer le Garagiste {{garagiste.nomFr}} ?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <button class="btn btn-primary ml-2" type="button" (click)="supprimerInfoGaragiste()"><i
+                    class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Supprimer</button>
+        </div>
+    </ng-template> -->
+
+    <ng-template #modifierGaragiste let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Modification d'un garagiste</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span
+                    aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+            <form name="editForm" role="form" novalidate [formGroup]="editForm">
+                <div class="form-group row mb-1">
+
+                    <div class="col-md-4 form-group ">
+                        <label>Nom du garage :</label>
+                        <input class="form-control" type="text" placeholder="Nom du garage" name="nomFr" id="field_nomFr" data-cy="nomFr" formControlName="nomFr">
+                        <div *ngIf="editForm.get('nomFr')!.invalid && (editForm.get('nomFr')!.dirty || editForm.get('nomFr')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('nomFr')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>اسم المرآب :</label>
+                        <input class="form-control" type="text" placeholder="اسم المرآب" name="nomAr" id="field_nomAr" data-cy="nomAr" formControlName="nomAr">
+                        <div *ngIf="editForm.get('nomAr')!.invalid && (editForm.get('nomAr')!.dirty || editForm.get('nomAr')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('nomAr')?.errors?.pattern">
+                                المرجوا منك إدخال الحروف باللغة العربية
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Adresse :</label>
+                        <input class="form-control" type="text" placeholder="Adresse" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse">
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Téléphone :</label>
+                        <input class="form-control" type="text" placeholder="Téléphone" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone">
+                        <div *ngIf="editForm.get('telephone')!.invalid && (editForm.get('telephone')!.dirty || editForm.get('telephone')!.touched)">
+                            <p class="alert alert-danger" *ngIf="editForm.get('telephone')?.errors?.required">
+                                Ce champ est obligatoire
+                            </p>
+                            <p class="alert alert-danger" *ngIf="editForm.get('telephone')?.errors?.pattern">
+                                Numéro de téléphone invalide.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group ">
+                        <label>Personne à contacter :</label>
+                        <input class="form-control" type="text" placeholder="Personne à contacter" name="contact" id="field_contact" data-cy="contact" formControlName="contact">
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label>RC :</label>
+                        <input class="form-control" type="text" placeholder="RC" name="rc" id="field_rc" data-cy="rc" formControlName="rc">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <!-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button> -->
+            <button class="btn btn-primary ml-2" type="button" (click)="modifierInfoGaragiste()"><i
+                    class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+        </div>
+    </ng-template>
+
+ 
+    <ng-template #showGaragiste let-c="close" let-d="dismiss" style="margin-top: 23%;">
+        <div class="modal-body" >
+            <form class="pl-4 pt-3 pr-0 pb-2 border-grey br-10 mb-0 mt-2 background-color-light">
+                    
+              <div class="form-group row justify-content-center mb-0">
+               
+                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Nom Francé :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{garagiste.nomFr ? garagiste.nomFr : "-"}}</label>
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Nom Arabe :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{garagiste.nomAr ? garagiste.nomAr : "-"}}</label>
+                        </div>
+                        <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Telephone :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{garagiste.telephone ? garagiste.telephone : "-"}}</label>
+                           <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Contact :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{garagiste.contact ? garagiste.contact : "-"}}</label>
+                        </div> 
+                       <div class="row justify-content-center">
+                            <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">RC :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{garagiste.rc ? garagiste.rc : "-"}}</label>
+                           <label class="col-sm-4 col-form-label text-dark font-weight-bold f-s-13">Adresse :</label>
+                            <label class="col-sm-2 col-form-label f-s-13">{{garagiste.adresse ? garagiste.adresse : "-"}}</label>
+                        </div> 
+                    </div>
+                   
+       
+    
+               
+                </div>
+              
+            </form> 
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">fermer</button>
+        </div>
+        </ng-template> 
+
+</div>

@@ -1,0 +1,770 @@
+<!--begin: Wizard -->
+<div #wizard class="kt-grid kt-wizard-v1 kt-wizard-v1--white" id="kt_wizard_v1" data-ktwizard-state="step-first">
+    <div class="kt-grid__item">
+        <!--begin: Form Wizard Nav -->
+        <div class="kt-wizard-v1__nav">
+            <div class="kt-wizard-v1__nav-items">
+                <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" data-ktwizard-state="current">
+                    <div class="kt-wizard-v1__nav-body">
+                        <div class="kt-wizard-v1__nav-icon">
+                            <i class="flaticon-avatar"></i>
+                        </div>
+                        <div class="kt-wizard-v1__nav-label">
+                            1) معلومات عن مقدم الطلب
+                        </div>
+                    </div>
+                </a>
+                <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step">
+                    <div class="kt-wizard-v1__nav-body">
+                        <div class="kt-wizard-v1__nav-icon">
+                            <i class="flaticon-file-2"></i>
+                        </div>
+                        <div class="kt-wizard-v1__nav-label">
+                            2) الحجوزات
+                        </div>
+                    </div>
+                </a>
+                <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step">
+                    <div class="kt-wizard-v1__nav-body">
+                        <div class="kt-wizard-v1__nav-icon">
+                            <i class="flaticon-list"></i>
+                        </div>
+                        <div class="kt-wizard-v1__nav-label">
+                            3) ملخص
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--end: Form Wizard Nav -->
+    </div>
+    <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v1__wrapper">
+        <!--begin: Form Wizard Form-->
+        <form class="kt-form" id="kt_form">
+            <!--begin: Form Wizard Step 1-->
+            <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+                <!----		<ul ktTabClickEvent class="nav nav-pills justify-content-center" role="tablist">
+							<li class="nav-item ng-star-inserted">
+								<a (click)="tab.select('tab-id-1'); show('pp');"
+	class="nav-link active show btn ul_tab_size" data-toggle="tab" href="javascript:;" role="tab" aria-selected="true">شخص خارجي </a>
+							</li>
+							<li class="nav-item ng-star-inserted">
+								<a (click)="tab.select('tab-id-2'); show('pm');" class="nav-link btn ul_tab_size" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false">شخص داخلي </a>
+							</li>
+						</ul>-->
+                <ngb-tabset #tab="ngbTabset" class="tab_ul">
+                    <ngb-tab id="tab-id-1">
+                        <ng-template ngbTabContent>
+                            <ul ktTabClickEvent class="nav nav-pills justify-content-start" role="tablist">
+                                <li class="nav-item ng-star-inserted">
+                                    <a (click)="tab.select('tab-id-3'); show('pp');" class="nav-link active show btn-btn-brand" data-toggle="tab" href="javascript:;" role="tab" aria-selected="true">شخصية مادية</a>
+                                </li>
+                                <li class="nav-item ng-star-inserted">
+                                    <a (click)="tab.select('tab-id-4'); show('pm');" class="nav-link btn btn" data-toggle="tab" href="javascript:;" role="tab" aria-selected="false">شخصية معنوية</a>
+                                </li>
+                            </ul>
+                            <ngb-tabset #tab="ngbTabset" class="tab_ul">
+                                <ngb-tab id="tab-id-3">
+                                    <ng-template ngbTabContent>
+                                        <!----        <div class="kt-heading kt-heading--md">شخصية مادية </div>-->
+                                        <div class="kt-form__section kt-form__section--first">
+                                            <div class="kt-wizard-v1__form">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <mat-select class="form-control" name="typelll" (selectionChange)="onChangeofOptions1($event)" placeholder="البطاقة الوطنية">
+                                                                    <div class="cursor">
+                                                                        <input class="form-control" name="srch" (keyup)="onKey($event.target.value)" autofocus>
+                                                                        <i></i> </div>
+                                                                    <mat-option *ngFor="let item of dataArray" value="{{item}}">
+                                                                        {{item}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <!--<div class="form-group">
+													<l-select2 [(ngModel)]="selected" [data]="allcin" [options]="options" [disabled]="false" name="nameSelect" (valueChange)="onChangeofOptions($event)"></l-select2>
+												   </div>-->
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-sm">
+													<div class="form-group"> 
+													  <l-select2 [(ngModel)]="selected" [data]="allmail" [options]="options" [disabled]="false" (valueChange)="valueChange($event)"></l-select2>
+												 </div>
+												 </div>-->
+                                                <!--</div>-->
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+
+
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" id="nn" class="form-control" name="prenompps" [(ngModel)]="formData.pps.prenom" placeholder="الاسم" value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="nompps" [(ngModel)]="formData.pps.nom" placeholder="النسب" value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="cinpps" [(ngModel)]="formData.pps.cin" placeholder="البطاقة الوطنية" id="kt_inputmask_2" value="BK-******">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <span matPrefix>+212 &nbsp;</span>
+                                                                <input type="telgsmpp" class="form-control" [(ngModel)]="formData.pps.telephoneGsm" matInput placeholder="الهاتف المحمول" name="telegsmpps">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input type="text" matInput class="form-control" name="adressepp" [(ngModel)]="formData.pps.adresse" placeholder="عنوان">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input type="text" matInput class="form-control" name="emailpp" [(ngModel)]="formData.pps.email" placeholder="البريد الإلكتروني" id="kt_inputmask_9" value="a@a.com">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="faxpp" [(ngModel)]="formData.pps.fax" placeholder="الفاكس" value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="telefixepp" [(ngModel)]="formData.pps.telephoneFixe" placeholder="الهاتف الثابت" value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngb-tab>
+                                <ngb-tab id="tab-id-4">
+                                    <ng-template ngbTabContent>
+                                        <!----  <div class="kt-heading kt-heading--md">شخصية معنوية</div>-->
+                                        <div class="kt-form__section kt-form__section--first">
+                                            <div class="kt-wizard-v1__form">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <mat-select class="form-control" name="rcSearch" (selectionChange)="onChangeofOptionsrc($event)" placeholder=" السجل التجاري">
+                                                                    <div class="cursor">
+                                                                        <input class="form-control" name="srch1" (keyup)="onKeyRc($event.target.value)" autofocus>
+                                                                        <i></i> </div>
+                                                                    <mat-option *ngFor="let item of dataArrayRc" value="{{item}}">
+                                                                        {{item}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <!--<div class="form-group">
+                                                            <l-select2 [(ngModel)]="selected" [data]="allcin" [options]="options" [disabled]="false" name="nameSelect" (valueChange)="onChangeofOptions($event)"></l-select2>
+                                                        </div>-->
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput id="allrcReadOnly" type="text" class="form-control" name="rcpm" [(ngModel)]="formData.pms.rc" placeholder="السجل التجاري" value="BROME">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" id="allidfReadOnly" class="form-control" name="idfpm" [(ngModel)]="formData.pms.identifiantFiscal" placeholder="معرف الضريبة" value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="numppm" [(ngModel)]="formData.pms.numeroPatente" placeholder="Numero Patente" id="kt_inputmask_2">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <span matPrefix>+212 &nbsp;</span>
+                                                                <input type="telgmspm" class="form-control" name="telegsmpms" [(ngModel)]="formData.pms.teleGsm" matInput placeholder="الهاتف المحمول">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <span matPrefix>+212 &nbsp;</span>
+                                                                <input type="text" matInput class="form-control" name="telFixepm" [(ngModel)]="formData.pms.teleFixe" placeholder="الهاتف الثابت">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input type="text" matInput class="form-control" name="adressepm" [(ngModel)]="formData.pms.adresse" placeholder="العنوان">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="faxpm" [(ngModel)]="formData.pps.fax" placeholder="الفاكس" value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="emailpm" [(ngModel)]="formData.pms.eMail" placeholder="البريد الالكتروني" value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput type="text" class="form-control" name="sitepm" [(ngModel)]="formData.pms.siteWeb" placeholder="الموقع الإلكتروني " value="">
+                                                                <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngb-tab>
+                            </ngb-tabset>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="tab-id-2">
+                        <ng-template ngbTabContent>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" (selectionChange)="onChangeofOptionsTypeBien($event)" placeholder="القسم ">
+                                                <mat-option *ngFor="let item of test" value="{{item}}">{{item}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" (selectionChange)="onChangeofOptionsBien($event)" placeholder="المصلحة">
+
+                                                <mat-option *ngFor="let item of test" value="{{item}}">
+                                                    {{item}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" name="soustyperec" placeholder="البطاقة الوطنية للموظف">
+                                                <mat-option *ngFor="let item of test" value="{{item}}">{{item}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+            <!--end: Form Wizard Step 1-->
+
+            <!--begin: Form Wizard Step 2-->
+            <div class="kt-wizard-v1__content stepone" data-ktwizard-type="step-content">
+                <div class="kt-heading kt-heading--md">تفاصيل الحجز</div>
+                <div class="kt-form__section kt-form__section--first">
+                    <div class="kt-wizard-v1__form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="criticiterec" [(ngModel)]="formDataBien.typebiendemandeReservation" (selectionChange)="onChangeofOptionsTypeBien($event)" placeholder="نوع الممتلك">
+                                            <mat-option *ngFor="let item of typeBien" [value]="item">{{item.libelle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="typerec" (selectionChange)="onChangeofOptionsBien($event)" [(ngModel)]="formDataBien.objetdemandeautorisation" placeholder="الممتلك">
+
+                                            <mat-option *ngFor="let item of TypeBien" [value]="item">
+                                                {{item.objetDemandeAutorisation}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="soustyperec" [(ngModel)]="formDataBien.espaceReservation" placeholder="الفضاء المستغل">
+                                            <mat-option *ngFor="let item of EspaceBien" [value]="item">{{item[1]}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <textarea matInput placeholder="موضوع  الحجز " [(ngModel)]="formDataBien.objet" name="desclonguerec"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput class="form-control" [matDatepicker]="picker2" name="dateFinTraitement" [(ngModel)]="formDataBien.dateDebut" placeholder="تاريخ بداية الحجز">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput class="form-control datepicker_form" [matDatepicker]="picker4" [(ngModel)]="formDataBien.dateFin" name="dateDepot" placeholder="تاريخ  نهاية الحجز 
+													">
+                                            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #picker4></mat-datepicker>
+
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6  my-auto"><label> ساعة بداية الحجز : </label></div>
+                                        <div class="col-md-6  my-auto">
+                                            <div class="example-full-width">
+                                                <ngb-timepicker [(ngModel)]="timeDebutTraitement" name="time"></ngb-timepicker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="example-full-width">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6  my-auto"><label> ساعة  نهاية الحجز  : </label></div>
+                                                <div class="col-md-6  my-auto">
+                                                    <div class="example-full-width">
+                                                        <ngb-timepicker [(ngModel)]="timeFinTraitement" name="time1"></ngb-timepicker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="example-full-width">
+                                        <!--	<form>
+													<label class="custom-file-upload">
+													<input type="file" class="form-control" (change)="save($event)" multiple="multiple">
+													<i class="fa fa-cloud-upload"></i> الوثائق المرفقة
+												</label>
+													<br>
+													<span [innerHTML]="result"></span>
+												</form>-->
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <form>
+                                                    <label class="input-group-btn">
+															<span class="btn btn-brand">
+																اختيار الوثائق المرفقة <input type="file" (change)="save($event)" style="display: none;" multiple>
+															</span>
+														</label>
+                                                    <input type="text" class="form-control" readonly>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end: Form Wizard Step 2-->
+
+            <!--begin: Form Wizard Step 5-->
+            <div class="kt-wizard-v1__content stepfive" data-ktwizard-type="step-content">
+                <div class="kt-form__section kt-form__section--first">
+                    <div class="kt-wizard-v1__review">
+                        <!-- begin:: Content -->
+                        <!-- begin:: Content -->
+                        <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="kt-portlet">
+                                        <div class="kt-portlet__head">
+                                            <div class="kt-portlet__head-label">
+                                                <h3 class="">
+                                                    وضع طلب الحجز : <span class="kt-font-brand kt-font-bold">
+                                {{formDataBien.statutReservation.libelle}}
+                              </span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- begin:: Content section 2 -->
+                        <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="kt-portlet portlet-1">
+                                        <div class="kt-portlet__head kt-bg-portlet-1">
+                                            <div class="kt-portlet__head-label">
+                                                <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                                                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                                    معلومات عن طلب الرخصة
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="kt-portlet__body">
+                                            <div class="row">
+                                                <div class="col-md-12 show_port">
+                                                    <table class="table pj" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>موضوع الحجز :</th>
+                                                                <td class="donnee_show  kt-font-bold">
+                                                                    {{formDataBien.objet}}
+
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>تاريخ البدء :</th>
+                                                                <td class="donnee_show">
+                                                                    {{formDataBien.dateDebut | date: 'yyyy-MM-dd '}}
+                                                                </td>
+
+                                                                <th>تاريخ النهاية :</th>
+                                                                <td class="donnee_show">
+                                                                    {{formDataBien.dateFin | date: 'yyyy-MM-dd '}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>ساعة البدء :</th>
+                                                                <td class="donnee_show">
+                                                                    {{timeDebutTraitement.hour}} : {{timeDebutTraitement.minute}}
+                                                                </td>
+
+                                                                <th>ساعة النهاية :</th>
+                                                                <td class="donnee_show">
+                                                                    {{timeFinTraitement.hour}}: {{timeFinTraitement.minute}}
+                                                                </td>
+                                                            </tr>
+                                                            <!---  <tr>
+                                        <th>الوصف   :</th>
+                                        <td class="donnee_show kt-font-bold">
+                                            {{autorisation.description}}
+                              
+                                        </td>
+                                    </tr>-->
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="kt-portlet">
+                                        <div class="kt-portlet__head kt-bg-portlet-2">
+                                            <div class="kt-portlet__head-label">
+                                                <span class="kt-portlet__head-icon">
+                            <i class="flaticon-avatar"></i>
+                        </span>
+                                                <h3 class="kt-portlet__head-title">
+                                                    معلومات عن مقدم الطلب
+                                                </h3>
+                                            </div>
+                                            <div class="kt-portlet__head-toolbar">
+                                                <div class="kt-portlet__head-actions">
+                                                    <!---   <a routerLink="/PersonnePhysiqueForm" id="btnAddpp" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a routerLink="/PersonnePhysiqueForm" id="btnAddpm" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a id="btnChangepp" id="btnChangepp" class="btn btn-warning btn_rec" style="display:none">
+                               تغيير
+                            </a>
+                            <a id="btnChangepp" id="btnChangepm" style="display:none" class="btn btn-warning btn_rec">
+                              تغيير
+                            </a>-->
+                                                    <!-- <a id="btnAddpm" routerLink="/PersonneMoraleForm" style="display:none" href="#"
+                                class="btn btn-success btn_rec">
+                                <i class="flaticon2-add-1"></i>إضافة
+                            </a>
+                            <a id="btnChangepm" (click)="editpp(reclamation.pms.id)" style="display:none" href="#"
+                                class="btn btn-warning btn_rec">
+                                <i class="flaticon-edit"></i>تغيير
+                            </a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="kt-portlet__body">
+
+                                            <div class="row">
+                                                <div class="col-md-12 show_port">
+                                                    <table class="table pj" width="100%" id="pppp" style="display:none">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>الاسم :</th>
+                                                                <td class="kt-font-bold"> {{formData.pps.prenom}}</td>
+
+                                                                <th>النسب :</th>
+                                                                <td class="kt-font-bold"> {{formData.pps.nom}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>البطاقة الوطنية :</th>
+                                                                <td class="kt-font-bold">{{formData.pps.cin}}</td>
+
+                                                                <th>الهاتف المحمول :</th>
+                                                                <td class="kt-font-bold"> {{formData.pps.telephoneGsm}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <table class="table pj" width="100%" id="pmmm" style="display:none">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th> معرف الضريبة: </th>
+                                                                <td> {{formData.pms.rc}}</td>
+                                                                <th> السجل التجاري:</th>
+                                                                <td> {{formData.pms.identifiantFiscal}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Numero Patente: </th>
+                                                                <td>{{formData.pms.numeroPatente}}</td>
+                                                                <th>الهاتف المحمول :</th>
+                                                                <td> {{formData.pms.teleGsm}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="espace_bloc"></div>
+                                                    <div align="right">
+                                                        <!----    <button id="btnDetailpp" style="display:none" type="button" class="btn btn-brand">التفاصيل</button>
+                                <button id="btnDetailpm" style="display:none" type="button"
+                                    class="btn btn-brand">التفاصيل</button>-->
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end:: Content -->
+                        <!-- begin:: Content section 2 -->
+                        <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="kt-portlet portlet-1">
+                                        <div class="kt-portlet__head kt-bg-portlet-1">
+                                            <div class="kt-portlet__head-label">
+                                                <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                                                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                                    معلومات عن ملكية الجماعة
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="kt-portlet__body">
+                                            <div class="row">
+                                                <div class="col-md-12 show_port">
+                                                    <table class="table pj" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>نوع الملكية :</th>
+                                                                <td class="donnee_show">
+                                                                    {{formDataBien.typebiendemandeReservation.libelle}}
+                                                                </td>
+
+                                                                <th> الملكية :</th>
+                                                                <td class="donnee_show">
+                                                                    {{formDataBien.objetdemandeautorisation.objetDemandeAutorisation}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>الفضاء :</th>
+                                                                <td class="donnee_show">
+                                                                    {{formDataBien.espaceReservation[1]}}
+                                                                </td>
+
+                                                                <!---- <th> الثمن   :</th>
+                                        <td class="donnee_show">
+                                            {{formDataBien.espaceReservation.prix}}
+                                        </td>-->
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="espace_bloc"></div>
+                                                    <div align="right">
+                                                        <!---  <button id="btnDetailbien
+                                " type="button" class="btn btn-brand">التفاصيل</button>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="kt-portlet portlet-1">
+                                        <div class="kt-portlet__head kt-bg-portlet-4">
+                                            <div class="kt-portlet__head-label">
+                                                <span class="kt-portlet__head-icon">
+                            <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+                        </span>
+                                                <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                                    معلومات المعالجة
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="kt-portlet__body">
+                                            <div class="row">
+                                                <div class="col-md-12 show_port">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <table class="table pj" width="100%">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <th> الوضع :</th>
+                                                                            <td class="donnee_show kt-font-warning kt-font-bold">
+                                                                                {{formDataBien.statutReservation.libelle}} </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end:: Content -->
+                        <!-- end:: Content -->
+                        <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="">
+                                        <div class="kt-portlet__head">
+                                            <div class="kt-portlet__head-label" align="right">
+                                                <!---	<button type="button" class="btn btn-info"><i class="fa fa-print"></i>
+															الطبع</button>-->
+                                                <!----	<button *ngxPermissionsOnly="['accessToIndexReservation']" type="button" class="btn btn-label-dark" routerLink="/reservations/reservations-list"><i
+																class="flaticon2-list-2"></i>  
+																 لائحة
+																 طلبات الحجوزات </button>-->
+                                            </div>
+                                            <div class="espace_bloc"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end: Form Wizard Step 5-->
+
+            <!--begin: Form Actions -->
+            <div class="kt-form__actions">
+                <div class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">
+                    السابق
+                </div>
+                <div (click)="onSubmit()" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-submit">
+                    {{ 'PAGES.GENERAL.SAVE' | translate }}
+                </div>
+                <div (click)="switch()" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-next">
+                    التالي
+                </div>
+            </div>
+            <!--end: Form Actions -->
+        </form>
+        <!--end: Form Wizard Form-->
+    </div>
+</div>
+<!--end: Wizard -->

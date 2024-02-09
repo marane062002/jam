@@ -1,0 +1,361 @@
+<div novalidate autocomplete="off">
+	<!-- {{addForm.value |json}} -->
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Modifier un mort naturel:
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<form [formGroup]="FormArticle" class="row">
+		<div class="col-md-12">
+			<div class="form-group fv-plugins-icon-container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nom</mat-label>
+								<input
+                                    formControlName="nom"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Prénom</mat-label>
+								<input
+                                formControlName="prenom"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>CIN</mat-label>
+								<input
+                                formControlName="cin"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+			
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Nationalité</mat-label>
+								
+								<!-- Using mat-select to choose nationality -->
+								<mat-select formControlName="nationalite" matNativeControl class="form-control">
+									<!-- Option for selecting 'Marocain' nationality -->
+									<mat-option value="Marocain">Marocain</mat-option>
+									
+									<!-- Option for selecting 'Autre' nationality -->
+									<mat-option value="Autre">Autre</mat-option>
+								</mat-select>
+								
+								<!-- Input field for entering nationality if 'Autre' is selected -->
+								<!-- <input *ngIf="ajoutForm.get('nationalite').value !== 'Marocain'"
+									formControlName="nationalite"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/> -->
+							</mat-form-field>
+							
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date de naissance</mat-label>
+								<input
+                                    formControlName="date"
+									type="date"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Sexe</mat-label>
+                                <!-- <input
+                               
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/> -->
+								<mat-select
+                                formControlName="sexe"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option  value="Homme">Homme</mat-option>
+                                <mat-option  value="Femme">Femme</mat-option>
+								<mat-option  value="Enfant">Enfant</mat-option>
+                                <mat-option  value="NN/NRS">NN</mat-option>
+								<mat-option  value="NN/NRS">NRS</mat-option>
+								<mat-option  value="Indeterminé">Indeterminé</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Commune: </label>
+								<mat-select
+                                formControlName="commune"
+                                [compareWith]="selectedValueCommuneFunction"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option *ngFor="let c of commune" [value]="c">{{c.libelle}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<label> Arrondissement: </label>
+								<mat-select
+                                [compareWith]="selectedValueArrondissementFunction"
+									matNativeControl 
+									class="form-control"
+                                    formControlName="arrondissement"
+								>
+                                 <mat-option *ngFor="let arr of arrondissement" [value]="arr">{{arr.libelle}}</mat-option>
+									
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Quartier: </mat-label>
+								<mat-select
+                                [compareWith]="selectedValueQuartierFunction"
+                                formControlName="quartier"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option *ngFor="let q of quartier" [value]="q">{{q.libelle}}</mat-option>
+                            </mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Lieu de décés</mat-label>
+								<input
+                                formControlName="lieu"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Date de décés</mat-label>
+								<input
+                                    formControlName="dateDeces"
+									type="date"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Constateur</mat-label>
+								<mat-select
+                                [compareWith]="selectedValueConstateurFunction"
+									matNativeControl
+									class="form-control"
+                                    formControlName="constateur"
+
+								>
+                                <mat-option *ngFor="let cnst of constateur" [value]="cnst">{{cnst.nom}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Constater à</mat-label>
+								<mat-select
+                                    formControlName="constater"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option  value="Hopital">Hopital</mat-option>
+                                <mat-option  value="Clinique">Clinique</mat-option>
+								<mat-option  value="Autre">Autre</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Cause :</mat-label>
+                                <!-- <input
+                               
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/> -->
+								<mat-select
+                                formControlName="cause"
+									matNativeControl
+									class="form-control"
+								>
+                                <mat-option  value="Maladie">Maladie</mat-option>
+                                <mat-option  value="Accident">Accident</mat-option>
+								<mat-option  value="Suicide">Suicide</mat-option>
+								<mat-option  value="Homicide">Homicide</mat-option>
+                                <mat-option  value="intention indeterminée">Intention indeterminée</mat-option>
+								<mat-option  value="inconnues">Inconnues</mat-option>
+							
+							</mat-select>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+				
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>Description de décés:</mat-label>
+								<input
+                                formControlName="descriptionDec"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+
+				</div>
+
+             <div class="row">
+				<div class="col-md-12">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Adresse de résidence</mat-label>
+							<input
+							formControlName="adresseResidence"
+								type="text"
+								class="form-control-solid form-control-lg"
+								name="address1"
+								matInput
+							/>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group fv-plugins-icon-container">
+							<div class="kt-portlet__heads">
+								<div class="kt-portlet__head-label text-right">
+									<button
+										href="javascript:; "
+										(click)="RetourEmbalages()"
+										_ngcontent-dkp-c41=""
+										class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dkp-c41=""
+											class="la la-recycle"
+										></i>
+										Retour
+									</button>
+									<button
+										_ngcontent-dkp-c41=""
+                                        (click)="update()"
+										class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+									>
+										<i
+											_ngcontent-dlp-c41
+											class="icon la la-floppy-o"
+										></i>
+										ENREGISTRER
+									</button>
+								</div>
+							</div>
+							<div class="espace_bloc"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

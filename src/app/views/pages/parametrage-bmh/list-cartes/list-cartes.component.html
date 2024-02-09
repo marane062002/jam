@@ -1,0 +1,116 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Liste des cartes</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a
+						href="javascript:; "
+						(click)="ajouter()"
+						class="btn btn-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+		>&nbsp;
+		<mat-form-field>
+			<input
+				matInput
+				(keyup)="applyFilter($event.target.value)"
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+			/>
+		</mat-form-field>
+	</div>
+	<table
+		Num="exportData"
+		mat-table
+		[dataSource]="cartes"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="Num">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+			<td mat-cell *matCellDef="let row" class="num">{{ row.id }}</td>
+		</ng-container>
+		<ng-container matColumnDef="libelle">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Libelle</th>
+			<td mat-cell *matCellDef="let row" class="libelle">
+				{{row.libelle}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="description">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+			<td mat-cell *matCellDef="let row" class="description">
+				{{row.description}}
+			</td>
+		</ng-container>
+	
+		
+	
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+					(click)="details(row.id)"
+					matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"
+				>
+					<i class="icon la la-search-plus"></i>
+				</button>
+				<button
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					(click)="update(row.id)"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"
+				>
+					<i class="icon la la-edit"></i>
+				</button>
+				<button
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+					matTooltip="Télécharger"
+				>
+					<i class="la la-download"></i>
+				</button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	></div>
+	<!-- <mat-paginator
+		*ngIf="dataSource != undefined && dataSource.data != undefined"
+		[length]="dataSource.data.length"
+		[pageSize]="5"
+		[pageIndex]="0"
+		[pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons
+	></mat-paginator> -->
+	<hr />
+</div>

@@ -1,0 +1,772 @@
+<!-- begin:: Content section 2 -->
+<div class="row">
+    <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+            <div class="kt-portlet__head kt-bg-portlet-3">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="fas fa-users kt-font-inverse-brand"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                        {{ 'PAGES.MARCHE.COMMISSIONS.TITRE_INDEX' | translate }}
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div style="display: none;" class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" id="myCheck" class="form-control" placeholder="{{ 'PAGES.MARCHE.ORDRE_SERVICE.NUM_ORDRE' | translate }}  :" name="numOP" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div style="display: none;" class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" id="myCheck1" class="form-control" placeholder="{{ 'PAGES.MARCHE.ORDRE_SERVICE.NUM_ORDRE' | translate }}:" name="numOP" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div style="display: none;" class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" id="myCheck2" class="form-control" placeholder="{{ 'PAGES.MARCHE.ORDRE_SERVICE.NUM_ORDRE' | translate }}:" name="numOP" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="kt-portlet__body kt-portlet__body--fit">
+
+                    <div class="example-container mat-elevation-z8">
+
+                        <mat-table [dataSource]="dataSource" matSort>
+
+                            <!-- ID Column -->
+                            <!-- <ng-container matColumnDef="id">
+								<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم
+									اللجنة </mat-header-cell>
+								<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+							</ng-container> -->
+
+                            <!-- Progress Column -->
+                            <ng-container matColumnDef="typeCommission">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.TYPE_COMMISION.TYPE' | translate }} </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.typeCommission.libelle}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="dateOuverture">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الالتزام بالنفقة
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.dateOuveture | date: 'dd/MM/yyyy'}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <!---   <ng-container matColumnDef="isForfait">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>  جزافي؟ </mat-header-cell>
+                      <mat-cell *matCellDef="let row" > {{row.isForfait}} </mat-cell>
+                    </ng-container>-->
+
+
+
+                            <ng-container matColumnDef="actions">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canShowCommissionConsultation']" (click)="showCommission(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
+                                            class="la la-search-plus"></i></a>
+                                    <a href="javascript:;" *ngxPermissionsOnly="['canEditCommissionConsultation']" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                            class="la la-edit"></i></a>
+                                </mat-cell>
+                            </ng-container>
+
+
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </mat-row>
+                        </mat-table>
+                    </div>
+
+                </div>
+                <br>
+                <br>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div *ngIf="AddCommissionShow">
+                            <div class="kt-portlet__head-actions">
+                                &nbsp;
+                                <a href="javascript:;" *ngxPermissionsOnly="['canEditCommissionConsultation']" (click)="nouvelleLigne()" class="btn btn-success btn-elevate btn-icon-sm">
+                                    <i class="la la-plus"></i> {{ 'PAGES.MARCHE.COMMISSIONS.TITRE_NEW' | translate }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <form class="kt-form" autocomplete="off" #form="ngForm" id="frmLigne" style="display:none">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="text" [disabled]="true" class="form-control" name="prepp" [(ngModel)]="formDataCommssion.typeCommission.libelle" placeholder="اللجنة :" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput class="form-control" [matDatepicker]="picker2" name="dateCommission" [(ngModel)]="formDataCommssion.dateOuveture" placeholder="تاريخ الالتزام بالنفقة :">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="kt-portlet__head-toolbar">
+                                <div class="kt-portlet__head-wrapper">
+                                    <div class="kt-portlet__head-actions">
+                                        &nbsp;
+                                        <a href="javascript:; " (click)="nouveauParticipant()" class="btn btn-success btn-elevate btn-icon-sm">
+                                            <i class="la la-plus"></i> {{ 'PAGES.MARCHE.COMMISSIONS.ADD_MEMBRE' | translate }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div *ngIf="showRadio">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form [formGroup]="eventEditForm" novalidate>
+                                    <div class="form-group">
+                                        <mat-radio-group [(ngModel)]="selectedStatus" formControlName="completed">
+                                            <mat-radio-button [value]="0"> {{ 'PAGES.MARCHE.COMMISSIONS.ADD_MEMBRE_INTERNE' | translate }}
+                                            </mat-radio-button>
+                                            <mat-radio-button [value]="1"> {{ 'PAGES.MARCHE.COMMISSIONS.ADD_MEMBRE_EXTERNE' | translate }}
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div *ngIf="!selectedStatus" class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="divisionAo" (selectionChange)="onChangeDivision($event)" [(ngModel)]="participantInterne.idDivision" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.DIVISION' | translate }}">
+                                            <mat-option *ngFor="let item of typeBien1" value="{{item.id}}">
+                                                {{item.libelle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="criticiterec" (selectionChange)="onChangeService($event)" [(ngModel)]="participantInterne.idService" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.SERVICE' | translate }} ">
+                                            <mat-option *ngFor="let item of typeBien" value="{{item.id}}">
+                                                {{item.libelle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="crit" (selectionChange)="onChangeofOptionsPerso($event)" [(ngModel)]="participantInterne.idPersonnel" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.PERSONNEL' | translate }}">
+                                            <mat-option *ngFor="let item of personnel" value="{{item.id}}">{{item.nom}} {{item.prenom}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="critici" (selectionChange)="onChangeofOptionsRole($event)" [(ngModel)]="participantInterne.role.id" placeholder=" {{ 'PAGES.MARCHE.COMMISSIONS.ROLE' | translate }}  ">
+                                            <mat-option *ngFor="let item of roleCommissionAll" value="{{item.id}}">
+                                                {{item.libelle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-primary  " type="button" (click)="onClick($event)">{{
+                                'PAGES.GENERAL.SAVE' | translate }}</button>
+                        </div>
+                        <div *ngIf="selectedStatus">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" name="prenompp" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.PRENOM' | translate }} :" [(ngModel)]="formDataPE.prenom" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.NOM' | translate }}  :" name="nompp" [(ngModel)]="formDataPE.nom" required>
+                                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" name="cinpp" [(ngModel)]="formDataPE.cin" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.CIN' | translate }} :" required>
+                                            <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" name="telePE" [(ngModel)]="formDataPE.tele" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.TEL' | translate }}  :" required>
+                                            <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="text" class="form-control" name="nomOrganisme" [(ngModel)]="formDataPE.organisme" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ORGANISME' | translate }}  :" required>
+                                            <mat-icon matSuffix><i class="far fa-address-card"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select class="form-control" name="critici" (selectionChange)="onChangeofOptionsRole($event)" [(ngModel)]="formDataPE.role" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ROLE' | translate }}   ">
+                                                <mat-option *ngFor="let item of roleCommissionAll" [value]="item">
+                                                    {{item.libelle}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline-primary" (click)="onClickPE($event)">{{
+                                'PAGES.GENERAL.SAVE' | translate }}</button>
+                        </div>
+
+                    </div>
+                    <br>
+                    <br>
+                    <div class="kt-portlet__body kt-portlet__body--fit">
+                        <h4 class="title-style">
+                            لائحة المشتركين الداخليين
+                        </h4>
+                        <div class="example-header">
+                            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="example-container mat-elevation-z8">
+
+                            <mat-table [dataSource]="dataSourcePI" matSort>
+
+                                <ng-container matColumnDef="nom">
+                                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.NOM' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.nom}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="division">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.DIVISION' | translate }} </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.division}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="service">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.SERVICE' | translate }} </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.service}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="role">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.ROLE' | translate }} </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.role}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="present">
+                                    <mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT' | translate }} </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <mat-form-field floatLabel="never">
+                                            <mat-select [(value)]="row.present" placeholder="
+                        {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT' | translate }}">
+                                                <mat-option [value]=true>Oui</mat-option>
+                                                <mat-option [value]=false>Non</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="justif">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <mat-form-field floatLabel="never">
+                                            <input matInput type="text" [disabled]="row.present===true || row.present===null" name="test" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE' | translate }}" [value]="row.justif" [(ngModel)]="row.justif">
+                                        </mat-form-field>
+                                    </mat-cell>
+                                </ng-container>
+
+
+
+
+
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <a href="javascript:;" (click)="deleteReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                                class="la la-trash"></i></a>
+                                    </mat-cell>
+                                </ng-container>
+
+
+
+                                <mat-header-row *matHeaderRowDef="displayedColumnsPI"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumnsPI;">
+                                </mat-row>
+                            </mat-table>
+
+                            <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                        </div>
+
+                        <br>
+                        <br>
+
+
+
+                        <h4 class="title-style">
+                            لائحة المشتركين الخارجيين
+                        </h4>
+                        <div class="example-container mat-elevation-z8">
+
+                            <mat-table [dataSource]="dataSourcePE" matSort>
+
+
+                                <ng-container matColumnDef="nom">
+                                    <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+                                        الإسم </mat-header-cell>
+                                    <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.nom}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="organisme">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ORGANISME' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.organisme}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="tele">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.TEL' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.tel}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="role">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ROLE' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.role.libelle}} </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="present">
+                                    <mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT' | translate }} </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <mat-form-field floatLabel="never">
+                                            <mat-select [(value)]="row.present" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT' | translate }}">
+                                                <mat-option [value]=true>Oui</mat-option>
+                                                <mat-option [value]=false>Non</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="justif">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE' | translate }}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <mat-form-field floatLabel="never">
+                                            <input matInput type="text" [disabled]="row.present===true || row.present===null" name="test" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE' | translate }}" [value]="row.justif" [(ngModel)]="row.justif">
+                                        </mat-form-field>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <a href="javascript:;" (click)="deleteReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+                                                class="la la-trash"></i></a>
+                                    </mat-cell>
+                                </ng-container>
+
+
+                                <mat-header-row *matHeaderRowDef="displayedColumnsPE"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumnsPE;">
+                                </mat-row>
+                            </mat-table>
+
+                            <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                        </div>
+
+
+
+                        <div *ngIf="show==3">
+                            <br>
+                            <h4 class="title-style">
+                                لائحة العروض
+                            </h4>
+                            <div class="example-container mat-elevation-z8">
+
+                                <mat-table [dataSource]="dataSourceODEvTechnique" matSort>
+
+
+                                    <ng-container matColumnDef="id">
+                                        <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم الطلب </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="NomOrganisme">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.PRESTATAIRE.NOM_PRESTATAIRE' | translate }}
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.prestataire.nom}} </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="rc">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.PRESTATAIRE.RC' | translate }}
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.prestataire.rc}} </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="tele">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.PRESTATAIRE.TEL' | translate }} </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.prestataire.tel}} </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="statut">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.NOTE' | translate }} </mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+                                            <mat-form-field floatLabel="never">
+                                                <input matInput type="text" name="test2" (change)="changeStatutTech($event,row)" placeholder=" {{ 'PAGES.MARCHE.COMMISSIONS.NOTE' | translate }}" [value]="row.noteTechnique" [(ngModel)]="row.noteTechnique">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="reserve">
+                                        <mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.STATUT' | translate }} </mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+                                            <mat-form-field floatLabel="never">
+                                                <mat-select [(value)]="row.statutTechnique" placeholder="
+                        {{ 'PAGES.MARCHE.COMMISSIONS.STATUT' | translate }}">
+                                                    <mat-option [value]=1>{{ 'PAGES.MARCHE.PROCESSUS_VALIDATION.VALIDER' | translate }} </mat-option>
+                                                    <mat-option [value]=2>{{ 'PAGES.MARCHE.PROCESSUS_VALIDATION.REFUSER' | translate }} </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+
+
+                                    <mat-header-row *matHeaderRowDef="displayedColumnsODEvAdmin"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumnsODEvAdmin;">
+                                    </mat-row>
+                                </mat-table>
+
+                                <!----    <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>-->
+                            </div>
+                        </div>
+
+                        <div *ngIf="show==4">
+                            <br>
+                            <h4 class="title-style">
+                                لائحة العروض
+                            </h4>
+                            <div class="example-container mat-elevation-z8">
+
+                                <mat-table [dataSource]="dataSourceODEvFinanciere" matSort>
+
+                                    <!-- ID Column -->
+                                    <ng-container matColumnDef="id">
+                                        <mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header> رقم الطلب </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Progress Column -->
+                                    <ng-container matColumnDef="NomOrganisme">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.NOM' | translate }}
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.prestataire.nom}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="rc">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> رقم السجل التجاري
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.prestataire.rc}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Progress Column -->
+                                    <ng-container matColumnDef="tele">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> الهاتف </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.prestataire.tel}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="statut">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> المبلغ المقترح
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+                                            <mat-form-field floatLabel="never">
+                                                <input [disabled]="true" matInput type="text" name="test2" (change)="changeMontantPropose(row)" placeholder="المبلغ المقترح" [value]="row.commande.mntTotal">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Fav Column -->
+                                    <ng-container matColumnDef="reserve">
+                                        <mat-header-cell *matHeaderCellDef> النقطة المالية </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.noteFinanciere}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Fav Column -->
+                                    <ng-container matColumnDef="action">
+                                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> <button type="button" class="btn btn-outline-primary" (click)="onClickAddOCommande(row)">إدخال
+                                                العرض المقترح</button>
+                                        </mat-cell>
+                                    </ng-container>
+
+
+
+
+                                    <!-- Name Column -->
+                                    <!---   <ng-container matColumnDef="justif">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> تاريخ الالتزام بالنفقة </mat-header-cell>
+                      <mat-cell *matCellDef="let row">
+                        <mat-form-field floatLabel="never">
+                          <input matInput type="text" [disabled]="row.present===true || row.present===null" name="test" placeholder="Symbol" [value]="row.justif" [(ngModel)]="row.justif">
+                        </mat-form-field>
+                      </mat-cell>
+                    </ng-container>-->
+
+                                    <!-- Name Column -->
+                                    <!---   <ng-container matColumnDef="isForfait">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>  جزافي؟ </mat-header-cell>
+                    <mat-cell *matCellDef="let row" > {{row.isForfait}} </mat-cell>
+                  </ng-container>-->
+
+
+
+
+                                    <mat-header-row *matHeaderRowDef="displayedColumnsODEvFin"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumnsODEvFin;">
+                                    </mat-row>
+                                </mat-table>
+
+                                <!----    <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>-->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h4 *ngIf="showCommande" class="title-style">الطلبيات</h4>
+                    <div *ngIf="showCommande" class="kt-portlet__body kt-portlet__body--fit">
+
+                        <div class="example-header">
+                            <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="example-container mat-elevation-z8">
+
+                            <mat-table [dataSource]="dataSourceCommande" matSort>
+
+
+                                <!-- Progress Column -->
+                                <ng-container matColumnDef="type">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> نوع الطلبية </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.type}} </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="article">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> الغرض </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.article.libelle?row.article.libelle:"-"}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="intituleService">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> الخدمة </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.intituleService?row.intituleService:"-"}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <!---   <ng-container matColumnDef="isForfait">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>  جزافي؟ </mat-header-cell>
+                <mat-cell *matCellDef="let row" > {{row.isForfait}} </mat-cell>
+              </ng-container>-->
+
+
+
+                                <ng-container matColumnDef="tva">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> نسبة الضريبة </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.tva}} %</mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="prixUnitaire">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        ثمن الوحدة </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                        <mat-form-field floatLabel="never">
+                                            <input matInput type="text" name="test21" (change)="changePrixUnite(row)" placeholder="المبلغ المقترح" [value]="row.prixUnitaire" [(ngModel)]="row.prixUnitaire">
+                                        </mat-form-field>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="quantite">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        الكمية </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.quantite}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="prixTotal">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        إجمالي دون الضرائب </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.prixTotal | macurrency}} </mat-cell>
+                                </ng-container>
+
+
+
+                                <mat-header-row *matHeaderRowDef="displayedColumnsCommande"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumnsCommande;">
+                                </mat-row>
+                            </mat-table>
+
+                            <!----    <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>-->
+                        </div>
+
+                    </div>
+
+                    <br>
+                    <br>
+                    <h4 *ngIf="showCommande" class="title-style">
+                        الطلبية الإجمالية
+                    </h4>
+                    <br><br>
+                    <div *ngIf="showCommande" class="row">
+                        <div class="col-md-6">
+                            <label> مبلغ إجمالي دون الضريبة :</label>
+                            <span class="kt-margin-r-15"> {{commande.mntTotal | macurrency}} </span>
+                        </div>
+                        <div class="col-md-6">
+                            <label> مبلغ شامل الضريبة :</label>
+                            <span class="kt-margin-r-15"> {{commande.mntTtc | macurrency}} </span>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <button *ngIf="showCommande" type="button" class="btn btn-outline-primary" style="float: left; margin-left: 25px !important;" (click)="validerReponsePrestataire($event)">حفظ العرض المقترح </button>
+                    <br>
+                    <br>
+
+                    <br>
+                    <br>
+                    <button type="button" (click)="validerAll()" class="btn btn-success ">
+                        حفظ <i class="far fa-save"></i>
+                    </button>
+                </form>
+
+                <div>
+                    <!-- begin:: Content section 2 -->
+                    <br>
+                    <br>
+                    <h4 *ngIf="adjucataire" class="title-style">
+                        الفائز بالصفقة
+                    </h4>
+                    <br>
+                    <br>
+
+                    <div *ngIf="adjucataire" class="row">
+                        <div class="col-md-12 show_port">
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            إسم الهيئة :</th>
+                                        <td class="donnee_show">
+                                            {{OffreAdjucataire?.prestataire.nom}} </td>
+                                        <th>
+                                            رقم السجل التجاري :</th>
+                                        <td class="donnee_show">
+                                            {{OffreAdjucataire?.prestataire.rc}} </td>
+                                        <tr>
+                                            <th>
+                                                الهاتف :</th>
+                                            <td class="donnee_show">
+                                                {{OffreAdjucataire?.prestataire.tel}} </td>
+                                            <th>
+                                                البريد الإلكتروني :</th>
+                                            <td class="donnee_show">
+                                                {{OffreAdjucataire?.prestataire.mail}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                العنوان :</th>
+                                            <td class="donnee_show" colspan="4">
+                                                {{OffreAdjucataire?.prestataire.adresse}}</td>
+                                        </tr>
+
+                                </tbody>
+
+                            </table>
+                            <table class="table pj" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <th> النقطة المالية :</th>
+                                        <td colspan="2" class="donnee_show" style="font: bold; color:blue">
+                                            {{OffreAdjucataire?.noteFinanciere}} </td>
+                                        <th> مبلغ دون الضريبة :</th>
+                                        <td colspan="2" class="donnee_show" style="font: bold; color:blue">
+                                            {{OffreAdjucataire?.commande.mntTotal | macurrency}} </td>
+                                        <th>مبلغ شامل الضريبة :</th>
+                                        <td colspan="2" class="donnee_show" style="font: bold; color:blue">
+                                            {{OffreAdjucataire?.commande.mntTtc | macurrency}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="espace_bloc"></div>
+                        </div>
+                    </div>
+                    <!----    <button  *ngIf="transfert" class="btn btn-outline-primary" type="button" (click)="AddMarcher()">التحويل إلى صفقة </button>-->
+                    <div *ngIf="transfert"> <button class="btn btn-outline-primary" *ngxPermissionsOnly="['canTranformConsultation']" type="button" (click)="AddBonCommande()">التحويل إلى أمر بالشراء </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-profile"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.MEMBRE_BUREAU.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="editMembre()" *ngxPermissionsOnly="['canUpdateAssociation']" class="btn btn-warning btn-elevate btn-icon-sm">
+                        <i class="la la-edit"></i> {{ 'PAGES.GENERAL.EDIT' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <table class="table pj" width="100%">
+                    <tbody>
+                        <tr>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.NOM' | translate }} :</th>
+                            <td class="donnee_show">{{details.nom?details.nom:"-"}}</td>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.PRENOM' | translate }} :</th>
+                            <td class="donnee_show">{{details.prenom?details.prenom:"-"}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.CIN' | translate }} :</th>
+                            <td class="donnee_show">{{details.cin?details.cin:"-"}}</td>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.ROLE' | translate }} :</th>
+                            <td class="donnee_show">{{details.fonction?details.fonction:"-"}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.SEXE' | translate }} :</th>
+                            <td class="donnee_show">{{details.sexe?details.sexe:"-"}}</td>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.TRANCHE_AGE' | translate }} :</th>
+                            <td class="donnee_show">{{details.trancheAge?details.trancheAge:"-"}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.NIVEAU_SCOLAIRE' | translate }} :</th>
+                            <td class="donnee_show">{{details.niveauScolaire?details.niveauScolaire:"-"}}</td>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.FONCTION' | translate }} :</th>
+                            <td class="donnee_show">{{details.poste?details.poste:"-"}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.MEMBRE_BUREAU.ADRESSE' | translate }} :</th>
+                            <td colspan="4" class="donnee_show">{{details.adresse?details.adresse:"-"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END DETAILS ASSOCIATION -->
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

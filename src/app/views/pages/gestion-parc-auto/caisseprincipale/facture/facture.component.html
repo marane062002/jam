@@ -1,0 +1,133 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+      <h1 class="mr-2">Factures</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+      <div class="col-md-12 mb-4">
+          <div class="card text-left">
+              <div class="card-body">
+                  <div class="tab-content" id="myIconTabContent">
+                      <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+                          <div class="body">
+                            <div class="form-group row justify-content-center mb-1">
+                                <div class="col-md-3 form-group ">
+                                    <label>N° facture :</label>
+                                    <input class="form-control" type="text" placeholder="Numéro facture">
+                                </div>
+                                <div class="col-md-2 col-lg-2 form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                                </div>
+                            </div>
+                          </div>
+                      </div>
+
+                    <data-table 
+                            [datasource]="listeFactures" 
+                            [headers]="headerData" 
+                            [actions]="actions" 
+                            [titleTable]="'Liste des Factures'"
+                            [titleButton]="' Ajouter Facture'"
+                            (ajouterElement)="modalAjouterFacture(ajouterFacture)"
+                            (selectUpdateElement)="modalModifierFacture(modifierFacture,$event)"
+                            (deleteElement)="supprimerFacture($event)">
+                    </data-table>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    <ng-template #modifierFacture let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Modification d'une facture</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row mb-1">
+              <div class="col-md-4 form-group ">
+                  <label>Date Facture :</label>
+                  <input class="form-control" type="date" placeholder="dd-mm-yyyy">
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label>Montant facture en MAD:</label>
+                <input class="form-control" type="number" placeholder="Montant facture">
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label>Numéro Facture :</label>
+                <input class="form-control" type="number" placeholder="Numéro Facture">
+              </div>
+
+              <div class="col-md-4 form-group">
+                  <label>Emetteur :</label>
+                  <select class="form-control">
+                    <option>SNTL</option>
+                    <option>ADM</option>
+                    <option>ONCF</option>
+                  </select>
+              </div>
+              
+              <div class="col-md-4 form-group">
+                  <label>Objet facture :</label>
+                  <input class="form-control" type="text" placeholder="Année">
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary ml-2" type="button" (click)="modifierInfoFacture()"><i class="nav-icon i-Pen-2 mr-2 font-weight-bold"></i>Modifier</button>
+        </div>
+    </ng-template>
+
+   <!--  Modal ajouter -->
+   <ng-template #ajouterFacture let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Nouvelle Facture</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="close()"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row mb-1">
+        <div class="col-md-4 form-group ">
+          <label>Date Facture :</label>
+          <input class="form-control" type="date" placeholder="dd-mm-yyyy">
+      </div>
+
+      <div class="col-md-4 form-group">
+        <label>Montant facture en MAD:</label>
+        <input class="form-control" type="number" placeholder="Montant facture">
+      </div>
+
+      <div class="col-md-4 form-group">
+        <label>Numéro Facture :</label>
+        <input class="form-control" type="number" placeholder="Numéro Facture">
+      </div>
+
+      <div class="col-md-4 form-group">
+          <label>Emetteur :</label>
+          <select class="form-control">
+            <option>SNTL</option>
+            <option>ADM</option>
+            <option>ONCF</option>
+          </select>
+      </div>
+      
+      <div class="col-md-4 form-group">
+          <label>Objet facture :</label>
+          <input class="form-control" type="text" placeholder="Année">
+      </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary ml-2" type="button" (click)="ajouterInfoFacture()"><i class="nav-icon i-Add font-weight-bold"></i> Ajouter</button>
+    </div>
+   </ng-template>
+   <!-- modal detail-->
+   <ng-template #detailDemandeMission let-c="close" let-d="dismiss">
+  
+   </ng-template>
+
+
+</div>
+

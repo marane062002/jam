@@ -1,0 +1,124 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Liste des equipes :</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a
+						href="javascript:; "
+						(click)="addConducteur()"
+						class="btn btn-outline-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+		>&nbsp;
+		<mat-form-field>
+			<input
+				matInput
+			
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+			/>
+		</mat-form-field>
+	</div> -->
+	<table
+		id="exportData"
+		mat-table
+		[dataSource]="equipe"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="Id">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+			<td mat-cell *matCellDef="let row" class="num">{{ row.id }}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Nom">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+			<td mat-cell *matCellDef="let row" class="Nom">
+				{{ row.nom }}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="Prenom">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Prenom</th>
+			<td mat-cell *matCellDef="let row" class="Prenom">
+				{{ row.prenom }}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="CIN">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>CIN</th>
+			<td mat-cell *matCellDef="let row" class="CIN">
+				{{ row.cin }}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="TEL">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Tél</th>
+			<td mat-cell *matCellDef="let row" class="TEL">
+				{{ row.tel }}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button
+					type="button"
+					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+					(click)="DetailConducteur(row.id)"
+				>
+					<i class="icon la la-search-plus"></i>
+				</button>
+				<button
+					type="button"
+					routerLink="/parametrages/add-type-fichier"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					(click)="ModifierConducteur(row.id)"
+				>
+					<i class="icon la la-edit"></i>
+				</button>
+				<button type="button" (click)="delete(row.id)"
+				class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<!-- <div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	>
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div> -->
+	<!-- <mat-paginator
+		*ngIf="equipe != undefined && dataSource.data != undefined"
+		[length]="dataSource.data.length"
+		[pageSize]="5"
+		[pageIndex]="0"
+		[pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons
+	></mat-paginator> -->
+	<hr />
+</div>

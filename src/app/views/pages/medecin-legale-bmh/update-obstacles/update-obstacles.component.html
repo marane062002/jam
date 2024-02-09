@@ -1,0 +1,476 @@
+<div novalidate autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Modifier un mort non naturel :</h2>
+			</div>
+		</div>
+	</div>
+	<mat-horizontal-stepper #stepper>
+		<mat-step  label="Informations défunts">
+            <form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group fv-plugins-icon-container">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Nom</mat-label>
+										<input formControlName="nom" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Prénom</mat-label>
+										<input formControlName="prenom" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>CIN</mat-label>
+										<input formControlName="cin" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Nationalité</mat-label>
+                                        <mat-select
+                                            matNativeControl
+                                            formControlName="nationalite"
+                                            class="form-control"
+                                        >
+                                            <mat-option  value="Marocain">Marocain</mat-option>
+                                            <mat-option  value="Autre">Autre</mat-option>                                    
+                                        </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+                        <div class="row" *ngIf="ajoutForm.value.nationalite === 'Autre'">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Autre Nationalité :</mat-label>
+                                        <input
+                                        formControlName="autreNationalite"
+                                        class="form-control-solid form-control-lg"
+                                        name="address1"
+                                        matInput
+                                    />
+                                	</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+                        </div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Date de naissance</mat-label>
+										<input formControlName="date" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Sexe</mat-label>
+										<mat-select formControlName="sexe" matNativeControl class="form-control">
+											<mat-option value="Homme">Homme</mat-option>
+											<mat-option value="Femme">Femme</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <label> Commune: </label>
+                                        <mat-select
+                                        formControlName="commune"
+                                            matNativeControl
+                                            class="form-control"
+                                        >
+                                        <mat-option *ngFor="let c of commune" [value]="c">{{c.libelle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <label> Arrondissement: </label>
+                                        <mat-select
+                                            matNativeControl 
+                                            class="form-control"
+                                            formControlName="arrondissement"
+                                        >
+                                         <mat-option *ngFor="let arr of arrondissement" [value]="arr">{{arr.libelle}}</mat-option>
+                                            
+                                        </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Quartier: </mat-label>
+                                        <mat-select
+                                        formControlName="quartier"
+                                            matNativeControl
+                                            class="form-control"
+                                        >
+                                        <mat-option *ngFor="let q of quartier" [value]="q">{{q.libelle}}</mat-option>
+                                    </mat-select>
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Lieu de décés</mat-label>
+                                        <input
+                                        formControlName="lieu"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Adresse de résidence</mat-label>
+                                        <input
+                                        formControlName="adresseResidence"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+
+                                    
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Adresse du décés</mat-label>
+                                        <input
+                                            formControlName="adresseDeces"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>N décés</mat-label>
+                                        <input
+                                            formControlName="numDeces"
+                                            type="number"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="pb-5" data-wizard-type="step-content">
+							<h4 class="mb-10 font-weight-bold text-dark"></h4>
+							<div class="kt-portlet">
+								<div class="kt-portlet__body">
+									<div class="row">
+										<div class="col-md-12 show_port input-group">
+											<form enctype="multipart/form-data" method="POST" style="display: -webkit-inline-box; margin-inline-start: 98px">
+												<label class="input-group-btn">
+													Pièce jointe
+													<span class="btn btn-info">
+														Sélectionner un fichier
+														<input (change)="onPcJointeDefuntsChange($event)" type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
+													</span>
+												</label>
+												<input type="text" class="form-control" readonly />
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group fv-plugins-icon-container">
+									<div class="kt-portlet__heads">
+										<div class="kt-portlet__head-label text-right">
+											<button (click)="RetourEmbalages()" href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" >
+												<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+												Retour
+											</button>
+											<!-- <button (click)="ajouter()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active">
+												<i class="icon la la-floppy-o"></i>
+												Enregistrer
+											</button> -->
+											<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active" matStepperNext>
+												<i _ngcontent-dlp-c41 class="icon la la-plus-circle"></i>
+												Suivant
+											</button>
+										</div>
+									</div>
+									<div class="espace_bloc"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </form>
+		</mat-step>
+		<mat-step label="Informations déclarant">
+			<form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Nom de déclarant :</mat-label>
+							<input   formControlName="nomDeclarent" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Prénom de déclarant :</mat-label>
+							<input formControlName="prenomDeclarent" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>CIN du déclarant:</mat-label>
+							<input formControlName="cinDeclarent" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Observation :</mat-label>
+
+							<input formControlName="observation" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de déclaration :</mat-label>
+							<input formControlName="dateDeclaration" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="pb-5" data-wizard-type="step-content">
+				<h4 class="mb-10 font-weight-bold text-dark"></h4>
+				<div class="kt-portlet">
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-12 show_port input-group">
+								<form enctype="multipart/form-data" method="POST" style="display: -webkit-inline-box; margin-inline-start: 98px">
+									<label class="input-group-btn">
+										Pièce jointe
+										<span class="btn btn-info">
+											Sélectionner un fichier
+											<input (change)="onPcDeclarantChange($event)" type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
+										</span>
+									</label>
+									<input type="text" class="form-control" readonly />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label text-right">
+					<button (click)="RetourEmbalages()" href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" matStepperPrevious>
+						<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+						Retour
+					</button>
+					<!-- <button (click)="ajouter()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active">
+						<i class="icon la la-floppy-o"></i>
+						Enregistrer
+					</button> -->
+					<button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active" matStepperNext>
+						<i _ngcontent-dlp-c41 class="icon la la-plus-circle"></i>
+						Suivant
+					</button>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
+		</form>
+		</mat-step>
+		<mat-step label="Informations décés et constateur">
+			<form action="" [formGroup]="ajoutForm">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Constateur: </mat-label>
+							<mat-select
+							formControlName="constateur"
+								matNativeControl
+								class="form-control"
+							>
+							<mat-option *ngFor="let c of constateur" [value]="c">{{c.nom}}</mat-option>
+						</mat-select>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de constation :</mat-label>
+							<input formControlName="dateConstation" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de décés :</mat-label>
+
+							<input formControlName="dateDeces" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Causes de décés :</mat-label>
+							<input formControlName="causesDeces" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Observation :</mat-label>
+
+							<input formControlName="observationConst" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="pb-5" data-wizard-type="step-content">
+				<h4 class="mb-10 font-weight-bold text-dark"></h4>
+				<div class="kt-portlet">
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-12 show_port input-group">
+								<form enctype="multipart/form-data" method="POST" style="display: -webkit-inline-box; margin-inline-start: 98px">
+									<label class="input-group-btn">
+										Pièce jointe
+										<span class="btn btn-info">
+											Sélectionner un fichier
+											<input (change)="onPcConstateurChange($event)" type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
+										</span>
+									</label>
+									<input type="text" class="form-control" readonly />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label text-right">
+					<button (click)="RetourEmbalages()" href="javascript:; " _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" matStepperPrevious>
+						<i _ngcontent-dkp-c41="" class="la la-recycle" ></i>
+						Retour
+					</button>
+					<button (click)="ajouter()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u active">
+						<i class="icon la la-floppy-o"></i>
+						Enregistrer
+					</button>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
+		 </form>
+		</mat-step>
+	</mat-horizontal-stepper>
+</div>

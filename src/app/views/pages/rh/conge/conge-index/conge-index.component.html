@@ -1,0 +1,72 @@
+<div class="kt-portlet">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                {{ 'MENU.LISTECONGES' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="kt-section">
+            <div class="example-header">
+                <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                </mat-form-field>
+            </div>
+            <div class="example-container mat-elevation-z8">
+
+                <mat-table [dataSource]="dataSource" matSort>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> # </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                    </ng-container>
+                    <!-- Progress Column -->
+                    <ng-container matColumnDef="matricule">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.MATRICULE' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.personnel?.matricule}} </mat-cell>
+                    </ng-container>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="nom">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.NOM' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.personnel?.nom}} </mat-cell>
+                    </ng-container>
+                    <!-- Color Column -->
+                    <ng-container matColumnDef="prenom">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.PERSONNEL.PRENOM' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.personnel?.prenom}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.CONGE.TYPE' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.type?.libelle}}</mat-cell>
+
+                    </ng-container>
+                    <ng-container matColumnDef="statut">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.STATUT_DEMANDE' | translate }} </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.statut?row.statut.libelle:'PAGES.GENERAL.STATUT_DEMANDE_DEFAULT' | translate}}</mat-cell>
+
+                    </ng-container>
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button *ngxPermissionsOnly="['canShowDemandeConge']" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" title="عرض"><i class="icon la la-search-plus"></i></button>
+                            <ng-container *ngxPermissionsOnly="['canUpdateDemandeConge']">
+                                <button *ngIf="!row.statut?.finale" (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i class="icon la la-edit"></i></button>
+                            </ng-container>
+                            <ng-container *ngxPermissionsOnly="['canValidateDemandeConge']">
+                                <button *ngIf="!row.statut?.finale" (click)="validate(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i class="icon la la-check-square"></i></button>
+                            </ng-container>
+                            <!-- <button  *ngIf="row.statut?.rang == 5" (click)="print(row.id)" class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"><i class="icon la la-print"></i></button>  -->
+                            <button *ngxPermissionsOnly="['canDeleteDemandeConge']" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i class="icon la la-trash"></i></button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

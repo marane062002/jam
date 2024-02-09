@@ -1,0 +1,61 @@
+<div class="kt-portlet__body">
+	<!-- Start :: Expansion panel -->
+	<mat-accordion class="example-headers-align panel-space" multi>
+		<mat-expansion-panel [expanded]="true">
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>info</mat-icon>&nbsp;{{ "PAGES.PROGRAMME.DETAIL_PROGRAMME" | translate }}
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<table class="table pj" width="100%">
+				<tbody>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.NUMERO_PROJET" | translate }} :</th>
+						<td class="donnee_show">{{programmeRetro.numero ? programmeRetro.numero : '-'}}</td>
+						<th>{{ "PAGES.PROGRAMME.AXE" | translate }} :</th>
+						<td class="donnee_show">{{programmeRetro.axe}}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.PROJET" | translate }} :</th>
+						<td class="donnee_show">{{programmeRetro.projet}}</td>
+						<th>{{ "PAGES.PROGRAMME.EMPLACEMENT" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngFor="let item of emplacements">
+								<span>{{item ? item : '-'}}</span><br>
+							</span> 
+						</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.CONSISTANCE" | translate }} :</th>
+						<td class="donnee_show">
+							<span *ngFor="let item of consistances">
+								<span>{{item ? item : '-'}}</span><br>
+							</span>
+						</td>
+						<th>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE" | translate }} :</th>
+						<td class="donnee_show">{{programmeRetro.mod}}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</th>
+						<td class="donnee_show">{{programmeRetro.dateDebut}}</td>
+						<th>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</th>
+						<td class="donnee_show">{{programmeRetro.dateFin}}</td>
+					</tr>
+					<tr>
+						<th>{{ "PAGES.PROGRAMME.DELAI" | translate }} :</th>
+						<td class="donnee_show">{{programmeRetro.delai}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</mat-expansion-panel>
+
+	</mat-accordion><br>
+	<div class="kt-portlet__heads">
+		<div class="kt-portlet__head-label text-right">
+			<button _ngcontent-dkp-c41="" (click)="RetourEmbalages()"
+				class="btn btn-info btn-md btn-tall btn-wide bg-primary kt-font-transform-u" type="reset">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				RETOUR</button>
+		</div>
+	</div>
+</div>

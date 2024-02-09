@@ -1,0 +1,161 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="kt-portlet">
+          <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+              <h3 class="">
+                إضافة نقطة     
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- begin:: Content section 2 -->
+  <div class="kt-container">
+    <div class="row">
+      <div class="col-lg-12 col-md-offset-2">
+        <div class="kt-portlet portlet-3">
+          <div class="kt-portlet__head kt-bg-portlet-3">
+            <div class="kt-portlet__head-label">
+              <span class="kt-portlet__head-icon">
+                <i class="fas fa-book-open kt-font-inverse-brand"></i>
+              </span>
+              <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                النقطة 
+              </h3>
+            </div>
+          </div>
+          <div class="kt-portlet__body">
+            <form class="kt-form" autocomplete="off" #form="ngForm" >
+              <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input [disabled]="true" matInput type="text" class="form-control" name="prepp" [(ngModel)]="formData.session.nomSession" placeholder=" الدورة :" required>
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                      </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                      <input matInput type="text" class="form-control" placeholder="موضوع النقطة :" [(ngModel)]="formData.objet" name="objetPoint"  required>
+                      <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                    <!--- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+             <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" class="form-control" placeholder="معلومات عن النقطة :" [(ngModel)]="formData.description" name="descriptionPoint"  required>
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" class="form-control" placeholder="الميزانية المقدرة  :" [(ngModel)]="formData.budget" name="budgetPoint"  required>
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                      <!--- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput class="form-control" [matDatepicker]="picker" name="dateRealisation" [(ngModel)]="formData.dateRealisation" placeholder=" تاريخ الإنجاز :    ">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        {{formData.dateRealisation  | date:'dd/MM/yyyy'}}
+                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" class="form-control" placeholder=" مصدر النقطة :" [(ngModel)]="formData.source" name="sourcePoint"  required>
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>  
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" class="form-control" placeholder="تأثير النقطة :" [(ngModel)]="formData.impacte" name="impacte"  required>
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <mat-select class="form-control"  name ="statutpoint"  [(ngModel)]="formData.statut.id" placeholder=" وضعية النقطة :">
+                              <mat-option *ngFor="let item of statutsPoints" [value]="item.id">{{item.libelle}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                  </div>
+              </div>
+           <!---   <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <mat-select class="form-control"  name ="typesession"  [(ngModel)]="formData.type.id" placeholder=" الصنف:">
+                          <mat-option  *ngFor="let item of typesPoints" [value]="item.id">{{item.libelle}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                          <mat-select  class="form-control"  name ="statutsession"  [(ngModel)]="formData.commission.id" placeholder=" اللجنةالمكلفة  :">
+                              <mat-option *ngFor="let item of commissions" [value]="item.id">{{item.nomCommission}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                  </div>
+              </div>-->
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" class="form-control" placeholder="ملاحظات عن النقطة :" [(ngModel)]="formData.observations" name="observations"  required>
+                        <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                      </mat-form-field>
+                    </div>
+                  </div>
+              </div>
+        <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                  <button type="button" (click)="send()" class="btn btn-success btn-md btn-tall btn-wide">
+                    حفظ 
+                    <i class="far fa-save"></i> </button>
+                  <button type="button" class="btn btn-secondary btn-md btn-tall btn-wide">
+                    إلغاء <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    
+  

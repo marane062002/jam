@@ -1,0 +1,166 @@
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="">
+                                    {{ 'MENU.AJOUTERCONGE' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- begin:: Content section 2 -->
+     <!--begin::Form-->
+     <form [formGroup]="demandeForm" (submit)="onSubmit()" class="kt-form">
+    <div class="kt-container">
+        <div class="row">
+            <div class="col-lg-12 col-md-offset-2">
+                <div class="kt-portlet portlet-3">
+                    <div class="kt-portlet__head kt-bg-portlet-3">
+                        <div class="kt-portlet__head-label">
+                            <span class="kt-portlet__head-icon">
+                                <i class="fas fa-address-card kt-font-inverse-brand"></i>
+                            </span>
+                            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                    {{ 'PAGES.GENERAL.FORM_CONGE' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select class="form-control" formControlName="type" (selectionChange)="getRestConge()" placeholder="{{ 'PAGES.CONGE.TYPE' | translate }} :">
+                                                        <mat-option [value]=null>---{{ 'PAGES.CONGE.TYPE' | translate }}---</mat-option>
+                                                        <mat-option *ngFor="let type of types" [value]="type">
+                                                                {{type.libelle}} 
+                                                        </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="isControlHasError('type','required')">
+                                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                    </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control"  placeholder="{{ 'PAGES.CONGE.DROITS' | translate }} :" value={{droits}} readonly="readonly" >
+                                        <mat-icon matSuffix></mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" class="form-control" placeholder="{{ 'PAGES.CONGE.CONSOME' | translate }} :" value={{consome}} readonly="readonly" >
+                                        <mat-icon matSuffix></mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text" [formControl]="reste" class="form-control" placeholder="{{ 'PAGES.CONGE.RESTE' | translate }} :"  readonly="readonly" >
+                                        <mat-icon matSuffix></mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-offset-2">
+                <div class="kt-portlet portlet-3">
+                    <div class="kt-portlet__head kt-bg-portlet-4">
+                        <div class="kt-portlet__head-label">
+                            <span class="kt-portlet__head-icon">
+                                <i class="far fa-folder-open kt-font-inverse-brand"></i>
+                            </span>
+                            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                                    {{ 'PAGES.CONGE.DEMANDE' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                                <div class="col-md-6">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="number" class="form-control" formControlName="duree" (change)="dureeChange()" placeholder="{{ 'PAGES.CONGE.DUREE' | translate }} :" required>
+                                                <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                                                <mat-error *ngIf="isControlHasError('duree','required')">
+                                                        <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                    </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                    <div class="col-md-4">
+                                            <div class="form-group">
+                                                <div class="input-group date">
+                                                    <mat-form-field class="example-full-width">
+                                                        <input matInput class="form-control" (dateChange)="dateDchange()" [matDatepicker]="picker" id="dateDebut"
+                                                            placeholder="{{ 'PAGES.GENERAL.DATED' | translate }} :" formControlName="dateDebut" required>
+                                                        <mat-datepicker-toggle matSuffix matSuffix [for]="picker">
+                                                            <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                                            </mat-icon>
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                                        <mat-error *ngIf="isControlHasError('dateDebut','required')">
+                                                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                                            </mat-error>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="col-md-3">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput type="date" class="form-control" formControlName="dateFin" placeholder="{{ 'PAGES.GENERAL.DATEF' | translate }} :" readonly="readonly">
+                                            <mat-icon matSuffix></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                           
+                        </div>
+                        <div class="kt-form__actions">
+                                <button type="submit" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': isloading}" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                        {{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+                                </button>
+                                <button type="reset" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                        {{ 'PAGES.GENERAL.RESET' | translate }} <i class="fas fa-times"></i>
+                                </button>
+                                <button type="button" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                        {{ 'PAGES.GENERAL.EXIT' | translate }} <i class="fas fa-undo-alt"></i>
+                                </button>
+                            </div>
+                      
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    </form>
+   

@@ -1,0 +1,158 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-1">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-time kt-font-inverse-brand"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.IMMOBILISATION.REFORME.TITRE_NEW' | translate }}
+            </h3>
+        </div>
+    </div>
+
+    <div class="kt-portlet__body">
+        <div class="export-align">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-export" (click)="exportTable()" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.IMMOBILISATION.REFORME.TITRE_INDEX' | translate }}">
+					<i _ngcontent-clk-c12=""
+						class="icon la la-file-excel-o"></i>{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}
+				</button>
+            </div>
+        </div>
+        <form [formGroup]="addForm">
+
+            <div class="row" mat-dialog-content class="filter__form">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select matNativeControl formControlName="typeImmobilisation" class="form-control" (selectionChange)="selectionTypeChanged($event)" placeholder="{{ 'PAGES.IMMOBILISATION.TYPE' | translate }}">
+                                <mat-option>-- {{ 'PAGES.IMMOBILISATION.TYPE' | translate }} --</mat-option>
+                                <mat-option *ngFor="let type of typeImmobilisation" [value]="type">
+                                    {{type.typeImmobilisation}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select matNativeControl formControlName="sousType" (selectionChange)="selectionSubTypeChanged($event)" class="form-control" placeholder="{{ 'PAGES.IMMOBILISATION.SOUS_TYPE' | translate }}">
+                                <mat-option>--{{ 'PAGES.IMMOBILISATION.SOUS_TYPE' | translate }}--
+                                </mat-option>
+                                <mat-option *ngFor="let sousT of sousTypes" [value]="sousT">
+                                    {{sousT.libelle}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field class="example-full-width">
+                            <input formControlName="reference" matInput (keyup)="applyFilter($event.target.value)" type="text" class="form-control" name="reference" placeholder="{{ 'PAGES.IMMOBILISATION.REFERENCE' | translate }}">
+                            <mat-icon matSuffix><i class="la la-search"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- ========================================= DATA SOURCE ========================================= -->
+
+        <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+            <!-- reference Column -->
+            <ng-container matColumnDef="reference">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'PAGES.IMMOBILISATION.REFERENCE' | translate }}</th>
+                <td mat-cell *matCellDef="let row"> {{row.reference}} </td>
+            </ng-container>
+            <!-- modeAcquisition Column -->
+            <!-- <ng-container matColumnDef="modeAcquisition">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.IMMOBILISATION.MODE_ACQUSITION' | translate }}</th>
+							<td mat-cell *matCellDef="let row">{{row.modeAcquisition}} </td>
+						</ng-container> -->
+            <!-- designation Column -->
+            <ng-container matColumnDef="designation">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'PAGES.IMMOBILISATION.DESIGNATION' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{row.designation}} </td>
+            </ng-container>
+            <!-- dateReformeFinal Column -->
+            <ng-container matColumnDef="dateReformeFinal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'PAGES.IMMOBILISATION.REFORME.DATE_REFOMR_REE' | translate }} </th>
+                <td mat-cell *matCellDef="let row">{{row.dateReformeFinal | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <!-- sousType Column -->
+            <ng-container matColumnDef="sousType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'PAGES.IMMOBILISATION.SOUS_TYPE' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{row.sousTypeImmobilisation.libelle}} </td>
+            </ng-container>
+            <!-- typeImmobilisation Column -->
+            <ng-container matColumnDef="typeImmobilisation">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'PAGES.IMMOBILISATION.TYPE' | translate }}</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.sousTypeImmobilisation.typeImmobilisation.typeImmobilisation}} </td>
+            </ng-container>
+            <!-- typeImmobilisation Column -->
+            <!-- <ng-container matColumnDef="emplacement">
+							<th mat-header-cell *matHeaderCellDef mat-sort-header>
+								{{ 'PAGES.IMMOBILISATION.EMPLACEMENT' | translate }}</th>
+							<td mat-cell *matCellDef="let row">{{row.emplacement.designation}} </td>
+						</ng-container> -->
+            <!-- dureeVie Column -->
+            <ng-container matColumnDef="dureeVie">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ 'PAGES.IMMOBILISATION.REFORME.DUREE_VIE' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{row.dureeVie}} </td>
+            </ng-container>
+            <!-- Action Column -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let row">
+                    <span *ngIf="row.dateReformeFinal!=null; else activeReforme">
+						<button type="button"
+							class="btn btn-sm btn-clean btn-icon btn-light   btn-icon-md btn_table_active_reforme"
+							matTooltip="{{ 'PAGES.IMMOBILISATION.REFORME.LIBELLE' | translate }}"><i
+								class="icon la la-battery-quarter"></i></button>
+					</span>
+                    <ng-template #activeReforme>
+                        <button type="button" (click)="reformeImmobilisation(row)" class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_reforme" matTooltip="{{ 'PAGES.IMMOBILISATION.REFORME.LIBELLE' | translate }}"><i
+								class="icon la la-battery-quarter"></i></button>
+                    </ng-template>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="dataSource.data== null || dataSource.data.length == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+            {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+        </div>
+        <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+            </mat-progress-spinner>
+        </mat-card>
+        <mat-paginator *ngIf="dataSource != undefined &&  dataSource.data != undefined " [length]="dataSource.data.length"  [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,50]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+<!-- Attachement section-->
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="onReset()">
+			<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+			{{ 'PAGES.GENERAL.RESET' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

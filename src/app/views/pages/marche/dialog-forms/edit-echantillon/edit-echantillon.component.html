@@ -1,0 +1,86 @@
+<form class="kt-form" autocomplete="off" #form="ngForm">
+    <!-- <button class="close" mat-button (click)="onNoClick()">X</button> -->
+    <h3 mat-dialog-title style="
+	text-align: center;
+    font-size: 15px !important;
+    border-bottom: 1px solid #d0cdcd;
+    color: #0a3552;
+    padding-bottom: 5px;">{{ 'PAGES.MARCHE.ECHANTILLONS.TITRE_INDEX' | translate }}</h3>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput class="form-control" [matDatepicker]="picker" name="delais" [(ngModel)]="formData.delais" placeholder="{{ 'PAGES.MARCHE.ECHANTILLONS.DELAIS' | translate }}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input matInput class="form-control" [matDatepicker]="picker2" name="dateExamen" (dateChange)="dateHeureVisite()" [(ngModel)]="formData.dateExamen" placeholder="{{ 'PAGES.MARCHE.ECHANTILLONS.DATE_EXAMEN' | translate }} ">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-8  my-auto"><label>{{ 'PAGES.MARCHE.ECHANTILLONS.HEURE' | translate }} : </label></div>
+                        <div class="col-md-4  my-auto">
+                            <div class="example-full-width">
+                                <ngb-timepicker [(ngModel)]="heureExam" name="time" (ngModelChange)="TimeOnChange($event)">
+                                </ngb-timepicker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" (selectionChange)="onChangeDivision($event)" name="divisionAo" [(ngModel)]="formData.division" placeholder="{{ 'PAGES.MARCHE.ECHANTILLONS.DIVISION' | translate }}">
+                            <mat-option *ngFor="let item of divisions" [value]="item.id">{{item.libelle}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" (selectionChange)="onChangeService($event)" name="criticiterec" [(ngModel)]="formData.service" placeholder="{{ 'PAGES.MARCHE.ECHANTILLONS.SERVICE' | translate }} ">
+                            <mat-option *ngFor="let item of services" [value]="item.id">{{item.libelle}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <mat-select class="form-control" name="crit" [(ngModel)]="formData.responsable" placeholder="{{ 'PAGES.MARCHE.ECHANTILLONS.RESPONSABLE' | translate }}">
+                            <mat-option *ngFor="let item of personnels" [value]="item.id">{{item.nom}} {{item.prenom}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label" align="right">
+                <button [disabled]="form.invalid" type="submit" [mat-dialog-close]="formData" cdkFocusInitial class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i class="icon la la-floppy-o"></i>{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                <button mat-dialog-close type="reset" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="onNoClick()">
+					<i class="icon la la-close"></i>{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+            </div>
+        </div>
+    </div>
+</form>

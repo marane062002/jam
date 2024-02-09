@@ -1,0 +1,83 @@
+<div class="row col-md-12">
+    <div class="col-md-12 col-lg-12 dos">
+        <div class="card o-hidden mb-4">
+            <div class="card-header d-flex align-items-center border-0">
+                <h3 class="w-50 float-left card-title m-0">{{titleTable}}</h3>
+                <div class="text-right w-50 float-right">
+                    <button *ngIf="actions?.canAdd" (click)="ajouter()" class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-ajouter-modal-lg"><i class="nav-icon i-Add font-weight-bold"></i>&nbsp;{{titleButton}}</button>
+                    <button *ngIf="actions?.deleteALL" (click)="submitChecked()" class="btn btn-primary" type="button" data-toggle="modal" data-target=".bd-ajouter-modal-lg"><i class="nav-icon i-Add font-weight-bold"></i>&nbsp;{{titleButtonDelete}}</button>
+                </div>
+                
+            </div>
+            <div *ngIf=" datasource?.length!=undefined &&  datasource?.length !=0">
+                <div class="table-responsive">
+                    <table class="table text-center" id="user_table">
+                        <thead>
+                            <th *ngIf="actions?.withCheckbox">
+                                <div class="form-check mb-5">
+                                    <input class="form-check-input" type="checkbox" [(ngModel)]="selectedAll" (change)="onCheckboxChange(datasource,$event,1)" style="width:20px;height:20px;border-radius:3px;">
+                                </div>
+                            </th>
+                            <th *ngFor="let header of headers">{{header.name}}</th>
+                            <th *ngIf="actions?.withAction">Actions</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of datasource">
+                                <td *ngIf="actions?.withCheckbox">
+                                    <div class="form-check mb-5">
+                                        <input class="form-check-input" type="checkbox" [checked]="selectedOne" style="width:20px;height:20px;border-radius:3px;" (change)="onCheckboxChange(item,$event,0)">
+                                    </div>
+                                </td>
+                                <td *ngFor="let header of headers">
+                                    {{header.content.split('.').length == 1 ?    item[header.content  ] || 'N/A' :  
+                                     (header.content.split('.').length == 2 ?    item[header.content.split('.')[0]][header.content.split('.')[1] ] || 'N/A' : 
+                                     item[header.content.split('.')[0]][header.content.split('.')[1]][header.content.split('.')[2]] || 'N/A'    )  }}
+                                
+                                  
+                                </td>
+                                <td>  
+                                   <!--  <a class="text-warning mr-2" *ngIf="actions?.addArticle" (click)="addArticle(item)"> <i class="nav-icon i-Add font-weight-bold"></i></a> -->
+                                   <a class="text-warning mr-2" *ngIf="actions?.canaffectDemande" (click)="affectDemande(item)"><i class="nav-icon i-Add font-weight-bold"></i></a>
+                                    <a class="text-success mr-2" *ngIf="actions?.canDetail" (click)="openLarge(item)"><i class="nav-icon i-Eye-Scan font-weight-bold"></i></a>
+                                    <a class="text-primary mr-2" *ngIf="actions?.canModify" (click)="selectupdate(item)"><i class="nav-icon i-Pen-5 font-weight-bold"></i></a>
+                                    <a class="text-danger mr-2" *ngIf="actions?.canDelete" (click)="delete(item.id)"><i class="nav-icon i-Close-Window font-weight-bold"></i></a>
+                                    <a class="text-primary mr-2" *ngIf="actions?.canAffectCar" (click)="affectedCar(item)"><i class="nav-icon i-Car-3 font-weight-bold"></i></a>  
+                                    <a class="text-primary mr-2" *ngIf="actions?.canAffectVignette" (click)="affecteCarteAuto(item)"><i class="nav-icon  i-Gaugage-2 font-weight-bold"></i></a>   
+                                    <a class="text-primary mr-2" *ngIf="actions?.canAffectCarteAuto" (click)="affecteCarteAuto(item)"><i class="nav-icon i-Credit-Card-3 font-weight-bold"></i></a>
+                                    <a class="text-primary mr-2" *ngIf="actions?.canLivreStock" (click)="livreSortieStock(item)"><i class="nav-icon i-Pen-5 font-weight-bold"></i></a>      
+                                    
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="datasource?.length==undefined ||  datasource?.length ==0">
+              <span style="    font-size: 15px; margin: 10px 10px;  color: red; display: block;">Aucune donnée trouvée</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+               <!--  <button class="btn btn-outline-danger mr-2" type="button" data-dismiss="modal"><i class="nav-icon i-File-Excel font-weight-bold"></i>PDF</button>
+                <button class="btn btn-outline-success" type="button" data-dismiss="modal"><i class="nav-icon i-File-Excel font-weight-bold"></i>EXCEL</button> -->
+            </div>
+
+            <div class="col-md-8">
+                <nav aria-label="Page navigation example"  >
+                    
+                    <ul class="pagination justify-content-end mb-0 mt-2">
+                            <select style="    width: 40px; margin-right: 10px; border-radius: 5px;" (change)="chnageSizeEvent($event)">
+                                <option *ngFor="let size of [5,10,15,20, 25,30]"  [value]="size"  >{{size}}</option>
+                            </select>
+                      
+                        <li class="page-item"><a class="page-link"  tabindex="-1" (click)="chnagePageEvent(currentPage)" *ngIf="currentPage!=0">Précédent</a></li>
+                        <li class="page-item"><a class="page-link"  (click)="chnagePageEvent(currentPage-1)" *ngIf="currentPage!=0" >{{currentPage}}</a></li>
+                        <li class="page-item active"><a class="page-link" (click)="chnagePageEvent(currentPage)" >{{currentPage+1}} <span class="sr-only">(current)</span></a></li>
+                        <li class="page-item"><a class="page-link" (click)="chnagePageEvent(currentPage+1)" *ngIf="totalPages>currentPage+1">{{currentPage+2}}</a></li>
+                        <li class="page-item"><a class="page-link" (click)="chnagePageEvent(currentPage+1)" *ngIf="totalPages>currentPage+1">Suivant</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-xl-12">
+        <div class="kt-portlet kt-portlet--height-fluid kt-portlet--mobile ">
+            <div class="kt-portlet__head kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+						<i class="fas fa-box kt-font-inverse-brand"></i>
+					</span>
+                    <h3 class="kt-portlet__head-title">
+                        الأغراض
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            &nbsp;
+                            <a href="javascript:; " *ngxPermissionsOnly="['canCreateArticle']" (click)=" nouveauArtcile()" class="btn btn-success btn-elevate btn-icon-sm">
+                                <i class="la la-plus"></i> إضافة غرض
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body kt-portlet__body--fit">
+
+                <div class="example-header">
+                    <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                    </mat-form-field>
+                </div>
+
+                <div class="example-container mat-elevation-z8">
+
+                    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                        <!-- Progress Column -->
+                        <!-- <ng-container matColumnDef="id">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> الرقم
+								الداخلي للغرض </mat-header-cell>
+							<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+						</ng-container> -->
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="numRef">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> الرقم المرجعي للغرض </th>
+                            <td mat-cell *matCellDef="let row"> {{row.numRef}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="libelle">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                التسمية </th>
+                            <td mat-cell *matCellDef="let row"> {{row.libelle}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> الوصف
+                            </th>
+                            <td mat-cell *matCellDef="let row"> {{row.description}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                            <td mat-cell *matCellDef="let row">
+                                <a href="javascript:;" *ngxPermissionsOnly="['canUpdateArticle']" (click)="editconsultation(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[3,5, 10, 25]"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- begin :: Action -->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!-- end::section actions -->

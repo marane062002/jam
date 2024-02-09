@@ -1,0 +1,445 @@
+<div class="kt-portlet portlet-4">
+    <div class="kt-portlet__head kt-bg-portlet-4">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-app kt-font-inverse-brand"></i>
+			</span> &nbsp;
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.PROJET_URBANISME.TITRE_EDIT' | translate }}
+            </h3>
+        </div>
+    </div>
+
+    <form novalidate [formGroup]="editForm">
+        <div class="kt-portlet__body">
+            <!-- 1 ======================================= -->
+            <div class="row">
+                <!-- NUM PRJET -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="numProjet" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.NUM_PROJET' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('numProjet','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- NOM PRJET -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="nomProjet" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.NOM_PROJET' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('nomProjet','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 2 ======================================= -->
+            <div class="row">
+                <!-- OBJEt -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="objet" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.OBJET' | translate }} :" required>
+                            <mat-error *ngIf="isControlHasError('objet','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+                            </mat-error>
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- MARCHE -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="idMarche" placeholder="{{ 'PAGES.PROJET_URBANISME.MARCHE' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('idMarche','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- 3 ======================================= -->
+            <div class="row">
+                <!-- BUDGET_PROJET -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="budgetProjet" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.BUDGET_PROJET' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('budgetProjet','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- PROMOTEUR -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="promotteur" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.PROMOTEUR' | translate }} :">
+                            <!-- <mat-error *ngIf="isControlHasError('promotteur','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                            <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- 4 ======================================= -->
+            <div class="row">
+                <!-- DATE DEMARRAGE TRAVAUX -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input matInput class="form-control" [matDatepicker]="picker1" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.DATE_DEMARRAGE' | translate }} :" formControlName="dateDemarrageTravaux" (dateChange)="dateDemarrageChange()">
+                                <!-- <mat-error *ngIf="isControlHasError('dateDemarrageTravaux','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error> -->
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker1">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <!-- DATE RECEPTION -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input matInput class="form-control" [matDatepicker]="picker3" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.DATE_RECEPTION' | translate }} :" formControlName="dateReception">
+                                <!-- <mat-error *ngIf="isControlHasError('dateReception','required')">
+									<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+								</mat-error> -->
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker3">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker3></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <!-- DATE FIN TRAVAUX-->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="input-group date">
+                            <mat-form-field class="example-full-width">
+                                <input matInput class="form-control" [matDatepicker]="picker2" autocomplete="off" placeholder="{{ 'PAGES.PROJET_URBANISME.DATE_FIN_TRAVAUX' | translate }} :" formControlName="dateFinTravaux" [min]="editForm.controls.dateDemarrageTravaux.value">
+                                <!-- <mat-error *ngIf="isControlHasError('dateFinTravaux','required')">
+										<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+									</mat-error> -->
+                                <mat-datepicker-toggle matSuffix matSuffix [for]="picker2">
+                                    <mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i>
+                                    </mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--5 ======================================= -->
+            <div class="row">
+                <!-- DIVISION -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select matNativeControl class="form-control" (selectionChange)="selectionChanged($event)" formControlName="divison" name="division" placeholder="{{ 'PAGES.ORGANISATION.DIVISION' | translate }}">
+                                <mat-option *ngFor="let div of divisions" [value]="div.id">
+                                    {{checkLang=='ar'?div.libelle:div.libelleFR}}
+                                </mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="isControlHasError('divison','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- SERVICE -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select matNativeControl class="form-control" name="service" (selectionChange)="onChangeService($event)" formControlName="service" placeholder="{{ 'PAGES.ORGANISATION.SERVICE' | translate }}">
+                                <mat-option *ngFor="let serv of services" [value]="serv.id">
+                                    {{checkLang=='ar'?serv.libelle:serv.libelleFR}}
+                                </mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="isControlHasError('service','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- PERSONNEL -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="responsableReception" name="responsableReception" placeholder="{{ 'PAGES.PROJET_URBANISME.RESPONSABLE_RECEPTION' | translate }} :">
+                                <mat-option *ngFor="let p of personnels" [value]="p.id">
+                                    {{p?.nom}} {{p?.prenom}}
+                                </mat-option>
+                            </mat-select>
+                            <!-- <mat-error *ngIf="isControlHasError('responsableReception','required')">
+								<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+							</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- 6 ======================================= -->
+            <div class="row">
+                <!-- TYPE INTERVENTION -->
+                <div class="col-md-6">
+                    <div class="form-group" formGroupName="typeProjetUrbanisme">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="id" name="typeProjetUrbanisme" placeholder="{{ 'PAGES.PROJET_URBANISME.TYPE' | translate }} :">
+                                <mat-option *ngFor="let type of types" [value]="type.id">
+                                    {{checkLang=='ar'?type.libelle:type.libelleFR}}
+                                </mat-option>
+                            </mat-select>
+                            <div *ngIf="editForm.get('typeProjetUrbanisme').get('id').hasError('required') && editForm.get('typeProjetUrbanisme').get('id').touched" class="text-danger">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- STATUT -->
+                <div class="col-md-6">
+                    <div class="form-group" formGroupName="statutProjetUrbanisme">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="id" name="statutProjetUrbanisme" placeholder="{{ 'PAGES.PROJET_URBANISME.STATUT' | translate }} :" required>
+                                <mat-option *ngFor="let stat of statuts" [value]="stat.id">
+                                    {{checkLang=='ar'?stat.libelle:stat.libelleFR}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('statutProjetUrbanisme','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }} * </strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- <div _ngcontent-idd-c40="" class="kt-separator kt-separator--dashed"></div> -->
+    </form>
+</div>
+
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-2">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-info"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+                {{ 'PAGES.ADRESSAGE.TITRE_SHOW' | translate }}
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    &nbsp;
+                    <a href="javascript:; " (click)="onCreate(myDialog)" class="btn btn-success btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i> {{ 'PAGES.ADRESSAGE.TITRE_NEW' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <!-- ======================================================================================= -->
+                <div class="kt-portlet">
+                    <hr>
+                    <div class="example-header">
+                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <mat-form-field>
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                        <!-- numVoix Column -->
+                        <ng-container matColumnDef="numVoix">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.ADRESSAGE.NUM_VOIX' | translate }}</th>
+                            <td mat-cell *matCellDef="let row"> {{row.numVoix}}</td>
+                        </ng-container>
+                        <!-- nomPropose Column -->
+                        <ng-container matColumnDef="nomPropose">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.ADRESSAGE.NOM_PRPOSE' | translate }}</th>
+                            <td mat-cell *matCellDef="let row"> {{row.nomPropose}}</td>
+                        </ng-container>
+                        <!-- statutAdressage Column -->
+                        <ng-container matColumnDef="statutAdressage">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{ 'PAGES.ADRESSAGE.STATUT_ADRESSAGE' | translate }}</th>
+                            <td mat-cell *matCellDef="let row">{{checkLang=='ar'?row.statutAdressage.libelle:row.statutAdressage.libelleFR}}</td>
+                        </ng-container>
+                        <!-- Action Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                            <td mat-cell *matCellDef="let row">
+                                <button type="button" (click)="onEdit(row,myDialog)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+										class="icon la la-edit"></i></button>
+                                <button type="button" (click)="onDelete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="icon la la-trash"></i></button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <div *ngIf="sizeData == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                        {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                    </div>
+                    <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                        </mat-progress-spinner>
+                    </mat-card>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25]" [pageSize]="5" showFirstLastButtons>
+                    </mat-paginator>
+                    <hr>
+                </div>
+                <!-- ************************************* FORME DIALOG **************************************** -->
+
+                <ng-template #myDialog>
+                    <div *ngIf="IsForUpdate" class="kt-containe" style="text-align: right !important;">
+                        <h3 *ngIf="formName === 'EDIT'" style="text-align: center;">
+                            {{ 'PAGES.ADRESSAGE.TITRE_EDIT' | translate }}</h3>
+                        <h3 *ngIf="formName === 'ADD'" style="text-align: center;">
+                            {{ 'PAGES.ADRESSAGE.TITRE_NEW' | translate }}
+                        </h3>
+                        <hr>
+                        <div class="row">
+                            <form [formGroup]="editAdressageForm">
+                                <div class="form-group">
+                                    <label for="numVoix">{{ 'PAGES.ADRESSAGE.NUM_VOIX' | translate }}</label>
+                                    <input type="text" name="numVoix" class="form-control" autocomplete="off" formControlName="numVoix" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">{{ 'PAGES.ADRESSAGE.NOM_PRPOSE' | translate }}</label>
+                                    <input type="text" name="nomPropose" class="form-control" autocomplete="off" formControlName="nomPropose" required>
+                                </div>
+                                <div class="form-group" formGroupName="statutAdressage">
+                                    <label for="power">{{ 'PAGES.ADRESSAGE.STATUT_ADRESSAGE' | translate }}</label>
+                                    <select class="form-control" formControlName="id" name="statutAdressage" required>
+										<option *ngFor="let s of statAdressages" [value]="s.id">
+											{{checkLang=='ar'?s.libelle:s.libelleFR}}
+										</option>
+									</select>
+                                </div>
+
+                                <div style="display: flex;">
+                                    <button type="button" (click)="OnCancel()" class="btn btn-primary form-control">{{ 'PAGES.GENERAL.EXIT' | translate }}</button>&nbsp;
+                                    <button type="button" (click)="updateemp()" class="btn btn-success form-control">{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div class="kt-portlet">
+    <div class="kt-portlet__head kt-bg-portlet-5">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+            <h3 class="kt-portlet__head-title">
+                {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-md-12 show_port">
+                <!-- start section::edit file form -->
+                <div class="row">
+                    <div class="col-md-6 show_port input-group">
+                        <form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm" style="display: -webkit-inline-box;margin-inline-start: 98px;">
+                            <label class="input-group-btn">
+								<span class="btn btn-info">
+									{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" name="file"
+										(change)="fileChange($event)" formControlName="_file" id="customFile"
+										style="display: none;" multiple>
+								</span>
+							</label>
+                            <input type="text" class="form-control" readonly>
+                        </form>
+                    </div>
+                    <!-- <button type="button"
+									class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md"
+									matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="flaticon-refresh"></i></button> -->
+
+                </div>
+                <!-- end section::edit file form -->
+                <hr>
+                <table *ngIf="files" class="table pj" width="100%">
+                    <thead>
+                        <tr>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TYPE' | translate }}</td>
+                            <td class="title_td" width="25%">{{ 'PAGES.ATTCHEMENTS.FICHIER' | translate }}
+                            </td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_CREATION' | translate }}</td>
+                            <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
+                            <td class="title_td"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of files | async">
+                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}" matTooltip="{{FileName(item.name)}}"></td>
+                            <td> {{FileName(item.name) | slice:0:20}}</td>
+                            <td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{item.fSize/1000}} ko</td>
+                            <td>
+                                <button type="button" (click)="onClickPjName(item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{FileName(item.name)}}"><i class="flaticon-download-1"></i></button>
+                                <button type="button" (click)="onDeleteFile(item.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
+										class="icon la la-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="start">
+                    <p class="wait_text_bar">{{ 'PAGES.ATTCHEMENTS.WAIT_MSG' | translate }}</p>
+                    <mat-progress-bar class="progress_bar" mode='query'></mat-progress-bar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label" align="right">
+        <button _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" [disabled]="editForm.invalid" (click)="onSubmit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">
+			<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+			{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+        <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+    </div>
+    <div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

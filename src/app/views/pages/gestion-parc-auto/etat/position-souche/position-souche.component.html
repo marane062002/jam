@@ -1,0 +1,76 @@
+<div class="main-content container">
+  <div class="breadcrumb">
+    <h1 class="mr-2">Position de la souche</h1>
+  </div>
+  <!-- card of depot -->
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="tab-content">
+
+            <div class="mr-6 ml-6 mt-3 mb-4 p-4 background-color-light border-grey br-10">
+              <div class="body">
+                <div class="form-group row justify-content-center mb-1">
+                  <div class="col-md-3 form-group ">
+                    <label>Reference de la souche :</label>
+                    <input class="form-control" type="text" placeholder="Reference de la souche">
+                  </div>
+                  <div class="col-md-2 col-lg-2 form-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary font-weight-bold btn-block" type="submit"><i class="nav-icon i-Magnifi-Glass1 mr-2 font-weight-bold"></i>Rechercher</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 col-md-12">
+                <div class="row" id="dossier">
+                  <div class="col-md-8 col-lg-12 dos">
+                    <div class="card o-hidden mb-4">
+
+                      <div class="card-header d-flex align-items-center border-0">
+                        <h3 class="float-left card-title m-0">Souche Carburant</h3>
+                      </div>
+
+                      <div>
+                        <div class="table-responsive">
+                          <table class="table text-center mb-0" id="user_table">
+                            <thead>
+                              <tr class="no-border">
+                                <th scope="col">Référence</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Montant</th>
+                                <th scope="col">Prix Unitaire</th>
+                                <th scope="col">L</th>
+                                <th scope="col">km</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let souche of souches">
+                                <td>souche.reference</td>
+                                <td>souche.date</td>
+                                <td>souche.montant</td>
+                                <td>souche.prixUnitaire</td>
+                                <td>souche.l</td>
+                                <td>souche.km</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                    </div> 
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

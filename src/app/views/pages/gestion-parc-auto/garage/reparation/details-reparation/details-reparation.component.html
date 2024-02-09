@@ -1,0 +1,48 @@
+
+    <div class="row">
+    <div class="col-lg-12">
+    <div class="kt-portlet portlet-1">
+    <div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+    <span class="kt-portlet__head-icon">
+    <i class="flaticon-file-2 kt-font-inverse-brand"></i>
+    </span>
+    <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+    {{ 'PAGES.Gestion.parc.reparation.details.title' | translate }}
+    </h3>
+    </div>
+    </div>
+    <div class="kt-portlet__body">
+    
+    <div class="row">
+    <div class="col-md-12 show_port">
+    <table class="table pj" width="100%">
+    <tbody>
+    <tr>
+    <th> {{ 'PAGES.Gestion.parc.reparation.vehicule' | translate }}</th>
+    <td class="donnee_show">{{reparation?.vehicule?.matricule ? reparation.vehicule?.matricule : "-"}}</td>
+    <th> {{ 'PAGES.Gestion.parc.reparation.dateReparation' | translate }}</th>
+    <td class="donnee_show">
+    {{reparation?.dateReparation| date:"yyyy/MM/dd" }}
+    </td>
+    </tr>
+    <tr>
+    
+    <th> {{ 'PAGES.Gestion.parc.reparation.commentaire' | translate }}</th>
+    <td class="donnee_show">
+    {{reparation?.commentaire ? reparation?.commentaire :"-" }}
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!--div class="modal-footer">
+    <button *ngIf="fonctionnaire.role?.id!=12 && tabID===1" class="btn btn-outline-success ml-2" type="button" data-dismiss="modal" (click)="validerReparation()"><i class="nav-icon i-Yes font-weight-bold"></i> Valider </button>
+    <button class="btn btn-outline-secondary ml-2 font-weight-bold" (click)="close()" type="button"> Annuler</button>
+    </div-->
+   

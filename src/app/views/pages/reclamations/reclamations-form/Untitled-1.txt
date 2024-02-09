@@ -1,0 +1,682 @@
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+  <div class="kt-subheader__main">
+    <h3 class="kt-subheader__title">
+      الرئيسية </h3>
+    <span class="kt-subheader__separator kt-hidden"></span>
+    <div class="kt-subheader__breadcrumbs">
+      <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+      <span class="kt-subheader__breadcrumbs-separator"></span>
+      <a href="" class="kt-subheader__breadcrumbs-link">
+        الشكايات
+      </a>
+      <span class="kt-subheader__breadcrumbs-separator"></span>
+      <a href="" class="kt-subheader__breadcrumbs-link">
+        إضافة شكاية</a>
+
+      <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
+    </div>
+  </div>
+  <div class="kt-subheader__toolbar">
+    <div class="kt-subheader__wrapper">
+      <a href="#" class="btn kt-subheader__btn-daterange" id="kt_dashboard_daterangepicker" data-toggle="kt-tooltip" title="Select dashboard daterange" data-placement="left">
+        <span class="kt-subheader__btn-daterange-title" id="kt_dashboard_daterangepicker_title">Today</span>&nbsp;
+        <span class="kt-subheader__btn-daterange-date" id="kt_dashboard_daterangepicker_date">Aug 16</span>
+
+        <!--<i class="flaticon2-calendar-1"></i>-->
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--sm">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <rect id="bound" x="0" y="0" width="24" height="24" />
+            <path d="M4.875,20.75 C4.63541667,20.75 4.39583333,20.6541667 4.20416667,20.4625 L2.2875,18.5458333 C1.90416667,18.1625 1.90416667,17.5875 2.2875,17.2041667 C2.67083333,16.8208333 3.29375,16.8208333 3.62916667,17.2041667 L4.875,18.45 L8.0375,15.2875 C8.42083333,14.9041667 8.99583333,14.9041667 9.37916667,15.2875 C9.7625,15.6708333 9.7625,16.2458333 9.37916667,16.6291667 L5.54583333,20.4625 C5.35416667,20.6541667 5.11458333,20.75 4.875,20.75 Z" id="check" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+            <path d="M2,11.8650466 L2,6 C2,4.34314575 3.34314575,3 5,3 L19,3 C20.6568542,3 22,4.34314575 22,6 L22,15 C22,15.0032706 21.9999948,15.0065399 21.9999843,15.009808 L22.0249378,15 L22.0249378,19.5857864 C22.0249378,20.1380712 21.5772226,20.5857864 21.0249378,20.5857864 C20.7597213,20.5857864 20.5053674,20.4804296 20.317831,20.2928932 L18.0249378,18 L12.9835977,18 C12.7263047,14.0909841 9.47412135,11 5.5,11 C4.23590829,11 3.04485894,11.3127315 2,11.8650466 Z M6,7 C5.44771525,7 5,7.44771525 5,8 C5,8.55228475 5.44771525,9 6,9 L15,9 C15.5522847,9 16,8.55228475 16,8 C16,7.44771525 15.5522847,7 15,7 L6,7 Z" id="Combined-Shape" fill="#000000" />
+          </g>
+        </svg> </a>
+    </div>
+  </div>
+</div>
+
+
+<div class="kt-portlet">
+  <div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+      <h3 class="kt-portlet__head-title">
+        إضافة شكاية
+      </h3>
+    </div>
+  </div>
+  <!--begin::Form-->
+  <br>
+  
+
+  
+  <form class="kt-form kt-form--label-right" #form="ngForm" (submit)="onSubmit(form)"  >
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <input type="radio" name="source" value="pp" (click)="show('pp');">شخص مادي<br>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <input type="radio" name="source" value="pm" (click)="show('pm');">شخص معنوي<br>
+            </div>
+            </div></div>
+            <br><br>
+ 
+  <div id="ppsf" style="display:none">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm"> 
+            <div class="form-group">
+            <l-select2 [(ngModel)]="selected" [data]="allcin" [options]="options" [disabled]="false" (valueChange)="onChangeofOptions($event)"></l-select2>
+           </div>
+           </div>
+           <!--<div class="col-sm">
+            <div class="form-group"> 
+              <l-select2 [(ngModel)]="selected" [data]="allmail" [options]="options" [disabled]="false" (valueChange)="valueChange($event)"></l-select2>
+         </div>
+         </div>-->
+        </div></div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">  
+                  <div class="form-group">
+                    <label>النسب</label>
+                     <input name="nompps" #pps.nom="ngModel" [(ngModel)]="formData.pps.nom" class="form-control" >
+                 </div></div>
+                 <div class="col-sm">  
+                 <div class="form-group">
+                  <label>الاسم</label>
+                   <input name="prenom" #pps.prenom="ngModel" [(ngModel)]="formData.pps.prenom" class="form-control" >
+               </div></div></div></div>
+               <div class="container">
+                <div class="row">
+                  <div class="col-sm">  
+               <div class="form-group">
+                <label>البطاقة الوطنية</label>
+                 <input name="cin" id="cinReadOnly" #pps.cin="ngModel" [(ngModel)]="formData.pps.cin" class="form-control"  >
+             </div></div>
+             <div class="col-sm"> 
+             <div class="form-group">
+              <label>العنوان</label>
+               <input name="ppsAdresse" #pps.adresse="ngModel" [(ngModel)]="formData.pps.adresse" class="form-control" >
+             </div></div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">  
+             <div class="form-group">
+              <label>الهاتف الثابت</label>
+               <input name="telefixepps" #pps.telephoneFixe="ngModel" [(ngModel)]="formData.pps.telephoneFixe" class="form-control" >
+           </div></div>
+           <div class="col-sm">  
+           <div class="form-group">
+            <label>الهاتف المحمول</label>
+             <input name="telegsmpps" #pps.telephoneGsm="ngModel" [(ngModel)]="formData.pps.telephoneGsm" class="form-control" >
+           </div></div></div></div>
+           <div class="container">
+            <div class="row">
+              <div class="col-sm">  
+           <div class="form-group">
+            <label>البريد الإلكتروني</label>
+             <input name="emailpps" #pps.eMail="ngModel" [(ngModel)]="formData.pps.eMail" class="form-control" >
+         </div></div>
+         <div class="col-sm">  
+         <div class="form-group">
+          <label>الفاكس</label>
+           <input name="faxpps" #pps.fax="ngModel" [(ngModel)]="formData.pps.fax" class="form-control" >
+         </div>
+        </div></div></div></div>
+        <div id="pmsf" style="display:none">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm"> 
+                  <div class="form-group">
+                  <l-select2 [(ngModel)]="selected" [data]="allidf" [options]="options" [disabled]="false" (valueChange)="onChangeofOptionsidf($event)"></l-select2>
+                 </div>
+                 </div>
+                 <div class="col-sm">
+                  <div class="form-group"> 
+                    <l-select2 [(ngModel)]="selected"  [data]="allrc" [options]="options" [disabled]="false" (valueChange)="onChangeofOptionsrc($event)"></l-select2>
+               </div>
+               </div>
+              </div></div>
+           <!-- <div class="container">
+                <div class="row">
+                  <div class="col-sm"> 
+                      <div class="form-group">                  
+معرف الضريبة :
+
+         <select name ="iddf" [(ngModel)]="myDropDown1" (ngModelChange)="onChangeofOptionsidf($event)" class="form-control" >
+            <option value="-1">-Select-</option>      
+          <option *ngFor="let item of allidf" value="{{item}}">{{item}}</option>
+          </select></div></div>
+          <div class="col-sm"> 
+              <div class="form-group">
+              السجل التجاري : 
+          <select name ="idrc" [(ngModel)]="myDropDown2" (ngModelChange)="onChangeofOptionsrc($event)" class="form-control" >
+              <option value="-1">-Select-</option>      
+            <option *ngFor="let item of allrc" value="{{item}}">{{item}}</option>
+            </select></div></div></div></div>-->
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">  
+                 <div class="form-group">
+                  <label>السجل التجاري</label>
+                   <input name="rc" #pms.rc="ngModel"  id="allidfReadOnly" [(ngModel)]="formData.pms.rc" class="form-control">
+               </div></div>
+               <div class="col-sm">  
+               <div class="form-group">
+                <label>معرف الضريبة</label>
+                 <input name="identifiantFiscal" id="allrcReadOnly" #pms.identifiantFiscal="ngModel" [(ngModel)]="formData.pms.identifiantFiscal" class="form-control" >
+             </div></div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">  
+             <div class="form-group">
+              <label>Numero Patente</label>
+               <input name="numPatente" #pms.numeroPatente="ngModel" [(ngModel)]="formData.pms.numeroPatente" class="form-control" >
+             </div></div>
+             <div class="col-sm">  
+             <div class="form-group">
+              <label>العنوان</label>
+               <input name="adressepms" #pms.adresse="ngModel" [(ngModel)]="formData.pms.adresse" class="form-control" >
+             </div></div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">  
+             <div class="form-group">
+              <label>الهاتف الثابت</label>
+               <input name="telephoneFixepms" #pms.telephoneFixe="ngModel" [(ngModel)]="formData.pms.teleFixe" class="form-control" >
+           </div>
+           </div>
+           <div class="col-sm"> 
+           <div class="form-group">
+            <label>الهاتف المحمول</label>
+             <input name="telephoneGsmpms" #pms.telephoneGsm="ngModel" [(ngModel)]="formData.pms.teleGsm" class="form-control" >
+           </div></div></div></div>
+           <div class="container">
+            <div class="row">
+              <div class="col-sm">  
+           <div class="form-group">
+            <label>البريد الإلكتروني</label>
+             <input name="emailpms" #pms.eMail="ngModel" [(ngModel)]="formData.pms.eMail" class="form-control" >
+         </div></div>
+         <div class="col-sm">  
+         <div class="form-group">
+          <label>الموقع الإلكتروني</label>
+           <input name="sitewebpms" #pms.siteWeb="ngModel" [(ngModel)]="formData.pms.siteWeb" class="form-control" >
+        </div></div></div></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">  
+         <div class="form-group">
+          <label>الفاكس</label>
+           <input name="faxpms" #pps.fax="ngModel" [(ngModel)]="formData.pms.fax" class="form-control" >
+         </div> 
+         </div>
+         <div class="col-sm">  
+         <div class="form-group">
+          <label>اتصال</label>
+           <input name="contact" #pms.contact="ngModel" [(ngModel)]="formData.pms.contact" class="form-control" >
+         </div></div></div></div>
+         </div> 
+         <div class="container">
+          <div class="row">
+            <div class="col-sm">  
+              <div class="form-group">
+               <label>الخطورة</label>
+               <select name="idseverite" #id="ngModel" [(ngModel)]="formData.reclamation.severite.id" class="form-control" >
+                 <option *ngFor="let item of severiteAll" value="{{item.id}}">{{item.libelle}}</option>
+               </select>
+             </div>
+             </div>
+             <div class="col-sm">     
+              <div class="form-group">
+                <label>الوضع</label>
+                <select name="idstatutrec" #id="ngModel" [(ngModel)]="formData.reclamation.statutReclamation.id" class="form-control" >
+                  <option *ngFor="let item of statutAll" value="{{item.id}}">{{item.libelle}}</option>
+                </select>
+              </div> </div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>النوع</label>
+                    <select name="idtyperec" #id="ngModel" [(ngModel)]="formData.reclamation.typeReclamation.id" (ngModelChange)="onChangeofOptionsType($event)" class="form-control" >
+                      <option *ngFor="let item of typeAll" value="{{item.id}}">{{item.libelle}}</option>
+                    </select>
+                  </div></div>
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>النوع الفرعي</label>
+                    
+                    <select name="idst" #id="ngModel" [(ngModel)]="formData.reclamation.soustypeReclamation.id" class="form-control" >
+                      <option *ngFor="let item of sousTypeAll" value="{{item.id}}">{{item.libelle}}</option>
+                    </select>
+                  </div>
+                </div>
+                </div></div>
+                <div class="container">
+                <div class="form-group">
+                  <label>وصف قصير</label>
+                  <input name="decsriptionCourte" #decsriptionCourte="ngModel" [(ngModel)]="formData.reclamation.descriptionCourte" class="form-control" >
+                    </div></div>
+                    <div class="container">
+              
+                    <div class="form-group">
+                      <label>وصف طويل</label>
+                      <input name="decsriptionLongue" #decsriptionLongue="ngModel" [(ngModel)]="formData.reclamation.descriptionLongue" class="form-control" >
+                        </div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">
+           
+             <div class="form-group">
+               <label>قناة</label>
+               <select name="idcanal" #id="ngModel" [(ngModel)]="formData.reclamation.canal.id" class="form-control" >
+                 <option *ngFor="let item of canalAll" value="{{item.id}}">{{item.libelle}}</option>
+               </select>
+             </div>
+             </div>
+             <div class="col-sm">
+             <div class="form-group">
+               <label>قناة الإجابة</label>
+                <select name="idcanalreponse" #id="ngModel" [(ngModel)]="formData.reclamation.canalreponse.id" class="form-control" > 
+                 <option *ngFor="let item of canalReponseAll" value="{{item.id}}">{{item.libelle}}</option>
+               </select>
+             </div>
+           </div>
+           </div>
+           </div>
+           <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                   <div class="form-group">
+                    <label for="example-datetime-local-input" class="col-2 col-form-label">تاريخ الوضع </label>
+                     <input name="datedepot" type="datetime-local"  #dateDepot="ngModel" [(ngModel)]="formData.reclamation.dateDepot" class="form-control" >
+                             </div></div>
+                             <div class="col-sm">        
+                   <div class="form-group">
+                    <label for="example-datetime-local-input" class="col-2 col-form-label">تاريخ بدء</label>
+                    <input name="dateDebutTraitement" type="datetime-local" #dateDebutTraitement="ngModel" [(ngModel)]="formData.reclamation.dateDebutTraitement" class="form-control" >
+                   </div></div></div></div>
+                   <div class="container">
+                    <div class="row">
+                      <div class="col-sm">
+                   <div class="form-group">
+                    <label for="example-datetime-local-input" class="col-2 col-form-label">تاريخ الإنتهاء</label>
+                    <input name="dateFinTraitemente" type="datetime-local" #dateFinTraitement="ngModel" [(ngModel)]="formData.reclamation.dateFinTraitement" class="form-control" >
+                    </div></div>
+                    <div class="col-sm">
+                    <div class="form-group">
+                      <label for="example-datetime-local-input" class="col-2 col-form-label"> الإغلاق</label>
+                      <input name="cloture" type="datetime-local" #cloture="ngModel" [(ngModel)]="formData.reclamation.cloture" class="form-control" >
+                    </div></div></div></div> 
+                    <div class="container">
+                      <div class="row">
+                    <form>
+                      <label class="custom-file-upload">
+                        <input type="file" (change)="save($event)" multiple="multiple">
+                        <i class="fa fa-cloud-upload"></i> الوثائق المرفقة
+                    </label>
+                    
+                      <br>
+                      <span [innerHTML]="result"></span>
+                    </form>
+                    </div>
+                  </div>
+                    
+                             
+       
+    <div class="kt-portlet__foot">
+      <div class="kt-form__actions">
+        <div class="row">
+         
+          <div class="col-10">
+            <button  type="submit" [disabled]="form.invalid" class="btn btn-success">تأكيد</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+  <div class="kt-subheader__main">
+    <h3 class="kt-subheader__title">
+      الرئيسية </h3>
+    <span class="kt-subheader__separator kt-hidden"></span>
+    <div class="kt-subheader__breadcrumbs">
+      <a href="#" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+      <span class="kt-subheader__breadcrumbs-separator"></span>
+      <a href="" class="kt-subheader__breadcrumbs-link">
+        الشكايات
+      </a>
+      <span class="kt-subheader__breadcrumbs-separator"></span>
+      <a href="" class="kt-subheader__breadcrumbs-link">
+        إضافة شكاية</a>
+
+      <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->
+    </div>
+  </div>
+  <div class="kt-subheader__toolbar">
+    <div class="kt-subheader__wrapper">
+      <a href="#" class="btn kt-subheader__btn-daterange" id="kt_dashboard_daterangepicker" data-toggle="kt-tooltip" title="Select dashboard daterange" data-placement="left">
+        <span class="kt-subheader__btn-daterange-title" id="kt_dashboard_daterangepicker_title">Today</span>&nbsp;
+        <span class="kt-subheader__btn-daterange-date" id="kt_dashboard_daterangepicker_date">Aug 16</span>
+
+        <!--<i class="flaticon2-calendar-1"></i>-->
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--sm">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <rect id="bound" x="0" y="0" width="24" height="24" />
+            <path d="M4.875,20.75 C4.63541667,20.75 4.39583333,20.6541667 4.20416667,20.4625 L2.2875,18.5458333 C1.90416667,18.1625 1.90416667,17.5875 2.2875,17.2041667 C2.67083333,16.8208333 3.29375,16.8208333 3.62916667,17.2041667 L4.875,18.45 L8.0375,15.2875 C8.42083333,14.9041667 8.99583333,14.9041667 9.37916667,15.2875 C9.7625,15.6708333 9.7625,16.2458333 9.37916667,16.6291667 L5.54583333,20.4625 C5.35416667,20.6541667 5.11458333,20.75 4.875,20.75 Z" id="check" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+            <path d="M2,11.8650466 L2,6 C2,4.34314575 3.34314575,3 5,3 L19,3 C20.6568542,3 22,4.34314575 22,6 L22,15 C22,15.0032706 21.9999948,15.0065399 21.9999843,15.009808 L22.0249378,15 L22.0249378,19.5857864 C22.0249378,20.1380712 21.5772226,20.5857864 21.0249378,20.5857864 C20.7597213,20.5857864 20.5053674,20.4804296 20.317831,20.2928932 L18.0249378,18 L12.9835977,18 C12.7263047,14.0909841 9.47412135,11 5.5,11 C4.23590829,11 3.04485894,11.3127315 2,11.8650466 Z M6,7 C5.44771525,7 5,7.44771525 5,8 C5,8.55228475 5.44771525,9 6,9 L15,9 C15.5522847,9 16,8.55228475 16,8 C16,7.44771525 15.5522847,7 15,7 L6,7 Z" id="Combined-Shape" fill="#000000" />
+          </g>
+        </svg> </a>
+    </div>
+  </div>
+</div>
+
+
+<div class="kt-portlet">
+  <div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+      <h3 class="kt-portlet__head-title">
+        إضافة شكاية
+      </h3>
+    </div>
+  </div>
+  <!--begin::Form-->
+  <br>
+  
+
+  
+  <form class="kt-form kt-form--label-right" #form="ngForm" (submit)="onSubmit(form)"  >
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <input type="radio" name="source" value="pp" (click)="show('pp');">شخص مادي<br>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <input type="radio" name="source" value="pm" (click)="show('pm');">شخص معنوي<br>
+            </div>
+            </div></div>
+            <br><br>
+ 
+  <div id="ppsf" style="display:none">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm"> 
+            <div class="form-group">
+            <l-select2 [(ngModel)]="selected" [data]="allcin" [options]="options" [disabled]="false" (valueChange)="onChangeofOptions($event)"></l-select2>
+           </div>
+           </div>
+           <!--<div class="col-sm">
+            <div class="form-group"> 
+              <l-select2 [(ngModel)]="selected" [data]="allmail" [options]="options" [disabled]="false" (valueChange)="valueChange($event)"></l-select2>
+         </div>
+         </div>-->
+        </div></div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">  
+                  <div class="form-group">
+                    <label>النسب</label>
+                     <input name="nompps" #pps.nom="ngModel" [(ngModel)]="formData.pps.nom" class="form-control" >
+                 </div></div>
+                 <div class="col-sm">  
+                 <div class="form-group">
+                  <label>الاسم</label>
+                   <input name="prenom" #pps.prenom="ngModel" [(ngModel)]="formData.pps.prenom" class="form-control" >
+               </div></div></div></div>
+               <div class="container">
+                <div class="row">
+                  <div class="col-sm">  
+               <div class="form-group">
+                <label>البطاقة الوطنية</label>
+                 <input name="cin" id="cinReadOnly" #pps.cin="ngModel" [(ngModel)]="formData.pps.cin" class="form-control"  >
+             </div></div>
+             <div class="col-sm"> 
+             <div class="form-group">
+              <label>العنوان</label>
+               <input name="ppsAdresse" #pps.adresse="ngModel" [(ngModel)]="formData.pps.adresse" class="form-control" >
+             </div></div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">  
+             <div class="form-group">
+              <label>الهاتف الثابت</label>
+               <input name="telefixepps" #pps.telephoneFixe="ngModel" [(ngModel)]="formData.pps.telephoneFixe" class="form-control" >
+           </div></div>
+           <div class="col-sm">  
+           <div class="form-group">
+            <label>الهاتف المحمول</label>
+             <input name="telegsmpps" #pps.telephoneGsm="ngModel" [(ngModel)]="formData.pps.telephoneGsm" class="form-control" >
+           </div></div></div></div>
+           <div class="container">
+            <div class="row">
+              <div class="col-sm">  
+           <div class="form-group">
+            <label>البريد الإلكتروني</label>
+             <input name="emailpps" #pps.eMail="ngModel" [(ngModel)]="formData.pps.eMail" class="form-control" >
+         </div></div>
+         <div class="col-sm">  
+         <div class="form-group">
+          <label>الفاكس</label>
+           <input name="faxpps" #pps.fax="ngModel" [(ngModel)]="formData.pps.fax" class="form-control" >
+         </div>
+        </div></div></div></div>
+        <div id="pmsf" style="display:none">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm"> 
+                  <div class="form-group">
+                  <l-select2 [(ngModel)]="selected" [data]="allidf" [options]="options" [disabled]="false" (valueChange)="onChangeofOptionsidf($event)"></l-select2>
+                 </div>
+                 </div>
+                 <div class="col-sm">
+                  <div class="form-group"> 
+                    <l-select2 [(ngModel)]="selected"  [data]="allrc" [options]="options" [disabled]="false" (valueChange)="onChangeofOptionsrc($event)"></l-select2>
+               </div>
+               </div>
+              </div></div>
+           <!-- <div class="container">
+                <div class="row">
+                  <div class="col-sm"> 
+                      <div class="form-group">                  
+معرف الضريبة :
+
+         <select name ="iddf" [(ngModel)]="myDropDown1" (ngModelChange)="onChangeofOptionsidf($event)" class="form-control" >
+            <option value="-1">-Select-</option>      
+          <option *ngFor="let item of allidf" value="{{item}}">{{item}}</option>
+          </select></div></div>
+          <div class="col-sm"> 
+              <div class="form-group">
+              السجل التجاري : 
+          <select name ="idrc" [(ngModel)]="myDropDown2" (ngModelChange)="onChangeofOptionsrc($event)" class="form-control" >
+              <option value="-1">-Select-</option>      
+            <option *ngFor="let item of allrc" value="{{item}}">{{item}}</option>
+            </select></div></div></div></div>-->
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">  
+                 <div class="form-group">
+                  <label>السجل التجاري</label>
+                   <input name="rc" #pms.rc="ngModel"  id="allidfReadOnly" [(ngModel)]="formData.pms.rc" class="form-control">
+               </div></div>
+               <div class="col-sm">  
+               <div class="form-group">
+                <label>معرف الضريبة</label>
+                 <input name="identifiantFiscal" id="allrcReadOnly" #pms.identifiantFiscal="ngModel" [(ngModel)]="formData.pms.identifiantFiscal" class="form-control" >
+             </div></div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">  
+             <div class="form-group">
+              <label>Numero Patente</label>
+               <input name="numPatente" #pms.numeroPatente="ngModel" [(ngModel)]="formData.pms.numeroPatente" class="form-control" >
+             </div></div>
+             <div class="col-sm">  
+             <div class="form-group">
+              <label>العنوان</label>
+               <input name="adressepms" #pms.adresse="ngModel" [(ngModel)]="formData.pms.adresse" class="form-control" >
+             </div></div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">  
+             <div class="form-group">
+              <label>الهاتف الثابت</label>
+               <input name="telephoneFixepms" #pms.telephoneFixe="ngModel" [(ngModel)]="formData.pms.teleFixe" class="form-control" >
+           </div>
+           </div>
+           <div class="col-sm"> 
+           <div class="form-group">
+            <label>الهاتف المحمول</label>
+             <input name="telephoneGsmpms" #pms.telephoneGsm="ngModel" [(ngModel)]="formData.pms.teleGsm" class="form-control" >
+           </div></div></div></div>
+           <div class="container">
+            <div class="row">
+              <div class="col-sm">  
+           <div class="form-group">
+            <label>البريد الإلكتروني</label>
+             <input name="emailpms" #pms.eMail="ngModel" [(ngModel)]="formData.pms.eMail" class="form-control" >
+         </div></div>
+         <div class="col-sm">  
+         <div class="form-group">
+          <label>الموقع الإلكتروني</label>
+           <input name="sitewebpms" #pms.siteWeb="ngModel" [(ngModel)]="formData.pms.siteWeb" class="form-control" >
+        </div></div></div></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">  
+         <div class="form-group">
+          <label>الفاكس</label>
+           <input name="faxpms" #pps.fax="ngModel" [(ngModel)]="formData.pms.fax" class="form-control" >
+         </div> 
+         </div>
+         <div class="col-sm">  
+         <div class="form-group">
+          <label>اتصال</label>
+           <input name="contact" #pms.contact="ngModel" [(ngModel)]="formData.pms.contact" class="form-control" >
+         </div></div></div></div>
+         </div> 
+         <div class="container">
+          <div class="row">
+            <div class="col-sm">  
+              <div class="form-group">
+               <label>الخطورة</label>
+               <select name="idseverite" #id="ngModel" [(ngModel)]="formData.reclamation.severite.id" class="form-control" >
+                 <option *ngFor="let item of severiteAll" value="{{item.id}}">{{item.libelle}}</option>
+               </select>
+             </div>
+             </div>
+             <div class="col-sm">     
+              <div class="form-group">
+                <label>الوضع</label>
+                <select name="idstatutrec" #id="ngModel" [(ngModel)]="formData.reclamation.statutReclamation.id" class="form-control" >
+                  <option *ngFor="let item of statutAll" value="{{item.id}}">{{item.libelle}}</option>
+                </select>
+              </div> </div></div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>النوع</label>
+                    <select name="idtyperec" #id="ngModel" [(ngModel)]="formData.reclamation.typeReclamation.id" (ngModelChange)="onChangeofOptionsType($event)" class="form-control" >
+                      <option *ngFor="let item of typeAll" value="{{item.id}}">{{item.libelle}}</option>
+                    </select>
+                  </div></div>
+                <div class="col-sm">
+                  <div class="form-group">
+                    <label>النوع الفرعي</label>
+                    
+                    <select name="idst" #id="ngModel" [(ngModel)]="formData.reclamation.soustypeReclamation.id" class="form-control" >
+                      <option *ngFor="let item of sousTypeAll" value="{{item.id}}">{{item.libelle}}</option>
+                    </select>
+                  </div>
+                </div>
+                </div></div>
+                <div class="container">
+                <div class="form-group">
+                  <label>وصف قصير</label>
+                  <input name="decsriptionCourte" #decsriptionCourte="ngModel" [(ngModel)]="formData.reclamation.descriptionCourte" class="form-control" >
+                    </div></div>
+                    <div class="container">
+              
+                    <div class="form-group">
+                      <label>وصف طويل</label>
+                      <input name="decsriptionLongue" #decsriptionLongue="ngModel" [(ngModel)]="formData.reclamation.descriptionLongue" class="form-control" >
+                        </div></div>
+             <div class="container">
+              <div class="row">
+                <div class="col-sm">
+           
+             <div class="form-group">
+               <label>قناة</label>
+               <select name="idcanal" #id="ngModel" [(ngModel)]="formData.reclamation.canal.id" class="form-control" >
+                 <option *ngFor="let item of canalAll" value="{{item.id}}">{{item.libelle}}</option>
+               </select>
+             </div>
+             </div>
+             <div class="col-sm">
+             <div class="form-group">
+               <label>قناة الإجابة</label>
+                <select name="idcanalreponse" #id="ngModel" [(ngModel)]="formData.reclamation.canalreponse.id" class="form-control" > 
+                 <option *ngFor="let item of canalReponseAll" value="{{item.id}}">{{item.libelle}}</option>
+               </select>
+             </div>
+           </div>
+           </div>
+           </div>
+           <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                   <div class="form-group">
+                    <label for="example-datetime-local-input" class="col-2 col-form-label">تاريخ الوضع </label>
+                     <input name="datedepot" type="datetime-local"  #dateDepot="ngModel" [(ngModel)]="formData.reclamation.dateDepot" class="form-control" >
+                             </div></div>
+                             <div class="col-sm">        
+                   <div class="form-group">
+                    <label for="example-datetime-local-input" class="col-2 col-form-label">تاريخ بدء</label>
+                    <input name="dateDebutTraitement" type="datetime-local" #dateDebutTraitement="ngModel" [(ngModel)]="formData.reclamation.dateDebutTraitement" class="form-control" >
+                   </div></div></div></div>
+                   <div class="container">
+                    <div class="row">
+                      <div class="col-sm">
+                   <div class="form-group">
+                    <label for="example-datetime-local-input" class="col-2 col-form-label">تاريخ الإنتهاء</label>
+                    <input name="dateFinTraitemente" type="datetime-local" #dateFinTraitement="ngModel" [(ngModel)]="formData.reclamation.dateFinTraitement" class="form-control" >
+                    </div></div>
+                    <div class="col-sm">
+                    <div class="form-group">
+                      <label for="example-datetime-local-input" class="col-2 col-form-label"> الإغلاق</label>
+                      <input name="cloture" type="datetime-local" #cloture="ngModel" [(ngModel)]="formData.reclamation.cloture" class="form-control" >
+                    </div></div></div></div> 
+                    <div class="container">
+                      <div class="row">
+                    <form>
+                      <label class="custom-file-upload">
+                        <input type="file" (change)="save($event)" multiple="multiple">
+                        <i class="fa fa-cloud-upload"></i> الوثائق المرفقة
+                    </label>
+                    
+                      <br>
+                      <span [innerHTML]="result"></span>
+                    </form>
+                    </div>
+                  </div>
+                    
+                             
+       
+    <div class="kt-portlet__foot">
+      <div class="kt-form__actions">
+        <div class="row">
+         
+          <div class="col-10">
+            <button  type="submit" [disabled]="form.invalid" class="btn btn-success">تأكيد</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

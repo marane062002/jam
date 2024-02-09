@@ -1,0 +1,62 @@
+/* style file datatable */
+
+.title_td {
+    font-weight: bold !important;
+    color: #155db3 !important;
+}
+
+.progress_bar {
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.file_icon {
+    height: 26px;
+}
+
+.wait_text_bar {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+}
+
+.btn_table_download i {
+    color: #0fbb51 !important;
+}
+
+.btn-download {
+    color: #212529;
+    background-color: #0fbb51;
+    border-color: #0fbb51;
+}
+
+.btn-success.focus,
+.btn-success:focus,
+.btn-success:hover {
+    color: #fff;
+    background-color: #0fbb51 !important;
+    border-color: #05a844 !important;
+}
+
+
+/* style btn export data xls*/
+
+.btn-export {
+    color: #ffffff !important;
+    background-color: #3875e7 !important;
+    padding: 5px 20px !important;
+}
+
+.export-align {
+    margin-left: 2% !important;
+}
+
+
+/* HISTRIQUE */
+
+.pj th {
+    width: 17% !important;
+}

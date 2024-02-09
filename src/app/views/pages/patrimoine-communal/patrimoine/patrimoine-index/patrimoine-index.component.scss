@@ -1,0 +1,89 @@
+.type {
+    width: 10%;
+}
+
+.dateEnreg {
+    width: 12%;
+}
+
+.nature {
+    width: 11%;
+}
+
+.arrondissement {
+    width: 11%;
+}
+
+.spec {
+    width: 11%;
+}
+
+.superf {
+    width: 10%;
+}
+
+.refCF {
+    width: 5%;
+}
+
+.dateCf {
+    width: 15%;
+}
+
+.action {
+    width: 15%;
+}
+
+.numReCf {
+    width: 10%;
+}
+
+.kt-portlet .kt-portlet__head__ {
+    transition: height .3s;
+}
+
+.kt-portlet.kt-portlet--sticky>.kt-portlet__head__,
+.kt-portlet .kt-portlet__head__ {
+    transition: right .3s, left .3s, height .3s;
+}
+
+.kt-portlet .kt-portlet__head__ {
+    transition: height .3s;
+}
+
+.kt-portlet .kt-portlet__head__ {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 25px;
+    min-height: 50px;
+}
+
+.kt-portlet .kt-portlet__head__ .kt-portlet__head-toolbar {
+    display: flex;
+    align-items: center;
+    align-content: flex-end;
+}
+
+.counter {
+    font-size: xx-large;
+    font-weight: 600;
+    color: #6c757d;
+    border: 1px solid #e1e4e6;
+    background-color: #f8f9fa;
+    padding-left: 33px;
+    padding-right: 33px;
+    padding-bottom: 10px;
+    border-radius: 2px;
+}
+
+.counter__titre {
+    display: flex;
+    position: absolute;
+    padding-top: 55px;
+    padding-right: 12px;
+    /* padding-left: 15px; */
+    color: #909090;
+    font-size: 11px;
+}
