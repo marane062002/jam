@@ -1,0 +1,348 @@
+
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Décès enregistrés à la morgue communale
+			</h2>
+		</div>
+		<!-- <div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<button href="javascript:; " class="btn btn-success">
+						génerer
+					</button>
+				</div>
+			</div>
+		</div> -->
+	</div>
+	<!-- end::row-content-top -->
+
+
+
+	<mat-card class="example-card mt-8 mb-5">
+		<form [formGroup]="searchForm">
+			<div class="row">
+				
+				<!-- <div class="col-md-4 form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.BUREAU_ORDRE.PERIODE_DE" | translate }} :</mat-label>
+						<input readonly type="text" class="form-control form-control-solid form-control-lg"
+							formControlName="periodeDe" matInput />
+					</mat-form-field>
+				</div> -->
+				<!-- ORIGINE -->
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de début</mat-label>
+							<input
+							formControlName="dated"
+								type="date"
+								class="form-control-solid form-control-lg"
+								name="address1"
+								matInput
+							/>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date fin</mat-label>
+							<input
+							formControlName="datef"
+								type="date"
+								class="form-control-solid form-control-lg"
+								name="address1"
+								matInput
+							/>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			<!-- TYPE -->
+			<!-- <div class="col-md-4">
+				<div class="form-group">
+					<mat-form-field class="example-full-width">
+						<mat-select class="form-control" formControlName="type"
+							placeholder="{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} :">
+							<mat-option *ngFor="let type of types" [value]="type.id">
+								{{type.libelle}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div> -->
+			</div>
+			<div class="row">
+				<div class="col-md-9"></div>
+
+				<div class="col-md-3 form-group fv-plugins-icon-container">
+					<div class="kt-portlet__head-label text-center">
+						<button (click)="filterDecesData()" _ngcontent-dkp-c41=""
+							class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+							{{'PAGES.PROGRAMME.STATISTIQUE.APPLIQUER'| translate}} </button>
+						<button (click)="reset()" _ngcontent-dkp-c41=""
+							class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+							{{'PAGES.PROGRAMME.STATISTIQUE.REINITIALISER'| translate}} </button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</mat-card>
+
+
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Adulte
+			</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<button (click)="exportToExcel()" matTooltip="Télécharger" href="javascript:; " class="btn btn-success">
+						<i class="la la-download"></i> 
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<mat-card class="example-card mt-8 mb-5">
+	
+	<div class="row">
+	
+        <div class="col-md-6">
+            <table #excelTableDom id="exportData">
+                <thead>
+                    <tr>
+                        <th>Sexe</th>
+                        <th *ngFor="let nationality of nationalities">{{ nationality }}</th>
+                        <th>Total</th>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sex of sexes">
+                        <th>{{ sex }}</th>
+                        <td *ngFor="let nationality of nationalities">{{ getCellValue(nationality, sex) }}</td>
+                        <td>{{ getTotalRowValue(sex) }}</td>
+                      
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="col-md-6">
+            <div [style.pointer-events]="filtredData.length ? 'all' : 'none'">
+                <canvas id="canva2"></canvas>
+            </div>
+          </div> 
+        
+	</div>
+    <!-- <div class="row">
+        <div class="col-md-12 m-auto">
+            
+                <div>
+                    <canvas id="canva"></canvas>
+                </div>
+              
+        </div>
+    </div> -->
+</mat-card>
+<br>
+
+
+
+<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Nombre d'expertises médico-légales
+			</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<button (click)="exportToExcelSurvenu()" matTooltip="Télécharger" href="javascript:; " class="btn btn-success">
+						<i class="la la-download"></i> 
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<mat-card class="example-card mt-8 mb-5">
+	
+<div class="row">
+	<div class="col-md-6">
+	<table #excelTable id="exportDataSurvenus">
+		<thead>
+			<tr>
+				<th>Sexe</th>		
+	     		<th>Examens</th>
+				<th>Autopsie</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let sex of sexes">
+				<th>{{ sex }}</th>
+				<td>{{ getCellValueEx(sex) }}</td>
+				<td>{{ getCellValueAu(sex) }}</td>
+				<td>{{ getTotalRowValueEx(sex) }}</td>
+			</tr>
+		</tbody>
+  </table>
+</div>
+
+<div class="col-md-6">
+	<div [style.pointer-events]="filtred2Data.length || filtred3Data.length ? 'all' : 'none'">
+		<canvas id="canva"></canvas>
+	</div>
+</div>
+
+</div>
+</mat-card>
+  
+
+
+
+
+
+
+<div class="kt-portlet__head kt-bg-portlet-1">
+	<div class="kt-portlet__head-label">
+		<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+			Nombre de prélèvement pour analyse
+		</h2>
+	</div>
+	<div class="kt-portlet__head-toolbar">
+		<div class="kt-portlet__head-wrapper">
+			<div class="kt-portlet__head-actions">
+				<button (click)="exportToExcel3()" matTooltip="Télécharger" href="javascript:; " class="btn btn-success">
+					<i class="la la-download"></i> 
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<mat-card class="example-card mt-8 mb-5">
+
+<div class="row">
+<div class="col-md-6">
+<table #excelTable3 id="exportDataAnalyse">
+	<thead>
+		<tr>
+			<th>Sexe</th>		
+			 <th *ngFor="let analyse of analyses">{{analyse}}</th>
+			<th>Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let sex of sexes">
+			<th>{{ sex }}</th>
+			<td *ngFor="let analyse of analyses">{{ getCellValuePr(sex,analyse) }}</td>
+			<td>{{ getTotalRowValuePr(sex) }}</td>
+
+
+
+			
+                      
+
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<div class="col-md-6">
+<div [style.pointer-events]="filtred4Data.length ? 'all' : 'none'">
+	<canvas id="canva3"></canvas>
+</div>
+</div>
+
+</div>
+</mat-card>
+	  
+</div>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table #excelTableDom id="exportData">
+	<thead>
+		<tr>
+			<th>Ctégorie</th>
+			<th *ngFor="let nationality of nationalities">{{ nationality }}</th>
+			<th>Total</th>
+			<th>Examens</th>
+			<th>Autopsie</th>
+			<th>Total</th>
+			<th *ngFor="let analyse of analyses">{{analyse}}</th>
+			<!-- <th>Total</th> -->
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let sex of sexes">
+			<th>{{ sex }}</th>
+			<td *ngFor="let nationality of nationalities">{{ getCellValue(nationality, sex) }}</td>
+			<td>{{ getTotalRowValue(sex) }}</td>
+			<td>{{ getCellValueEx(sex) }}</td>
+			<td>{{ getCellValueAu(sex) }}</td>
+			<td>{{ getTotalRowValueEx(sex) }}</td>
+			<td *ngFor="let analyse of analyses">{{ getCellValuePr(sex,analyse) }}</td>
+		   <!-- <td>{{ getTotalRowValuePr(sex) }}</td>	 -->
+		</tr>
+	</tbody>
+</table>
+
+
+
+<!-- <thead>
+	<tr>
+		<th>Sexe</th>		
+		 <th *ngFor="let analyse of analyses">{{analyse}}</th>
+		<th>Total</th>
+	</tr>
+</thead>
+<tbody>
+	<tr *ngFor="let sex of sexes">
+		<th>{{ sex }}</th>
+		<td *ngFor="let analyse of analyses">{{ getCellValuePr(sex,analyse) }}</td>
+		<td>{{ getTotalRowValuePr(sex) }}</td>			  
+
+	</tr>
+</tbody> -->
+
+
+

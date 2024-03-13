@@ -1,0 +1,71 @@
+<!-- begin:: Content section 2 -->
+<div class="kt-portlet portlet-1">
+    <div class="kt-portlet__head kt-bg-portlet-1">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+				<i class="fas fa-info-circle kt-font-inverse-brand"></i>
+			</span>
+            <h3 class="kt-portlet__head-title kt-font-inverse-brand">
+               Membre interne de la commission technique
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="example-container mat-elevation-z8">
+
+            <mat-table [dataSource]="dataSourcePI">
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="nom">
+                    <mat-header-cell *matHeaderCellDef>
+                        {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.NOM' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="chikaya_td"> {{row.nom?row.nom:"-"}} </mat-cell>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="role">
+                    <mat-header-cell *matHeaderCellDef>
+                        {{ 'PAGES.MARCHE.COMMISSIONS.INFO_MEMBRE_EXTERNE.ROLE' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.role?row.role:"-"}} </mat-cell>
+                </ng-container>
+
+                <!-- Fav Column -->
+                <ng-container matColumnDef="present">
+                    <mat-header-cell *matHeaderCellDef> {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.IS_PRESENT' | translate }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.present?row.present:"-"}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="justif">
+                    <mat-header-cell *matHeaderCellDef>
+                        {{ 'PAGES.MARCHE.COMMISSIONS.PRESENCE.MOTIF_ABSENCE' | translate }} </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.justif?row.justif:"-"}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef>Convocation</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <!-- <a href="javascript:;" *ngIf="TypeCommission == 1 || TypeCommission == 3" (click)="convocation(idao,row.nom)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md" matTooltip="Convocation"><i class="la la-print"></i></a> -->
+                        <a href="javascript:;"  (click)="convocation(idao,row.nom)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md" matTooltip="Convocation"><i class="la la-print"></i></a>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsPI"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsPI;">
+                </mat-row>
+            </mat-table>
+            <div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+            </div>
+            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                </mat-progress-spinner>
+            </mat-card>
+            <mat-paginator [length]="dataSize" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10]" showFirstLastButtons></mat-paginator>
+        </div>
+
+
+    </div>
+</div>

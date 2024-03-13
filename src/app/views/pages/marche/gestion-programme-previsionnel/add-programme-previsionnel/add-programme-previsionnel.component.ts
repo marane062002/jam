@@ -3,6 +3,7 @@ import { AoService } from '../../../shared/ao.service';
 import { GestionDesTypesAoService } from '../../../parametrage/Services/gestion-des-types-ao.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../../../../app/core/auth';
 
 @Component({
   selector: 'kt-add-programme-previsionnel',
@@ -11,12 +12,13 @@ import { Router } from '@angular/router';
 })
 export class AddProgrammePrevisionnelComponent implements OnInit {
   formData = {
+    heureOuverturePlis:null,
     typePrestation: { id: "" },
     // sousTypePrestation:"",
-    objet:"",
+    objet:"", 
     lieuExecution:"",
     lieuLivraison:"",
-    president:"",
+    idPresident:0,
     imputationBudgetaire:"",
     natureAo: { id: "" },
 		modePassation: "",
@@ -26,7 +28,7 @@ export class AddProgrammePrevisionnelComponent implements OnInit {
     quantite:'',
     estimation:'',
 		marcheDestinePME: '',
-    dateProjet:null
+		numRef: '',
   }
   typePrestation: number;
 	listSousTypePrestationAo;
@@ -55,10 +57,14 @@ export class AddProgrammePrevisionnelComponent implements OnInit {
     'Division budget,comptabilité et marchés publics',
     'Division des Grands services et logistique',
     'Division de Gestion des ressources   financières',]
-
-  constructor(  private router: Router,private service: AoService,private serviceTypeAo:GestionDesTypesAoService,) { }
+    President
+  constructor( private authService:AuthService, private router: Router,private service: AoService,private serviceTypeAo:GestionDesTypesAoService,) { }
   typesAO
   ngOnInit() {
+    this.authService.getUserWherePresidentTrue().then((res)=>{
+      this.President=res
+      
+    })
     this.serviceTypeAo.getAll().then((res)=>{
 			this.typesAO=res
 			
@@ -126,8 +132,8 @@ this.listSousTypePrestationAo=["Travaux","Aménagement","Travaux d\'entretien","
 	}
   onSubmit() {
 	
-			
-    
+			this.formData.heureOuverturePlis= this.formData.dateOuverturePlis.split("T")[1];
+      
 		
 			this.service.addProgrammePrevisionnel(this.formData).subscribe((res) => {
 			  this.router.navigate(["/marches/list-programme-previsionnel"]);

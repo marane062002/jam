@@ -2,7 +2,7 @@
 	<div class="kt-portlet portlet-3">
 		<div class="kt-portlet__head kt-bg-portlet-3">
 			<div class="kt-portlet__head-label">
-				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Ajouter un Obstacle :</h2>
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Ajouter mort avec obstacle  :</h2>
 			</div>
 		</div>
 	</div>
@@ -52,15 +52,15 @@
                                             formControlName="nationalite"
                                             class="form-control"
                                         >
-                                            <mat-option  value="Marocain">Marocain</mat-option>
-                                            <mat-option  value="Autre">Autre</mat-option>                                    
+                                            <mat-option value="Marocain">Marocain</mat-option>
+                                            <mat-option value="Autre">Autre</mat-option>                                    
                                         </mat-select>
                                     </mat-form-field>
 									<div class="fv-plugins-message-container"></div>
 								</div>
 							</div>
 						</div>
-                        <div class="row" *ngIf="ajoutForm.value.nationalite === 'Autre'">
+                        <!-- <div class="row" *ngIf="ajoutForm.value.nationalite === 'Autre'">
 							<div class="col-md-6">
 								<div class="form-group fv-plugins-icon-container">
 									<mat-form-field class="example-full-width">
@@ -75,7 +75,7 @@
 									<div class="fv-plugins-message-container"></div>
 								</div>
 							</div>
-                        </div>
+                        </div> -->
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group fv-plugins-icon-container">
@@ -208,7 +208,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<div class="form-group fv-plugins-icon-container">
 									<mat-form-field class="example-full-width">
                                         <mat-label>N décés</mat-label>
@@ -223,13 +223,79 @@
 									<div class="fv-plugins-message-container"></div>
 								</div>
 							</div>
+
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+										<mat-label>Statut</mat-label>
+										<mat-select
+										formControlName="statusCadavre"
+											matNativeControl
+											class="form-control"
+										>
+										<mat-option  value="Traitée">Traitée</mat-option>
+										<mat-option  value="En_cours_de_traitement">En cours de traitement</mat-option>
+										<mat-option  value="Non_traitée">Non traitée</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
 						</div>
 
+						<div class="row" *ngIf="ajoutForm.get('statusCadavre').value === 'Traitée'">
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>Nom du cimitiére</mat-label>
+                                        <input
+                                            formControlName="nomCim"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
 
-
-
-
-
+							<div class="col-md-6">
+								<div class="form-group fv-plugins-icon-container">
+									<mat-form-field class="example-full-width">
+                                        <mat-label>N tombe</mat-label>
+                                        <input
+                                            formControlName="numTombe"
+                                            type="text"
+                                            class="form-control-solid form-control-lg"
+                                            name="address1"
+                                            matInput
+                                        />
+                                    </mat-form-field>
+									<div class="fv-plugins-message-container"></div>
+								</div>
+							</div>
+						</div>
+                    <div class="row">
+						<div class="col-md-12">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Constater à</mat-label>
+									<mat-select
+									formControlName="constater"
+										matNativeControl
+										class="form-control"
+									>
+									<mat-option value="Hopital">Hopital</mat-option>
+									<mat-option value="Clinique">Clinique</mat-option>
+									<mat-option value="Maison">Maison</mat-option>
+									<mat-option value="Autre">Autre</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
 
 						<mat-expansion-panel [expanded]="true">
 							<mat-expansion-panel-header>
@@ -410,7 +476,16 @@
 					<div class="form-group fv-plugins-icon-container">
 						<mat-form-field class="example-full-width">
 							<mat-label>Date de déclaration :</mat-label>
-							<input formControlName="dateDeclaration" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+							<input formControlName="dateDeclaration" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Numéro de téléphone :</mat-label>
+							<input formControlName="numTel" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
 						</mat-form-field>
 						<div class="fv-plugins-message-container"></div>
 					</div>
@@ -558,7 +633,7 @@
 								matNativeControl
 								class="form-control"
 							>
-							<mat-option *ngFor="let c of constateur" [value]="c">{{c.nom}}</mat-option>
+							<mat-option *ngFor="let c of constateur" [value]="c">{{c.prenom}} {{ c.nom}}</mat-option>
 						</mat-select>
 						</mat-form-field>
 						<div class="fv-plugins-message-container"></div>
@@ -568,7 +643,7 @@
 					<div class="form-group fv-plugins-icon-container">
 						<mat-form-field class="example-full-width">
 							<mat-label>Date de constation :</mat-label>
-							<input formControlName="dateConstation" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+							<input formControlName="dateConstation" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
 						</mat-form-field>
 						<div class="fv-plugins-message-container"></div>
 
@@ -582,7 +657,7 @@
 						<mat-form-field class="example-full-width">
 							<mat-label>Date de décés :</mat-label>
 
-							<input formControlName="dateDeces" type="datetime-local" class="form-control-solid form-control-lg" name="address1" matInput />
+							<input formControlName="dateDeces" type="date" class="form-control-solid form-control-lg" name="address1" matInput />
 						</mat-form-field>
 						<div class="fv-plugins-message-container"></div>
 
@@ -598,7 +673,6 @@
 								matNativeControl
 								class="form-control"
 							>
-							<mat-option  value="Maladie">Maladie</mat-option>
 							<mat-option  value="Accident">Accident</mat-option>
 							<mat-option  value="Suicide">Suicide</mat-option>
 							<mat-option  value="Homicide">Homicide</mat-option>
@@ -611,23 +685,26 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group fv-plugins-icon-container">
-						<mat-form-field class="example-full-width">
-							<mat-label>Description de deces :</mat-label>
+				
 
-							<input formControlName="observationConst" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
-						</mat-form-field>
-						<div class="fv-plugins-message-container"></div>
-					</div>
-				</div>
-
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<div class="form-group fv-plugins-icon-container">
 						<mat-form-field class="example-full-width">
 							<mat-label>N registre :</mat-label>
 
 							<input formControlName="numRegistre" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Description de deces :</mat-label>
+
+							<input formControlName="observationConst" type="text" class="form-control-solid form-control-lg" name="address1" matInput />
 						</mat-form-field>
 						<div class="fv-plugins-message-container"></div>
 					</div>

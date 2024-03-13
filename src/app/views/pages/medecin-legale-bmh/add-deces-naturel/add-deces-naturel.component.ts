@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 import { MatTableDataSource } from '@angular/material';
 import * as $ from "jquery";
 import { environment } from "../../../../../environments/environment";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'kt-add-deces-naturel',
@@ -44,13 +44,17 @@ export class AddDecesNaturelComponent implements OnInit {
 
   displayedColumns1 = [ "label", "nomDoc", "actions"];
 
-
+  private headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+	});
   public get newDeces(): InterfaceDeces {
     return this._newDeces;
   }
   public set newDeces(value: InterfaceDeces) {
     this._newDeces = value;
   }
+  private baseUrl = environment.API_BMH_URL;
   private AlfresscoURL = environment.API_ALFRESCO_URL;
   constructor(private httpClient:HttpClient, private communeService:CommuneService,private quartierService:QuartierService,private constateurService:ConstateurService, private ArrondissementService:ArrondissemntService, private router:Router,private formBuilder: FormBuilder,private service:DecesNaturelsService) { }
   pjDeclar: any;
@@ -74,11 +78,17 @@ export class AddDecesNaturelComponent implements OnInit {
       lieu: ['',Validators.required],
       // adresseDeces: ['',Validators.required],
       adresseResidence: ['',Validators.required],
-      autreNationalite:[''],
+      // autreNationalite:[''],
       constater:[''],
       cause:[''],
       dateDeces:[''],
-      descriptionDec:['']
+      descriptionDec:[''],
+      numDeces:[''],
+      numRegistre:[''],
+      statusCadavre:[''],
+      numTombe:[''],
+      nomCim:[''],
+      commentaire:['']
     });
     
   
@@ -146,14 +156,14 @@ export class AddDecesNaturelComponent implements OnInit {
   }
   detecterChangementNationalite() {
     
-      if ( this.ajoutForm.value.nationalite === 'Autre') {
+      // if ( this.ajoutForm.value.nationalite === 'Autre') {
         
-        this.ajoutForm.value.nationalite=this.ajoutForm.value.autreNationalite
+      //   this.ajoutForm.value.nationalite=this.ajoutForm.value.autreNationalite
         
-      } else {
-        this.ajoutForm.get('autreNationalite').clearValidators();
-      }
-      this.ajoutForm.get('autreNationalite').updateValueAndValidity();
+      // } else {
+      //   this.ajoutForm.get('autreNationalite').clearValidators();
+      // }
+      // this.ajoutForm.get('autreNationalite').updateValueAndValidity();
     }
 
   
@@ -162,13 +172,26 @@ export class AddDecesNaturelComponent implements OnInit {
     this.detecterChangementNationalite();
     if(this.ajoutForm.valid){
     
-      if ( this.ajoutForm.value.nationalite === 'Autre') {
+      // if ( this.ajoutForm.value.nationalite === 'Autre') {
         
-        this.ajoutForm.value.nationalite=this.ajoutForm.value.autreNationalite
+      //   this.ajoutForm.value.nationalite=this.ajoutForm.value.autreNationalite
         
-      }
+      // }
+      
       this.service.create(this.ajoutForm.value).subscribe(
         (res:any) => {
+          const historique = {
+              "nouveauStatut":this.ajoutForm.value.statusCadavre,
+               "decesNaturel":{
+                "id":res.id
+               }
+            }
+            debugger
+            this.httpClient.post(`${this.baseUrl}historique-deces`, historique , { headers: this.headers })
+            .subscribe((res)=>{
+            debugger
+            console.log('stored successfully:', res);
+            })
           this.allpjDeclar.forEach(formPj => {	
         
             const pcjDeclarant = new FormData();
@@ -183,6 +206,7 @@ export class AddDecesNaturelComponent implements OnInit {
               console.log('deces naturel pièce Jointe stored successfully:', res);
               })
             });
+           
           console.log("nouveau res :", res);
           Swal.fire({
             title: 'Enregistrement réussi!',

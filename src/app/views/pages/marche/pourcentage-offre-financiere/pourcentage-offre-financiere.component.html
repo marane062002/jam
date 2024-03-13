@@ -1,0 +1,101 @@
+<div class="col-lg-12 col-md-offset-2">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+
+				<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+					{{ "PAGES.MARCHE.POURCENTAGE_OFFRE_FINANCIERE.POURCENTAGE_OFFRE_FINANCIERE" | translate }} :
+				</h3>
+			</div>
+		</div>
+	</div>
+</div>
+<form [formGroup]="Form1">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<input readonly value="Travaux" matInput type="text" class="form-control"
+									formControlName="categorie"
+									placeholder="{{ 'PAGES.MARCHE.POURCENTAGE_OFFRE_FINANCIERE.CATEGORIE' | translate }} :"
+									required>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<input matInput type="number" class="form-control" formControlName="pourcentage1"
+									placeholder="{{ 'PAGES.MARCHE.POURCENTAGE_OFFRE_FINANCIERE.POURCENTAGE_1' | translate }} :"
+									required>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<input matInput type="number" class="form-control" formControlName="pourcentage2"
+									placeholder="{{ 'PAGES.MARCHE.POURCENTAGE_OFFRE_FINANCIERE.POURCENTAGE_2' | translate }} :"
+									required>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<form [formGroup]="Form2">
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<input readonly value="Fournitures" matInput type="text" class="form-control"
+									formControlName="categorie"
+									placeholder="{{ 'PAGES.MARCHE.POURCENTAGE_OFFRE_FINANCIERE.CATEGORIE' | translate }} :"
+									required>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<input matInput type="number" class="form-control" formControlName="pourcentage1"
+									placeholder="{{ 'PAGES.MARCHE.POURCENTAGE_OFFRE_FINANCIERE.POURCENTAGE_1' | translate }} :"
+									required>
+							</mat-form-field>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<input matInput type="number" class="form-control" formControlName="pourcentage2"
+									placeholder="{{ 'PAGES.MARCHE.POURCENTAGE_OFFRE_FINANCIERE.POURCENTAGE_2' | translate }} :"
+									required>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__body">
+		<div class="kt-form__actions">
+			<button type="submit" (click)="onEdit()"
+				[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+				class="btn btn-success btn-md btn-tall btn-wide">
+				{{ 'PAGES.GENERAL.SAVE' | translate }} <i class="far fa-save"></i>
+			</button>
+
+		</div>
+	</div>
+</div>

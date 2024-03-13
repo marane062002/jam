@@ -1,0 +1,118 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">
+				Référentiel de maintenance d'équipement X
+			</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a
+						(click)="addMaintenance()"
+						href="javascript:; "
+						class="btn btn-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+		>&nbsp;
+		<mat-form-field>
+			<input
+				matInput
+				(keyup)="applyFilter($event.target.value)"
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+			/>
+		</mat-form-field>
+	</div>
+	<table
+		id="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="NUM">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				N°
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">{{ row.id }}</td>
+		</ng-container>
+		<ng-container matColumnDef="MAINTENANCE">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				MAINTENANCE
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.maintenance }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="TYPE_M">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				TYPE MAINTENANCE
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.typeMaintenance }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="DATE_M">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				DATE MAINTENANCE
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ formatDate(row.dateMaintenance) }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="REVISION">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				REVISION
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.revision }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="TYPE_R">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				TYPE REVISION
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.typeRevision }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="DATE_R">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				DATE REVISION
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ formatDate(row.dateRevision) }}
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	>
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<mat-paginator
+	*ngIf="dataSource != undefined && dataSource.data != undefined"
+	[length]="totalRecords"
+	[pageSize]="pageSize"
+	[pageIndex]="currentPage"
+	(page)="onPaginatorChange($event)"
+	[pageSizeOptions]="pageSizeOptions"
+	[showFirstLastButtons]="true"
+  ></mat-paginator>
+	<hr />
+</div>

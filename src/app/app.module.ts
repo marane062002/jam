@@ -73,6 +73,8 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { FormsModule } from '@angular/forms';
 import { SanitaireComponent } from './sanitaire/sanitaire.component';
 import { TransformDatePipe } from './transform-date.pipe';
+import { ShowTypeForfaitComponent } from './views/pages/gsm-lan/parametrage/type-forfait/show-type-forfait/show-type-forfait.component';
+
 // import { EnterrementComponent } from './enterrement/enterrement.component';
 
 
@@ -140,6 +142,7 @@ export function clearState(reducer) {
 		PartialsModule,
 		CoreModule,
 		OverlayModule,
+		
 		MaterialsModule,
 		StoreModule.forRoot(reducers, {
 			metaReducers: [clearState, debug]

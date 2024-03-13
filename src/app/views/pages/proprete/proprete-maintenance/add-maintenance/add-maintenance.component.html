@@ -1,0 +1,106 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Ajouter une maintenance
+			</h2>
+		</div>
+	</div>
+</div>
+<form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
+	<div class="col-md-12">
+		<div class="form-group fv-plugins-icon-container">
+	<div class="row">
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Type d'équipement </label>
+			<mat-select formControlName="typeEqipement" class="form-control">
+			  <mat-option [value]="'mobile'">Mobile</mat-option>
+			  <mat-option [value]="'immobile'">Immobile</mat-option>
+			</mat-select>
+		  </mat-form-field>
+		</div>
+	  </div>
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Maintenance </label>
+			<input matInput formControlName="maintenance" type="text" class="form-control form-control-solid form-control-lg" name="maintenance" />
+		  </mat-form-field>
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Désignation </label>
+			<mat-select formControlName="designation" class="form-control">
+			  <mat-option [value]="'option1'">Option 1</mat-option>
+			  <mat-option [value]="'option2'">Option 2</mat-option>
+			</mat-select>
+		  </mat-form-field>
+		</div>
+	  </div>
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Type maintenance </label>
+			<input matInput formControlName="typeMaintenance" type="text" class="form-control form-control-solid form-control-lg" name="maintenanceType" />
+		  </mat-form-field>
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Date maintenance </label>
+			<input matInput formControlName="dateMaintenance" type="date" class="form-control form-control-solid form-control-lg" name="maintenanceDate" />
+		  </mat-form-field>
+		</div>
+	  </div>
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Révision </label>
+			<input matInput formControlName="revision" type="text" class="form-control form-control-solid form-control-lg" name="revision" />
+		  </mat-form-field>
+		</div>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Type révision </label>
+			<input matInput formControlName="typeRevision" type="text" class="form-control form-control-solid form-control-lg" name="revisionType" />
+		  </mat-form-field>
+		</div>
+	  </div>
+	  <div class="col-md-6">
+		<div class="form-group">
+		  <mat-form-field class="example-full-width">
+			<label> Date révision </label>
+			<input matInput formControlName="dateRevision" type="date" class="form-control form-control-solid form-control-lg" name="revisionDate" />
+		  </mat-form-field>
+		</div>
+	  </div>
+	</div>
+	<div class="kt-portlet__heads">
+	  <div class="kt-portlet__head-label" align="right">
+		<button href="javascript:;" (click)="backList()" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+		  <i class="la la-recycle"></i>
+		  Retour
+		</button>
+		<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+		  <i class="icon la la-floppy-o"></i>
+		  Enregistrer
+		</button>
+	  </div>
+	</div>
+	</div>
+	</div>
+  </form>
+  

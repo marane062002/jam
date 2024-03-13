@@ -1,0 +1,139 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1 col-md-12">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="fas fa-address-card kt-font-inverse-brand"></i>
+			</span>
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.DEL_SDL.DETAILL_SDL" | translate }}
+			</h2>
+		</div>
+	</div>
+
+	<div class="kt-portlet portlet-1 col-md-12">
+
+		<div class="kt-portlet__body">
+			<div class="row">
+				<div class="col-md-12 show_port">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.RS" | translate }} :</th>
+								<td class="donnee_show">{{ details.raisonSociale }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.RC" | translate }} :</th>
+								<td class="donnee_show">{{ details.raisonCommerciale }}</td>
+							</tr>
+	
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.IF" | translate }} :</th>
+								<td class="donnee_show">{{ details.identifiantFiscal }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.ICE" | translate }} :</th>
+								<td class="donnee_show">{{ details.identifiantCommun }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.NUM_CNSS" | translate }} :</th>
+								<td class="donnee_show">{{ details.numCnss }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.ADRESSE" | translate }} :</th>
+								<td class="donnee_show">{{ details.adresse }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.TEL" | translate }} :</th>
+								<td class="donnee_show">{{ details.numTel }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.FAX" | translate }} :</th>
+								<td class="donnee_show">{{ details.nemFax }}</td>
+							</tr>
+	
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.EMAIL" | translate }} :</th>
+								<td class="donnee_show">{{ details.email }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.GERANT" | translate }} :</th>
+								<td class="donnee_show">{{ details.gerant }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.STRUCTURE" | translate }} :</th>
+								<td class="donnee_show">{{ details.structureSdl.libelle }}</td>
+							</tr>
+							<tr>
+								<th>{{ "PAGES.DEL_SDL.CAPITAL" | translate }} :</th>
+								<td class="donnee_show">{{ details.capital }}</td>
+							</tr>
+							</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="kt-portlet portlet-1 col-md-12">
+					
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			&nbsp;
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">Piéces jointes</h2>
+		</div>
+	</div>
+
+	<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+
+		<mat-table [dataSource]="dataSource2" matSort>
+			<!-- file name Column -->
+			<ng-container matColumnDef="nomDoc">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="titre">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>
+					Libelle</mat-header-cell>
+				<mat-cell *matCellDef="let row"> {{row.sousModule}} </mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="dow">
+				<mat-header-cell *matHeaderCellDef mat-sort-header>
+					{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]="!row.idAlfresco" [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+						<i class="flaticon-download-1"></i></button>
+				</mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns2;">
+			</mat-row>
+		</mat-table>
+	</div>
+</div>
+
+<mat-tab-group>
+	<mat-tab label="Suivi Sdl">
+		<kt-tab-sdl></kt-tab-sdl>
+	</mat-tab>
+</mat-tab-group>
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:;"
+			(click)="Back()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+</div>
+<div class="espace_bloc"></div>
+<!-- end:: Content -->

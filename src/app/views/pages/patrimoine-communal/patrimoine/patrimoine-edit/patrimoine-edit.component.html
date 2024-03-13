@@ -184,6 +184,37 @@
                                 <button  mat-raised-button color="primary" style="width: 80%;" (click)="openDialog()" >  {{ 'PAGES.GENERAL.UPDATETYPE' | translate }}</button>
                             </div>
 
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select (selectionChange)="selectedTypePropriete($event.value)"
+                                            class="form-control" formControlName="typePropriete"
+                                            placeholder="{{ 'PAGES.GENERAL.TYPE_PROPRIETE' | translate }} :" required>
+                                            <mat-option [value]=null> ---{{ 'PAGES.GENERAL.VIDE' | translate }}---
+                                            </mat-option>
+                                            <mat-option value="عمليات عقارية">{{'عمليات عقارية'}}
+                                            </mat-option>
+                                            <mat-option value="تحفيظ">{{'تحفيظ'}}</mat-option>
+                                            <mat-option value="تدبيرالممتلكات">{{'تدبيرالممتلكات'}} </mat-option>
+                                            <mat-option value="Autre">{{'Autre'}} </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="isControlHasError('type','required')">
+                                            <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-3" *ngIf="isSelectedAutre==true">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input class="form-control" placeholder="" matInput
+                                            formControlName="typeProprieteLibre">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+    
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <mat-form-field class="example-full-width">

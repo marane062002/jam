@@ -124,6 +124,8 @@ export class PatrimoineNewComponent implements OnInit {
       categorieMeubles: [null],
       statutMarche: [null],
       createurUser: [window.localStorage.getItem("fullnameUser")],
+      typePropriete: [null],
+      typeProprieteLibre: [null]
     })
 
     this.patrimoineForm.get('arrondissement').disable();
@@ -153,12 +155,22 @@ export class PatrimoineNewComponent implements OnInit {
       );
   }
 
-  onDeletePj(id: number):void {
+  isSelectedAutre: boolean = false;
+  selectedTypePropriete(event: any) {
+    if (event == 'Autre') {
+      this.isSelectedAutre = true;
+    }
+    else {
+      this.isSelectedAutre = false;
+    }
+  }
+
+  onDeletePj(id: number): void {
     this.allpjs.splice(id, 1);
     if (this.allpjs.length > 0) {
       this.dataSource1 = new MatTableDataSource(this.allpjs);
     } else {
-      this.dataSource1 = null
+      this.dataSource1 = null;
     }
   }
 
@@ -222,7 +234,10 @@ export class PatrimoineNewComponent implements OnInit {
   //
   // ==================================================================
   onSubmit() {
-
+    if (this.patrimoineForm.get('typeProprieteLibre').value != null) {
+      this.patrimoineForm.get('typePropriete').setValue(this.patrimoineForm.get('typeProprieteLibre').value);
+      this.patrimoineForm.get('typeProprieteLibre').reset();
+    }
     const formValues = this.patrimoineForm.value
     const controls = this.patrimoineForm.controls;
     /** check form */
@@ -236,7 +251,6 @@ export class PatrimoineNewComponent implements OnInit {
     this.loading = true;
     const patrimoine: any = Object.assign({}, formValues);
     console.log('patrimoin data : ' + patrimoine)
-
     this.service.savePatrimoine(patrimoine)
       .subscribe(data => {
         if (this.allpjs.length > 0) {
@@ -307,18 +321,18 @@ export class PatrimoineNewComponent implements OnInit {
 
 
   back() {
-		let id = parseInt(localStorage.getItem('idPatrimoine11122'));
+    let id = parseInt(localStorage.getItem('idPatrimoine11122'));
     let id1 = parseInt(localStorage.getItem('idPatrimoine11133'));
-		if (isNaN(id) && isNaN(id1)) {
-			this.router.navigate(["/patrimoine/patrimoine-index"]);
-		}
-		if (!isNaN(id)){
-			this.router.navigate(['/patrimoine/patrimoine-show'], { queryParams: { id: id } })
-		}
-    if (!isNaN(id1)){
-			this.router.navigate(['/patrimoine/patrimoine-show'], { queryParams: { id: id1 } })
-		}
-	}
+    if (isNaN(id) && isNaN(id1)) {
+      this.router.navigate(["/patrimoine/patrimoine-index"]);
+    }
+    if (!isNaN(id)) {
+      this.router.navigate(['/patrimoine/patrimoine-show'], { queryParams: { id: id } })
+    }
+    if (!isNaN(id1)) {
+      this.router.navigate(['/patrimoine/patrimoine-show'], { queryParams: { id: id1 } })
+    }
+  }
 }
 
 

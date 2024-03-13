@@ -1,0 +1,260 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-profile"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				Détails de délégataire
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>RC :</th>
+							<td class="donnee_show">{{details.rc}}</td>
+
+							<th>RS :</th>
+							<td class="donnee_show">{{details.rs}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- END DETAILS ASSOCIATION -->
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-suitcase kt-font-inverse-brand"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				Ressources humains
+			</h3>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a
+						href="javascript:; "
+						(click)="addRessource()"
+						class="btn btn-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="example-header col-md-4">
+				<i
+					class="flaticon-search-magnifier-interface-symbol text-dark"
+				></i
+				>&nbsp;
+				<mat-form-field>
+					<input
+						matInput
+						(keyup)="applyFilter($event.target.value)"
+						placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+					/>
+				</mat-form-field>
+			</div>
+			<div class="col-md-4"></div>
+			<div class="col-md-1 text-right p-5">
+				<input type="text" disabled value="Total : 350" />
+			</div>
+		</div>
+		<table
+			id="exportData"
+			mat-table
+			[dataSource]="dataSource"
+			class="mat-elevation-z8"
+			matSort
+		>
+			<ng-container matColumnDef="NUM">
+				<th
+					colspan="1"
+					mat-header-cell
+					*matHeaderCellDef
+					mat-sort-header
+				>
+					N°
+				</th>
+				<td colspan="1" mat-cell *matCellDef="let row">
+					{{ row.NUM }}
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="NOM">
+				<th
+					colspan="3"
+					mat-header-cell
+					*matHeaderCellDef
+					mat-sort-header
+				>
+					Nom
+				</th>
+				<td colspan="3" mat-cell *matCellDef="let row">
+					{{ row.NOM }}
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="PRENOM">
+				<th
+					colspan="3"
+					mat-header-cell
+					*matHeaderCellDef
+					mat-sort-header
+				>
+					Prénom
+				</th>
+				<td colspan="3" mat-cell *matCellDef="let row">
+					{{ row.PRENOM }}
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="CNSS">
+				<th
+					colspan="3"
+					mat-header-cell
+					*matHeaderCellDef
+					mat-sort-header
+				>
+					Fiche CNSS
+				</th>
+				<td colspan="3" mat-cell *matCellDef="let row">
+					<button
+						type="button"
+						class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_show"
+					>
+						<mat-icon>picture_as_pdf</mat-icon>
+					</button>
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="POINTAGE">
+				<th
+					colspan="3"
+					mat-header-cell
+					*matHeaderCellDef
+					mat-sort-header
+				>
+					Fiche de pointage
+				</th>
+				<td colspan="3" mat-cell *matCellDef="let row">
+					<button
+						type="button"
+						class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_show"
+					>
+						<mat-icon>picture_as_pdf</mat-icon>
+					</button>
+				</td>
+			</ng-container>
+			<ng-container matColumnDef="PERSONNELLE">
+				<th
+					colspan="3"
+					mat-header-cell
+					*matHeaderCellDef
+					mat-sort-header
+				>
+					Fiche personnelle
+				</th>
+				<td colspan="3" mat-cell *matCellDef="let row">
+					<button
+						type="button"
+						class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_show"
+					>
+						<mat-icon>picture_as_pdf</mat-icon>
+					</button>
+				</td>
+			</ng-container>
+
+			<ng-container matColumnDef="actions">
+				<th
+					mat-header-cell
+					*matHeaderCellDef
+					mat-sort-header
+					class="action"
+				>
+					Actions
+				</th>
+				<td mat-cell *matCellDef="let row" class="actionsBtn action">
+					<button
+						type="button"
+						(click)="Details()"
+						class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"
+						matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"
+					>
+						<i class="icon la la-search-plus"></i>
+					</button>
+					<button
+						type="button"
+						(click)="EditRessource()"
+						class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+						matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"
+					>
+						<i class="icon la la-edit"></i>
+					</button>
+					<button
+						type="button"
+						(click)="deleteAssociation(row.id)"
+						class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+						matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"
+					>
+						<i class="icon la la-trash"></i>
+					</button>
+				</td>
+			</ng-container>
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		</table>
+		<div
+			*ngIf="dataSource.data.length == 0 && isLoading == false"
+			style="
+				display: flex;
+				justify-content: center;
+				padding: 2%;
+				color: orangered;
+			"
+		>
+			{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+		</div>
+		<mat-paginator
+			*ngIf="dataSource != undefined && dataSource.data != undefined"
+			[length]="dataSource.data.length"
+			[pageSize]="5"
+			[pageIndex]="0"
+			[pageSizeOptions]="[5, 10, 50]"
+			showFirstLastButtons
+		></mat-paginator>
+		<!-- END DETAILS ASSOCIATION -->
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="backList()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

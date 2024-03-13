@@ -36,13 +36,13 @@ export class ListEtablissementComponent implements OnInit {
 	// .set('Access-Control-Allow-Origin', '*');
 	displayedColumns: string[] = [
 		"Id",
-		"IF",
+		"EH",
 		// "Adresse",
-		"Description",
+		"Remarque",
 		// "Proprietaire",
-		"Tel",
-		"Propriétaire",
-		"Gérant",
+		"Netab",
+		"Tetab",
+		"Adresse",
 		// "Indicateur",
 		"actions",
 	];
@@ -85,13 +85,12 @@ export class ListEtablissementComponent implements OnInit {
 		console.log("token", localStorage.getItem('accessToken'));
 
 		this.httpClient.get<any[]>(`${this.baseUrl}etablissements/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// debugger
+			// 
 			this.data = response.content;
 			this.dataSource.data = response.content;
 			this.totalRecords = response.totalElements;
 			this.isLoadingResults = false;
 		});
-
 		console.log("page:", page, "pageSize:", pageSize);
 	}
 

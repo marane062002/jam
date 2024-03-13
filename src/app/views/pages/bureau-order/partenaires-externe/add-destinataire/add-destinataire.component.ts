@@ -59,6 +59,7 @@ export class AddDestinataireComponent implements OnInit {
 		this.service.getData().subscribe(
 			(data) => {
 				this.partenaires = data[1];
+				
 			},
 			(err) => {
 				console.log(err);
@@ -79,7 +80,7 @@ export class AddDestinataireComponent implements OnInit {
 	onChangeDivision() {
 		const idDivision = this.addForm.get("idDivision").value;
 		this.addForm.get("idService").setValue(0);
-		this.addForm.get("idPersonnel").setValue(0);
+		this.addForm.get("idPersonne").setValue(0);
 
 		if (idDivision != 0) {
 			this.service1
@@ -108,7 +109,7 @@ export class AddDestinataireComponent implements OnInit {
 	//
 	// ============================================================
 	onChangePersonnel() {
-		const personnel = this.addForm.get("idPersonnel").value;
+		const personnel = this.addForm.get("idPersonne").value;
 	}
 	// ============================================================
 	//
@@ -116,7 +117,7 @@ export class AddDestinataireComponent implements OnInit {
 	onChangeService() {
 		const idService = this.addForm.get("idService").value;
 		const idDivision = this.addForm.get("idDivision").value;
-		this.addForm.get("idPersonnel").setValue(0);
+		this.addForm.get("idPersonne").setValue(0);
 
 		if (idService != 0) {
 			this.service1
@@ -140,10 +141,11 @@ export class AddDestinataireComponent implements OnInit {
 				id: [this.courrierId],
 			}),
 			typeDestinataire: [""],
-			partenaire: [0],
+			statutSortant: ["NON_DISTRIBUER"],
+			raisonSociale: [0],
 			idDivision: [0],
 			idService: [0],
-			idPersonnel: [0],
+			idPersonne: [0],
 		});
 	}
 	// ============================================================
@@ -156,11 +158,11 @@ export class AddDestinataireComponent implements OnInit {
 			this.showInterne = false;
 			this.addForm.get("idDivision").reset();
 			this.addForm.get("idService").reset();
-			this.addForm.get("idPersonnel").reset();
+			this.addForm.get("idPersonne").reset();
 		} else {
 			this.showExterne = false;
 			this.showInterne = true;
-			this.addForm.get("partenaire").reset();
+			this.addForm.get("raisonSociale").reset();
 		}
 	}
 	// ============================================================
@@ -177,9 +179,10 @@ export class AddDestinataireComponent implements OnInit {
 		if (this.addForm.invalid) {
 			return;
 		}
+		
 		this.loading = true;
 		this.service
-			.createObject("/partenaire/new", this.addForm.value)
+			.createObject("/destinataireCouriersSortant/new", this.addForm.value)
 			.subscribe((data) => {
 				this.notification.warn(
 					this.translate.instant("PAGES.GENERAL.MSG_SAVED_CONFIRMED")

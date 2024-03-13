@@ -51,6 +51,8 @@ export const environment = {
 	API_PROJET_URBANISME_URL: "http://localhost:9101/projet-urbanisme",
 	API_ALFRESCO_URL: "http://localhost:9101/alfresco",
 	API_BMH_URL:"http://localhost:9101/service-bmh/",
+	API_SDL_URL:"http://localhost:9101/service-sdl/",
+	API_PROPRETE_URL: "http://localhost:9101/service-proprete/",
 	// API_URL:"http://localhost:9095/",
 
 	SERVER_URL:"http://localhost:9101/",
@@ -58,7 +60,9 @@ export const environment = {
 	API_MARCHEGROS:"http://localhost:9101/marche-gros/api/",
 	API_ABATOIR:"http://localhost:9101/service-abattoir/api/",
 	SERVER_PARC_AUTO:"http://localhost:9101/ParcAuto/",
+	API_GSM_LAN: "http://localhost:9101/gsmLan",
 	
+
 };
 
 /*

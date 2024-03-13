@@ -139,7 +139,7 @@ export class CaCommissionComponent implements OnInit {
 		this.service.getAllRoleCommission().subscribe((data) => {
 			this.roleCommissionAll = data;
 		});
-		this.service.getAllOffreDeposee(this.idCA).subscribe((data) => {
+		this.service.getAllOffreDeposee(this.idCA,0,5).subscribe((data) => {
 			/*  for (var i = 0; i <data.length ; i++) {
 		data[i].commission={"id":1}
 	 }*/

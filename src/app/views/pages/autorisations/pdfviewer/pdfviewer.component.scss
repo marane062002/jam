@@ -1,0 +1,14 @@
+.title-style {
+    text-align: center;
+    color: #f7f8fa;
+    background-color: darkblue;
+}
+
+.mat-dialog-content {
+    display: block;
+    margin: 0 -23px;
+    padding: 0 7px !important;
+    max-height: 86vh !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}

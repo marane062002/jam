@@ -2,10 +2,15 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { OrigineService } from "../../medecin-legale-bmh/services/origine.service";
 import { EnterementInhumService } from "../../medecin-legale-bmh/services/enterement-inhum.service";
+import Swal from "sweetalert2";
+import { MatTableDataSource } from "@angular/material";
+import { Association360Tab } from "../../pesee/show-pesee/show-pesee.component";
+import { Observable } from "rxjs";
+import * as $ from "jquery";
 @Component({
 	selector: "kt-upd-enterrement",
 	templateUrl: "./upd-enterrement.component.html",
@@ -16,12 +21,27 @@ export class UpdEnterrementComponent implements OnInit {
 	origine: any[] = [];
 	enterement: any[] = [];
 	private baseUrl = environment.API_BMH_URL;
+	private AlfresscoURL = environment.API_ALFRESCO_URL;
 	private headers = new HttpHeaders({
 		// 'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
 	enterId: any;
 	enterDetails: any;
+
+
+	pcfileDeclar : File;
+	labelDeclar: any;
+	pcDeclarantFile: File;
+  	allpjDeclar = []
+	formPjDeclar = { selecetedFile: {}, LabelPj: "" };
+	dataSource3: MatTableDataSource<any>;
+	displayedColumns1 = [ "label", "nomDoc", "actions"];
+	displayedColumns2=['nomDoc','titre','label','dow']
+	asyncTabs: Observable<Association360Tab[]>;
+	dataSource2 = new MatTableDataSource<any>();
+	ajoutForm: FormGroup;
+
 
 	typeControl = new FormControl();
 	communeControl = new FormControl();
@@ -44,21 +64,27 @@ export class UpdEnterrementComponent implements OnInit {
 	dateNaissancef: Date;
 	numBulletin: any;
 	nationalite = new FormControl();
-
+	
 	type: any[] = [];
 	commune: any[] = [];
 	arrondissement: any[] = [];
 	quartier: any[] = [];
 
 	handleFileInput(event: any): void {
+		this.httpClient.delete(`${this.AlfresscoURL}/enterrement/index/${this.enterId}`)
+		.subscribe((res)=>{
+			console.log('Piece Jointe stored successfully:', res);
+		})
 		this.pieceJointe = event.target.files[0];
 	}
+
 	constructor(private router: Router, 
 		private route: ActivatedRoute, 
 		private httpClient: HttpClient, 
 		private datePipe: DatePipe, 
 		private entermentserv: EnterementInhumService, 
-		private originev:OrigineService) {}
+		private originev:OrigineService,
+		private fb:FormBuilder) {}
 
 	ngOnInit() {
 		this.fetchQuartier();
@@ -66,17 +92,70 @@ export class UpdEnterrementComponent implements OnInit {
 		this.fetchArrondis();
 		this.fetchTypes();
 
+		this.ajoutForm = this.fb.group({
+			pj: this.fb.group({
+				pcfileDeclar: [''] 
+			})
+		  });
+
 		this.route.params.subscribe((params) => {
 			this.enterId = +params["id"];
 		});
 		this.fetchEnterDetails();
+		this.getAllPjImm(this.enterId)
 	}
-
+	saveDec(event: any): void {
+		$("#testd").val(event.target.files[0].name);
+		this.ajoutForm.get('pj.pcfileDeclar').setValue(event.target.files[0].name);
+		this.formPjDeclar.selecetedFile = event.target.files[0];
+	  }
+	
+	  labelDeclarant(event: any): void {
+		this.formPjDeclar.LabelPj = event.target.value;
+	  }
+	  validerPjDec() {
+		this.allpjDeclar.push(this.formPjDeclar);
+		$("#testd").val(null);
+		this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+		this.formPjDeclar = { selecetedFile: {}, LabelPj: this.formPjDeclar.LabelPj };
+	  }
+	
+	  onDeletePjDec(id: number): void {
+		this.allpjDeclar.splice(id, 1);
+		if (this.allpjDeclar.length > 0) {
+		  this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+		} else {
+		  this.dataSource3 = null;
+		}
+	  }
+	  async getAllPjImm(ide) {
+		await this.httpClient.get(`${this.AlfresscoURL}/enterrement/index/${ide}`)
+		  .subscribe(
+			(data:any) => {
+				this.dataSource2 = new MatTableDataSource(data);
+			},
+			(error) => console.log(error)
+		);
+	}
+		onClickPj(e, id) {
+			var r = e.substring(0, e.length - 4);
+		console.log("rrrrr:", r)
+		console.log("id alf:", id)
+	
+			this.httpClient.delete(`${this.AlfresscoURL}/enterrement/index/${id}`)
+		.subscribe(
+				(data:any) => {
+			console.log(data)
+			this.ngOnInit()
+				},
+				(error) => console.log(error)
+			);
+		}
 	fetchEnterDetails(): void {
 		const url = `${this.baseUrl}enterrement/${this.enterId}`;
 		this.httpClient.get(url,{ headers: this.headers }).subscribe((response) => {
 			this.enterDetails = response;
-			// debugger
+			
 			this.sexeControl.setValue(this.enterDetails.sexe);
 			this.lieuEnter = this.enterDetails.lieuEnterementObstacle;
 			this.lieuRecup = this.enterDetails.lieuRecuperationObstacle;
@@ -140,7 +219,7 @@ export class UpdEnterrementComponent implements OnInit {
 	}
 
 	updateEnterrement(): void {
-// debugger
+
 		const origine = {
 			nom: this.nom,
 			prenom: this.prenom,
@@ -150,20 +229,20 @@ export class UpdEnterrementComponent implements OnInit {
 			nationalite: this.nationalite.value,
 			connu: this.connu,
 		};
-		// debugger
+		
 		const formData = new FormData();
-		// debugger
+		const pieceJ = new FormData();
 		console.log(formData);
-		// debugger
+		
 		setTimeout(() => {
 			if (this.enterDetails.origine) { // Add null check here
 				this.httpClient.put(`${this.baseUrl}origine/${this.enterDetails.origine.id}`, origine, { headers: this.headers }).subscribe(
 					(response: any) => {
-	// debugger
+	
 						console.log("Origine created successfully:", response);
-// debugger
+
 						console.log(response.id);
-						// debugger
+						
 						const inhumation = {
 							type: { id: this.typeControl.value },
 							commune: { id: this.communeControl.value },
@@ -177,16 +256,38 @@ export class UpdEnterrementComponent implements OnInit {
 								id: this.enterDetails.origine.id,
 							},
 						};
-						// debugger
+						
 						console.log("inhumation", inhumation);
-	// debugger
+	
 						formData.append("enterement", new Blob([JSON.stringify(inhumation)], { type: "application/json" }));
-						formData.append("pieceJointe", this.pieceJointe);
+						// formData.append("pieceJointe", this.pieceJointe);
 						this.httpClient.put(`${this.baseUrl}enterrement/${this.enterId}`, formData, { headers: this.headers }).subscribe(
-							(employeurResponse) => {
-								// debugger
+							(employeurResponse:any) => {
+								this.allpjDeclar.forEach(formPj => {	
+        
+									const pcjDeclarant = new FormData();
+								
+									  pcjDeclarant.append("file", formPj.selecetedFile)
+									  pcjDeclarant.append("sousModule", "ENTERREMENT")
+									  pcjDeclarant.append("id",response.id)
+									  pcjDeclarant.append("label", formPj.LabelPj);
+								
+									  this.httpClient.post(`${this.AlfresscoURL}/enterrement/multiplefile`, pcjDeclarant)
+									  .subscribe((res)=>{
+									  console.log('deces naturel pièce Jointe stored successfully:', res);
+									  })
+									});
+							
 								console.log("enterrement created successfully:", employeurResponse);
-								this.router.navigate(["/bmh1/list-enterementInhum"]);
+								Swal.fire({
+									title: "Enregistrement réussi!",
+									text: "Enterrement enregistré avec succès.",
+									icon: "success",
+									confirmButtonText: "OK",
+								}).then(() => {
+									this.ngOnInit(); 
+									this.router.navigate(["/bmh1/list-enterementInhum"]);
+								});
 							},
 							(error) => {
 								console.error("Error creating enterrement:", error);

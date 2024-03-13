@@ -1,0 +1,33 @@
+<mat-dialog-content class="mat-typography">
+    <table
+    id="exportData"
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+    matSort
+>
+    <ng-container matColumnDef="Num">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+        <td mat-cell *matCellDef="let row" class="num">{{ row.id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Nouveau_statut">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nouveau statut</th>
+        <td mat-cell *matCellDef="let row" class="Nouveau_statut">
+            {{row.nouveauStatut}}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date </th>
+        <td mat-cell *matCellDef="let row" class="date">
+            {{ convertTimestampToDateTime(row.updatedAt) }}
+        </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <!-- footer data -->
+</table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

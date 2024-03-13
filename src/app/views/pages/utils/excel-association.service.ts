@@ -3,7 +3,8 @@ import { Injectable } from "@angular/core";
 import * as fs from "file-saver";
 import { Workbook } from "exceljs";
 import * as logo from "./logo.js";
-import { difference, property } from "lodash";
+import { ConventionMarcheService } from "../shared/conventionService.js";
+import { TranslateService } from "@ngx-translate/core";
 
 const EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const EXCEL_EXTENSION = ".xlsx";
@@ -12,7 +13,7 @@ const EXCEL_EXTENSION = ".xlsx";
 	providedIn: "root",
 })
 export class ExcelAssociationService {
-	constructor(private datePipe: DatePipe) {}
+	constructor(private datePipe: DatePipe, private conventionMarcheService: ConventionMarcheService, private translate: TranslateService) { }
 
 	public exportAsExcelFile2(reportHeading: string, reportSubHeading: string, headersArray: any[], json: any[], footerData: any, excelFileName: string, sheetName: string) {
 		const header = headersArray;
@@ -241,14 +242,14 @@ export class ExcelAssociationService {
 			// let qty = row.getCell(1);
 			let color = "aefaf5b9";
 			/*  if (+qty.value < 500) {
-         color = 'aefdb772'
-       }
+		 color = 'aefdb772'
+	   }
  
-       qty.fill = {
-         type: 'pattern',
-         pattern: 'solid',
-         fgColor: { argb: color }
-       } */
+	   qty.fill = {
+		 type: 'pattern',
+		 pattern: 'solid',
+		 fgColor: { argb: color }
+	   } */
 			row.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 		});
 		worksheet.getColumn(1).width = 60;
@@ -431,19 +432,19 @@ export class ExcelAssociationService {
 		}
 
 		/* worksheet.mergeCells('D450:E450');
-    worksheet.getCell('E450').value = 'Total des coût : ' + countCout;
-    worksheet.getCell('E450').alignment = { horizontal: 'center' };
-    worksheet.getCell('E450').font = { size: 12, bold: true };
-    worksheet.getCell('E450').fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'aedde9el' },
-    }; */
+	worksheet.getCell('E450').value = 'Total des coût : ' + countCout;
+	worksheet.getCell('E450').alignment = { horizontal: 'center' };
+	worksheet.getCell('E450').font = { size: 12, bold: true };
+	worksheet.getCell('E450').fill = {
+	  type: 'pattern',
+	  pattern: 'solid',
+	  fgColor: { argb: 'aedde9el' },
+	}; */
 		/* footerRow.getCell(1).fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'aed4d2c9' },
-    }; */
+	  type: 'pattern',
+	  pattern: 'solid',
+	  fgColor: { argb: 'aed4d2c9' },
+	}; */
 		footerRow.getCell(4).fill = {
 			type: "pattern",
 			pattern: "solid",
@@ -451,7 +452,7 @@ export class ExcelAssociationService {
 			fgColor: { argb: "aedde9el" },
 		};
 		/* footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-    footerRow.getCell(1).alignment = { horizontal: 'center' } */
+	footerRow.getCell(1).alignment = { horizontal: 'center' } */
 		footerRow.getCell(4).border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 		footerRow.getCell(4).alignment = { horizontal: "center" };
 		//Merge Cells
@@ -593,6 +594,507 @@ export class ExcelAssociationService {
 		});
 	}
 
+
+	public exportAsExcelFile1(reportHeading: string, reportSubHeading: string, headersArray: any[], json: any[], footerData: any, excelFileName: string, sheetName: string, selectedColumns: string[]) {
+		const header = headersArray;
+
+		/* Create workbook and worksheet */
+		const workbook = new Workbook();
+		/* Set workbook properties */
+		workbook.creator = "Brome";
+		workbook.lastModifiedBy = "Brome";
+		workbook.created = new Date();
+		workbook.modified = new Date();
+		const worksheet = workbook.addWorksheet(sheetName);
+		/* file orientation */
+		worksheet.views = [{ rightToLeft: false }];
+		/* Add header row */
+		worksheet.addRow([]);
+
+		worksheet.mergeCells("B2:E2");
+		worksheet.getCell("B2").value = reportHeading;
+		worksheet.getCell("B2").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("B2").font = { size: 12, bold: true };
+		worksheet.getCell("B2").fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aeb6e8c5" },
+		};
+		worksheet.getCell("B2").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+		worksheet.addRow([]);
+
+		if (reportHeading !== "") {
+			worksheet.mergeCells("B3:E3");
+			worksheet.getCell("B3").value = "تاريخ : " + this.datePipe.transform(new Date(), "dd-MM-yyyy");
+			worksheet.getCell("B3").alignment = { horizontal: "center" };
+			worksheet.getCell("B3").font = { size: 12, bold: true };
+			worksheet.getCell("B3").fill = {
+				type: "pattern",
+				pattern: "solid",
+				fgColor: { argb: "aedde9el" },
+			};
+			worksheet.getCell("B3").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+			worksheet.addRow([]);
+		}
+
+		let footerRow = worksheet.addRow([""]);
+		let sumCout = 0.0;
+		let sumContributionCommune = 0.0;
+		let sumContributionCommune1 = 0.0;
+		let sumTotalContributionCommunePA = 0.0;
+		let sumContributionCommune2 = 0.0;
+		let sumTotalContributionCommuneDA = 0.0;
+		let sumContributionCommune3 = 0.0;
+		let sumTotalContributionCommuneTA = 0.0;
+		let sumContributionCommune3A = 0.0;
+		let sumContributionPartenaire3A = 0.0;
+		let sumContributionGlobal3PA = 0.0;
+		let sumContributionGlobal3DA = 0.0;
+		let sumMontantDispoCommune3PA = 0.0;
+		let sumMontantIndispoCommune = 0.0;
+
+		for (let i = 0; i < json.length; i++) {
+			let parsedCoutValue = parseFloat(json[i].COUT);
+			let parsedContributionCommuneValue = parseFloat(json[i].CONTRIBUTION_COMUNE);
+			let parsedContributionCommune1Value = parseFloat(json[i].CONTRIBUTION_COMUNE_PREMIERE_ANNE);
+			let parsedTotalContributionCommunePAValue = parseFloat(json[i].TOTAL_CONTRIBUTION_COMUNE_PREMIERE_ANNE);
+			let parsedContributionCommune2Value = parseFloat(json[i].CONTRIBUTION_COMUNE_DEUXIEME_ANNE);
+			let parsedTotalContributionCommuneDAValue = parseFloat(json[i].TOTAL_CONTRIBUTION_COMUNE_DEUXIEME_ANNE);
+			let parsedContributionCommune3Value = parseFloat(json[i].CONTRIBUTION_COMUNE_TROISIEME_ANNE);
+			let parsedTotalContributionCommuneTAValue = parseFloat(json[i].TOTAL_CONTRIBUTION_COMUNE_TROISIEME_ANNE);
+			let parsedContributionCommuneTAValue = parseFloat(json[i].CONTRIBUTION_COMMUNE_TROIS_ANNEE);
+			let parsedContributionPartenaireTAValue = parseFloat(json[i].CONTRIBUTION_PARTENAIRE_TROIS_ANNEE);
+			let parsedContributionGlobal3PAValue = parseFloat(json[i].CONTRIBUTION_GLOBAL_TROIS_PREMIERE_ANNEE);
+			let parsedContributionGlobal3DAValue = parseFloat(json[i].CONTRIBUTION_GLOBAL_TROIS_DERNIERE_ANNEE);
+			let parsedMontantDispoCommune3PAValue = parseFloat(json[i].MONTANT_DISPO_COMMUNE_TROIS_PREMIERE_ANNEE);
+			let parsedMontantIndispoCommuneAValue = parseFloat(json[i].MONTANT_INDISPO_COMMUNE);
+
+			if (!isNaN(parsedCoutValue)) {
+				sumCout += parsedCoutValue;
+			}
+
+			if (!isNaN(parsedContributionCommuneValue)) {
+				sumContributionCommune += parsedContributionCommuneValue;
+			}
+			if (!isNaN(parsedContributionCommune1Value)) {
+				sumContributionCommune1 += parsedContributionCommune1Value;
+			}
+			if (!isNaN(parsedTotalContributionCommunePAValue)) {
+				sumTotalContributionCommunePA += parsedTotalContributionCommunePAValue;
+			}
+			if (!isNaN(parsedContributionCommune2Value)) {
+				sumContributionCommune2 += parsedContributionCommune2Value;
+			}
+			if (!isNaN(parsedTotalContributionCommuneDAValue)) {
+				sumTotalContributionCommuneDA += parsedTotalContributionCommuneDAValue;
+			}
+			if (!isNaN(parsedContributionCommune3Value)) {
+				sumContributionCommune3 += parsedContributionCommune3Value;
+			}
+			if (!isNaN(parsedTotalContributionCommuneTAValue)) {
+				sumTotalContributionCommuneTA += parsedTotalContributionCommuneTAValue;
+			}
+			if (!isNaN(parsedContributionCommuneTAValue)) {
+				sumContributionCommune3A += parsedContributionCommuneTAValue;
+			}
+			if (!isNaN(parsedContributionPartenaireTAValue)) {
+				sumContributionPartenaire3A += parsedContributionPartenaireTAValue;
+			}
+			if (!isNaN(parsedContributionGlobal3PAValue)) {
+				sumContributionGlobal3PA += parsedContributionGlobal3PAValue;
+			}
+			if (!isNaN(parsedContributionGlobal3DAValue)) {
+				sumContributionGlobal3DA += parsedContributionGlobal3DAValue;
+			}
+			if (!isNaN(parsedMontantDispoCommune3PAValue)) {
+				sumMontantDispoCommune3PA += parsedMontantDispoCommune3PAValue;
+			}
+			if (!isNaN(parsedMontantIndispoCommuneAValue)) {
+				sumMontantIndispoCommune += parsedMontantIndispoCommuneAValue;
+			}
+		}
+
+		// Add Image
+		let myLogoImage = workbook.addImage({
+			base64: logo.imgBase64,
+			extension: "png",
+		});
+		worksheet.mergeCells("A1:A5");
+		worksheet.addImage(myLogoImage, {
+			tl: { col: 0.6, row: 0.4 },
+			ext: { width: 50, height: 80 },
+		});
+		worksheet.addRow([]);
+		worksheet.addRow([]);
+
+		// Filter headersArray based on selectedColumns
+		const filteredHeadersArray = headersArray.filter(header => selectedColumns.includes(header));
+
+		// Filter json data based on selectedColumns
+		const filteredJsonData = json.map(item => {
+			const filteredItem = {};
+			Object.keys(item).forEach(key => {
+				if (selectedColumns.includes(key)) {
+					filteredItem[key] = item[key];
+				}
+			});
+			return filteredItem;
+		});
+
+		// Add header row with styles
+		const headerRow = worksheet.addRow(filteredHeadersArray);
+		headerRow.eachCell(cell => {
+			cell.fill = {
+				type: "pattern",
+				pattern: "solid",
+				fgColor: { argb: "ffb0eaf6" }
+			};
+			let a = "PAGES.PROGRAMME." + cell.value;
+
+			cell.value = this.translate.instant(a);
+			cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+			cell.font = { size: 12, bold: true };
+		});
+
+		// Add data rows with styles
+		filteredJsonData.forEach((d) => {
+			const rowData = filteredHeadersArray.map(header => d[header]);
+			const row = worksheet.addRow(rowData);
+			row.eachCell(cell => {
+				cell.alignment = { vertical: "middle", horizontal: "center" };
+				cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+			});
+		});
+
+		// Calculate the maximum width needed for each column
+		const columnWidths = filteredHeadersArray.map(header => {
+			let maxCellWidth = header.length;
+			filteredJsonData.forEach(row => {
+				const cellWidth = String(row[header] || '').length;
+				if (cellWidth > maxCellWidth) {
+					maxCellWidth = cellWidth;
+				}
+			});
+			return maxCellWidth;
+		});
+
+		// Set width and alignment dynamically
+		filteredHeadersArray.forEach((header, index) => {
+			const column = worksheet.getColumn(index + 1);
+			column.width = columnWidths[index];
+			column.alignment = { vertical: "middle", horizontal: "center" };
+		});
+
+		// Find the index of the "COUT" column in the filteredHeadersArray
+
+		const coutColumnIndex = filteredHeadersArray.indexOf("COUT");
+		const coutColumnLetter = String.fromCharCode(65 + coutColumnIndex);
+		
+		// Find the index of the "CONTRIBUTION_COMUNE" column in the filteredHeadersArray
+		const contributionCommuneColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_COMUNE");
+		const contributionCommuneColumnLetter = String.fromCharCode(65 + contributionCommuneColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_COMUNE_PREMIERE_ANNE" column in the filteredHeadersArray
+		const contributionCommune1ColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_COMUNE_PREMIERE_ANNE");
+		const contributionCommune1ColumnLetter = String.fromCharCode(65 + contributionCommune1ColumnIndex);
+
+		// Find the index of the "TOTAL_CONTRIBUTION_COMUNE_PREMIERE_ANNE" column in the filteredHeadersArray
+		const TotalContributionCommunePAColumnIndex = filteredHeadersArray.indexOf("TOTAL_CONTRIBUTION_COMUNE_PREMIERE_ANNE");
+		const TotalContributionCommunePAColumnLetter = String.fromCharCode(65 + TotalContributionCommunePAColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_COMUNE_DEUXIEME_ANNE" column in the filteredHeadersArray
+		const contributionCommune2ColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_COMUNE_DEUXIEME_ANNE");
+		const contributionCommune2ColumnLetter = String.fromCharCode(65 + contributionCommune2ColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_COMUNE_DEUXIEME_ANNE" column in the filteredHeadersArray
+		const TotalContributionCommuneDAColumnIndex = filteredHeadersArray.indexOf("TOTAL_CONTRIBUTION_COMUNE_DEUXIEME_ANNE");
+		const TotalContributionCommuneDAColumnLetter = String.fromCharCode(65 + TotalContributionCommuneDAColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_COMUNE_TROISIEME_ANNE" column in the filteredHeadersArray
+		const contributionCommune3ColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_COMUNE_TROISIEME_ANNE");
+		const contributionCommune3ColumnLetter = String.fromCharCode(65 + contributionCommune3ColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_COMUNE_TROISIEME_ANNE" column in the filteredHeadersArray
+		const TotalContributionCommuneTAColumnIndex = filteredHeadersArray.indexOf("TOTAL_CONTRIBUTION_COMUNE_TROISIEME_ANNE");
+		const TotalContributionCommuneTAColumnLetter = String.fromCharCode(65 + TotalContributionCommuneTAColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_COMUNE_TROISIEME_ANNE" column in the filteredHeadersArray
+		const contributionCommune3AColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_COMMUNE_TROIS_ANNEE");
+		const contributionCommune3AColumnLetter = String.fromCharCode(65 + contributionCommune3AColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_PARTENAIRE_TROIS_ANNEE" column in the filteredHeadersArray
+		const contributionPartenaire3AColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_PARTENAIRE_TROIS_ANNEE");
+		const contributionPartenare3AColumnLetter = String.fromCharCode(65 + contributionPartenaire3AColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_GLOBAL_TROIS_PREMIERE_ANNEE" column in the filteredHeadersArray
+		const contributionGlobal3PAColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_GLOBAL_TROIS_PREMIERE_ANNEE");
+		const contributionGlobal3PAColumnLetter = String.fromCharCode(65 + contributionGlobal3PAColumnIndex);
+
+		// Find the index of the "CONTRIBUTION_GLOBAL_TROIS_PREMIERE_ANNEE" column in the filteredHeadersArray
+		const contributionGlobal3DAColumnIndex = filteredHeadersArray.indexOf("CONTRIBUTION_GLOBAL_TROIS_DERNIERE_ANNEE");
+		const contributionGlobal3DAColumnLetter = String.fromCharCode(65 + contributionGlobal3DAColumnIndex);
+
+		// Find the index of the "MONTANT_DISPO_COMMUNE_TROIS_PREMIERE_ANNEE" column in the filteredHeadersArray
+		const MontantDispoCommune3PAColumnIndex = filteredHeadersArray.indexOf("MONTANT_DISPO_COMMUNE_TROIS_PREMIERE_ANNEE");
+		const MontantDispoCommune3PAColumnLetter = String.fromCharCode(65 + MontantDispoCommune3PAColumnIndex);
+
+		// Find the index of the "MONTANT_DISPO_COMMUNE_TROIS_PREMIERE_ANNEE" column in the filteredHeadersArray
+		const MontantIndispoCommuneColumnIndex = filteredHeadersArray.indexOf("MONTANT_INDISPO_COMMUNE");
+		const MontantIndispoCommuneColumnLetter = String.fromCharCode(65 + MontantIndispoCommuneColumnIndex);
+
+		// Determine the row number for the footer
+		const footerRowNumber = worksheet.rowCount + 1;
+
+		// Merge cells and set values for "Total des coûts" and "Total Contribution Commune"
+		if (coutColumnIndex != -1) {
+			worksheet.mergeCells(`${coutColumnLetter}${footerRowNumber}:${coutColumnLetter}${footerRowNumber}`);
+			worksheet.getCell(`${coutColumnLetter}${footerRowNumber}`).value = "Total des coûts : " + sumCout.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+			worksheet.getCell(`${coutColumnLetter}${footerRowNumber}`).fill = {
+				type: "pattern",
+				pattern: "solid",
+				fgColor: { argb: "aedde9el" },
+			};}
+		if (contributionCommuneColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionCommuneColumnLetter}${footerRowNumber}:${contributionCommuneColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionCommuneColumnLetter}${footerRowNumber}`).value = sumContributionCommune.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionCommuneColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (contributionCommune1ColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionCommune1ColumnLetter}${footerRowNumber}:${contributionCommune1ColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionCommune1ColumnLetter}${footerRowNumber}`).value = sumContributionCommune1.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionCommune1ColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (TotalContributionCommunePAColumnIndex != -1) {
+		worksheet.mergeCells(`${TotalContributionCommunePAColumnLetter}${footerRowNumber}:${TotalContributionCommunePAColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${TotalContributionCommunePAColumnLetter}${footerRowNumber}`).value = sumTotalContributionCommunePA.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${TotalContributionCommunePAColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (contributionCommune2ColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionCommune2ColumnLetter}${footerRowNumber}:${contributionCommune2ColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionCommune2ColumnLetter}${footerRowNumber}`).value = sumContributionCommune2.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionCommune2ColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (TotalContributionCommuneDAColumnIndex != -1) {
+		worksheet.mergeCells(`${TotalContributionCommuneDAColumnLetter}${footerRowNumber}:${TotalContributionCommuneDAColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${TotalContributionCommuneDAColumnLetter}${footerRowNumber}`).value = sumTotalContributionCommuneDA.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${TotalContributionCommuneDAColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (contributionCommune3ColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionCommune3ColumnLetter}${footerRowNumber}:${contributionCommune3ColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionCommune3ColumnLetter}${footerRowNumber}`).value = sumContributionCommune3.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionCommune3ColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (TotalContributionCommuneTAColumnIndex != -1) {
+		worksheet.mergeCells(`${TotalContributionCommuneTAColumnLetter}${footerRowNumber}:${TotalContributionCommuneTAColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${TotalContributionCommuneTAColumnLetter}${footerRowNumber}`).value = sumTotalContributionCommuneTA.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${TotalContributionCommuneTAColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (contributionCommune3AColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionCommune3AColumnLetter}${footerRowNumber}:${contributionCommune3AColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionCommune3AColumnLetter}${footerRowNumber}`).value = sumContributionCommune3A.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionCommune3AColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (contributionPartenaire3AColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionPartenare3AColumnLetter}${footerRowNumber}:${contributionPartenare3AColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionPartenare3AColumnLetter}${footerRowNumber}`).value = sumContributionPartenaire3A.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionPartenare3AColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (contributionGlobal3PAColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionGlobal3PAColumnLetter}${footerRowNumber}:${contributionGlobal3PAColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionGlobal3PAColumnLetter}${footerRowNumber}`).value = sumContributionGlobal3PA.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionGlobal3PAColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (contributionGlobal3DAColumnIndex != -1) {
+		worksheet.mergeCells(`${contributionGlobal3DAColumnLetter}${footerRowNumber}:${contributionGlobal3DAColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${contributionGlobal3DAColumnLetter}${footerRowNumber}`).value = sumContributionGlobal3DA.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${contributionGlobal3DAColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (MontantDispoCommune3PAColumnIndex != -1) {
+		worksheet.mergeCells(`${MontantDispoCommune3PAColumnLetter}${footerRowNumber}:${MontantDispoCommune3PAColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${MontantDispoCommune3PAColumnLetter}${footerRowNumber}`).value = sumMontantDispoCommune3PA.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${MontantDispoCommune3PAColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};}
+		if (MontantIndispoCommuneColumnIndex != -1) {
+		worksheet.mergeCells(`${MontantIndispoCommuneColumnLetter}${footerRowNumber}:${MontantIndispoCommuneColumnLetter}${footerRowNumber}`);
+		worksheet.getCell(`${MontantIndispoCommuneColumnLetter}${footerRowNumber}`).value = sumMontantIndispoCommune.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+		worksheet.getCell(`${MontantIndispoCommuneColumnLetter}${footerRowNumber}`).fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aedde9el" },
+		};	}
+		/* Save Excel File */
+		workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
+			const blob = new Blob([data], { type: EXCEL_TYPE });
+			let now = new Date();
+			let timeSpan = this.datePipe.transform(now, "yyyyHHmmss");
+			fs.saveAs(blob, excelFileName + "-" + timeSpan + EXCEL_EXTENSION);
+		});
+	}
+
+
+
+
+
+
+
+
+
+
+	public exportAsExcelFileAutorisation(reportHeading: string, headersArray: any[], json: any[], excelFileName: string, sheetName: string) {
+		const header = headersArray;
+		const data = json;
+
+		/* Create workbook and worksheet */
+		const workbook = new Workbook();
+		/* Set workbook properties */
+
+		workbook.created = new Date();
+		workbook.modified = new Date();
+		const worksheet = workbook.addWorksheet(sheetName);
+		/* file orientation */
+		worksheet.views = [{ rightToLeft: true }];
+		/* Add header row */
+		worksheet.addRow([]);
+
+		worksheet.mergeCells("B2:M2");
+		worksheet.getCell("B2").value = reportHeading;
+		worksheet.getCell("B2").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("B2").font = { size: 12, bold: true };
+		worksheet.getCell("B2").fill = {
+			type: "pattern",
+			pattern: "solid",
+			fgColor: { argb: "aeb6e8c5" },
+		};
+		worksheet.getCell("B2").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+		worksheet.addRow([]);
+		//let subTitleRow = worksheet.addRow(['date: ' + this.datePipe.transform(new Date(), 'medium' ) ] );
+
+		if (reportHeading !== "") {
+			worksheet.mergeCells("B3:M3");
+			worksheet.getCell("B3").value = "تاريخ : " + this.datePipe.transform(new Date(), "dd-MM-yyyy");
+			worksheet.getCell("B3").alignment = { horizontal: "center" };
+			worksheet.getCell("B3").font = { size: 12, bold: true };
+			worksheet.getCell("B3").fill = {
+				type: "pattern",
+				pattern: "solid",
+				fgColor: { argb: "aedde9el" },
+			};
+			worksheet.getCell("B3").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+			worksheet.addRow([]);
+		}
+
+		//Add Image
+		let myLogoImage = workbook.addImage({
+			base64: logo.imgBase64,
+			extension: "png",
+		});
+		worksheet.mergeCells("A1:A5");
+		worksheet.addImage(myLogoImage, {
+			tl: { col: 0.6, row: 0.4 },
+			ext: { width: 50, height: 80 },
+		});
+		// worksheet.mergeCells('A1:D2');
+		worksheet.addRow([]);
+		worksheet.addRow([]);
+		/* Add header row */
+		const headerRow = worksheet.addRow(header);
+
+		// Cell style : Fill and border
+		headerRow.eachCell((cell, index) => {
+			cell.fill = {
+				type: "pattern",
+				pattern: "solid",
+				fgColor: { argb: "ffb0eaf6" },
+			};
+			cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+			cell.font = { size: 12, bold: true };
+
+			worksheet.getColumn(index).width = header[index - 1].length < 40 ? 40 : header[index - 1].lenght;
+		});
+
+		// Add Data and Conditional Formatting
+		data.forEach((d) => {
+
+
+			let row = worksheet.addRow(Object.values(d));
+			row.alignment = { vertical: "middle", horizontal: "center" };
+			// let qty = row.getCell(1);
+
+			row.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+		});
+		worksheet.getColumn(1).width = 92;
+		worksheet.getColumn(1).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(2).width = 25;
+		worksheet.getColumn(2).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(3).width = 20;
+		worksheet.getColumn(3).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(4).width = 72;
+		worksheet.getColumn(4).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(5).width = 15;
+		worksheet.getColumn(5).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(6).width = 25;
+		worksheet.getColumn(6).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(7).width = 25;
+		worksheet.getColumn(7).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(8).width = 15;
+		worksheet.getColumn(8).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(9).width = 15;
+		worksheet.getColumn(9).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(10).width = 15;
+		worksheet.getColumn(10).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(11).width = 15;
+		worksheet.getColumn(11).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(12).width = 30;
+		worksheet.getColumn(12).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getColumn(13).width = 53;
+		worksheet.getColumn(13).alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.addRow([]);
+
+
+		/* Save Excel File */
+		workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
+			const blob = new Blob([data], { type: EXCEL_TYPE });
+			let now = new Date();
+			let timeSpan = this.datePipe.transform(now, "yyyyHHmmss");
+			fs.saveAs(blob, excelFileName + "-" + timeSpan + EXCEL_EXTENSION);
+		});
+	}
 	public exportAsExcelFileAr(reportHeading: string, reportSubHeading: string, headersArray: any[], json: any[], footerData: any, excelFileName: string, sheetName: string) {
 		const header = headersArray;
 		const data = json;
@@ -677,14 +1179,14 @@ export class ExcelAssociationService {
 			// let qty = row.getCell(1);
 			let color = "aefaf5b9";
 			/*  if (+qty.value < 500) {
-         color = 'aefdb772'
-       }
+		 color = 'aefdb772'
+	   }
  
-       qty.fill = {
-         type: 'pattern',
-         pattern: 'solid',
-         fgColor: { argb: color }
-       } */
+	   qty.fill = {
+		 type: 'pattern',
+		 pattern: 'solid',
+		 fgColor: { argb: color }
+	   } */
 			row.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 		});
 		worksheet.getColumn(1).width = 60;
@@ -868,19 +1370,19 @@ export class ExcelAssociationService {
 		}
 
 		/* worksheet.mergeCells('D450:E450');
-    worksheet.getCell('E450').value = 'Total des coût : ' + countCout;
-    worksheet.getCell('E450').alignment = { horizontal: 'center' };
-    worksheet.getCell('E450').font = { size: 12, bold: true };
-    worksheet.getCell('E450').fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'aedde9el' },
-    }; */
+	worksheet.getCell('E450').value = 'Total des coût : ' + countCout;
+	worksheet.getCell('E450').alignment = { horizontal: 'center' };
+	worksheet.getCell('E450').font = { size: 12, bold: true };
+	worksheet.getCell('E450').fill = {
+	  type: 'pattern',
+	  pattern: 'solid',
+	  fgColor: { argb: 'aedde9el' },
+	}; */
 		/* footerRow.getCell(1).fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'aed4d2c9' },
-    }; */
+	  type: 'pattern',
+	  pattern: 'solid',
+	  fgColor: { argb: 'aed4d2c9' },
+	}; */
 		footerRow.getCell(4).fill = {
 			type: "pattern",
 			pattern: "solid",
@@ -888,7 +1390,7 @@ export class ExcelAssociationService {
 			fgColor: { argb: "aedde9el" },
 		};
 		/* footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-    footerRow.getCell(1).alignment = { horizontal: 'center' } */
+	footerRow.getCell(1).alignment = { horizontal: 'center' } */
 		footerRow.getCell(4).border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 		footerRow.getCell(4).alignment = { horizontal: "center" };
 		//Merge Cells
@@ -1109,14 +1611,14 @@ export class ExcelAssociationService {
 		// let qty = row.getCell(1);
 		let color = "aefaf5b9";
 		/*  if (+qty.value < 500) {
-       color = 'aefdb772'
-     }
+	   color = 'aefdb772'
+	 }
  
-     qty.fill = {
-       type: 'pattern',
-       pattern: 'solid',
-       fgColor: { argb: color }
-     } */
+	 qty.fill = {
+	   type: 'pattern',
+	   pattern: 'solid',
+	   fgColor: { argb: color }
+	 } */
 		row.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 
 		worksheet.getColumn(1).width = 75;
@@ -1146,15 +1648,15 @@ export class ExcelAssociationService {
 		worksheet.getColumn(13).width = 13;
 		worksheet.getColumn(13).alignment = { vertical: "middle", horizontal: "center" };
 		/* worksheet.getColumn(9).width = 130;
-    worksheet.getColumn(9).alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getColumn(10).width = 80;
-    worksheet.getColumn(10).alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getColumn(11).width = 30;
-    worksheet.getColumn(11).alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getColumn(12).width = 30;
-    worksheet.getColumn(12).alignment = { vertical: 'middle', horizontal: 'left' };
-    worksheet.getColumn(13).width = 30;
-    worksheet.getColumn(13).alignment = { vertical: 'middle', horizontal: 'left' }; */
+	worksheet.getColumn(9).alignment = { vertical: 'middle', horizontal: 'left' };
+	worksheet.getColumn(10).width = 80;
+	worksheet.getColumn(10).alignment = { vertical: 'middle', horizontal: 'left' };
+	worksheet.getColumn(11).width = 30;
+	worksheet.getColumn(11).alignment = { vertical: 'middle', horizontal: 'left' };
+	worksheet.getColumn(12).width = 30;
+	worksheet.getColumn(12).alignment = { vertical: 'middle', horizontal: 'left' };
+	worksheet.getColumn(13).width = 30;
+	worksheet.getColumn(13).alignment = { vertical: 'middle', horizontal: 'left' }; */
 		worksheet.addRow([]);
 
 		/* Save Excel File */
@@ -1245,14 +1747,14 @@ export class ExcelAssociationService {
 		// let qty = row.getCell(1);
 		let color = "aefaf5b9";
 		/*  if (+qty.value < 500) {
-       color = 'aefdb772'
-     }
+	   color = 'aefdb772'
+	 }
  
-     qty.fill = {
-       type: 'pattern',
-       pattern: 'solid',
-       fgColor: { argb: color }
-     } */
+	 qty.fill = {
+	   type: 'pattern',
+	   pattern: 'solid',
+	   fgColor: { argb: color }
+	 } */
 		row.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 
 		worksheet.getColumn(1).width = 75;
@@ -1282,15 +1784,15 @@ export class ExcelAssociationService {
 		worksheet.getColumn(13).width = 13;
 		worksheet.getColumn(13).alignment = { vertical: "middle", horizontal: "center" };
 		/* worksheet.getColumn(9).width = 130;
-    worksheet.getColumn(9).alignment = { vertical: 'middle', horizontal: 'right' };
-    worksheet.getColumn(10).width = 80;
-    worksheet.getColumn(10).alignment = { vertical: 'middle', horizontal: 'right' };
-    worksheet.getColumn(11).width = 30;
-    worksheet.getColumn(11).alignment = { vertical: 'middle', horizontal: 'right' };
-    worksheet.getColumn(12).width = 30;
-    worksheet.getColumn(12).alignment = { vertical: 'middle', horizontal: 'right' };
-    worksheet.getColumn(13).width = 30;
-    worksheet.getColumn(13).alignment = { vertical: 'middle', horizontal: 'right' }; */
+	worksheet.getColumn(9).alignment = { vertical: 'middle', horizontal: 'right' };
+	worksheet.getColumn(10).width = 80;
+	worksheet.getColumn(10).alignment = { vertical: 'middle', horizontal: 'right' };
+	worksheet.getColumn(11).width = 30;
+	worksheet.getColumn(11).alignment = { vertical: 'middle', horizontal: 'right' };
+	worksheet.getColumn(12).width = 30;
+	worksheet.getColumn(12).alignment = { vertical: 'middle', horizontal: 'right' };
+	worksheet.getColumn(13).width = 30;
+	worksheet.getColumn(13).alignment = { vertical: 'middle', horizontal: 'right' }; */
 		worksheet.addRow([]);
 
 		/* Save Excel File */
@@ -1631,14 +2133,14 @@ export class ExcelAssociationService {
 			// let qty = row.getCell(1);
 			let color = "aefaf5b9";
 			/*  if (+qty.value < 500) {
-         color = 'aefdb772'
-       }
+		 color = 'aefdb772'
+	   }
  
-       qty.fill = {
-         type: 'pattern',
-         pattern: 'solid',
-         fgColor: { argb: color }
-       } */
+	   qty.fill = {
+		 type: 'pattern',
+		 pattern: 'solid',
+		 fgColor: { argb: color }
+	   } */
 			const lastMergeKey1 = Array.from(startingRows1.keys()).pop();
 			const lastStartRow1 = startingRows1.get(lastMergeKey1);
 			const colorIndex = lastStartRow1 % colors.length; // Calculate the index of the color in the array
@@ -1899,19 +2401,19 @@ export class ExcelAssociationService {
 		// let footerRow = worksheet.addRow(['هذا الجدول تم إنشاءه من طرف نظام المعلومات']);
 
 		/* worksheet.mergeCells('D450:E450');
-    worksheet.getCell('E450').value = 'Total des coût : ' + countCout;
-    worksheet.getCell('E450').alignment = { horizontal: 'center' };
-    worksheet.getCell('E450').font = { size: 12, bold: true };
-    worksheet.getCell('E450').fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'aedde9el' },
-    }; */
+	worksheet.getCell('E450').value = 'Total des coût : ' + countCout;
+	worksheet.getCell('E450').alignment = { horizontal: 'center' };
+	worksheet.getCell('E450').font = { size: 12, bold: true };
+	worksheet.getCell('E450').fill = {
+	  type: 'pattern',
+	  pattern: 'solid',
+	  fgColor: { argb: 'aedde9el' },
+	}; */
 		/* footerRow.getCell(1).fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'aed4d2c9' },
-    }; */
+	  type: 'pattern',
+	  pattern: 'solid',
+	  fgColor: { argb: 'aed4d2c9' },
+	}; */
 
 		/* Save Excel File */
 		workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
@@ -1922,571 +2424,12 @@ export class ExcelAssociationService {
 		});
 	}
 
-	public exportAsExcelFileRetro3(reportHeading: string, reportSubHeading: string, headersArray: any[], json: any[], footerData: any, excelFileName: string, sheetName: string) {
-		const header = headersArray;
-		const data = json;
-
-		/* Create workbook and worksheet */
-		const workbook = new Workbook();
-		/* Set workbook properties */
-		workbook.creator = "Brome";
-		workbook.lastModifiedBy = "Brome";
-		workbook.created = new Date();
-		workbook.modified = new Date();
-		const worksheet = workbook.addWorksheet(sheetName);
-		// /* file orientation */
-		// worksheet.views = [{ rightToLeft: true }];
-		/* Add header row */
-		worksheet.addRow([]);
-		worksheet.mergeCells("A1:A5");
-		// worksheet.mergeCells("B1:B5");
-
-		// worksheet.getColumn(1).width = 40;
-		// worksheet.getColumn(1).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		worksheet.mergeCells("B2:K2");
-		worksheet.getCell("B2").value = reportHeading;
-		worksheet.getCell("B2").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("B2").font = { size: 12, bold: true };
-		worksheet.getCell("B2").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("B2").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-		worksheet.addRow([]);
-		/* ==================================================================================== */
-		/* ==================================================================================== */
-
-		//let subTitleRow = worksheet.addRow(['date: ' + this.datePipe.transform(new Date(), 'medium' ) ] );
-
-		if (reportHeading !== "") {
-			worksheet.mergeCells("B3:K3");
-			worksheet.getCell("B3").value = "تاريخ : " + this.datePipe.transform(new Date(), "dd-MM-yyyy");
-			worksheet.getCell("B3").alignment = { vertical: "middle", horizontal: "center" };
-			worksheet.getCell("B3").font = { size: 12, bold: true };
-			worksheet.getCell("B3").fill = {
-				type: "pattern",
-				pattern: "solid",
-				fgColor: { argb: "aedde9el" },
-			};
-			worksheet.getCell("B3").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-			worksheet.addRow([]);
-		}
-
-		worksheet.mergeCells("A6:CH6");
-		worksheet.getCell("A6").value = "Rétroplanning";
-		worksheet.getCell("A6").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("A6").font = { size: 12, bold: true };
-		worksheet.getCell("A6").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "B4C6E7" },
-		};
-		worksheet.mergeCells("A7:N7");
-		worksheet.getCell("A7").value = "";
-		worksheet.getCell("A7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("A7").font = { size: 12, bold: true };
-		worksheet.getCell("A7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "eae6e6" },
-		};
-		worksheet.getCell("A7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-		worksheet.mergeCells("O7:Z7");
-		worksheet.getCell("O7").value = "2023";
-		worksheet.getCell("O7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("O7").font = { size: 12, bold: true };
-		worksheet.getCell("O7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("O7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("AA7:AL7");
-		worksheet.getCell("AA7").value = "2024";
-		worksheet.getCell("AA7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("AA7").font = { size: 12, bold: true };
-		worksheet.getCell("AA7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("AA7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("AM7:AX7");
-		worksheet.getCell("AM7").value = "2025";
-		worksheet.getCell("AM7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("AM7").font = { size: 12, bold: true };
-		worksheet.getCell("AM7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("AM7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("AY7:BJ7");
-		worksheet.getCell("AY7").value = "2026";
-		worksheet.getCell("AY7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("AY7").font = { size: 12, bold: true };
-		worksheet.getCell("AY7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("AY7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("BK7:BV7");
-		worksheet.getCell("BK7").value = "2027";
-		worksheet.getCell("BK7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("BK7").font = { size: 12, bold: true };
-		worksheet.getCell("BK7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("BK7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("BW7:CH7");
-		worksheet.getCell("BW7").value = "2028";
-		worksheet.getCell("BW7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("BW7").font = { size: 12, bold: true };
-		worksheet.getCell("BW7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("BW7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		//Add Image
-		let myLogoImage = workbook.addImage({
-			base64: logo.imgBase64,
-			extension: "png",
-		});
-
-		worksheet.addImage(myLogoImage, {
-			tl: { col: 0.6, row: 0.4 },
-			ext: { width: 50, height: 80 },
-		});
-		// worksheet.mergeCells('A1:D2');
-		// worksheet.addRow([]);
-		// worksheet.addRow([]);
-		/* Add header row */
-		const headerRow = worksheet.addRow(header);
-
-		// Cell style : Fill and border
-		headerRow.eachCell((cell, index) => {
-			cell.fill = {
-				type: "pattern",
-				pattern: "solid",
-				fgColor: { argb: "ffb0eaf6" },
-			};
-			cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-			cell.font = { size: 12, bold: true };
-
-			worksheet.getColumn(index).width = header[index - 1].length < 20 ? 20 : header[index - 1].lenght;
-		});
-		// Add Data and Conditional Formatting
-		let i = 9;
-		const startingRows1 = new Map();
-		const startingRows6 = new Map();
-
-		const colors = ["FF3300", "FFC000", "A9D08E", "9999FF", "BF8F00", "FFCCCC", "33CCCC", "B4C6E7", "D9D9D9"];
-		// Add Data and Conditional Formatting
-		//   data.forEach((d, index) => {
-		//     let propertyValues1 = [d.nature, d.theme, d.sousTheme, d.codeProjet, d.nameProjet, d.projet, d.numero];
-		//     let mergeKey1 = propertyValues1.join('|');
-		//     let startRow1;
-
-		//     if (startingRows1.has(mergeKey1)) {
-		//         startRow1 = startingRows1.get(mergeKey1);
-		//     } else {
-		//         startRow1 = i;
-		//         startingRows1.set(mergeKey1, startRow1);
-		//     }
-
-		//     if (index > 0) {
-		//         let prevData1 = data[index - 1];
-		//         let prevPropertyValues1 = [prevData1.nature, prevData1.theme, prevData1.sousTheme, prevData1.codeProjet, prevData1.nameProjet, prevData1.projet, prevData1.numero];
-		//         let prevMergeKey1 = prevPropertyValues1.join('|');
-		//         let prevStartRow1 = startingRows1.get(prevMergeKey1);
-
-		//         if (prevMergeKey1 !== mergeKey1 || startRow1 !== prevStartRow1) {
-		//             if (prevStartRow1 < i - 1) {
-		//                 for (let column = 1; column <= 6; column++) {
-		//                     worksheet.mergeCells(`${String.fromCharCode(64 + column)}${prevStartRow1}:${String.fromCharCode(64 + column)}${i - 1}`);
-		//                 }
-		//                 worksheet.mergeCells(`F${prevStartRow1}:F${i - 1}`); // Assuming F is the column for "numero"
-		//             }
-
-		//             const colorIndex = prevStartRow1 % colors.length;
-		//             const fillColor = colors[colorIndex];
-
-		//             for (let row = prevStartRow1; row <= i - 1; row++) {
-		//                 for (let column = 1; column <= 7; column++) {
-		//                     let cell = worksheet.getCell(`${String.fromCharCode(64 + column)}${row}`);
-		//                     cell.fill = {
-		//                         type: 'pattern',
-		//                         pattern: 'solid',
-		//                         fgColor: { argb: fillColor },
-		//                     };
-		//                 }
-		//             }
-		//         }
-		//     }
-
-		//     let row = worksheet.addRow(propertyValues1);
-		//     row.alignment = { vertical: 'middle', horizontal: 'center' };
-
-		//     const lastMergeKey1 = Array.from(startingRows1.keys()).pop();
-		//     const lastStartRow1 = startingRows1.get(lastMergeKey1);
-		//     const colorIndex = lastStartRow1 % colors.length;
-		//     const fillColor = colors[colorIndex];
-
-		//     for (let column = 1; column <= 7; column++) {
-		//         row.getCell(column).fill = {
-		//             type: 'pattern',
-		//             pattern: 'solid',
-		//             fgColor: { argb: fillColor },
-		//         };
-		//     }
-
-		//     row.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
-		//     i = i + 1;
-
-		//     // Additional logic for handling the last row and merging cells if needed
-		// });
-
-		const mergedCellsByProjetNumero = new Map();
-
-		data.forEach((d, index) => {
-			const allNumbers = d.numero;
-
-			allNumbers.forEach((numero, numIndex) => {
-				let propertyValues1 = [d.nature, d.theme, d.sousTheme, d.codeProjet, d.nameProjet, d.projet, numero];
-				let mergeKey1 = propertyValues1.slice(0, -1).join("|"); // Exclude the last value (numero) for merging
-				let startRow1;
-
-				if (startingRows1.has(mergeKey1)) {
-					startRow1 = startingRows1.get(mergeKey1);
-				} else {
-					startRow1 = i;
-					startingRows1.set(mergeKey1, startRow1);
-				}
-
-				if (index > 0) {
-					let prevData1 = data[index - 1];
-					let prevPropertyValues1 = [prevData1.nature, prevData1.theme, prevData1.sousTheme, prevData1.codeProjet, prevData1.nameProjet, prevData1.projet, prevData1.numero];
-					let prevMergeKey1 = prevPropertyValues1.slice(0, -1).join("|");
-					let prevStartRow1 = startingRows1.get(prevMergeKey1);
-
-					if (prevMergeKey1 !== mergeKey1 || startRow1 !== prevStartRow1) {
-						if (prevStartRow1 < i - 1) {
-							for (let column = 1; column <= 6; column++) {
-								worksheet.mergeCells(`${String.fromCharCode(64 + column)}${prevStartRow1}:${String.fromCharCode(64 + column)}${i - 1}`);
-							}
-							worksheet.mergeCells(`G${prevStartRow1}:G${i - 1}`); // Assuming G is the column for "numero"
-						}
-					}
-				}
-
-				let row = worksheet.addRow(propertyValues1);
-				row.alignment = { vertical: "middle", horizontal: "center" };
-
-				const lastMergeKey1 = Array.from(startingRows1.keys()).pop();
-				const lastStartRow1 = startingRows1.get(lastMergeKey1);
-				const colorIndex = lastStartRow1 % colors.length;
-				const fillColor = colors[colorIndex];
-
-				for (let column = 1; column <= 7; column++) {
-					row.getCell(column).fill = {
-						type: "pattern",
-						pattern: "solid",
-						fgColor: { argb: fillColor },
-					};
-				}
-
-				row.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-				i = i + 1;
-
-				// // Track merged cells for each unique combination of projet and numero
-				// const projetNumeroKey = `${d.projet || ''}_${numero || ''}`;
-				// if (!mergedCellsByProjetNumero.has(projetNumeroKey)) {
-				//     mergedCellsByProjetNumero.set(projetNumeroKey, new Set());
-				// }
-				// const mergedCellsForProjetNumero = mergedCellsByProjetNumero.get(projetNumeroKey);
-
-				// for (let column = 1; column <= 7; column++) {
-				//     mergedCellsForProjetNumero.add(row.number);
-				// }
-
-				// Track merged cells for each unique combination of projet and numero
-				const projetNumeroKey = `${d.projet || ""}_${numero || ""}`;
-				if (!mergedCellsByProjetNumero.has(projetNumeroKey)) {
-					mergedCellsByProjetNumero.set(projetNumeroKey, new Set());
-				}
-				const mergedCellsForProjetNumero = mergedCellsByProjetNumero.get(projetNumeroKey);
-
-				for (let column = 1; column <= reportSubHeading.length; column++) {
-					mergedCellsForProjetNumero.add(row.number);
-				}
-			});
-		});
-
-		// // Apply fill color to merged cells for each unique combination of projet and numero
-		// mergedCellsByProjetNumero.forEach((mergedCellsForProjetNumero) => {
-		//     const colorIndex = Array.from(mergedCellsForProjetNumero)[0] as number % colors.length;
-		//     const fillColor = colors[colorIndex];
-
-		//     for (let row of mergedCellsForProjetNumero) {
-		//         for (let column = 1; column <= 7; column++) {
-		//             let cell = worksheet.getCell(`${String.fromCharCode(64 + column)}${row}`);
-		//             cell.fill = {
-		//                 type: 'pattern',
-		//                 pattern: 'solid',
-		//                 fgColor: { argb: fillColor },
-		//             };
-		//         }
-		//     }
-		// });
-
-		// Apply fill color to merged cells for each unique combination of projet and numero
-		mergedCellsByProjetNumero.forEach((mergedCellsForProjetNumero) => {
-			const colorIndex = (Array.from(mergedCellsForProjetNumero)[0] as number) % colors.length;
-
-			for (let row of mergedCellsForProjetNumero) {
-				for (let column = 1; column <= reportSubHeading.length; column++) {
-					let cell = worksheet.getCell(`${String.fromCharCode(64 + column)}${row}`);
-					cell.fill = {
-						type: "pattern",
-						pattern: "solid",
-						fgColor: { argb: colors[colorIndex] },
-					};
-				}
-			}
-		});
-
-		worksheet.getColumn(1).width = 40;
-		worksheet.getColumn(1).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		worksheet.getColumn(2).width = 40;
-		worksheet.getColumn(2).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		worksheet.getColumn(3).width = 25;
-		worksheet.getColumn(3).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		worksheet.getColumn(4).width = 10;
-		worksheet.getColumn(4).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		worksheet.getColumn(5).width = 60;
-		worksheet.getColumn(5).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		worksheet.getColumn(6).width = 10;
-		worksheet.getColumn(6).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(7).width = 40;
-		// worksheet.getColumn(7).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(8).width = 30;
-		// worksheet.getColumn(8).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(9).width = 30;
-		// worksheet.getColumn(9).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(10).width = 30;
-		// worksheet.getColumn(10).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(11).width = 20;
-		// worksheet.getColumn(11).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(12).width = 20;
-		// worksheet.getColumn(12).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(13).width = 20;
-		// worksheet.getColumn(13).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(14).width = 20;
-		// worksheet.getColumn(14).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(15).width = 6.30;
-		// worksheet.getColumn(15).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-		// worksheet.getColumn(16).width = 6.30;
-		// worksheet.getColumn(16).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(17).width = 6.30;
-		// worksheet.getColumn(17).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(18).width = 6.30;
-		// worksheet.getColumn(18).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(19).width = 6.30;
-		// worksheet.getColumn(19).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(20).width = 6.30;
-		// worksheet.getColumn(20).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(21).width = 6.30;
-		// worksheet.getColumn(21).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(22).width = 6.30;
-		// worksheet.getColumn(22).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(23).width = 6.30;
-		// worksheet.getColumn(23).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(24).width = 6.30;
-		// worksheet.getColumn(24).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(25).width = 6.30;
-		// worksheet.getColumn(25).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(26).width = 6.30;
-		// worksheet.getColumn(26).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(27).width = 6.30;
-		// worksheet.getColumn(27).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(28).width = 6.30;
-		// worksheet.getColumn(28).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(29).width = 6.30;
-		// worksheet.getColumn(29).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(30).width = 6.30;
-		// worksheet.getColumn(30).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(31).width = 6.30;
-		// worksheet.getColumn(31).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(32).width = 6.30;
-		// worksheet.getColumn(32).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(33).width = 6.30;
-		// worksheet.getColumn(33).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(34).width = 6.30;
-		// worksheet.getColumn(34).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(35).width = 6.30;
-		// worksheet.getColumn(35).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(36).width = 6.30;
-		// worksheet.getColumn(36).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(37).width = 6.30;
-		// worksheet.getColumn(37).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(38).width = 6.30;
-		// worksheet.getColumn(38).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(39).width = 6.30;
-		// worksheet.getColumn(39).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(40).width = 6.30;
-		// worksheet.getColumn(40).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(41).width = 6.30;
-		// worksheet.getColumn(41).alignment = { vertical: 'middle', horizontal: 'center' };
-
-		// worksheet.getColumn(42).width = 6.30;
-		// worksheet.getColumn(42).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(43).width = 6.30;
-		// worksheet.getColumn(43).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(44).width = 6.30;
-		// worksheet.getColumn(44).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(45).width = 6.30;
-		// worksheet.getColumn(45).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(46).width = 6.30;
-		// worksheet.getColumn(46).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(47).width = 6.30;
-		// worksheet.getColumn(47).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(48).width = 6.30;
-		// worksheet.getColumn(48).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(49).width = 6.30;
-		// worksheet.getColumn(49).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(50).width = 6.30;
-		// worksheet.getColumn(50).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(51).width = 6.30;
-		// worksheet.getColumn(51).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(52).width = 6.30;
-		// worksheet.getColumn(52).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(53).width = 6.30;
-		// worksheet.getColumn(53).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(54).width = 6.30;
-		// worksheet.getColumn(54).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(55).width = 6.30;
-		// worksheet.getColumn(55).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(56).width = 6.30;
-		// worksheet.getColumn(56).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(57).width = 6.30;
-		// worksheet.getColumn(57).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(58).width = 6.30;
-		// worksheet.getColumn(58).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(59).width = 6.30;
-		// worksheet.getColumn(59).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(60).width = 6.30;
-		// worksheet.getColumn(60).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(61).width = 6.30;
-		// worksheet.getColumn(61).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(62).width = 6.30;
-		// worksheet.getColumn(62).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(63).width = 6.30;
-		// worksheet.getColumn(63).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(64).width = 6.30;
-		// worksheet.getColumn(64).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(65).width = 6.30;
-		// worksheet.getColumn(65).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(66).width = 6.30;
-		// worksheet.getColumn(66).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(67).width = 6.30;
-		// worksheet.getColumn(67).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(68).width = 6.30;
-		// worksheet.getColumn(68).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(69).width = 6.30;
-		// worksheet.getColumn(69).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(70).width = 6.30;
-		// worksheet.getColumn(70).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(71).width = 6.30;
-		// worksheet.getColumn(71).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(72).width = 6.30;
-		// worksheet.getColumn(72).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(73).width = 6.30;
-		// worksheet.getColumn(73).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(74).width = 6.30;
-		// worksheet.getColumn(74).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(75).width = 6.30;
-		// worksheet.getColumn(75).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(76).width = 6.30;
-		// worksheet.getColumn(76).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(77).width = 6.30;
-		// worksheet.getColumn(77).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(78).width = 6.30;
-		// worksheet.getColumn(78).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(79).width = 6.30;
-		// worksheet.getColumn(79).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(80).width = 6.30;
-		// worksheet.getColumn(80).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(81).width = 6.30;
-		// worksheet.getColumn(81).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(82).width = 6.30;
-		// worksheet.getColumn(82).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(83).width = 6.30;
-		// worksheet.getColumn(83).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(84).width = 6.30;
-		// worksheet.getColumn(84).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(85).width = 6.30;
-		// worksheet.getColumn(85).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(86).width = 6.30;
-		// worksheet.getColumn(86).alignment = { vertical: 'middle', horizontal: 'center' };
-		// worksheet.getColumn(87).width = 6.30;
-		// worksheet.getColumn(87).alignment = { vertical: 'middle', horizontal: 'center' };
-		worksheet.addRow([]);
-
-		//Footer Row
-		// let footerRow = worksheet.addRow(["هذا الجدول تم إنشاءه من طرف نظام المعلومات"]);
-		// footerRow.getCell(1).fill = {
-		//   type: "pattern",
-		//   pattern: "solid",
-		//   fgColor: { argb: "aed4d2c9" },
-		// };
-		// footerRow.getCell(1).border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-		// footerRow.getCell(1).alignment = { horizontal: "center" };
-		// //Merge Cells
-		// worksheet.mergeCells(`A${footerRow.number}:G${footerRow.number}`);
-
-		/* Save Excel File */
-		workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
-			const blob = new Blob([data], { type: EXCEL_TYPE });
-			let now = new Date();
-			let timeSpan = this.datePipe.transform(now, "ddMMyyyyHHmmss");
-			fs.saveAs(blob, excelFileName + "-" + timeSpan + EXCEL_EXTENSION);
-		});
-	}
 	public exportAsExcelFileRetro4(reportHeading: string, reportSubHeading: string, headersArray: any[], json: any[], footerData: any, excelFileName: string, sheetName: string) {
 		const header = headersArray;
 		const data = json;
 
-		/* Create workbook and worksheet */
 		const workbook = new Workbook();
 
-		/* Set workbook properties */
 		workbook.creator = "Brome";
 		workbook.lastModifiedBy = "Brome";
 		workbook.created = new Date();
@@ -2494,445 +2437,299 @@ export class ExcelAssociationService {
 
 		const worksheet = workbook.addWorksheet(sheetName);
 
-		/* Add header row */
-		// worksheet.addRow([]);
-		worksheet.mergeCells("A1:A5");
-
-		worksheet.mergeCells("B2:K2");
-		worksheet.getCell("B2").value = reportHeading;
-		worksheet.getCell("B2").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("B2").font = { size: 12, bold: true };
-		worksheet.getCell("B2").fill = {
+		worksheet.mergeCells("A1:D1");
+		worksheet.getCell("A1").value = 'DATE DE MISE A JOUR: ' + this.formatDate(new Date());;
+		worksheet.getCell("A1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("A1").font = { name: "Calibri", size: 9, bold: false, color: { argb: "FF000000" } };
+		worksheet.getCell("A1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
+			fgColor: { argb: "FFFF00" },
 		};
-		worksheet.getCell("B2").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-		// worksheet.addRow([]);
-		// /* ==================================================================================== */
-		// /* ==================================================================================== */
 
-		if (reportHeading !== "") {
-			worksheet.mergeCells("B3:K3");
-			worksheet.getCell("B3").value = "تاريخ : " + this.datePipe.transform(new Date(), "dd-MM-yyyy");
-			worksheet.getCell("B3").alignment = { vertical: "middle", horizontal: "center" };
-			worksheet.getCell("B3").font = { size: 12, bold: true };
-			worksheet.getCell("B3").fill = {
-				type: "pattern",
-				pattern: "solid",
-				fgColor: { argb: "aedde9el" },
-			};
-			worksheet.getCell("B3").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-			// worksheet.addRow([]);
-		}
-
-		worksheet.mergeCells("A6:CH6");
-		worksheet.getCell("A6").value = "Rétroplanning";
-		worksheet.getCell("A6").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("A6").font = { size: 12, bold: true };
-		worksheet.getCell("A6").fill = {
+		worksheet.mergeCells("E1:N1");
+		worksheet.getCell("E1").value = reportHeading;
+		worksheet.getCell("E1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("E1").font = { name: "Calibri", size: 18, bold: true, color: { argb: "FFFFFFFF" } };
+		worksheet.getCell("E1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "B4C6E7" },
+			fgColor: { argb: "203764" },
 		};
-		worksheet.mergeCells("A7:N7");
-		worksheet.getCell("A7").value = "";
-		worksheet.getCell("A7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("A7").font = { size: 12, bold: true };
-		worksheet.getCell("A7").fill = {
+		worksheet.getCell("E1").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+
+		worksheet.mergeCells("O1:Z1");
+		worksheet.getCell("O1").value = '2023';
+		worksheet.getCell("O1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("O1").font = { name: "Calibri", size: 11, bold: false, color: { argb: "FF000000" } };
+		worksheet.getCell("O1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "eae6e6" },
+			fgColor: { argb: "FFFF99" },
 		};
-		worksheet.getCell("A7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-		worksheet.mergeCells("O7:Z7");
-		worksheet.getCell("O7").value = "2023";
-		worksheet.getCell("O7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("O7").font = { size: 12, bold: true };
-		worksheet.getCell("O7").fill = {
+		worksheet.mergeCells("AA1:AL1");
+		worksheet.getCell("AA1").value = '2024';
+		worksheet.getCell("AA1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("AA1").font = { name: "Calibri", size: 11, bold: false, color: { argb: "FF000000" } };
+		worksheet.getCell("AA1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
+			fgColor: { argb: "FFFF99" },
 		};
-		worksheet.getCell("O7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("AA7:AL7");
-		worksheet.getCell("AA7").value = "2024";
-		worksheet.getCell("AA7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("AA7").font = { size: 12, bold: true };
-		worksheet.getCell("AA7").fill = {
+		worksheet.mergeCells("AM1:AX1");
+		worksheet.getCell("AM1").value = '2025';
+		worksheet.getCell("AM1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("AM1").font = { name: "Calibri", size: 11, bold: false, color: { argb: "FF000000" } };
+		worksheet.getCell("AM1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
+			fgColor: { argb: "FFFF99" },
 		};
-		worksheet.getCell("AA7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("AM7:AX7");
-		worksheet.getCell("AM7").value = "2025";
-		worksheet.getCell("AM7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("AM7").font = { size: 12, bold: true };
-		worksheet.getCell("AM7").fill = {
+		worksheet.mergeCells("AY1:BJ1");
+		worksheet.getCell("AY1").value = '2026';
+		worksheet.getCell("AY1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("AY1").font = { name: "Calibri", size: 11, bold: false, color: { argb: "FF000000" } };
+		worksheet.getCell("AY1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
+			fgColor: { argb: "FFFF99" },
 		};
-		worksheet.getCell("AM7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("AY7:BJ7");
-		worksheet.getCell("AY7").value = "2026";
-		worksheet.getCell("AY7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("AY7").font = { size: 12, bold: true };
-		worksheet.getCell("AY7").fill = {
+		worksheet.mergeCells("BK1:BV1");
+		worksheet.getCell("BK1").value = '2027';
+		worksheet.getCell("BK1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("BK1").font = { name: "Calibri", size: 11, bold: false, color: { argb: "FF000000" } };
+		worksheet.getCell("BK1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
+			fgColor: { argb: "FFFF99" },
 		};
-		worksheet.getCell("AY7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-
-		worksheet.mergeCells("BK7:BV7");
-		worksheet.getCell("BK7").value = "2027";
-		worksheet.getCell("BK7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("BK7").font = { size: 12, bold: true };
-		worksheet.getCell("BK7").fill = {
+		worksheet.mergeCells("BW1:CH1");
+		worksheet.getCell("BW1").value = '2028';
+		worksheet.getCell("BW1").alignment = { vertical: "middle", horizontal: "center" };
+		worksheet.getCell("BW1").font = { name: "Calibri", size: 11, bold: false, color: { argb: "FF000000" } };
+		worksheet.getCell("BW1").fill = {
 			type: "pattern",
 			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
+			fgColor: { argb: "FFFF99" },
 		};
-		worksheet.getCell("BK7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 
-		worksheet.mergeCells("BW7:CH7");
-		worksheet.getCell("BW7").value = "2028";
-		worksheet.getCell("BW7").alignment = { vertical: "middle", horizontal: "center" };
-		worksheet.getCell("BW7").font = { size: 12, bold: true };
-		worksheet.getCell("BW7").fill = {
-			type: "pattern",
-			pattern: "solid",
-			fgColor: { argb: "aeb6e8c5" },
-		};
-		worksheet.getCell("BW7").border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
 
-		//Add Image
-		let myLogoImage = workbook.addImage({
-			base64: logo.imgBase64,
-			extension: "png",
-		});
-
-		worksheet.addImage(myLogoImage, {
-			tl: { col: 0.6, row: 0.4 },
-			ext: { width: 50, height: 80 },
-		});
-		// worksheet.mergeCells('A1:D2');
-		// worksheet.addRow([]);
-		// worksheet.addRow([]);
-		/* Add header row */
 		const headerRow = worksheet.addRow(header);
 
-		// Cell style : Fill and border
 		headerRow.eachCell((cell, index) => {
-			cell.fill = {
-				type: "pattern",
-				pattern: "solid",
-				fgColor: { argb: "ffb0eaf6" },
-			};
-			cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-			cell.font = { size: 12, bold: true };
+			if (index >= 1 && index <= 12) { // Cells from A to L
+				cell.fill = {
+					type: "pattern",
+					pattern: "solid",
+					fgColor: { argb: "ED7D31" },
+				};
+				cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+				cell.font = { size: 9, bold: true, name: "Calibri" };
 
-			worksheet.getColumn(index).width = header[index - 1].length < 20 ? 20 : header[index - 1].lenght;
+				worksheet.getColumn(index).width = header[index - 1].length < 20 ? 20 : header[index - 1].length;
+			} else if (index >= 13 && index <= 14) {
+				cell.fill = {
+					type: "pattern",
+					pattern: "solid",
+					fgColor: { argb: "305496" },
+				};
+				cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+				cell.font = { size: 9, bold: true, name: "Calibri", color: { argb: "FFFFFFFF" } };
+
+				worksheet.getColumn(index).width = header[index - 1].length < 20 ? 20 : header[index - 1].length;
+			} else if (index >= 15 && index <= 86) {
+				cell.fill = {
+					type: "pattern",
+					pattern: "solid",
+					fgColor: { argb: "D0CECE" },
+				};
+				cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+				cell.font = { size: 9, bold: true, name: "Calibri", color: { argb: "FF000000" } };
+
+				worksheet.getColumn(index).width = header[index - 1].length < 20 ? 20 : header[index - 1].length;
+			}
 		});
-		// Add Data and Conditional Formatting
-		let i = 9;
-		const startingRows1 = new Map();
-		const startingRows2 = new Map();
+		let startIndex = 3;
+		const baseYear = 2023;
+		data.forEach((d) => {
+			if (
+				Array.isArray(d.numero) &&
+				Array.isArray(d.object) &&
+				Array.isArray(d.maitreOuvrageDelegue) &&
+				Array.isArray(d.Avancement) &&
+				Array.isArray(d.cout) &&
+				d.numero.length === d.object.length &&
+				d.numero.length === d.Avancement.length &&
+				d.numero.length === d.cout.length &&
+				d.numero.length === d.maitreOuvrageDelegue.length
+			) {
+				for (let i = 0; i < d.numero.length; i++) {
+					let propertyValues1 = [
+						d.nature, d.theme, d.sousTheme, d.codeProjet, d.nameProjet,
+						d.numero[i],
+						d.object[i],
+						d.maitreOuvrageDelegue[i],
+						d.convention.lenght != 0 ? d.convention[i] : '-', d.date, d.Avancement[i], d.cout[i], d.dateDebut[i], d.dateFin[i],
+					];
+					let row = worksheet.addRow(propertyValues1);
+					row.alignment = { vertical: 'middle', horizontal: 'center' };
+					let dateDebut = new Date(d.dateDebut[i]);
+					let dateFin = new Date(d.dateFin[i]);
+					let startYear = dateDebut.getFullYear();
+					let startMonth = dateDebut.getMonth() + 1;
+					let endYear = dateFin.getFullYear();
+					let endMonth = dateFin.getMonth() + 1;
+					let monthOffset = dateDebut.getDate() > 1 ? 1 : 0;
+					let startColumnIndex;
+					let endColumnIndex;
+					for (let year = baseYear; year <= startYear; year++) {
+						const indexOffset = (year - baseYear) * 12;
+						startColumnIndex = indexOffset + startMonth + 13 + monthOffset;
+						endColumnIndex = indexOffset + endMonth + 13 + monthOffset;
 
-		const colors = ["FF3300", "FFC000", "A9D08E", "9999FF", "BF8F00", "FFCCCC", "33CCCC", "B4C6E7", "D9D9D9"];
-		// // Add Data and Conditional Formatting
-    data.forEach((d, index) => {
-      // Check if 'numero', 'object', and 'maitreOuvrageDelegue' are arrays
-      if (
-          Array.isArray(d.numero) &&
-          Array.isArray(d.object) &&
-          Array.isArray(d.maitreOuvrageDelegue) &&
-     
-          d.numero.length === d.object.length &&
-         
-          d.numero.length === d.maitreOuvrageDelegue.length
-      ) {
-          // Iterate over pairs of 'numero', 'object', and 'maitreOuvrageDelegue'
-          for (let i = 0; i < d.numero.length; i++) {
-			let conventions = this.getConventionsAsString(d.convention);
+					}
+					for (let columnIndex = startColumnIndex; columnIndex <= endColumnIndex; columnIndex++) {
+						let cell = row.getCell(columnIndex);
+						cell.fill = {
+							type: 'pattern',
+							pattern: 'solid',
+							fgColor: { argb: '8EA9DB' }
+						};
+						cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+					}
 
-              let propertyValues1 = [
-                  d.nature, d.theme, d.sousTheme, d.codeProjet, d.nameProjet,
-                  d.numero[i],  // Use 'numero' element
-                  d.object[i],  // Use 'object' element
-                  d.maitreOuvrageDelegue[i],  // Use 'maitreOuvrageDelegue' element
-				  conventions, d.AnnéeDébut, d.Avancement, d.cout, d.DateDebut, d.DateFin
-              ];
-  
-              // Rest of your existing logic for merging and formatting
-              // ...
-  
-              // Add the row to the worksheet
-              let row = worksheet.addRow(propertyValues1);
-              row.alignment = { vertical: 'middle', horizontal: 'center' };
-  
-              // Other formatting as needed
-              row.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
-          }
-      } else {
-		let conventions = this.getConventionsAsString(d.convention);
+					if (d.numero.lenght > 1) {
+						let cellsToEmpty = [1, 2, 3, 4, 5];
+						cellsToEmpty.forEach(cellIndex => {
+							let cell = row.getCell(cellIndex);
+							cell.value = null;
+						});
+					}
+				}
 
-          // Your existing code for a single row
-          let propertyValues1 = [d.nature, d.theme, d.sousTheme, d.codeProjet, d.nameProjet, d.numero, d.object, d.maitreOuvrageDelegue, conventions, d.AnnéeDébut, d.Avancement, d.cout, d.DateDebut, d.DateFin];
-  
-          // Your existing logic for merging and formatting
-          // ...
-  
-          // Add the row to the worksheet
-          let row = worksheet.addRow(propertyValues1);
-          row.alignment = { vertical: 'middle', horizontal: 'center' };
-  
-          // Other formatting as needed
-          row.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
-      }
-  });
-  
-  
-  
-  
-  
-  
-  
-  
-  
+			} else {
+				let propertyValues1 = [d.nature, d.theme, d.sousTheme, d.codeProjet, d.nameProjet, d.numero, d.object, d.maitreOuvrageDelegue, d.convention.lenght != 0 ? d.convention : '-', d.AnnéeDébut, d.Avancement, d.cout, d.DateDebut, d.DateFin];
 
-// 		data.forEach((d, index) => {
-// 			let propertyValues1 = [d.nature];
-// 			let mergeKey1 = propertyValues1.join("|");
-// 			let startRow1;
-// 			if (startingRows1.has(mergeKey1)) {
-// 				startRow1 = startingRows1.get(mergeKey1);
-// 			} else {
-// 				startRow1 = i;
-// 				startingRows1.set(mergeKey1, startRow1);
-// 			}
+				let row = worksheet.addRow(propertyValues1);
+				row.alignment = { vertical: 'middle', horizontal: 'center' };
+				let dateDebut = new Date(d.dateDebut);
+				let dateFin = new Date(d.dateFin);
+				let startYear = dateDebut.getFullYear();
+				let startMonth = dateDebut.getMonth() + 1;
+				let endYear = dateFin.getFullYear();
+				let endMonth = dateFin.getMonth() + 1;
+				let monthOffset = dateDebut.getDate() > 1 ? 1 : 0;
+				let startColumnIndex;
+				let endColumnIndex;
 
-// 			// if (index > 0) {
-// 			//   let prevData1 = data[index - 1];
-// 			//   let prevPropertyValues1 = [prevData1.nature];
-// 			//   let prevMergeKey1 = prevPropertyValues1.join('|');
-// 			//   let prevStartRow1 = startingRows1.get(prevMergeKey1);
+				for (let year = baseYear; year <= startYear; year++) {
+					const indexOffset = (year - baseYear) * 12;
+					startColumnIndex = indexOffset + startMonth + 13 + monthOffset;
+					endColumnIndex = indexOffset + endMonth + 13 + monthOffset;
 
-// 			//   if (prevMergeKey1 !== mergeKey1 || startRow1 !== prevStartRow1) {
-// 			//     console.log('mergeKey11:', mergeKey1);
-// 			//     console.log('prevMergeKey11:', prevMergeKey1);
-// 			//     console.log('startRow11:', startRow1);
-// 			//     console.log('prevStartRow11:', prevStartRow1);
-// 			//     console.log('iA:', i);
-// 			//     console.log('index:', index);
-// 			//     worksheet.mergeCells(`A${prevStartRow1}:A${i - 1}`);
+				}
+				for (let columnIndex = startColumnIndex; columnIndex <= endColumnIndex; columnIndex++) {
+					let cell = row.getCell(columnIndex);
+					cell.fill = {
+						type: 'pattern',
+						pattern: 'solid',
+						fgColor: { argb: '8EA9DB' }
+					};
+					cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+				}
+				if (d.numero.lenght > 1) {
+					let cellsToEmpty = [1, 2, 3, 4, 5];
+					cellsToEmpty.forEach(cellIndex => {
+						let cell = row.getCell(cellIndex);
+						cell.value = null;
+					});
+				}
+			}
 
-// 			//     const colorIndex = prevStartRow1 % colors.length; // Calculate the index of the color in the array
-// 			//     const fillColor = colors[colorIndex]; // Get the color value from the array
-// 			//     colors.splice(colorIndex, 1);
-// 			//     for (let row = prevStartRow1; row <= i - 1; row++) {
-// 			//       let cell = worksheet.getCell(`A${row}`);
-// 			//       cell.fill = {
-// 			//         type: 'pattern',
-// 			//         pattern: 'solid',
-// 			//         fgColor: { argb: fillColor },
-// 			//       };
-// 			//     }
-// 			//   }
-// 			//   console.log('mergeKey1:', mergeKey1);
-// 			//   console.log('prevMergeKey1:', prevMergeKey1);
-// 			//   console.log('startRow1:', startRow1);
-// 			//   console.log('prevStartRow1:', prevStartRow1);
-// 			// }
+			if (Array.isArray(d.sousProjets) && d.sousProjets.length > 0) {
+				const endIndex = startIndex + (d.sousProjets.length) - 1;
+				worksheet.mergeCells(`A${startIndex}:A${endIndex}`);
+				worksheet.mergeCells(`B${startIndex}:B${endIndex}`);
+				worksheet.mergeCells(`C${startIndex}:C${endIndex}`);
+				worksheet.mergeCells(`D${startIndex}:D${endIndex}`);
+				worksheet.mergeCells(`E${startIndex}:E${endIndex}`);
+				startIndex = endIndex + 1;
+			}
+		});
 
-// 			let propertyValues2 = [d.theme];
-// 			let mergeKey2 = propertyValues2.join("|");
-// 			let startRow2;
-
-// 			if (startingRows2.has(mergeKey2)) {
-// 				startRow2 = startingRows2.get(mergeKey2);
-// 			} else {
-// 				startRow2 = i;
-// 				startingRows2.set(mergeKey2, startRow2);
-// 			}
-
-// 			//       if (index > 0) {
-// 			//           let prevData2 = data[index - 1];
-// 			//           let prevPropertyValues2 = [prevData2.theme];
-// 			//           let prevMergeKey2 = prevPropertyValues2.join('|');
-// 			//           let prevStartRow2 = startingRows2.get(prevMergeKey2);
-
-// 			//           if (prevMergeKey2 !== mergeKey2 || startRow2 !== prevStartRow2) {
-// 			//             console.log('mergeKey21:', mergeKey2);
-// 			//             console.log('prevMergeKey21:', prevMergeKey2);
-// 			//             console.log('startRow21:', startRow2);
-// 			//             console.log('prevStartRow21:', prevStartRow2);
-// 			//             console.log('iB:', i);
-// 			//             console.log('index:', index);
-// 			//               // Check if cells are not already merged before attempting to merge
-// 			//               if (!worksheet.getCell(`B${prevStartRow2}`).isMerged) {
-// 			//                   worksheet.mergeCells(`B${prevStartRow2}:B${i - 1}`);
-// 			//                   const colorIndex = prevStartRow2 % colors.length;
-// 			//                   const fillColor = colors[colorIndex];
-// 			//                   colors.splice(colorIndex, 1);
-
-// 			//                   for (let row = prevStartRow2; row <= i - 1; row++) {
-// 			//                       let cell = worksheet.getCell(`B${row}`);
-// 			//                       cell.fill = {
-// 			//                           type: 'pattern',
-// 			//                           pattern: 'solid',
-// 			//                           fgColor: { argb: fillColor },
-// 			//                       };
-// 			//                   }
-// 			//               }
-
-// 			//           }
-// 			//           console.log('mergeKey2:', mergeKey2);
-// 			// console.log('prevMergeKey2:', prevMergeKey2);
-// 			// console.log('startRow2:', startRow2);
-// 			// console.log('prevStartRow2:', prevStartRow2);
-// 			//       }
-//       let mergedCellsA = [];
-//       let mergedCellsB = [];
-// if (index > 0) {
-//   let prevData1 = data[index - 1];
-//   let prevPropertyValues1 = [prevData1.nature];
-//   let prevMergeKey1 = prevPropertyValues1.join("|");
-//   let prevStartRow1 = startingRows1.get(prevMergeKey1);
-//   let prevData2 = data[index - 1];
-//   let prevPropertyValues2 = [prevData2.theme];
-//   let prevMergeKey2 = prevPropertyValues2.join("|");
-//   let prevStartRow2 = startingRows2.get(prevMergeKey2);
-//   const colorIndex2 = prevStartRow2 % colors.length;
-//   const fillColor2 = colors[colorIndex2];
-//   colors.splice(colorIndex2, 1);
-//   const colorIndex1 = prevStartRow1 % colors.length;
-//   const fillColor1 = colors[colorIndex1];
-//   colors.splice(colorIndex1, 1);
-
-//   if (prevMergeKey1 !== mergeKey1 || startRow1 !== prevStartRow1) {
-//       console.log("Merging cells for A:", prevStartRow1, "to", i - 1);
-//       this.mergeCellsAndApplyColor(worksheet, prevStartRow1, i - 1, "A", fillColor1, mergedCellsA);
-//   }
-
-//   if (prevMergeKey2 !== mergeKey2 || startRow2 !== prevStartRow2) {
-//       console.log("Merging cells for B:", prevStartRow2, "to", i - 1);
-//       this.mergeCellsAndApplyColor(worksheet, prevStartRow2, i - 1, "B", fillColor2, mergedCellsB);
-//   }
-// }
-
-// 			let row = worksheet.addRow([propertyValues1[0], propertyValues2[0]]);
-// 			row.alignment = { vertical: "middle", horizontal: "center" };
-// 			// let qty = row.getCell(1);
-// 			let color = "aefaf5b9";
-// 			/*  if (+qty.value < 500) {
-//          color = 'aefdb772'
-//        }
- 
-//        qty.fill = {
-//          type: 'pattern',
-//          pattern: 'solid',
-//          fgColor: { argb: color }
-//        } */
-// 			const lastMergeKey1 = Array.from(startingRows1.keys()).pop();
-// 			const lastStartRow1 = startingRows1.get(lastMergeKey1);
-// 			const colorIndex = lastStartRow1 % colors.length; // Calculate the index of the color in the array
-// 			const fillColor = colors[colorIndex]; // Get the color value from the array
-
-// 			row.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
-// 			i = i + 1;
-
-// 			if (index === data.length - 1) {
-// 				const lastRowData = data[index - 1];
-// 				if (lastRowData.nature === d.nature) {
-// 					for (let column of ["A"]) {
-// 						worksheet.mergeCells(`${column}${i - 2}:${column}${i - 1}`);
-// 						let cell = worksheet.getCell(`${column}${i - 2}`);
-// 						cell.fill = {
-// 							type: "pattern",
-// 							pattern: "solid",
-// 							fgColor: { argb: fillColor },
-// 						};
-// 					}
-// 				}
-// 			}
-//       const lastMergeKey2 = Array.from(startingRows2.keys()).pop();
-// 			const lastStartRow2 = startingRows2.get(lastMergeKey2);
-// 			const colorIndex2 = lastStartRow2 % colors.length; // Calculate the index of the color in the array
-// 			const fillColor2 = colors[colorIndex2]; // Get the color value from the array
-// 			if (index === data.length - 1) {
-// 				const lastRowData2 = data[index - 1];
-// 				if (lastRowData2.theme === d.theme) {
-// 					for (let column of ["B"]) {
-// 						worksheet.mergeCells(`${column}${i - 2}:${column}${i - 1}`);
-// 						let cell = worksheet.getCell(`${column}${i - 2}`);
-// 						cell.fill = {
-// 							type: "pattern",
-// 							pattern: "solid",
-// 							fgColor: { argb: fillColor2 },
-// 						};
-// 					}
-// 				}
-// 			}
-// 		});
-
-		worksheet.getColumn(1).width = 40;
+		worksheet.getColumn(1).width = 30;
 		worksheet.getColumn(1).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
 
-		worksheet.getColumn(2).width = 40;
+		worksheet.getColumn(2).width = 30;
 		worksheet.getColumn(2).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
 
-    worksheet.getColumn(3).width = 40;
+		worksheet.getColumn(3).width = 30;
 		worksheet.getColumn(3).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
 
-    worksheet.getColumn(4).width = 40;
+		worksheet.getColumn(4).width = 30;
 		worksheet.getColumn(4).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
 
-    worksheet.getColumn(5).width = 50;
+		worksheet.getColumn(5).width = 30;
 		worksheet.getColumn(5).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
 
-    worksheet.getColumn(6).width = 30;
+		worksheet.getColumn(6).width = 30;
 		worksheet.getColumn(6).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
 
-    worksheet.getColumn(7).width = 70;
+		worksheet.getColumn(7).width = 30;
 		worksheet.getColumn(7).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-		// worksheet.addRow([]);
+
+		worksheet.getColumn(7).width = 30;
+		worksheet.getColumn(7).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+
+		worksheet.getColumn(8).width = 30;
+		worksheet.getColumn(8).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+
+		worksheet.getColumn(9).width = 30;
+		worksheet.getColumn(9).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+
+		worksheet.getColumn(10).width = 30;
+		worksheet.getColumn(10).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+
+		worksheet.getColumn(11).width = 30;
+		worksheet.getColumn(11).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+
+		worksheet.getColumn(12).width = 30;
+		worksheet.getColumn(12).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+
+		worksheet.getColumn(13).width = 30;
+		worksheet.getColumn(13).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+
+		worksheet.getColumn(13).width = 30;
+		worksheet.getColumn(13).alignment = { vertical: "middle", horizontal: "center", wrapText: true };
 
 		workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
 			const blob = new Blob([data], { type: EXCEL_TYPE });
 			let now = new Date();
-			let timeSpan = this.datePipe.transform(now, "ddMMyyyyHHmmss");
-			fs.saveAs(blob, excelFileName + "-" + timeSpan + EXCEL_EXTENSION);
+			let timeSpan = this.datePipe.transform(now, "dd-MM-yyyy");
+			fs.saveAs(blob, excelFileName + " " + timeSpan + EXCEL_EXTENSION);
 		});
 	}
-// Define a helper function to merge cells and apply color
-mergeCellsAndApplyColor(worksheet, startRow, endRow, column, fillColor, mergedCells) {
-  for (let row = startRow; row <= endRow; row++) {
-      let cell = worksheet.getCell(`${column}${row}`);
-      // Check if the cell address is not already in mergedCells array
-      
-      if (!mergedCells.includes(`${column}${row}`)) {
-          worksheet.mergeCells(`${column}${startRow}:${column}${endRow}`);
-          cell.fill = {
-              type: 'pattern',
-              pattern: 'solid',
-              fgColor: { argb: fillColor },
-          };
-          // Add the cell address to the mergedCells array
-          mergedCells.push(`${column}${startRow}`);
-      }
-  }
-}
-getConventionsAsString(conventions) {
-    if (conventions && conventions.length > 0) {
-        return conventions.map(convention => convention.object).join(', ');
-    }
-    return '';
-}
+
+
+	getColumnLetter(cellIndex) {
+		let columnIndex = cellIndex + 1;
+
+		let code = (columnIndex + 64);
+
+		if (columnIndex > 26) {
+			let firstLetter = String.fromCharCode(Math.floor((columnIndex - 1) / 26) + 64);
+			let secondLetter = String.fromCharCode((columnIndex - 1) % 26 + 65);
+			return `${firstLetter}${secondLetter}`;
+		}
+
+		return String.fromCharCode(code);
+	}
+
+	formatDate(date) {
+		const day = date.getDate().toString().padStart(2, '0');
+		const month = (date.getMonth() + 1).toString().padStart(2, '0'); // January is 0!
+		const year = date.getFullYear();
+		return `${day}/${month}/${year}`;
+	}
 }
 

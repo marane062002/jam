@@ -1,173 +1,82 @@
-<!-- <div class="kt-portlet portlet-1">
-	<div class="kt-portlet__head kt-bg-portlet-1">
-		<div class="kt-portlet__head-label">
-			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
-				Statistiques
-			</h2>
+<mat-card class="example-card mt-8 mb-5">
+	<form [formGroup]="searchForm">
+		<div class="row">
+			<div class="col-md-4 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }} :</mat-label>
+					<input type="date" class="form-control form-control-solid form-control-lg"
+						name="address1" formControlName="dateDebut" matInput />
+				</mat-form-field>
+			</div>
+			<div class="col-md-4 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.PROGRAMME.DATE_FIN" | translate }} :</mat-label>
+					<input type="date" class="form-control form-control-solid form-control-lg"
+						name="address1" formControlName="dateFin" matInput />
+				</mat-form-field>
+			</div>
+			<div class="col-md-4 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.BUREAU_ORDRE.VOLUME_TOTAL_COURRIER" | translate }}
+						:</mat-label>
+					<input readonly type="text" class="form-control form-control-solid form-control-lg"
+						formControlName="volumeTotalCourrier" matInput />
+				</mat-form-field>
+			</div>
+			<div class="col-md-4 form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.BUREAU_ORDRE.PERIODE_DE" | translate }} :</mat-label>
+					<input readonly type="text" class="form-control form-control-solid form-control-lg"
+						formControlName="periodeDe" matInput />
+				</mat-form-field>
+			</div>
+			<!-- ORIGINE -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<mat-form-field class="example-full-width">
+					<mat-select name="typeOrigine" formControlName="typeOrigine" class="form-control"
+						placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_INTERNE_EXTERNE' | translate }} :"
+						>
+						<mat-option value="Entrant">
+							{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.LIBELLE' | translate }}</mat-option>
+						<mat-option value="Sortant">
+							{{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.LIBELLE' | translate }}</mat-option>
+							<mat-option value="Convocation">
+								{{ 'PAGES.BUREAU_ORDRE.COURRIER_CONVOCATION.LIBELLE' | translate }}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
 		</div>
-	</div>
-	<div class="kt-portlet__body">
-		<form
-			novalidate
-			[formGroup]="searchForm"
-			class="d-flex justify-content-center"
-		>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="form-group">
-						<div class="input-group date">
-							<mat-form-field class="example-full-width">
-								<input
-									matInput
-									class="form-control"
-									[matDatepicker]="picker1"
-									placeholder="Date debut :"
-									formControlName="dateDebut"
-								/>
-								<mat-datepicker-toggle
-									matSuffix
-									matSuffix
-									[for]="picker1"
-								>
-									<mat-icon matDatepickerToggleIcon
-										><i class="fas fa-calendar-plus"></i>
-									</mat-icon>
-								</mat-datepicker-toggle>
-								<mat-datepicker
-									touchUi="true"
-									#picker1
-								></mat-datepicker>
-							</mat-form-field>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="form-group">
-						<div class="input-group date">
-							<mat-form-field class="example-full-width">
-								<input
-									matInput
-									class="form-control"
-									[matDatepicker]="picker2"
-									[min]="searchForm.controls.dateDebut.value"
-									placeholder="{{
-										'PAGES.ASSOCIATION.DATE_END' | translate
-									}} :"
-									formControlName="dateFin"
-								/>
-								<mat-datepicker-toggle
-									matSuffix
-									matSuffix
-									[for]="picker2"
-								>
-									<mat-icon matDatepickerToggleIcon
-										><i class="fas fa-calendar-plus"></i>
-									</mat-icon>
-								</mat-datepicker-toggle>
-								<mat-datepicker
-									touchUi="true"
-									#picker2
-								></mat-datepicker>
-							</mat-form-field>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="form-group"></div>
-					<button
-						[disabled]="searchForm.invalid"
-						(click)="onSubmit()"
-						class="btn btn-dark"
-					>
-						<i class="flaticon-search-1"></i
-						>{{ "PAGES.GENERAL.FILTER" | translate }}
-					</button>
-				</div>
+		<!-- TYPE -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<mat-form-field class="example-full-width">
+					<mat-select class="form-control" formControlName="type"
+						placeholder="{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} :">
+						<mat-option *ngFor="let type of types" [value]="type.id">
+							{{type.libelle}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
-		</form>
-	</div>
-</div>
+		</div>
+		</div>
+		<div class="row">
+			<div class="col-md-9"></div>
 
-<div class="row d-flex justify-content-center">
-	<div class="col-lg-5">
-		<div class="kt-portlet">
-			<div class="kt-portlet__head kt-bg-portlet-5">
-				<div class="kt-portlet__head-label">
-					<h2 class="kt-portlet__head-title">Véhicule</h2>
-				</div>
-			</div>
-			<div class="kt-portlet__body">
-
-				<br />
-				<div class="row">
-					<div class="col-md-5 ">
-						<label> N° : </label>
-						<mat-form-field class="example-full-width">
-
-							<mat-select class="form-control" >
-								<mat-option *ngFor="let option of dataImm" [value]="option.id">{{option.numVehicule}}
-								</mat-option>
-							</mat-select>
-
-						</mat-form-field>
-					</div>
-
-					<div class="col-md-5">
-						<mat-radio-group aria-label="Select an option">
-							<mat-radio-button value="1" checked="true"
-								>Aperçu le numéro de véhicule</mat-radio-button
-							>
-							<mat-radio-button value="2"
-								>Aperçu de l'historique du
-								véhicule</mat-radio-button
-							>
-							<mat-radio-button value="3"
-								>Rapport par utilisateur</mat-radio-button
-							>
-						</mat-radio-group>
-					</div>
-				</div>
-				<br />
-				<div class="row">
-					<div class="col-md-12 show_port">
-						<div class="col-md-12 show_port">
-							<div Style="pointer-events: none;">
-								<canvas id="canvas"></canvas>
-							</div>
-						</div>
-					</div>
+			<div class="col-md-3 form-group fv-plugins-icon-container">
+				<div class="kt-portlet__head-label text-center">
+					<button _ngcontent-dkp-c41=""
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						{{'PAGES.PROGRAMME.STATISTIQUE.APPLIQUER'| translate}} </button>
+					<button _ngcontent-dkp-c41=""
+						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						{{'PAGES.PROGRAMME.STATISTIQUE.REINITIALISER'| translate}} </button>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-lg-5">
-		<div class="kt-portlet">
-			<div class="kt-portlet__head kt-bg-portlet-5">
-				<div class="kt-portlet__head-label">
-					<h2 class="kt-portlet__head-title">Produit</h2>
-				</div>
-			</div>
-			<router-outlet></router-outlet>
-		</div>
-	</div>
-</div>
-
-<div class="row d-flex justify-content-center">
-	<div class="col-lg-5">
-		<div class="kt-portlet">
-			<div class="kt-portlet__head kt-bg-portlet-5">
-				<div class="kt-portlet__head-label">
-					<h2 class="kt-portlet__head-title">Carreau</h2>
-				</div>
-			</div>
-			<router-outlet name="aside"></router-outlet>
-		</div>
-	</div>
-</div>
-
- -->
+	</form>
+</mat-card>
  <div class="row d-flex justify-content-center">
 	<div class="col-md-5">
 		<div class="kt-portlet">

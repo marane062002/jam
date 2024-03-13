@@ -43,9 +43,11 @@ import { BiensEditComponent } from "./biens-edit/biens-edit.component";
 import { NgxPermissionsModule } from "ngx-permissions";
 import { TranslateModule } from "@ngx-translate/core";
 import { MaterialsModule } from "../utils/materials/materials.module";
+import { PagesModule } from "../pages.module";
+import { PdfviewerComponent } from "./pdfviewer/pdfviewer.component";
 
 @NgModule({
-	declarations: [
+	declarations: [PdfviewerComponent,
 		AutorisationsComponent,
 		AutorisationsListComponent,
 		AutorisationsEditComponent,
@@ -58,7 +60,8 @@ import { MaterialsModule } from "../utils/materials/materials.module";
 		BiensEditComponent,
 	],
 
-	imports: [
+	imports: [		PagesModule,
+
 		NgbModule,
 		NgbDropdownModule,
 		NgbTabsetModule,
@@ -135,5 +138,7 @@ import { MaterialsModule } from "../utils/materials/materials.module";
 		MatTooltipModule,
 		NgxPermissionsModule.forChild(),
 	],
+	entryComponents: [PdfviewerComponent],
+
 })
 export class AutorisationsModule {}

@@ -185,7 +185,9 @@ export class AuthService {
     async getUserByUserName(username: string) {
 		return await this.http.get<User>(USERS_URL + `/comptesByUserName/show/${username}`).toPromise();
 	}
-
+    async getUserWherePresidentTrue() {
+		return await this.http.get<User[]>(USERS_URL + `/comptesWherePresidentTrue`).toPromise();
+	}
     async getUserByRole(id: any) {
 		return await this.http.get<User>(USERS_URL + `/comptesByRole/show/${id}`).toPromise();
 	}

@@ -13,7 +13,7 @@ import { FilesUtilsService } from "../../../utils/files-utils.service";
 import { SpinnerService } from "../../../utils/spinner.service";
 import { ConventionMarcheService } from "../../../shared/conventionService";
 import { environment } from "../../../../../../environments/environment";
-
+ 
 @Component({
 	selector: 'kt-detaille-convention',
 	templateUrl: './detaille-convention.component.html',
@@ -105,12 +105,55 @@ export class DetailleConventionComponent implements OnInit {
 			}
 			console.log(res);
 			this.details = res;
+			const dateSignature = new Date(res.dateSignature);
+
+			// Check if dateSignature is a valid Date object
+			if (!isNaN(dateSignature.getTime())) {
+				// If it's a valid Date object, set it directly to the form control
+				this.details.dateSignature=dateSignature.toISOString().split('T')[0];
+			} else {
+				// Handle the case where dateSignature is not a valid date
+				console.error('Invalid dateSignature:', res.dateSignature);
+			}	
+		
+		
+			const dateBO = new Date(res.dateBO);
+
+			// Check if dateSignature is a valid Date object
+			if (!isNaN(dateBO.getTime())) {
+				// If it's a valid Date object, set it directly to the form control
+				this.details.dateBO=dateBO.toISOString().split('T')[0];
+			} else {
+				// Handle the case where dateSignature is not a valid date
+				console.error('Invalid dateBO:', res.dateBO);
+			}	
+			const dateDebut = new Date(res.dateDebut);
+
+			// Check if dateSignature is a valid Date object
+			if (!isNaN(dateDebut.getTime())) {
+				// If it's a valid Date object, set it directly to the form control
+				this.details.dateDebut=dateDebut.toISOString().split('T')[0];
+			} else {
+				// Handle the case where dateSignature is not a valid date
+				console.error('Invalid dateDebut:', res.dateDebut);
+			}	
+			const dateAchevement = new Date(res.dateAchevement);
+
+			// Check if dateSignature is a valid Date object
+			if (!isNaN(dateAchevement.getTime())) {
+				// If it's a valid Date object, set it directly to the form control
+				this.details.dateAchevement=dateAchevement.toISOString().split('T')[0];
+			} else {
+				// Handle the case where dateSignature is not a valid date
+				console.error('Invalid dateAchevement:', res.dateAchevement);
+			}	
 			var b = { index: 0 };
 			this.changeTab(b);
 		}, err => {
 			console.log(err)
 		})
 		this.files = this.conventionMarcheService.getByIdFiles(this.id);
+		
 	}
 	// =====================================
 	// back to list
@@ -165,7 +208,30 @@ export class DetailleConventionComponent implements OnInit {
 			totalMmbreF: tf,
 		};
 	}
-
+	onDeletePj(id){
+		Swal.fire({
+			title: "Voulez-vous supprimer cette piéce jointe  ?",
+			icon: "question",
+			iconHtml: "?",
+			showCancelButton: true,
+			showCloseButton: true,
+			confirmButtonText: "Oui",
+			cancelButtonText: "Non",
+		}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+			this.conventionMarcheService.deletePj(id).subscribe((res)=>{
+				Swal.fire({
+					position: "center",
+					icon: "success",
+					title: "Piéce jointe supprimé",
+					showConfirmButton: false,
+					timer: 1500,
+				}).then(()=>this.ngOnInit());
+			})
+			}
+		});
+	}
 	// ============================================
 	// Filter de recherche
 	// ============================================

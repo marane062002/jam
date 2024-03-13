@@ -86,13 +86,16 @@ export class ListSortieComponent implements OnInit {
 		this.dataSource = new MatTableDataSource(this.data);
 		this.dataSource.paginator = this.paginator;
 		this.loadData(this.currentPage, this.pageSize);
+		console.log("data source :",this.dataSource)
 	}
   onPaginatorChange(event: PageEvent): void {
 		this.currentPage = event.pageIndex;
 		this.pageSize = event.pageSize;
 		this.loadData(this.currentPage, this.pageSize);
 	}
-
+	formatDate(date: any): string {
+		return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+	  }
   text: string = "";
 
   getFirstThreeWords(text: string): string {

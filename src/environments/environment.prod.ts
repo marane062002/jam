@@ -41,10 +41,13 @@ export const environment = {
 	API_PROJET_URBANISME_URL: 'http://marrakech.jamaati.ma:8080/gateway/projet-urbanisme/projet-urbanisme',
 	API_ALFRESCO_URL: 'http://marrakech.jamaati.ma:8080/gateway/alfresco/alfresco',
 	SERVER_URL:"http://marrakech.jamaati.ma:8080/gateway/",
-	SERVER_URL_Stock:"http://marrakech.jamaati.ma:8080/gateway/gestionStock/",
+	SERVER_URL_Stock:"http://marrakech.jamaati.ma:8080/gateway/gestionStock/Stock",
 	API_MARCHEGROS:"http://marrakech.jamaati.ma:8080/gateway/marche-gros/marche-gros/api/",
 	API_ABATOIR:"http://marrakech.jamaati.ma:8080/gateway/service-abattoir/service-abattoir/api/",
-	SERVER_PARC_AUTO:"http://marrakech.jamaati.ma:8080/gateway/gestionParc/",
+	SERVER_PARC_AUTO:"http://marrakech.jamaati.ma:8080/gateway/gestionParc/ParcAuto",
 	API_BMH_URL:"http://marrakech.jamaati.ma:8080/gateway/service-bmh/Bmh/",
+	API_GSM_LAN: 'http://marrakech.jamaati.ma:8080/gateway/gsmLan/GSM-LAN',
+	API_SDL_URL: 'http://marrakech.jamaati.ma:8080/gateway/service-sdl/SDL/',
+	API_PROPRETE_URL: 'http://marrakech.jamaati.ma:8080/gateway/service-proprete/proprete/',
 
 };

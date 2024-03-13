@@ -16,6 +16,9 @@ export class PartiePreneurService {
 	all(){
 		return this.http.get<any[]>(this.baseUrl+"all");
 	}
+	Page(pageIndex,pageSize){
+		return this.http.get<any[]>(this.baseUrl+"all-page?page=" + pageIndex + "&size=" + pageSize);
+	}
     findById(id:number){
 		return this.http.get<any[]>(this.baseUrl+"details/"+id);
 	}

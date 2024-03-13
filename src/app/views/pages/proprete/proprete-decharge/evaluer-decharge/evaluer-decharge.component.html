@@ -1,0 +1,109 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">Evaluer les décharges</h2>
+		</div>
+	</div>
+	<div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+		>&nbsp;
+		<mat-form-field>
+			<input
+				matInput
+				(keyup)="applyFilter($event.target.value)"
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+			/>
+		</mat-form-field>
+	</div>
+	<table
+		id="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="NUM">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				N°
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">{{ row.NUM }}</td>
+		</ng-container>
+		<ng-container matColumnDef="DATE">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				DATE
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.DATE }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="TONAGE">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Tonnage décharge
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.TONAGE }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="SOMME">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Somme tonage C.T
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.SOMME }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="TAIL">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Tail de décalage
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.TAIL }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="FRAUDE">
+			<th colspan="3" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Fraude
+			</th>
+			<td colspan="3" mat-cell *matCellDef="let row">
+				{{ row.FRAUDE }}
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	>
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	<mat-paginator
+		*ngIf="dataSource != undefined && dataSource.data != undefined"
+		[length]="dataSource.data.length"
+		[pageSize]="5"
+		[pageIndex]="0"
+		[pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons
+	></mat-paginator>
+	<hr />
+</div>
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="backList()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+	</div>
+</div>

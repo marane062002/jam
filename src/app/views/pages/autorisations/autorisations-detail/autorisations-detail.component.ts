@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { AutorisationsService } from "../../shared/autorisations.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { PersonnePhysiqueService } from "../../shared/personne-physique.service";
 import { PersonneMoraleService } from "../../shared/personne-morale.service";
 import { environment } from "../../../../../environments/environment";
+import { PdfviewerComponent } from "../pdfviewer/pdfviewer.component";
+import { MatDialog } from "@angular/material";
 
 @Component({
 	selector: "kt-autorisations-detail",
@@ -14,7 +16,9 @@ export class AutorisationsDetailComponent implements OnInit {
 	// ====================================================================
 	//
 	// ====================================================================
-	constructor(
+	constructor(		private _dialog: MatDialog,
+		private router: Router,
+
 		private service: AutorisationsService,
 		private service1: PersonnePhysiqueService,
 		private service2: PersonneMoraleService,
@@ -67,6 +71,8 @@ export class AutorisationsDetailComponent implements OnInit {
 		espace: { espace: "" },
 		note: "",
 	};
+	pageIndex
+	pageSize
 	// ====================================================================
 	//
 	// ====================================================================
@@ -76,7 +82,11 @@ export class AutorisationsDetailComponent implements OnInit {
 
 		this.activatedRoute.queryParams.subscribe((params) => {
 			this.id = params["reclam"];
+			this.pageIndex = params['pageIndex'];
+			this.pageSize = params['pageSize'];
 		});
+
+		
 		this.service.getByIdAutorisation(this.id).subscribe((data) => {
 			console.log("Autorisation : " + JSON.stringify(data, null, 2));
 			this.details = data;
@@ -93,12 +103,16 @@ export class AutorisationsDetailComponent implements OnInit {
 					eMail: "",
 					fax: "",
 				};
-				this.service2
+				
+				if(data.pmsourceautorisation!=0){
+					this.service2
 					.getByIdpm(data.pmsourceautorisation)
 					.subscribe((res) => {
 						data.pmsourceautorisation = res;
 						console.log("[PMSource] : " + JSON.stringify(res, null, 2));
 					});
+				}
+			
 
 				document.getElementById("pmmm").style.display = "inline";
 				/* document.getElementById("btnAddpm").style.display="inline";
@@ -166,6 +180,21 @@ export class AutorisationsDetailComponent implements OnInit {
 				this.pjstraitement = k;
 			});
 	}
+	pdfSrc: string = '';
+
+	openDialog(pdfUrl: string) {
+		console.log(pdfUrl)
+		var r = pdfUrl.substring(0, pdfUrl.length - 4);
+		this.pdfSrc = environment.API_ALFRESCO_URL + "/PjAutorisations/" + r;
+		const dialogRef = this._dialog.open(PdfviewerComponent, {
+			height: '500px',
+			data: { pdfUrl: this.pdfSrc }
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			console.log(`Dialog result: ${result}`);
+		});
+	}
 	// ====================================================================
 	//
 	// ====================================================================
@@ -197,5 +226,8 @@ export class AutorisationsDetailComponent implements OnInit {
 			const fileURL = URL.createObjectURL(file);
 			window.open(fileURL);
 		});
+	}
+	retour(){
+		this.router.navigate(["/autorisations/autorisations-list"], { queryParams: { pageIndex: parseInt(this.pageIndex) } });
 	}
 }

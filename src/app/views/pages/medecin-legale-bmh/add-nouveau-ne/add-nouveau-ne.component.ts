@@ -111,16 +111,16 @@ export class AddNouveauNeComponent implements OnInit {
 
 	ajouter() {
 		
-		// debugger
+		// 
 		if (this.ajoutForm.valid) {
 			const formData = new FormData();
 			const pcj = new FormData();
 			const pcj2 = new FormData();
-			// debugger
+			// 
 			console.log("object before validate :",this.ajoutForm)
 			// this.detecterChangementNationalite();
 			// this.detecterChangementNationalite1();
-			// debugger
+			// 
 			this.service.create(this.ajoutForm.value).subscribe(
 				(res:any) => {
 					formData.append('id',res.id)

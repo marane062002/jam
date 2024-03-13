@@ -1,5 +1,5 @@
 <!-- begin:: Content section 2 -->
-<div class="kt-portlet portlet-3">
+<div class="kt-portlet portlet-3">  
 	<div class="kt-portlet__head kt-bg-portlet-4">
 		<div class="kt-portlet__head-label">
 			<span class="kt-portlet__head-icon">
@@ -135,7 +135,22 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-6" formGroupName="typeCourrier">
+				<div class="col-md-4">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select name="typeOrigine" formControlName="typeOrigine" class="form-control" placeholder="{{ 'PAGES.BUREAU_ORDRE.COURRIER_INTERNE_EXTERNE' | translate }} *">
+                                <mat-option value="in">
+                                    {{ 'PAGES.BUREAU_ORDRE.ORIGINE_IN' | translate }}</mat-option>
+                                <mat-option value="out">
+                                    {{ 'PAGES.BUREAU_ORDRE.ORIGINE_OUT' | translate }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isControlHasError('typeOrigine','required')">
+                                <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+				<div class="col-md-4" formGroupName="typeCourrier">
 					<div class="form-group">
 						<mat-form-field class="example-full-width">
 							<mat-select matNativeControl formControlName="id" class="form-control"
@@ -148,7 +163,7 @@
 						</mat-form-field>
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="form-group">
 						<mat-form-field class="example-full-width">
 							<input matInput type="text" formControlName="destinataire" class="form-control"
@@ -192,7 +207,7 @@
 		<div class="row">
 			<div class="col-md-12 show_port">
 				<!-- start section::edit file form -->
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-md-6 show_port input-group">
 						<form enctype="multipart/form-data" method="POST" [formGroup]="addFileForm"
 							style="display: -webkit-inline-box;margin-inline-start: 98px;">
@@ -206,12 +221,99 @@
 							<input type="text" class="form-control" readonly>
 						</form>
 					</div>
-					<!-- <label class="input-group-btn" >
-									<span class="btn btn-danger" (click)="resetFileField()" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
-										{{ 'PAGES.GENERAL.DELETE' | translate }}
-									</span>
-								</label> -->
-				</div>
+				
+				</div> -->
+				<form class="row"  [formGroup]="pjForm" > 
+                    <div  class="col-md-2">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <input formControlName="fileName" matInput type="text" class="form-control" placeholder="Nom Pièce Jointe" />
+                                <mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div enctype="multipart/form-data" method="POST" class="mt-4" style="display: -webkit-inline-box;">
+                            <label class="input-group-btn">
+                                <span class="btn btn-info">
+                                    Sélectionner des pièces jointes
+                                    <input type="file" formControlName="fileInput" (change)="handleFile($event)" id="customFile" style="display: none" multiple />
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <button (click)="startScan()"   _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                        style="
+                        width: 30%;
+                        height: 52px;" >
+                            <i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+                            Scane Pdf
+                        </button>
+                    </div>
+                
+                    <button (click)="pdf()" _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                    style="
+                    width: 11%;
+                    height: 52px;" >
+                        <i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+                        Ajouter Pdf
+                    </button>
+                </form>
+                <div class="kt-portlet__body" *ngIf="tableuPdf.length != 0 || tableScane.length ">
+                    <div class="row ex3">
+                        <div class="col-md-2 show_port"></div>
+                        <div class="col-md-6 show_port">
+                            <table id="exportData" class="table" *ngIf="tableuPdf.length != 0 || tableScane.length ">
+                                <thead class="text-white" style="background-color: #2a5599">
+                                    <tr>
+                                        <th scope="col">id</th>
+                                        <th scope="col">Piece Joint</th>
+                                        <th scope="col">Nom Piece Joint</th>
+                            
+                                        <th scope="col">action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let tableu of tableuPdf; let index = index">
+                                        <td>{{index+1 }}</td>
+                            
+                            
+                            
+                                        <td>{{ tableu.file.name }}</td>
+                            
+                                        <td>{{ tableu.fileName }}</td>
+                            
+                            
+                                        <td>
+                                            <button class="btn btn-danger" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" (click)="supimerPdf(index)"><i class="icon la la-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let tableu of tableScane; let index = index">
+                                        <td>{{index+1 }}</td>
+                            
+                            
+                            
+                                        <td>Scane {{index+1 }}</td>
+                            
+                                        <td>{{ tableu.fileName }}</td>
+                            
+                            
+                                        <td>
+                            
+                                            <button href="javascript:;" (click)="constration(tableu)" type="button" class="btn btn_table_print btn-sm btn-clean btn-icon btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}">
+                                                <i class="icon fa fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-danger" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" (click)="supimerPdf(index)"><i class="icon la la-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-4 show_port"></div>
+                    </div>
+                </div>
 				<!-- end section::edit file form -->
 				<hr>
 				<table *ngIf="files" class="table pj" width="100%">

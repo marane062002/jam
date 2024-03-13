@@ -22,6 +22,8 @@
 
 	<!-- begin:: Content section 2 -->
 	<div class="row">
+
+	
 		<div class="col-lg-12">
 			<div class="kt-portlet portlet-1">
 				<div class="kt-portlet__head">
@@ -55,7 +57,8 @@
 								<mat-icon>block</mat-icon>
 								<span>Anuller Ao</span>
 							</button> -->
-							<button mat-menu-item *ngxPermissionsOnly="['canUpdateAoBySg']" (click)="editSm(ao.id)" matTooltip="{{
+							<button mat-menu-item *ngxPermissionsOnly="['canUpdateAoBySg']" (click)="editSm(ao.id)"
+								matTooltip="{{
 									'PAGES.MARCHE.AO.UPDATE_AO_SM' | translate
 								}}">
 								<mat-icon>mode_edit</mat-icon>
@@ -74,7 +77,8 @@
 							" matTooltip="{{ 'PAGES.GENERAL.PRINT' | translate }}">
 							<i class="flaticon2-printer"></i>
 						</button>
-						<button *ngIf=" ao.statutAo.id==3" (click)="traiterAO($event)" type="button" class="btn btn-info tn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ng-star-inserted">
+						<button *ngIf=" ao.statutAo.id==3" (click)="traiterAO($event)" type="button"
+							class="btn btn-info tn-md btn-tall btn-wide kt-font-bold kt-font-transform-u ng-star-inserted">
 							<i class="flaticon2-edit"></i>
 							Traiter
 						</button>
@@ -89,10 +93,7 @@
 							<button	 mat-menu-item (click)="printBordereau( ao.id,'dsg',	divisionLibelle)">
 								Bordereau
 							</button>-->
-							<button
-								mat-menu-item
-								(click)="lettreMaintien(ao.id)"
-							>
+							<button mat-menu-item (click)="lettreMaintien(ao.id)">
 								Lettre de Maintien
 							</button>
 							<!-- <button
@@ -140,7 +141,7 @@
 				<mat-expansion-panel-header>
 					<mat-panel-title class="panel-title" style="color: #2a79b1">
 						<mat-icon>info</mat-icon>&nbsp;{{
-							"PAGES.MARCHE.AO.DETAIL_CONSULTATION_AO" | translate
+						"PAGES.MARCHE.AO.DETAIL_CONSULTATION_AO" | translate
 						}}
 					</mat-panel-title>
 				</mat-expansion-panel-header>
@@ -219,7 +220,8 @@
 							<th>Qualification :</th>
 							<td>
 								<span *ngIf="ao.existQualification==1">
-									{{ao.classification.qualificationAo.libelle? ao.classification.qualificationAo.libelle:"-"}}
+									{{ao.classification.qualificationAo.libelle?
+									ao.classification.qualificationAo.libelle:"-"}}
 								</span>
 								<span *ngIf="ao.existQualification==0">Non</span>
 							</td>
@@ -287,11 +289,16 @@
 							<!-- <th>Pièce justicative du réglement :</th>
 							<td>{{ao.loi}}</td> -->
 						</tr>
-						<tr *ngIf="ao.existanceVisite==1">
+						<tr>
 
-							<th>Adresse visite des lieux :</th>
-							<td>
+							<th *ngIf="ao.existanceVisite==1">Adresse visite des lieux :</th>
+							<td *ngIf="ao.existanceVisite==1">
 								{{ao?.adresseVisite ? ao?.adresseVisite : "-"}}
+							</td>
+							<th>Offre technique :</th>
+							<td>
+								<span *ngIf="ao.offreTechnique==1">Oui</span>
+								<span *ngIf="ao.offreTechnique==0">Non</span>
 							</td>
 							<!-- <th>Pièce justicative du réglement :</th>
 							<td>{{ao.loi}}</td> -->
@@ -315,8 +322,8 @@
 						<tr *ngIf="ao.dateOuverturePlis">
 							<th>
 								{{
-									"PAGES.MARCHE.AO.DATE_RECEPTION"
-										| translate
+								"PAGES.MARCHE.AO.DATE_RECEPTION"
+								| translate
 								}}:
 							</th>
 							<td class="donnee_show">
@@ -324,30 +331,30 @@
 							</td>
 							<th>
 								{{
-									"PAGES.MARCHE.AO.DATE_OUVERTURE_PLIS"
-										| translate
+								"PAGES.MARCHE.AO.DATE_OUVERTURE_PLIS"
+								| translate
 								}}
 								:
 							</th>
 							<td class="donnee_show">
 								{{
-									ao.dateOuverturePlis
-										| date: "dd/MM/yyyy à HH:mm"
+								ao.dateOuverturePlis
+								| date: "dd/MM/yyyy à HH:mm"
 								}}
 							</td>
 						</tr>
 						<tr *ngIf="ao.modePassation == 'Mieux disant'">
 							<th>
 								{{
-									"PAGES.MARCHE.AO.TAUX_TECHNIQUE" | translate
+								"PAGES.MARCHE.AO.TAUX_TECHNIQUE" | translate
 								}}
 								:
 							</th>
 							<td class="donnee_show">% {{ ao.ptechnique }}</td>
 							<th>
 								{{
-									"PAGES.MARCHE.AO.TAUX_FINANCIERE"
-										| translate
+								"PAGES.MARCHE.AO.TAUX_FINANCIERE"
+								| translate
 								}}
 								:
 							</th>
@@ -356,8 +363,8 @@
 						<tr *ngIf="ao.statutAo.id == 7">
 							<th style="color: crimson">
 								{{
-									"PAGES.MARCHE.AO.MOTIF_ANNULE_AO"
-										| translate
+								"PAGES.MARCHE.AO.MOTIF_ANNULE_AO"
+								| translate
 								}}
 								:
 							</th>
@@ -391,7 +398,10 @@
 							<mat-header-cell *matHeaderCellDef mat-sort-header>
 								{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
 							<mat-cell *matCellDef="let row">
-								<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]="!row.idAlfresco" [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+								<button type="button" (click)="onClickPj(row.idAlfresco,row.id)"
+									[disabled]="!row.idAlfresco"
+									[ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
 									<i class="flaticon-download-1"></i></button>
 							</mat-cell>
 						</ng-container>
@@ -539,14 +549,15 @@
 							<td class="boder-table">{{ item.numLot }}</td>
 							<td class="boder-table">
 								{{
-									item.objetFr
-										? item.objetFr.length > 50
-											? (item.objetFr | slice: 0:50) +
-											  "..."
-											: item.objetFr
-										: "-"
+								item.objetFr
+								? item.objetFr.length > 50
+								? (item.objetFr | slice: 0:50) +
+								"..."
+								: item.objetFr
+								: "-"
 								}}
-								<a href="javascript:void(0);" *ngIf="item.objetFr.length > 50" matTooltip="{{ item.objetFr }}"><i class="fas fa-info-circle"></i></a>
+								<a href="javascript:void(0);" *ngIf="item.objetFr.length > 50"
+									matTooltip="{{ item.objetFr }}"><i class="fas fa-info-circle"></i></a>
 							</td>
 							<!-- <td class="boder-table">
                                 {{ item.objetAr? ((item.objetAr.length>50)? (item.objetAr | slice:0:50)+ '...':(item.objetAr)) : "-" }}
@@ -554,9 +565,9 @@
                             </td> -->
 							<td class="boder-table">
 								{{
-									item.caution
-										? (item.caution | macurrency)
-										: 0
+								item.caution
+								? (item.caution | macurrency)
+								: 0
 								}}
 							</td>
 							<td class="boder-table">
@@ -718,18 +729,14 @@
 					</mat-panel-title>
 				</mat-expansion-panel-header>
 				<div class="col-md-12 show_port">
-					<br /> 
+					<br />
 					<div class="kt-portlet__foot">
 						<mat-tab-group (selectedTabChange)="changeTab($event)">
-						 <mat-tab 
-								label="{{ 'PAGES.MARCHE.AO.TAB_360.TAB_BP' | translate }}"
-							>
+							<mat-tab label="{{ 'PAGES.MARCHE.AO.TAB_360.TAB_BP' | translate }}">
 							</mat-tab>
-							<!--	<mat-tab
-								label="{{
+							<!-- <mat-tab label="{{
 									'PAGES.MARCHE.AO.TAB_360.TAB_APPROBATION_PRESIDENT'|translate
-								}}"
-							>
+								}}">
 							</mat-tab>
 							<mat-tab
 								label="{{
@@ -737,65 +744,56 @@
 										| translate
 								}}"
 							>
-							</mat-tab> -->
-							<!-- <mat-tab
+							</mat-tab>
+							<mat-tab
 								label="{{
 									'PAGES.MARCHE.AO.TAB_360.TAB_APPROBATION_TRESORIER'
 										| translate
 								}}"
 							>
-							</mat-tab>
-							
+							</mat-tab> -->
 
-							
-							<mat-tab
-								label="{{
+
+
+							<mat-tab *ngIf="ao.existEchantillon" label="{{
 									'PAGES.MARCHE.AO.TAB_360.TAB_ECHANTILLONS'
 										| translate
-								}}"
-							>
-							</mat-tab> -->
-							<mat-tab
-								label="{{
-									'PAGES.MARCHE.AO.TAB_360.TAB_COMMISSIONS'
-										| translate
-								}}"
-							>
+								}}">
+							</mat-tab> 
+							<mat-tab label="Les membres de la commission">
 							</mat-tab>
-							<mat-tab
-								label="{{
-									'PAGES.MARCHE.AO.TAB_360.TAB_JOURNAUX'
-										| translate
-								}}" 
-							>
+							<mat-tab *ngIf="ao.offreTechnique" label="Les membres de la commission technique">
 							</mat-tab>
-							
-								<mat-tab
-									label="{{
+							<mat-tab label="{{
 										'PAGES.MARCHE.AO.TAB_360.TAB_PRESTATAIRES'
 											| translate
-									}}"
-								>
-								</mat-tab>
+									}}">
+							</mat-tab>
+							<mat-tab label="La gestion des séances">
+							</mat-tab>
+							<mat-tab label="{{
+									'PAGES.MARCHE.AO.TAB_360.TAB_JOURNAUX'
+										| translate
+								}}">
+							</mat-tab>
+
+
 							<!-- <mat-tab label="{{
 									'PAGES.MARCHE.AO.TAB_360.TAB_DOCUMENTS'
 										| translate
 								}}"
 							>
-							</mat-tab> -->
+							</mat-tab>
 							<mat-tab label="{{
 								'PAGES.MARCHE.AO.TAB_360.TAB_STATUT'
 									| translate
 							}}"
 						>
-						</mat-tab>
-							<mat-tab
-								*ngIf="ao.existanceVisite"
-								label="{{
+						</mat-tab> -->
+							<mat-tab *ngIf="ao.existanceVisite" label="{{
 									'PAGES.MARCHE.AO.TAB_360.TAB_VISITES'
 										| translate
-								}}"
-							></mat-tab>
+								}}"></mat-tab>
 						</mat-tab-group>
 					</div>
 					<router-outlet></router-outlet>
@@ -900,34 +898,40 @@
 				</mat-expansion-panel-header>
 				<div class="kt-portlet__head">
 					<div class="kt-portlet__head-label">
-						<form  (submit)="onSubmit(commentaire)">
+						<form (submit)="onSubmit(commentaire)">
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
 										<mat-form-field class="example-full-width">
-											<input matInput type="text" class="form-control" name="note" [(ngModel)]="commentaire.note" placeholder="{{	'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_NOTE'	| translate	}} :" />
+											<input matInput type="text" class="form-control" name="note"
+												[(ngModel)]="commentaire.note"
+												placeholder="{{	'PAGES.MARCHE.MARCHE.CONSULTATION_ARCHITECTURALE_NOTE'	| translate	}} :" />
 											<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
 										</mat-form-field>
 									</div>
 								</div>
 								<div class="col-md-4 show_port input-group">
-									<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+									<form
+										style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
 										<label class="input-group-btn">
 											<span class="btn btn-info">
-												{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" (change)="save($event)" id="customFile" style="display: none;" multiple>
+												{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
+													(change)="save($event)" id="customFile" style="display: none;"
+													multiple>
 											</span>
 										</label>
-										<input id="test" type="text" class="form-control"  readonly>
+										<input id="test" type="text" class="form-control" readonly>
 									</form>
 								</div>
 								<div class="col-md-2" style="padding-top: 27px;">
-									<button class="btn btn-primary" type="button" (click)="validerPj()" style="position: absolute;right: 0px;">
+									<button class="btn btn-primary" type="button" (click)="validerPj()"
+										style="position: absolute;right: 0px;">
 										{{ 'PAGES.GENERAL.SAVE' | translate }}
 									</button>
 								</div>
 							</div>
 							<mat-table [dataSource]="dataSource" matSort>
-							
+
 								<!-- file name Column -->
 								<ng-container matColumnDef="nomDoc">
 									<mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -939,7 +943,9 @@
 										{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
 									</mat-header-cell>
 									<mat-cell *matCellDef="let row; let i=index">
-										<button type="button" (click)="onDeletePj(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+										<button type="button" (click)="onDeletePj(i)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
 											<i class="icon la la-trash"></i>
 										</button>
 									</mat-cell>
@@ -951,12 +957,13 @@
 							</mat-table>
 
 							<br><br><br>
-							<button type="submit" _ngcontent-dkp-c41="" class="	btn btn-success btn-md btn-tall btn-wide	kt-font-bold kt-font-transform-u">
+							<button type="submit" _ngcontent-dkp-c41=""
+								class="	btn btn-success btn-md btn-tall btn-wide	kt-font-bold kt-font-transform-u">
 								<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
 								{{
 								"PAGES.MARCHE.CONSULTATION_ARCHITECTURALE.VALIDATION"
-									| translate
-							}}
+								| translate
+								}}
 							</button>
 						</form>
 
@@ -978,11 +985,13 @@
 									{{
 									item.commentaire
 
-								}}
+									}}
 
 								</td>
-								<td class="boder-table" >
-									<button type="button" (click)="showPjCommentaire(item.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="show">
+								<td class="boder-table">
+									<button type="button" (click)="showPjCommentaire(item.id)"
+										class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+										matTooltip="show">
 										<i class="la la-search-plus"></i>
 									</button>
 
@@ -1070,7 +1079,9 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<mat-form-field class="example-full-width">
-									<mat-select class="form-control" name="crit" placeholder="{{ 'PAGES.MARCHE.AO.TAB_360.TAB_STATUT' | translate }}" formControlName="statut" (selectionChange)="updateStatut($event)">
+									<mat-select class="form-control" name="crit"
+										placeholder="{{ 'PAGES.MARCHE.AO.TAB_360.TAB_STATUT' | translate }}"
+										formControlName="statut" (selectionChange)="updateStatut($event)">
 										<mat-option value="ANNULE"> annulé</mat-option>
 										<mat-option value="INFRUCTUEUX"> infructueux</mat-option>
 										<mat-option value="ADJUGE"> adjugé</mat-option>
@@ -1099,10 +1110,12 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<mat-form-field class="example-full-width">
-									<mat-select class="form-control" name="crit" placeholder="Status du marché" formControlName="statut" (selectionChange)="updateStatutMarche($event)">
+									<mat-select class="form-control" name="crit" placeholder="Status du marché"
+										formControlName="statut" (selectionChange)="updateStatutMarche($event)">
 										<mat-option value="EN_COURS_ENGAGEMENT"> En cours d'engagement</mat-option>
 										<mat-option value="EN_COURS_APPROBATION"> En cours d'approbation</mat-option>
-										<mat-option value="ENVOYE_SERVICE_GESTIONNAIRE"> Envoyé au service gestionnaire</mat-option>
+										<mat-option value="ENVOYE_SERVICE_GESTIONNAIRE"> Envoyé au service
+											gestionnaire</mat-option>
 									</mat-select>
 								</mat-form-field>
 							</div>

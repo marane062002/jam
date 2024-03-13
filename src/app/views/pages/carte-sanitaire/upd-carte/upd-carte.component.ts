@@ -1,8 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { MatTableDataSource } from "@angular/material";
+import { Association360Tab } from "../../pesee/show-pesee/show-pesee.component";
+import { Observable } from "rxjs";
+import * as $ from "jquery";
 @Component({
 	selector: "kt-upd-carte",
 	templateUrl: "./upd-carte.component.html",
@@ -21,10 +25,37 @@ export class UpdCarteComponent implements OnInit {
 		// 'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
+
+
 	typeControl = new FormControl();
 	statutControl = new FormControl();
 	sexeControl = new FormControl();
 	decisionControl = new FormControl()
+	private AlfresscoURL = environment.API_ALFRESCO_URL;
+
+	pcDeclarantFile: File;
+	pcfileDeclar : File;
+	labelDeclar: any;
+	allpjDeclar = []
+	formPjDeclar = { selecetedFile: {}, LabelPj: "" };
+	dataSource3: MatTableDataSource<any>;
+	displayedColumns1 = ["label", "nomDoc", "actions"];
+	ajoutForm: FormGroup;
+
+	pcEmplFile: File;
+	dataSource4: MatTableDataSource<any>;
+	ajoutFormEmp: FormGroup;
+	allpjEmp = []
+	formPjEmp = { selecetedFile: {}, LabelPj: "" };
+	pcfileEmp : File;
+	labelEmp: any;
+
+
+	displayedColumns2=['nomDoc','titre','label','dow']
+	asyncTabs: Observable<Association360Tab[]>;
+	dataSource2 = new MatTableDataSource<any>();
+
+
 
 	rs: any;
 	ifiscal:any;
@@ -88,15 +119,107 @@ export class UpdCarteComponent implements OnInit {
   }
 
     private baseUrl = environment.API_BMH_URL;
-	constructor(private router: Router, private httpClient:HttpClient, private route: ActivatedRoute) {}
+	constructor(private fb:FormBuilder, private router: Router, private httpClient:HttpClient, private route: ActivatedRoute) {}
 
 	ngOnInit():void {
+		this.ajoutForm = this.fb.group({
+			pj: this.fb.group({
+				pcfileDeclar: [''] 
+			})
+		  });
+
+		  this.ajoutFormEmp = this.fb.group({
+			pj: this.fb.group({
+				pcfileEmp: [''] 
+			})
+		  });
+		  
 		this.route.params.subscribe((params) => {
 			this.carteId = +params['id']; 
 		  });
 		  this.fetchCartDetails();
+		  this.getAllPjImm(this.carteId)
 	}
+	saveDec(event: any): void {
+		$("#testd").val(event.target.files[0].name);
+		this.ajoutForm.get('pj.pcfileDeclar').setValue(event.target.files[0].name);
+		this.formPjDeclar.selecetedFile = event.target.files[0];
+		}
+		
+		labelDeclarant(event: any): void {
+		this.formPjDeclar.LabelPj = event.target.value;
+		}
+		validerPjDec() {
+		this.allpjDeclar.push(this.formPjDeclar);
+		$("#testd").val(null);
+		this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+		this.formPjDeclar = { selecetedFile: {}, LabelPj: this.formPjDeclar.LabelPj };
+		console.log(this.allpjDeclar)
+		}
+		
+		onDeletePjDec(id: number): void {
+		this.allpjDeclar.splice(id, 1);
+		if (this.allpjDeclar.length > 0) {
+		  this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+		} else {
+		  this.dataSource3 = null;
+		}
+		}
+		
+		
+		   saveEmp(event: any): void {
+			$("#teste").val(event.target.files[0].name);
+			this.ajoutFormEmp.get('pj.pcfileEmp').setValue(event.target.files[0].name);
+			this.formPjEmp.selecetedFile = event.target.files[0];
+			}
+			
+			labelEmploye(event: any): void {
+			this.formPjEmp.LabelPj = event.target.value;
+			}
+			validerPjEmp() {
+			this.allpjEmp.push(this.formPjEmp);
+			$("#teste").val(null);
+			this.dataSource4 = new MatTableDataSource(this.allpjEmp);
+			this.formPjEmp = { selecetedFile: {}, LabelPj: this.formPjEmp.LabelPj };
+			console.log(this.allpjEmp)
+			}
+			
+			onDeletePjEmp(id: number): void {
+			this.allpjEmp.splice(id, 1);
+			if (this.allpjEmp.length > 0) {
+			  this.dataSource4 = new MatTableDataSource(this.allpjEmp);
+			} else {
+			  this.dataSource4 = null;
+			}
+			}
+	  async getAllPjImm(ide) {
+		await this.httpClient.get(`${this.AlfresscoURL}/bmh-cartesanitaire/index/${ide}`)
+		  .subscribe(
+			(data:any) => {
+				this.dataSource2 = new MatTableDataSource(data);
+			},
+			(error) => console.log(error)
+		);
+	  }
+		onClickPj(e, id) {
+			var r = e.substring(0, e.length - 4);
+		console.log("rrrrr:", r)
+		console.log("id alf:", id)
 	
+			this.httpClient.delete(`${this.AlfresscoURL}/bmh-cartesanitaire/index/${id}`)
+		.subscribe(
+				(data:any) => {
+			console.log(data)
+			this.ngOnInit()
+				},
+				(error) => console.log(error)
+			);
+	  }
+
+
+
+
+
 	fetchCartDetails(): void {
 		const url = `${this.baseUrl}employeur/${this.carteId}`;
 		this.httpClient.get(url,{ headers: this.headers }).subscribe(
@@ -197,8 +320,6 @@ export class UpdCarteComponent implements OnInit {
 		const formDataemployeur = new FormData();
 		const formData = new FormData();
 		formData.append('employe', new Blob([JSON.stringify(employee)], { type: 'application/json' }));
-		formData.append('photo', this.photo);
-		formData.append('pieceJointe', this.pieceJointe);
 		console.log(formData);
 		setTimeout(() => {
 		  this.httpClient.put(`${this.baseUrl}employe/${this.carteDetails.employe.id}`, formData,{ headers: this.headers })
@@ -221,10 +342,38 @@ export class UpdCarteComponent implements OnInit {
 					}
 				};
                 formDataemployeur.append('employeur', new Blob([JSON.stringify(employeur)], { type: 'application/json' }));
-				formDataemployeur.append('pieceJointes', this.pieceJointemployeur)
 				this.httpClient.put(`${this.baseUrl}employeur/${this.carteId}`, formDataemployeur, {headers : this.headers})
 				.subscribe(
-					(employeurResponse) => {
+					(employeurResponse:any) => {
+
+						this.allpjEmp.forEach(formPj => {	
+        
+							const pcJointemploye = new FormData();
+						
+							pcJointemploye.append("file", formPj.selecetedFile)
+							pcJointemploye.append("sousModule", "EMPLOYE")
+							pcJointemploye.append("id",employeurResponse.id)
+							pcJointemploye.append("label", formPj.LabelPj);
+						
+							  this.httpClient.post(`${this.AlfresscoURL}/bmh-cartesanitaire/multiplefile`, pcJointemploye)
+							  .subscribe((res)=>{
+							  })
+							});
+
+						this.allpjDeclar.forEach(formPj => {	
+        
+                            const pcjDeclarant = new FormData();
+                        
+                              pcjDeclarant.append("file", formPj.selecetedFile)
+                              pcjDeclarant.append("sousModule", "CARTE SANITAIRE")
+                              pcjDeclarant.append("id",employeurResponse.id)
+                              pcjDeclarant.append("label", formPj.LabelPj);
+                        
+                              this.httpClient.post(`${this.AlfresscoURL}/bmh-cartesanitaire/multiplefile`, pcjDeclarant)
+                              .subscribe((res)=>{
+                              console.log('deces naturel pièce Jointe stored successfully:', res);
+                              })
+                            });
 					console.log('Employeur updated successfully:', employeurResponse);
 					this.router.navigate(["/cartesanitaire/list-carte"])
 					},

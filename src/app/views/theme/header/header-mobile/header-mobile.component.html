@@ -15,7 +15,7 @@
             <div ngbDropdownMenu class="dropdown-menu dropdown-menu-md" aria-labelledby="ddlDashboard">
                 <ul class="kt-nav kt-nav--bold kt-nav--md-space kt-nav--v3">
                     <perfect-scrollbar style="height: 400px;">
-						<li ngbDropdownItem *ngxPermissionsOnly="['accessToRHModule']" class="kt-nav__item">
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToRHModule']" class="kt-nav__item">
                             <a class="kt-nav__link active" (click)="menuHorService.clickMenu(1)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon-profile"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.RH' | translate }}</span>
@@ -36,7 +36,8 @@
                         <!-- **************************RACHID********************************************************** -->
 
                         <!-- begin::Bureau d'ordre -->
-                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToBOModule']" class="kt-nav__item">
+                        <!-- <li ngbDropdownItem *ngxPermissionsOnly="['accessToBOModule']" class="kt-nav__item"> -->
+                        <li ngbDropdownItem class="kt-nav__item">
                             <a class="kt-nav__link active" (click)="menuHorService.clickMenu(4)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-mail-1"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.MODULE_BO' | translate }}</span>
@@ -72,7 +73,8 @@
                         <!-- end::JSCE -->
 
                         <!-- begin::Travaux communaux -->
-                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToTravauxCommunauxModule']" class="kt-nav__item">
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToTravauxCommunauxModule']"
+                            class="kt-nav__item">
                             <a class="kt-nav__link active" (click)="menuHorService.clickMenu(8)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon-bus-stop"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.MODULE_TRAVAUX_COMMUNAUX' | translate }}</span>
@@ -105,8 +107,8 @@
                             </a>
                         </li>
                         <!-- end::Reservations  -->
-                         <!-- begin::AffairesConseil -->
-						 <li ngbDropdownItem *ngxPermissionsOnly="['accessToAffaireConseilModule']" class="kt-nav__item">
+                        <!-- begin::AffairesConseil -->
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToAffaireConseilModule']" class="kt-nav__item">
                             <a class="kt-nav__link active" (click)="menuHorService.clickMenu(12)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon-suitcase"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.AFFAIRES_CONSEIL' | translate }}</span>
@@ -114,23 +116,116 @@
                         </li>
                         <!-- end::AffairesConseil  -->
                         <!-- begin::AffairesConseil -->
-                        <li ngbDropdownItem  *ngxPermissionsOnly="['accessToMarcheModule']" class="kt-nav__item">
-                            <a  class="kt-nav__link active" (click)="menuHorService.clickMenu(13)" href="javascript:;">
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToMarcheModule','accessToCalendrierModule']" class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(13)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.MARCHES1' | translate }}</span>
                             </a>
                         </li>
+                        <!--begin::gestion de ressources humaines-->
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToAccountModule']" (click)="menuHorService.clickMenu(23)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.RessourcesHumaines' | translate }}</span>
+                            </a>
+                        </li>
+                        <!--begin::gestion de ressources humains-->
+                        <!-- begin::Gestion abattoir  -->
+                        <li ngbDropdownItem class="kt-nav__item" *ngxPermissionsOnly="['accessToAbattoirModule']">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(25)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.gestionAbattoir' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- end::Gestion abattoir -->
+                        <!-- begin::gestion stock -->
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToStockModule']" (click)="menuHorService.clickMenu(21)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.GestionStock' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- begin::gestion stock  -->
+                        <!-- begin::gestion stock -->
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToParcAutoModule']" (click)="menuHorService.clickMenu(22)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.gestionParcAuto' | translate }}</span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToMarcheGrosModule','accessToMondataireModule']" (click)="menuHorService.clickMenu(23)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">{{ 'MENU.GESTIONMARCHE' | translate }}</span>
+                            </a>
+                        </li>
+                        <!-- begin::gestion stock  -->
+                             <!-- begin::gestion stock -->
+                             <li ngbDropdownItem class="kt-nav__item" *ngxPermissionsOnly="['accessToPlanningModule']" >
+                                <a class="kt-nav__link active" (click)="menuHorService.clickMenu(24)" href="javascript:;">
+                                    <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                    <span class="kt-nav__link-text">{{ 'MENU.programme' | translate }}</span>
+                                </a>
+                            </li>
+                            <!-- begin::gestion stock  -->
                         <!-- end::AffairesConseil  -->
                         <!-- **************************END********************************************************** -->
 
                         <!-- begin::Users -->
-                        <li ngbDropdownItem  *ngxPermissionsOnly="['accessToAccountModule']" class="kt-nav__item">
+                        <li ngbDropdownItem *ngxPermissionsOnly="['accessToAccountModule']" class="kt-nav__item">
                             <a class="kt-nav__link active" (click)="menuHorService.clickMenu(20)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.USERS' | translate }}</span>
                             </a>
                         </li>
                         <!-- begin::Users -->
+
+                        <li ngbDropdownItem class="kt-nav__item" *ngxPermissionsOnly="['accessToBMHModule']">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(26)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
+                                <span class="kt-nav__link-text">BMH</span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToProgrammePrevisionnelModule']" (click)="menuHorService.clickMenu(27)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">planning  prévisionnel de la commande public de la commune de marrakech</span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem class="kt-nav__item" *ngxPermissionsOnly="['accessToPlanningModule']" >
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(28)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">Fiche de consultation</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a (click)="menuHorService.clickMenu(29)"
+                                class="kt-nav__link active"
+                                href="javascript:;"
+                            >
+                                <span class="kt-nav__link-icon"
+                                    ><i
+                                        class="fa fa-briefcase"
+                                        aria-hidden="true"
+                                    ></i
+                                ></span>
+                                <span class="kt-nav__link-text">
+                                    Délégataire/SDL
+                                </span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(30)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="fas fa-phone"></i></span>
+                                <span class="kt-nav__link-text">GMS/LAN</span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(31)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="fas fa-phone"></i></span>
+                                <span class="kt-nav__link-text">Propreté</span>
+                            </a>
+                        </li>
                     </perfect-scrollbar>
                 </ul>
             </div>

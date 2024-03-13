@@ -9,6 +9,8 @@ import { PersonnePhysiqueService } from "../../shared/personne-physique.service"
 import { PersonneMoraleService } from "../../shared/personne-morale.service";
 import { AutorisationsService } from "../../shared/autorisations.service";
 import { FilesUtilsService } from "../../utils/files-utils.service";
+import Swal from "sweetalert2";
+import { MatTableDataSource } from "@angular/material";
 
 @Component({
 	selector: "kt-autorisations-form",
@@ -62,6 +64,13 @@ export class AutorisationsFormComponent implements OnInit {
 	EspaceBien;
 	typesAutorisation;
 	selectedFiles = [];
+	temp=false
+	allpjs = [];
+	dataSource1: MatTableDataSource<any>;
+	displayedColumns1 = [ "nomDoc", "actions"];
+
+	formPj = {  selecetedFile: {} };
+
 	date = new FormControl(new Date());
 	serializedDate = new FormControl(new Date().toISOString());
 	// ===============================================================
@@ -126,8 +135,47 @@ export class AutorisationsFormComponent implements OnInit {
 	// ===============================================================
 	//
 	// ===============================================================
+	// save(event: any): void {
+	// 	this.selectedFiles = event.target.files;
+	// } 
 	save(event: any): void {
-		this.selectedFiles = event.target.files;
+		$("#test").val(event.target.files[0].name);
+		this.formPj.selecetedFile = event.target.files;
+	}
+
+	validerPj() {
+		var champTexte:any = document.getElementById("test");
+		
+		if(champTexte.value == "" ){
+			this.temp=false
+			Swal.fire({
+				title:"	Vous devez choisir une piéce jointe",
+
+				icon:'error'
+			})
+		}else{
+			this.allpjs.push(this.formPj);
+			$("#test").val(null);
+			console.log(this.allpjs);
+			this.dataSource1 = new MatTableDataSource(this.allpjs);
+			this.array=this.dataSource1.data
+			
+			this.formPj = {  selecetedFile: {}};
+			champTexte.value = "";
+		}
+		
+	}
+	onDeletePj(id: number): void {
+		
+		this.temp=false
+		this.allpjs.splice(id, 1);
+		if (this.allpjs.length > 0) {
+			this.dataSource1 = new MatTableDataSource(this.allpjs);
+		} else {
+			this.dataSource1 = null
+			
+		}
+		
 	}
 	// ===============================================================
 	//
@@ -172,14 +220,16 @@ export class AutorisationsFormComponent implements OnInit {
 			descriptions: "",
 			ppsourceautorisation: 0,
 			pmsourceautorisation: 0,
-			objetdemandeautorisation: {
-				id: 0,
-				objetDemandeAutorisation: "",
-			},
-			espace: {
-				id: 0,
-				espace: "",
-			},
+			objetdemandeautorisation:"",
+			// objetdemandeautorisation: {
+			// 	id: 0,
+			// 	objetDemandeAutorisation: "",
+			// },
+			// espace: {
+			// 	id: 0,
+			// 	espace: "",
+			// },
+			espace:'',
 			typeobj: {
 				id: 0,
 				typeObjetAutorisation: "",
@@ -331,13 +381,16 @@ export class AutorisationsFormComponent implements OnInit {
 	// ===============================================================
 	//
 	// ===============================================================
+	array
 	onSubmit() {
+		
+		
 		if(this.formDataBien.typeobj.id == 0 || this.formDataBien.typeobj.id == null){
-			this.formDataBien.objetdemandeautorisation = null;
-			this.formDataBien.espace = null;
+			// this.formDataBien.objetdemandeautorisation = null;
+			// this.formDataBien.espace = null;
 			this.formDataBien.typeobj = null;
 		}else{
-		this.formDataBien.espace = { id: this.formDataBien.espace[0] * 1 };
+		// this.formDataBien.espace = { id: this.formDataBien.espace[0] * 1 };
 		this.formDataBien.typeobj = { id: this.formDataBien.typeobj.id.id };
 		}
 		var personnePM;
@@ -373,10 +426,13 @@ export class AutorisationsFormComponent implements OnInit {
 				this.formDataBien.ppsourceautorisation = res;
 				console.log(this.formDataBien);
 				this.service1.sendaut(this.formDataBien).subscribe((res1) => {
-					if (this.selectedFiles.length > 0) {
+					
+					if (this.allpjs.length > 0) {
+						for (var i = 0; i < this.allpjs.length; i++) {
+
 						this.service1
-							.nouvellepj(this.selectedFiles, res1.id)
-							.subscribe((res) => {});
+							.nouvellepj(this.allpjs[i].selecetedFile, res1.id)
+							.subscribe((res) => {});}
 					}
 					this.router.navigate(["/autorisations/autorisations-list"]);
 				});
@@ -387,10 +443,12 @@ export class AutorisationsFormComponent implements OnInit {
 				this.formDataBien.pmsourceautorisation = res;
 				this.service1.sendaut(this.formDataBien).subscribe((res1) => {
 					this.router.navigate(["/autorisations/autorisations-list"]);
-					if (this.selectedFiles.length > 0) {
+					if (this.allpjs.length > 0) {
+						for (var i = 0; i < this.allpjs.length; i++) {
+
 						this.service1
-							.nouvellepj(this.selectedFiles, res1.id)
-							.subscribe((res) => {});
+							.nouvellepj(this.allpjs[i].selecetedFile, res1.id)
+							.subscribe((res) => {});}
 					}
 					this.router.navigate(["/autorisations/autorisations-list"]);
 				});

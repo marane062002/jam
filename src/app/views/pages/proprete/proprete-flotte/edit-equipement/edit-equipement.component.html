@@ -1,0 +1,169 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Modifier un équipement
+			</h2>
+		</div>
+	</div>
+</div>
+
+<form [formGroup]="ajoutForm" class="row">
+	<div class="col-md-12">
+		<div class="form-group fv-plugins-icon-container">
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label> Type </label>
+				<mat-select formControlName="type" class="form-control">
+					<mat-option value="mobile">mobile</mat-option>
+					<mat-option value="immobile">immobile</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label>Immatriculation </label>
+				<input
+				formControlName="immatriculation"
+					matInput
+					type="text"
+					class="form-control form-control-solid form-control-lg"
+					name="address1"
+				/>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label> Désignation </label>
+				<input
+				formControlName="designation"
+					matInput
+					type="text"
+					class="form-control"
+					placeholder=""
+				/>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label>Capacité </label>
+				<input
+				formControlName="capacite"
+					matInput
+					type="text"
+					class="form-control form-control-solid form-control-lg"
+					name="address1"
+				/>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label> Etat </label>
+				<mat-select  formControlName="etat"  class="form-control">
+					<mat-option value="1">Bon</mat-option>
+					<mat-option value="0">Mauvaise</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label>Commentaire </label>
+				<input
+				formControlName="commentaire"
+					matInput
+					type="text"
+					class="form-control form-control-solid form-control-lg"
+					name="address1"
+				/>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label> Opérationnel </label>
+				<mat-select formControlName="operationnel" class="form-control">
+					<mat-option value="OUI">Oui</mat-option>
+					<mat-option value="NON">Non</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+	<div *ngIf="ajoutForm.get('type').value === 'immobile'" class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label>Localisation/circuit </label>
+				<mat-select formControlName="localisation" class="form-control">
+					<mat-option [value]="1">1</mat-option>
+					<mat-option [value]="2">2</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<label>Délégataire </label>
+				<mat-select formControlName="delegataire" [compareWith]="selectedValueDelegataireFunction" class="form-control">
+					<mat-option *ngFor="let arr of delegataire" [value]="arr">{{arr.rc}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+</div>
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="backList()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+		<button
+		(click)="ajouter()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="reset"
+		>
+			<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+			Enregistrer
+		</button>
+	</div>
+</div>
+</div>
+</div>
+</form>

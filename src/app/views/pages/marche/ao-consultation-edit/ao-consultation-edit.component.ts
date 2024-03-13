@@ -131,6 +131,8 @@ export class AoConsultationEditComponent implements OnInit {
 	selectedValueTypeAo;
 	typeConsultationArchitecturale;
 	formData = { 
+		offreTechnique: '0',
+
 		typeConsultationArchitecturale: "",
 		typeBudget: "",
 		statutAoValide: "",
@@ -149,8 +151,8 @@ export class AoConsultationEditComponent implements OnInit {
 
 		id: 0,
 		typeMarche: { id: "" },
-		typePrestation: { id: "" },
-		natureAo: { id: "" },
+		typePrestation: { id: 0},
+		natureAo: { id:0 },
 		statutAo: { id: 1, libelle: "" },
 		pfinancier: 0,
 		ptechnique: 0,
@@ -293,7 +295,12 @@ export class AoConsultationEditComponent implements OnInit {
 				(data) => {
 					this.ao = data;
 					this.formData.is_en_attente_de_validation = data.is_en_attente_de_validation;
-
+					if(data.offreTechnique==false){
+						this.formData.offreTechnique='0'
+					}else{
+						this.formData.offreTechnique='1'
+					
+					}
 					this.formData.statutAoValide = data.statutAoValide;
 					this.formData.typeBudget = data.typeBudget;
 
@@ -356,7 +363,7 @@ export class AoConsultationEditComponent implements OnInit {
 							this.formData.typePrestation.id = data.typePrestation.id;
 						}
 					} else {
-						this.formData.typePrestation = { id: "" };
+						this.formData.typePrestation = { id: 0 };
 					}
 					if (data.typeMarche != null) {
 						if (data.typeMarche.id != null) {
@@ -393,7 +400,7 @@ export class AoConsultationEditComponent implements OnInit {
 						}
 					} else {
 						this.isVisible1 = false;
-						this.formData.natureAo = { id: "" };
+						this.formData.natureAo = { id: 0 };
 					}
 
 					this.formData.naturePrix = data.naturePrix;
@@ -563,6 +570,83 @@ export class AoConsultationEditComponent implements OnInit {
 				console.log(err);
 			}
 		);
+	}
+	selectedValueOffreTechnique(p1: any, p2: any) {
+		if(p2 == true){
+			p2="1"
+		}
+		if(p2==false){
+			p2="0"
+		}
+		if (p1 && p2) {
+			return p1 === p2;
+		}
+
+		return false;
+	}
+	onChangeEstimation(){
+		if(this.formData.natureAo.id==33467 && this.formData.typePrestation.id==1 && this.formData.estimationHT>10000000){
+			
+			Swal.fire({
+				position: "center",
+				icon: "warning",
+				title: "le montant de l'estimation HT doit etre inférieur ou égale à 10.000.000 dhs, H.T",
+				showConfirmButton: false,
+				timer: 2500,
+			}).then((res)=>{
+				
+			});
+		}
+		if(this.formData.natureAo.id==33467 ){
+			if( this.formData.typePrestation.id==2 || this.formData.typePrestation.id==3){
+				if(this.formData.estimationHT>1000000){
+					
+					Swal.fire({
+						position: "center",
+						icon: "warning",
+						title: " le montant doit etre inférieur ou égale à 1.000.000,00 dhs, H.T",
+						showConfirmButton: false,
+						timer: 2500,
+					}).then((res)=>{
+						
+
+					});;
+				}
+			}
+			
+		}
+		if(this.formData.natureAo.id==33468 && this.formData.typePrestation.id==1 && this.formData.estimationHT>10000000){
+			
+			Swal.fire({
+				position: "center",
+				icon: "warning",
+				title: " le montant de l'estimation HT doit etre supérieure à 10.000.000,00 dbs H.T",
+				showConfirmButton: false,
+				timer: 2500,
+			}).then((res)=>{
+				
+
+			});;
+		}
+		if(this.formData.natureAo.id==33468 ){
+			if( this.formData.typePrestation.id==2 || this.formData.typePrestation.id==3){
+				if(this.formData.estimationHT> 1000000){
+					
+					Swal.fire({
+						position: "center",
+						icon: "warning",
+						title: " le montant de l'estimation HT doit etre supérieur à 1.000.000,00dhs H.T",
+						showConfirmButton: false,
+						timer: 2500,
+					}).then((res)=>{
+						
+
+					});;
+				}
+			}
+			
+		}
+		
 	}
 	CalculerEstimation(){
 		const estimationHT=this.formData.estimationHT
@@ -1111,6 +1195,14 @@ if(this.formMarche.id==0){
 			(error) => console.log(error)
 		);
 	}
+	selectedOffreTechnique(event){
+		if (event.value == "1") {
+			this.formData.offreTechnique ='1';
+		} else {
+			this.formData.offreTechnique = '0';
+
+		}
+	}
 	selectedValuePAC(p1: any, p2: any) {
 		if (p1 == p2) {
 			return p1 === p2;
@@ -1550,7 +1642,7 @@ if(this.formMarche.id==0){
 				}
 			}
 			if (this.formData.natureAo != null) {
-				if (this.formData.natureAo.id == "") {
+				if (this.formData.natureAo.id == 0) {
 					this.formData.natureAo = null;
 				}
 			}
@@ -1561,7 +1653,7 @@ if(this.formMarche.id==0){
 				}
 			}
 			if (this.formData.typePrestation != null) {
-				if (this.formData.typePrestation.id == "") {
+				if (this.formData.typePrestation.id == 0) {
 					this.formData.typePrestation = null;
 				}
 			}

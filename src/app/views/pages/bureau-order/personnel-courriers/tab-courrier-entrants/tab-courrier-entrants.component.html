@@ -118,28 +118,28 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.BUREAU_ORDRE.traite' | translate }} </th>
             <td mat-cell *matCellDef="let row">
 
-                <span *ngIf="row.statusCourrier.code===2">
+                <span *ngIf="row?.statusCourrier?.code===2">
                     <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
                         style="background-color: rgb(9, 103, 65) !important;">
                         <span *ngIf="language=='fr'">Oui</span>
                         <span *ngIf="language=='ar'">نعم</span>
                     </span>
                 </span>
-                <span *ngIf="row.statusCourrier.code===1">
+                <span *ngIf="row?.statusCourrier?.code===1">
                     <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--info kt-badge--wide"
                         style="background-color: rgba(0, 123, 255) !important;">
                         <span *ngIf="language=='fr'">En transit</span>
                         <span *ngIf="language=='ar'">قيد النقل</span>
                     </span>
                 </span>
-                <span *ngIf="row.statusCourrier.code===3">
+                <span *ngIf="row?.statusCourrier?.code===3">
                     <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide"
                         style="background-color: rgba(108, 117, 125) !important;">
                         <span *ngIf="language=='fr'">Clôturé</span>
                         <span *ngIf="language=='ar'">منتهي</span>
                     </span>
                 </span>
-                <span *ngIf="row.statusCourrier.code===4">
+                <span *ngIf="row?.statusCourrier?.code===4">
                     <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--warning kt-badge--wide"
                         style="background-color: rgba(255, 193, 7) !important;">
                         <span *ngIf="language=='fr'">Envoyé par erreur</span>

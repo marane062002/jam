@@ -1,0 +1,75 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Modifier un centre de décharge
+			</h2>
+		</div>
+	</div>
+</div>
+
+<form [formGroup]="ajoutForm" (ngSubmit)="onSubmit()">
+	<div class="col-md-12">
+		<div class="form-group fv-plugins-icon-container">
+	<div class="row">
+	  <div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+		  <mat-form-field class="example-full-width">
+			<label> Immatriculation camion </label>
+			<mat-select formControlName="immatriculationCamion" class="form-control">
+			  <mat-option value="1">1</mat-option>
+			  <mat-option value="2">2</mat-option>
+			</mat-select>
+		  </mat-form-field>
+		  <div class="fv-plugins-message-container"></div>
+		</div>
+	  </div>
+	  <div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+		  <mat-form-field class="example-full-width">
+			<label> Capacité </label>
+			<input matInput formControlName="capacite" type="text" class="form-control form-control-solid form-control-lg" name="address1" />
+		  </mat-form-field>
+		  <div class="fv-plugins-message-container"></div>
+		</div>
+	  </div>
+	</div>
+  
+	<div class="row">
+	  <div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+		  <mat-form-field class="example-full-width">
+			<label> Adresse C.T </label>
+			<mat-select formControlName="adresseCT" class="form-control">
+			  <mat-option value="1">1</mat-option>
+			  <mat-option value="2">2</mat-option>
+			</mat-select>
+		  </mat-form-field>
+		  <div class="fv-plugins-message-container"></div>
+		</div>
+	  </div>
+	  <div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+		  <mat-form-field class="example-full-width">
+			<label> Tonnage </label>
+			<input matInput formControlName="tonnage" type="text" class="form-control form-control-solid form-control-lg" name="address1" />
+		  </mat-form-field>
+		  <div class="fv-plugins-message-container"></div>
+		</div>
+	  </div>
+	</div>
+  
+	<!-- Buttons -->
+	<div class="kt-portlet__heads">
+	  <div class="kt-portlet__head-label" align="right">
+		<button href="javascript:;" (click)="backList()" _ngcontent-dkp-c41="" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+		  <i _ngcontent-dkp-c41="" class="la la-recycle"></i> Retour
+		</button>
+		<button  _ngcontent-dkp-c41="" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+		  <i _ngcontent-dlp-c41="" class="icon la la-floppy-o"></i> Enregistrer
+		</button>
+	  </div>
+	</div>
+		</div>
+	</div>
+  </form>

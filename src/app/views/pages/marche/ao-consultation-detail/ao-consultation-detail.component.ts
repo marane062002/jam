@@ -82,7 +82,7 @@ export class AoConsultationDetailComponent implements OnInit {
 	column = ["label", "actions"];
 	seance;
 	ajouterUneSeance() {
-		 this.isPremiereSeance = true;
+		this.isPremiereSeance = true;
 		// this.service.findByAo_Id(this.idao).subscribe((res) => {
 		// 	this.longeurTableSeance = res.length;
 		// 	this.seance = {
@@ -91,29 +91,29 @@ export class AoConsultationDetailComponent implements OnInit {
 		// 		etatSeance: "SEANCE",
 		// 	};
 		// 	this.service.createSeance(this.seance).subscribe((res) => {
-				const dialogRef = this.dialog.open(SeanceDialogComponent, {
-					width: "1000px",
-					data: {
-						idao: this.idao,
-						// idSeance: res.id,
-						seance: this.isPremiereSeance,
-						avantDerniereSeance: this.isAvantDerniereSeance,
-						derniereSeance: this.isDerniereSeance,
-					},
-				});
-				dialogRef.afterClosed().subscribe((res) => {
-					this.service.findByAo_Id(this.idao).subscribe((res) => {
-						this.dataSource1 = res;
-						if (this.dataSource1.length == 0) {
-							this.firstSeance = true;
-							this.notFirstSeance = false;
-						} else {
-							this.firstSeance = false;
+		const dialogRef = this.dialog.open(SeanceDialogComponent, {
+			width: "1000px",
+			data: {
+				idao: this.idao,
+				// idSeance: res.id,
+				seance: this.isPremiereSeance,
+				avantDerniereSeance: this.isAvantDerniereSeance,
+				derniereSeance: this.isDerniereSeance,
+			},
+		});
+		dialogRef.afterClosed().subscribe((res) => {
+			this.service.findByAo_Id(this.idao).subscribe((res) => {
+				this.dataSource1 = res;
+				if (this.dataSource1.length == 0) {
+					this.firstSeance = true;
+					this.notFirstSeance = false;
+				} else {
+					this.firstSeance = false;
 
-							this.notFirstSeance = true;
-						}
-					});
-				});
+					this.notFirstSeance = true;
+				}
+			});
+		});
 		// 	});
 		// });
 	}
@@ -218,7 +218,7 @@ export class AoConsultationDetailComponent implements OnInit {
 			width: "1000px",
 			data: {
 				idCommentaire: i,
-				
+
 			},
 		});
 		dialogRef.afterClosed().subscribe((res) => {
@@ -298,6 +298,7 @@ export class AoConsultationDetailComponent implements OnInit {
 		existanceAgrement: null,
 		existEchantillon: null,
 		existQualification: null,
+		offreTechnique: null,
 		/* sousTypePrestation: {
 			id: 1,
 			libelle: "",
@@ -369,7 +370,7 @@ export class AoConsultationDetailComponent implements OnInit {
 	dataSource2: MatTableDataSource<any>;
 	dataSource: MatTableDataSource<any>;
 	dataSource1: any;
-	displayedColumns2 = ["nomDoc","type","label", "dow"];
+	displayedColumns2 = ["nomDoc", "type", "label", "dow"];
 	isPremiereSeance = false;
 	isAvantDerniereSeance = false;
 	isDerniereSeance = false;
@@ -381,7 +382,7 @@ export class AoConsultationDetailComponent implements OnInit {
 	// ===============================================================
 	//
 	// ===============================================================
-	ngAfterViewInit() {}
+	ngAfterViewInit() { }
 	// ===============================================================
 	//
 	// ===============================================================
@@ -412,68 +413,80 @@ export class AoConsultationDetailComponent implements OnInit {
 		this.getHistoriqueUpdateStatutFromValideByIdAo();
 		this.getHistoriqueUpdateStatutMarcheByIdAo();
 		this.populateSecteurs();
-		this.service.findByAo_Id_And_EtatSeance(this.idao, "DERNIER").subscribe((res) => {
-			if (res != null) {
-				this.dernierExiste = true;
-			} else {
-				this.dernierExiste = false;
+		// this.service.findByAo_Id_And_EtatSeance(this.idao, "DERNIER").subscribe((res) => {
+		// 	if (res != null) {
+		// 		this.dernierExiste = true;
+		// 	} else {
+		// 		this.dernierExiste = false;
+		// 	}
+		// });
+
+		this.service.findByTypeCommission_IdAndAo_Id(5, this.idao).subscribe((data) => {
+			if (data != null || data.length != 0) {
+				this.service.findByStatut_IdAndAo_Id(1, this.idao).subscribe((res) => {
+					if (res.length == 1) {
+						this.dernierExiste = true;
+					} else {
+						this.dernierExiste = false;
+					}
+				});
 			}
-		});
+		})
+
 		this.service.findMarcheByAo_Id(this.idao).subscribe((res) => {
 			this.marche = res;
 		});
-		this.service.findByAo_Id(this.idao).subscribe((res) => {
-			this.longeurTableSeance = res.length;
+		// this.service.findByAo_Id(this.idao).subscribe((res) => {
+		// 	this.longeurTableSeance = res.length;
 
-			this.dataSource1 = res;
-			if (this.dataSource1.length == 0) {
-				this.firstSeance = true;
-			} else {
-				this.notFirstSeance = true;
-			}
-		});
+		// 	this.dataSource1 = res;
+		// 	if (this.dataSource1.length == 0) {
+		// 		this.firstSeance = true;
+		// 	} else {
+		// 		this.notFirstSeance = true;
+		// 	}
+		// });
 
-		// this.populateAgrementMarche();
 	}
 	historiqueAo
-	getHistoriqueAoByIdAo(){
-		this.service.findHistoriqueAoByAo_Id(this.idao).then((res)=>{
-			this.historiqueAo=res
+	getHistoriqueAoByIdAo() {
+		this.service.findHistoriqueAoByAo_Id(this.idao).then((res) => {
+			this.historiqueAo = res
 
 		})
 	}
 	historiqueUpdateStatutToComment
-	getHistoriqueUpdateStatutToCommentByIdAo(){
-		this.service.findHistoriqueUpdateStatutToCommentByAo_Id(this.idao).then((res)=>{
-			this.historiqueUpdateStatutToComment=res
+	getHistoriqueUpdateStatutToCommentByIdAo() {
+		this.service.findHistoriqueUpdateStatutToCommentByAo_Id(this.idao).then((res) => {
+			this.historiqueUpdateStatutToComment = res
 
 		})
 	}
 	historiqueUpdateStatutToEnAttenteValidation
-	getHistoriqueUpdateStatutToEnAttenteValidationByIdAo(){
-		this.service.findHistoriqueUpdateStatutToEnAttenteValidationByAo_Id(this.idao).then((res)=>{
-			this.historiqueUpdateStatutToEnAttenteValidation=res
+	getHistoriqueUpdateStatutToEnAttenteValidationByIdAo() {
+		this.service.findHistoriqueUpdateStatutToEnAttenteValidationByAo_Id(this.idao).then((res) => {
+			this.historiqueUpdateStatutToEnAttenteValidation = res
 
 		})
 	}
 	historiqueUpdateStatutToValide
-	getHistoriqueUpdateStatutToValideByIdAo(){
-		this.service.findHistoriqueUpdateStatutToValideByAo_Id(this.idao).then((res)=>{
-			this.historiqueUpdateStatutToValide=res
+	getHistoriqueUpdateStatutToValideByIdAo() {
+		this.service.findHistoriqueUpdateStatutToValideByAo_Id(this.idao).then((res) => {
+			this.historiqueUpdateStatutToValide = res
 
 		})
 	}
 	historiqueUpdateStatutFromValide
-	getHistoriqueUpdateStatutFromValideByIdAo(){
-		this.service.findHistoriqueUpdateStatutFromValideByAo_Id(this.idao).then((res)=>{
-			this.historiqueUpdateStatutFromValide=res
+	getHistoriqueUpdateStatutFromValideByIdAo() {
+		this.service.findHistoriqueUpdateStatutFromValideByAo_Id(this.idao).then((res) => {
+			this.historiqueUpdateStatutFromValide = res
 
 		})
 	}
 	historiqueUpdateStatutMarche
-	getHistoriqueUpdateStatutMarcheByIdAo(){
-		this.service.findHistoriqueUpdateStatutMarcheByAo_Id(this.idao).then((res)=>{
-			this.historiqueUpdateStatutMarche=res
+	getHistoriqueUpdateStatutMarcheByIdAo() {
+		this.service.findHistoriqueUpdateStatutMarcheByAo_Id(this.idao).then((res) => {
+			this.historiqueUpdateStatutMarche = res
 
 		})
 	}
@@ -510,18 +523,18 @@ export class AoConsultationDetailComponent implements OnInit {
 		;
 		console.log(value);
 		let commentaire = {
-			ao: { id: this.idao,},
-				
+			ao: { id: this.idao, },
+
 			commentaire: value.note,
 		};
-		let HistoriqueStatutToComment={
-			ao: { id: this.idao,},
-			modificateurUser:window.localStorage.getItem("fullnameUser"),
+		let HistoriqueStatutToComment = {
+			ao: { id: this.idao, },
+			modificateurUser: window.localStorage.getItem("fullnameUser"),
 
 		}
-		
-		this.service.createHistoriqueUpdateStatutToComment(HistoriqueStatutToComment).subscribe((data)=>{
-			
+
+		this.service.createHistoriqueUpdateStatutToComment(HistoriqueStatutToComment).subscribe((data) => {
+
 		})
 		this.service.createHistoriqueCommentaire(commentaire).subscribe((res) => {
 			;
@@ -537,8 +550,8 @@ export class AoConsultationDetailComponent implements OnInit {
 					this.service.nouvellepjCommentaire(this.allpjs[i].selecetedFile, res["id"], "COMMENTAIRE").subscribe((data) => {
 						;
 						console.log("C: " + JSON.stringify(data, null, 2));
-						this.dataSource=null
-						;
+						this.dataSource = null
+							;
 					});
 				}
 			}
@@ -622,12 +635,12 @@ export class AoConsultationDetailComponent implements OnInit {
 		}).then((result) => {
 			/* Read more about isConfirmed, isDenied below */
 			if (result.isConfirmed) {
-				let HistoriqueStatutFromValide={
-					ao: { id: this.ao.id,},
-					modificateurUser:window.localStorage.getItem("fullnameUser"),
-					statutAoValide:event.value
+				let HistoriqueStatutFromValide = {
+					ao: { id: this.ao.id, },
+					modificateurUser: window.localStorage.getItem("fullnameUser"),
+					statutAoValide: event.value
 				}
-				this.service.createHistoriqueUpdateStatutFromValide(HistoriqueStatutFromValide).subscribe((res)=>{
+				this.service.createHistoriqueUpdateStatutFromValide(HistoriqueStatutFromValide).subscribe((res) => {
 
 				})
 				if (event.value == "ANNULE" || event.value == "INFRUCTUEUX") {
@@ -656,12 +669,12 @@ export class AoConsultationDetailComponent implements OnInit {
 		}).then((result) => {
 			/* Read more about isConfirmed, isDenied below */
 			if (result.isConfirmed) {
-				let HistoriqueStatutMarche={
-					ao: { id: this.ao.id,},
-					modificateurUser:window.localStorage.getItem("fullnameUser"),
-					statutMarche:event.value
+				let HistoriqueStatutMarche = {
+					ao: { id: this.ao.id, },
+					modificateurUser: window.localStorage.getItem("fullnameUser"),
+					statutMarche: event.value
 				}
-				this.service.createHistoriqueUpdateStatutMarche(HistoriqueStatutMarche).subscribe((res)=>{
+				this.service.createHistoriqueUpdateStatutMarche(HistoriqueStatutMarche).subscribe((res) => {
 
 				})
 				this.marche.statutMarche = event.value;
@@ -763,62 +776,383 @@ export class AoConsultationDetailComponent implements OnInit {
 	// ===============================================================
 	//
 	// ===============================================================
+	// changeTab(a) {
+	// 	if (a.index == 0) {
+	// 		this.router.navigate(["marches/ao-consultation-detail/ligneBP-form-consultation"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	// if (a.index == 1) {
+	// 	// 	this.router.navigate(["marches/ao-consultation-detail/circuit-validation-consultation"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	// if (a.index == 2) {
+	// 	// 	this.router.navigate(["marches/ao-consultation-detail/valide-dg-service-consultation"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	// if (a.index == 3) {
+	// 	// 	this.router.navigate(["marches/ao-consultation-detail/valide-tresorerie-consultation"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	else if (a.index == 1 && this.ao.existEchantillon == true) {
+	// 		this.router.navigate(["marches/ao-consultation-detail/ao-echantillon"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 2 && this.ao.existEchantillon == true) {
+	// 		this.router.navigate(["marches/ao-consultation-detail/membre-seance"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+
+	// 	}
+	// 	else if (a.index == 6 && this.ao.offreTechnique == true && this.ao.existEchantillon == true) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+	// 	// if (a.index == 5) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/pieces-jointes"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	// if (a.index == 6) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/ao-statut"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	else if (a.index == 7 && this.ao.offreTechnique == true && this.ao.existEchantillon == true) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+	// 	else if (a.index == 3 && (this.ao.offreTechnique == false || this.ao.existEchantillon == false || this.ao.offreTechnique == null || this.ao.existEchantillon == null)) {
+	// 		this.service.sendData(this.ao);
+	// 		this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 4 && (this.ao.offreTechnique == false || this.ao.existEchantillon == false || this.ao.offreTechnique == null || this.ao.existEchantillon == null)) {
+	// 		this.service.sendData(this.idao);
+
+	// 		this.router.navigate(["/marches/ao-consultation-detail/commission"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 5 && (this.ao.offreTechnique == false || this.ao.existEchantillon == false || this.ao.offreTechnique == null || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+	// 	// if (a.index == 5) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/pieces-jointes"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	// if (a.index == 6) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/ao-statut"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	else if (a.index == 6 && (this.ao.offreTechnique == false || this.ao.existEchantillon == false || this.ao.offreTechnique == null || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+
+
+	// 	else if (a.index == 1 && (this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["marches/ao-consultation-detail/membre-seance"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+
+
+
+	// 	}
+
+	// 	else if (a.index == 2 && this.ao.offreTechnique == true && (this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["marches/ao-consultation-detail/membre-technique-seance"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 3 && this.ao.offreTechnique == true && (this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.service.sendData(this.ao);
+	// 		this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 4 && this.ao.offreTechnique == true && (this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.service.sendData(this.idao);
+
+	// 		this.router.navigate(["/marches/ao-consultation-detail/commission"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 5 && this.ao.offreTechnique == true && (this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+	// 	// if (a.index == 5) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/pieces-jointes"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	// if (a.index == 6) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/ao-statut"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	else if (a.index == 6 && this.ao.offreTechnique == true && (this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+	// 	else if (a.index == 2 && (this.ao.offreTechnique == false || this.ao.offreTechnique == null || this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.service.sendData(this.ao);
+	// 		this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 3 && (this.ao.offreTechnique == false || this.ao.offreTechnique == null || this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.service.sendData(this.idao);
+
+	// 		this.router.navigate(["/marches/ao-consultation-detail/commission"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+	// 	else if (a.index == 4 && (this.ao.offreTechnique == false || this.ao.offreTechnique == null || this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+	// 	// if (a.index == 5) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/pieces-jointes"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	// if (a.index == 6) {
+	// 	// 	this.router.navigate(["/marches/ao-consultation-detail/ao-statut"], {
+	// 	// 		queryParams: { id: this.idao },
+	// 	// 	});
+	// 	// }
+	// 	else if (a.index == 5 && (this.ao.offreTechnique == false || this.ao.offreTechnique == null || this.ao.existEchantillon == false || this.ao.existEchantillon == null)) {
+	// 		this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+	// 			queryParams: { id: this.idao },
+	// 		});
+	// 	}
+
+
+
+
+	// }
+
+
+
+
 	changeTab(a) {
 		if (a.index == 0) {
+			
 			this.router.navigate(["marches/ao-consultation-detail/ligneBP-form-consultation"], {
 				queryParams: { id: this.idao },
 			});
 		}
-		// if (a.index == 1) {
-		// 	this.router.navigate(["marches/ao-consultation-detail/circuit-validation-consultation"], {
-		// 		queryParams: { id: this.idao },
-		// 	});
-		// }
-		// if (a.index == 2) {
-		// 	this.router.navigate(["marches/ao-consultation-detail/valide-dg-service-consultation"], {
-		// 		queryParams: { id: this.idao },
-		// 	});
-		// }
-		// if (a.index == 3) {
-		// 	this.router.navigate(["marches/ao-consultation-detail/valide-tresorerie-consultation"], {
-		// 		queryParams: { id: this.idao },
-		// 	});
-		// }
-		// if (a.index == 4) {
-		// 	this.router.navigate(["marches/ao-consultation-detail/ao-echantillon"], {
-		// 		queryParams: { id: this.idao },
-		// 	});
-		// }
-		if (a.index == 1) {
-			this.router.navigate(["/marches/ao-consultation-detail/commission"], {
-				queryParams: { id: this.idao },
-			});
-		}
-		if (a.index == 2) {
-			this.router.navigate(["/marches/ao-consultation-detail/journal"], {
-				queryParams: { id: this.idao },
-			});
-		}
-		if (a.index == 3) {
-		this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
-			queryParams: { id: this.idao },
-		});
-		}
-		// if (a.index == 8) {
-		// 	this.router.navigate(["/marches/ao-consultation-detail/pieces-jointes"], {
-		// 		queryParams: { id: this.idao },
-		// 	});
-		// }
-		if (a.index == 4) {
-			this.router.navigate(["/marches/ao-consultation-detail/ao-statut"], {
-				queryParams: { id: this.idao },
-			});
-		}
-		if (a.index == 5) {
-			this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
-				queryParams: { id: this.idao },
-			});
-		}
+		
+
+				if (a.index == 1 && this.ao.existEchantillon == true && this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/ao-echantillon"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 2&& this.ao.existEchantillon == true && this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/membre-seance"], {
+						queryParams: { id: this.idao },
+					});
+		
+				}
+		
+				if (a.index == 3&& this.ao.existEchantillon == true && this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/membre-technique-seance"], {
+						queryParams: { id: this.idao },
+					});
+				}
+		
+		
+				if (a.index == 4&& this.ao.existEchantillon == true && this.ao.offreTechnique == true) {
+					
+					this.service.sendData(this.ao);
+					this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 5&& this.ao.existEchantillon == true && this.ao.offreTechnique == true) {
+					
+					this.service.sendData(this.idao);
+		
+					this.router.navigate(["/marches/ao-consultation-detail/commission"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 6&& this.ao.existEchantillon == true && this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+						queryParams: { id: this.idao },
+					});
+				}
+		
+				if (a.index == 7&& this.ao.existEchantillon == true && this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+						queryParams: { id: this.idao },
+					});
+				}
+			
+				if (a.index == 1&& this.ao.existEchantillon == true &&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/ao-echantillon"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 2&& this.ao.existEchantillon == true &&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/membre-seance"], {
+						queryParams: { id: this.idao },
+					});
+		
+				}
+		
+		
+		
+				if (a.index == 3&& this.ao.existEchantillon == true &&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.service.sendData(this.ao);
+					this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 4&& this.ao.existEchantillon == true &&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.service.sendData(this.idao);
+		
+					this.router.navigate(["/marches/ao-consultation-detail/commission"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 5&& this.ao.existEchantillon == true &&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+						queryParams: { id: this.idao },
+					});
+				}
+		
+				if (a.index == 6&& this.ao.existEchantillon == true &&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+						queryParams: { id: this.idao },
+					});
+				}
+			
+		
+			
+				if (a.index == 1&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&& this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/membre-seance"], {
+						queryParams: { id: this.idao },
+					});
+		
+				}
+		
+				if (a.index == 2&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&& this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/membre-technique-seance"], {
+						queryParams: { id: this.idao },
+					});
+				}
+		
+		
+				if (a.index == 3&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&& this.ao.offreTechnique == true) {
+					
+					this.service.sendData(this.ao);
+					this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 4&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&& this.ao.offreTechnique == true) {
+					
+					this.service.sendData(this.idao);
+		
+					this.router.navigate(["/marches/ao-consultation-detail/commission"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 5&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&& this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+						queryParams: { id: this.idao },
+					});
+				}
+		
+				if (a.index == 6&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&& this.ao.offreTechnique == true) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+						queryParams: { id: this.idao },
+					});
+				}
+			
+				
+				if (a.index == 1&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.router.navigate(["marches/ao-consultation-detail/membre-seance"], {
+						queryParams: { id: this.idao },
+					});
+		
+				}
+		
+			
+		
+				if (a.index == 2&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.service.sendData(this.ao);
+					this.router.navigate(["marches/ao-consultation-detail/prestataires"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 3&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.service.sendData(this.idao);
+		
+					this.router.navigate(["/marches/ao-consultation-detail/commission"], {
+						queryParams: { id: this.idao },
+					});
+				}
+				if (a.index == 4&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/journal"], {
+						queryParams: { id: this.idao },
+					});
+				}
+		
+				if (a.index == 5&& (this.ao.existEchantillon == false || this.ao.existEchantillon==undefined || this.ao.existEchantillon==null)&&( this.ao.offreTechnique == false || this.ao.offreTechnique==undefined || this.ao.offreTechnique==null)) {
+					
+					this.router.navigate(["/marches/ao-consultation-detail/ao-visite"], {
+						queryParams: { id: this.idao },
+					});
+				}
+			
+		
+
 	}
 	// ===============================================================
 	//
@@ -1675,7 +2009,7 @@ export class AoConsultationDetailComponent implements OnInit {
 	async getPrestataires() {
 		const _this = this;
 		await this.service
-			.getAllOffreDeposee(this.idao)
+			.getAllOffreDeposee(this.idao, 0, 5)
 			.pipe(delay(300))
 			.subscribe(
 				(data) => {
@@ -1731,72 +2065,72 @@ export class AoConsultationDetailComponent implements OnInit {
 		let tableRows4 = "";
 		let tableRows5 = "";
 
-for (let i = 0; i < this.historiqueAo.length; i++) {
-    tableRows += '<tr style="border-bottom: 1px dotted;">' +
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.historiqueAo[i].modificateurUser
-         +
-        "</td>" +'<td>modification</td>'+
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.getDates(this.historiqueAo[i].updateDate)+        "</td>" +
-		
-        "</tr>";
-}
-for (let i = 0; i < this.historiqueUpdateStatutToComment.length; i++) {
-    tableRows1 += '<tr style="border-bottom: 1px dotted;">' +
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.historiqueUpdateStatutToComment[i].modificateurUser
-         +
-        "</td>" +'<td>modification du statut vers Commentaire à vérifier</td>'+
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.getDates(this.historiqueUpdateStatutToComment[i].updateDate)+        "</td>" +
-		
-        "</tr>";
-}
-for (let i = 0; i < this.historiqueUpdateStatutToEnAttenteValidation.length; i++) {
-    tableRows2 += '<tr style="border-bottom: 1px dotted;">' +
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.historiqueUpdateStatutToEnAttenteValidation[i].modificateurUser
-         +
-        "</td>" +'<td>modification du statut vers en attente de validation</td>'+
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.getDates(this.historiqueUpdateStatutToEnAttenteValidation[i].updateDate)+        "</td>" +
-		
-        "</tr>";
-}
-for (let i = 0; i < this.historiqueUpdateStatutToValide.length; i++) {
-    tableRows3 += '<tr style="border-bottom: 1px dotted;">' +
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.historiqueUpdateStatutToValide[i].modificateurUser
-         +
-        "</td>" +'<td>modification du statut vers valider</td>'+
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.getDates(this.historiqueUpdateStatutToValide[i].updateDate)+        "</td>" +
-		
-        "</tr>";
-}
-for (let i = 0; i < this.historiqueUpdateStatutFromValide.length; i++) {
-    tableRows4 += '<tr style="border-bottom: 1px dotted;">' +
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.historiqueUpdateStatutFromValide[i].modificateurUser
-         +
-        "</td>" +'<td>modification du statut de valider vers '+this.historiqueUpdateStatutFromValide[i].statutAoValide+'</td>'+
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.getDates(this.historiqueUpdateStatutFromValide[i].updateDate)+        "</td>" +
-		
-        "</tr>";
-}
-for (let i = 0; i < this.historiqueUpdateStatutMarche.length; i++) {
-    tableRows5 += '<tr style="border-bottom: 1px dotted;">' +
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.historiqueUpdateStatutMarche[i].modificateurUser
-         +
-        "</td>" +'<td>modification du statut du marche vers '+this.historiqueUpdateStatutMarche[i].statutMarche+'</td>'+
-        '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-		this.getDates(this.historiqueUpdateStatutMarche[i].updateDate)+        "</td>" +
-		
-        "</tr>";
-}
+		for (let i = 0; i < this.historiqueAo.length; i++) {
+			tableRows += '<tr style="border-bottom: 1px dotted;">' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.historiqueAo[i].modificateurUser
+				+
+				"</td>" + '<td>modification</td>' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.getDates(this.historiqueAo[i].updateDate) + "</td>" +
+
+				"</tr>";
+		}
+		for (let i = 0; i < this.historiqueUpdateStatutToComment.length; i++) {
+			tableRows1 += '<tr style="border-bottom: 1px dotted;">' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.historiqueUpdateStatutToComment[i].modificateurUser
+				+
+				"</td>" + '<td>modification du statut vers Commentaire à vérifier</td>' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.getDates(this.historiqueUpdateStatutToComment[i].updateDate) + "</td>" +
+
+				"</tr>";
+		}
+		for (let i = 0; i < this.historiqueUpdateStatutToEnAttenteValidation.length; i++) {
+			tableRows2 += '<tr style="border-bottom: 1px dotted;">' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.historiqueUpdateStatutToEnAttenteValidation[i].modificateurUser
+				+
+				"</td>" + '<td>modification du statut vers en attente de validation</td>' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.getDates(this.historiqueUpdateStatutToEnAttenteValidation[i].updateDate) + "</td>" +
+
+				"</tr>";
+		}
+		for (let i = 0; i < this.historiqueUpdateStatutToValide.length; i++) {
+			tableRows3 += '<tr style="border-bottom: 1px dotted;">' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.historiqueUpdateStatutToValide[i].modificateurUser
+				+
+				"</td>" + '<td>modification du statut vers valider</td>' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.getDates(this.historiqueUpdateStatutToValide[i].updateDate) + "</td>" +
+
+				"</tr>";
+		}
+		for (let i = 0; i < this.historiqueUpdateStatutFromValide.length; i++) {
+			tableRows4 += '<tr style="border-bottom: 1px dotted;">' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.historiqueUpdateStatutFromValide[i].modificateurUser
+				+
+				"</td>" + '<td>modification du statut de valider vers ' + this.historiqueUpdateStatutFromValide[i].statutAoValide + '</td>' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.getDates(this.historiqueUpdateStatutFromValide[i].updateDate) + "</td>" +
+
+				"</tr>";
+		}
+		for (let i = 0; i < this.historiqueUpdateStatutMarche.length; i++) {
+			tableRows5 += '<tr style="border-bottom: 1px dotted;">' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.historiqueUpdateStatutMarche[i].modificateurUser
+				+
+				"</td>" + '<td>modification du statut du marche vers ' + this.historiqueUpdateStatutMarche[i].statutMarche + '</td>' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.getDates(this.historiqueUpdateStatutMarche[i].updateDate) + "</td>" +
+
+				"</tr>";
+		}
 
 		Swal.fire({
 			title: "Historique",
@@ -1804,32 +2138,32 @@ for (let i = 0; i < this.historiqueUpdateStatutMarche.length; i++) {
 			icon: "info",
 			confirmButtonText: "Fermer",
 			html:
-			  '<div style="max-height: 400px;width:600px; overflow-y: auto;">' +
+				'<div style="max-height: 400px;width:600px; overflow-y: auto;">' +
 				'<table>' +
-				  '<thead style="background-color: #eaeaea">'+
-					'<tr>'+
-					  '<td class="boder-table">Acteur</td>'+
-					  '<td class="boder-table">Action</td>'+
-					  '<td class="boder-table">Date</td>'+
-					'</tr>'+
-				  '</thead>'+
-				  "<tbody>" +
-					'<tr style="border-bottom: 1px dotted;">' +
-					  '<td style="font-size: 15px;" class="donnee_show">' +
-						this.getCreator(this.ao.createurUser) +
-					  "</td>" +
-					  '<td>Création</td>'+
-					  '<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
-						this.getDates(this.ao.creationDate) +
-					  "</td>" +
-					'</tr>'+
-					tableRows +
-					tableRows1 +tableRows2+tableRows3+tableRows4+tableRows5+
-				  "</tbody>" +
+				'<thead style="background-color: #eaeaea">' +
+				'<tr>' +
+				'<td class="boder-table">Acteur</td>' +
+				'<td class="boder-table">Action</td>' +
+				'<td class="boder-table">Date</td>' +
+				'</tr>' +
+				'</thead>' +
+				"<tbody>" +
+				'<tr style="border-bottom: 1px dotted;">' +
+				'<td style="font-size: 15px;" class="donnee_show">' +
+				this.getCreator(this.ao.createurUser) +
+				"</td>" +
+				'<td>Création</td>' +
+				'<td style="font-size: 15px; direction: initial;" class="donnee_show">' +
+				this.getDates(this.ao.creationDate) +
+				"</td>" +
+				'</tr>' +
+				tableRows +
+				tableRows1 + tableRows2 + tableRows3 + tableRows4 + tableRows5 +
+				"</tbody>" +
 				"</table>" +
-			  '</div>',
-		  });
-		  
+				'</div>',
+		});
+
 	}
 	// ============================================
 	// get Creator

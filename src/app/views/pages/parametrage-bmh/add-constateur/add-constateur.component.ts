@@ -17,14 +17,12 @@ export class AddConstateurComponent implements OnInit {
   FormArticle:FormGroup;
   ngOnInit() {
     this.FormArticle= new FormGroup({
- 
       id: new FormControl('',),
       nom:new FormControl('', Validators.required),
       prenom: new FormControl('',Validators.required),
       cin: new FormControl('',Validators.required),
       tel: new FormControl('',Validators.required),
-      
-        });
+    });
   }
   RetourEmbalages(): void {
 		this.router.navigate(["/bmh/list-constateur"]);
@@ -42,7 +40,9 @@ export class AddConstateurComponent implements OnInit {
             confirmButtonText: 'OK'
           }).then(() => {
             this.FormArticle.reset();
+            this.RetourEmbalages()
             this.ngOnInit(); // Vous pouvez recharger les données si nécessaire ici
+            this.RetourEmbalages();
           });
         },
         (err) => {

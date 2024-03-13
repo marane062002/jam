@@ -79,13 +79,13 @@ export class MenuConfig {
 
 		// 			],
 		// 		}
-				
+
 
 
 		// 	],
 
 		// },
-	 	header_gestionStock: {
+		header_gestionStock: {
 			self: {},
 			items: [
 				{
@@ -145,7 +145,7 @@ export class MenuConfig {
 						},
 					],
 				},
-				
+
 				{
 					title: "gestion des stock",
 					translate: "MENU.Stock",
@@ -182,14 +182,14 @@ export class MenuConfig {
 							icon: "flaticon-home-1",
 						},
 					],
-				}, 
-			/* 	{
-					title: "Etat",
-					translate: "MENU.ETAT",
-					page: "/gestionStock/personnel-new",
-					icon: "flaticon-edit-1",
-				//	permission: "canCreatePersonnel",
-				}, */
+				},
+				/* 	{
+						title: "Etat",
+						translate: "MENU.ETAT",
+						page: "/gestionStock/personnel-new",
+						icon: "flaticon-edit-1",
+					//	permission: "canCreatePersonnel",
+					}, */
 				// {
 				// 	title: "parametrages",
 				// 	translate: "MENU.parametrages",
@@ -257,7 +257,7 @@ export class MenuConfig {
 							page: "/stock/list-organisem",
 							icon: "flaticon2-list-2",
 						},
-						
+
 
 					],
 				},
@@ -437,7 +437,7 @@ export class MenuConfig {
 				// 			title: "Gestion de Factures",
 				// 			translate: "Liste des factures",
 				// 			page: "/audiences/list-facture",
-				// 			icon: "flaticon2-list-3",
+				// 			icon: "flaticon2-list-3",autopsie
 				// 		},
 				// 	],
 				// },
@@ -1090,7 +1090,7 @@ export class MenuConfig {
 			],
 		},
 		headerMarche: {
-			
+
 			self: {},
 			items: [
 				{
@@ -1115,7 +1115,7 @@ export class MenuConfig {
 							icon: "flaticon-edit-1",
 							//permission: "canCreateAssociation",
 						},
-						
+
 						{
 							title: "Liste des pesées",
 							translate: "MENU.PESEE.LISTEPESEE",
@@ -1270,8 +1270,8 @@ export class MenuConfig {
 									icon: "flaticon2-list-3"
 								}
 							]
-							
-						},						
+
+						},
 						{
 							title: "Transactions et recettes",
 							translate: "MENU.STATISTIQUE.TRANSACTIONSETRECETTES",
@@ -1310,7 +1310,7 @@ export class MenuConfig {
 									icon: "flaticon2-list-3"
 								}
 							]
-							
+
 						},
 						{
 							title: "Marchandise et Carreaux",
@@ -1332,9 +1332,9 @@ export class MenuConfig {
 									icon: "flaticon2-list-3"
 								}
 							]
-							
+
 						},
-						
+
 					],
 				},
 				{
@@ -1361,7 +1361,7 @@ export class MenuConfig {
 							icon: "flaticon2-list-3",
 							//permission: "accessToIndexAssociation",
 						},
-						
+
 					],
 				},
 
@@ -1590,7 +1590,7 @@ export class MenuConfig {
 					toggle: "hover",
 					translate: "TRANSLATOR.TOP_MANAGEMENT",
 					page: "/top-management/top-management",
-					permission:"accessToTopManagement"
+					permission: "accessToTopManagement"
 				},
 				/* {
 					title: "dashboard",
@@ -2008,6 +2008,39 @@ export class MenuConfig {
 					page: "/associations/mandat-filter",
 					//permission: "",
 				},
+				// added by saad for the new menu
+				{
+					title: "Demandes",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "MENU.DEMANDE.DEMANDES",
+					page: "",
+					submenu: [
+						{
+							title: "Liste des demandes",
+							translate: "MENU.DEMANDE.LISTE_DEMANDES",
+							page: "/demandes/list-demandesLicense",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						{
+							title: "Liste des demandes financières",
+							translate: "MENU.DEMANDE.LISTE_DEMANDES_FINANCIERES",
+							page: "/demandes/list-demandes-soutien-financiere",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						{
+							title: "Liste des demandes logistiques",
+							translate: "MENU.DEMANDE.LISTE_DEMANDES_LOGISTIQUES",
+							page: "/demandes/list-demandes-soutien-logistique",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						
+					],
+				}
 			],
 		},
 		// ******************************************************************
@@ -2536,10 +2569,10 @@ export class MenuConfig {
 						// 	page: "/marches/ao-form",
 						// 	permission: "canCreateAo",
 						// },
-						
+
 					],
 				},
-				
+
 				{
 					title: "marches",
 					root: true,
@@ -2562,7 +2595,7 @@ export class MenuConfig {
 							page: "/marches/marche-new",
 							permission: "canCreateMarche",
 						},*/
-						
+
 					],
 				},
 				// {
@@ -2611,7 +2644,7 @@ export class MenuConfig {
 							page: "/marches/bon-commande-list-adjuge",
 							permission: "accessToIndexBonCommande",
 						},
-					
+
 					],
 				},
 				{
@@ -2636,7 +2669,7 @@ export class MenuConfig {
 						// 	page: "/marches/bon-commande-list-adjuge",
 						// 	permission: "accessToIndexBonCommande",
 						// },
-					
+
 					],
 				},
 				// {
@@ -2694,24 +2727,24 @@ export class MenuConfig {
 					alignment: "left",
 					toggle: "hover",
 					translate: "Calendrier des ouvertures des plis",
-					permissions: [ { name: "accessToMarcheModule", params: {  } }, { name: "accessToCalendrierModule", params: { }}],
+					permissions: [{ name: "accessToMarcheModule", params: {} }, { name: "accessToCalendrierModule", params: {} }],
 
 					// permission:["accessToMarcheModule","accessToCalendrierModule"],
-					
+
 					submenu: [
 						{
 							title: "Calendrier des appels d'offres ",
 							icon: "flaticon2-list-3",
 							translate: "PAGES.CALENDRIER.CALENDRIER_AO",
 							page: "/marches/calendrier",
-							permissions: [ { name: "accessToMarcheModule", params: {  } }, { name: "accessToCalendrierModule", params: { }}],
+							permissions: [{ name: "accessToMarcheModule", params: {} }, { name: "accessToCalendrierModule", params: {} }],
 						},
 						{
 							title: "Calendrier des bons de commande ",
 							icon: "flaticon-edit-1",
 							translate: "PAGES.CALENDRIER.CALENDRIER_BC",
 							page: "/marches/calendrier-bc",
-							permissions: [ { name: "accessToMarcheModule", params: {  } }, { name: "accessToCalendrierModule", params: { }}],
+							permissions: [{ name: "accessToMarcheModule", params: {} }, { name: "accessToCalendrierModule", params: {} }],
 						},
 						// {
 						// 	title: "Programme prévisionnel",
@@ -2721,7 +2754,7 @@ export class MenuConfig {
 						// 	permissions: [ { name: "accessToMarcheModule", params: {  } }, { name: "accessToCalendrierModule", params: { }}],
 						// },
 					],
-					
+
 				},
 
 
@@ -2732,84 +2765,91 @@ export class MenuConfig {
 					toggle: "hover",
 					translate: "Parametrage",
 					permission: "accessToAoModule",
-					
+
 					submenu: [
-					{
-						title: "Disponibilité des fonds",
-						icon: "flaticon2-list-3",
-						root: true,
-						alignment: "left",
-						toggle: "hover",
-						translate: "MENU.FONDS",
-						permission: "accessToAoModule",
-						page: "/marches/disponibilite-des-fonds",
-				    },
-					{
-						title: "liste des prestataires ",
-						icon: "flaticon2-list-3",
-						translate: "PAGES.MARCHE.PRESTATAIRE.TITRE_INDEX",
-						page: "/marches/prestataires-list",
-						permission: "accessToIndexPrestataireAo",
-					},
-					{
-						title: "Type AO ",
-						icon: "flaticon2-list-3",
-						translate: "Type AO",
-						page: "/parametrage/list-type-ao",
-						// permission: "accessToIndexPrestataireAo",
-					},
-					{
-						title: "Catégorie ",
-						icon: "flaticon2-list-3",
-						translate: "Catégorie",
-						page: "/parametrage/list-categorie",
-						// permission: "accessToIndexPrestataireAo",
-					},
-						
-					{
-						title: "Type marché ",
-						icon: "flaticon2-list-3",
-						translate: "Type marché",
-						page: "/parametrage/list-type-marche",
-						// permission: "accessToIndexPrestataireAo",
-					},
-					{
-						title: "Mode Passation",
-						icon: "flaticon2-list-3",
-						translate: "Mode Passation",
-						page: "/parametrage/list-mode-passation",
-						// permission: "accessToIndexPrestataireAo",
-					},
-					{
-						title: "Agrement",
-						icon: "flaticon2-list-3",
-						translate: "Agrement",
-						page: "/parametrage/list-agrement",
-						// permission: "accessToIndexPrestataireAo",
-					},
-					{
-						title: "Type Piéce jointe",
-						icon: "flaticon2-list-3",
-						translate: "Type Piéce jointe",
-						page: "/parametrage/list-type-piece-joint",
-						// permission: "accessToIndexPrestataireAo",
-					},
-					{
-						title: "Qualification",
-						icon: "flaticon2-list-3",
-						translate: "Qualification",
-						page: "/parametrage/list-qualification",
-						// permission: "accessToIndexPrestataireAo",
-					},
-					{
-						title: "Classification",
-						icon: "flaticon2-list-3",
-						translate: "Classification",
-						page: "/parametrage/list-classification",
-						// permission: "accessToIndexPrestataireAo",
-					},
+						{
+							title: "Disponibilité des fonds",
+							icon: "flaticon2-list-3",
+							root: true,
+							alignment: "left",
+							toggle: "hover",
+							translate: "MENU.FONDS",
+							permission: "accessToAoModule",
+							page: "/marches/disponibilite-des-fonds",
+						},
+						{
+							title: "liste des prestataires ",
+							icon: "flaticon2-list-3",
+							translate: "PAGES.MARCHE.PRESTATAIRE.TITRE_INDEX",
+							page: "/marches/prestataires-list",
+							permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Type AO ",
+							icon: "flaticon2-list-3",
+							translate: "Type AO",
+							page: "/parametrage/list-type-ao",
+							// permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Catégorie ",
+							icon: "flaticon2-list-3",
+							translate: "Catégorie",
+							page: "/parametrage/list-categorie",
+							// permission: "accessToIndexPrestataireAo",
+						},
+
+						{
+							title: "Type marché ",
+							icon: "flaticon2-list-3",
+							translate: "Type marché",
+							page: "/parametrage/list-type-marche",
+							// permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Mode Passation",
+							icon: "flaticon2-list-3",
+							translate: "Mode Passation",
+							page: "/parametrage/list-mode-passation",
+							// permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Agrement",
+							icon: "flaticon2-list-3",
+							translate: "Agrement",
+							page: "/parametrage/list-agrement",
+							// permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Type Piéce jointe",
+							icon: "flaticon2-list-3",
+							translate: "Type Piéce jointe",
+							page: "/parametrage/list-type-piece-joint",
+							// permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Qualification",
+							icon: "flaticon2-list-3",
+							translate: "Qualification",
+							page: "/parametrage/list-qualification",
+							// permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Classification",
+							icon: "flaticon2-list-3",
+							translate: "Classification",
+							page: "/parametrage/list-classification",
+							// permission: "accessToIndexPrestataireAo",
+						},
+						{
+							title: "Pourcentages de l'offre financière",
+							icon: "flaticon2-list-3",
+							translate: "Pourcentages de l'offre financière",
+							page: "/marches/pourcentage-offre-financiere",
+							// permission: "accessToIndexPrestataireAo",
+						},
 					],
-					
+
 				},
 				// {
 				// 	title: "maintien de l'offre",
@@ -2899,9 +2939,9 @@ export class MenuConfig {
 					],
 				},
 			],
-			
+
 		},
-		
+
 		header_programme: {
 			self: {},
 			items: [
@@ -2927,15 +2967,221 @@ export class MenuConfig {
 							page: "/programme/add-programme",
 							icon: "flaticon-edit-1",
 						},
+
+					],
+				},
+				// {
+				// 	title: "Rétroplanning",
+				// 	root: true,
+				// 	alignment: "left",
+				// 	toggle: "hover",
+				// 	translate: "Rétroplanning",
+				// 	permission: "accessToProgramModule",
+				// 	page: "/programme/retroplanning-programme",
+
+				// 	// submenu: [
+				// 	// 	{
+				// 	// 		title: "rétroplanning",
+				// 	// 		translate: "MENU.retroplanning",
+				// 	// 		// permission: "canCreateProgram",
+				// 	// 		page: "/programme/retroplanning-programme",
+				// 	// 		icon: "flaticon-edit-1",
+				// 	// 	},
+
+				// 	// ],
+				// },
+				// {
+				// 	title: "Définition besoin",
+				// 	root: true,
+				// 	alignment: "left",
+				// 	toggle: "hover",
+				// 	translate: "MENU.BESION",
+				// 	permission: "accessToNeedConsultationModule",
+				// 	submenu: [
+				// 		{
+				// 			title: "programme",
+				// 			translate: "MENU.BESIONLISTEAO",
+				// 			permission: "accessToNeedConsultationModule",
+				// 			page: "/programme/list-EtudeBesion",
+				// 			icon: "flaticon2-list-3",
+				// 		},
+				// 		{
+				// 			title: "Liste des besoins de consultation  des bons de commande",
+				// 			translate: "MENU.BESIONLISTEBC",
+				// 			permission: "canCreateNeedconsultation",
+				// 			page: "/programme/list-EtudeBesion-Bc",
+				// 			icon: "flaticon-edit-1",
+				// 		},
+				// 		{
+				// 			title: "Liste des besoins de consultation  des contrats",
+				// 			translate: "MENU.BESIONLISTECONTRAT",
+				// 			permission: "canCreateNeedconsultation",
+				// 			page: "/programme/list-EtudeBesion-Contrat",
+				// 			icon: "flaticon-edit-1",
+				// 		},
+
+				// 	],
+				// },
+				{
+					title: "Convention",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "MENU.Convention",
+					permission: "accessToConventionModule",
+					submenu: [
 						{
-							title: "rétroplanning",
-							translate: "MENU.retroplanning",
-							// permission: "canCreateProgram",
-							page: "/programme/retroplanning-programme",
+							title: "Liste des Conventions",
+							translate: "MENU.ListConvention",
+							permission: "accessToIndexConvention",
+							page: "/convention/listconvention",
+							icon: "flaticon2-list-3",
+						},
+						{
+							title: "ajouter un convention",
+							translate: "MENU.Ajouterconvention",
+							permission: "canCreateConvention",
+							page: "/convention/new-convention",
+							icon: "flaticon-edit-1",
+						},
+						{
+							title: "Partie prenante",
+							translate: "MENU.ListPartiePreneur",
+							permission: "accessToIndexPP",
+							page: "/convention/PartiePreneurList",
+							icon: "flaticon2-list-3",
+						},
+						{
+							title: "ajouter un partie prenante",
+							translate: "MENU.AjouterPartiePreneur",
+							permission: "canCreatePP",
+							page: "/convention/new-PartiePreneur",
 							icon: "flaticon-edit-1",
 						},
 					],
 				},
+				// {
+				// 	title: "Partie prenante",
+				// 	root: true,
+				// 	alignment: "left",
+				// 	toggle: "hover",
+				// 	translate: "MENU.PP",
+				// 	permission: "accessToPPModule",
+				// 	submenu: [
+				// 		{
+				// 			title: "Partie prenante",
+				// 			translate: "MENU.ListPartiePreneur",
+				// 			permission: "accessToIndexPP",
+				// 			page: "/convention/PartiePreneurList",
+				// 			icon: "flaticon2-list-3",
+				// 		},
+				// 		{
+				// 			title: "ajouter un partie prenante",
+				// 			translate: "MENU.AjouterPartiePreneur",
+				// 			permission: "canCreatePP",
+				// 			page: "/convention/new-PartiePreneur",
+				// 			icon: "flaticon-edit-1",
+				// 		},
+				// 	],
+				// },
+				{
+					title: "Statistiques",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "TRANSLATOR.STATISTIQUES",
+					permission: "accessToProgramModule",
+					submenu: [
+						{
+							title: "statistique des projets",
+							translate: "MENU.statistiqueProgramme",
+							// permission: "canCreateProgram",
+							page: "/programme/statistique-programme",
+
+							icon: "flaticon-edit-1",
+						},
+						{
+							title: "Statistiques des conventions",
+							translate: "MENU.statistiqueConvention",
+							// permission: "canCreateProgram",
+							page: "/convention/statistique-convention",
+
+							icon: "flaticon-edit-1",
+						},
+					]
+				},
+				{
+					title: "Paramétrage",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Paramétrage",
+					permission: "accessToProgramModule",
+					submenu: [
+						{
+							title: "Paramétrage des natures",
+							translate: "Paramétrage des natures",
+							// permission: "canCreateProgram",
+							page: "/programme/list-nature",
+							icon: "flaticon-edit-1",
+						}, {
+							title: "Paramétrage des themes",
+							translate: "Paramétrage des themes",
+							// permission: "canCreateProgram",
+							page: "/programme/list-theme",
+							icon: "flaticon-edit-1",
+						}, {
+							title: "Paramétrage des sous themes",
+							translate: "Paramétrage des sous themes",
+							// permission: "canCreateProgram",
+							page: "/programme/list-sous-theme",
+							icon: "flaticon-edit-1",
+						},
+						{
+							title: "Paramétrage des arrondissements",
+							translate: "Paramétrage des arrondissements",
+							// permission: "canCreateProgram",
+							page: "/programme/list-arrondissement",
+							icon: "flaticon-edit-1",
+						},
+					]
+				},
+				{
+					title: "Tableau de bord",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Tableau de bord",
+					permission: "accessToProgramModule",
+					submenu: [
+						{
+							title: "Ajout d'un tableau de bord",
+							translate: "Ajout d'un tableau de bord",
+							// permission: "canCreateProgram",
+							page: "/programme/add-tableau-bord",
+							icon: "flaticon-edit-1",
+						}, {
+							title: "Liste des tableau de bord",
+							translate: "Liste des tableau de bord",
+							// permission: "canCreateProgram",
+							page: "/programme/list-tableau-bord",
+							icon: "flaticon-edit-1",
+						}, {
+							title: "Rétroplanning",
+							translate: "Rétroplanning",
+							// permission: "canCreateProgram",
+							permission: "accessToProgramModule",
+							page: "/programme/retroplanning-programme",
+							icon: "flaticon-edit-1",
+						}
+					]
+				}
+			],
+		},
+		header_consultationPac: {
+			self: {},
+			items: [
+
 				{
 					title: "Définition besoin",
 					root: true,
@@ -2965,74 +3211,11 @@ export class MenuConfig {
 							page: "/programme/list-EtudeBesion-Contrat",
 							icon: "flaticon-edit-1",
 						},
+
 					],
 				},
-				{
-					title: "Convention",
-					root: true,
-					alignment: "left",
-					toggle: "hover",
-					translate: "MENU.Convention",
-					permission: "accessToConventionModule",
-					submenu: [
-						{
-							title: "Liste des Conventions",
-							translate: "MENU.ListConvention",
-							permission: "accessToIndexConvention",
-							page: "/convention/listconvention",
-							icon: "flaticon2-list-3",
-						},
-						{
-							title: "ajouter un convention",
-							translate: "MENU.Ajouterconvention",
-							permission: "canCreateConvention",
-							page: "/convention/new-convention",
-							icon: "flaticon-edit-1",
-						},
-					],
-				},
-				{
-					title: "Partie prenante",
-					root: true,
-					alignment: "left",
-					toggle: "hover",
-					translate: "MENU.PP",
-					permission: "accessToPPModule",
-					submenu: [
-						{
-							title: "Partie prenante",
-							translate: "MENU.ListPartiePreneur",
-							permission: "accessToIndexPP",
-							page: "/convention/PartiePreneurList",
-							icon: "flaticon2-list-3",
-						},
-						{
-							title: "ajouter un partie prenante",
-							translate: "MENU.AjouterPartiePreneur",
-							permission: "canCreatePP",
-							page: "/convention/new-PartiePreneur",
-							icon: "flaticon-edit-1",
-						},
-					],
-				},
-				{
-					title: "Statistiques",
-					root: true,
-					alignment: "left",
-					toggle: "hover",
-					translate: "TRANSLATOR.STATISTIQUES",
-					permission: "accessToProgramModule",
-					page: "/programme/statistique-programme",
-					/* submenu:[
-						{
-							title: "statistique des projets",
-							translate: "MENU.statistiqueProgramme",
-							// permission: "canCreateProgram",
-							
-							icon: "flaticon-edit-1",
-						},
-					] */
-				}
+
+
 			],
 		},
 		headerBMH: {
@@ -3053,8 +3236,8 @@ export class MenuConfig {
 							//permission: "accessToIndexAssociation",
 						},
 						{
-							title: "Décès non naturel",
-							translate: "Décès non naturel",
+							title: "Décès avec obstacles",
+							translate: "Décès par obstacles",
 							page: "/bmh1/list-obstacles",
 							icon: "flaticon2-list-3",
 							//permission: "accessToIndexAssociation",
@@ -3094,12 +3277,7 @@ export class MenuConfig {
 							icon: "flaticon2-list-3",
 							//permission: "accessToIndexAssociation",
 						},
-						{
-							title: "Nouveau né",
-							translate: "Nouveau né",
-							page: "/bmh1/list-nouveauNe",
-							icon: "flaticon2-list-3",
-						},
+						
 					],
 				},
 				{
@@ -3315,6 +3493,13 @@ export class MenuConfig {
 									page: "/bmh/list-convention",
 									//permission: "accessToIndexAssociation",
 								},
+								{
+									title: "Controleur",
+									translate: "Controleur",
+									icon: "flaticon2-list-3",
+									page: "/bmh/list-controleur",
+									//permission: "accessToIndexAssociation",
+								},
 							],
 						},
 						{
@@ -3450,56 +3635,379 @@ export class MenuConfig {
 					],
 				},
 				{
+					title: "Naissance à domicile",
+					translate: "Naissance à domicile",
+					page: "/bmh1/list-nouveauNe",
+					icon: "flaticon2-list-3",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+				},
+				{
 					title: "Statistique",
 					root: true,
 					alignment: "left",
 					toggle: "hover",
 					translate: "Statistique",
-					page: "/statistiques/dashboard",
-					// submenu: [
-					// 	{
-					// 		title: "Objet de la sortie",
-					// 		translate: "Objet de la sortie",
-					// 		icon: "flaticon2-list-3",
-					// 		alignment: "right",
-					// 		root: true,
-					// 		page: "/pages/Parametrage-bmh/list-objet-sortie",
-					// 		submenu: [
-					// 			{
-					// 				title: " sortie",
-					// 				translate: " sortie",
+					page: "/statistiques/statistique-etablissement",
+					
+					submenu: [
+						{
+							title: "Médcine légale",
+							translate: "Médcine légale",
+							icon: "flaticon2-list-3",
+							alignment: "right",
+							root: true,
+							submenu: [
+								{
+									title: "Décés naturels",
+									translate: "Décés naturels",
+									class: "test",
+									icon: "flaticon2-list-3",
+									alignment: "right",
+									root: true,
+									page: "/statistiques/dashboard",
+								},
 
-					// 				icon: "flaticon2-list-3",
-					// 				alignment: "right",
-					// 				root: true,
-					// 				page: "/pages/Parametrage-bmh/list-objet-sortie",
-					// 			},
+								{
+									title: "Décés non naturels",
+									translate: "Décés non naturels",
+									class: "test",
+									icon: "flaticon2-list-3",
+									alignment: "right",
+									root: true,
+									page: "/statistiques/deces",
+								},
 
-					// 			{
-					// 				title: " sortie 2",
-					// 				translate: " sortie",
-					// 				class: "test",
-					// 				icon: "flaticon2-list-3",
-					// 				alignment: "right",
-					// 				root: true,
-					// 				page: "/pages/Parametrage-bmh/list-objet-sortie",
-					// 			},
+							],
+						},
+						{
+							title: "Controle sanitaire",
+							translate: "Controle sanitaire",
+							icon: "flaticon2-list-3",
+							alignment: "right",
+							root: true,
+							submenu: [
+								{
+									title: "Etablissement",
+									translate: "Etablissement",
+									class: "test",
+									icon: "flaticon2-list-3",
+									alignment: "right",
+									root: true,
+									page: "/statistiques/statistique-etablissement",
+								},
 
-					// 			{
-					// 				title: " sortie 3",
-					// 				translate: " sortie",
-					// 				class: "test",
-					// 				icon: "flaticon2-list-3",
-					// 				alignment: "right",
-					// 				root: true,
-					// 				page: "/pages/Parametrage-bmh/list-objet-sortie",
-					// 			},
-					// 		],
-					// 	},
-					// ],
+							],
+						},
+					],
+					
+				},
+				{
+					title: "Magasin de stock",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Magasin de stock",
+					// page: "/statistiques/dashboard",
+					submenu: [
+						{
+							title: "Produits",
+							translate: "Produits",
+							icon: "flaticon2-list-3",
+							alignment: "right",
+							root: true,
+							page: "",
+						},
+						{
+							title: "Matériels",
+							translate: "Matériels",
+							icon: "flaticon2-list-3",
+							alignment: "right",
+							root: true,
+							page: "",
+						},
+					],
 				},
 			],
 		},
+
+		headerSDL:{
+			self: {},
+			items: [
+				{
+					title: "delegataire",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Délégataire",
+					//permission: "accessToAssociationModule",
+					submenu: [
+						{
+							title: "Délégitaire",
+							translate: "liste des délégataires",
+							page: "/delegataire/delegataires",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+					],
+				},
+				{
+					title: "SDL",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "SDL",
+					//permission: "accessToAssociationModule",
+					submenu: [
+						{
+							title: "SDL",
+							translate: "Liste des SDL",
+							page: "/delegataire/sdl",
+							icon: "flaticon2-list-3",
+						},
+					],
+				},
+				{
+					title: "Paramètrages",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Paramètrages",
+					submenu: [
+						{
+							title: "Structure délégataire",
+							translate: "Structure délégataire",
+							page: "/parametrage-sdl/list-structure-delegataire",
+							icon: "flaticon-edit-1",
+						},
+						{
+							title: "Structure sdl",
+							translate: "Structure sdl",
+							page: "/parametrage-sdl/list-structure-sdl",
+							icon: "flaticon-edit-1",
+						},
+						{
+							title: "Type d'indicateur délégataire",
+							translate: "Type d'indicateur délégataire",
+							page: "/parametrage-sdl/list-type-indicateur-delegataire",
+							icon: "flaticon-edit-1",
+						},
+						{
+							title: "Type d'indicateur sdl",
+							translate: "Type d'indicateur sdl",
+							page: "/parametrage-sdl/list-type-indicateur-sdl",
+							icon: "flaticon-edit-1",
+						},
+					],
+				},
+			],
+
+		},
+		headerGsmLan: {
+			self: {},
+			items: [
+				{
+						title: "Paramètrages",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Paramètrages",
+					submenu: [
+						{
+							title: "Type des forfaits",
+							translate: "Type des forfaits",
+							page: "/gsmLan/list-type-forfait",
+							icon: "flaticon-edit-1",
+						},
+
+
+					],
+				}
+				// {
+				// 	title: " la flotte GSM",
+				// 	root: true,
+				// 	alignment: "left",
+				// 	toggle: "hover",
+				// 	translate: " la flotte GSM",
+				// 	//permission: "accessToAssociationModule",
+				// 	submenu: [
+				// 		{
+				// 			title: " la flotte GSM",
+				// 			translate: "liste des flottes GSM",
+				// 			page: "/flotte/flottes-gsm",
+				// 			icon: "flaticon2-list-3",
+				// 			//permission: "accessToIndexAssociation",
+				// 		},
+				// 		{
+				// 			title: "Facturation",
+				// 			translate: "Facturation",
+				// 			page: "/flotte/facturationGSM",
+				// 			icon: "flaticon2-list-3",
+				// 			//permission: "accessToIndexAssociation",
+				// 		},
+				// 		{
+				// 			title: "Suivi contrat",
+				// 			translate: "Suivi contrat",
+				// 			page: "/flotte/suivicontrat",
+				// 			icon: "flaticon2-list-3",
+				// 			//permission: "accessToIndexAssociation",
+				// 		},
+				// 	],
+				// },
+				// {
+				// 	title: "La connexion LAN",
+				// 	root: true,
+				// 	alignment: "left",
+				// 	toggle: "hover",
+				// 	translate: "La connexion LAN",
+				// 	//permission: "accessToAssociationModule",
+				// 	submenu: [
+				// 		{
+				// 			title: "Liste des connexions LAN",
+				// 			translate: "Liste des connexions LAN",
+				// 			page: "/flotte/flottes-lan",
+				// 			icon: "flaticon2-list-3",
+				// 		},
+				// 		{
+				// 			title: "Facturation",
+				// 			translate: "Facturation",
+				// 			page: "/flotte/facturationLAN",
+				// 			icon: "flaticon2-list-3",
+				// 		},
+				// 	],
+				// },
+
+				// {
+				// 	title: "Paramètrages",
+				// 	root: true,
+				// 	alignment: "left",
+				// 	toggle: "hover",
+				// 	translate: "Paramètrages",
+				// 	submenu: [
+				// 		{
+				// 			title: "Liste de connexion",
+				// 			translate: "Liste de connexion",
+				// 			page: "/parametrage/list-connexion",
+				// 			icon: "flaticon-edit-1",
+				// 		},
+
+
+				// 	],
+				// },
+
+			],
+		},
+
+		headerProprete: {
+			self: {},
+			items: [
+				{
+					title: "Délégataire propreté",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Délégataire propreté",
+					submenu: [
+						{
+							title: "Délégataires",
+							translate: "Délégataire",
+							page: "/pages/proprete-personnel/list-personnel",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						{
+							title: "Flottes",
+							translate: "Flotte",
+							page: "/pages/proprete-flotte/list-flotte",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						{
+							title: "Circuits",
+							translate: "Circuit",
+							page: "/pages/proprete-circuit/list-circuit",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						{
+							title: " Suivre et identifier les équipements et le balayage",
+							translate:
+								" Suivre et identifier les équipements et le balayage",
+							page: "/pages/proprete-circuit/localisation-flotte",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						{
+							title: "Référentiel de maintenance",
+							translate: "Référentiel de maintenance",
+							page: "/pages/proprete-maintenance/list-maintenance",
+							icon: "flaticon2-list-3",
+						},
+						{
+							title: "Les Points de regroupements",
+							translate: "Les Points de regroupements",
+							page: "/pages/proprete-regroupement/list-regroupement",
+							icon: "flaticon2-list-3",
+						},
+						{
+							title: "Centre de transfert",
+							translate: "Centre de transfert",
+							page: "/pages/proprete-transfert/centre-transfert",
+							icon: "flaticon2-list-3",
+						},
+					],
+				},
+				{
+					title: "Délégataire décharge",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Délégataire décharge",
+					page: "/pages/proprete-decharge/list-decharge",
+				},
+				{
+					title: "Contrats",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Contrats",
+					page: "/pages/proprete-contrats/list-contrats",
+				},
+				{
+					title: "Réclamations & Pénalités",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Réclamations & Pénalités",
+					submenu: [
+						{
+							title: "Réclamations",
+							translate: "Réclamations",
+							page: "/pages/proprete-reclamations-penalites/list-reclamations",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+						{
+							title: "Pénalités",
+							translate: "Pénalités",
+							page: "/pages/proprete-reclamations-penalites/list-penalites",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexAssociation",
+						},
+					],
+				},
+				{
+					title: "Statistiques",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "Statistiques",
+					page: "/pages/statistiques/dashboard",
+				},
+			],
+		},
+
 
 		// ******************************************************************
 		// 	                       Tranche 2

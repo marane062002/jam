@@ -123,6 +123,10 @@ import { DetailsTraitementEffectueComponent } from './details-traitement-effectu
 import { ListCartesComponent } from './list-cartes/list-cartes.component';
 import { ListActionComponent } from './list-action/list-action.component';
 import { ListProgrammeComponent } from './list-programme/list-programme.component';
+import { ListControleurComponent } from './list-controleur/list-controleur.component';
+import { AddControleurComponent } from './add-controleur/add-controleur.component';
+import { UpdateControleurComponent } from './update-controleur/update-controleur.component';
+import { DetailsControleurComponent } from './details-controleur/details-controleur.component';
 
 
 @NgModule({
@@ -239,6 +243,10 @@ import { ListProgrammeComponent } from './list-programme/list-programme.componen
 		ListCartesComponent,
 		ListActionComponent,
 		ListProgrammeComponent,
+		ListControleurComponent,
+		AddControleurComponent,
+		UpdateControleurComponent,
+		DetailsControleurComponent,
 	],
 	imports: [
 		MatDialogModule,
@@ -672,6 +680,22 @@ import { ListProgrammeComponent } from './list-programme/list-programme.componen
 					{
 						path:"details-quartier/:id",
 						component:DetailsQuartierComponent
+					},
+					{
+						path:"list-controleur",
+						component:ListControleurComponent
+					},
+					{
+						path:"add-controleur",
+						component:AddControleurComponent
+					},
+					{
+						path:"update-controleur/:id",
+						component:UpdateControleurComponent
+					},
+					{
+						path:"details-controleur/:id",
+						component:DetailsControleurComponent
 					},
 					{
 						path:"list-traitement-effectue",

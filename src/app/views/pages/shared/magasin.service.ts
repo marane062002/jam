@@ -21,12 +21,18 @@ export class mgService {
     findById(id:number){
 		return this.http.get<any[]>(this.baseUrl+"magasins/marche/"+id);
 	}
+    findByIdAndNumMagasin(id:number,numMagsin:string){
+		return this.http.get<any[]>(this.baseUrl+"magasins/marche/numMagasin/"+id+'/'+numMagsin);
+	}
 	delete(id){
 		return this.http.delete(this.baseUrl+"magasins/delete/"+id,{responseType: 'text' as 'json'});
 	}
 
 	findOneById(id:number,id2:number){
 		return this.http.get<any[]>(this.baseUrl+"magasin/marche/"+id+"/"+id2);
+	}
+	existsByMarche_IdAndNumMagasin(idMarche:number,numMagasin:string){
+		return this.http.get<any[]>(this.baseUrl+"magasins/exist/"+idMarche+"/"+numMagasin);
 	}
 
 	nouvellepj(v, id, sModule) {

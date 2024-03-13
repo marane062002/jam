@@ -20,7 +20,7 @@ export class User extends BaseModel {
     idService:number;
     idHangar:number;
     
-    
+    isPresident:Boolean;
     
     occupation: string;
 	companyName: string;

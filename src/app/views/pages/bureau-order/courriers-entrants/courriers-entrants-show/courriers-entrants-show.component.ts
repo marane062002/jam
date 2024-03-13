@@ -21,6 +21,8 @@ import { AppState } from '../../../../../../app/core/reducers';
 import { Store, select } from '@ngrx/store';
 import { FonctionnaireEntityResponse, FonctionnaireService } from '../../../../../../app/core/_base/layout/services/fonctionnaire.service';
 import { FonctionnaireDTO } from '../../../../../../app/core/_base/layout/models/fonctionnaire-dto';
+import { AfficheComponent } from '../affiche/affiche.component';
+import { HttpClient } from '@angular/common/http';
 registerLocaleData(localeAr, 'ar');
 
 @Component({
@@ -32,7 +34,7 @@ export class CourriersEntrantsShowComponent implements OnInit {
 	language=localStorage.getItem('language');
 
 	// 	user : Observable<User>;
-	//   idFonctionniare=0;
+	//   idFonctionniare=0; 
 	//   fonctionnaireDTO : FonctionnaireDTO = {};
 	// PDF
 	formPj = { type: 0, selecetedFile: {} };
@@ -86,6 +88,7 @@ export class CourriersEntrantsShowComponent implements OnInit {
 	// Constructeur
 	// =================================================================
 	constructor(
+		private http: HttpClient,
 		private service: BoServiceService,
 		private notification: NotificationService,
 		private translate: TranslateService,
@@ -135,13 +138,48 @@ export class CourriersEntrantsShowComponent implements OnInit {
 	// get file extension & icons
 	// ============================================================
 	FileExtension(file) {
+	let a=	this.service.getExtensionFile(file);
+		
 		if (file == null) {
 			return "-";
 		} else {
 			return this.service.getExtensionFile(file);
 		}
 	}
-	// showSpinner() {
+
+	getExtension(file){
+		
+		return this.service.getExtensionFile(file)
+
+	}
+	fond
+	constration(row:any): void {
+		var r = row.idAlfresco.substring(0, row.idAlfresco.length - 4);
+
+		this.pdfSrc = environment.API_ALFRESCO_URL + "/PjCourriersEntrants/" + r;
+		this.http.get(this.pdfSrc , { responseType: 'blob' }).subscribe(response => {
+			this.convertBlobToBase64(response);
+		  });
+		const dialogRef = this._dialog.open(AfficheComponent, {
+			width: "50%",
+			height:"70%",
+			data : { Data: this.pdfSrc },
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			console.log("The dialog was closed");
+			this.fond = result;
+		});
+	}
+	base64Image
+	convertBlobToBase64(blob: Blob) {
+		const reader = new FileReader();
+		reader.onloadend = () => {
+		  // Convert the blob to Base64 and assign it to the variable
+		  this.base64Image = reader.result as string;
+		};
+		reader.readAsDataURL(blob);
+	  }	// showSpinner() {
 	// 	this.SpinnerService.show();
 	// 	setTimeout(() => {
 	// 		this.SpinnerService.hide();
@@ -183,6 +221,7 @@ export class CourriersEntrantsShowComponent implements OnInit {
 				}
 			);
 		this.fileHistorique = this.service.getFileByIdCourrier(this.courrierId);
+		
 		this.getCourriersEntrants(courrierId);
 
 	}
@@ -194,7 +233,7 @@ export class CourriersEntrantsShowComponent implements OnInit {
 		var r = e.substring(0, e.length - 4);
 		console.log(r);
 		window.open(environment.API_ALFRESCO_URL + "/PjCourriersEntrants/" + r);
-	}
+	} 
 	onClickPjName1(e, id) {
 		//console.log("You clicked: " + e);
 		var r = e.substring(0, e.length - 4);

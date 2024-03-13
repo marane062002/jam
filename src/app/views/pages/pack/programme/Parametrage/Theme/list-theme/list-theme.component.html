@@ -1,0 +1,70 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title">
+				Théme
+			</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a href="javascript:; " (click)="addNew()" class="btn btn-success btn-elevate btn-icon-sm"> <i class="la la-plus"></i> Ajouter un théme</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'PAGES.TYPE_ALERT.Id' | translate }}</th>
+            <td mat-cell *matCellDef="let row" class="num"> {{row.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="libelleFrançais">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Libellé Français
+            </th>
+            <td mat-cell *matCellDef="let row" class="Nom" >
+                {{ row.libelleFrancais? row.libelleFrancais : "-" }}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="libelleArabe">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+               Libellé Arabe
+            </th>
+            <td mat-cell *matCellDef="let row" class="Nom" >
+				{{ row.libelleArab? row.libelleArab : "-" }}
+
+            </td>
+        </ng-container>
+		<ng-container matColumnDef="natutre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nature
+            </th>
+            <td mat-cell *matCellDef="let row" class="Nom" >
+				<div *ngIf="checkLang=='ar'">{{ row.nature.libelleArab? row.nature.libelleArab : "-" }}</div>
+				<div *ngIf="checkLang=='fr'">{{ row.nature.libelleFrancais? row.nature.libelleFrancais : "-" }}</div>
+
+            </td>
+        </ng-container>
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="action">{{ "PAGES.PROGRAMME.ACTIONS" | translate }}</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button type="button" routerLink="/parametrages/add-type-fichier" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" (click)="Details(row)" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="icon la la-search-plus"></i></button>
+				<button type="button" routerLink="/parametrages/add-type-fichier" (click)="update(row)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
+				<button type="button" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+
+	<div *ngIf="dataSource.data.length == 0 && isLoading == false" style="display: flex; justify-content: center; padding: 2%; color: orangered">
+		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+	</div>
+	
+	<mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons (page)="handlePageEvent($event)"></mat-paginator>
+	<hr />
+</div>

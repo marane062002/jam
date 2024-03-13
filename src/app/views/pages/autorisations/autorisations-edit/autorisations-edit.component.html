@@ -6,7 +6,7 @@
 				<div class="kt-portlet__head-label">
 					<h3 class="">
 						رقم طلب الرخصة :
-						{{autorisation.id}}
+						{{autorisation?.numAutorisation}}
 					</h3>
 				</div>
 				<div class="kt-portlet__head-label">
@@ -319,7 +319,36 @@
 				</div>
 			</div>
 			<div class="kt-portlet__body">
-				<div class="form-group">
+				<div class="row">
+					<div class="col-md-6">
+						
+						<form style="padding: 0rem !important;">
+							<label class="input-group-btn">
+								<span class="btn btn-brand">
+									اختيار الوثائق المرفقة <input type="file"
+										(change)="save($event)" style="display: none;" multiple>
+								</span>
+							</label>
+						   
+
+						</form>
+
+
+							<div class="row">
+								<div class="col-md-6"><input id="test" type="text" class="form-control" value="" readonly ></div>
+								<div class="col-md-6"><label class="input-group-btn">
+									<button class="btn btn-brand" (click)="validerPj()">تسجيل الوثائق المرفقة</button>
+
+								</label></div>
+							</div>
+
+						
+						
+						
+					</div>
+				   
+				</div>
+				<!-- <div class="form-group">
 					<div class="input-group">
 						<form>
 							<label class="input-group-btn">
@@ -331,7 +360,7 @@
 							<input type="text" class="form-control" readonly>
 						</form>
 					</div>
-				</div>
+				</div> -->
 				<!---  <div id="psj">
                         <form>
                           <label class="custom-file-upload">
@@ -359,14 +388,25 @@
 									<td width="50%">الوثائق المرفقة</td>
 									<td>التحميل</td>
 								</tr>
-							</thead>
+							</thead>  
 							<tbody>
 								<tr *ngFor="let item of pjs ; index as i">
-									<td> {{item.name}}</td>
+									<td> 
+										<!-- {{item.name}} -->
+										<span *ngIf="item.idAlfresco == null ">{{item.selecetedFile[0].name}}</span>
+										<span *ngIf="item.idAlfresco !== null "> {{item.name}}</span>
+									</td>
+								
 									<td>
 										<button type="button" class="btn btn_piecejoint_down"
 											(click)="onClickPjName(item.idAlfresco,item.id)"><i
 												class="icon la la-cloud-download"></i></button>
+
+												<button type="button" (click)="onDeletePj(i)"
+                                            class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+                                            matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+                                            <i class="icon la la-trash"></i>
+                                        </button>
 										<!----    <button type="button" class="btn btn_piecejoint_down"
                                                 (click)="onClickDeletePj(item.id,i)"><i
                                                     class="la la-remove

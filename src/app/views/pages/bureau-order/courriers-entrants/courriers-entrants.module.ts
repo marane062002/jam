@@ -10,9 +10,11 @@ import { AddCourriersEntrantsComponent } from './add-courriers-entrants/add-cour
 import { EditCourriersEntrantsComponent } from './edit-courriers-entrants/edit-courriers-entrants.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SearchCourriersEntrantsComponent } from './search-courriers-entrants/search-courriers-entrants.component';
+import { ScannedImageComponent } from './scanned-image/scanned-image.component';
 
 @NgModule({
   declarations: [
+	ScannedImageComponent,
 	CourriersEntrantsComponent,
 	ListCourriersEntrantsComponent,
 	CourriersEntrantsShowComponent,
@@ -31,6 +33,10 @@ import { SearchCourriersEntrantsComponent } from './search-courriers-entrants/se
 				{
 					path: 'list-courriers-entrants',
 					component: ListCourriersEntrantsComponent
+				},
+				{
+					path: 'scan',
+					component: ScannedImageComponent
 				},
 				{
 					path: 'courriers-entrants-show',

@@ -1,0 +1,40 @@
+/* Style pour le formulaire */
+.form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Style pour les labels */
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Style pour les boutons */
+  .btn {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Style pour les icônes */
+  .la {
+    margin-right: 5px;
+  }
+  
+  /* Style pour les sélecteurs */
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  /* Style pour les options du sélecteur */
+  .mat-option {
+    font-size: 12px !important;
+  }
+  

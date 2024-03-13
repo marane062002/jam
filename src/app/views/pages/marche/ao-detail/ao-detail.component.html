@@ -321,6 +321,11 @@
 							<td>
 								{{ao?.adresseVisite ? ao?.adresseVisite : "-"}}
 							</td>
+							<th>Offre technique :</th>
+							<td>
+								<span *ngIf="ao.offreTechnique==1">Oui</span>
+								<span *ngIf="ao.offreTechnique==0">Non</span>
+							</td>
 							<!-- <th>Pièce justicative du réglement :</th>
 							<td>{{ao.loi}}</td> -->
 						</tr>

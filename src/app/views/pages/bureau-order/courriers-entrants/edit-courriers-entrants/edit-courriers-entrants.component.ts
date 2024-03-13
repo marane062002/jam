@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from "@angular/core";
 import {
 	FormGroup,
 	Validators,
@@ -17,7 +17,27 @@ import { environment } from './../../../../../../environments/environment';
 import { NotificationType } from '../../../shared/NotificationMessage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerService } from '../../../utils/spinner.service';
+import { ImageScan } from "../scanned-image/image-scan";
+import { SafeUrl } from "@angular/platform-browser";
+import Swal from "sweetalert2";
+export interface Pdf {
+	file: File;
+	fileName: string;
+}
+export class Scan {
+	file: string;
+	fileName: string;
+}
 
+export class PdfClass implements Pdf {
+	file: File;
+	fileName: string;
+
+	constructor(file: File, fileName: string) {
+		this.file = file;
+		this.fileName = fileName;
+	}
+}
 @Component({
 	selector: "kt-edit-courriers-entrants",
 	templateUrl: "./edit-courriers-entrants.component.html",
@@ -30,6 +50,7 @@ export class EditCourriersEntrantsComponent implements OnInit {
 	language=localStorage.getItem('language');
 	showRefOrigine = 0;
 	loading = false;
+	loading1 = false;
 	divisions: any;
 	services: any;
 	personnels: any;
@@ -38,7 +59,7 @@ export class EditCourriersEntrantsComponent implements OnInit {
 	showExternePM = false;
 	showExternePP = false;
 	typeCourrier: any;
-	originCourrier: any;
+	originCourrier: any; 
 	criticiteCourrier: any;
 	originCourrierPM: any;
 	originCourrierPP: any;
@@ -48,6 +69,33 @@ export class EditCourriersEntrantsComponent implements OnInit {
 	start: boolean = true;
 	public uploadFiles: Array<File>;
 	addFileForm: FormGroup;
+	pjForm: FormGroup = this.formBuilder.group({
+		fileName: [""],
+		fileInput: ["", Validators.required],
+	});
+	public file;
+	selectedFileName?: string;
+	pjExist: Boolean;
+	@Output() onSaveScannedImage = new EventEmitter<any>();
+	@Input() width: Number = 200;
+
+	@Input() wsServerPort: number = 61024;
+	imageScan : ImageScan;
+	private wsUrl: string = `ws://localhost:${this.wsServerPort}`;
+
+	base64Img: any = "";
+	scannedImageUrl: SafeUrl = "";
+	private ws: WebSocket = null;
+	startScanning: boolean;
+	showImageCropper: boolean = false;
+	tableScane:any =[]
+	tableuPdf: any = [];
+	isConnectedToScanner: boolean = false;
+	@Output() onScannerConnectionStateChange = new EventEmitter<boolean>(false);
+	errorMessage: String = "";
+	private reconnecteOnWSClose: boolean = true;
+	private wsReconnectDuration: number = 100;
+
 	// ============================================================
 	//
 	// ============================================================
@@ -167,6 +215,91 @@ export class EditCourriersEntrantsComponent implements OnInit {
 				this.files = this.service.getByIdCourrierFiles(courrierId);
 			this.start = false;
 		}, 1000);
+	}
+	pdf() {
+		let pdf = new PdfClass(this.file, this.pjForm.value.fileName);
+		this.tableuPdf.push(pdf);
+		console.log(this.tableuPdf)
+		console.log(this.file)
+
+		this.pjForm.value.file = "";
+		this.pjForm.value.fileName = "";
+	}
+	handleFile(e?: any) {
+		this.file = undefined;
+		this.file = e.target.files[0];
+		e.target.value = "";
+		this.selectedFileName = this.file.name;
+
+		this.pjExist = true;
+		this.uploadFiles = e.target.files;
+		if (e.target.files.length > 0) {
+			console.log("file size :: " + e.target.files.length);
+			console.log("file name :: " + e.target.files[0].name);
+			var file = e.target.files[0].name;
+			//console.log("file name SE :: " + file.substr(0, file.lastIndexOf('.')));
+			var num = this.editForm.get("numero").value;
+			//console.log("Num : " + num + " /" + num.substr(5, num.length))
+			var fileName = file.substr(0, file.lastIndexOf('.'));
+			if (num.indexOf(fileName) !== -1) {
+				this.notification.sendMessage({
+					message: 'الملف جاهز للتحميل ... ',
+					type: NotificationType.info
+				});
+			} else {
+
+				this.notification.sendMessage({
+					message: 'الملف جاهز للتحميل ... ',
+					type: NotificationType.info
+				});
+		/* 		Swal.fire({
+					title: 'انتباه !',
+					text: "هذه المراسلة المرفقة لا تحمل الرقم : " + num.substr(5, num.length - 5),
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					cancelButtonText: 'إلغاء',
+					confirmButtonText: 'تأكيد'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						this.notification.sendMessage({
+							message: 'الملف جاهز للتحميل ... ',
+							type: NotificationType.info
+						});
+					} else if (result.dismiss === Swal.DismissReason.cancel) {
+						this.addFileForm.reset();
+						this.inputFile.nativeElement.value = '';
+					}
+				}) */
+			}
+
+
+			this.addFileForm.patchValue(this.uploadFiles);
+		}
+
+	}
+	removeScannedImage(): void {
+		this.base64Img = "";
+		this.scannedImageUrl = "";
+	}
+	startScan(): void {
+		try {this.removeScannedImage();
+			if(this.ws.readyState == WebSocket.OPEN){
+				this.showImageCropper = false;
+				this.removeScannedImage();
+				this.ws.send("1100");
+				this.startScanning = true;
+				this.loading1 = true
+				this.files
+				this.tableScane
+				this.tableuPdf
+			
+
+			}
+		} catch (error) {
+			// this.errorMessage = "Allumez votre scanner";
+		}
 	}
 	// ============================================================
 	// Origine changed
@@ -433,6 +566,7 @@ export class EditCourriersEntrantsComponent implements OnInit {
 	//
 	// ============================================================
 	ngOnInit() {
+		this.connectToSocket();
 
 		this.service.fileSizeDetector();
 
@@ -487,6 +621,89 @@ export class EditCourriersEntrantsComponent implements OnInit {
 			}
 		);
 
+	}
+	private changeScannerConnectionState(state: boolean): void {
+		this.isConnectedToScanner = state;
+		this.onScannerConnectionStateChange.emit(this.isConnectedToScanner);
+	}
+	private  connectToSocket = (): void => {
+		try {
+			this.ws = null;
+			if(!this.ws){
+				try {
+					this.ws = new WebSocket(this.wsUrl);
+				} catch (error) {
+
+				}
+				
+				this.ws.onopen = (e) => {
+					this.changeScannerConnectionState(true);
+					this.errorMessage = '';
+				}
+				this.ws.onerror = (e) => {
+					this.errorMessage = "Lancez l'application middleware du scanner";
+					this.ws.close();
+				}
+				this.ws.onmessage = (e) => {
+					if (e.data instanceof Blob) {
+						var reader = new FileReader();
+						reader.readAsDataURL(e.data);
+						reader.onloadend = () => {
+							this.base64Img = reader.result;
+							if (this.base64Img != null) {
+								this.imageScan = {
+									imageBase64: this.base64Img
+								}
+							}
+							// this.gestionDocumentService.Add("detect-face",this.imageScan).subscribe(res=>{
+							// 	let f = res.body as ImageScan;
+							// 	this.base64Img = f.imageBase64;
+							// 	this.scannedImageUrl = this.sanitizer.bypassSecurityTrustUrl(this.base64Img + "");
+							// 	if(this.enableImageCropper){
+							// 		this.showImageCropper = true;
+							// 	}
+							// 	this.startScanning = false;
+
+							// },  (error) => {
+							// 	let errorMessage;
+							// 	if (error.status === 500 || error.status === 404) {
+							// 	  errorMessage = 'Une erreur est survenue, merci de réessayer plus tard';
+							// 	} else if (error.error && error.error.message) {
+							// 	  errorMessage = error.error.message;
+							// 	}
+
+							// 	this.messageService.add({
+							// 	  severity: 'error',
+							// 	  summary: errorMessage,
+							// 	  life: 5000
+							// 	});
+							//   });
+							
+							this.tableScane.push({file: this.base64Img,
+								fileName: this.addFileForm.value.fileName})
+						  console.log(this.tableScane)
+						  
+						  this.loading1 = false
+						}
+					}
+					// else{
+					//     let msg = JSON.parse(e.data);
+					// }
+				};
+				this.ws.onclose = (e) => {
+					this.changeScannerConnectionState(false);
+					if(this.reconnecteOnWSClose){
+						setTimeout(() => {
+							this.connectToSocket();
+						}, this.wsReconnectDuration);
+					}
+				}
+			}
+		} catch (error) {
+			setTimeout(() => {
+				this.connectToSocket();
+			}, this.wsReconnectDuration);
+		}
 	}
 	// ============================================
 	// Charger les liste externe
@@ -544,20 +761,81 @@ export class EditCourriersEntrantsComponent implements OnInit {
 					var id = this.editForm.get('id').value;
 					//console.log("ID courrier: " + id);
 					// upload file
-					if (this.uploadFiles)
-						this.service.updloadFiles(this.uploadFiles, id)
-							.subscribe(
-								(res) =>
+
+					if(this.tableScane.length >0){
+
+						for(let j=0;j<this.tableScane.length ; j++){
+							this.service.uploadSejoursScan(this.tableScane[j],id).subscribe(
+								(res)=>{
 									this.notification.sendMessage({
 										message: 'تمت إضافة المرفقات بنجاح',
 										type: NotificationType.info
 									}),
-								(err) =>
+									console.log(res)
+								},(err)=>{
 									this.notification.sendMessage({
 										message: 'عملية رفع المرفقات خاطئة',
 										type: NotificationType.error
 									}),
+									console.log(err)
+								}
+							)
+	
+	
+						}
+	
+	
+	
+					}
+					if (this.tableuPdf.length > 0) {
+						for (let i = 0; i < this.tableuPdf.length; i++) {
+							this.service.updloadFiles(this.tableuPdf[i].file,  id).subscribe(
+								(res) => {
+									console.log(res);
+									this.Association();
+								},
+								(error) => {
+									console.log(error);
+									this.Association();
+								}
 							);
+						}
+					// // upload files to alfresco GED
+					// if (this.uploadFiles){
+						
+					// }
+					// 	this.service.updloadFiles(this.uploadFiles, data)
+					// 		.subscribe(
+					// 			(res) =>
+					// 				this.notification.sendMessage({
+					// 					message: 'تمت إضافة المرفقات بنجاح',
+					// 					type: NotificationType.info
+					// 				}),
+					// 			(err) =>
+					// 				this.notification.sendMessage({
+					// 					message: 'عملية رفع المرفقات خاطئة',
+					// 					type: NotificationType.error
+					// 				}),
+					// 		);
+					this.notification.sendMessage({
+						message: this.translate.instant("PAGES.GENERAL.MSG_SAVED_CONFIRMED"),
+						type: NotificationType.success
+					});
+				}
+					// if (this.uploadFiles)
+					// 	this.service.updloadFiles(this.uploadFiles, id)
+					// 		.subscribe(
+					// 			(res) =>
+					// 				this.notification.sendMessage({
+					// 					message: 'تمت إضافة المرفقات بنجاح',
+					// 					type: NotificationType.info
+					// 				}),
+					// 			(err) =>
+					// 				this.notification.sendMessage({
+					// 					message: 'عملية رفع المرفقات خاطئة',
+					// 					type: NotificationType.error
+					// 				}),
+					// 		);
 
 					this.router.navigate([
 						"courriers-entrants/list-courriers-entrants"
@@ -576,6 +854,16 @@ export class EditCourriersEntrantsComponent implements OnInit {
 					alert(error);
 				}
 			);
+	}
+	Association(): void {
+		Swal.fire({
+			position: "center",
+			icon: "success",
+			title: "Enregistre Succes",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		this.router.navigate(["courriers-entrants/list-courriers-entrants"]);
 	}
 	// ============================================================
 	//

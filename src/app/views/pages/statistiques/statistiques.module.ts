@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { MaterialsModule } from "../utils/materials/materials.module";
 import { RouterModule } from "@angular/router";
-
+// import Chart from 'chart.js/auto';
 import { StatistiquesComponent } from "./statistiques.component";
 import { VehiculeComponent } from "../gestion-parc-auto/parametrage/vehicules/components/vehicule.component";
 import { MarchandiseEtCarreauxComponent } from "./marchandise-et-carreaux/marchandise-et-carreaux.component";
@@ -28,6 +28,7 @@ import { QuantiteParSousTypeEtPeriodeModalComponent } from "./marchandise-et-car
 import { QuantiteParTypeEtPeriodeModalComponent } from "./marchandise-et-carreaux/quantite-par-type-et-periode-modal/quantite-par-type-et-periode-modal.component";
 import { CalculDixJoursModalComponent } from "./transaction-et-recettes/calcul-dix-jours-modal/calcul-dix-jours-modal.component";
 import { NombreParGenreEtQuantiteModalComponent } from "./vehicules/nombre-par-genre-et-quantite-modal/nombre-par-genre-et-quantite-modal.component";
+import { StatistiqueEtablissementComponent } from './controle-sanitaire/statistique-etablissement/statistique-etablissement.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { NombreParGenreEtQuantiteModalComponent } from "./vehicules/nombre-par-g
     TransactionsModalComponent,
     DashboardComponent,
     DashboardCarreComponent,
-    DashboardProduitComponent
+    DashboardProduitComponent,
+    StatistiqueEtablissementComponent
   ],
 
   entryComponents:[TransactionsModalComponent,NombreParGenreEtQuantiteModalComponent,CalculDixJoursModalComponent,QuantiteParTypeEtPeriodeModalComponent,QuantiteParSousTypeEtPeriodeModalComponent,RecettesParPeriodeEtCarreauModalComponent,],
@@ -65,6 +67,7 @@ import { NombreParGenreEtQuantiteModalComponent } from "./vehicules/nombre-par-g
     PagesModule,
     CommonModule,
     FormsModule,
+    // ChartModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
     MaterialsModule,
@@ -103,7 +106,10 @@ import { NombreParGenreEtQuantiteModalComponent } from "./vehicules/nombre-par-g
             path: "nombre-par-genre-et-quantite",
             component: NombreParGenreEtQuantiteComponent,
           },
-          
+          {
+            path: "statistique-etablissement",
+            component: StatistiqueEtablissementComponent,
+          },
         ],
       },
     ]),

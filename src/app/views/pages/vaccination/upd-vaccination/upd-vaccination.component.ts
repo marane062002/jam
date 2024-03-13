@@ -2,12 +2,18 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { TypeVaccinationService } from "../../parametrage-bmh/services/type-vaccination.service";
 import { AnimalService } from "../../parametrage-bmh/services/animal.service";
 import { TraitementEffectueService } from "../../parametrage-bmh/services/traitement-effectue.service";
 import { VStatutService } from "../../parametrage-bmh/services/v-statut.service";
+import Swal from 'sweetalert2';
+import { MatTableDataSource } from "@angular/material";
+import { Association360Tab } from "../../pesee/show-pesee/show-pesee.component";
+import { Observable } from "rxjs";
+import * as $ from "jquery";
+
 @Component({
 	selector: "kt-upd-vaccination",
 	templateUrl: "./upd-vaccination.component.html",
@@ -16,12 +22,23 @@ import { VStatutService } from "../../parametrage-bmh/services/v-statut.service"
 export class UpdVaccinationComponent implements OnInit {
 	vaccinationId: any;
 	vaccinationDetails: any;
-
+	private AlfresscoURL = environment.API_ALFRESCO_URL;
 	private headers = new HttpHeaders({
 		'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
 
+	pcfileDeclar : File;
+	labelDeclar: any;
+	pcDeclarantFile: File;
+    allpjDeclar = []
+	formPjDeclar = { selecetedFile: {}, LabelPj: "" };
+	dataSource3: MatTableDataSource<any>;
+	displayedColumns1 = [ "label", "nomDoc", "actions"];
+	displayedColumns2=['nomDoc','titre','label','dow']
+	asyncTabs: Observable<Association360Tab[]>;
+	dataSource2 = new MatTableDataSource<any>();
+	ajoutForm: FormGroup;
 
 	connu: any;
 	minneur: any;
@@ -90,10 +107,16 @@ export class UpdVaccinationComponent implements OnInit {
 		 private animalv : AnimalService,
 		 private typev: TypeVaccinationService,
 		 private traitv: TraitementEffectueService,
-		 private statusv: VStatutService
+		 private statusv: VStatutService,
+		 private fb: FormBuilder
 		 ) {}
 
 	ngOnInit(): void {
+		this.ajoutForm = this.fb.group({
+			pj: this.fb.group({
+				pcfileDeclar: [''] 
+			})
+		  });
 		this.route.params.subscribe((params) => {
 			this.vaccinationId = +params["id"];
 		});
@@ -103,7 +126,57 @@ export class UpdVaccinationComponent implements OnInit {
 		this.fetchTypeDeclaration();
 		this.fetchTraitementEffectue();
 		this.fetchStatut();
+		this.getAllPjImm(this.vaccinationId)
 	}
+
+	saveDec(event: any): void {
+		$("#testd").val(event.target.files[0].name);
+		this.ajoutForm.get('pj.pcfileDeclar').setValue(event.target.files[0].name);
+		this.formPjDeclar.selecetedFile = event.target.files[0];
+	  }
+	
+	  labelDeclarant(event: any): void {
+		this.formPjDeclar.LabelPj = event.target.value;
+	  }
+	  validerPjDec() {
+		this.allpjDeclar.push(this.formPjDeclar);
+		$("#testd").val(null);
+		this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+		this.formPjDeclar = { selecetedFile: {}, LabelPj: this.formPjDeclar.LabelPj };
+	  }
+	
+	  onDeletePjDec(id: number): void {
+		this.allpjDeclar.splice(id, 1);
+		if (this.allpjDeclar.length > 0) {
+		  this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+		} else {
+		  this.dataSource3 = null;
+		}
+	  }
+	  async getAllPjImm(ide) {
+		await this.httpClient.get(`${this.AlfresscoURL}/bmh-vaccination/index/${ide}`)
+		  .subscribe(
+			(data:any) => {	
+				this.dataSource2 = new MatTableDataSource(data);
+			},
+			(error) => console.log(error)
+		);
+	}
+		onClickPj(e, id) {
+			var r = e.substring(0, e.length - 4);
+		console.log("rrrrr:", r)
+		console.log("id alf:", id)
+	
+			this.httpClient.delete(`${this.AlfresscoURL}/bmh-vaccination/index/${id}`)
+		.subscribe(
+				(data:any) => {
+			console.log(data)
+			this.ngOnInit()
+				},
+				(error) => console.log(error)
+			);
+		}
+
 	private fetchAnimal(): void {
 		this.animalv.getAll().subscribe(
 			(response) => {
@@ -214,7 +287,7 @@ export class UpdVaccinationComponent implements OnInit {
 				this.datePrevueDernierRappel = this.formatDate(this.vaccinationDetails.infosVictime.datePrvDernierRappel);
 				this.statutDernierRappelControl.setValue(this.vaccinationDetails.infosVictime.statutDernierRappel);
 				this.dateReelleDernierRappel = this.formatDate(this.vaccinationDetails.infosVictime.dateReelleDernierRappel);
-				this.statut = this.vaccinationDetails.infosVictime.status;
+				this.statut = this.vaccinationDetails.infosVictime.status.libelle;
 			},
 			(error) => {
 				console.error("Error fetching etablissement details:", error);
@@ -261,10 +334,12 @@ export class UpdVaccinationComponent implements OnInit {
 		setTimeout(() => {
 			this.httpClient.put(`${this.baseUrl}type-animal/${this.vaccinationDetails.typeAnimal.id}`, animalType,{ headers: this.headers }).subscribe(
 				(animal: any) => {
-					console.log("animal created successfully:", animal);
+					
+					console.log("animal updated successfully:", animal);
 					this.httpClient.put(`${this.baseUrl}infos-victimes/${this.vaccinationDetails.infosVictime.id}`, infosVictimes,{ headers: this.headers }).subscribe(
 						(victime: any) => {
-							console.log("victime created successfully:", animal);
+							
+							console.log("victime updated successfully:", animal);
 							console.log("animal id:", animal.id);
 							console.log("victime id:", victime.id);
 							const infosGenerales = {
@@ -283,13 +358,28 @@ export class UpdVaccinationComponent implements OnInit {
 									id: this.vaccinationDetails.typeAnimal.id,
 								},
 							};
-
+							
 							formData.append("generale", new Blob([JSON.stringify(infosGenerales)], { type: "application/json" }));
-							formData.append("pieceJointe", this.pieceJointe);
+							
+							// formData.append("pieceJointe", this.pieceJointe);
 							console.log("infos generales: ", formData);
 							console.log("infos generales without piece jointe:", infosGenerales);
-							this.httpClient.put(`${this.baseUrl}vaccination/${this.vaccinationId}`, formData, { headers: this.headers }).subscribe(
-								(infosGenerales) => {
+							this.httpClient.put(`${this.baseUrl}vaccination/${this.vaccinationId}`, infosGenerales, { headers: this.headers }).subscribe(
+								(infosGenerales:any) => {
+									this.allpjDeclar.forEach(formPj => {	
+        
+										const pcjDeclarant = new FormData();
+									
+										  pcjDeclarant.append("file", formPj.selecetedFile)
+										  pcjDeclarant.append("sousModule", "VACCINATION")
+										  pcjDeclarant.append("id",infosGenerales.id)
+										  pcjDeclarant.append("label", formPj.LabelPj);
+									
+										  this.httpClient.post(`${this.AlfresscoURL}/bmh-vaccination/multiplefile`, pcjDeclarant)
+										  .subscribe((res)=>{
+										  console.log('deces naturel pièce Jointe stored successfully:', res);
+										  })
+										});
 									console.log("infosGeneral updated successfully:", infosGenerales);
 									this.router.navigate(["/vaccination/list-vaccination"]);
 								},

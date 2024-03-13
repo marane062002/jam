@@ -25,8 +25,8 @@
 
 			<div class="form-group fv-plugins-icoan-container">
 				<mat-form-field class="example-full-width">
-					<mat-select class="form-control" formControlName="partiePreneur" placeholder="{{ 'PAGES.MARCHE.convention.PP' | translate }}" multiple>
-						<mat-option *ngFor="let item of listPP" [value]="item.id">
+					<mat-select class="form-control" formControlName="partiePreneurs" placeholder="{{ 'PAGES.MARCHE.convention.PP' | translate }}" multiple>
+						<mat-option *ngFor="let item of listPP" [value]="item">
 							{{item.nom}} {{item.prenom}}</mat-option>
 					</mat-select>
 				</mat-form-field>
@@ -46,6 +46,37 @@
 			<mat-form-field class="example-full-width">
 				<input matInput class="form-control" type="number" formControlName="maxMontant"  placeholder="Max Montant:" />
 			</mat-form-field></div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group fv-plugins-icoan-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.CONVENTION.ETAT_CONVENTION" | translate }} :</mat-label>
+					<mat-select multiple class="form-control" formControlName="etatConvention"
+						[(ngModel)]="selectedOptionsEC" (selectionChange)="addItemEtatConvention($event.value)">
+						<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+						<mat-option [value]="'EN_COURS_PREPARATION'">{{ "PAGES.CONVENTION.EN_COURS_PREPARATION" | translate }}
+						</mat-option>
+						<mat-option [value]="'EN_COURS_SIGNATURE'">{{ "PAGES.CONVENTION.EN_COURS_SIGNATURE" | translate }}
+						</mat-option>
+						<mat-option [value]="'SIGNER'">{{ "PAGES.CONVENTION.SIGNER" | translate }}</mat-option>
+						<mat-option [value]="'ACHEVER'">{{ "PAGES.CONVENTION.ACHEVER" | translate }}</mat-option>
+					</mat-select>
+
+				</mat-form-field>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>{{ "PAGES.PROGRAMME.ANNEE" | translate }} :</mat-label>
+					<input matInput class="form-control" [matDatepicker]="picker5"
+						placeholder="{{ 'PAGES.PROGRAMME.ANNEE' | translate }} :" formControlName="date" />
+					<mat-datepicker-toggle matSuffix matSuffix [for]="picker5">
+						<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i> </mat-icon>
+					</mat-datepicker-toggle>
+					<mat-datepicker touchUi="true" #picker5></mat-datepicker>
+				</mat-form-field>
+			</div>
 		</div>
 		<div class="col-md-3" style="margin-top: 15px;;">
 		</div>
@@ -146,6 +177,7 @@
 		">
 		{{ "PAGES.GENERAL.NO_RECORDS" | translate }}
 	</div>
-	<mat-paginator *ngIf="dataSource != undefined && dataSource.data != undefined" [length]="dataSource.data.length" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons></mat-paginator>
+	<mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons (page)="handlePageEvent($event)"></mat-paginator>
 	<hr />
+
 </div>

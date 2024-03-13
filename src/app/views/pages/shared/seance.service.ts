@@ -21,12 +21,19 @@ export class seanceService {
     findById(id:number){
 		return this.http.get<any[]>(this.baseUrl+"seances/marche/"+id);
 	}
+    findByIdAndNumSeance(id:number,numSeance:string){
+		return this.http.get<any[]>(this.baseUrl+"seances/marche/numSeance/"+id+'/'+numSeance);
+	}
 	delete(id){
 		return this.http.delete(this.baseUrl+"seances/delete/"+id,{responseType: 'text' as 'json'});
 	}
 
 	findOneById(id:number,id2:number){
 		return this.http.get<any[]>(this.baseUrl+"seance/marche/"+id+"/"+id2);
+	}
+
+	existsByMarche_IdAndNumMagasin(idMarche:number,numSeance:string){
+		return this.http.get<any[]>(this.baseUrl+"seances/exist/"+idMarche+"/"+numSeance);
 	}
 
 	nouvellepj(v, id, sModule) {

@@ -1,0 +1,81 @@
+<div autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Afficher un controleur :
+				</h2>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+  
+    <form *ngIf="info">
+        <div class="row">
+            <div class="col-md-6">
+              <div class="form-group fv-plugins-icon-container">
+                <mat-form-field class="example-full-width">
+                    <label>Nom</label>
+                    <input matInput [value]="info.nom" readonly>
+                  </mat-form-field>
+                  <div class="fv-plugins-message-container"></div> 
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group fv-plugins-icon-container">
+                <mat-form-field class="example-full-width">
+                    <label>Prenom</label>
+                    <input   matInput [value]="info.prenom" readonly>
+                  </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group fv-plugins-icon-container">
+                  <mat-form-field class="example-full-width">
+                      <label>CIN</label>
+                      <input matInput [value]="info.cin" readonly>
+                    </mat-form-field>
+                    <div class="fv-plugins-message-container"></div> 
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group fv-plugins-icon-container">
+                  <mat-form-field class="example-full-width">
+                      <label>TEL</label>
+                      <input matInput [value]="info.tel" readonly>
+                    </mat-form-field>
+                    <div class="fv-plugins-message-container"></div> 
+                </div>
+              </div>
+          </div>
+      </form>
+      <div class="kt-portlet__heads" style="margin-top: 20px;">
+        <div class="kt-portlet__head-label" align="right">
+            <button
+                href="javascript:; "
+                (click)="RetourEmbalages()"
+                _ngcontent-dkp-c41=""
+                class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+            >
+                <i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+                Retour
+            </button>
+    </div>
+</div>
+
+<!-- <div>
+          <label>Libellé:</label>
+          <input type="text" [(ngModel)]="info.libelle" name="libelle" readonly>
+        </div>
+      
+        <div>
+          <label>Description:</label>
+          <textarea [(ngModel)]="info.description" name="description" readonly></textarea>
+        </div> -->
+
+

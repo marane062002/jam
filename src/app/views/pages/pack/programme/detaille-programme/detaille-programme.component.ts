@@ -8,7 +8,7 @@ import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { FilesUtilsService } from '../../../utils/files-utils.service';
 import { ExcelAssociationService } from '../../../utils/excel-association.service';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { ConsistanceConventionService } from '../../../../../views/pages/shared/consistance-convention.service';
 import { ExecutionProjetService } from '../../../../../views/pages/shared/execution-projet.service';
 
@@ -18,7 +18,7 @@ import { ExecutionProjetService } from '../../../../../views/pages/shared/execut
   styleUrls: ['./detaille-programme.component.scss']
 })
 export class DetailleProgrammeComponent implements OnInit {
-  language = localStorage.getItem('language');
+  checkLang = localStorage.getItem('language');
   id;
   programme
   // ============================================
@@ -54,7 +54,13 @@ export class DetailleProgrammeComponent implements OnInit {
   data3: any[] = null;
 
   ngOnInit() {
-
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			if (event.lang == "ar") {
+				this.checkLang = "ar";
+			} else if (event.lang == "fr") {
+				this.checkLang = "fr";
+			}
+		});
     this.activatedRoute.queryParams.subscribe(params => {
       this.id = params['id'];
       console.log(this.id)

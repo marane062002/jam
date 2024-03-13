@@ -167,7 +167,7 @@
                                     <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
                                     <span class="kt-nav__link-text">{{ 'MENU.programme' | translate }}</span>
                                 </a>
-                            </li>
+                            </li>  
                             <!-- begin::gestion stock  -->
                         <!-- end::AffairesConseil  -->
                         <!-- **************************END********************************************************** -->
@@ -181,18 +181,62 @@
                         </li>
                         <!-- begin::Users -->
 
-                        <li ngbDropdownItem class="kt-nav__item">
+                        <li ngbDropdownItem class="kt-nav__item" *ngxPermissionsOnly="['accessToBMHModule']">
                             <a class="kt-nav__link active" (click)="menuHorService.clickMenu(26)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
                                 <span class="kt-nav__link-text">BMH</span>
                             </a>
                         </li>
                         <li ngbDropdownItem class="kt-nav__item">
-                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToProgrammePrevisionnelModule']" (click)="menuHorService.clickMenu(27)" href="javascript:;">
+                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToProgrammePrevisionnelModule']" 
+                            (click)="menuHorService.clickMenu(27)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
                                 <span class="kt-nav__link-text">planning  prévisionnel de la commande public de la commune de marrakech</span>
                             </a>
                         </li>
+                        <li ngbDropdownItem class="kt-nav__item" *ngxPermissionsOnly="['accessToPlanningModule']" >
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(28)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
+                                <span class="kt-nav__link-text">Fiche de consultation</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a (click)="menuHorService.clickMenu(29)"
+                                class="kt-nav__link active"
+                                href="javascript:;"
+                            >
+                                <span class="kt-nav__link-icon"
+                                    ><i
+                                        class="fa fa-briefcase"
+                                        aria-hidden="true"
+                                    ></i
+                                ></span>
+                                <span class="kt-nav__link-text">
+                                    Délégataire/SDL
+                                </span>
+                            </a>
+                        </li>
+                        <li ngbDropdownItem class="kt-nav__item">
+                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(30)" href="javascript:;">
+                                <span class="kt-nav__link-icon"><i class="fas fa-phone"></i></span>
+                                <span class="kt-nav__link-text">GMS/LAN</span>
+                            </a>
+                        </li>
+                        <li class="kt-nav__item">
+                            <a (click)="menuHorService.clickMenu(31)"
+                                class="kt-nav__link active"
+                                href="javascript:;"
+                            >
+                                <span class="kt-nav__link-icon"
+                                    ><i
+                                        class="fa fa-briefcase"
+                                        aria-hidden="true"
+                                    ></i
+                                ></span>
+                                <span class="kt-nav__link-text"> Propreté </span>
+                            </a>
+                        </li>
+    
                     </perfect-scrollbar>
                 </ul>
             </div>

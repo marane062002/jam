@@ -64,7 +64,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="form-group fv-plugins-icon-container">
 											<mat-form-field class="example-full-width">
 												<mat-label>{{ "PAGES.CONVENTION.DUREE" | translate }} :</mat-label>
@@ -77,13 +77,67 @@
 											<div class="fv-plugins-message-container"></div>
 										</div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="form-group fv-plugins-icon-container">
 											<mat-form-field class="example-full-width">
 												<mat-label>{{ "PAGES.CONVENTION.MONTANT" | translate }} :</mat-label>
 												<input type="text"
 													class="form-control form-control-solid form-control-lg"
 													name="address1" value="{{details?.montant}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.ETAT_CONVENTION" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.etatConvention}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.DATE_SIGNATURE" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.dateSignature}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.MONTANT" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.dateDebut}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.ETAT_CONVENTION" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.dateAchevement}}" disabled matInput />
 											</mat-form-field>
 											<div class="fv-plugins-message-container"></div>
 
@@ -106,7 +160,7 @@
 										</td>
 										<td class="title_td">{{ 'PAGES.ATTCHEMENTS.DATE_DISPATCHING' | translate }}</td>
 										<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TAILLE_FICHIER' | translate }}</td>
-										<td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td>
+										<!-- <td class="title_td">{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</td> -->
 									</tr>
 								</thead>
 								<tbody>
@@ -118,6 +172,11 @@
 										<td>{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
 										<td>{{item.fSize/1000}} ko</td>
 										<td>
+											<button type="button" (click)="onDeletePj(item.id)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+											<i class="icon la la-trash"></i>
+										</button>
 											<button type="button" (click)="onClickPjName(item.idAlfresco,item.id)"
 												class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
 												matTooltip="{{FileName(item.name)}}"><i

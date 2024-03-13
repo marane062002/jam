@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { environment } from "../../../../../environments/environment";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
 @Component({
   selector: "kt-add-etablissement",
@@ -11,40 +13,44 @@ import { environment } from "../../../../../environments/environment";
 })
 export class AddEtablissementComponent implements OnInit {
   typeControl = new FormControl();
-  stypeControl = new FormControl();
   communeControl = new FormControl();
   quartierControl = new FormControl();
   arrondissementControl = new FormControl();
+  controleurControl=new FormControl();
 
-  rs: any;
+  
+  denomination:string;
+  natureEtablissement:any;
+  remarque:string;
+  mesuresPrises:any;
+  saisisDestruction: any;
+  valeurSaisieDestruction:any;
+  etatHygiene:string;
   rc: any;
   nom: any;
   prenom: any;
   cin: any;
-  description: any;
-  activites: any;
   tel: any;
-  fax: any;
-  nomprop: any;
-  prenomprop: any;
-  cinprop: any ;
-  telprop: any;
-  nomgerant: any;
-  prenomgerant: any;
-  cingerant: any;
-  telgerant: any;
-  idf: any;
+  nomProp: any;
+  prenomProp: any;
+  cinPro: any ;
+  nomGerant: any;
+  prenomGerant: any;
+  cinGerant: any;
   adresse: any;
-  checkedChoisi: any;
+  personne:any;
+  proprGerant:any;
+  date=new Date();
   private headers = new HttpHeaders({
 		'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
   types: any[] = [];
-  stypes: any[] = [];
   commune: any[] = [];
   quartier: any[] = [];
   arrondissement: any[] = [];
+  controleur:any[]=[];
+  
 //   data: any[] =[];
   private baseUrl = environment.API_BMH_URL;
 
@@ -54,12 +60,14 @@ export class AddEtablissementComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchTypes();
-    this.SousTypes();
     this.fetchCommune();
     this.fetchQuartier();
     this.fetchArrondissement();
+    this.fetchControleur();
+   
   }
 
+  
   private fetchTypes(): void {
     this.httpClient.get<any[]>(`${this.baseUrl}typectrl`,{ headers: this.headers }).subscribe(
       (response) => {
@@ -67,6 +75,16 @@ export class AddEtablissementComponent implements OnInit {
       },
       (error) => {
         console.error("Error fetching types:", error);
+      }
+    );
+  }
+  private fetchControleur(): void {
+    this.httpClient.get<any[]>(`${this.baseUrl}controleur`,{ headers: this.headers }).subscribe(
+      (response) => {
+        this.controleur = response;
+      },
+      (error) => {
+        console.error("Error fetching controleur:", error);
       }
     );
   }
@@ -104,49 +122,52 @@ export class AddEtablissementComponent implements OnInit {
     );
   }
 
-  private SousTypes(): void {
-    this.httpClient.get<any[]>(`${this.baseUrl}soustype`,{ headers: this.headers }).subscribe(
-      (response) => {
-        this.stypes = response;
-      },
-      (error) => {
-        console.error("Error fetching types:", error);
-      }
-    );
-  }
+
  
   createEtablissement(): void {
     const data: any = {
-        description: this.description,
-        activite: this.activites,
+      denomination:this.denomination,
+      natureEtablissement:this.natureEtablissement,
+      remarque:this.remarque,
+      mesuresPrises:this.mesuresPrises,
+      saisisDestruction:this.saisisDestruction,
+      valeurSaisieDestruction:this.valeurSaisieDestruction,
+      etatHygiene:this.etatHygiene,
+      personne:this.personne,
+      proprGerant:this.proprGerant,
         tel: this.tel,
-        fax: this.fax,
-        ifiscal: this.idf,
         adresse: this.adresse,
-        personne: this.checkedChoisi,
-        nomProp: this.nomprop,
-        prenomProp: this.prenomprop,
-        cinPro: this.cinprop,
-        telProp: this.telprop,
-        nomGerant: this.nomgerant,
-        prenomGerant: this.prenomgerant,
-        cinGerant: this.cingerant,
-        telGerant: this.telgerant, 
+        nomProp: this.nomProp,
+        prenomProp: this.prenomProp,
+        cinPro: this.cinPro,
+        nomGerant: this.nomGerant,
+        prenomGerant: this.prenomGerant,
+        cinGerant: this.cinGerant,
+        date:this.date,
 		typeControleSanitaire : { id: this.typeControl.value },
-		sousType : { id: this.stypeControl.value },
 		commune : { id: this.communeControl.value },
 		arrondissement : { id: this.arrondissementControl.value },
-		quartier : { id: this.quartierControl.value }
+		quartier : { id: this.quartierControl.value },
+		controleur : { id: this.controleurControl.value }
     };
 
-    if (this.checkedChoisi === "MORALE") {
-        data.rs = this.rs;
-        data.rc = this.rc;
-    } else if (this.checkedChoisi === "PHYSIQUE") {
-        data.nom = this.nom;
-        data.prenom = this.prenom;
-        data.cin = this.cin;
+    if(this.proprGerant==="Proprietaire"){
+      
+      data.nomProp=this.nomProp;  
+      data.prenomProp=this.prenomProp;  
+      data.cinPro=this.cinPro;
+    }else{
+      data.nomGerant=this.nomGerant;
+      data.rc=this.rc;
     }
+    if (this.personne === "MORALE") {
+      data.rc = this.rc;
+      data.nom = this.nom;
+  } else if (this.personne === "PHYSIQUE") {
+      data.nom = this.nom;
+      data.prenom = this.prenom;
+      data.cin = this.cin;
+  }
 
    
     console.log(data);

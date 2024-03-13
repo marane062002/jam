@@ -11,23 +11,126 @@
                             التراخيص
                         </h3>
                     </div>
+                    
                     <div class="kt-portlet__head-toolbar">
                         <div class="kt-portlet__head-wrapper">
                             <div class="kt-portlet__head-actions">
                                 &nbsp;
+                                <button (click)="exportTable()" type="button" class="
+                                btn
+                                btn-sm
+                                btn-clean
+                                btn-icon
+                                btn-success
+                                btn-icon-md
+                                btn_table_show
+                            " matTooltip="{{
+                                'PAGES.GENERAL.DOWNLOAD' | translate
+                            }}&nbsp;{{
+                                'PAGES.MARCHE.AO.TITRE_INDEX_BC'
+                                    | translate
+                            }}">
+                            <i class="flaticon2-download text-success"></i>
+                        </button>
                                 <a href="javascript:; " *ngxPermissionsOnly="['canCreateAutorisation']" (click)=" nouvellepp()" class="btn btn-success btn-elevate btn-icon-sm">
                                     <i class="la la-plus"></i> إضافة ترخيص
                                 </a>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
                 <div class="kt-portlet__body kt-portlet__body--fit">
                     <div class="example-header">
-                        <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+                        <form action="" class="row" [formGroup]="formGroup" >
+                            <div class="col-md-4">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>نوع الممتلك :</mat-label>
+                                        <mat-select multiple class="form-control-lg" placeholder="نوع الممتلك:" formControlName="typeobj" (selectionChange)="addItemTypeBien($event.value)" [(ngModel)]="selectedOptionsTypeBien">
+                                            <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                                            <mat-option *ngFor="let item of typeBien" [value]="item">
+                                                {{item.typeObjetAutorisation}}</mat-option>                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group fv-plugins-icon-container">
+
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="typelll" formControlName="cin1" 
+                                        (selectionChange)="onChangeofOptions1($event)"
+                                            placeholder="البطاقة الوطنية">
+                                            <div class="cursor">
+                                                <input class="form-control" name="srch"formControlName="cin" 
+                                                    (keyup)="onKey($event.target.value)" autofocus>
+                                                <i></i>
+                                            </div>
+
+                                            <mat-option *ngFor="let item of dataArray" value="{{item}}">
+                                                {{item}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <!-- <mat-form-field class="example-full-width">
+                                        <mat-label>البطاقة الوطنية :</mat-label>
+                                        <mat-select multiple class="form-control-lg" placeholder="البطاقة الوطنية :" formControlName="cin" (selectionChange)="addItemCin($event.value)" [(ngModel)]="selectedOptionsCin">
+                                            <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                                            <mat-option *ngFor="let item of cins" [value]="item">{{ item }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group fv-plugins-icon-container">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select class="form-control" name="rcSearch"  formControlName="rc1"
+                                            (selectionChange)="onChangeofOptionsrc($event)"
+                                            placeholder=" السجل التجاري">
+                                            <div class="cursor">
+                                                <input class="form-control" name="srch1"formControlName="rc"
+                                                    (keyup)="onKeyRc($event.target.value)" autofocus>
+                                                <i></i>
+                                            </div>
+                                            <mat-option *ngFor="let item of dataArrayRc" value="{{item}}">
+                                                {{item}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <!-- <mat-form-field class="example-full-width">
+                                        <mat-label> السجل التجاري :</mat-label>
+                                        <mat-select multiple class="form-control-lg" placeholder=" السجل التجاري :" formControlName="rc" (selectionChange)="addItemRc($event.value)" [(ngModel)]="selectedOptionsRc">
+                                            <mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+                                            <mat-option *ngFor="let item of rcs" [value]="item">{{ item }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+                                </div>
+                            </div>
+                            
+                          
+                           
+                            <div class="col-md-3" style="margin-top: 15px;;">
+                                <button _ngcontent-dkp-c41="" (click)="onSubmit()"
+                                    class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                    <i _ngcontent-dlp-c41 class=" la la-search-plus"></i>
+                                    {{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+                                </button>
+                            </div>
+                            <div class="col-md-3" style="margin-top: 15px;;">
+                                <button (click)="initForm()" _ngcontent-dkp-c41=""
+                                    class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                    <i _ngcontent-dlp-c41 class="icon la "></i>
+                                    {{ "PAGES.PROGRAMME.REINITIALISER" | translate }}
+                                </button>
+                            </div>
+                       
+                
+                
+                
+                        </form>
+                        <!-- <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
                         <mat-form-field>
                             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
-                        </mat-form-field>
+                        </mat-form-field> -->
                     </div>
                     <div class="example-container mat-elevation-z8">
                         <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
@@ -35,7 +138,7 @@
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
                                     رقم الترخيص </th>
-                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.id?row.id:"-"}} </td>
+                                <td mat-cell *matCellDef="let row" class="chikaya_td"> {{row.numAutorisation?row.numAutorisation:"-"}} </td>
                             </ng-container>
 
                             <!-- Progress Column -->
@@ -108,11 +211,15 @@
                         <div *ngIf="datasize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
                             {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
                         </div>
+                        <!-- <kt-custom-pagination [page]="page" (nextPageEvent)="getNextPage()" (previousPageEvent)="getPreviousPage()" (pageSizeEvent)="getPageInNewSize($event)">
+                        </kt-custom-pagination> -->
+                        <mat-paginator [length]="datasize" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 50]"
+		showFirstLastButtons (page)="handlePageEvent($event)"></mat-paginator>
                         <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
                             <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
                             </mat-progress-spinner>
                         </mat-card>
-                        <mat-paginator [length]="datasize" [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+                   
                         <hr>
                     </div>
                 </div>

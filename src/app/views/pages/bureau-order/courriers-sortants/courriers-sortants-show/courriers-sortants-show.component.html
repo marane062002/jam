@@ -3,8 +3,8 @@
     <div class="kt-portlet__head kt-bg-portlet-2">
         <div class="kt-portlet__head-label">
             <span class="kt-portlet__head-icon">
-				<i class="flaticon-multimedia-2"></i>
-			</span> &nbsp;
+                <i class="flaticon-multimedia-2"></i>
+            </span> &nbsp;
             <h3 class="kt-portlet__head-title kt-font-inverse-brand">
                 {{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.TITRE_SHOW' | translate }}
             </h3>
@@ -13,12 +13,17 @@
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
                     &nbsp;
-                    <button (click)="historique()" type="button" class="btn btn-sm btn-clean btn-icon btn_table_print btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_INDEX' | translate }}">
-						<i class="fas fa-info-circle text-primary"></i>
-					</button>
-                    <button _ngcontent-dkp-c41="" (click)="editCourrierSortant()" *ngxPermissionsOnly="['canUpdateCourrierSortant']" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}" class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"> <i
-							_ngcontent-dkp-c41="" class="icon la la-edit"></i>
-						{{ 'PAGES.GENERAL.EDIT' | translate }}</button>
+                    <button (click)="historique()" type="button"
+                        class="btn btn-sm btn-clean btn-icon btn_table_print btn-icon-md"
+                        matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_INDEX' | translate }}">
+                        <i class="fas fa-info-circle text-primary"></i>
+                    </button>
+                    <button _ngcontent-dkp-c41="" (click)="editCourrierSortant()"
+                        *ngxPermissionsOnly="['canUpdateCourrierSortant']"
+                        matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"
+                        class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"> <i
+                            _ngcontent-dkp-c41="" class="icon la la-edit"></i>
+                        {{ 'PAGES.GENERAL.EDIT' | translate }}</button>
                 </div>
             </div>
         </div>
@@ -34,29 +39,30 @@
                             <th>{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} :</th>
                             <td class="donnee_show">{{detailscourrier.typeCourrier?detailscourrier.typeCourrier:"-"}}
                             </td>
-                            <tr>
-                                <th>{{ 'PAGES.BUREAU_ORDRE.OBJET' | translate }} :</th>
-                                <td  class="donnee_show">{{detailscourrier.objet?detailscourrier.objet:"-"}}</td>
-                                <th>{{ 'PAGES.BUREAU_ORDRE.REFERENCE' | translate }} :</th>
-                                <td  class="donnee_show">{{detailscourrier.reference}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'PAGES.ORGANISATION.DIVISION' | translate }} :</th>
-                                <td class="donnee_show">{{detailscourrier.division?detailscourrier.division:"-"}}</td>
-                                <th>{{ 'PAGES.ORGANISATION.SERVICE' | translate }} :</th>
-                                <td class="donnee_show">{{detailscourrier.service?detailscourrier.service:"-"}}</td>
-                            </tr>
-                            <tr>
-                                <th>{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }} :</th>
-                                <td class="donnee_show">{{detailscourrier.personnel?detailscourrier.personnel:"-"}}</td>
-                                <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.DATE_EXPIDITION' | translate }} :
-                                </th>
-                                <td class="donnee_show">
-                                    {{(detailscourrier.dateExpedetion != null)?(detailscourrier.dateExpedetion | date:'dd/MM/yyyy'):"-"}}
-                                </td>
-                            </tr>
-                            <!-- <tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.OBJET' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier.objet?detailscourrier.objet:"-"}}</td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.REFERENCE' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier.reference}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.ORGANISATION.DIVISION' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier.division?detailscourrier.division:"-"}}</td>
+                            <th>{{ 'PAGES.ORGANISATION.SERVICE' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier.service?detailscourrier.service:"-"}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier.personnel?detailscourrier.personnel:"-"}}</td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_SORTANT.DATE_EXPIDITION' | translate }} :
+                            </th>
+                            <td class="donnee_show">
+                                {{(detailscourrier.dateExpedetion != null)?(detailscourrier.dateExpedetion |
+                                date:'dd/MM/yyyy'):"-"}}
+                            </td>
+                        </tr>
+                        <!-- <tr>
 							<th>{{ 'PAGES.BUREAU_ORDRE.CRITICITE' | translate }} :</th>
 							<td *ngIf="detailscourrier.criticiteCourrier!=null">
 								<span *ngIf="detailscourrier.criticiteCourrier.id==1; else elseBlock">
@@ -77,24 +83,35 @@
 							<th>{{ 'PAGES.BUREAU_ORDRE.NOMBRE_COPIES' | translate }} :</th>
 							<td class="donnee_show">{{detailscourrier.nombreCopie}}</td>
 						</tr> -->
-                            <!-- <tr>
+                        <!-- <tr>
 							<th>{{ 'PAGES.BUREAU_ORDRE.TYPE_COURRIER' | translate }} :</th>
 							<td class="donnee_show">{{detailscourrier.typeCourrier}}</td>
 							<th>{{ 'PAGES.BUREAU_ORDRE.COURSIER' | translate }} :</th>
 							<td class="donnee_show">
 								{{detailscourrier.coursier!=''?detailscourrier.coursier:'---'}}</td>
 						</tr> -->
-                            <tr>
-                                <th>{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.LIBELLE' | translate }} :</th>
-                                <td class="donnee_show">{{detailscourrier?.destinataire}}</td>
-                                <th>{{ 'PAGES.BUREAU_ORDRE.STATUT' | translate }} :</th>
-                                <div *ngIf="detailscourrier?.statut">
-                                    <div *ngIf="detailscourrier.statut=='Envoyer'">
-                                        <td style="color: rgb(5, 223, 41); width: 1%;" class="donnee_show"><i class="fa fa-paper-plane"></i> {{ 'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.STATUT_OK' | translate }}
-                                        </td>
-                                    </div>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.LIBELLE' | translate }} :</th>
+                            <td class="donnee_show">{{detailscourrier?.destinataire}}</td>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.STATUT' | translate }} :</th>
+                            <div *ngIf="detailscourrier?.statut">
+                                <div *ngIf="detailscourrier.statut=='Envoyer'">
+                                    <td style="color: rgb(5, 223, 41); width: 1%;" class="donnee_show"><i
+                                            class="fa fa-paper-plane"></i> {{
+                                        'PAGES.BUREAU_ORDRE.COURRIER_REFUSE.STATUT_OK' | translate }}
+                                    </td>
                                 </div>
-                            </tr>
+                            </div>
+                        </tr>
+                        <tr>
+                            <th>{{ 'PAGES.BUREAU_ORDRE.COURRIER_INTERNE_EXTERNE' | translate }} :</th>
+                            <td class="donnee_show" *ngIf="detailscourrier.typeOrigine=='in'"> {{
+                                'PAGES.BUREAU_ORDRE.ORIGINE_IN' | translate }}</td>
+                            <td class="donnee_show" *ngIf="detailscourrier.typeOrigine=='out'"> {{
+                                'PAGES.BUREAU_ORDRE.ORIGINE_OUT' | translate }}</td>
+
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -104,73 +121,86 @@
 <!-- end:: Content -->
 
 <!-- begin:: Content  | id="destinataire" -->
-<!-- <div class="kt-container  kt-grid__item kt-grid__item--fluid">
-	<div class="row">
-		<div class="col-lg-12" id="destinataire">
-			<div class="kt-portlet">
-				<div class="kt-portlet__head kt-bg-portlet-4">
-					<div class="kt-portlet__head-label">
-						<span class="kt-portlet__head-icon">
-							<i class="flaticon-users  kt-font-inverse-brand"></i>
-						</span>
-						&nbsp;
-						<h3 class="kt-portlet__head-title">
-							{{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.TITRE_INDEX' | translate }}
-						</h3>
-					</div>
-				</div>
-				<div class="kt-portlet__body">
-					<div class="row">
-						<div class="col-md-12 show_port">
+<div class="kt-container" id="destinataire">
+    <div class="row"> 
+        <div class="col-lg-12">
+            <div class="kt-portlet">
+                <div class="kt-portlet__head kt-bg-portlet-4">
+                    <div class="kt-portlet__head-label">
+                        <span class="kt-portlet__head-icon">
+                            <i class="flaticon-users  kt-font-inverse-brand"></i>
+                        </span>
+                        &nbsp;
+                        <h3 class="kt-portlet__head-title">
+                            {{ 'PAGES.BUREAU_ORDRE.DESTINATAIRE_COURRIER.TITRE_INDEX' | translate }}
+                        </h3>
+                    </div>
 
-							<table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
-								matSort>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-wrapper">
+                            <div class="kt-portlet__head-actions">
+                                <button _ngcontent-dkp-c41="" (click)="destinataireCourrierSortant()" *ngxPermissionsOnly="['canDispatchingCS']"
+                                    matTooltip="{{ 'PAGES.BUREAU_ORDRE.DISPATCH_ACTION_NO' | translate }}"
+                                    class="btn btn-primary tn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                    <i _ngcontent-dkp-c41="" class="icon la la-paper-plane"></i>
+                                    {{ 'PAGES.BUREAU_ORDRE.DISPATCH_ACTION_NO' | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12 show_port">
 
-								<ng-container matColumnDef="idDivision">
-									<th mat-header-cell *matHeaderCellDef mat-sort-header>
-										{{ 'PAGES.ORGANISATION.DIVISION' | translate }} </th>
-									<td mat-cell *matCellDef="let row">{{row?.division?row.division:'---'}} </td>
-								</ng-container>
+                            <table id="ExampleTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                                matSort>
 
-								<ng-container matColumnDef="idService">
-									<th mat-header-cell *matHeaderCellDef mat-sort-header>
-										{{ 'PAGES.ORGANISATION.SERVICE' | translate }} </th>
-									<td mat-cell *matCellDef="let row">{{row?.service?row.service:'---'}} </td>
-								</ng-container>
+                                <ng-container matColumnDef="idDivision">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.ORGANISATION.DIVISION' | translate }} </th>
+                                    <td mat-cell *matCellDef="let row">{{row?.division?row.division:'---'}} </td>
+                                </ng-container>
 
-								<ng-container matColumnDef="idPersonne">
-									<th mat-header-cell *matHeaderCellDef mat-sort-header>
-										{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }} </th>
-									<td mat-cell *matCellDef="let row"> {{row?.personnelInterne?row.personnelInterne:'---'}} </td>
-								</ng-container>
+                                <ng-container matColumnDef="idService">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.ORGANISATION.SERVICE' | translate }} </th>
+                                    <td mat-cell *matCellDef="let row">{{row?.service?row.service:'---'}} </td>
+                                </ng-container>
 
-								<ng-container matColumnDef="partenaire">
-									<th mat-header-cell *matHeaderCellDef mat-sort-header>
-										{{ 'PAGES.BUREAU_ORDRE.PARTENAIRE' | translate }} </th>
-									<td mat-cell *matCellDef="let row"> {{row?.partenaire?row.partenaire:'---'}} </td>
-								</ng-container>
-								<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-								<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-							</table>
-							<div *ngIf="data_size == 0 && loading == false"
-								style="display: flex;justify-content: center;padding: 2%;color: orangered;">
-								{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
-							</div>
-							<mat-card *ngIf="loading"
-								style="display: flex; justify-content: center; align-items: center">
-								<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
-								</mat-progress-spinner>
-							</mat-card>
-							<mat-paginator [length]="data_size" [pageSize]="5" [pageIndex]="0"
-								[pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+                                <ng-container matColumnDef="idPersonne">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.PERSONNEL.PERSONNEL' | translate }} </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{row?.personnelInterne?row.personnelInterne:'---'}} </td>
+                                </ng-container>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div> -->
+                                <ng-container matColumnDef="partenaire">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        {{ 'PAGES.BUREAU_ORDRE.PARTENAIRE' | translate }} </th>
+                                    <td mat-cell *matCellDef="let row"> {{row?.partenaire?row.partenaire:'---'}} </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <div *ngIf="data_size == 0 && loading == false"
+                                style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+                                {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+                            </div>
+                            <mat-card *ngIf="loading"
+                                style="display: flex; justify-content: center; align-items: center">
+                                <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+                                </mat-progress-spinner>
+                            </mat-card>
+                            <mat-paginator [length]="data_size" [pageSize]="5" [pageIndex]="0"
+                                [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- end:: Content -->
 
 <!-- begin:: Content -->
@@ -178,8 +208,8 @@
     <div class="kt-portlet__head kt-bg-portlet-5">
         <div class="kt-portlet__head-label">
             <span class="kt-portlet__head-icon">
-				<i class="flaticon-attachment"></i>
-			</span>
+                <i class="flaticon-attachment"></i>
+            </span>
             <h3 class="kt-portlet__head-title">
                 {{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
             </h3>
@@ -201,15 +231,30 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of files | async">
-                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}" matTooltip="{{FileName(item.name)}}"></td>
+                            <td><img class="file_icon" src="./assets/media/files/{{FileExtension(item.name)}}"
+                                    matTooltip="{{FileName(item.name)}}"></td>
                             <td> {{FileName(item.name) | slice:0:20}}</td>
                             <td style="direction: initial;">{{item.dateFile | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td style="direction: initial;">{{getFormattedFileSize(item.fSize)}}</td>
                             <td>
-                                <button type="button" (click)="onClickPjName(FileExtension(item.name),item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}"><i class="flaticon-download-1"></i></button>
+                                <button type="button"
+                                    (click)="onClickPjName(FileExtension(item.name),item.idAlfresco,item.id)"
+                                    class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+                                    matTooltip="{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}"><i
+                                        class="flaticon-download-1"></i></button>
                                 <!-- *** pdf viewer action *** -->
-                                <button type="button" (click)="openDialog(item.idAlfresco,detailscourrier.numero)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md" matTooltip="{{ 'PAGES.ATTCHEMENTS.VISUALISER' | translate }}"><i
-                                class="fas fa-eye"></i></button>
+                                <!-- <button type="button" (click)="openDialog(item.idAlfresco,detailscourrier.numero)"
+                                    class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md"
+                                    matTooltip="{{ 'PAGES.ATTCHEMENTS.VISUALISER' | translate }}"><i
+                                        class="fas fa-eye"></i></button> -->
+                                        <button type="button" *ngIf="getExtension(item.name)=='pdf.svg'" (click)="openDialog(item.idAlfresco,detailscourrier.numero)"
+                                        class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md"
+                                        matTooltip="{{ 'PAGES.ATTCHEMENTS.VISUALISER' | translate }}"><i
+                                            class="fas fa-eye"></i></button>
+
+                                        <button href="javascript:;" *ngIf="getExtension(item.name)=='jpg.svg'"(click)="constration(item)" type="button" class="btn btn_table_print btn-sm btn-clean btn-icon btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}">
+                                                <i class="icon fa fa-eye"></i>
+                                            </button>
                                 <!-- *** end action pdf viewer *** -->
                             </td>
                         </tr>
@@ -236,9 +281,11 @@
 			class="btn btn-warning btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
 			<i _ngcontent-dkp-c41="" class="icon la la-print"></i>
 			{{ 'PAGES.GENERAL.PRINT' | translate }}</button> -->
-        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="back()">
-			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
-			{{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+        <button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+            class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+            (click)="back()">
+            <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+            {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
     </div>
     <div class="espace_bloc"></div>
 </div>

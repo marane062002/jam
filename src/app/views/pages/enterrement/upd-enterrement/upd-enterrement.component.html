@@ -148,47 +148,157 @@
 					</div>
 				</div>
 
-				<div class="pb-5" data-wizard-type="step-content">
-					<h4 class="mb-10 font-weight-bold text-dark"></h4>
-					<div class="kt-portlet">
-						<div class="kt-portlet__body">
-							<div class="row">
-								<div class="col-md-12 show_port input-group">
-									<form
-										enctype="multipart/form-data"
-										method="POST"
-										style="
-											display: -webkit-inline-box;
-											margin-inline-start: 98px;
-										"
-									>
-										<label class="input-group-btn">
-											Pièce jointe
-											<span class="btn btn-info">
-												Sélectionner un fichier
-												<input
-												(change)="handleFileInput($event)"
-													type="file"
-													name="file"
-													formControlName="_file"
-													id="customFile"
-													style="display: none"
-													multiple
-												/>
-											</span>
-										</label>
-										<input
-											type="text"
-											[value]="pieceJointe"
-											class="form-control"
-											readonly
-										/>
-									</form>
-								</div>
+				<div class="row">
+					<div class="kt-portlet portlet-1 col-md-12">
+						<div class="kt-portlet__head kt-bg-portlet-2">
+							<div class="kt-portlet__head-label">
+								&nbsp;
+								<h2 class="kt-portlet__head-title kt-font-inverse-brand">Piéces jointes</h2>
 							</div>
+						</div>
+					
+						<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+				
+							<mat-table [dataSource]="dataSource2" matSort>
+								<!-- file name Column -->
+								<ng-container matColumnDef="nomDoc">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										Nom</mat-header-cell>
+									<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="titre">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										Sous Module</mat-header-cell>
+									<mat-cell *matCellDef="let row"> {{row.sousModule}} </mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="label">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										Libelle</mat-header-cell>
+									<mat-cell *matCellDef="let row"> {{row.label}} </mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="dow">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+									</mat-header-cell>
+										<mat-cell *matCellDef="let row; let i=index">
+											<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+												<i class="icon la la-trash"></i>
+											</button>
+										</mat-cell>
+								</ng-container>
+				
+								<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+								<mat-row *matRowDef="let row; columns: displayedColumns2;">
+								</mat-row>
+							</mat-table>
 						</div>
 					</div>
 				</div>
+			
+				<mat-expansion-panel [expanded]="true">
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							<div class="matPanelSceneSymbol"><i class="fas fa-address-card "></i></div>
+							&nbsp;&nbsp;
+							<h4 class="kt-portlet__head-title ">
+								{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}
+							</h4>
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<div class="kt-portlet__body">
+						<div class="row">
+							<div class="col-md-12 show_port">
+								<!-- start section::edit file form -->
+								<div class="row">
+									
+									<div class="col-md-2" >
+										<div class="form-group">
+											<mat-form-field class="example-full-width">
+												<label> Label:
+												</label>
+												<input id="cc" matInput type="text" class="form-control" (change)="labelDeclarant($event)" name="LabelPj"  [(ngModel)]="labelDeclar" placeholder="" >
+					
+											</mat-form-field>
+										</div>
+									</div>
+									<div class="col-md-6 show_port input-group">
+										<!-- <form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;" formGroupName="pj">
+											<label class="input-group-btn">
+												<span class="btn btn-info">
+													{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file" (change)="saveDec($event)" id="customFile" style="display: none;" multiple>
+												</span>
+											</label>
+											<input id="testd" type="text" formControlName="pcfileDeclar" class="form-control" readonly>
+											
+										</form> -->
+										<form  style="align-items: center; margin-inline-start: 98px; padding-top: 27px;" [formGroup]="ajoutForm">
+											<div formGroupName="pj" style="display: flex; ">
+												<label class="input-group-btn col-md-6" style="margin-right: 10px;">
+													<span class="btn btn-info">
+														{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}
+														<input type="file" (change)="saveDec($event)" id="customFile" style="display: none;" multiple>
+													</span>
+												</label>
+												<input id="testd" type="text" formControlName="pcfileDeclar" class="form-control" readonly>
+											</div>
+										</form>
+									</div>
+									<div class="col-md-2" style="padding-top: 27px;">
+										<button class="btn btn-primary" type="button" (click)="validerPjDec()" style="position: absolute;right: 0px;">
+											{{ 'PAGES.GENERAL.SAVE' | translate }}
+										</button>
+									</div>
+								</div>
+								
+								<!-- end section::edit file form -->
+								<hr>
+								<!-- begin::file datasource -->
+								<div   
+								 *ngIf="dataSource3" class="example-container mat-elevation-z8">
+			
+									<mat-table [dataSource]="dataSource3" matSort>
+										<!-- type Column -->
+										<!-- <ng-container matColumnDef="type">
+											<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+												{{ 'PAGES.MARCHE.AO.TAB_360.AO.PJ.TYPE' | translate }}</mat-header-cell>
+											<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.type.libelle}} </mat-cell>
+										</ng-container> -->
+										<!-- label Column -->
+										<ng-container matColumnDef="label">
+											<mat-header-cell class="firt_column chikaya_th" *matHeaderCellDef mat-sort-header>
+												Label</mat-header-cell>
+											<mat-cell *matCellDef="let row" class="chikaya_td"> {{row.LabelPj?row.LabelPj:"-"}} </mat-cell>
+										</ng-container>
+										<!-- file name Column -->
+										<ng-container matColumnDef="nomDoc">
+											<mat-header-cell *matHeaderCellDef mat-sort-header>
+												{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+											<mat-cell *matCellDef="let row"> {{row.selecetedFile.name}} </mat-cell>
+										</ng-container>
+										<ng-container matColumnDef="actions">
+											<mat-header-cell *matHeaderCellDef mat-sort-header>
+												{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+											</mat-header-cell>
+											<mat-cell *matCellDef="let row; let i=index">
+												<button type="button" (click)="onDeletePjDec(i)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+													<i class="icon la la-trash"></i>
+												</button>
+											</mat-cell>
+										</ng-container>
+			
+										<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+										<mat-row *matRowDef="let row; columns: displayedColumns1;">
+										</mat-row>
+									</mat-table>
+			
+								</div>
+								<!-- end::file datasource -->
+							</div>
+						</div>
+					</div>
+				</mat-expansion-panel>
+
+
 				<div class="kt-portlet portlet-3">
 					<div class="kt-portlet__head kt-bg-portlet-3">
 						<div class="kt-portlet__head-label">

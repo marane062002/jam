@@ -550,7 +550,7 @@
 						formControlName="dateFin" matInput />
 				</mat-form-field>
 			</div>
-			<div class="col-md-3 form-group fv-plugins-icon-container">
+			<div class="col-md-6 form-group fv-plugins-icon-container">
 				<div class="kt-portlet__head-label text-center">
 					<button (click)="appliquer()" _ngcontent-dkp-c41=""
 						style="margin-left: 20px !important; margin-bottom: -75px !important;"
@@ -560,6 +560,10 @@
 						style="margin-left: 20px !important; margin-bottom: -75px !important;"
 						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
 						{{'PAGES.PROGRAMME.STATISTIQUE.REINITIALISER'| translate}} </button>
+					<button (click)="downloadPdf()" _ngcontent-dkp-c41=""
+						style="margin-left: 20px !important; margin-bottom: -75px !important;"
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						{{'PAGES.PROGRAMME.STATISTIQUE.DOWNLOAD'| translate}} </button>
 				</div>
 			</div>
 		</div>
@@ -651,44 +655,53 @@
 						<span *ngIf="nbProjetOrien1Programmes!=0">{{nbProjetOrien1Programmes}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
-						<span *ngIf="coutProjetOrien1Programmes!=0">{{coutProjetOrien1Programmes | number: '1.2-2'}}</span>
+						<span *ngIf="coutProjetOrien1Programmes!=0">{{coutProjetOrien1Programmes | number:
+							'1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
 						<span
-							*ngIf="contributionTotaleCommuneOrien1Programmes!=0">{{contributionTotaleCommuneOrien1Programmes | number: '1.2-2'}}</span>
+							*ngIf="contributionTotaleCommuneOrien1Programmes!=0">{{contributionTotaleCommuneOrien1Programmes
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien2Programmes!=0">{{nbProjetOrien2Programmes}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
-						<span *ngIf="coutProjetOrien2Programmes!=0">{{coutProjetOrien2Programmes | number: '1.2-2'}}</span>
+						<span *ngIf="coutProjetOrien2Programmes!=0">{{coutProjetOrien2Programmes | number:
+							'1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
 						<span
-							*ngIf="contributionTotaleCommuneOrien2Programmes!=0">{{contributionTotaleCommuneOrien2Programmes | number: '1.2-2'}}</span>
+							*ngIf="contributionTotaleCommuneOrien2Programmes!=0">{{contributionTotaleCommuneOrien2Programmes
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Programmes!=0">{{nbProjetOrien3Programmes}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
-						<span *ngIf="coutProjetOrien3Programmes!=0">{{coutProjetOrien3Programmes | number: '1.2-2'}}</span>
+						<span *ngIf="coutProjetOrien3Programmes!=0">{{coutProjetOrien3Programmes | number:
+							'1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
 						<span
-							*ngIf="contributionTotaleCommuneOrien3Programmes!=0">{{contributionTotaleCommuneOrien3Programmes | number: '1.2-2'}}</span>
+							*ngIf="contributionTotaleCommuneOrien3Programmes!=0">{{contributionTotaleCommuneOrien3Programmes
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Programmes!=0">{{nbProjetOrien4Programmes}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
-						<span *ngIf="coutProjetOrien3Programmes!=0">{{coutProjetOrien4Programmes | number: '1.2-2'}}</span>
+						<span *ngIf="coutProjetOrien3Programmes!=0">{{coutProjetOrien4Programmes | number:
+							'1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #7030a0;color:#000000;border: 1px solid black">
 						<span
-							*ngIf="contributionTotaleCommuneOrien3Programmes!=0">{{contributionTotaleCommuneOrien4Programmes | number: '1.2-2'}}</span>
+							*ngIf="contributionTotaleCommuneOrien3Programmes!=0">{{contributionTotaleCommuneOrien4Programmes
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color:#7B7B7B;color: #FFD966;border: 1px solid black">
-						<span *ngIf="coutProjetTotalProgrammes!=0">{{coutProjetTotalProgrammes | number: '1.2-2'}}</span>
+						<span *ngIf="coutProjetTotalProgrammes!=0">{{coutProjetTotalProgrammes | number:
+							'1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color:#7B7B7B;color: #FFD966;border: 1px solid black">
 						<span *ngIf="nbProjetTotalProgrammes!=0">{{nbProjetTotalProgrammes}}</span>
@@ -705,8 +718,8 @@
 						<span *ngIf="coutProjetOrien1Acheves!=0">{{coutProjetOrien1Acheves | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien1Acheves!=0">{{contributionTotaleCommuneOrien1Acheves | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien1Acheves!=0">{{contributionTotaleCommuneOrien1Acheves
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien2Acheves!=0">{{nbProjetOrien2Acheves}}</span>
@@ -715,8 +728,8 @@
 						<span *ngIf="coutProjetOrien2Acheves!=0">{{coutProjetOrien2Acheves | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien2Acheves!=0">{{contributionTotaleCommuneOrien2Acheves | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien2Acheves!=0">{{contributionTotaleCommuneOrien2Acheves
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Acheves!=0">{{nbProjetOrien3Acheves}}</span>
@@ -725,8 +738,8 @@
 						<span *ngIf="coutProjetOrien3Acheves!=0">{{coutProjetOrien3Acheves | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien3Acheves!=0">{{contributionTotaleCommuneOrien3Acheves | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien3Acheves!=0">{{contributionTotaleCommuneOrien3Acheves
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Acheves!=0">{{nbProjetOrien4Acheves}}</span>
@@ -735,8 +748,8 @@
 						<span *ngIf="coutProjetOrien3Acheves!=0">{{coutProjetOrien4Acheves | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #00B050;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien3Acheves!=0">{{contributionTotaleCommuneOrien4Acheves | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien3Acheves!=0">{{contributionTotaleCommuneOrien4Acheves
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color:#D9E1F2;color: #000000;border: 1px solid black">
 						<span *ngIf="coutProjetTotalAcheves!=0">{{coutProjetTotalAcheves | number: '1.2-2'}}</span>
@@ -757,8 +770,8 @@
 						<span *ngIf="coutProjetOrien1Encours!=0">{{coutProjetOrien1Encours | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien1Encours!=0">{{contributionTotaleCommuneOrien1Encours | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien1Encours!=0">{{contributionTotaleCommuneOrien1Encours
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien2Encours!=0">{{nbProjetOrien2Encours}}</span>
@@ -767,8 +780,8 @@
 						<span *ngIf="coutProjetOrien2Encours!=0">{{coutProjetOrien2Encours | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien2Encours!=0">{{contributionTotaleCommuneOrien2Encours | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien2Encours!=0">{{contributionTotaleCommuneOrien2Encours
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Encours!=0">{{nbProjetOrien3Encours}}</span>
@@ -777,8 +790,8 @@
 						<span *ngIf="coutProjetOrien3Encours!=0">{{coutProjetOrien3Encours | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien3Encours!=0">{{contributionTotaleCommuneOrien3Encours | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien3Encours!=0">{{contributionTotaleCommuneOrien3Encours
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Encours!=0">{{nbProjetOrien4Encours}}</span>
@@ -787,8 +800,8 @@
 						<span *ngIf="coutProjetOrien3Encours!=0">{{coutProjetOrien4Encours | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #C65911;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien3Encours!=0">{{contributionTotaleCommuneOrien4Encours | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien3Encours!=0">{{contributionTotaleCommuneOrien4Encours
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color:#D9E1F2;color: #000000;border: 1px solid black">
 						<span *ngIf="coutProjetTotalEncours!=0">{{coutProjetTotalEncours | number: '1.2-2'}}</span>
@@ -808,8 +821,8 @@
 						<span *ngIf="coutProjetOrien1Nlances!=0">{{coutProjetOrien1Nlances | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien1Nlances!=0">{{contributionTotaleCommuneOrien1Nlances | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien1Nlances!=0">{{contributionTotaleCommuneOrien1Nlances
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien2Nlances!=0">{{nbProjetOrien2Nlances}}</span>
@@ -818,8 +831,8 @@
 						<span *ngIf="coutProjetOrien2Nlances!=0">{{coutProjetOrien2Nlances | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien2Nlances!=0">{{contributionTotaleCommuneOrien2Nlances | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien2Nlances!=0">{{contributionTotaleCommuneOrien2Nlances
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Nlances!=0">{{nbProjetOrien3Nlances}}</span>
@@ -828,8 +841,8 @@
 						<span *ngIf="coutProjetOrien3Nlances!=0">{{coutProjetOrien3Nlances | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien3Nlances!=0">{{contributionTotaleCommuneOrien3Nlances | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien3Nlances!=0">{{contributionTotaleCommuneOrien3Nlances
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
 						<span *ngIf="nbProjetOrien3Nlances!=0">{{nbProjetOrien4Nlances}}</span>
@@ -838,8 +851,8 @@
 						<span *ngIf="coutProjetOrien3Nlances!=0">{{coutProjetOrien4Nlances | number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color: #FF0000;color: #000000;border: 1px solid black">
-						<span
-							*ngIf="contributionTotaleCommuneOrien3Nlances!=0">{{contributionTotaleCommuneOrien4Nlances | number: '1.2-2'}}</span>
+						<span *ngIf="contributionTotaleCommuneOrien3Nlances!=0">{{contributionTotaleCommuneOrien4Nlances
+							| number: '1.2-2'}}</span>
 					</td>
 					<td style="text-align: center;background-color:#D9E1F2;color: #000000;border: 1px solid black">
 						<span *ngIf="coutProjetTotalNlances!=0">{{coutProjetTotalNlances | number: '1.2-2'}}</span>
@@ -856,16 +869,20 @@
 					</th>
 					<td colspan="3"
 						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
-							*ngIf="contributionTotaleCommuneOrien1!=0">{{contributionTotaleCommuneOrien1 | number: '1.2-2'}}</span></td>
+							*ngIf="contributionTotaleCommuneOrien1!=0">{{contributionTotaleCommuneOrien1 | number:
+							'1.2-2'}}</span></td>
 					<td colspan="3"
 						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
-							*ngIf="contributionTotaleCommuneOrien2!=0">{{contributionTotaleCommuneOrien2 | number: '1.2-2'}}</span></td>
+							*ngIf="contributionTotaleCommuneOrien2!=0">{{contributionTotaleCommuneOrien2 | number:
+							'1.2-2'}}</span></td>
 					<td colspan="3"
 						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
-							*ngIf="contributionTotaleCommuneOrien3!=0">{{contributionTotaleCommuneOrien3 | number: '1.2-2'}}</span></td>
-							<td colspan="3"
+							*ngIf="contributionTotaleCommuneOrien3!=0">{{contributionTotaleCommuneOrien3 | number:
+							'1.2-2'}}</span></td>
+					<td colspan="3"
 						style="text-align: center;background-color:#FFD966;color: #000000;border: 1px solid black"><span
-							*ngIf="contributionTotaleCommuneOrien3!=0">{{contributionTotaleCommuneOrien4 | number: '1.2-2'}}</span></td>
+							*ngIf="contributionTotaleCommuneOrien3!=0">{{contributionTotaleCommuneOrien4 | number:
+							'1.2-2'}}</span></td>
 				</tr>
 				<tr>
 					<td colspan="12"

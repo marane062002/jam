@@ -54,7 +54,9 @@ export class ListEnterementInhumComponent implements OnInit {
 		// });
 		this.loadData(this.currentPage, this.pageSize);
 	}
-
+	formatDate(date: any): string {
+		return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+	}
 	onPaginatorChange(event: PageEvent): void {
 		this.currentPage = event.pageIndex;
 		this.pageSize = event.pageSize;
@@ -68,7 +70,7 @@ export class ListEnterementInhumComponent implements OnInit {
 		console.log("token", localStorage.getItem('accessToken'));
 
 		this.httpClient.get<any[]>(`${this.baseUrl}enterrement/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// debugger
+			// 
 			this.enterement = response.content;
 			this.dataSource.data = response.content;
 			this.totalRecords = response.totalElements;

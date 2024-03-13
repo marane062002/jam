@@ -61,7 +61,9 @@ import { DetailsNouveauNeComponent } from '../details-nouveau-ne/details-nouveau
 import { TransformDatePipe } from '../transform-date.pipe';
 import { PagesModule } from '../../pages.module';
 import { SortirObstaclesComponent } from '../sortir-obstacles/sortir-obstacles.component';
-
+import { PopupComponent } from '../details-obstacles/popup/popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PopupDecesComponent } from '../details-deces-naturel/popup-deces/popup-deces.component';
 
 
 @NgModule({
@@ -132,6 +134,7 @@ import { SortirObstaclesComponent } from '../sortir-obstacles/sortir-obstacles.c
 	ListPrelevementComponent,
   ],
   imports: [
+	MatDialogModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -145,14 +148,6 @@ import { SortirObstaclesComponent } from '../sortir-obstacles/sortir-obstacles.c
 	MatCheckboxModule,
 	MatRadioModule,
 	PagesModule,
-
-		
-		// MatStepperModule,
-		// MatTabsModule,
-		// FormsModule,
-		// ReactiveFormsModule,
-	
-
 
 
     TranslateModule.forChild(),
@@ -202,7 +197,7 @@ import { SortirObstaclesComponent } from '../sortir-obstacles/sortir-obstacles.c
 						component: SortirObstaclesComponent,
 					},
 					{
-						path: "add-examen",
+						path: "add-examen/:id",
 						component: AddExamenComponent,
 					},
           			{
@@ -218,7 +213,7 @@ import { SortirObstaclesComponent } from '../sortir-obstacles/sortir-obstacles.c
 						component: ListAutopsieComponent,
 					},
 					{
-						path: "add-autopsie",
+						path: "add-autopsie/:id",
 						component: AddAutopsieComponent,
 					},
           			{
@@ -234,7 +229,7 @@ import { SortirObstaclesComponent } from '../sortir-obstacles/sortir-obstacles.c
 						component: ListPrelevementComponent,
 					},
 					{
-						path: "add-prelevement",
+						path: "add-prelevement/:id",
 						component: AddPrelevementComponent,
 					},
           			{
@@ -377,6 +372,10 @@ import { SortirObstaclesComponent } from '../sortir-obstacles/sortir-obstacles.c
         }
       ])
 	],
+	entryComponents:[
+		PopupComponent,
+		PopupDecesComponent
+	]
 	// bootstrap: [
 	// 	ListExamenComponent,
 	// 	ListAutopsieComponent,

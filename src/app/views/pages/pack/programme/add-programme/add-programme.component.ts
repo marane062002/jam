@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from "@angular/router";
 import Swal from 'sweetalert2';
@@ -9,38 +9,29 @@ import * as _ from 'lodash';
 import * as $ from "jquery";
 import { FilesUtilsService } from '../../../utils/files-utils.service';
 import { Observable } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatPaginator } from '@angular/material';
+import { Location } from '@angular/common';
+import { NatureService } from '../../../shared/Nature.service';
+import { themeService } from '../../../shared/theme.service';
+import { sousThemeService } from '../../../shared/sous-theme.service';
+import { ArrondissementService } from '../../../shared/arrondissement.service';
 @Component({
   selector: 'kt-add-programme',
   templateUrl: './add-programme.component.html',
   styleUrls: ['./add-programme.component.scss']
 })
 export class AddProgrammeComponent implements OnInit {
-//   listeNature=["Animations culturelles",
-//   "Arrété organisationnel",
-//   "BHNS",
-//   "Centres des patrimoines",
-//   "Education","Energie",
-//   "équipement socioculturel",
-// "équipement sport",
-// "Equipements économiques",
-// "Espaces publiques",
-// "Espaces verts",
-// "Etude strategique",
-// "Gestion d'eau",
-// "Gouvernance",
-// "Grands équipements culturels",
-// "Habitat","mise à niveau de l'administration",
-// "ouvrages d'art","Parkinges","Propreté",
-// "Requalification urbaine","restauration du patrimoines historiques",
-// "Salubrité publique","Santé"
-// ,"Sécurité urbaine","Transport commun","Voirie de proximité","Voiries structurante"]
-listeNature=["Construction","Aménagement","Gouvernance","Animation","Logistique"]
-listeSousTheme
-listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité","Habitat","Patrimoine et identité historique","Sport, Culture et Education","Urbanisme et Aménagement urbain","Santé et salubrité publique","Securité"]
-  language = localStorage.getItem('language');
+  arabicPattern = /^[\u0600-\u06FF\s]+$/;
+  listeNature
+  listeArrondissement
+  listeSousTheme 
+  checkLang = localStorage.getItem('language');
   formGroup: FormGroup;
+  minDate: string;
+  minDateReel: string;
+  minDatePrevisionnel: string;
   programmePhaseBudgets: FormArray;
   sousProjets: FormArray;
   listConvention: any
@@ -54,17 +45,20 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
 
   allpjs = [];
   codes = ["A", "B", "C", "D", "E", "F", "G", " H", "I", " J", "K", "L", "M", "N", " O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", " Y", "Z"]
-  constructor(private router: Router,
+  constructor(private Natureservice: NatureService, private arrondissementService: ArrondissementService,
+    private router: Router, private location: Location,
     private conventionMarcheService: ConventionMarcheService,
     private translate: TranslateService,
     private fileUtils: FilesUtilsService,
     private programmeService: ProgrammeService,
     private programmePhase: ProgrammePhase,
+    private Themeservice: themeService,
+    private sousThemeservice: sousThemeService,
     private fB: FormBuilder,
     private activatedRoute: ActivatedRoute) {
     this.formGroup = new FormGroup({
       id: new FormControl(''),
-      convention:new FormControl([]),
+      convention: new FormControl([]),
       programmePhaseBudgets: new FormArray([]),
       sousProjets: new FormArray([]),
       date: new FormControl(''),
@@ -87,54 +81,90 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
       cout: new FormControl(''),
       montantReel: new FormControl(''),
       delai: new FormControl(''),
+      montantRealisePA: new FormControl(''),
+      montantRealiseDA: new FormControl(''),
+      montantRealiseTA: new FormControl(''),
+      montantRealiseQA: new FormControl(''),
+      montantRealiseCA: new FormControl(''),
+      montantRealiseSA: new FormControl(''),
+      montantRealiseTotal: new FormControl(''),
+      tauxContributionCommune: new FormControl(''),
       phase: new FormControl(''),
       dateDebut: new FormControl(''),
       dateFin: new FormControl(''),
       description: new FormControl(''),
       chefProjet: new FormControl(''),
       chefProjetAr: new FormControl(''),
-      nature: new FormControl(''),
-      theme: new FormControl(''),
-      sousTheme: new FormControl(''),
-      natureAr: new FormControl(''),
+      nature: new FormGroup({ id: new FormControl('') }),
+      theme: new FormGroup({ id: new FormControl('') }),
+      sousTheme: new FormGroup({ id: new FormControl('') }),
+      arrondissement: new FormGroup({ id: new FormControl('') }),
       niveau: new FormControl(''),
       maitreOuvrage: new FormControl(''),
       maitreOuvrageDelegue: new FormControl(''),
       sousProjet: new FormControl(''),
-      etatAvancement: new FormControl('')
+      etatAvancement: new FormControl(''),
+      acheveDate: new FormControl('')
     });
 
+    this.formGroup.get('dateDebut').valueChanges.subscribe((dateDebut: string) => {
+      this.minDate = dateDebut;
+    });
   }
 
   programmeEdit
-  // Visible: any = 1;
   Visible: any;
   VisibleSousProjet: any;
   files: Observable<any>;
   files1: Observable<any>;
 
   etatAvanc: string = '';
-
+  pageIndex
+  pageSize
   isSelected: boolean = false;
   ngOnInit() {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      if (event.lang == "ar") {
+        this.checkLang = "ar";
+      } else if (event.lang == "fr") {
+        this.checkLang = "fr";
+      }
+    });
+    this.Natureservice.findAll().then((res) => {
+      this.listeNature = res
+
+    })
+    this.arrondissementService.findAllByPages().then((res: any) => {
+      this.listeArrondissement = res.content
+
+    })
+    this.formGroup.get('dateDebut').valueChanges.subscribe((dateDebut: string) => {
+      this.minDate = dateDebut;
+    });
     localStorage.removeItem("eventCC");
     localStorage.removeItem("eventCP");
     this.activatedRoute.queryParams.subscribe(params => {
       this.programme_id = params['id'];
+      this.pageIndex = params['pageIndex'];
+      this.pageSize = params['pageSize'];
+
       if (this.programme_id != undefined && this.programme_id != 0) {
         this.isUpdate = true;
         this.programmeService.findById(this.programme_id).subscribe((res: any) => {
-          /* for (let i = 0; i < res.programmePhaseBudgets.length; i++) {
-            this.getValuePhase(res.programmePhaseBudgets[i].phase);
-          } */
           if (res.cout != null) {
-            res.cout = res.cout.toLocaleString('fr', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+            res.cout = Number(res.cout);
+
           }
+
           for (let i = 0; i < res.sousProjets.length; i++) {
             if (res.sousProjets[i].constibutionC != null) {
-              res.sousProjets[i].constibutionC = res.sousProjets[i].constibutionC.toLocaleString('fr', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+              res.sousProjets[i].constibutionC = Number(res.sousProjets[i].constibutionC);
+
             }
           }
+
+
+
           for (let i = 0; i < res.programmePhaseBudgets.length; i++) {
             if (res.programmePhaseBudgets[i].contributionComune1 != null) {
               res.programmePhaseBudgets[i].contributionComune1 = res.programmePhaseBudgets[i].contributionComune1.toLocaleString('fr', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
@@ -231,10 +261,29 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
           }
           this.programmeEdit = res;
           this.formGroup.patchValue(_.pickBy(res));
+          this.formGroup.patchValue({
+            nature: res.sousTheme.theme[0].nature[0],
+            theme: res.sousTheme.theme[0],
+            sousTheme: res.sousTheme
+
+          })
+
+          this.formGroup
+
+          this.NatureChange(res.sousTheme.theme[0].nature[0].id)
+
+          this.ThemeChange(res.sousTheme.theme[0].id)
           this.etatAvancement = res.etatAvancement;
           console.log(this.formGroup)
           if (res.sousProjets.length > 0) {
             this.initializArrayP(res.sousProjets);
+            for (let i = 0; i < res.sousProjets.length; i++) {
+              if (res.sousProjets[i].arrondissement != null) {
+                this.Arrondissement1Change(res.sousProjets[i].arrondissement.id)
+              }
+
+            }
+
           } else {
             console.log("hjjjjjjjjjjjjjjjjjjj")
             this.addItemP();
@@ -265,17 +314,17 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
           else {
             this.Visible = 0;
           }
-          if(res.sousProjets.length!=0){
-            for(let i=0;i<res.sousProjets.length;i++){
-              if(res.sousProjets[i].convention!=null){
-                this.VisibleSousProjet=1
-              }else{
-                this.VisibleSousProjet=0
+          if (res.sousProjets.length != 0) {
+            for (let i = 0; i < res.sousProjets.length; i++) {
+              if (res.sousProjets[i].convention != null) {
+                this.VisibleSousProjet = 1
+              } else {
+                this.VisibleSousProjet = 0
 
               }
             }
           }
-          
+
 
         }, err => {
           console.log(err);
@@ -304,7 +353,27 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
     })
 
   }
+  selectedNature(p1, p2) {
+    if (p1 == p2) {
 
+      return true;
+    } else return false
+
+  }
+  selectedArrondissement(p1, p2) {
+    if (p1 == p2) {
+
+      return true;
+    } else return false
+
+  }
+  selectedArrondissement1(p1, p2) {
+    if (p1.id == p2.id) {
+
+      return true;
+    } else return false
+
+  }
   etatAvancementRes;
   etatAvancement: any = "NON_LANCES";
   isP1: boolean = false;
@@ -331,37 +400,26 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
   }
   onEtatAvancementSousProjetChange(event) {
 
-      this.etatAvancement = event.value
-    
+    this.etatAvancement = event.value
+
   }
-  ThemeChange(event){
-    if(event.value=='Energie, Eau, Environnement et Durabilité'){
-      this.listeSousTheme=["Energie","Eau","Environnement","Développement durable"]
-    }
-    if(event.value=='Transport et Mobilité'){
-      this.listeSousTheme=["Transports en commun","Parkings"]
-    }
-    if(event.value=='Habitat'){
-      this.listeSousTheme=["Habitat menaçant ruine","Ville sans bidonvilles"]
-    }
-    if(event.value=='Patrimoine et identité historique'){
-      this.listeSousTheme=["Patrimoine culturel","Patrimpoine historique"]
-    }
-    if(event.value=='Sport, Culture et Education'){
-      this.listeSousTheme=["Sport","Culture","Education"]
-    }
-    if(event.value=='Urbanisme et Aménagement urbain'){
-      this.listeSousTheme=["Rénovation urbaine","Voiries structurantes","Voiries de proximité","Espaces publics","Espaces verts"]
-    }
-    if(event.value=='Santé et salubrité publique'){
-      this.listeSousTheme=["Santé","Salubrité publique"]
-    }
-    if(event.value=='Securité'){
-      this.listeSousTheme=["Signalisation","Accessibilités"]
-    }
+  listeTheme = []
+  NatureChange(e) {
+    this.Themeservice.findByNature_Id(e).subscribe((res) => {
+      this.listeTheme = res
+    })
   }
+  ThemeChange(e) {
+    this.sousThemeservice.findByTheme_Id(e).subscribe((res) => {
+      this.listeSousTheme = res
+
+    })
+
+
+  }
+  formPhaseP1
   addItem(): void {
-    let item = this.fB.group({
+    this.formPhaseP1 = this.fB.group({
       phase: new FormGroup({
         id: new FormControl('')
       }),
@@ -383,12 +441,12 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
     });
 
 
-    this.getFormArray().push(item);
+    this.getFormArray().push(this.formPhaseP1);
     this.sousProjets = this.getFormArray();
   }
-
+  formPhaseP2
   addItem2(): void {
-    let item = this.fB.group({
+    this.formPhaseP2 = this.fB.group({
       phase: new FormGroup({
         id: new FormControl('')
       }),
@@ -411,11 +469,11 @@ listeTheme=["Energie, Eau, Environnement et Durabilité","Transport et Mobilité
     });
 
 
-    this.getFormArray().push(item);
+    this.getFormArray().push(this.formPhaseP2);
     this.sousProjets = this.getFormArray();
   }
 
-form
+  form
   addItemP() {
     this.form = this.fB.group({
       id: new FormControl(''),
@@ -427,30 +485,138 @@ form
       lieu: new FormControl(''),
       dateDebut: new FormControl(''),
       dateFine: new FormControl(''),
+      dateDebutReel: new FormControl(''),
+      dateFinReel: new FormControl(''),
       montantPrevisionnel: new FormControl(''),
       montantReel: new FormControl(''),
-      dateReel: new FormControl(''),
-      datePrevisionnel: new FormControl(''),
+      tauxRealisation: new FormControl(''),
+      arrondissement: new FormControl(),
+
       delais: new FormControl(''),
+      codeSousProjet: new FormControl(''),
+      delaisReel: new FormControl(''),
       observation: new FormControl(''),
       etatAvancement: new FormControl('NON_LANCES'),
-      convention:new FormControl([]),
+      convention: new FormControl([]),
       maitreOuvrageDelegue: new FormControl(''),
     })
-    
-    this.getFormArraySousProjet().push( this.form);
+    this.form.get('dateDebut').valueChanges.subscribe((dateDebut: string) => {
+      this.minDatePrevisionnel = dateDebut;
+    });
+    this.form.get('dateDebutReel').valueChanges.subscribe((dateDebutReel: string) => {
+      this.minDateReel = dateDebutReel;
+    });
+    this.getFormArraySousProjet().push(this.form);
     this.programmePhaseBudgets = this.getFormArraySousProjet();
   }
-  updateDelais() {
-    const dateReel = new Date(this.form.value.dateReel);
-    const datePrevisionnel = new Date(this.form.value.datePrevisionnel);
-    
-    // Calculate the difference in days
-    // const differenceInDays = Math.ceil((datePrevisionnel - dateReel) / (1000 * 60 * 60 * 24));
-    const differenceInDays: number = Math.ceil((datePrevisionnel.getTime() - dateReel.getTime()) / (1000 * 60 * 60 * 24));
-    
-    // Update the 'delais' field
+  CalculTauxRealisation() {
+    const montantReel = this.form.value.montantReel
+    const montantPrevisionnel = this.form.value.montantPrevisionnel
+    const tauxRealisation = (montantReel / montantPrevisionnel) * 100
+    this.form.patchValue({ tauxRealisation: tauxRealisation });
+
+  }
+  updateDelaisReel() {
+    const dateDebutReel = new Date(this.form.value.dateDebutReel);
+    const dateFinReel = new Date(this.form.value.dateFinReel);
+    const differenceInDays: number = Math.ceil((dateFinReel.getTime() - dateDebutReel.getTime()) / (1000 * 60 * 60 * 24));
+
+    this.form.patchValue({ delaisReel: differenceInDays });
+  }
+  updateDelaisPrevisionnel() {
+    const dateDebut = new Date(this.form.value.dateDebut);
+    const dateFine = new Date(this.form.value.dateFine);
+    const differenceInDays: number = Math.ceil((dateFine.getTime() - dateDebut.getTime()) / (1000 * 60 * 60 * 24));
+
     this.form.patchValue({ delais: differenceInDays });
+  }
+  CalculSommeCCp1() {
+    const contributionComune1 = this.formPhaseP1.value.contributionComune1;
+    const contributionComune2 = this.formPhaseP1.value.contributionComune2;
+    const contributionComune3 = this.formPhaseP1.value.contributionComune3;
+    const contributionCommune: number = contributionComune1 + contributionComune2 + contributionComune3;
+
+    this.formPhaseP1.patchValue({ contributionCommune: contributionCommune });
+  }
+  CalculSommeMontantRealise() {
+    const montantRealisePA = this.formGroup.value.montantRealisePA;
+    const montantRealiseDA = this.formGroup.value.montantRealiseDA;
+    const montantRealiseTA = this.formGroup.value.montantRealiseTA;
+    const montantRealiseQA = this.formGroup.value.montantRealiseQA;
+    const montantRealiseCA = this.formGroup.value.montantRealiseCA;
+    const montantRealiseSA = this.formGroup.value.montantRealiseSA;
+    const montantRealiseTotal: number = montantRealisePA + montantRealiseDA + montantRealiseTA + montantRealiseQA + montantRealiseCA + montantRealiseSA;
+    const tauxContributionCommune: number = (this.formPhaseP1.value.totalContribution + this.formPhaseP2.value.totalContributionPh2) / this.formGroup.value.cout;
+
+    this.formGroup.patchValue({ montantRealiseTotal: montantRealiseTotal });
+    this.formGroup.patchValue({ tauxContributionCommune: tauxContributionCommune });
+  }
+  CalculSommeCCp2() {
+    const contributionComune1P2 = this.formPhaseP2.value.contributionComune1P2;
+    const contributionComune2P2 = this.formPhaseP2.value.contributionComune2P2;
+    const contributionComune3P2 = this.formPhaseP2.value.contributionComune3P2;
+    const contributionCommuneP2: number = contributionComune1P2 + contributionComune2P2 + contributionComune3P2;
+
+    this.formPhaseP2.patchValue({ contributionCommuneP2: contributionCommuneP2 });
+  }
+  CalculSommeCPp1() {
+    const contributionPartenaires1 = this.formPhaseP1.value.contributionPartenaires1;
+    const contributionPartenaires2 = this.formPhaseP1.value.contributionPartenaires2;
+    const contributionPartenaires3 = this.formPhaseP1.value.contributionPartenaires3;
+    const contributionComune3 = this.formPhaseP1.value.contributionComune3;
+    const contributionComune1 = this.formPhaseP1.value.contributionComune1;
+    const contributionComune2 = this.formPhaseP1.value.contributionComune2;
+
+    const contributionPartenaires: number = contributionPartenaires1 + contributionPartenaires2 + contributionPartenaires3;
+    const totalContributionPremiereAnnee: number = contributionPartenaires1 + contributionComune1;
+    const totalContributionDeuxiemeAnnee: number = contributionPartenaires2 + contributionComune2;
+
+    const totalContributionTroisiemeAnnee: number = contributionPartenaires3 + contributionComune3;
+    this.formPhaseP1.patchValue({ totalContributionTroisiemeAnnee: totalContributionTroisiemeAnnee });
+
+    this.formPhaseP1.patchValue({ contributionPartenaires: contributionPartenaires });
+    this.formPhaseP1.patchValue({ totalContribution: totalContributionTroisiemeAnnee + totalContributionPremiereAnnee + totalContributionDeuxiemeAnnee });
+  }
+  CalculSommeCPp2() {
+    const contributionPartenaires1P2 = this.formPhaseP2.value.contributionPartenaires1P2;
+    const contributionPartenaires2P2 = this.formPhaseP2.value.contributionPartenaires2P2;
+    const contributionPartenaires3P2 = this.formPhaseP2.value.contributionPartenaires3P2;
+    const contributionComune3P2 = this.formPhaseP2.value.contributionComune3P2;
+    const contributionComune1P2 = this.formPhaseP2.value.contributionComune1P2;
+    const contributionComune2P2 = this.formPhaseP2.value.contributionComune2P2;
+
+    const contributionPartenairesP2: number = contributionPartenaires1P2 + contributionPartenaires2P2 + contributionPartenaires3P2;
+    const totalContributionPremiereAnneeP2: number = contributionPartenaires1P2 + contributionComune1P2;
+    const totalContributionDeuxiemeAnneeP2: number = contributionPartenaires2P2 + contributionComune2P2;
+
+    const totalContributionTroisiemeAnneeP2: number = contributionPartenaires3P2 + contributionComune3P2;
+    this.formPhaseP2.patchValue({ totalContributionTroisiemeAnneeP2: totalContributionTroisiemeAnneeP2 });
+    this.formPhaseP2.patchValue({ contributionPartenairesP2: contributionPartenairesP2 });
+    this.formPhaseP2.patchValue({ totalContributionPh2: totalContributionTroisiemeAnneeP2 + totalContributionPremiereAnneeP2 + totalContributionDeuxiemeAnneeP2 });
+  }
+  CalculSommeCPAp1() {
+    const contributionPartenaires1 = this.formPhaseP1.value.contributionPartenaires1;
+    const contributionComune1 = this.formPhaseP1.value.contributionComune1;
+    const totalContributionPremiereAnnee: number = contributionPartenaires1 + contributionComune1;
+    this.formPhaseP1.patchValue({ totalContributionPremiereAnnee: totalContributionPremiereAnnee });
+  }
+  CalculSommeCPAp2() {
+    const contributionPartenaires1P2 = this.formPhaseP2.value.contributionPartenaires1P2;
+    const contributionComune1P2 = this.formPhaseP2.value.contributionComune1P2;
+    const totalContributionPremiereAnneeP2: number = contributionPartenaires1P2 + contributionComune1P2;
+    this.formPhaseP2.patchValue({ totalContributionPremiereAnneeP2: totalContributionPremiereAnneeP2 });
+  }
+  CalculSommeCDAp1() {
+    const contributionPartenaires2 = this.formPhaseP1.value.contributionPartenaires2;
+    const contributionComune2 = this.formPhaseP1.value.contributionComune2;
+    const totalContributionDeuxiemeAnnee: number = contributionPartenaires2 + contributionComune2;
+    this.formPhaseP1.patchValue({ totalContributionDeuxiemeAnnee: totalContributionDeuxiemeAnnee });
+  }
+  CalculSommeCDAp2() {
+    const contributionPartenaires2P2 = this.formPhaseP2.value.contributionPartenaires2P2;
+    const contributionComune2P2 = this.formPhaseP2.value.contributionComune2P2;
+    const totalContributionDeuxiemeAnneeP2: number = contributionPartenaires2P2 + contributionComune2P2;
+    this.formPhaseP2.patchValue({ totalContributionDeuxiemeAnneeP2: totalContributionDeuxiemeAnneeP2 });
   }
   initializArray(phases: any[]) {
     phases.forEach(item => {
@@ -497,7 +663,6 @@ form
   initializArray1(item: any) {
     this.getFormArray().push(this.fB.group({
       id: item.id,
-      phase: { id: item.phase.id, name: item.phase.name },
       contributionComune1: item.contributionComune1,
       contributionComune2: item.contributionComune2,
       contributionComune3: item.contributionComune3,
@@ -551,8 +716,12 @@ form
         lieu: item.lieu,
         dateDebut: item.dateDebut,
         dateFine: item.dateFine,
-        dateReel: item.dateReel,
-        datePrevisionnel: item.datePrevisionnel,
+        dateDebutReel: item.dateDebutReel,
+        dateFinReel: item.dateFinReel,
+        delaisReel: item.delaisReel,
+        tauxRealisation: item.tauxRealisation,
+        codeSousProjet: item.codeSousProjet,
+        arrondissement: item.arrondissement,
         montantPrevisionnel: item.montantPrevisionnel,
         montantReel: item.montantReel,
         delais: item.delais,
@@ -591,9 +760,9 @@ form
     return this.formGroup.get('sousProjets') as FormArray;
   }
   RetourEmbalages(): void {
-    this.router.navigate(["pages/Programme/list-programme"]);
-
+    this.router.navigate(['/programme/list-programme'], { queryParams: { pageIndex: parseInt(this.pageIndex) } });
   }
+
   selectedConvontion($event) {
     this.formGroup.removeControl('convention');
   }
@@ -614,18 +783,20 @@ form
       this.formGroup.value.date.setUTCHours("00");
     }
   }
-  ConventionChangeProjet(e){
-    this.formGroup.value.convention=e.value
-    
+  ConventionChangeProjet(e) {
+    this.formGroup.value.convention = e.value
+
   }
-convention
-  ConventionChangeSousProjet(e){
-    this.convention=e.value
-    
+  convention
+  ConventionChangeSousProjet(e) {
+    this.convention = e.value
+
   }
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   onSubmit() {
-    this.convention
-    
+    this.formGroup
+
     this.formatDate();
     this.formGroup.value.etatAvancement = this.etatAvancement;
     const myArray1 = this.formGroup.get('sousProjets') as FormArray;
@@ -634,112 +805,11 @@ convention
     const myArray2 = this.formGroup.get('programmePhaseBudgets') as FormArray;
     const values2 = myArray2.length;
     if (this.formGroup.value.id != null) {
-      // if (this.formGroup.value.cout != null) {
-      //   this.formGroup.value.cout = parseFloat((this.formGroup.value.cout).replace(/\s/, ''));
-      // }
       for (let i = 0; i < values1; i++) {
-        // if (myArray1.value[i].constibutionC != null) {
-           myArray1.value[i].convention =this.convention
-        // }
-        
+        myArray1.value[i].convention = this.convention
       }
-      
-      // for (let i = 0; i < values2; i++) {
-      //   if (myArray2.value[i].contributionComune1 != null) {
-      //     myArray2.value[i].contributionComune1 = parseFloat((myArray2.value[i].contributionComune1).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionComune2 != null) {
-      //     myArray2.value[i].contributionComune2 = parseFloat((myArray2.value[i].contributionComune2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionComune3 != null) {
-      //     myArray2.value[i].contributionComune3 = parseFloat((myArray2.value[i].contributionComune3).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionCommune != null) {
-      //     myArray2.value[i].contributionCommune = parseFloat((myArray2.value[i].contributionCommune).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenaires1 != null) {
-      //     myArray2.value[i].contributionPartenaires1 = parseFloat((myArray2.value[i].contributionPartenaires1).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenaires2 != null) {
-      //     myArray2.value[i].contributionPartenaires2 = parseFloat((myArray2.value[i].contributionPartenaires2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenaires3 != null) {
-      //     myArray2.value[i].contributionPartenaires3 = parseFloat((myArray2.value[i].contributionPartenaires3).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenaires != null) {
-      //     myArray2.value[i].contributionPartenaires = parseFloat((myArray2.value[i].contributionPartenaires).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContributionPremiereAnnee != null) {
-      //     myArray2.value[i].totalContributionPremiereAnnee = parseFloat((myArray2.value[i].totalContributionPremiereAnnee).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContributionDeuxiemeAnnee != null) {
-      //     myArray2.value[i].totalContributionDeuxiemeAnnee = parseFloat((myArray2.value[i].totalContributionDeuxiemeAnnee).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContributionTroisiemeAnnee != null) {
-      //     myArray2.value[i].totalContributionTroisiemeAnnee = parseFloat((myArray2.value[i].totalContributionTroisiemeAnnee).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContribution != null) {
-      //     myArray2.value[i].totalContribution = parseFloat((myArray2.value[i].totalContribution).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContributionPh2 != null) {
-      //     myArray2.value[i].totalContributionPh2 = parseFloat((myArray2.value[i].totalContributionPh2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].montantDispoCommune3PA != null) {
-      //     myArray2.value[i].montantDispoCommune3PA = parseFloat((myArray2.value[i].montantDispoCommune3PA).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].montantDispoCommune3DA != null) {
-      //     myArray2.value[i].montantDispoCommune3DA = parseFloat((myArray2.value[i].montantDispoCommune3DA).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].montantIndispoCommune != null) {
-      //     myArray2.value[i].montantIndispoCommune = parseFloat((myArray2.value[i].montantIndispoCommune).replace(/\s/, ''));
-      //   }
-
-
-
-      //   if (myArray2.value[i].contributionComune1P2 != null) {
-      //     myArray2.value[i].contributionComune1P2 = parseFloat((myArray2.value[i].contributionComune1P2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionComune2P2 != null) {
-      //     myArray2.value[i].contributionComune2P2 = parseFloat((myArray2.value[i].contributionComune2P2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionComune3P2 != null) {
-      //     myArray2.value[i].contributionComune3P2 = parseFloat((myArray2.value[i].contributionComune3P2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionCommuneP2 != null) {
-      //     myArray2.value[i].contributionCommuneP2 = parseFloat((myArray2.value[i].contributionCommuneP2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenaires1P2 != null) {
-      //     myArray2.value[i].contributionPartenaires1P2 = parseFloat((myArray2.value[i].contributionPartenaires1P2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenaires2P2 != null) {
-      //     myArray2.value[i].contributionPartenaires2P2 = parseFloat((myArray2.value[i].contributionPartenaires2P2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenaires3P2 != null) {
-      //     myArray2.value[i].contributionPartenaires3P2 = parseFloat((myArray2.value[i].contributionPartenaires3P2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].contributionPartenairesP2 != null) {
-      //     myArray2.value[i].contributionPartenairesP2 = parseFloat((myArray2.value[i].contributionPartenairesP2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContributionPremiereAnneeP2 != null) {
-      //     myArray2.value[i].totalContributionPremiereAnneeP2 = parseFloat((myArray2.value[i].totalContributionPremiereAnneeP2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContributionDeuxiemeAnneeP2 != null) {
-      //     myArray2.value[i].totalContributionDeuxiemeAnneeP2 = parseFloat((myArray2.value[i].totalContributionDeuxiemeAnneeP2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].totalContributionTroisiemeAnneeP2 != null) {
-      //     myArray2.value[i].totalContributionTroisiemeAnneeP2 = parseFloat((myArray2.value[i].totalContributionTroisiemeAnneeP2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].montantDispoCommune3PAP2 != null) {
-      //     myArray2.value[i].montantDispoCommune3PAP2 = parseFloat((myArray2.value[i].montantDispoCommune3PAP2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].montantDispoCommune3DAP2 != null) {
-      //     myArray2.value[i].montantDispoCommune3DAP2 = parseFloat((myArray2.value[i].montantDispoCommune3DAP2).replace(/\s/, ''));
-      //   }
-      //   if (myArray2.value[i].montantIndispoCommuneP2 != null) {
-      //     myArray2.value[i].montantIndispoCommuneP2 = parseFloat((myArray2.value[i].montantIndispoCommuneP2).replace(/\s/, ''));
-      //   }
-      // }
     }
+
     if (this.isUpdate == true) {
       if (this.formGroup.value.convention) {
         if (this.formGroup.value.convention.id == '') {
@@ -747,20 +817,27 @@ convention
         }
       }
     }
+
     if (this.formGroup.value.programmePhaseBudgets.length != 0) {
       for (let i = 0; i < this.formGroup.value.programmePhaseBudgets.length; i++) {
         this.formGroup.value.programmePhaseBudgets[i].phase.id = i + 1;
       }
-      if (this.formGroup.value.programmePhaseBudgets[1].contributionCommuneP2 == "" || isNaN(this.formGroup.value.programmePhaseBudgets[1].contributionCommuneP2)) {
-        this.formGroup.value.programmePhaseBudgets.splice(1, 1);
+      if (this.formGroup.value.programmePhaseBudgets[1] != undefined) {
+        if (this.formGroup.value.programmePhaseBudgets[1].contributionCommuneP2 == "" || isNaN(this.formGroup.value.programmePhaseBudgets[1].contributionCommuneP2)) {
+          this.formGroup.value.programmePhaseBudgets.splice(1, 1);
+        }
       }
-      if (this.formGroup.value.programmePhaseBudgets[0].contributionCommune === "" || isNaN(this.formGroup.value.programmePhaseBudgets[0].contributionCommune)) {
-        this.formGroup.value.programmePhaseBudgets.splice(0, 1);
+
+      if (this.formGroup.value.programmePhaseBudgets[0] != undefined) {
+        if (this.formGroup.value.programmePhaseBudgets[0].contributionCommune === "" || isNaN(this.formGroup.value.programmePhaseBudgets[0].contributionCommune)) {
+          this.formGroup.value.programmePhaseBudgets.splice(0, 1);
+        }
       }
     }
     if (this.isUpdate == true) {
       this.formGroup.value.etatAvancement = this.etatAvancement;
     }
+    this.formGroup.value.programmePhaseBudgets
     this.programmeService.save(this.formGroup.value).subscribe((res: any) => {
       console.log(res);
       console.log(this.allpjs);
@@ -776,17 +853,24 @@ convention
         showConfirmButton: false,
         timer: 1500
       })
-      this.router.navigate(["/programme/list-programme"])
+      this.router.navigate(['/programme/list-programme'], { queryParams: { pageIndex: parseInt(this.pageIndex) } });
     }, err => {
       console.log(err)
     })
   }
-
+  SousThemeChange(e) {
+    this.formGroup.get('sousTheme.id').setValue(e);
+  }
+  ArrondissementChange(e) {
+    this.formGroup.get('arrondissement.id').setValue(e);
+  }
+  Arrondissement1Change(e) {
+    this.form.get('arrondissement').get('id').setValue(e);
+  }
   onClickPjName(a, e, id) {
     console.log("You clicked: " + e);
     var r = e.substring(0, e.length - 4);
     console.log(r);
-    //window.open(environment.API_ALFRESCO_URL + "/MarcheConvention/"+r);
     this.programmeService.downoldFile(r, a);
   }
 
@@ -800,7 +884,6 @@ convention
       confirmButtonText: this.translate.instant("PAGES.PROGRAMME.OUI"),
       cancelButtonText: this.translate.instant("PAGES.PROGRAMME.NON")
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.programmeService
           .deleteByIdFiles(id)

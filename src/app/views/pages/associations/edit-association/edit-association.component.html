@@ -428,7 +428,7 @@
 							<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
 							<td>{{ item.fSize / 1000 }} ko</td>
 							<td>
-								<button type="button" (click)="onClickPjName(item.idAlfresco, item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
+								<button type="button" (click)="onClickPjName(FileExtension(item.name),item.idAlfresco,item.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download" matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
 								<button type="button" (click)="onDeleteFile(item.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
 							</td>
 						</tr>

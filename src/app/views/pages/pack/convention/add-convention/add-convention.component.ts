@@ -19,7 +19,7 @@ export class AddConventionComponent implements OnInit {
 	constructor(private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private conventionMarcheService: ConventionMarcheService) {
-			this.isUpdate=false;
+		this.isUpdate = false;
 		this.formConvention = new FormGroup({
 			id: new FormControl(''),
 			object: new FormControl(''),
@@ -27,9 +27,14 @@ export class AddConventionComponent implements OnInit {
 			montant: new FormControl(''),
 			duree: new FormControl(''),
 			date: new FormControl(''),
+			dateSignature: new FormControl(''),
+			dateBO: new FormControl(''),
+			dateDebut: new FormControl(''),
+			dateAchevement: new FormControl(''),
+			etatConvention: new FormControl(''),
 		});
 	}
-
+	minDate
 	ngOnInit() {
 		this.activatedRoute.queryParams.subscribe(params => {
 			this.convention_id = params['id'];
@@ -39,14 +44,60 @@ export class AddConventionComponent implements OnInit {
 					if (res.montant != null) {
 						res.montant = res.montant.toLocaleString('fr', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 					}
+
 					this.formConvention.patchValue(res);
-					console.log(this.formConvention.value)
+					// this.formConvention.value.dateSignature=new Date(res.dateSignature.getFullYear() + "/" + (res.dateSignature.getMonth() + 1) + "/" + res.dateSignature.getDate()+' '); 
+
+			
+
+					const dateSignature = new Date(res.dateSignature);
+
+					// Check if dateSignature is a valid Date object
+					if (!isNaN(dateSignature.getTime())) {
+						// If it's a valid Date object, set it directly to the form control
+						this.formConvention.get('dateSignature').setValue(dateSignature.toISOString().split('T')[0]);
+					} else {
+						// Handle the case where dateSignature is not a valid date
+						console.error('Invalid dateSignature:', res.dateSignature);
+					}	
+				
+				
+					const dateBO = new Date(res.dateBO);
+
+					// Check if dateSignature is a valid Date object
+					if (!isNaN(dateBO.getTime())) {
+						// If it's a valid Date object, set it directly to the form control
+						this.formConvention.get('dateBO').setValue(dateBO.toISOString().split('T')[0]);
+					} else {
+						// Handle the case where dateSignature is not a valid date
+						console.error('Invalid dateBO:', res.dateBO);
+					}	
+					const dateDebut = new Date(res.dateDebut);
+
+					// Check if dateSignature is a valid Date object
+					if (!isNaN(dateDebut.getTime())) {
+						// If it's a valid Date object, set it directly to the form control
+						this.formConvention.get('dateDebut').setValue(dateDebut.toISOString().split('T')[0]);
+					} else {
+						// Handle the case where dateSignature is not a valid date
+						console.error('Invalid dateDebut:', res.dateDebut);
+					}	
+					const dateAchevement = new Date(res.dateAchevement);
+
+					// Check if dateSignature is a valid Date object
+					if (!isNaN(dateAchevement.getTime())) {
+						// If it's a valid Date object, set it directly to the form control
+						this.formConvention.get('dateAchevement').setValue(dateAchevement.toISOString().split('T')[0]);
+					} else {
+						// Handle the case where dateSignature is not a valid date
+						console.error('Invalid dateAchevement:', res.dateAchevement);
+					}	
 				}, err => {
 					console.log(err);
 				})
 			}
-			else{
-				this.isUpdate=false;
+			else {
+				this.isUpdate = false;
 				this.formConvention = new FormGroup({
 					id: new FormControl(''),
 					object: new FormControl(''),
@@ -54,12 +105,21 @@ export class AddConventionComponent implements OnInit {
 					montant: new FormControl(''),
 					duree: new FormControl(''),
 					date: new FormControl(''),
+					dateSignature: new FormControl(''),
+					dateBO: new FormControl(''),
+					dateDebut: new FormControl(''),
+					dateAchevement: new FormControl(''),
+					etatConvention: new FormControl(''),
+
 				});
+				this.formConvention.get('dateDebut').valueChanges.subscribe((dateDebut: string) => {
+					this.minDate = dateDebut;
+				  });
 			}
 		})
 	}
 
-	RetourEmbalages() {
+	Retour() {
 		this.router.navigate(["/convention/listconvention"]);
 	}
 
@@ -71,6 +131,7 @@ export class AddConventionComponent implements OnInit {
 				this.formConvention.value.montant = parseFloat((this.formConvention.value.montant).toFixed(2));
 			}
 		}
+		
 		this.conventionMarcheService.save(this.formConvention.value).subscribe(res => {
 			let id = JSON.parse(res).id;
 			if (this.allpjs.length > 0 && id != undefined) {
@@ -82,7 +143,7 @@ export class AddConventionComponent implements OnInit {
 						});
 				}
 			}
-			this.RetourEmbalages();
+			this.Retour();
 		}, err => {
 			console.log(err)
 		})

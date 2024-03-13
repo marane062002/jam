@@ -128,7 +128,7 @@
 										<span style="color: #000000;font-weight: bold;">{{
 											"PAGES.BUREAU_ORDRE.NON_TRAITES" | translate }}: {{ dynamicWidth2
 											}}</span>
-									</div>
+									</div> 
 									<div [style.width]="dynamicWidth3" *ngIf="dynamicWidth3!='0%'"
 										style="background-color: #3191df; height: 100%; text-align: center; display: flex; align-items: center; justify-content: center;">
 										<span style="color: #000000;font-weight: bold;">{{
@@ -178,6 +178,14 @@
 											translate }}
 										</th>
 										<td mat-cell *matCellDef="let row">{{row.paramPCNT}}
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="courriersCloturer">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.COURRIERS_CLOTURER' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">{{row.paramPCC}}
 										</td>
 									</ng-container>
 									<ng-container matColumnDef="performance">
@@ -277,6 +285,14 @@
 											translate }}
 										</th>
 										<td mat-cell *matCellDef="let row">{{row.paramECNT}}
+										</td>
+									</ng-container>
+									<ng-container matColumnDef="courriersCloturer">
+										<th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+											'PAGES.BUREAU_ORDRE.COURRIERS_CLOTURER' |
+											translate }}
+										</th>
+										<td mat-cell *matCellDef="let row">{{row.paramECC}}
 										</td>
 									</ng-container>
 									<ng-container matColumnDef="performance">

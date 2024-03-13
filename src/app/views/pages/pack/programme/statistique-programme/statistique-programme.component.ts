@@ -4,6 +4,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { ProgrammeService } from '../../../shared/ProgrammeService';
 import { TranslateService } from '@ngx-translate/core';
+import { SpinnerService } from '../../../utils/spinner.service';
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { ExcelServiceService } from '../../../utils/excel-service.service';
 @Component({
   selector: 'kt-statistique-programme',
   templateUrl: './statistique-programme.component.html',
@@ -40,9 +44,13 @@ export class StatistiqueProgrammeComponent implements OnInit {
 
   isSelected: boolean = false;
 
+  footerData: any[][] = [];
+
   constructor(private fb: FormBuilder,
     private programeServie: ProgrammeService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private spinnerService: SpinnerService,
+    private excelService: ExcelServiceService
   ) {
     this.searchForm = this.fb.group({
       tabcherches: [[],],
@@ -1423,7 +1431,7 @@ export class StatistiqueProgrammeComponent implements OnInit {
       this.nbProjetTotalNlances = this.nbProjetOrien1Nlances + this.nbProjetOrien2Nlances + this.nbProjetOrien3Nlances + this.nbProjetOrien4Nlances;
       this.nbProjetTotalEncours = this.nbProjetOrien1Encours + this.nbProjetOrien2Encours + this.nbProjetOrien3Encours + this.nbProjetOrien4Encours;
       this.nbProjetTotalAcheves = this.nbProjetOrien1Acheves + this.nbProjetOrien2Acheves + this.nbProjetOrien3Acheves + this.nbProjetOrien4Acheves;
-      
+
     }
   }
 
@@ -1607,7 +1615,7 @@ export class StatistiqueProgrammeComponent implements OnInit {
       this.contributionTotaleCommuneOrien1 = this.contributionTotaleCommuneOrien1Acheves + this.contributionTotaleCommuneOrien1Encours + this.contributionTotaleCommuneOrien1Nlances + this.contributionTotaleCommuneOrien1Programmes + this.contributionTotaleCommuneOrien4Programmes;
       this.contributionTotaleCommuneOrien2 = this.contributionTotaleCommuneOrien2Acheves + this.contributionTotaleCommuneOrien2Encours + this.contributionTotaleCommuneOrien2Nlances + this.contributionTotaleCommuneOrien2Programmes + this.contributionTotaleCommuneOrien4Programmes;
       this.contributionTotaleCommuneOrien3 = this.contributionTotaleCommuneOrien3Acheves + this.contributionTotaleCommuneOrien3Encours + this.contributionTotaleCommuneOrien3Nlances + this.contributionTotaleCommuneOrien3Programmes + this.contributionTotaleCommuneOrien4Programmes;
-      this.contributionTotaleCommune = this.contributionTotaleCommuneOrien1 + this.contributionTotaleCommuneOrien2 + this.contributionTotaleCommuneOrien3+ this.contributionTotaleCommuneOrien4;
+      this.contributionTotaleCommune = this.contributionTotaleCommuneOrien1 + this.contributionTotaleCommuneOrien2 + this.contributionTotaleCommuneOrien3 + this.contributionTotaleCommuneOrien4;
     }
     else {
       for (let i = 0; i < this.programmes.length; i++) {
@@ -1656,7 +1664,7 @@ export class StatistiqueProgrammeComponent implements OnInit {
             this.contributionTotaleCommuneOrien3Nlances += this.programmes[i].programmePhaseBudgets[j].totalContributionCommunePh1Ph2;
           }
         }
-      
+
 
         if (this.programmes[i].orientationStrategique == "Une économie prospère et diversifiée" && this.programmes[i].etatAvancement == 'EN_COURS') {
           for (let j = 0; j < this.programmes[i].programmePhaseBudgets.length; j++) {
@@ -1681,7 +1689,7 @@ export class StatistiqueProgrammeComponent implements OnInit {
       this.contributionTotaleCommuneOrien1 = this.contributionTotaleCommuneOrien1Acheves + this.contributionTotaleCommuneOrien1Encours + this.contributionTotaleCommuneOrien1Nlances + this.contributionTotaleCommuneOrien1Programmes + this.contributionTotaleCommuneOrien4Programmes;
       this.contributionTotaleCommuneOrien2 = this.contributionTotaleCommuneOrien2Acheves + this.contributionTotaleCommuneOrien2Encours + this.contributionTotaleCommuneOrien2Nlances + this.contributionTotaleCommuneOrien2Programmes + this.contributionTotaleCommuneOrien4Programmes;
       this.contributionTotaleCommuneOrien3 = this.contributionTotaleCommuneOrien3Acheves + this.contributionTotaleCommuneOrien3Encours + this.contributionTotaleCommuneOrien3Nlances + this.contributionTotaleCommuneOrien3Programmes + this.contributionTotaleCommuneOrien4Programmes;
-      this.contributionTotaleCommune = this.contributionTotaleCommuneOrien1 + this.contributionTotaleCommuneOrien2 + this.contributionTotaleCommuneOrien3+ this.contributionTotaleCommuneOrien4;
+      this.contributionTotaleCommune = this.contributionTotaleCommuneOrien1 + this.contributionTotaleCommuneOrien2 + this.contributionTotaleCommuneOrien3 + this.contributionTotaleCommuneOrien4;
     }
   }
 
@@ -1796,11 +1804,11 @@ export class StatistiqueProgrammeComponent implements OnInit {
     var ctx = document.getElementById("canvas1");
     const labelColors = {
       'Projets en cours': 'yellow',
-      'Projets non lancés': 'red', 
+      'Projets non lancés': 'red',
       'Projets achevés': 'green',
       'Projets programmés': '#7030a0',
       'المشاريع المنطلقة': 'yellow',
-      'المشاريع التي لم تنطلق': 'red', 
+      'المشاريع التي لم تنطلق': 'red',
       'المشاريع المنتهية': 'green',
       'المشاريع المبرمجة': '#7030a0',
     };
@@ -1845,10 +1853,10 @@ export class StatistiqueProgrammeComponent implements OnInit {
     var ctx = document.getElementById("canvas2");
     const labelColors = {
       'Projets en cours': 'yellow',
-      'Projets non lancés': 'red', 
+      'Projets non lancés': 'red',
       'Projets achevés': 'green',
       'المشاريع المنطلقة': 'yellow',
-      'المشاريع التي لم تنطلق': 'red', 
+      'المشاريع التي لم تنطلق': 'red',
       'المشاريع المنتهية': 'green',
     };
     this.dash2 = new Chart(ctx, {
@@ -1871,5 +1879,184 @@ export class StatistiqueProgrammeComponent implements OnInit {
         },
       },
     });
+  }
+  toPrint: any;
+
+  columns: any[];
+
+  downloadPdf() {
+    let data: any = [this.nbProjetOrien1Programmes, this.coutProjetOrien1Programmes, this.contributionTotaleCommuneOrien1Programmes, this.nbProjetOrien2Programmes,
+    this.coutProjetOrien2Programmes, this.contributionTotaleCommuneOrien2Programmes, this.nbProjetOrien3Programmes, this.coutProjetOrien3Programmes,
+    this.contributionTotaleCommuneOrien3Programmes, this.nbProjetOrien4Programmes, this.coutProjetOrien4Programmes, this.contributionTotaleCommuneOrien4Programmes,
+    this.coutProjetTotalProgrammes, this.nbProjetTotalProgrammes, this.nbProjetOrien1Acheves, this.coutProjetOrien1Acheves, this.contributionTotaleCommuneOrien1Acheves,
+    this.nbProjetOrien2Acheves, this.coutProjetOrien2Acheves, this.contributionTotaleCommuneOrien2Acheves, this.nbProjetOrien3Acheves, this.coutProjetOrien3Acheves,
+    this.contributionTotaleCommuneOrien3Acheves, this.nbProjetOrien4Acheves, this.coutProjetOrien4Acheves, this.contributionTotaleCommuneOrien4Acheves, this.coutProjetTotalAcheves,
+    this.nbProjetTotalAcheves, this.nbProjetOrien1Encours, this.coutProjetOrien1Encours, this.contributionTotaleCommuneOrien1Encours, this.nbProjetOrien2Encours, this.coutProjetOrien2Encours,
+    this.contributionTotaleCommuneOrien2Encours, this.nbProjetOrien3Encours, this.coutProjetOrien3Encours, this.contributionTotaleCommuneOrien3Encours, this.nbProjetOrien4Encours, this.coutProjetOrien4Encours,
+    this.contributionTotaleCommuneOrien4Encours, this.coutProjetTotalEncours, this.nbProjetTotalEncours, this.nbProjetOrien1Nlances, this.coutProjetOrien1Nlances, this.contributionTotaleCommuneOrien1Nlances, this.nbProjetOrien2Nlances, this.coutProjetOrien2Nlances,
+    this.contributionTotaleCommuneOrien2Nlances, this.nbProjetOrien3Nlances, this.coutProjetOrien3Nlances, this.contributionTotaleCommuneOrien3Nlances, this.nbProjetOrien4Nlances, this.coutProjetOrien4Nlances,
+    this.contributionTotaleCommuneOrien4Nlances, this.coutProjetTotalNlances, this.nbProjetTotalNlances, this.contributionTotaleCommuneOrien1, this.contributionTotaleCommuneOrien2,
+    this.contributionTotaleCommuneOrien3, this.contributionTotaleCommuneOrien4, this.contributionTotaleCommune]
+
+    let json = new excelData(data);
+    (this.columns = [/* "Orientation 1", "Orientation 2", "Orientation 3", "Orientation 4", "Nombre de projets", "Coût des projets", "Cntribution totale de la commune de Marrakech", "Coût des projets", "Cntribution totale de la commune de Marrakech", "Coût des projets", "Cntribution totale de la commune de Marrakech", "Coût total des projets", "Nombre total des projets", "Taux d'avancement des projets sur le terrain",
+      "Projets programmés", "Projets achevés", "Projets en cours", "Projets non lancés", "Contribution totale de la commune de Marrakech", "Taux d'avancement des projets sur le terrain" */]),
+      this.excelService.exportAsExcel("Statistiques des projets", "", this.columns, json, this.footerData, "Statistiques des projets", "Statistiques des projets");
+  }
+
+}
+
+export class excelData {
+  nombreProjetOr1Prog: string;
+  coutProjetOr1Prog: string;
+  ContributionTotaleCMMarrOr1Prog: string;
+  nombreProjetOr2Prog: string;
+  coutProjetOr2Prog: string;
+  ContributionTotaleCMMarrOr2Prog: string;
+  nombreProjetOr3Prog: string;
+  coutProjetOr3Prog: string;
+  ContributionTotaleCMMarrOr3Prog: string;
+  nombreProjetOr4Prog: string;
+  coutProjetOr4Prog: string;
+  ContributionTotaleCMMarrOr4Prog: string;
+  coutTotalProjetProg: string;
+  nombreTotalTotalProjetProg: string;
+
+
+  nombreProjetOr1Achev: string;
+  coutProjetOr1Achev: string;
+  ContributionTotaleCMMarrOr1Achev: string;
+  nombreProjetOr2Achev: string;
+  coutProjetOr2Achev: string;
+  ContributionTotaleCMMarrOr2Achev: string;
+  nombreProjetOr3Achev: string;
+  coutProjetOr3Achev: string;
+  ContributionTotaleCMMarrOr3Achev: string;
+  nombreProjetOr4Achev: string;
+  coutProjetOr4Achev: string;
+  ContributionTotaleCMMarrOr4Achev: string;
+  coutTotalProjetAchev: string;
+  nombreTotalTotalProjetAchev: string;
+  tauxAvancementTotalAchev: string;
+
+
+  nombreProjetOr1EnCours: string;
+  coutProjetOr1EnCours: string;
+  ContributionTotaleCMMarrOr1EnCours: string;
+  nombreProjetOr2EnCours: string;
+  coutProjetOr2EnCours: string;
+  ContributionTotaleCMMarrOr2EnCours: string;
+  nombreProjetOr3EnCours: string;
+  coutProjetOr3EnCours: string;
+  ContributionTotaleCMMarrOr3EnCours: string;
+  nombreProjetOr4EnCours: string;
+  coutProjetOr4EnCours: string;
+  ContributionTotaleCMMarrOr4EnCours: string;
+  coutTotalProjetEnCours: string;
+  nombreTotalTotalProjetEnCours: string;
+  tauxAvancementTotalEnCours: string;
+
+
+  nombreProjetOr1NonLanc: string;
+  coutProjetOr1NonLanc: string;
+  ContributionTotaleCMMarrOr1NonLanc: string;
+  nombreProjetOr2NonLanc: string;
+  coutProjetOr2NonLanc: string;
+  ContributionTotaleCMMarrOr2NonLanc: string;
+  nombreProjetOr3NonLanc: string;
+  coutProjetOr3NonLanc: string;
+  ContributionTotaleCMMarrOr3NonLanc: string;
+  nombreProjetOr4NonLanc: string;
+  coutProjetOr4NonLanc: string;
+  ContributionTotaleCMMarrOr4NonLanc: string;
+  coutTotalProjetNonLanc: string;
+  nombreTotalTotalProjetNonLanc: string;
+  tauxAvancementTotalNonLanc
+
+
+  ontributionTotalCMMarrOr1: string;
+  ontributionTotalCMMarrOr2: string;
+  ontributionTotalCMMarrOr3: string;
+  ontributionTotalCMMarrOr4: string;
+  ontributionTotalCMMarr: string;
+
+  tauxAvancementTotal: string;
+
+  constructor(item) {
+
+    this.nombreProjetOr1Prog = item[0];
+    this.coutProjetOr1Prog = item[1];
+    this.ContributionTotaleCMMarrOr1Prog = item[2];
+    this.nombreProjetOr2Prog = item[3];
+    this.coutProjetOr2Prog = item[4];
+    this.ContributionTotaleCMMarrOr2Prog = item[5];
+    this.nombreProjetOr3Prog = item[6];
+    this.coutProjetOr3Prog = item[7];
+    this.ContributionTotaleCMMarrOr3Prog = item[8];
+    this.nombreProjetOr4Prog = item[9];
+    this.coutProjetOr4Prog = item[10];
+    this.ContributionTotaleCMMarrOr4Prog = item[11];
+    this.coutTotalProjetProg = item[12];
+    this.nombreTotalTotalProjetProg = item[13];
+
+
+    this.nombreProjetOr1Achev = item[14];
+    this.coutProjetOr1Achev = item[15];
+    this.ContributionTotaleCMMarrOr1Achev = item[16];
+    this.nombreProjetOr2Achev = item[17]
+    this.coutProjetOr2Achev = item[18];
+    this.ContributionTotaleCMMarrOr2Achev = item[19];
+    this.nombreProjetOr3Achev = item[20]
+    this.coutProjetOr3Achev = item[21];
+    this.ContributionTotaleCMMarrOr3Achev = item[22];
+    this.nombreProjetOr4Achev = item[23]
+    this.coutProjetOr4Achev = item[24];
+    this.ContributionTotaleCMMarrOr4Achev = item[25];
+    this.coutTotalProjetAchev = item[26];
+    this.nombreTotalTotalProjetAchev = item[27];
+    this.tauxAvancementTotalAchev = "-";
+
+
+    this.nombreProjetOr1EnCours = item[28];
+    this.coutProjetOr1EnCours = item[29];
+    this.ContributionTotaleCMMarrOr1EnCours = item[30];
+    this.nombreProjetOr2EnCours = item[31];
+    this.coutProjetOr2EnCours = item[32];
+    this.ContributionTotaleCMMarrOr2EnCours = item[33];
+    this.nombreProjetOr3EnCours = item[34];
+    this.coutProjetOr3EnCours = item[35];
+    this.ContributionTotaleCMMarrOr3EnCours = item[36];
+    this.nombreProjetOr4EnCours = item[37];
+    this.coutProjetOr4EnCours = item[38];
+    this.ContributionTotaleCMMarrOr4EnCours = item[39];
+    this.coutTotalProjetEnCours = item[40];
+    this.nombreTotalTotalProjetEnCours = item[41]
+    this.tauxAvancementTotalEnCours = "-";
+
+
+    this.nombreProjetOr1NonLanc = item[42];
+    this.coutProjetOr1NonLanc = item[43];
+    this.ContributionTotaleCMMarrOr1NonLanc = item[44];
+    this.nombreProjetOr2NonLanc = item[45];
+    this.coutProjetOr2NonLanc = item[46];
+    this.ContributionTotaleCMMarrOr2NonLanc = item[47];
+    this.nombreProjetOr3NonLanc = item[48];
+    this.coutProjetOr3NonLanc = item[49];
+    this.ContributionTotaleCMMarrOr3NonLanc = item[50];
+    this.nombreProjetOr4NonLanc = item[51];
+    this.coutProjetOr4NonLanc = item[52];
+    this.ContributionTotaleCMMarrOr4NonLanc = item[53];
+    this.coutTotalProjetNonLanc = item[54];
+    this.nombreTotalTotalProjetNonLanc = item[55]
+    this.tauxAvancementTotalNonLanc = "-"
+
+
+    this.ontributionTotalCMMarrOr1 = item[56];
+    this.ontributionTotalCMMarrOr2 = item[57];
+    this.ontributionTotalCMMarrOr3 = item[58];
+    this.ontributionTotalCMMarrOr4 = item[59];
+    this.ontributionTotalCMMarr = item[60];
+
+    this.tauxAvancementTotal = "-";
   }
 }

@@ -113,7 +113,7 @@ export class EBFormComponent implements OnInit {
 		typeAo: { id: "" },
 		typeMarche: { id: "" },
 		typeConsultationArchitecturale: "",
-		natureAo: { id: "" },
+		natureAo: { id: 0 },
 		statutAo: { id: 1, libelle: "" },
 		pfinancier: 0,
 		ptechnique: 0,
@@ -138,6 +138,7 @@ export class EBFormComponent implements OnInit {
 		numAo: "",
 		existanceVisite: false,
 		existEchantillon: false,	
+		offreTechnique: false,	
 		is_en_attente_de_validation: false,
 
 		existClassification: false,
@@ -159,7 +160,7 @@ export class EBFormComponent implements OnInit {
 		convention: { id: "" },
 		qualification: { id: "" },
 		classification: { id: "" },
-		 typePrestation: { id: "" },
+		 typePrestation: { id: 0 },
 		sendToServiceMarche: false
 	};
 	ListAgrement
@@ -219,6 +220,70 @@ export class EBFormComponent implements OnInit {
 			this.lisTypePrestationAo = data;
 		});
 	}
+	onChangeEstimation(){
+		if(this.formData.natureAo.id==33467 && this.formData.typePrestation.id==1 && this.formData.estimationHT>10000000){
+			
+			Swal.fire({
+				position: "center",
+				icon: "warning",
+				title: "le montant de l'estimation HT doit etre inférieur ou égale à 10.000.000 dhs, H.T",
+				showConfirmButton: false,
+				timer: 2500,
+			}).then((res)=>{
+				
+			});
+		}
+		if(this.formData.natureAo.id==33467 ){
+			if( this.formData.typePrestation.id==2 || this.formData.typePrestation.id==3){
+				if(this.formData.estimationHT>1000000){
+					
+					Swal.fire({
+						position: "center",
+						icon: "warning",
+						title: " le montant doit etre inférieur ou égale à 1.000.000,00 dhs, H.T",
+						showConfirmButton: false,
+						timer: 2500,
+					}).then((res)=>{
+						
+
+					});;
+				}
+			}
+			
+		}
+		if(this.formData.natureAo.id==33468 && this.formData.typePrestation.id==1 && this.formData.estimationHT>10000000){
+			
+			Swal.fire({
+				position: "center",
+				icon: "warning",
+				title: " le montant de l'estimation HT doit etre supérieure à 10.000.000,00 dbs H.T",
+				showConfirmButton: false,
+				timer: 2500,
+			}).then((res)=>{
+				
+
+			});;
+		}
+		if(this.formData.natureAo.id==33468 ){
+			if( this.formData.typePrestation.id==2 || this.formData.typePrestation.id==3){
+				if(this.formData.estimationHT> 1000000){
+					
+					Swal.fire({
+						position: "center",
+						icon: "warning",
+						title: " le montant de l'estimation HT doit etre supérieur à 1.000.000,00dhs H.T",
+						showConfirmButton: false,
+						timer: 2500,
+					}).then((res)=>{
+						
+
+					});;
+				}
+			}
+			
+		}
+		
+	}
 	isVisible7
 	selectedEchantillon(event) {
 		if (event.value == "1") {
@@ -228,6 +293,14 @@ export class EBFormComponent implements OnInit {
 			this.formData.existEchantillon = false;
 
 			this.isVisible7 = false;
+		}
+	}
+	selectedOffreTechnique(event){
+		if (event.value == "1") {
+			this.formData.offreTechnique = true;
+		} else {
+			this.formData.offreTechnique = false;
+
 		}
 	}
 	selectedAgrement(event) {
@@ -610,7 +683,7 @@ export class EBFormComponent implements OnInit {
 	save(event: any): void {
 		$("#test").val(event.target.files[0].name);
 		this.formPj.selecetedFile = event.target.files;
-	}
+	} 
 	// ====================================================
 	//
 	//=====================================================
@@ -844,7 +917,7 @@ export class EBFormComponent implements OnInit {
 				this.formData.convention = null;
 			}
 			if (this.formData.typePrestation) {
-				if (this.formData.typePrestation.id == "") {
+				if (this.formData.typePrestation.id == 0) {
 					this.formData.typePrestation = null;
 				}
 			}
@@ -852,7 +925,7 @@ export class EBFormComponent implements OnInit {
 				this.formData.typeAo = null;
 			}
 			if (this.formData.natureAo != null) {
-				if (this.formData.natureAo.id == "") {
+				if (this.formData.natureAo.id == 0) {
 					this.formData.natureAo = null;
 				}
 			}

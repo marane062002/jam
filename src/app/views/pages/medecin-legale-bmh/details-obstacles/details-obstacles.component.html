@@ -3,7 +3,7 @@
 	<div class="kt-portlet__head kt-bg-portlet-2">
 		<div class="kt-portlet__head-label">
 			&nbsp;
-			<h2 class="kt-portlet__head-title kt-font-inverse-brand">Détails des morts non naturelles :</h2>
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">Détails des morts par obstacles :</h2>
 		</div>
 
 		<div class="kt-portlet__head-toolbar">
@@ -11,66 +11,73 @@
 				<div class="kt-portlet__head-actions">
 					<a href="javascript:; " (click)="SortirAssociation()" class="btn btn-outline-danger btn-elevate btn-icon-sm">
 						<i class="icon la la-share"></i>
-
-						Sortie du cadavre
+						Sortie du cadavre  
 					</a>
+					
+
+
+
+					
+						<button class="btn btn-primary" mat-button (click)="openDialog()"><i class="la la-tasks"></i> Historique</button>
+
+					
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="row justify-content-center">
-	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+<div  class="row justify-content-center">
+	<div class="kt-portlet portlet-1 col-md-5">
 		<div class="kt-portlet__head kt-bg-portlet-2">
 			<div class="kt-portlet__head-label">
 				&nbsp;
 				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Informations défunts</h2>
 			</div>
 		</div>
-		<div class="kt-portlet__body">
+		<div *ngIf="info" class="kt-portlet__body">
 			<div class="row">
-				<div *ngIf="history" class="espace_bloc"></div>
 				<div class="col-md-12 show_port">
 					<table class="table">
 						<tbody>
 							<tr>
 								<th>Nom :</th>
-								<td class="donnee_show">353531343483</td>
+								<td  class="donnee_show">{{info.nom}}</td>
 							</tr>
 							<tr>
 								<th>Prénom :</th>
-								<td class="donnee_show">438348383383</td>
+								<td class="donnee_show">{{info.prenom}}</td>
 							</tr>
 
 							<tr>
 								<th>CIN :</th>
-								<td class="donnee_show">434383833</td>
+								<td class="donnee_show">{{info.cin}}</td>
 							</tr>
 							<tr>
 								<th>Sexe :</th>
-								<td class="donnee_show">Homme</td>
+								<td class="donnee_show">{{info.sexe}}</td>
 							</tr>
 
 							<tr>
 								<th>Nationalité :</th>
-								<td class="donnee_show">34838888888888888</td>
+								<td class="donnee_show">{{info.nationalite}}</td>
 							</tr>
 							<tr>
 								<th>Date de naissance :</th>
-								<td class="donnee_show">24/06/1987</td>
+								<td class="donnee_show">{{info.date}}</td>
 							</tr>
 							<tr>
 								<th>Adresse de résidence :</th>
-								<td class="donnee_show">3434358343</td>
+								<td class="donnee_show">{{info.adresseResidence}}</td>
 							</tr>
 							<tr>
 								<th>Arrondissement :</th>
-								<td class="donnee_show">Active</td>
+								<td class="donnee_show">{{info.arrondissement.libelle}}</td>
 							</tr>
 							<tr>
 								<th>Quartier :</th>
-								<td class="donnee_show">43483483483</td>
+								<td class="donnee_show">{{info.quartier.libelle}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -79,88 +86,82 @@
 		</div>
 	</div>
 
-	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+	<div  class="kt-portlet portlet-1 col-md-5">
 		<div class="kt-portlet__head kt-bg-portlet-2">
 			<div class="kt-portlet__head-label">
 				&nbsp;
 				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Infos Déclarant</h2>
 			</div>
 		</div>
-		<div class="kt-portlet__body">
+		<div *ngIf="info" class="kt-portlet__body">
 			<div class="row">
-				<div *ngIf="history" class="espace_bloc"></div>
+				<div  class="espace_bloc"></div>
 				<div class="col-md-12 show_port">
 					<table class="table">
 						<tbody>
 							<tr>
 								<th>Nom du déclarant</th>
-								<td class="donnee_show">368463483483</td>
+								<td class="donnee_show">{{info.nomDeclarent}}</td>
 							</tr>
 							<tr>
 								<th>Prénom du déclarant :</th>
-								<td class="donnee_show">34834348344583</td>
+								<td class="donnee_show">{{info.prenomDeclarent}}</td>
 							</tr>
 
 							<tr>
 								<th>C.I.N du déclarant :</th>
-								<td class="donnee_show">43343438843</td>
+								<td class="donnee_show">{{info.cinDeclarent}}</td>
 							</tr>
 							<tr>
-								<th>Qualité du déclarant :</th>
-								<td class="donnee_show">Avancé</td>
+								<th>Observation du déclarant :</th>
+								<td class="donnee_show">{{info.observation}}</td>
 							</tr>
 							<tr>
 								<th>Date de déclaration :</th>
-								<td class="donnee_show">22/10/2022</td>
-							</tr>
-							<tr>
-								<th>Heure de déclaration :</th>
-								<td class="donnee_show">11:00</td>
+								<td class="donnee_show">{{info.dateDeclaration}}</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<!-- END DETAILS ASSOCIATION -->
 		</div>
 	</div>
 </div>
 
 <div class="row justify-content-center">
-	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+	<div  class="kt-portlet portlet-1 col-md-5">
 		<div class="kt-portlet__head kt-bg-portlet-2">
-			<div class="kt-portlet__head-label">
+			<div class="kt-portlet__head-label">		
 				&nbsp;
 				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Décés</h2>
 			</div>
 		</div>
-		<div class="kt-portlet__body">
+		<div *ngIf="info" class="kt-portlet__body">
 			<div class="row">
-				<div *ngIf="history" class="espace_bloc"></div>
+				<div  class="espace_bloc"></div>
 				<div class="col-md-12 show_port">
 					<table class="table">
 						<tbody>
 							<tr>
-								<th>Date du décés :</th>
-								<td class="donnee_show">Activité</td>
+								<th>N décés :</th>
+								<td class="donnee_show">{{info?.numDeces}}</td>
 							</tr>
 							<tr>
-								<th>Heure de décés</th>
-								<td class="donnee_show">Type</td>
+								<th>Date du décés :</th>
+								<td class="donnee_show">{{info.dateDeces}}</td>
 							</tr>
 							<tr>
 								<th>Causes de décés</th>
-								<td class="donnee_show">Type</td>
+								<td class="donnee_show">{{info.causesDeces}}</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<!-- END DETAILS ASSOCIATION -->
 		</div>
 	</div>
 
-	<div *ngIf="details" class="kt-portlet portlet-1 col-md-5">
+	<div *ngIf="info"  class="kt-portlet portlet-1 col-md-5">
 		<div class="kt-portlet__head kt-bg-portlet-2">
 			<div class="kt-portlet__head-label">
 				&nbsp;
@@ -169,21 +170,17 @@
 		</div>
 		<div class="kt-portlet__body">
 			<div class="row">
-				<div *ngIf="history" class="espace_bloc"></div>
+				<div  class="espace_bloc"></div>
 				<div class="col-md-12 show_port">
 					<table class="table">
 						<tbody>
 							<tr>
 								<th>Constateur :</th>
-								<td class="donnee_show">125431821231485</td>
+								<td class="donnee_show">{{info.constateur.nom}}</td>
 							</tr>
 							<tr>
 								<th>Date de constation :</th>
-								<td class="donnee_show">20/11/2022</td>
-							</tr>
-							<tr>
-								<th>Heure de constation :</th>
-								<td class="donnee_show">03:23</td>
+								<td class="donnee_show">{{info.dateConstation}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -193,7 +190,7 @@
 	</div>
 </div>
 
-<div class="row justify-content-center">
+<div  class="row justify-content-center">
 	<div class="kt-portlet portlet-1 col-md-5">
 		<div class="kt-portlet__head kt-bg-portlet-2">
 			<div class="kt-portlet__head-label">
@@ -201,18 +198,18 @@
 				<h2 class="kt-portlet__head-title kt-font-inverse-brand">Enterrement</h2>
 			</div>
 		</div>
-		<div class="kt-portlet__body">
+		<div *ngIf="info" class="kt-portlet__body">
 			<div class="row">
 				<div class="col-md-12 show_port">
 					<table class="table">
 						<tbody>
 							<tr>
 								<th>Lieu d'entrremment :</th>
-								<td class="donnee_show">Activité</td>
+								<td class="donnee_show">{{info.entrementInhumation.numDeces}}</td>
 							</tr>
 							<tr>
 								<th>Date de bulletin</th>
-								<td class="donnee_show">Activité</td>
+								<td class="donnee_show">{{info.entermentObstacle}}</td>
 							</tr>
 							<tr>
 								<th>Date de récupération du cadavre</th>
@@ -222,7 +219,6 @@
 					</table>
 				</div>
 			</div>
-			<!-- END DETAILS ASSOCIATION -->
 		</div>
 	</div>
 
@@ -292,3 +288,21 @@
 </div>
 <div class="espace_bloc"></div>
 <!-- end:: Content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

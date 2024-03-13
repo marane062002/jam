@@ -4,125 +4,172 @@
 		<div class="kt-portlet__head kt-bg-portlet-3">
 			<div class="kt-portlet__head-label">
 				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
-					<span *ngIf="isUpdate">{{ "PAGES.CONVENTION.MODIFICATION_CONVENTION" | translate }}</span> 
-					<span *ngIf="!isUpdate">{{ "PAGES.CONVENTION.AJOUT_CONVENTION" | translate }}</span> 
+					<span *ngIf="isUpdate">{{ "PAGES.CONVENTION.MODIFICATION_CONVENTION" | translate }}</span>
+					<span *ngIf="!isUpdate">{{ "PAGES.CONVENTION.AJOUT_CONVENTION" | translate }}</span>
 				</h2>
 			</div>
 		</div>
 	</div>
 	<form [formGroup]="formConvention" (ngSubmit)="onSubmit()">
-	<div class="col-xl-12 col-xxl-6">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="form-group fv-plugins-icon-container">
-					<mat-form-field class="example-full-width">
-						
-						<mat-label>{{ "PAGES.CONVENTION.OBJET" | translate }} :</mat-label>
-						<input
-							type="text"
-							class="form-control form-control-solid form-control-lg"
-							name="address1"
-							matInput
-							formControlName="object"
-						/>
-					</mat-form-field>
-					<div class="fv-plugins-message-container"></div>
+		<div class="col-xl-12 col-xxl-6">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
 
-					<div class="fv-plugins-message-container"></div>
+							<mat-label>{{ "PAGES.CONVENTION.OBJET" | translate }} :</mat-label>
+							<input type="text" class="form-control form-control-solid form-control-lg" name="address1"
+								matInput formControlName="object" />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+
+							<mat-label>{{ "PAGES.CONVENTION.OBJET_ARABE" | translate }} :</mat-label>
+							<input type="text" class="form-control form-control-solid form-control-lg" name="address1"
+								matInput formControlName="objectAr" />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.CONVENTION.DATE" | translate }} :</mat-label>
+							<input type="date" class="form-control form-control-solid form-control-lg" name="address1"
+								formControlName="date" matInput />
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="form-group fv-plugins-icon-container">
-					<mat-form-field class="example-full-width">
-						
-						<mat-label>{{ "PAGES.CONVENTION.OBJET_ARABE" | translate }} :</mat-label>
-						<input
-							type="text"
-							class="form-control form-control-solid form-control-lg"
-							name="address1"
-							matInput
-							formControlName="objectAr"
-						/>
-					</mat-form-field>
-					<div class="fv-plugins-message-container"></div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.CONVENTION.DUREE" | translate }} :</mat-label>
+							<input type="number" class="form-control form-control-solid form-control-lg"
+								formControlName="duree" matInput />
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
 
-					<div class="fv-plugins-message-container"></div>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.CONVENTION.MONTANT" | translate }} :</mat-label>
+							<input type="text" class="form-control form-control-solid form-control-lg"
+								formControlName="montant" matInput />
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.CONVENTION.ETAT_CONVENTION" | translate }} :</mat-label>
+						<mat-select class="form-control" placeholder="" formControlName="etatConvention">
+							<mat-option [value]="'EN_COURS_PREPARATION'">{{ "PAGES.CONVENTION.EN_COURS_PREPARATION" |
+								translate }} </mat-option>
+							<mat-option [value]="'EN_COURS_SIGNATURE'">{{ "PAGES.CONVENTION.EN_COURS_SIGNATURE" |
+								translate }} </mat-option>
+							<mat-option [value]="'SIGNER'">{{ "PAGES.CONVENTION.SIGNER" | translate }}</mat-option>
+							<mat-option [value]="'ACHEVER'">{{ "PAGES.CONVENTION.ACHEVER" | translate }} </mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+
+			</div>
+			<div class="row">
+
+				<div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.CONVENTION.DATE_SIGNATURE" | translate }} :</mat-label>
+							<input type="date" class="form-control form-control-solid form-control-lg" name="address1"
+								formControlName="dateSignature" matInput />
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div><div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.CONVENTION.DATE_BO" | translate }} :</mat-label>
+							<input type="date" class="form-control form-control-solid form-control-lg" name="address1"
+								formControlName="dateBO" matInput />
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div><div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.CONVENTION.DATE_DEBUT" | translate }} :</mat-label>
+							<input type="date" class="form-control form-control-solid form-control-lg" name="address1"
+								formControlName="dateDebut" matInput />
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div><div class="col-md-4">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>{{ "PAGES.CONVENTION.DATE_ACHEVEMENT" | translate }} :</mat-label>
+							<input type="date" [min]="minDate" class="form-control form-control-solid form-control-lg" name="address1"
+								formControlName="dateAchevement" matInput />
+						</mat-form-field>
+
+						<div class="fv-plugins-message-container"></div>
+
+						<div class="fv-plugins-message-container"></div>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="form-group fv-plugins-icon-container">
-					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.CONVENTION.DATE" | translate }} :</mat-label>
-						<input
-							type="date"
-							class="form-control form-control-solid form-control-lg"
-							name="address1"
-							formControlName="date"
-							matInput
-						/>
-					</mat-form-field>
-
-					<div class="fv-plugins-message-container"></div>
-
-					<div class="fv-plugins-message-container"></div>
+			<div class="row">
+				<div class="col-md-6 show_port input-group">
+					<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+						<label class="input-group-btn">
+							<span class="btn btn-info">
+								{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
+									(change)="save($event)" id="customFile" style="display: none;" multiple>
+							</span>
+						</label>
+						<input id="test" type="text" class="form-control" readonly>
+					</form>
 				</div>
 			</div>
+			<div class="kt-portlet__heads">
+				<div class="kt-portlet__head-label text-right">
+					<button href="javascript:; " (click)="Retour()" _ngcontent-dkp-c41=""
+						class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+						{{ 'PAGES.GENERAL.RETOUR' | translate }}
+					</button>
+					<button _ngcontent-dkp-c41=""
+						class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+						<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+						{{ "PAGES.PROGRAMME.SAVE" | translate }}
+					</button>
+				</div>
+			</div>
+			<div class="espace_bloc"></div>
 		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<div class="form-group fv-plugins-icon-container">
-					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.CONVENTION.DUREE" | translate }} :</mat-label>
-						<input
-							type="number"
-							class="form-control form-control-solid form-control-lg"
-							formControlName="duree"
-							matInput
-						/>
-					</mat-form-field>
-					<div class="fv-plugins-message-container"></div>
-
-					<div class="fv-plugins-message-container"></div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="form-group fv-plugins-icon-container">
-					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.CONVENTION.MONTANT" | translate }} :</mat-label>
-						<input
-							type="text"
-							class="form-control form-control-solid form-control-lg"
-							formControlName="montant"
-							matInput
-						/>
-					</mat-form-field>
-				</div>
-			</div>
-			<div class="col-md-6 show_port input-group">
-				<form style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
-					<label class="input-group-btn">
-						<span class="btn btn-info">
-							{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
-								(change)="save($event)" id="customFile" style="display: none;" multiple>
-						</span>
-					</label>
-					<input id="test" type="text" class="form-control" readonly>
-				</form>
-			</div>
-		</div>
-
-		<div class="kt-portlet__heads">
-			<div class="kt-portlet__head-label text-right">
-				<button
-					_ngcontent-dkp-c41=""
-					class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
-				>
-					<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
-					{{ "PAGES.PROGRAMME.SAVE" | translate }}
-				</button>
-			</div>
-		</div>
-		<div class="espace_bloc"></div>
-	</div>
 	</form>
 </div>

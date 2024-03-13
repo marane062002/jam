@@ -16,6 +16,8 @@ import localeAr from '@angular/common/locales/ar-MA';
 import Swal from 'sweetalert2';
 import { SpinnerService } from '../../../utils/spinner.service';
 import { PdfviewerDialogComponent } from '../../dialog/pdfviewer-dialog/pdfviewer-dialog.component';
+import { AfficheComponent } from "../../courriers-entrants/affiche/affiche.component";
+import { HttpClient } from "@angular/common/http";
 registerLocaleData(localeAr, 'ar');
 
 @Component({
@@ -45,6 +47,8 @@ export class CourriersSortantsShowComponent implements OnInit {
 	// Constructeur
 	// =================================================================
 	constructor(
+		private http: HttpClient,
+
 		private service: BoServiceService,
 		private translate: TranslateService,
 		private router: Router,
@@ -152,14 +156,14 @@ export class CourriersSortantsShowComponent implements OnInit {
 			return;
 		}
 		const _this = this;
-		/*document.getElementById("destinataire").style.display = "none";
+		document.getElementById("destinataire").style.display = "none";
 		this.service
-			.getAllObjectById("/partenaire/find/", courrierId)
+			.getAllObjectById("/destinataireCouriersSortant/find/", courrierId)
 			.subscribe(
 				(data) => {
 					_this.data_size = data.length;
 					if (_this.data_size > 0) {
-						//document.getElementById("destinataire").style.display ="inline";
+						document.getElementById("destinataire").style.display ="inline";
 						this.loading = false;
 						this.dataSource = new MatTableDataSource(data);
 						this.paginator._intl.itemsPerPageLabel = this.translate.instant(
@@ -183,7 +187,7 @@ export class CourriersSortantsShowComponent implements OnInit {
 				},
 				(error) => console.log(error)
 			);
-			*/
+			
 	}
 	// ====================================
 	//
@@ -202,6 +206,38 @@ export class CourriersSortantsShowComponent implements OnInit {
 		this.service.downoldFile(r,e);
 		// window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"+r);
 	}
+	getExtension(file){
+		
+		return this.service.getExtensionFile(file)
+
+	}
+	fond
+	constration(row:any): void {
+		var r = row.idAlfresco.substring(0, row.idAlfresco.length - 4);
+
+		this.pdfSrc = environment.API_ALFRESCO_URL + "/PjCourriersSortants/" + r;
+		this.http.get(this.pdfSrc , { responseType: 'blob' }).subscribe(response => {
+			this.convertBlobToBase64(response);
+		  });
+		const dialogRef = this._dialog.open(AfficheComponent, {
+			width: "75%",
+			data : { Data: this.pdfSrc },
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			console.log("The dialog was closed");
+			this.fond = result;
+		});
+	}
+	base64Image
+	convertBlobToBase64(blob: Blob) {
+		const reader = new FileReader();
+		reader.onloadend = () => {
+		  // Convert the blob to Base64 and assign it to the variable
+		  this.base64Image = reader.result as string;
+		};
+		reader.readAsDataURL(blob);
+	  }
 	// ============================================================
 	// PDF view
 	// ============================================================
@@ -310,5 +346,19 @@ export class CourriersSortantsShowComponent implements OnInit {
 			result = formatDate(date, 'dd/MM/yyyy HH:mm','ar-MA');
 		}
 		return result;
+	}
+
+		// ============================================
+	// Destinataire courrier details
+	// ============================================
+	destinataireCourrierSortant(): void {
+		let courrierId = window.localStorage.getItem("courrId");
+		if (!courrierId) {
+			alert("Invalid action.");
+			this.router.navigate(["list-courriers-sortants"]);
+			return;
+		}
+		//this.router.navigate(["destinataire-courrier/add-destinataire-courrier"]);
+		this.router.navigate(["partenaires-externe/add-destinataire"]);
 	}
 }

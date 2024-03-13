@@ -116,33 +116,6 @@
 								</div>
 							</div>
 						</div>
-						<!-- <div class="Radio col-md-6" style="	display: flex;flex-wrap: wrap;	margin-right: -15px;	margin-left: -15px;justify-content: center;		"> -->
-						<!-- <div class="col-md-2">
-								<div class="form-group fv-plugins-icon-container">
-									<label>
-										<h5>Convention</h5>
-									</label>
-								</div>
-							</div>
-
-							<div class="col-md-1">
-								<div class="form-group fv-plugins-icon-container">
-									<input class="form-check-input" type="radio" [(ngModel)]="isVisible3" name="isVisible3" [value]="0" [checked]="isSelected" />
-									<label>
-										<h6>Non</h6>
-									</label>
-								</div>
-							</div>
-
-							<div class="col-md-1">
-								<div class="form-group fv-plugins-icon-container">
-									<input class="form-check-input" type="radio" [(ngModel)]="isVisible3" name="isVisible3" [value]="1" [checked]="!isSelected" />
-									<label>
-										<h6>Oui</h6>
-									</label>
-								</div>
-							</div>
-							<div class="col-md-8"></div> -->
 						<div class="col-md-6 text-center purple" *ngIf="isVisible3 == true">
 							<div class="row">
 								<div class="col-md-12">
@@ -161,16 +134,57 @@
 							</div>
 						</div>
 
-						<!-- </div> -->
 					</div>
+				<!--====================================================================================================================================================-->
 
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Mode de passation:
+									</label>
+									<mat-select class="form-control" name="modePassation" placeholder=""
+										(selectionChange)="selectedmodePassation($event)">
+										<mat-option *ngFor="let item of natureAoAll" value="{{item.id}}">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6" *ngIf="isVisible1==true">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> Autres:
+									</label>
+									<input matInput type="text" class="form-control" name="autres"
+										[(ngModel)]="formData.modePassation" placeholder="">
+	
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label> {{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }}:
+									</label>
+									<mat-select class="form-control" name="typePrestAo"
+										(selectionChange)="onChangeTypePrestationAo($event)" placeholder="">
+										<mat-option *ngFor="let item of lisTypePrestationAo" value="{{item.id}}">
+											{{item.libelle}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+					</div> 
 					<!--====================================================================================================================================================-->
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<mat-form-field class="example-full-width">
 									<label>Estimation HT</label>
-									<input matInput type="number" class="form-control" placeholder=""
+									<input matInput type="number" class="form-control" placeholder="" (blur)="onChangeEstimation()"
 										[(ngModel)]="formData.estimationHT" name="estimationHT"
 										(blur)="CalculerEstimation()">
 
@@ -188,6 +202,7 @@
 							</div>
 						</div>
 					</div>
+					<!--====================================================================================================================================================-->
 
 					<div class="row">
 						<div class="col-md-6">
@@ -213,6 +228,7 @@
 							</div>
 						</div>
 					</div>
+					<!--====================================================================================================================================================-->
 
 					<div class="row">
 						<div class="col-md-6">
@@ -239,9 +255,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
-					</div>
 					<!-- ================================================================================================================================================================= -->
+
 					<!-- ================================================================================================================================================================= -->
 				
 				<div class="row">
@@ -276,20 +291,10 @@
 
 
 				</div>
+					<!-- ================================================================================================================================================================= -->
+
 				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<mat-form-field class="example-full-width">
-								<label> {{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }}:
-								</label>
-								<mat-select class="form-control" name="typePrestAo"
-									(selectionChange)="onChangeTypePrestationAo($event)" placeholder="">
-									<mat-option *ngFor="let item of lisTypePrestationAo" value="{{item.id}}">
-										{{item.libelle}}</mat-option>
-								</mat-select>
-							</mat-form-field>
-						</div>
-					</div>
+					
 					<div class="col-md-6">
 						<div class="form-group">
 							<mat-form-field class="example-full-width">
@@ -416,32 +421,7 @@
 					</table>
 					<!-- end::table-secteur -->
 				</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<mat-form-field class="example-full-width">
-								<label> Mode de passation:
-								</label>
-								<mat-select class="form-control" name="modePassation" placeholder=""
-									(selectionChange)="selectedmodePassation($event)">
-									<mat-option *ngFor="let item of natureAoAll" value="{{item.id}}">
-										{{item.libelle}}</mat-option>
-								</mat-select>
-							</mat-form-field>
-						</div>
-					</div>
-					<div class="col-md-6" *ngIf="isVisible1==true">
-						<div class="form-group">
-							<mat-form-field class="example-full-width">
-								<label> Autres:
-								</label>
-								<input matInput type="text" class="form-control" name="autres"
-									[(ngModel)]="formData.modePassation" placeholder="">
-
-							</mat-form-field>
-						</div>
-					</div>
-				</div>
+			
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -689,6 +669,19 @@
 							</mat-form-field>
 						</div>
 					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<mat-form-field class="example-full-width">
+								<label> Offre technique:
+								</label>
+								<mat-select class="form-control" (selectionChange)="selectedOffreTechnique($event)">
+									<mat-option value="0"> Non</mat-option>
+									<mat-option value="1"> Oui</mat-option>
+								</mat-select>
+
+							</mat-form-field>
+						</div>
+					</div>
 				</div>
 			</div>
 			</div>
@@ -742,7 +735,7 @@
 										{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
 											(change)="save($event)" id="customFile" style="display: none;" multiple>
 									</span>
-								</label>
+								</label> 
 								<input id="test" type="text" class="form-control" value="" readonly>
 							</form>
 						</div>

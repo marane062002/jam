@@ -8,8 +8,8 @@ import { MedecinService } from "../../parametrage-bmh/services/medecin.service";
 import { TypeExamenService } from "../../parametrage-bmh/services/type-examen.service";
 import Swal from "sweetalert2";
 import { ExamenService } from "../services/examen.service";
-import { Router } from "@angular/router";
-
+import { ActivatedRoute, Router } from "@angular/router";
+import { Location } from '@angular/common';
 @Component({
 	selector: "kt-add-examen",
 	templateUrl: "./add-examen.component.html",
@@ -20,16 +20,17 @@ export class AddExamenComponent implements OnInit {
 	medecinOperant: InterfaceMedecin[] = [];
 	typeExamen: InterfaceTypeExamen[] = [];
 	ajoutForm: any;
-	constructor(private router: Router, private formBuilder: FormBuilder, private service: ExamenService, private statutService: StatusService, private medecinService: MedecinService, private typeExamenService: TypeExamenService) {}
+	id:any;
+	constructor(private location: Location,private route: ActivatedRoute ,private router: Router, private formBuilder: FormBuilder, private service: ExamenService, private statutService: StatusService, private medecinService: MedecinService, private typeExamenService: TypeExamenService) {}
 
 	ngOnInit() {
-		this.ajoutForm = this.formBuilder.group({
-			// id: [null], // Exemple de champ non modifiable
-			date: [""],
-			typeExamen: [""],
-			medecinOperant: [""],
-			status: [""],
-		});
+		this.route.params.subscribe((params) => {
+			this.id = +params['id']; 
+			// Initialize the form with the retrieved id
+			this.initializeForm();
+		  });
+
+
 		this.statutService.getAll().subscribe((res) => {
 			this.status = res;
 			console.log(res);
@@ -45,10 +46,23 @@ export class AddExamenComponent implements OnInit {
 			console.log(res);
 			console.log(this.typeExamen);
 		});
+		
 	}
+	initializeForm(): void {
+		this.ajoutForm = this.formBuilder.group({
+		  date: ['', Validators.required],
+		  typeExamen: ['', Validators.required],
+		  medecinOperant: ['', Validators.required],
+		  status: ['', Validators.required],
+		  obstacleDefunts: [{id:this.id}, Validators.required], 
+		});
+	  }
 	RetourEmbalages() {
 		this.router.navigate(["/bmh1/list-obstacles"]);
 	}
+	goBack(): void {
+		this.location.back();
+	  }
 	ajouter() {
 		if (this.ajoutForm.valid) {
 			this.service.create(this.ajoutForm.value).subscribe(
@@ -60,7 +74,7 @@ export class AddExamenComponent implements OnInit {
 						icon: "success",
 						confirmButtonText: "OK",
 					}).then(() => {
-						this.RetourEmbalages();
+						this.goBack();
 						this.ngOnInit(); // Vous pouvez recharger les données si nécessaire ici
 					});
 				},

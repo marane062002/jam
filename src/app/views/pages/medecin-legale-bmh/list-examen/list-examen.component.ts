@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ExamenService } from "../services/examen.service";
 
 @Component({
@@ -10,21 +10,24 @@ import { ExamenService } from "../services/examen.service";
 export class ListExamenComponent implements OnInit {
 	examen: InterfaceExamen[] = [];
 	displayedColumns: string[] = ["ID", "Casier", "Deces", "Status", "Date", "actions"];
-
-	constructor(private router: Router, private service: ExamenService) {}
+    id:any;
+	constructor(private router: Router, private service: ExamenService,private route: ActivatedRoute) {}
 
 	ngOnInit() {
 		this.service.getAll().subscribe((res) => {
 			this.examen = res;
 
-			console.log(res);
+			console.log("examen:",res);
 		});
+		this.route.params.subscribe((params) => {
+			this.id = +params['id']; 
+		  });
 	}
 	RetourEmbalages() {
 		this.router.navigate(["/bmh1/list-obstacle"]);
 	}
 	add() {
-		this.router.navigate(["/bmh1/add-examen"]);
+		this.router.navigate([`/bmh1/add-examen/${this.id}`]);
 	}
 
 	Details(id: any) {

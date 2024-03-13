@@ -214,7 +214,34 @@ export class MenuHorizontalService {
 			this.router.navigate(["/marches/list-programme-previsionnel"]);
 			break;
 		}
-
+		case 28: {
+			this.menu = "header_consultationPac.items";
+			localStorage.setItem("menu", "header_consultationPac.items");
+			this.loadMenu();
+			this.router.navigate(["programme"]);
+			break;
+		}
+		case 29: {
+			this.menu = "headerSDL.items";
+			localStorage.setItem("menu", "headerSDL.items");
+			this.loadMenu();
+			this.router.navigate(["/delegataire/delegataires"]);
+			break;
+		}
+		case 30: {
+			this.menu = "headerGsmLan.items";
+			localStorage.setItem("menu", "headerGsmLan.items");
+			this.loadMenu();
+			this.router.navigate(["/gsmLan/gsmLan"]);
+			break;
+		}
+		case 31: {
+			this.menu = "headerPreprete.items";
+			localStorage.setItem("menu", "headerProprete.items");
+			this.loadMenu();
+			this.router.navigate([""]);
+			break;
+		}
 			default: {
 			   //statements;
 			   break;

@@ -42,7 +42,7 @@ export class ListCourriersEntrantsComponent implements OnInit {
 		"typeOrigine",
 		"origineCourierEntrant",
 		"traite",
-		"statut",
+		"statut", 
 		"actions"
 	];
 	// ============================================

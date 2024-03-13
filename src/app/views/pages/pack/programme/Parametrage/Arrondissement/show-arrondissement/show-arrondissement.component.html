@@ -1,0 +1,30 @@
+<div class="kt-portlet__body">
+	<!-- Start :: Expansion panel -->
+	<mat-accordion class="example-headers-align panel-space" multi>
+		<mat-expansion-panel [expanded]="true">
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>info</mat-icon>&nbsp;Détails d'arrondissement
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<table class="table pj" width="100%">
+				<tbody>
+					<tr>
+						<th>Libellé arabe :</th>
+						<td class="donnee_show">
+							<span>{{ arrondissement?.libelleArab? arrondissement?.libelleArab:'-'}}</span>
+						</td>
+						<th>Libellé Français :</th>
+						<td class="donnee_show">
+							<span>{{ arrondissement?.libelleFrancais?arrondissement?.libelleFrancais:'-' }}</span>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</mat-expansion-panel>
+		
+
+
+	</mat-accordion>
+</div>

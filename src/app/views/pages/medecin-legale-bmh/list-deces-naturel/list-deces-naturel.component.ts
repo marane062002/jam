@@ -92,10 +92,9 @@ export class ListDecesNaturelComponent implements OnInit {
 	loadData(page: number, pageSize: number): void {
 		const startIndex = page * pageSize;
 		const endIndex = startIndex + pageSize;
-		console.log("token", localStorage.getItem('accessToken'));
 
 		this.httpClient.get<any[]>(`${this.baseUrl}deces/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// debugger
+			// 
 			this.deces = response.content;
 			this.dataSource.data = response.content;
 			this.totalRecords = response.totalElements;

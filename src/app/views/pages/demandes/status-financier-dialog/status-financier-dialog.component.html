@@ -1,0 +1,36 @@
+<h1 mat-dialog-title> {{ "PAGES.DEMANDE.CHANGE_STATUS" | translate }}</h1>
+<div mat-dialog-content>
+    <p>{{ "PAGES.DEMANDE.CHANGE_STATUS" | translate }}</p>
+    <p>{{ data.status }} : {{ "PAGES.DEMANDE.status" | translate}}</p>
+    <p>{{ data.uniqueCode }} : {{ "PAGES.DEMANDE.uniqueCode" | translate}}</p>
+    <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <mat-select #newStatus>
+            <mat-option value="ACCEPTEE">{{ "PAGES.DEMANDE.Accept" | translate}}</mat-option>
+            <mat-option value="REFUSEE">{{ "PAGES.DEMANDE.REFUSE" | translate}}</mat-option>
+            <mat-option value="EN_COURS">{{ "PAGES.DEMANDE.ENCOURS" | translate}}</mat-option>
+            <mat-option value="ANNULEE">{{ "PAGES.DEMANDE.cancel" | translate}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="newStatus.value === 'ACCEPTEE'">
+        <div class="upload-files-container" style="margin:0 auto;">
+            <input type="file" (change)="onFileSelected($event)" #fileInput class="default-file-input" hidden>
+            <button mat-raised-button color="accent" (click)="fileInput.click()">{{ "PAGES.DEMANDE.UPLOAD_FILE" |
+                translate }}</button>
+
+            <span *ngIf="selectedFileName else updateText">  {{ "PAGES.DEMANDE.UPDATE" | translate}} </span>
+            <ng-template #updateText>
+                <span> {{ "PAGES.DEMANDE.UPLOAD_FILE" |
+                    translate }} </span>
+            </ng-template>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">{{ "PAGES.DEMANDE.cancel" | translate }}</button>
+
+    <button mat-raised-button color="primary"
+    [disabled]="newStatus.value === 'ACCEPTEE' && !selectedFileName" (click)="changeStatus(newStatus.value)">{{
+        "PAGES.DEMANDE.ENVOYER" | translate }}</button>
+</div>

@@ -53,7 +53,9 @@ export class ListVaccinationComponent implements OnInit {
 	// ============================================
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 	@ViewChild(MatSort, { static: true }) sort: MatSort;
-	
+	formatDate(date: any): string {
+		return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+	  }
 	constructor(
 		private translate: TranslateService,
 		private router: Router,

@@ -41,7 +41,7 @@ export class DetailsNouveauNeComponent implements OnInit {
     await this.httpClient.get(`${this.AlfresscoURL}/bmh-nouveau/index/${ide}`)
           .subscribe(
                   (data:any) => {
-                    // debugger
+                    // 
                       this.dataSource2 = new MatTableDataSource(data);
                   },
                   (error) => console.log(error)

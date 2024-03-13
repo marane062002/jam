@@ -40,7 +40,7 @@ export class DetailleEnterrementComponent implements OnInit {
 			await this.httpClient.get(`${this.AlfresscoURL}/enterrement/index/${ide}`)
 			.subscribe(
 				(data:any) => {
-					// debugger
+					// 
 					this.dataSource2 = new MatTableDataSource(data);
 				},
 				(error) => console.log(error)

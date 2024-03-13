@@ -12,7 +12,10 @@ import { ObstacleService } from '../services/obstacle.service';
 import { QuartierService } from '../../parametrage-bmh/services/quartier.service';
 import { CommuneService } from '../../parametrage-bmh/services/commune.service';
 import { ArrondissemntService } from '../../parametrage-bmh/services/arrondissemnt.service';
-
+import { DatePipe } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from "../../../../../environments/environment";
+import { debug } from 'console';
 @Component({
 	selector: "kt-update-obstacles",
 	templateUrl: "./update-obstacles.component.html",
@@ -31,14 +34,21 @@ export class UpdateObstaclesComponent implements OnInit {
 	pcDeclarantFile: File;
 	pcConstateurFile: File;
 	pcJointeDefuntsFile: File;
-
+    OldStatut : any;
 	obstacleId: any;
 	obstacleDetails:any;
-
+	private baseUrl = environment.API_BMH_URL;
 	// constructor(private router: Router, ) {}
+
+	private headers = new HttpHeaders({
+		// 'Content-Type': 'application/json',
+		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+	});
 
 	// m:InterfaceType[]=[]
 	constructor(private router: Router, private route: ActivatedRoute, 
+		private httpClient : HttpClient,
+		private datePipe: DatePipe,
 		private service: ObstacleService,
 		private ArrondissementService: ArrondissemntService, 
 		private communeService: CommuneService, 
@@ -54,16 +64,17 @@ export class UpdateObstaclesComponent implements OnInit {
 		numCasier: new FormControl("", Validators.required),
 		numDeces: new FormControl("", Validators.required),
 		status: new FormControl("", Validators.required),
+		cause: new FormControl("",Validators.required),
 	});
 
 	ngOnInit() {
 		const id = this.route.snapshot.params["id"];
 		this.route.params.subscribe((params) => {
 			this.obstacleId = +params['id']; 
-		  });
+		});
 		this.service.getById(id).subscribe(
-			(res) => {
-				
+			(res:any) => {
+				this.OldStatut = res.statusCadavre;
 				console.log("esssssssss:",res);
 				
 				this.FormArticle.patchValue({ ...res });
@@ -107,8 +118,14 @@ export class UpdateObstaclesComponent implements OnInit {
 			dateDeclaration: [""],
 			dateDeces: [""],
 			dateConstation: [""],
-			causesDeces: [""],
+			cause: [""],
 			observationConst: [""],
+			numTel:[""],
+			constater:[""],
+			statusCadavre: [""],
+			numTombe: [""],
+			nomCim: [""],
+			numRegistre:[""]
 			// cadavre: [""],
 		});
 		this.ArrondissementService.getAll().subscribe((res) => {
@@ -142,7 +159,7 @@ export class UpdateObstaclesComponent implements OnInit {
 					cin: [res.cin || "", Validators.required],
 					nationalite: [res.nationalite || ""],
 					sexe: [res.sexe || ""],
-					date: [res.date || ""],
+					date: [this.datePipe.transform(res.date,"yyyy-MM-dd") || ""],
 					commune: [res.commune || ""],
 					constateur: [res.constateur || ""],
 					arrondissement: [res.arrondissement || ""],
@@ -156,11 +173,18 @@ export class UpdateObstaclesComponent implements OnInit {
 					prenomDeclarent: [res.prenomDeclarent || ""],
 					cinDeclarent: [res.cinDeclarent || ""],
 					observation: [res.observation || ""],
-					dateDeclaration: [res.dateDeclaration || ""],
-					dateDeces: [res.dateDeces || ""],
-					dateConstation: [res.dateConstation || ""],
-					causesDeces: [res.causesDeces || ""],
+					dateDeclaration: [this.datePipe.transform(res.dateDeclaration, "yyyy-MM-dd") || ""],
+					dateDeces: [this.datePipe.transform(res.dateDeces,"yyyy-MM-dd") || ""],
+					dateConstation: [this.datePipe.transform(res.dateConstation,"yyyy-MM-dd") || ""],
+					cause: [res.causeDeces || ""],
 					observationConst: [res.observationConst || ""],
+					numRegistre: [res.numRegistre || ""],
+					numTel:[res.numTel || ""],
+					constater:[res.constater || ""],
+					statusCadavre:[res.statusCadavre || ""],
+					numTombe:[res.numTombe || ""],
+					nomCim:[res.nomCim || ""],
+					
 				});
 				console.log("obstacle fetching :", this.ajoutForm)
 			},
@@ -169,6 +193,38 @@ export class UpdateObstaclesComponent implements OnInit {
 			}
 		)
 	}
+
+	selectedValueCommuneFunction(p1: InterfaceCommune, p2: InterfaceCommune) {
+		if (p1 && p2) {
+			return p1.id === p2.id;
+		}
+		return false;
+	}
+	selectedValueArrondissementFunction(p1: InterfaceArrondissement, p2: InterfaceArrondissement) {
+		if (p1 && p2) {
+			return p1.id === p2.id;
+		}
+		return false;
+	}
+	selectedValueConstateurFunction(p1: InterfaceConstateur, p2: InterfaceConstateur) {
+		if (p1 && p2) {
+			return p1.id === p2.id;
+		}
+		return false;
+	}
+	selectedValueQuartierFunction(p1: InterfaceQuartier, p2: InterfaceQuartier) {
+		if (p1 && p2) {
+			return p1.id === p2.id;
+		}
+		return false;
+	}
+	selectedValueCauseFunction(p1: InterfaceQuartier, p2: InterfaceQuartier) {
+		if (p1 && p2) {
+			return p1.id === p2.id;
+		}
+		return false;
+	}
+	
 	detecterChangementNationalite() {
 		if (this.ajoutForm.value.nationalite === "Autre") {
 			this.ajoutForm.value.nationalite = this.ajoutForm.value.autreNationalite;
@@ -181,7 +237,7 @@ export class UpdateObstaclesComponent implements OnInit {
 	
 
 	RetourEmbalages() {
-		this.router.navigate(["/bmh1/list-morgue"]);
+		this.router.navigate(["/bmh1/list-obstacles"]);
 	}
 
 	// Function to handle file input change for pcDeclarant
@@ -205,6 +261,10 @@ export class UpdateObstaclesComponent implements OnInit {
 	//   }
 	//   return false;
 	// }
+
+
+
+
 	update() {
 		this.detecterChangementNationalite();
 		if (this.ajoutForm.valid) {
@@ -212,6 +272,22 @@ export class UpdateObstaclesComponent implements OnInit {
 			this.ajoutForm.value.nationalite = this.ajoutForm.value.autreNationalite;
 		  }
 	  
+
+		  if(this.OldStatut !== this.ajoutForm.value.statusCadavre){
+			const historique = {
+						 "nouveauStatut":this.ajoutForm.value.statusCadavre,
+						 "obstacleDefunts":{
+						  "id":this.obstacleId
+						 }
+					  }
+			
+					  this.httpClient.post(`${this.baseUrl}historique-obstacle`, historique , { headers: this.headers })
+					  .subscribe((res)=>{
+					  console.log('stored successfully:', res);
+					  })
+		}
+
+
 		  // Create a FormData object
 		  const formData = new FormData();
 	  
@@ -232,7 +308,7 @@ export class UpdateObstaclesComponent implements OnInit {
 				confirmButtonText: "OK",
 			  }).then(() => {
 				this.RetourEmbalages();
-				this.ngOnInit(); // Reload data if necessary
+				this.ngOnInit(); 
 			  });
 			},
 			(err) => {

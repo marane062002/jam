@@ -34,7 +34,7 @@ export class AssociationService {
 	// public apiURL_PROJ = `${BACKEND_URL_PROJ}`;
 	public AlfrescoURL = `${GED_URL}`;
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	public getData(): Observable<any> {
 		let statutAssociation = this.http.get(this.apiURL + "/statut/index");
@@ -51,18 +51,18 @@ export class AssociationService {
 	// ASSOCIATION
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-	getAllAssociationByPage(url,  pageable: Pageable): Observable<any[]> {
-		let path = this.apiURL + url 
+	getAllAssociationByPage(url, pageable: Pageable): Observable<any[]> {
+		let path = this.apiURL + url
 			+ '?page=' + pageable.pageNumber
 			+ '&size=' + pageable.pageSize
 			+ '&sort=id,desc'
 		return this.http.get<any[]>(path);
-	} 
-	findByMotCle(pageable: Pageable, motCle:any){
-		let path = this.apiURL + '/association/ByMotCle'+  '?page=' + pageable.pageNumber
-			+ '&size=' + pageable.pageSize+ '&sort=id,desc'+ `${motCle ? '&motCle=' + motCle : ''}` 
+	}
+	findByMotCle(pageable: Pageable, motCle: any) {
+		let path = this.apiURL + '/association/ByMotCle' + '?page=' + pageable.pageNumber
+			+ '&size=' + pageable.pageSize + '&sort=id,desc' + `${motCle ? '&motCle=' + motCle : ''}`
 
-			return this.http.get<any[]>(`${path}`);
+		return this.http.get<any[]>(`${path}`);
 	}
 	getAllcourrierEntrantsBypersonnelchefId(url, id: number, pageable: Pageable): Observable<any[]> {
 		let path = this.apiURL + url + id
@@ -245,7 +245,7 @@ export class AssociationService {
 			.toPromise();
 	}
 	/*
-  	deleteOnCasscadAssociation(idAss) {
+		deleteOnCasscadAssociation(idAss) {
 		this.deletefiles("/associationService/ByIdAssociation/", idAss)
 		.subscribe((data) => {
 		});
@@ -301,7 +301,7 @@ export class AssociationService {
 		return this.http.get<any[]>(this.apiURL + "/association/rechercheFindByParameters3", { params: queryParams });
 	}
 
-	getMarcheByFilterParameters4(dateDebut, dateFin,communeActivite) {
+	getMarcheByFilterParameters4(dateDebut, dateFin, communeActivite) {
 		let queryParams = new HttpParams();
 		queryParams = queryParams.append("dateDebut", dateDebut);
 		queryParams = queryParams.append("dateFin", dateFin);
@@ -309,7 +309,7 @@ export class AssociationService {
 		return this.http.get<any[]>(this.apiURL + "/association/rechercheFindByParameters4", { params: queryParams });
 	}
 
-	getMarcheByFilterParameters5(dateDebut, dateFin, typeActiviteAssociation,communeActivite) {
+	getMarcheByFilterParameters5(dateDebut, dateFin, typeActiviteAssociation, communeActivite) {
 		let queryParams = new HttpParams();
 		queryParams = queryParams.append("dateDebut", dateDebut);
 		queryParams = queryParams.append("dateFin", dateFin);
@@ -325,5 +325,56 @@ export class AssociationService {
 		queryParams = queryParams.append("classification", classification);
 		queryParams = queryParams.append("communeActivite", communeActivite);
 		return this.http.get<any[]>(this.apiURL + "/association/rechercheFindByParameters6", { params: queryParams });
+	}
+
+
+	downoldFile(alfresco_id, a) {
+		const options = {
+
+			responseType: 'arraybuffer' as 'json'
+		};
+		this.http.get(this.baseUrl1 + '/' + alfresco_id, options)
+			.subscribe((data: any) => {
+				if (a == 'pdf.svg') {
+					const blob = new Blob([data], { type: 'application/pdf' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				}
+				else if (a == 'png.svg') {
+					const blob = new Blob([data], { type: 'image/png' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				}
+				else if (a == 'xls.svg') {
+					const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				}
+				else if (a == 'doc.svg') {
+					const blob = new Blob([data], { type: 'application/msword' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				}
+				else if (a == 'jpg.svg') {
+					const blob = new Blob([data], { type: 'image/jpeg' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				}
+				else if (a == 'csv.svg') {
+					const blob = new Blob([data], { type: 'text/csv' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				}
+				else if (a == 'txt.svg') {
+					const blob = new Blob([data], { type: 'text/plain' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				} else if (a == 'txt.svg') {
+					const blob = new Blob([data], { type: 'text/plain' });
+					const url = window.URL.createObjectURL(blob);
+					window.open(url);
+				}
+
+			});
 	}
 }

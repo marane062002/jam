@@ -4,7 +4,7 @@ import { PersonnelService } from '../../../rh/services/personnel.service';
 import { OrganisationService } from '../../../organisation/organisation.service';
 import { NotificationService } from '../../../shared/notification.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
@@ -28,10 +28,12 @@ export class EditDestinataireComponent implements OnInit {
 	services: any;
 	personnels: any;
 	editForm: FormGroup;
+	id
 	// ============================================================
 	//
 	// ============================================================
 	constructor(
+		private activatedRoute: ActivatedRoute,
 		private service: BoServiceService,
 		private service1: PersonnelService,
 		private service2: OrganisationService,
@@ -40,14 +42,18 @@ export class EditDestinataireComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder
 	) {
-		this.partnerId = +window.localStorage.getItem("partnerId");
-		this.formBuild(this.partnerId);
 		this.getDivisions();
 	}
 	// ============================================================
 	//
 	// ============================================================
 	ngOnInit() {
+		this.activatedRoute.queryParams.subscribe((params) => {
+			this.id = params["id"];
+			this.formBuild(this.id);
+
+		});
+	
 		this.changedOrganisationList();
 
 		this.getData();
@@ -121,7 +127,7 @@ export class EditDestinataireComponent implements OnInit {
 	onChangeDivision() {
 		const idDivision = this.editForm.get("idDivision").value;
 		this.editForm.get("idService").setValue(0);
-		this.editForm.get("idPersonnel").setValue(0);
+		this.editForm.get("idPersonne").setValue(0);
 
 		if (idDivision != 0) {
 			this.service1
@@ -151,7 +157,7 @@ export class EditDestinataireComponent implements OnInit {
 	onChangeService() {
 		const idService = this.editForm.get("idService").value;
 		const idDivision = this.editForm.get("idDivision").value;
-		this.editForm.get("idPersonnel").setValue(0);
+		this.editForm.get("idPersonne").setValue(0);
 
 		if (idService != 0) {
 			this.service1
@@ -178,7 +184,7 @@ export class EditDestinataireComponent implements OnInit {
 			partenaire: [0],
 			idDivision: [0],
 			idService: [0],
-			idPersonnel: [0],
+			idPersonne: [0],
 		});
 		this.getDestinataire(idPartner);
 	}
@@ -187,9 +193,10 @@ export class EditDestinataireComponent implements OnInit {
 	// ============================================================
 	getDestinataire(courrierId:number){
 		this.service
-			.getAllObjectById("/partenaire/show/", +courrierId)
+			.getAllObjectById("/destinataireCourriersSortant/show/", +courrierId)
 			.subscribe((data) => {
 				this.editForm.patchValue(data);
+				this.selectionChanged()
 			});
 	}
 	// ============================================================
@@ -202,7 +209,7 @@ export class EditDestinataireComponent implements OnInit {
 			this.showInterne = false;
 			this.editForm.get("idDivision").reset();
 			this.editForm.get("idService").reset();
-			this.editForm.get("idPersonnel").reset();
+			this.editForm.get("idPersonne").reset();
 		} else {
 			this.showExterne = false;
 			this.showInterne = true;
@@ -226,7 +233,7 @@ export class EditDestinataireComponent implements OnInit {
 		this.loading = true;
 
 		this.service
-			.updateObject("/partenaire/edit/", this.editForm.value)
+			.updateObject("/destinataireCourriersSortant/edit/", this.editForm.value)
 			.pipe(first())
 			.subscribe(
 				(data) => {

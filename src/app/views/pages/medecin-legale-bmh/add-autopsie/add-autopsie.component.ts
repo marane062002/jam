@@ -6,7 +6,7 @@ import { MedecinService } from "../../parametrage-bmh/services/medecin.service";
 import { StatusService } from "../../parametrage-bmh/services/status.service";
 import { AutopsieService } from "../services/autopsie.service";
 import { FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { DatePipe, Location } from "@angular/common";
 
@@ -19,17 +19,24 @@ export class AddAutopsieComponent implements OnInit {
 	medecinOperant: InterfaceMedecin[] = [];
 	status: InterfaceStatus[] = [];
 	ajoutForm: any; // Formulaire de type FormGroup
+	id:any;
 	private autopsie: InterfaceAutopsie;
 
-	constructor( private datePipe: DatePipe,private location: Location,private medecinOperantService: MedecinService, private statutService: StatusService, private service: AutopsieService, private router: Router, private formBuilder: FormBuilder) {}
+	constructor( private datePipe: DatePipe,private location: Location,private medecinOperantService: MedecinService, private statutService: StatusService, private service: AutopsieService, private router: Router, private formBuilder: FormBuilder,private route: ActivatedRoute) {}
 
 	ngOnInit() {
-		this.ajoutForm = this.formBuilder.group({
-			// id: [null], // Exemple de champ non modifiable
-			date: ["", Validators.required],
-			medecinOperant: ["", Validators.required],
-			status: [""],
-		});
+		this.route.params.subscribe((params) => {
+			this.id = +params['id']; 
+			// Initialize the form with the retrieved id
+			this.initializeForm();
+		  });
+		// this.ajoutForm = this.formBuilder.group({
+		// 	// id: [null], // Exemple de champ non modifiable
+		// 	date: ["", Validators.required],
+		// 	medecinOperant: ["", Validators.required],
+		// 	status: [""],
+
+		// });
 
 		// this.ajoutForm = this.formBuilder.group(this.ajoutForm);
 		this.medecinOperantService.getAll().subscribe((res) => {
@@ -43,7 +50,18 @@ export class AddAutopsieComponent implements OnInit {
 			console.log(this.status);
 		});
 	}
-
+	initializeForm(): void {
+		this.ajoutForm = this.formBuilder.group({
+		//   date: ['', Validators.required],
+		//   typeExamen: ['', Validators.required],
+		//   medecinOperant: ['', Validators.required],
+		//   status: ['', Validators.required],
+		date: ["", Validators.required],
+		medecinOperant: ["", Validators.required],
+		status: [""],
+		obstacleDefunts: [{id:this.id}, Validators.required], 
+		});
+	  }
 	RetourEmbalages() {
 		this.location.back();
 	}

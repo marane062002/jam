@@ -1,0 +1,29 @@
+<form action="" class="row" >
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>{{ "PAGES.PROGRAMME.RECHERCHER" | translate }}</label>
+        <mat-form-field class="example-full-width">
+          <mat-select class="form-control" #selectElem
+                      (selectionChange)="doSomething($event.value, selectElem)"
+                      [multiple]="true"  [value]="selectedValueCherche">
+            <mat-option *ngFor="let option of searchOptions" [value]="option.value">
+              {{ option.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="col-md-6">
+      <div style="margin-top: 15px;">
+        <button style="background-color: #7174cc;" (click)="exportTable()" type="button" class="btn btn-export"
+					matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }} ">
+					<i style="color: #ffffff;" _ngcontent-clk-c12="" class="icon la la-file-excel-o"></i><span
+						style="color: #ffffff;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate
+						}}</span>
+				</button>
+        
+      </div>
+    </div>
+  </form>
+  

@@ -196,8 +196,8 @@
 						<td>
 							Je soussigne....................................................................................................................................................certifie que<br>
 							Nommé(e) : {{ info?.nom ? info.nom : '...............................................' }} {{ info?.prenom ? info.prenom : '...........................................' }} <br>
-							<i>Enregistré(e)</i> aux registres de la division de l'environnement et de l'hygiène de Marrakech <b><i>dans la catégorie des morts naturelles</i></b> sous le Nº {{ info?.cin }} Avec les renseingnements suivants : <br>
-							Agé (e): {{ calculateAge(info?.date) !== null ? calculateAge(info?.date) + ' ANS' : '-' }} <b>ANS</b><br>
+							<i>Enregistré(e)</i> aux registres de la division de l'environnement et de l'hygiène de Marrakech <b><i>dans la catégorie des morts naturelles</i></b> sous le Nº {{ info?.numDeces }} Avec les renseingnements suivants : <br>
+							Agé (e): {{ calculateAge(info?.date) !== null ? calculateAge(info?.date) : '-' }} <b>ANS</b><br>
 							Date de décès : {{ info?.dateDeces ? info.dateDeces : "................." }} <br>
 							Adresse : {{ info?.lieu }}<br> 
 						</td>

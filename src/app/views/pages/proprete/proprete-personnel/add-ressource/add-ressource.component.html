@@ -1,0 +1,114 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+	  <div class="kt-portlet__head-label">
+		<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+		  Ajouter un personnel
+		</h2>
+	  </div>
+	</div>
+  </div>
+  
+  <form [formGroup]="personnelForm" (ngSubmit)="onSubmit()">
+	<div class="row">
+	  <div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+		  <mat-form-field class="example-full-width">
+			<label> Nom </label>
+			<input matInput type="text" class="form-control" placeholder="" formControlName="nom" />
+		  </mat-form-field>
+		  <div class="fv-plugins-message-container"></div>
+		</div>
+	  </div>
+	  <div class="col-md-6">
+		<div class="form-group fv-plugins-icon-container">
+		  <mat-form-field class="example-full-width">
+			<label>Prénom </label>
+			<input matInput type="text" class="form-control form-control-solid form-control-lg" formControlName="prenom" />
+		  </mat-form-field>
+		  <div class="fv-plugins-message-container"></div>
+		</div>
+	  </div>
+	</div>
+  
+	<!-- Fiche CNSS -->
+	<div class="pb-5" data-wizard-type="step-content">
+	  <h4 class="mb-10 font-weight-bold text-dark"></h4>
+	  <div class="kt-portlet">
+		<div class="kt-portlet__head kt-bg-portlet-5">
+		  <div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+			  <i class="flaticon-attachment"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">Fiche CNSS</h3>
+		  </div>
+		</div>
+		<div class="kt-portlet__body">
+		  <div class="row">
+			<div class="col-md-6 show_port input-group">
+			  <!-- File upload form -->
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  
+	<!-- Fiche de pointage -->
+	<div class="pb-5" data-wizard-type="step-content">
+	  <h4 class="mb-10 font-weight-bold text-dark"></h4>
+	  <div class="kt-portlet">
+		<div class="kt-portlet__head kt-bg-portlet-5">
+		  <div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+			  <i class="flaticon-attachment"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">Fiche de pointage</h3>
+		  </div>
+		</div>
+		<div class="kt-portlet__body">
+		  <div class="row">
+			<div class="col-md-6 show_port input-group">
+			  <!-- File upload form -->
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  
+	<!-- Fiche personnelle -->
+	<div class="pb-5" data-wizard-type="step-content">
+	  <h4 class="mb-10 font-weight-bold text-dark"></h4>
+	  <div class="kt-portlet">
+		<div class="kt-portlet__head kt-bg-portlet-5">
+		  <div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+			  <i class="flaticon-attachment"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title">Fiche personnelle</h3>
+		  </div>
+		</div>
+		<div class="kt-portlet__body">
+		  <div class="row">
+			<div class="col-md-6 show_port input-group">
+			  <!-- File upload form -->
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  
+	<!-- Form actions -->
+	<div class="kt-portlet__heads">
+	  <div class="kt-portlet__head-label" align="right">
+		<button href="javascript:;" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" (click)="backList()">
+		  <i class="la la-recycle"></i> Retour
+		</button>
+		<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+		  <i class="icon la la-floppy-o"></i> Enregistrer
+		</button>
+	  </div>
+	</div>
+  </form>
+  

@@ -1,8 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import Swal from 'sweetalert2';
+import { MatTableDataSource } from "@angular/material";
+import { Association360Tab } from "../../pesee/show-pesee/show-pesee.component";
+import { Observable } from "rxjs";
+import * as $ from "jquery";
 @Component({
 	selector: "kt-upd-sortie",
 	templateUrl: "./upd-sortie.component.html",
@@ -14,9 +19,22 @@ export class UpdSortieComponent implements OnInit {
   sortieDetails: any;
   
  private headers = new HttpHeaders({
-		'Content-Type': 'application/json',
+		// 'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
+  private AlfresscoURL = environment.API_ALFRESCO_URL;
+
+  pcfileDeclar : File;
+	labelDeclar: any;
+	pcDeclarantFile: File;
+  allpjDeclar = []
+	formPjDeclar = { selecetedFile: {}, LabelPj: "" };
+	dataSource3: MatTableDataSource<any>;
+	displayedColumns1 = [ "label", "nomDoc", "actions"];
+  displayedColumns2=['nomDoc','titre','label','dow']
+  asyncTabs: Observable<Association360Tab[]>;
+  dataSource2 = new MatTableDataSource<any>();
+  ajoutForm: FormGroup;
 
   data: any[] = [];
   datef: Date;
@@ -54,9 +72,15 @@ export class UpdSortieComponent implements OnInit {
 	}
 
 	private baseUrl = environment.API_BMH_URL;
-	constructor(private router: Router, private httpClient:HttpClient, private route: ActivatedRoute) {}
-
+	constructor(private fb : FormBuilder ,private router: Router, private httpClient:HttpClient, private route: ActivatedRoute) {}
+  
+  pjDeclar: any;
 	ngOnInit() {
+    this.ajoutForm = this.fb.group({
+      pj: this.fb.group({
+          pcfileDeclar: [''] 
+      })
+    });
     this.route.params.subscribe((params) => {
 			this.sortieId = +params['id']; 
 		  });
@@ -69,7 +93,55 @@ export class UpdSortieComponent implements OnInit {
     this.fetchQuantite();
     this.fetchProduit();
     this.fetchSortie();
+    this.getAllPjImm(this.sortieId)
   }
+  saveDec(event: any): void {
+    $("#testd").val(event.target.files[0].name);
+    this.ajoutForm.get('pj.pcfileDeclar').setValue(event.target.files[0].name);
+    this.formPjDeclar.selecetedFile = event.target.files[0];
+  }
+
+  labelDeclarant(event: any): void {
+    this.formPjDeclar.LabelPj = event.target.value;
+  }
+  validerPjDec() {
+    this.allpjDeclar.push(this.formPjDeclar);
+    $("#testd").val(null);
+    this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+    this.formPjDeclar = { selecetedFile: {}, LabelPj: this.formPjDeclar.LabelPj };
+  }
+
+  onDeletePjDec(id: number): void {
+    this.allpjDeclar.splice(id, 1);
+    if (this.allpjDeclar.length > 0) {
+      this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+    } else {
+      this.dataSource3 = null;
+    }
+  }
+  async getAllPjImm(ide) {
+    await this.httpClient.get(`${this.AlfresscoURL}/bmh-sortie/index/${ide}`)
+      .subscribe(
+        (data:any) => {
+            this.dataSource2 = new MatTableDataSource(data);
+        },
+        (error) => console.log(error)
+    );
+}
+    onClickPj(e, id) {
+        var r = e.substring(0, e.length - 4);
+    console.log("rrrrr:", r)
+    console.log("id alf:", id)
+
+        this.httpClient.delete(`${this.AlfresscoURL}/bmh-sortie/index/${id}`)
+    .subscribe(
+            (data:any) => {
+        console.log(data)
+        this.ngOnInit()
+            },
+            (error) => console.log(error)
+        );
+    }
   fetchSortie():void {
 		const url = `${this.baseUrl}sortie/${this.sortieId}`;
 		this.httpClient.get(url,{ headers: this.headers }).subscribe(
@@ -189,8 +261,7 @@ export class UpdSortieComponent implements OnInit {
                     );
                     }
 
-                    updSortie():void{
-                  //  console.log(this.typeTraitementControl.value)
+                updSortie():void{
                       const sortie = {
                         date: this.date,
                         lieu : this.lieu,
@@ -207,14 +278,38 @@ export class UpdSortieComponent implements OnInit {
                       }
                       console.log("sortie : ", sortie)
                       const formData = new FormData();
+                      const pcj = new FormData();
+                      const prcsv = new FormData();
+
                       formData.append('sortie', new Blob([JSON.stringify(sortie)], { type: 'application/json' }));
-                      formData.append('procesVerbal', this.procesVerbal);
-                      formData.append('pieceJointe', this.piceJointe);
-                      console.log(formData);
-                      this.httpClient.put<any>(`${this.baseUrl}sortie/${this.sortieId}`, formData,{ headers: this.headers }).subscribe(
+
+                      this.httpClient.put<any>(`${this.baseUrl}sortie/${this.sortieId}`, sortie,{ headers: this.headers }).subscribe(
                         (response) => {
                           console.log("Sortie created successfully:", response);
+                          Swal.fire({
+                            title: 'Enregistrement réussi!',
+                            text: 'Constateur enregistré avec succès.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                          })
+                          
+                          this.allpjDeclar.forEach(formPj => {	
+        
+                            const pcjDeclarant = new FormData();
+                        
+                              pcjDeclarant.append("file", formPj.selecetedFile)
+                              pcjDeclarant.append("sousModule", "SORTIE")
+                              pcjDeclarant.append("id",response.id)
+                              pcjDeclarant.append("label", formPj.LabelPj);
+                        
+                              this.httpClient.post(`${this.AlfresscoURL}/bmh-sortie/multiplefile`, pcjDeclarant)
+                              .subscribe((res)=>{
+                              console.log('deces naturel pièce Jointe stored successfully:', res);
+                              })
+                            });
+                          
                           this.router.navigate(["/sortie/list-sortie"]);
+                          
                         },
                         (error) => {
                           console.error("Error creating etablissement:", error);

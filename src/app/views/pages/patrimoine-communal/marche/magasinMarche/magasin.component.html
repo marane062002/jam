@@ -1,201 +1,329 @@
 <div class="kt-portlet__body">
-    <div class="kt-portlet__head-toolbar">
-        <div class="kt-portlet__head-wrapper">
-            <div class="kt-portlet__head-actions">
-                <a href="javascript:; " (click)="openDialog(0)" class="btn btn-success btn-elevate btn-icon-sm">
-                    <i class="la la-plus"></i> {{ 'PAGES.MARCHE.convention.TITRE_NEW' | translate }}
-                </a>
-            </div>
-        </div>
-    </div>
-
-
-    <div *ngIf="Ajouter" class="espace_bloc">
-		<form [formGroup]="formMagasin"
-			class="kt-form"
-			autocomplete="off"
-			(ngSubmit)="onSubmit()"
-		>
-        <div class="row">
-			<div class="col-md-1">
-
-			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" class="form-control" formControlName="numMagasin" placeholder="{{ 'PAGES.GENERAL.NUM_MAG' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
-				</div>
-			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" class="form-control" formControlName="superficieMag" placeholder="{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
-				</div>
-			</div>
-			<div class="col-md-1">
-
+	<div class="example-header col-md-3" *ngIf="Show==false && Ajouter==false">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
+		<mat-form-field>
+			<input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.MARCHE.convention.FILTER_BY_NUMERO_MAGASIN' | translate }}" />
+		</mat-form-field>
+	</div>
+	<div class="kt-portlet__head-toolbar">
+		<div class="kt-portlet__head-wrapper">
+			<div class="kt-portlet__head-actions" *ngIf="Show==false && Ajouter==false">
+				<a href="javascript:; " (click)="openDialog(0)" class="btn btn-success btn-elevate btn-icon-sm">
+					<i class="la la-plus"></i> {{ 'PAGES.MARCHE.convention.TITRE_NEW' | translate }}
+				</a>
 			</div>
 		</div>
+	</div>
 
-		<div class="row">
-			<div class="col-md-1">
 
-			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" class="form-control" formControlName="localisation" placeholder="{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
+	<div *ngIf="Ajouter" class="espace_bloc">
+		<form [formGroup]="formMagasin" class="kt-form" autocomplete="off" (ngSubmit)="onSubmit()">
+			<div class="row">
+				<div class="col-md-1">
+
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="number" class="form-control" formControlName="numMagasin"
+								placeholder="{{ 'PAGES.GENERAL.NUM_MAG' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="superficieMag"
+								placeholder="{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-1">
+
 				</div>
 			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" class="form-control" formControlName="nomLocataireMAG" placeholder="{{ 'PAGES.GENERAL.NOM_LOC' | translate }} :">
-						<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
-					</mat-form-field>
+
+			<div class="row">
+				<div class="col-md-1">
+
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="localisation"
+								placeholder="{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="nomLocataireMAG"
+								placeholder="{{ 'PAGES.GENERAL.NOM_LOC' | translate }} :">
+							<mat-icon matSuffix><i class="far fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-1">
+
 				</div>
 			</div>
-			<div class="col-md-1">
+			<div class="row">
+				<div class="col-md-1">
 
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="cinLocMag"
+								placeholder="{{ 'PAGES.GENERAL.CIN' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="date" class="form-control" formControlName="dateContratLoc"
+								placeholder="{{ 'PAGES.GENERAL.DATE_CONTRATLOC' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-1">
 
-			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" class="form-control" formControlName="cinLocMag" placeholder="{{ 'PAGES.GENERAL.CIN' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
 				</div>
 			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="date" class="form-control" formControlName="dateContratLoc" placeholder="{{ 'PAGES.GENERAL.DATE_CONTRATLOC' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
+			<div class="row">
+				<div class="col-md-1">
+
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="date" class="form-control" formControlName="dateEnregContratLoc"
+								placeholder="{{ 'PAGES.GENERAL.DATE_ENREG_CONTRATLOC' | translate }} :">
+
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="text" class="form-control" formControlName="montantLoc"
+								placeholder="{{ 'PAGES.GENERAL.MONTANT_LOC' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-1">
+
 				</div>
 			</div>
-			<div class="col-md-1">
+			<div class="row">
+				<div class="col-md-1">
 
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="date" class="form-control" formControlName="dateMajMontantLoc"
+								placeholder="{{ 'PAGES.GENERAL.DATE_MAJ_MONTANT_LOC' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<mat-form-field class="example-full-width">
+							<input matInput type="date" class="form-control" formControlName="dateFinContratLoc"
+								placeholder="{{ 'PAGES.GENERAL.DATE_FIN_CONTRATLOC' | translate }} :">
+							<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="col-md-1">
 
-			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="date" class="form-control" formControlName="dateEnregContratLoc" placeholder="{{ 'PAGES.GENERAL.DATE_ENREG_CONTRATLOC' | translate }} :">
-						
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
 				</div>
 			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="text" class="form-control" formControlName="montantLoc" placeholder="{{ 'PAGES.GENERAL.MONTANT_LOC' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
+
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<!-- start section::edit file form -->
+						<div class="row">
+							<div class="col-md-6 show_port input-group">
+								<div style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
+									<label class="input-group-btn">
+										<span class="btn btn-info">
+											{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
+												(change)="save($event)" id="customFile" style="display: none;" multiple>
+										</span>
+									</label>
+									<input id="test" type="text" class="form-control" readonly>
+								</div>
+							</div>
+							<div class="col-md-3" style="padding-top: 27px;">
+								<button class="btn btn-primary" type="button" (click)="validerPj()"
+									style="position: absolute;right: 0px;">
+									{{ 'PAGES.GENERAL.SAVE' | translate }}
+								</button>
+							</div>
+						</div><br><br>
+						<!-- end section::edit file form -->
+						<!-- begin::file datasource -->
+						<div *ngIf="dataSource1" class="example-container mat-elevation-z8">
+
+							<mat-table [dataSource]="dataSource1" matSort>
+								<ng-container matColumnDef="nomDoc">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+									<mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
+								</ng-container>
+
+								<ng-container matColumnDef="actions">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+									</mat-header-cell>
+									<mat-cell *matCellDef="let row; let i=index">
+										<button type="button" (click)="onDeletePj(i)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+											<i class="icon la la-trash"></i>
+										</button>
+									</mat-cell>
+								</ng-container>
+
+								<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+								<mat-row *matRowDef="let row; columns: displayedColumns1;">
+								</mat-row>
+							</mat-table>
+
+						</div><br><br>
+
+						<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+
+							<mat-table [dataSource]="dataSource2" matSort>
+								<!-- file name Column -->
+								<ng-container matColumnDef="nomDoc">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+									<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+								</ng-container>
+								<ng-container matColumnDef="dow">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+									<mat-cell *matCellDef="let row">
+										<button type="button" (click)="onClickPj(row.name,row.idAlfresco,row.id)"
+											[disabled]="!row.idAlfresco"
+											[ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }"
+											class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+											<i class="flaticon-download-1"></i></button>
+									</mat-cell>
+								</ng-container>
+
+								<ng-container matColumnDef="actions">
+									<mat-header-cell *matHeaderCellDef mat-sort-header>
+										{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
+									</mat-header-cell>
+									<mat-cell *matCellDef="let row">
+										<button type="button" (click)="onDeleteFile(row.id)"
+											class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+											matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
+											<i class="icon la la-trash"></i>
+										</button>
+									</mat-cell>
+								</ng-container>
+
+								<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+								<mat-row *matRowDef="let row; columns: displayedColumns2;">
+								</mat-row>
+							</mat-table>
+						</div><br><br>
+						<!-- end::file datasource -->
+					</div>
 				</div>
 			</div>
-			<div class="col-md-1">
 
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
-
-			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="date" class="form-control" formControlName="dateMajMontantLoc" placeholder="{{ 'PAGES.GENERAL.DATE_MAJ_MONTANT_LOC' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
+			<!--Action Section :: begin-->
+			<div class="kt-portlet__head">
+				<div class="kt-portlet__head-label" align="right">
+					<button type="submit" _ngcontent-dkp-c41="" class="
+							btn btn-success btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						">
+						<i _ngcontent-dkp-c41="" class="icon la la-floppy-o"></i>
+						{{ "PAGES.GENERAL.SAVE" | translate }}
+					</button>
+					<button _ngcontent-dkp-c41="" class="
+							btn btn-info btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						" (click)="annuler()">
+						<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+						{{ "PAGES.GENERAL.EXIT" | translate }}
+					</button>
+					<button _ngcontent-dkp-c41="" class="
+							btn btn-secondary btn-md btn-tall btn-wide
+							kt-font-bold kt-font-transform-u
+						" type="reset">
+						<i _ngcontent-dlp-c41 class="la la-recycle"></i>
+						{{ "PAGES.GENERAL.RESET" | translate }}
+					</button>
 				</div>
+				<div class="espace_bloc"></div>
 			</div>
-			<div class="col-md-5">
-				<div class="form-group">
-					<mat-form-field class="example-full-width">
-						<input matInput type="date" class="form-control" formControlName="dateFinContratLoc" placeholder="{{ 'PAGES.GENERAL.DATE_FIN_CONTRATLOC' | translate }} :">
-						<mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
-					</mat-form-field>
-				</div>
-			</div>
-			<div class="col-md-1">
+			<!--Action Section :: end-->
+		</form>
+	</div>
 
-			</div>
-		</div>
-		
+	<div *ngIf="Show" class="espace_bloc">
 		<div class="kt-portlet__body">
 			<div class="row">
 				<div class="col-md-12 show_port">
-					<!-- start section::edit file form -->
-					<div class="row">
-						<div class="col-md-6 show_port input-group">
-							<div style="display: -webkit-inline-box;margin-inline-start: 98px;padding-top: 27px;">
-								<label class="input-group-btn">
-									<span class="btn btn-info">
-										{{ 'PAGES.ATTCHEMENTS.SELECT_FILE' | translate }}<input type="file"
-											(change)="save($event)" id="customFile" style="display: none;" multiple>
-									</span>
-								</label>
-								<input id="test" type="text" class="form-control" readonly>
-							</div>
-						</div>
-						<div class="col-md-3" style="padding-top: 27px;">
-							<button class="btn btn-primary" type="button" (click)="validerPj()" style="position: absolute;right: 0px;">
-								{{ 'PAGES.GENERAL.SAVE' | translate }}
-							</button>
-						</div>
-					</div><br><br>
-					<!-- end section::edit file form -->
-					<!-- begin::file datasource -->
-					<div *ngIf="dataSource1" class="example-container mat-elevation-z8">
-	
-						<mat-table [dataSource]="dataSource1" matSort>
-							<ng-container matColumnDef="nomDoc">
-								<mat-header-cell *matHeaderCellDef mat-sort-header>
-									{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
-								<mat-cell *matCellDef="let row"> {{row.selecetedFile[0].name}} </mat-cell>
-							</ng-container>
+					<table class="table pj" width="100%">
+						<tbody>
+							<tr>
+								<th>{{ 'PAGES.GENERAL.NUM_MAG' | translate }} :</th>
+								<td>{{magasin.numMagasin}}</td>
+								<th>{{ 'PAGES.GENERAL.SUPERFICIE' | translate }} :</th>
+								<td>{{magasin.superficieMag}}</td>
 
-							<ng-container matColumnDef="actions">
-								<mat-header-cell *matHeaderCellDef mat-sort-header>
-									{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
-								</mat-header-cell>
-								<mat-cell *matCellDef="let row; let i=index">
-									<button type="button" (click)="onDeletePj(i)"
-										class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
-										matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
-										<i class="icon la la-trash"></i>
-									</button>
-								</mat-cell>
-							</ng-container>
-	
-							<mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
-							<mat-row *matRowDef="let row; columns: displayedColumns1;">
-							</mat-row>
-						</mat-table>
-	
-					</div><br><br>
-					
+							</tr>
+							<tr>
+								<th>{{ 'PAGES.GENERAL.LOCALISATION' | translate }} :</th>
+								<td>{{magasin.localisation}}</td>
+								<th>{{ 'PAGES.GENERAL.NOM_LOC' | translate }} :</th>
+								<td>{{magasin.nomLocataireMAG}}</td>
+
+							</tr>
+
+							<tr>
+								<th>{{ 'PAGES.GENERAL.CIN' | translate }} :</th>
+								<td>{{magasin.cinLocMag}}</td>
+								<th>{{ 'PAGES.GENERAL.DATE_CONTRATLOC' | translate }} :</th>
+								<td>{{magasin.dateContratLoc | date:'dd-MM-yyyy'}}</td>
+							</tr>
+							<tr>
+								<th>{{ 'PAGES.GENERAL.DATE_ENREG_CONTRATLOC' | translate }} :</th>
+								<td>{{magasin.dateEnregContratLoc | date:'dd-MM-yyyy'}}</td>
+								<th>{{ 'PAGES.GENERAL.MONTANT_LOC' | translate }} :</th>
+								<td>{{magasin.montantLoc}}</td>
+							</tr>
+							<tr>
+								<th>{{ 'PAGES.GENERAL.DATE_MAJ_MONTANT_LOC' | translate }} :</th>
+								<td>{{magasin.dateMajMontantLoc | date:'dd-MM-yyyy'}}</td>
+								<th>{{ 'PAGES.GENERAL.DATE_FIN_CONTRATLOC' | translate }} :</th>
+								<td>{{magasin.dateFinContratLoc | date:'dd-MM-yyyy'}}</td>
+							</tr>
+						</tbody>
+					</table>
+
 					<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
-
 						<mat-table [dataSource]="dataSource2" matSort>
-							<!-- file name Column -->
 							<ng-container matColumnDef="nomDoc">
 								<mat-header-cell *matHeaderCellDef mat-sort-header>
 									{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
@@ -212,135 +340,101 @@
 										<i class="flaticon-download-1"></i></button>
 								</mat-cell>
 							</ng-container>
-	
-							<ng-container matColumnDef="actions">
-								<mat-header-cell *matHeaderCellDef mat-sort-header>
-									{{ "PAGES.PROGRAMME.ACTIONS" | translate }}
-								</mat-header-cell>
-								<mat-cell *matCellDef="let row">
-									<button type="button" (click)="onDeleteFile(row.id)"
-										class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
-										matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}">
-										<i class="icon la la-trash"></i>
-									</button>
-								</mat-cell>
-							</ng-container>
-	
-							<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
-							<mat-row *matRowDef="let row; columns: displayedColumns2;">
+							<mat-header-row *matHeaderRowDef="displayedColumns3"></mat-header-row>
+							<mat-row *matRowDef="let row; columns: displayedColumns3;">
 							</mat-row>
 						</mat-table>
 					</div><br><br>
-					<!-- end::file datasource -->
+					<div class="espace_bloc"></div>
 				</div>
 			</div>
 		</div>
-
-			<!--Action Section :: begin-->
-			<div class="kt-portlet__head">
-				<div class="kt-portlet__head-label" align="right">
-					<button
-						type="submit"
-						_ngcontent-dkp-c41=""
-						class="
-							btn btn-success btn-md btn-tall btn-wide
-							kt-font-bold kt-font-transform-u
-						"
-					>
-						<i
-							_ngcontent-dkp-c41=""
-							class="icon la la-floppy-o"
-						></i>
-						{{ "PAGES.GENERAL.SAVE" | translate }}
-					</button>
-					<button
-						_ngcontent-dkp-c41=""
-						class="
-							btn btn-info btn-md btn-tall btn-wide
-							kt-font-bold kt-font-transform-u
-						"
-						(click)="annuler()"
-					>
-						<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
-						{{ "PAGES.GENERAL.EXIT" | translate }}
-					</button>
-					<button
-						_ngcontent-dkp-c41=""
-						class="
-							btn btn-secondary btn-md btn-tall btn-wide
-							kt-font-bold kt-font-transform-u
-						"
-						type="reset"
-					>
-						<i _ngcontent-dlp-c41 class="la la-recycle"></i>
-						{{ "PAGES.GENERAL.RESET" | translate }}
-					</button>
-				</div>
-				<div class="espace_bloc"></div>
-			</div>
-			<!--Action Section :: end-->
-		</form>
+		<div class="kt-portlet__head" align="right">
+			<button _ngcontent-dkp-c41="" class="
+						btn btn-info btn-md btn-tall btn-wide
+						kt-font-bold kt-font-transform-u
+					" (click)="annuler2()">
+				<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+				{{ "PAGES.GENERAL.EXIT" | translate }}
+			</button>
+		</div>
 	</div>
- 
-    <!-- begin:: content section datasource -->
-    <!-- <div *ngIf="dataSize > 0"> -->
-    <div class="kt-portlet__body">
-        <div class="kt-portlet__body kt-portlet__body--fit">
+
+	<!-- begin:: content section datasource -->
+	<!-- <div *ngIf="dataSize > 0"> -->
+	<div class="kt-portlet__body">
+		<div class="kt-portlet__body kt-portlet__body--fit">
 
 
-            <div class="example-container mat-elevation-z8">
+			<div class="example-container mat-elevation-z8">
 
-                <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="Nom">
-                        <th class="num" mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.GENERAL.NUM_MAG' | translate }} </th>
-                        <td class="num" mat-cell *matCellDef="let row"> {{row.numMagasin ? row.numMagasin : '-'}} </td>
-                    </ng-container>
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="Prenom">
-                        <th class="objet" mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.SUPERFICIE' | translate }} </th>
-                        <td class="objet" mat-cell *matCellDef="let row"> {{row.superficieMag ? row.superficieMag : '-'}} </td>
-                    </ng-container>
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="organisme">
-                        <th class="tva" mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.GENERAL.LOCALISATION' | translate }} </th>
-                        <td class="tva" mat-cell *matCellDef="let row"> {{row.localisation ? row.localisation : '-'}} </td>
-                    </ng-container>
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="autorisation">
-                        <th class="prixU" mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.GENERAL.NOM_LOC' | translate }} </th>
-                        <td class="prixU" mat-cell *matCellDef="let row"> {{row.nomLocataireMAG ? row.nomLocataireMAG : ''}} </td>
-                    </ng-container>
-                 
-                    
+				<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+					<!-- Name Column -->
+					<ng-container matColumnDef="Nom">
+						<th class="num" mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.GENERAL.NUM_MAG' |
+							translate }} </th>
+						<td class="num" mat-cell *matCellDef="let row"> {{row.numMagasin ? row.numMagasin : '-'}} </td>
+					</ng-container>
+					<!-- Name Column -->
+					<ng-container matColumnDef="Prenom">
+						<th class="objet" mat-header-cell *matHeaderCellDef mat-sort-header> {{
+							'PAGES.GENERAL.SUPERFICIE' | translate }} </th>
+						<td class="objet" mat-cell *matCellDef="let row"> {{row.superficieMag ? row.superficieMag :
+							'-'}} </td>
+					</ng-container>
+					<!-- Name Column -->
+					<ng-container matColumnDef="organisme">
+						<th class="tva" mat-header-cell *matHeaderCellDef mat-sort-header>{{
+							'PAGES.GENERAL.LOCALISATION' | translate }} </th>
+						<td class="tva" mat-cell *matCellDef="let row"> {{row.localisation ? row.localisation : '-'}}
+						</td>
+					</ng-container>
+					<!-- Name Column -->
+					<ng-container matColumnDef="autorisation">
+						<th class="prixU" mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'PAGES.GENERAL.NOM_LOC' |
+							translate }} </th>
+						<td class="prixU" mat-cell *matCellDef="let row"> {{row.nomLocataireMAG ? row.nomLocataireMAG :
+							''}} </td>
+					</ng-container>
 
-                    <ng-container matColumnDef="actions">
-                        <th class="action" mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                        <td class="action" mat-cell *matCellDef="let row">
-                            <!----  <a href="javascript:;" (click)="showReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>-->
-                            <a href="javascript:;" (click)="openDialog(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
-                            <a href="javascript:;" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                    </tr>
-                </table>
-                <div *ngIf="dataSize == 0 && isLoading == false" style="display: flex;justify-content: center;padding: 2%;color: orangered;">
-                    {{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
-                </div>
-                <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
-                    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
-                    </mat-progress-spinner>
-                </mat-card>
-                <mat-paginator [length]="dataSize" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10,50]" showFirstLastButtons></mat-paginator>
-                <hr>
-            </div>
-        </div>
-    </div>
-    <!-- begin:: table des prix -->
 
-    
-    <!-- end:: table des prix -->
-    <!-- </div> -->
+
+					<ng-container matColumnDef="actions">
+						<th class="action" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+						<td class="action" mat-cell *matCellDef="let row">
+							<!----  <a href="javascript:;" (click)="showReclamation(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i class="la la-search-plus"></i></a>-->
+							<a href="javascript:;" (click)="openDialog(row.id)"
+								class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+								matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="la la-edit"></i></a>
+							<a href="javascript:;" (click)="openDialogShow(row.id)"
+								class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i
+									class="icon la la-search-plus"></i></a>
+							<a href="javascript:;" (click)="delete(row.id)"
+								class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+								matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="la la-trash"></i></a>
+						</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;">
+					</tr>
+				</table>
+				<div *ngIf="dataSize == 0 && isLoading == false"
+					style="display: flex;justify-content: center;padding: 2%;color: orangered;">
+					{{ 'PAGES.GENERAL.NO_RECORDS' | translate }}
+				</div>
+				<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+					<mat-progress-spinner color="primary" mode="indeterminate" diameter="50">
+					</mat-progress-spinner>
+				</mat-card>
+				<mat-paginator [length]="dataSize" [pageSize]="3" [pageIndex]="0" [pageSizeOptions]="[3,5,10,50]"
+					showFirstLastButtons></mat-paginator>
+				<hr>
+			</div>
+		</div>
+	</div>
+	<!-- begin:: table des prix -->
+
+
+	<!-- end:: table des prix -->
+	<!-- </div> -->
 </div>

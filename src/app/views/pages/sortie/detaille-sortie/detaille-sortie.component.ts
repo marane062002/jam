@@ -52,7 +52,7 @@ export class DetailleSortieComponent implements OnInit {
         await this.httpClient.get(`${this.AlfresscoURL}/bmh-sortie/index/${ide}`)
 		.subscribe(
             (data:any) => {
-				// debugger
+				// 
                 this.dataSource2 = new MatTableDataSource(data);
             },
             (error) => console.log(error)

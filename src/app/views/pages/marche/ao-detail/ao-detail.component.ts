@@ -1060,7 +1060,7 @@ this.getHistoriqueUpdateStatutMarcheByIdAo()
 	// ================================================================
 	async getPrestataires() {
 		const _this = this;
-		await this.service.getAllOffreDeposee(this.idao).pipe(delay(300)).subscribe((data) => {
+		await this.service.getAllOffreDeposee(this.idao,0,5).pipe(delay(300)).subscribe((data) => {
 			console.log(data);
 			this.prestataires = data;
 			

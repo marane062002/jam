@@ -47,7 +47,8 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef>Convocation</mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <a href="javascript:;" *ngIf="TypeCommission == 1 || TypeCommission == 3" (click)="convocation(idao,row.nom)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md" matTooltip="Convocation"><i class="la la-print"></i></a>
+                        <!-- <a href="javascript:;" *ngIf="TypeCommission == 1 || TypeCommission == 3" (click)="convocation(idao,row.nom)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md" matTooltip="Convocation"><i class="la la-print"></i></a> -->
+                        <a href="javascript:;"  (click)="convocation(idao,row.nom)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md" matTooltip="Convocation"><i class="la la-print"></i></a>
                     </mat-cell>
                 </ng-container>
 

@@ -1,0 +1,197 @@
+<!-- begin:: Content section 2 -->
+
+<form class="kt-form" autocomplete="off" #form="ngForm">
+	<!-- begin:: Content section 2 -->
+	<div class="row">
+		<div class="col-lg-12 col-md-offset-2">
+			<div class="kt-portlet portlet-3">
+				<div class="kt-portlet__head kt-bg-portlet-3">
+					<div class="kt-portlet__head-label">
+						<!-- <span class="kt-portlet__head-icon">
+							<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
+						</span> -->
+						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+					Modifier planning prévisionnel			</h3>
+					</div>
+				</div>
+				<div class="kt-portlet__body"> 
+					<div class="row">
+                        <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Objet du marché</label>
+                                    <input matInput  required type="text" class="form-control" name="objet" [(ngModel)]="formData.objet"  placeholder="" >
+                                   
+								</mat-form-field>
+							</div>
+						</div>
+                        <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Numero de référence</label>
+                                    <input matInput  required type="text" class="form-control" name="numRef" [(ngModel)]="formData.numRef"  placeholder="" >
+                                   
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <label > {{ 'PAGES.MARCHE.AO.TYPE_SERVICE' | translate }}:
+                                    </label>
+                                    <mat-select required class="form-control" name="typePrestAo" [(ngModel)]="formData.typePrestation.id" (selectionChange)="onChangeTypePrestationAo($event)" placeholder="" [compareWith]="selectedTypePrestationAo">
+                                        <mat-option *ngFor="let item of lisTypePrestationAo" value="{{item.id}}">
+                                            {{item.libelle}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                   
+
+                        <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Estimation</label>
+                                    <input matInput  required type="number" class="form-control" name="estimation" [(ngModel)]="formData.estimation"  placeholder="" >
+                                 
+								</mat-form-field>
+							</div>
+						</div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <label > Mode de passation:
+                                    </label>
+                                    <mat-select  class="form-control" name="modePassation" [(ngModel)]="formData.natureAo.id" placeholder=""  (selectionChange)="selectedmodePassation($event)"  [compareWith]="selectedValuemodePassation">
+                                        <mat-option *ngFor="let item of natureAoAll" value="{{item.id}}">
+                                            {{item.libelle}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="isVisible1==true">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <label> Autres:
+                                    </label>
+                                    <input matInput type="text" class="form-control" name="autres" [(ngModel)]="formData.modePassation"   placeholder="" >
+        
+                                </mat-form-field>
+                            </div>
+                        </div>
+                  
+                      
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <label > Service gestionnaire:
+                                    </label>
+                                    <mat-select required class="form-control" name="CoordonneServiceConcerne" [(ngModel)]="formData.coordonneServiceConcerne" placeholder="" >
+                                        <mat-option *ngFor="let item of ServiceConcerne" value="{{item}}">
+                                            {{item}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    
+                  
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group date">
+                                    <mat-form-field class="example-full-width">
+                                        <label>Date d'ouverture des plis:
+                                        </label>
+                                        <input type="datetime-local" matInput   class="form-control"   name="dateOuverturePlis" [value]="formData.dateOuverturePlis"   >
+                                        <!-- <mat-hint>JJ/MM/AAAA</mat-hint>
+                                     
+                                        <mat-datepicker touchUi="true" #picker3></mat-datepicker> -->
+                                      
+                                    </mat-form-field>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group date">
+                                    <mat-form-field class="example-full-width">
+                                        <label>Président de la commission
+                                        </label>
+                                        <input matInput  required type="text" class="form-control" name="president" [(ngModel)]="formData.president"  placeholder=""  [compareWith]="selectedValuePresident">
+
+                                      
+                                    </mat-form-field>
+        
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group date">
+                                    <mat-form-field class="example-full-width">
+                                        <label>Président de la commission
+                                        </label>
+                                        <!-- <input matInput  required type="text" class="form-control" name="president" [(ngModel)]="formData.president"  placeholder="" > -->
+
+                                        <mat-select required class="form-control" name="president" [(ngModel)]="formData.idPresident" placeholder="" [compareWith]="selectedValuePresident">
+                                            <mat-option *ngFor="let item of President" value="{{item.id}}">
+                                                {{item.fullname}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+
+                        <div class="form-group">
+                            <div class="input-group date">
+                                <mat-form-field class="example-full-width">
+                                    <label>
+                                        Imputation Budgetaire
+                                    </label>
+                                    <input matInput  type="text" class="form-control" name="imputationBudgetaire" [(ngModel)]="formData.imputationBudgetaire" placeholder="">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        </div> -->
+                      
+                        <!-- <div class="col-md-6" *ngIf="isTravaux==true ||  isServices==true">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Lieu d'execution</label>
+                                    <input matInput   type="text" class="form-control" name="lieuExecution" [(ngModel)]="formData.lieuExecution"  placeholder="" >
+                                    
+								</mat-form-field>
+							</div>
+						</div> -->
+
+                        
+                    </div>
+				</div> 
+			</div>
+		</div>
+	
+	
+		
+	</div>
+	<!--Action Section :: begin--> 
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label" align="right">
+			<button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit"
+				(click)="onSubmit()">
+				<i class="icon la la-floppy-o"></i>
+				{{ 'PAGES.GENERAL.SAVE' | translate }}</button>
+                <button _ngcontent-dkp-c41="" class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset" (click)="backList()">
+                    <i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+                    {{ 'PAGES.GENERAL.EXIT' | translate }}</button>
+			<!-- <button class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+				(click)="backList()">
+				<i class="icon la la-list"></i>
+				{{ 'PAGES.GENERAL.EXIT' | translate }}</button> -->
+		</div>
+		<div class="espace_bloc"></div>
+	</div>
+	<!--Action Section :: end-->
+</form>

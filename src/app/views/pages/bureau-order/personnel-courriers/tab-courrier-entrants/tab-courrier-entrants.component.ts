@@ -70,7 +70,7 @@ export class TabCourrierEntrantsComponent implements OnInit {
 		// this.user.idPersonnel=parseInt(localStorage.getItem('idPers'));
 		this.user$.subscribe((user: User) => {
 			this.user=user
-		})
+		}) 
 		//console.log("tab id personne: " + this.user.idPersonnel);
 		this.currentUserPermissions$ = this.store.pipe(select(currentUserPermissions));
 		console.log(this.currentUserPermissions$);
@@ -113,8 +113,9 @@ export class TabCourrierEntrantsComponent implements OnInit {
 				.getAllObjectById("/courrierEntrants/personnel/", id)
 				.pipe(delay(300))
 				.subscribe(
-					(data) => {
+					(data:any) => {
 						this.isLoading = false;
+						this.page = data;
 						this.dataSource = new MatTableDataSource(data);
 						this.paginator._intl.itemsPerPageLabel = this.translate.instant("PAGES.GENERAL.ITEMS_PER_PAGE_LABEL");
 						this.paginator._intl.nextPageLabel = this.translate.instant("PAGES.GENERAL.NEXT_PAGE_LABEL");

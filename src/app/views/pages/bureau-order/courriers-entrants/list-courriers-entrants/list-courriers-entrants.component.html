@@ -234,7 +234,7 @@
                     (click)="deleteCourrierEntrant(row.id)"
                     class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
                     matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
-
+ 
                 <span *ngIf="row?.statut.length>10; else motif">
                     <span *ngIf="row.president==false">
                         <button *ngxPermissionsOnly="['canDispatchingCE']" type="button"

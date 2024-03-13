@@ -5,6 +5,7 @@ import {
 	Output,
 	ViewChild,
 	ElementRef,
+	Input,
 } from "@angular/core";
 import {
 	FormControl,
@@ -24,18 +25,45 @@ import { NotificationType } from '../../../shared/NotificationMessage.service';
 import Swal from 'sweetalert2';
 import { SpinnerService } from '../../../utils/spinner.service';
 import { finalize } from 'rxjs/operators';
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { ImageScan } from "../scanned-image/image-scan";
+import { ImageTypes } from "../scanned-image/image-types";
+import { ScannedImageComponent } from "../scanned-image/scanned-image.component";
+import { MatDialog } from "@angular/material";
+import { AfficheComponent } from "../affiche/affiche.component";
+import jsPDF from "jspdf";
+export interface Pdf {
+	file: File;
+	fileName: string;
+}
+export class Scan {
+	file: string;
+	fileName: string;
+}
+
+export class PdfClass implements Pdf {
+	file: File;
+	fileName: string;
+
+	constructor(file: File, fileName: string) {
+		this.file = file;
+		this.fileName = fileName;
+	}
+}
 
 @Component({
 	selector: "kt-add-courriers-entrants",
 	templateUrl: "./add-courriers-entrants.component.html",
 	styleUrls: ["./add-courriers-entrants.component.scss"],
 })
+
 export class AddCourriersEntrantsComponent implements OnInit {
 	// ============================================================
 	//
 	// ============================================================
 	language = localStorage.getItem('language');
 	loading = false;
+	loading1= false;
 	president: boolean;
 	showInterne = false;
 	showExterne = true;
@@ -59,12 +87,17 @@ export class AddCourriersEntrantsComponent implements OnInit {
 	divisions: any;
 	compareDiv : any;
 	services: any;
-	personnels: any;
+	personnels: any; 
 	addForm: FormGroup;
 	addFileForm: FormGroup;
 
 	todayDate: Date = new Date();
 	typ_courrier = 1;
+	pjForm: FormGroup = this.formBuilder.group({
+		fileName: [""],
+		fileInput: ["", Validators.required],
+	});
+	fond: string;
 
 	num_courrier: string;
 	// ============================================================
@@ -77,11 +110,40 @@ export class AddCourriersEntrantsComponent implements OnInit {
 	@ViewChild('origineSearch', { static: false }) origineSearchInput: ElementRef;
 	origineList = [];
 	private _origineList: Array<any> = [];
+
 	@ViewChild('inputFile', { static: true }) inputFile: ElementRef;
+	@Output() onSaveScannedImage = new EventEmitter<any>();
+	@Input() width: Number = 200;
+
+	@Input() wsServerPort: number = 61024;
+	imageScan : ImageScan;
+	private wsUrl: string = `ws://localhost:${this.wsServerPort}`;
+
+	base64Img: any = "";
+	scannedImageUrl: SafeUrl = "";
+	private ws: WebSocket = null;
+	startScanning: boolean;
+
+	private reconnecteOnWSClose: boolean = true;
+	private wsReconnectDuration: number = 100;
+	isConnectedToScanner: boolean = false;
+	@Output() onScannerConnectionStateChange = new EventEmitter<boolean>(false);
+
+	errorMessage: String = "";
+
+	@Input() enableImageCropper: boolean = false;
+	cropperImageType: ImageTypes = ImageTypes.JPEG;
+	showImageCropper: boolean = false;
+	// @ViewChild('imageCropperC') imageCropper: ImageCropperComponent;
+		@ViewChild("imageCropperC", { static: false }) imageCropper : ScannedImageComponent;
+		tableScane:any =[]
+		tableuPdf: any = [];
+
 	// ============================================================
 	//
 	// ============================================================
 	constructor(
+		public dialog: MatDialog,
 		private service: BoServiceService,
 		private service1: PersonnelService,
 		private service2: OrganisationService,
@@ -89,8 +151,11 @@ export class AddCourriersEntrantsComponent implements OnInit {
 		private translate: TranslateService,
 		private router: Router,
 		private formBuilder: FormBuilder,
-		private spinnerService: SpinnerService
+		private spinnerService: SpinnerService,
+		private sanitizer: DomSanitizer
+
 	) {
+
 		this.getDivisions();
 		//this.thisYear = new Date().getFullYear() + "-";
 	}
@@ -101,6 +166,173 @@ export class AddCourriersEntrantsComponent implements OnInit {
 		this.service.getAllObject("/divisions/index")
 			.subscribe((data) => {this.divisions = data;
 								  this.compareDiv= data;});
+	}
+	private  connectToSocket = (): void => {
+		try {
+			this.ws = null;
+			if(!this.ws){
+				try {
+					this.ws = new WebSocket(this.wsUrl);
+				} catch (error) {
+					
+				}
+				
+				this.ws.onopen = (e) => {
+					this.changeScannerConnectionState(true);
+					this.errorMessage = '';
+				}
+				
+				this.ws.onerror = (e) => {
+					this.errorMessage = "Lancez l'application middleware du scanner";
+					this.ws.close();
+				}
+				
+				this.ws.onmessage = (e) => {
+					if (e.data instanceof Blob) {
+						var reader = new FileReader();
+						reader.readAsDataURL(e.data);
+						reader.onloadend = () => {
+							this.base64Img = reader.result;
+							if (this.base64Img != null) {
+								this.imageScan = {
+									imageBase64: this.base64Img
+								}
+								
+							}
+							// this.gestionDocumentService.Add("detect-face",this.imageScan).subscribe(res=>{
+							// 	let f = res.body as ImageScan;
+							// 	this.base64Img = f.imageBase64;
+							// 	this.scannedImageUrl = this.sanitizer.bypassSecurityTrustUrl(this.base64Img + "");
+							// 	if(this.enableImageCropper){
+							// 		this.showImageCropper = true;
+							// 	}
+							// 	this.startScanning = false;
+
+							// },  (error) => {
+							// 	let errorMessage;
+							// 	if (error.status === 500 || error.status === 404) {
+							// 	  errorMessage = 'Une erreur est survenue, merci de réessayer plus tard';
+							// 	} else if (error.error && error.error.message) {
+							// 	  errorMessage = error.error.message;
+							// 	}
+
+							// 	this.messageService.add({
+							// 	  severity: 'error',
+							// 	  summary: errorMessage,
+							// 	  life: 5000
+							// 	});
+							//   });
+							
+							this.tableScane.push({file: this.base64Img,
+								fileName: this.addFileForm.value.fileName})
+						  console.log(this.tableScane)
+						  
+						  this.loading1 = false
+						//   this.convertToPdf()
+						}
+					}
+					// else{
+					//     let msg = JSON.parse(e.data);
+					// }
+				};
+				this.ws.onclose = (e) => {
+					this.changeScannerConnectionState(false);
+					if(this.reconnecteOnWSClose){
+						setTimeout(() => {
+							this.connectToSocket();
+						}, this.wsReconnectDuration);
+					}
+				}
+			}
+		} catch (error) {
+			setTimeout(() => {
+				this.connectToSocket();
+			}, this.wsReconnectDuration);
+		}
+	}
+
+
+	private changeScannerConnectionState(state: boolean): void {
+		this.isConnectedToScanner = state;
+		this.onScannerConnectionStateChange.emit(this.isConnectedToScanner);
+	}
+	startScan(): void {
+		try {this.removeScannedImage();
+			if(this.ws.readyState == WebSocket.OPEN){
+				this.showImageCropper = false;
+				this.removeScannedImage();
+				this.ws.send("1100");
+				this.startScanning = true;
+				this.loading1 = true
+				
+			}
+		} catch (error) {
+			
+			// this.errorMessage = "Allumez votre scanner";
+		}
+	}
+	
+	  
+	pdf() {
+		let pdf = new PdfClass(this.file, this.pjForm.value.fileName);
+		this.tableuPdf.push(pdf);
+		console.log(this.tableuPdf)
+		console.log(this.file)
+
+		this.pjForm.value.file = "";
+		this.pjForm.value.fileName = "";
+	}
+	supimerPdf(index) {
+		this.tableuPdf.splice(index, 1);
+	}
+	convertToPdf() {
+        if (this.base64Img) {
+          const pdf = new jsPDF();
+          pdf.addImage(this.base64Img, 'JPEG', 10, 10, 180, 180);
+          pdf.save(this.base64Img);
+        }
+      }
+	constration(row:any): void {
+		const dialogRef = this.dialog.open(AfficheComponent, {
+			width: "75%",
+			data : { Data: row.file },
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			console.log("The dialog was closed");
+			this.fond = result;
+		});
+	}
+	// getDone(): void {
+	// 	if(this.enableImageCropper && this.showImageCropper){
+	// 		if(this.imageCropper){
+	// 			this.base64Img = this.imageCropper.getCroppedImageAsBase64();
+	// 			this.onSaveScannedImage.emit(this.base64Img);
+	// 		}
+	// 	}
+	// 	else{
+	// 		this.onSaveScannedImage.emit( this.sanitizer.bypassSecurityTrustUrl(this.base64Img + ""));
+	// 	}
+	// }
+	compressImage(src, newX, newY) {
+		return new Promise((res, rej) => {
+		  const img = new Image();
+		  img.src = src;
+		  img.onload = () => {
+			const elem = document.createElement('canvas');
+			elem.width = newX;
+			elem.height = newY;
+			const ctx = elem.getContext('2d');
+			ctx.drawImage(img, 0, 0, newX, newY);
+			const data = ctx.canvas.toDataURL();
+			res(data);
+		  }
+		  img.onerror = error => rej(error);
+		})
+	  }
+	removeScannedImage(): void {
+		this.base64Img = "";
+		this.scannedImageUrl = "";
 	}
 	// ============================================================
 	//
@@ -163,7 +395,7 @@ export class AddCourriersEntrantsComponent implements OnInit {
 	// ============================================================
 	formBuild() {
 		const currentDate = new Date().toISOString().substring(0, 10);
-
+        
 		this.addForm = this.formBuilder.group({
 			id: [],
 			numero: [""],
@@ -201,6 +433,7 @@ export class AddCourriersEntrantsComponent implements OnInit {
 	//
 	// ============================================================
 	ngOnInit() {
+		this.connectToSocket();
 
 		document.getElementById("num").style.display = "inline";
 
@@ -230,10 +463,26 @@ export class AddCourriersEntrantsComponent implements OnInit {
 		this.getData();
 
 		this.addFileForm = this.formBuilder.group({
-			_file: [],
+			fileName: [],
 		});
 
 		this.service.fileSizeDetector();
+	}
+	
+	ngAfterViewInit(): void {
+	}
+
+	ngOnDestroy(): void {
+		this.closeWebSocketConnection();
+	}
+	private closeWebSocketConnection(): void {
+		this.reconnecteOnWSClose = false;
+
+		if(this.ws.OPEN){
+			setTimeout(() => {
+				this.ws.close();
+			}, this.wsReconnectDuration);
+		}
 	}
 	// ============================================
 	// Charger les liste externe
@@ -477,30 +726,79 @@ export class AddCourriersEntrantsComponent implements OnInit {
 					this.router.navigate([
 						"courriers-entrants/list-courriers-entrants",
 					]);
-					// upload files to alfresco GED
-					if (this.uploadFiles){
-						
-					}
-						this.service.updloadFiles(this.uploadFiles, data)
-							.subscribe(
-								(res) =>
+
+					if(this.tableScane.length >0){
+
+						for(let j=0;j<this.tableScane.length ; j++){
+							this.service.uploadSejoursScan(this.tableScane[j],data).subscribe(
+								(res)=>{
 									this.notification.sendMessage({
 										message: 'تمت إضافة المرفقات بنجاح',
 										type: NotificationType.info
 									}),
-								(err) =>
+									console.log(res)
+								},(err)=>{
 									this.notification.sendMessage({
 										message: 'عملية رفع المرفقات خاطئة',
 										type: NotificationType.error
 									}),
+									console.log(err)
+								}
+							)
+	
+	
+						}
+	
+	
+	
+					}
+					if (this.tableuPdf.length > 0) {
+						for (let i = 0; i < this.tableuPdf.length; i++) {
+							this.service.updloadFiles(this.tableuPdf[i].file,  data).subscribe(
+								(res) => {
+									console.log(res);
+									this.Association();
+								},
+								(error) => {
+									console.log(error);
+									this.Association();
+								}
 							);
+						}
+					// // upload files to alfresco GED
+					// if (this.uploadFiles){
+						
+					// }
+					// 	this.service.updloadFiles(this.uploadFiles, data)
+					// 		.subscribe(
+					// 			(res) =>
+					// 				this.notification.sendMessage({
+					// 					message: 'تمت إضافة المرفقات بنجاح',
+					// 					type: NotificationType.info
+					// 				}),
+					// 			(err) =>
+					// 				this.notification.sendMessage({
+					// 					message: 'عملية رفع المرفقات خاطئة',
+					// 					type: NotificationType.error
+					// 				}),
+					// 		);
 					this.notification.sendMessage({
 						message: this.translate.instant("PAGES.GENERAL.MSG_SAVED_CONFIRMED"),
 						type: NotificationType.success
 					});
-				}
+				}}
 			});
 		//});
+	}
+	Association(): void {
+		Swal.fire({
+			position: "center",
+			icon: "success",
+			title: "Enregistre Succes",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+		this.router.navigate(["courriers-entrants/list-courriers-entrants"]);
 	}
 	// ============================================================
 	//
@@ -524,6 +822,62 @@ export class AddCourriersEntrantsComponent implements OnInit {
 	// ============================================================
 	// Upload files
 	// ============================================================
+	selectedFileName?: string;
+	pjExist: Boolean;
+	handleFile(e?: any) {
+		this.file = undefined;
+		this.file = e.target.files[0];
+		e.target.value = "";
+		this.selectedFileName = this.file.name;
+
+		this.pjExist = true;
+		this.uploadFiles = e.target.files;
+		if (e.target.files.length > 0) {
+			console.log("file size :: " + e.target.files.length);
+			console.log("file name :: " + e.target.files[0].name);
+			var file = e.target.files[0].name;
+			//console.log("file name SE :: " + file.substr(0, file.lastIndexOf('.')));
+			var num = this.addForm.get("numero").value;
+			//console.log("Num : " + num + " /" + num.substr(5, num.length))
+			var fileName = file.substr(0, file.lastIndexOf('.'));
+			if (num.indexOf(fileName) !== -1) {
+				this.notification.sendMessage({
+					message: 'الملف جاهز للتحميل ... ',
+					type: NotificationType.info
+				});
+			} else {
+
+				this.notification.sendMessage({
+					message: 'الملف جاهز للتحميل ... ',
+					type: NotificationType.info
+				});
+		/* 		Swal.fire({
+					title: 'انتباه !',
+					text: "هذه المراسلة المرفقة لا تحمل الرقم : " + num.substr(5, num.length - 5),
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					cancelButtonText: 'إلغاء',
+					confirmButtonText: 'تأكيد'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						this.notification.sendMessage({
+							message: 'الملف جاهز للتحميل ... ',
+							type: NotificationType.info
+						});
+					} else if (result.dismiss === Swal.DismissReason.cancel) {
+						this.addFileForm.reset();
+						this.inputFile.nativeElement.value = '';
+					}
+				}) */
+			}
+
+
+			this.addFileForm.patchValue(this.uploadFiles);
+		}
+
+	}
 	fileChange(event) {
 		this.uploadFiles = event.target.files;
 		if (event.target.files.length > 0) {

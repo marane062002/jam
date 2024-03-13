@@ -26,13 +26,44 @@ import { ContratListComponentComponent } from "../etudeBesion/contrat-list-compo
 import { ContratFormComponent } from "../etudeBesion/contrat-form/contrat-form.component";
 import { ContratEditComponent } from "../etudeBesion/contrat-edit/contrat-edit.component";
 import { MarcheModule } from "../../marche/marche.module";
+import { AddNatureComponent } from "./Parametrage/Nature/add-nature/add-nature.component";
+import { ListNatureComponent } from "./Parametrage/Nature/list-nature/list-nature.component";
+import { ShowNatureComponent } from "./Parametrage/Nature/show-nature/show-nature.component";
+import { AddThemeComponent } from "./Parametrage/Theme/add-theme/add-theme.component";
+import { ListThemeComponent } from "./Parametrage/Theme/list-theme/list-theme.component";
+import { ShowThemeComponent } from "./Parametrage/Theme/show-theme/show-theme.component";
+import { ListSousThemeComponent } from "./Parametrage/SousTheme/list-sous-theme/list-sous-theme.component";
+import { AddSousThemeComponent } from "./Parametrage/SousTheme/add-sous-theme/add-sous-theme.component";
+import { ShowSousThemeComponent } from "./Parametrage/SousTheme/show-sous-theme/show-sous-theme.component";
+import { ListTableauBordComponent } from "./tableau-bord/list-tableau-bord/list-tableau-bord.component";
+import { AddTableauBordComponent } from "./tableau-bord/add-tableau-bord/add-tableau-bord.component";
+import { TableauBordDialogComponent } from "./tableau-bord/tableau-bord-dialog/tableau-bord-dialog.component";
+import { ListArrondissementComponent } from "./Parametrage/Arrondissement/list-arrondissement/list-arrondissement.component";
+import { ShowArrondissementComponent } from "./Parametrage/Arrondissement/show-arrondissement/show-arrondissement.component";
+import { AddArrondissement1Component } from "./Parametrage/Arrondissement/add-arrondissement1/add-arrondissement1.component";
+import { ExportExcelDialogComponent } from "./export-excel-dialog/export-excel-dialog.component";
 
 @NgModule({
-	declarations: [
+	declarations: [ExportExcelDialogComponent,
+		AddNatureComponent,
+		TableauBordDialogComponent,
+		AddArrondissement1Component,
+		ShowArrondissementComponent,
+		ListArrondissementComponent,
+		ListNatureComponent,
+		ShowNatureComponent,
+		AddThemeComponent,
+		ListThemeComponent,
+		ShowThemeComponent,
+		ListSousThemeComponent,
+		AddSousThemeComponent,
+		ShowSousThemeComponent,
 		ContratEditComponent,
 		ProgrammeComponent,
 		AddProgrammeComponent,
 		ListProgrammeComponent,
+		ListTableauBordComponent,
+		AddTableauBordComponent,
 		UpdtProgrammeComponent,
 		DetailleProgrammeComponent,
 		EBFormComponent,ContratFormComponent,
@@ -48,7 +79,7 @@ import { MarcheModule } from "../../marche/marche.module";
 		   AddProgrammeRetroplanningComponent,
 		   ShowProgrammeRetroplanningComponent
 	],
-	entryComponents: [
+	entryComponents: [TableauBordDialogComponent,ExportExcelDialogComponent,
 		NewPhaseComponent,
 		
 	  ],
@@ -111,6 +142,63 @@ import { MarcheModule } from "../../marche/marche.module";
 			{
 				path: "list-programme",
 				component: ListProgrammeComponent,
+			},
+
+			{
+				path: "add-tableau-bord",
+				component: AddTableauBordComponent,
+			},
+			{
+				path: "list-tableau-bord",
+				component: ListTableauBordComponent,
+			},
+			{
+				path: "add-nature",
+				component: AddNatureComponent,
+			},
+			{
+				path: "list-nature",
+				component: ListNatureComponent,
+			},
+			{
+				path: "show-nature",
+				component: ShowNatureComponent,
+			},
+			{
+				path: "add-arrondissement",
+				component: AddArrondissement1Component,
+			},
+			{
+				path: "list-arrondissement",
+				component: ListArrondissementComponent,
+			},
+			{
+				path: "show-arrondissement",
+				component: ShowArrondissementComponent,
+			},
+			{
+				path: "add-theme",
+				component: AddThemeComponent,
+			},
+			{
+				path: "list-theme",
+				component: ListThemeComponent,
+			},
+			{
+				path: "show-theme",
+				component: ShowThemeComponent,
+			},
+			{
+				path: "add-sous-theme",
+				component: AddSousThemeComponent,
+			},
+			{
+				path: "list-sous-theme",
+				component: ListSousThemeComponent,
+			},
+			{
+				path: "show-sous-theme",
+				component: ShowSousThemeComponent,
 			},
 			{
 				path: "updt-programme",

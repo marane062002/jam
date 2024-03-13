@@ -93,9 +93,10 @@ export const locale = {
 			AJOUTER_BESION_BC_LISTE: "Ajouter besoin pour consultation des bons de commandes",
 			AJOUTER_BESION_CONTRAT_LISTE: "Ajouter besoin pour consultation des contrats de droit public",
 			// programme: "Planification",
-			listProgramme: "Planifications",
+			listProgramme: "PAC",
 			// addProgramme: "Ajouter Projet",
 			statistiqueProgramme: "Statistiques des projets",
+			statistiqueConvention: "Statistiques des conventions",
 			retroplanning: "Rétroplanning",
 			/* pp: "liste des  parties prenantes",
 			PP: "liste des  parties prenantes",
@@ -396,6 +397,9 @@ export const locale = {
 			PROMOTION: "Promotion",
 			RETRAITE: "Retraite",
 
+
+
+
 			PERSONNEL_PERMANENT: "Personnel Permanent",
 			PERSONNEL_SAISONNIER: "Personnel Saisonnier",
 
@@ -429,7 +433,13 @@ export const locale = {
 			GESTION_ESPECES: "Gestion des Espèces",
 			GESTION_ARRETES_FISCALES: "Gestion des Arrêtés Fiscales",
 			vignette: "Vignette",
-
+			//Demandes added by saad 26/02/2024
+			DEMANDE: {
+				DEMANDES: "Demandes",
+				LISTE_DEMANDES: "List des demandes des licenses",
+				LISTE_DEMANDES_FINANCIERES: "Liste des demandes de soutien financières",
+				LISTE_DEMANDES_LOGISTIQUES: "Liste des demandes de soutien logistique",
+			},
 			// STATISTIQUES
 			STATS: {
 				ass: "association",
@@ -627,6 +637,76 @@ export const locale = {
 				NBRPROJECT: "Nombre des projets",
 				nomprojet: "Nom de projet",
 				NOM_ASSO: "Nom de l'association",
+			},
+			//added by saad le 26/02/2024
+			DEMANDE: {
+				uniqueCode: "code unique",
+				submissionDate: "date de soumission",
+				status: "statut",
+				prioriter: "Numéro de priorité",
+				licenseType: "Type de licence",
+				dateOrganisation: "Date d'organisation",
+				typeActivite: "Type d'activité",
+				association: "Association",
+				action: "actions",
+				CHANGE_STATUS: "changer le status",
+				cancel: "Annuler",
+				Accept: "Accepter",
+				REFUSE: "Refuser",
+				ENCOURS: "En cours",
+				TITRE_SHOW: "INFORMATIONS Demande",
+				UPLOAD_FILE: "importer le fichier",
+				ENVOYER: "Envoyer",
+				UPDATE: "le fichier uploader",
+				ATTACHEMENT: "Pièces jointes envoyées par l'association",
+				ATTACHEMENT_2: "Licenses envoyées",
+				//financier
+				nomProjet: "le nom de projet",
+				typeProjet: "le type de projet",
+				communeActivite: "commune d'activité",
+				lieuRealisation: "le lieu de réalisation",
+
+				montantTotalProjet: "le montant total du projet",
+				partenairesProjet: "les partenaires du projet",
+				montantContributionPartenaires: "le montant de contribution des partenaires",
+				montantContributionAssociation: "le montant de contribution de l'association",
+				montantSupportCommuneAnneePrecedente: "le montant de support de la commune de l'année précédente",
+
+				dureeProjetMois: "la durée du projet en mois",
+				montantSupportDemande: "le montant de support demandé",
+				communeActivity: "commune d'activité",
+				//logistique
+				eventName: "le nom de l'événement",
+				projectLocation: "le lieu de réalisation",
+				partenaires: "les partenaires",
+				partenairesContributionType: "le type de contribution des partenaires",
+				liste_besoins: "liste des besoins",
+				programDescription: "description du programme",
+				partnersContributionType: "le type de contribution des partenaires",
+
+				TITRE_DEMANDE_LOGISTIQUE: "Les Demandes de soutien logistique",
+				TITRE_DEMANDE_FINANCIER: "Les Demandes de soutien financier",
+				TITRE_DEMANDE_LICENSE: "Les Demandes de licenses",
+
+
+				PMSOURCE: "INFORMATIONS PMSOURCE",
+				PMNOM: "NOM",
+				RC: "RC",
+				IDENTIFIANT_FISCAL: "Identifiant fiscal",
+				NUMERO_PATENTE: "numero de patente",
+				ADRESSE: "Adresse",
+				TELE_FIXE: "Tele fixe",
+				TELE_GSM: "Tele GSM",
+				CONTACT: "contact",
+				EMAIL: "email",
+				SITE_WEB: "site web",
+				FAX: "fax",
+				VILLE_REGISTRE_COMMERCE: "ville registre commerce",
+				PERSONNE_MORALE_PRIVE: "societe privé",
+				ASSOCIATION: "Association",
+				PERSONNE_MORALE: "Organisme public",
+
+
 			},
 			SUBVENTION: {
 				NOM_FESTIVALE: "Nom d'évènement",
@@ -865,12 +945,15 @@ export const locale = {
 				ORGANISME: "Organisme",
 			},
 			PROGRAMME: {
+				COUTP: 'Coût prévisionnel de 6 ans',
 				PIECE_JOINTE: "Piéce jointe",
 				FICHE_PROJET: "Fiche de projet",
 				ANNEE_FIN: "Année fin",
 				ANNEE_DEBUT: "Année début",
 				DATE_DEBUT: "Date début",
 				DATE_FIN: "Date fin",
+				DATE_PREVISIONNEL_DEBUT: "Date début prévisionnel",
+				DATE_PREVISIONNEL_FIN: "Date fin prévisionnel",
 				ANNEE: "Année",
 				ORIENTATIONS_STRATEGIQUES: "Orientations stratégiques",
 				ORIENTATIONS_STRATEGIQUES_ARABE: "Orientations stratégiques en arabe",
@@ -920,7 +1003,19 @@ export const locale = {
 				AUCUNE_CONVENTION: "Aucune convention",
 				SAVE: "Enregistrer",
 				CONTRIBUTION_COMUNE: "Contribution de la commune",
+				CONTRIBUTION_COMUNE_PREMIERE_ANNE: "Contribution de la commune 1ere année",
+				CONTRIBUTION_COMUNE_DEUXIEME_ANNE: "Contribution de la commune 2eme année",
+				CONTRIBUTION_COMUNE_TROISIEME_ANNE: "Contribution de la commune 3eme année",
+				CONTRIBUTION_COMMUNE_TROIS_ANNEE: "Contributon de la commune (Les trois années)",
+				CONTRIBUTION_PARTENAIRE_TROIS_ANNEE: "Contribution des partenaires (les trois années)",
+				CONTRIBUTION_GLOBAL_TROIS_PREMIERE_ANNEE: "Contribution globale pour les trois premières années",
+				CONTRIBUTION_GLOBAL_TROIS_DERNIERE_ANNEE: "Contribution globale pour les trois derniéres années",
+				TOTAL_CONTRIBUTION_COMUNE_PREMIERE_ANNE: "Total de contribution 1ere année",
+				TOTAL_CONTRIBUTION_COMUNE_DEUXIEME_ANNE: "Total de contribution 2eme année",
+				TOTAL_CONTRIBUTION_COMUNE_TROISIEME_ANNE: "Total de contribution 3eme année",
 				CONTRIBUTION_PARTENAIRES: "Contribution des partenaires",
+				MONTANT_DISPO_COMMUNE_TROIS_PREMIERE_ANNEE: "Montant disponible pour la commune:les trois premières années",
+				MONTANT_INDISPO_COMMUNE: "Montant indisponible pour la commune",
 				RECHERCHER: "Rechercher",
 				REINITIALISER: "Réinitialiser",
 				AJOUTER: "Ajouter",
@@ -937,6 +1032,7 @@ export const locale = {
 				ANNULE: "Annulé",
 				EN_COURS: "En cours",
 				ACHEVES: "Achevé",
+				EN: "en ",
 				EN_ARRET: "En arrêt",
 				COUT_TOTAL: "Coût total",
 				CODE_AXE: "Code de l'axe",
@@ -975,6 +1071,7 @@ export const locale = {
 					NOMBRE_PROJET: "Nombre de projets",
 				},
 				STATISTIQUE: {
+					DOWNLOAD: "Télécharger",
 					ORIENTATION1: "Orientation 1",
 					ORIENTATION2: "Orientation 2",
 					ORIENTATION3: "Orientation 3",
@@ -1843,6 +1940,7 @@ export const locale = {
 				NOM_HABITATION: "Nom de l'habitation",
 				ORIGINE_PATRIMOINE: "Origine du patrimoine",
 				nature_Patrimoine: "Genre du patrimoine",
+				TYPE_PROPRIETE: "Type de proprièté",
 				SOUS_ORIGINE_PATRIMOINE: "Sous origine du patrimoine",
 				SUPERFICIE: "Superficie",
 				PROJET_SHOW: "Informations du projet",
@@ -2397,6 +2495,11 @@ export const locale = {
 				PJ_LIST_MMBR_BUREAU: "Liste des membre bureau",
 			},
 			CONVENTION: {
+				ETAT_CONVENTION: 'Etat du convention',
+				EN_COURS_PREPARATION: 'En cours de préparation',
+				EN_COURS_SIGNATURE: 'En cours de signature',
+				SIGNER: "Signer",
+				ACHEVER: 'Achever',
 				RAPPORT_LITTERALE: "Rapport moral",
 				RAPPORT_FINANCIER: "Rapport financier",
 				RAPPORT_COMMISION: "Rapport du comité de suivi",
@@ -2435,6 +2538,9 @@ export const locale = {
 				AJOUT_CONVENTION: "Ajouter une convention",
 				OBJET_ARABE: "Objet en arabe",
 				DATE: "Date",
+				DATE_BO: "Date Bo",
+				DATE_DEBUT: "Date début",
+				DATE_ACHEVEMENT: "Date achèvement",
 				DUREE: "Durée (Mois)",
 				MONTANT: "Montant (DH)",
 				LISTE_CONVENTIONS: "Liste des conventions",
@@ -2836,6 +2942,7 @@ export const locale = {
 				POSITION: "Position",
 				COURRIERS_TRAITES: "Courriers traités",
 				COURRIERS_NON_TRAITES: "Courriers non traités",
+				COURRIERS_CLOTURER: "Courriers cloturer",
 				PERFORMANCE: "Performance",
 				TEMPS_MOYEN_TRAITEMENT_COURRIER: "Temps moyen de traitement du courrier",
 				TAUX_TRAITEMENT_COURRIERS: "Taux de traitement des courriers",
@@ -3021,7 +3128,7 @@ export const locale = {
 
 			// ************** EX Naima ****************
 			MARCHE: {
-				
+
 				MARCHE: {
 					EDITER_CONSULTATION_ARCHITECTURALE: "Editer une consultation architecturale",
 					TITRE_INDEX: "Liste des marchés",
@@ -3254,6 +3361,12 @@ export const locale = {
 					DISPONIBITE_FONDS: "Disponibilité des fonds",
 					MONTANT: "Montant",
 				},
+				POURCENTAGE_OFFRE_FINANCIERE: {
+					POURCENTAGE_OFFRE_FINANCIERE: "Pourcentages de l'offre financière",
+					POURCENTAGE_1: "Pourcentage 1",
+					POURCENTAGE_2: "Pourcentage 2",
+					CATEGORIE: "Catégorie",
+				},
 				convention: {
 					SuiviConstribution: {
 						date: "Date",
@@ -3276,6 +3389,8 @@ export const locale = {
 						MAGASIN: "Magasins",
 						SEANCE: "Séances",
 					},
+					FILTER_BY_NUMERO_MAGASIN: "Rechercher par numéro de magasin",
+					FILTER_BY_NUMERO_SEANCE: "Rechercher par numéro de séance",
 					TITRE_NEW: "Ajouter",
 					autorisation: "autorisation",
 					nom: "nom",
@@ -4038,6 +4153,7 @@ export const locale = {
 					prixEstimatif: "prix Estimatif",
 					TITRE_INDEX: "Liste bordereau de prix",
 					TITRE_NEW: "Nouveau bordereau de prix",
+					// EXPORT_EXCEL: "Exporter ",
 					TITRE_DELETE: "",
 					RESUME_BP: "Tableau de bordereau de prix",
 					NUM_PRIX: "N° prix",
@@ -4052,7 +4168,7 @@ export const locale = {
 					TOTAL_TTC: "Total TTC",
 					TOTAL_BP: "Total bordereau de prix",
 				},
-			
+
 				VISITE: {
 					DATE_VISITE: "Date de la visite",
 					LIEU_VISITE: "Lieux de la visite",
@@ -4122,6 +4238,7 @@ export const locale = {
 					ICE: "iCE",
 					IF: "IF",
 					NUM_RC: "N° RC",
+					PRIX_REFERENCE: "Prix de référence",
 				},
 				ECHANTILLONS: {
 					ADRESSE: "Adresse d'échantillon",
@@ -4142,6 +4259,40 @@ export const locale = {
 					EXEMPLAIRE: "Exemplaire",
 				},
 			},
+			DEL_SDL: {
+				ADD_DELEGATAIRE: "Ajouter un délégataire",
+				ADD_SDL: "Ajouter une Société de développement local (SDL) ",
+				UPD_DELEGATAIRE: "Modifier un délégataire",
+				UPD_SDL: "Modifier une Société de développement local (SDL)",
+				DETAILL_DELEGATAIRE: "Détail d'un délégataire",
+				DETAILL_SDL: "Détail d'une Société de développement local (SDL)",
+				LIST_DELEGATAIRE: "Liste des délégataires",
+				LIST_SDL: "Liste des Sociétés de développement local (SDL)",
+				LIST_STRUCTURE_DELEGATAIRE: "Liste des structures délégataires",
+				LIST_TYPE_INDIC_DELEGATAIRE: "Liste des types d'indicateurs délégataires",
+				LIST_STRUCTURE_SDL: "Liste des structures sociétés de développement local (SDL)",
+				LIST_TYPE_INDIC_SDL: "Liste des types d'indicateurs sociétés de développement local (SDL)",
+				LIBELLE: "Libellé",
+				DESCRIPTION: "Description",
+				RS: "Raison sociale",
+				RC: "Raison commerciale",
+				IF: "Identifiant fiscal",
+				ICE: "Identifiant commun de l'entreprise",
+				NUM_CNSS: "Numéro CNSS",
+				ADRESSE: "Adresse",
+				TEL: "N° Téléphone",
+				FAX: "N° FAX",
+				EMAIL: "Email",
+				GERANT: "Gérant",
+				STRUCTURE: "Structure",
+				TYPE_INDIC: "Type d'indicateur",
+				CAPITAL: "Capital",
+				ACTIONS: "Actions",
+				SEC_ACTIVITE: "Secteur d'activité",
+				STATUT: "Statut",
+				MODEL_J: "Modèle J",
+				SELECT_FICHIER: "Sélectionner un fichier",
+			}
 		},
 	},
 };

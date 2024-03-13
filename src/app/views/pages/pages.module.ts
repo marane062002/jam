@@ -33,6 +33,9 @@ import { ListFourgonObstacleComponent } from './medecin-legale-bmh/list-fourgon-
 import { AddFourgonObstacleComponent } from './medecin-legale-bmh/add-fourgon-obstacle/add-fourgon-obstacle.component';
 import { UpdateFourgonObstacleComponent } from './medecin-legale-bmh/update-fourgon-obstacle/update-fourgon-obstacle.component';
 import { DetailsFourgonObstacleComponent } from './medecin-legale-bmh/details-fourgon-obstacle/details-fourgon-obstacle.component';
+import { PopupComponent } from './medecin-legale-bmh/details-obstacles/popup/popup.component';
+import { PopupDecesComponent } from './medecin-legale-bmh/details-deces-naturel/popup-deces/popup-deces.component';
+
 
 
 // import { VaccinationComponent } from './vaccination/vaccination.component';
@@ -75,6 +78,6 @@ import { DetailsFourgonObstacleComponent } from './medecin-legale-bmh/details-fo
 					CustomPaginationComponent, 
 					SpinnerViewComponent, 
 					StockComponent, 
-					ParcComponent, ListFourgonObstacleComponent, AddFourgonObstacleComponent, UpdateFourgonObstacleComponent, DetailsFourgonObstacleComponent]
+					ParcComponent, ListFourgonObstacleComponent, AddFourgonObstacleComponent, UpdateFourgonObstacleComponent, DetailsFourgonObstacleComponent, PopupComponent, PopupDecesComponent]
 })
 export class PagesModule {}

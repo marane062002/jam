@@ -84,7 +84,7 @@
 			</th>
 
 			<td mat-cell *matCellDef="let row" class="Date">
-				{{ row.date }}
+				{{ formatDate(row.date) }}
 			</td>
 		</ng-container>
 		<ng-container matColumnDef="Agent">

@@ -28,6 +28,20 @@ const routes: Routes = [
 
 				loadChildren: () => import("./views/pages/gestion-stocks/gestion-stock.module").then((m) => m.GestionStockModule),
 			},
+			// {
+			// 	path: "flotte",
+			// 	loadChildren: () =>
+			// 		import("./views/pages/delegitaire/delegitaire.Module").then(
+			// 			(m) => m.DelegitairesModule
+			// 		),
+			// },
+			{
+				path: "gsmLan",
+				loadChildren: () =>
+					import("././views/pages/gsm-lan/gsm-lan.module").then(
+						(m) => m.GsmLanModule
+					),
+			},
 			{
 				path: "pesee",
 
@@ -256,6 +270,11 @@ const routes: Routes = [
 				path: "associations",
 				loadChildren: () => import("./views/pages/associations/associations.module").then((m) => m.AssociationsModule),
 			},
+			//added by saad le 26/02/2024
+			{
+				path: "demandes",
+				loadChildren: () => import("./views/pages/demandes/demandes.module").then((m) => m.DemandesModule),
+			},
 			{
 				path: "subventions",
 				loadChildren: () => import("./views/pages/subventions/subventions/subventions.module").then((m) => m.SubventionsModule),
@@ -386,6 +405,85 @@ const routes: Routes = [
 				//component:CourriersEntrantsComponent,
 				loadChildren: () => import("./views/pages/sortie/sortie.module").then((m) => m.SortieModule),
 			},
+			{
+				path: "delegataire",
+				//component:CourriersEntrantsComponent,
+				loadChildren: () => import("./views/pages/delegataire/delegataire.Module").then((m) => m.DelegatairesModule),
+			},
+			{
+				path: "parametrage-sdl",
+				//component:CourriersEntrantsComponent,
+				loadChildren: () => import("./views/pages/parametrages-sdl-delegataire/parametrages-sdl-delegataire.Module").then((m) => m.ParametragesSdlDelegataireModule),
+			},
+			{
+				path: "pages",
+				// component: BaseComponent,
+				children: [
+					{
+						path: "proprete-personnel",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-personnel/proprete-personnel.module"
+							).then((m) => m.PropretePersonnelModule),
+					},
+					{
+						path: "proprete-flotte",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-flotte/proprete-flotte.module"
+							).then((m) => m.PropreteFlotteModule),
+					},
+					{
+						path: "proprete-circuit",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-circuit/proprete-circuit.module"
+							).then((m) => m.PropreteCircuitModule),
+					},
+					{
+						path: "proprete-maintenance",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-maintenance/proprete-maintenance.module"
+							).then((m) => m.PropreteMaintenanceModule),
+					},
+					{
+						path: "proprete-regroupement",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-regroupement/proprete-regroupement.module"
+							).then((m) => m.PropreteRegroupementModule),
+					},
+					{
+						path: "proprete-transfert",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-transfert/proprete-transfert.module"
+							).then((m) => m.PropreteTransfertModule),
+					},
+					{
+						path: "proprete-decharge",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-decharge/proprete-decharge.module"
+							).then((m) => m.PropreteDechargeModule),
+					},
+					{
+						path: "proprete-reclamations-penalites",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-reclamations-penalites/proprete-reclamations-penalites.module"
+							).then((m) => m.PropreteReclamationsPenalitesModule),
+					},
+					{
+						path: "proprete-contrats",
+						loadChildren: () =>
+							import("./views/pages/proprete/proprete-contrats/proprete-contrats.module"
+							).then((m) => m.PropreteContratsModule),
+					},
+					{
+						path: "statistiques",
+						loadChildren: () =>
+							import(
+								"./views/pages/proprete/statistiques/statistiques.module"
+							).then((m) => m.StatistiquesModule),
+					},
+		
+				],
+			},
+		
 			{
 				path: "statistiques",
 				//component:CourriersEntrantsComponent,

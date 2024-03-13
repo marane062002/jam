@@ -1,0 +1,147 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+  			     <i class="fas fa-list-ul kt-font-inverse-brand"></i>
+			</span>
+			<h2 class="kt-portlet__head-title">
+				Liste des suivis des Sdls :
+			</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<a
+						href="javascript:; "
+						(click)="addSuiviSdl()"
+						class="btn btn-outline-success btn-elevate btn-icon-sm"
+					>
+						<i class="la la-plus"></i> Ajouter
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="example-header col-md-4">
+		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
+		>&nbsp;
+		<mat-form-field>
+			<input
+				matInput
+				(keyup)="applyFilter($event.target.value)"
+				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
+			/>
+		</mat-form-field>
+	</div>
+	<table
+		ID="exportData"
+		mat-table
+		[dataSource]="dataSource"
+		class="mat-elevation-z8"
+		matSort
+	>
+		<ng-container matColumnDef="id">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Réf.</th>
+			<td mat-cell *matCellDef="let row" class="num">{{ row.id }}</td>
+		</ng-container>
+		<ng-container matColumnDef="typeIndicateur">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Type d'indicateur
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">
+				{{ row.typeIndicateurSdl.libelle }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="nom">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Nom
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">
+				{{ row.nom }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="description">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Description
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">
+				{{ row.description }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="dateValeur">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				Date de Valeur
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">
+				{{ row.dateDeValeur }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="valeurContractuel">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				valeur Contractuel
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">
+				{{ row.valeurContractuel }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="valeurConstate">
+			<th colspan="1" mat-header-cell *matHeaderCellDef mat-sort-header>
+				valeur Constate
+			</th>
+			<td colspan="1" mat-cell *matCellDef="let row">
+				{{ row.valeurConstate }}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="actions">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				class="action"
+			>
+				Actions
+			</th>
+			<td mat-cell *matCellDef="let row" class="actionsBtn action">
+				<button
+					type="button"
+					(click)="updateSuiviSdl(row.id)"
+					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
+					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"
+				>
+					<i class="icon la la-edit"></i>
+				</button>
+				<button
+					type="button"
+					(click)="deleteSuiviSdl(row.id)"
+					class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
+					matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"
+				>
+					<i class="icon la la-trash"></i>
+				</button>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		<!-- footer data -->
+	</table>
+	<div
+		*ngIf="dataSource.data.length == 0 && isLoading == false"
+		style="
+			display: flex;
+			justify-content: center;
+			padding: 2%;
+			color: orangered;
+		"
+	></div>
+	<mat-paginator
+	*ngIf="dataSource != undefined && dataSource.data != undefined"
+	[length]="totalRecords"
+	[pageSize]="pageSize"
+	[pageIndex]="currentPage"
+	(page)="onPaginatorChange($event)"
+	[pageSizeOptions]="pageSizeOptions"
+	[showFirstLastButtons]="true"
+  ></mat-paginator>
+	<hr />
+</div>

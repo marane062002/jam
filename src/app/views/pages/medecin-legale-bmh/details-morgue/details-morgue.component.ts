@@ -39,7 +39,7 @@ export class DetailsMorgueComponent implements OnInit {
     await this.httpClient.get(`${this.AlfresscoURL}/bmh-morgue/index/${ide}`)
     .subscribe(
         (data:any) => {
-          // debugger
+          // 
             this.dataSource2 = new MatTableDataSource(data);
         },
         (error) => console.log(error)

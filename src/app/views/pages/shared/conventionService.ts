@@ -32,6 +32,9 @@ export class ConventionMarcheService {
 		const url = `${this.baseUrl}searchByPartiePreneursAndMontantRange?partiePreneurIds=${partiePreneurIds.join(',')}&minMontant=${minMontant}&maxMontant=${maxMontant}`;
 		return this.http.get(url);
 	  }
+	  research(page, size, searchDto: any) {
+		return this.http.post<any[]>(this.baseUrl + "?page=" + page + "&size=" + size, searchDto);
+	}
 	downoldFile(alfresco_id){
 	 	const options = {
 			
@@ -53,8 +56,15 @@ export class ConventionMarcheService {
 	all(){
 		return this.http.get<any[]>(this.baseUrl+"all");
 	}
+	Page(pageIndex,pageSize){
+		return this.http.get<any[]>(this.baseUrl+"all-page?page=" + pageIndex + "&size=" + pageSize);
+	}
     findById(id:number){
 		return this.http.get<any[]>(this.baseUrl+"details/"+id);
+	}
+	deletePj(id){
+		return this.http.delete<any>(this.baseUrl1 + "/" + id);
+	
 	}
 	delete(id){
 		return this.http.delete(this.baseUrl+"delete/"+id,{responseType: 'text' as 'json'});

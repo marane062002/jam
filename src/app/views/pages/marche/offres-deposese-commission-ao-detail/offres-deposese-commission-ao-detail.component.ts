@@ -65,6 +65,7 @@ export class OffresDeposeseCommissionAoDetailComponent implements OnInit {
 			this.idtypeCommission = params["typecommission"];
 			console.log(this.idtypeCommission);
 		});
+		
 		this.getOffres();
 		/* */
 	}
@@ -73,10 +74,9 @@ export class OffresDeposeseCommissionAoDetailComponent implements OnInit {
 	// =================================================================
 	async getOffres() {
 		const _this = this;
-		if (this.idtypeCommission == 1) {
 			await this.service
-				.getAllOffreDeposeeEvalAdmin(this.idao)
-				.subscribe((data) => {
+			.findByStatut_IdAndAo_Id(1,this.idao)
+			.subscribe((data) => {
 					_this.dataSize = data.length;
 					this.isLoading = false;
 					this.dataSource = new MatTableDataSource(data);
@@ -85,61 +85,7 @@ export class OffresDeposeseCommissionAoDetailComponent implements OnInit {
 					console.log(err);
 					this.isLoading = false;
 				  });
-		}
-		if (this.idtypeCommission == 2) {
-			await this.service
-				.getAllOffreDeposeeEvalAdmin(this.idao)
-				.subscribe((data2) => {
-					// console.log("dataSourceODEvAdmin :::: " + JSON.stringify(data, null, 4));
-					_this.dataSize2 = data2.length;
-					this.isLoading2 = false;
-					this.dataSourceODEvAdmin = new MatTableDataSource(data2);
-				}, (err) => {
-					_this.dataSize2 = 0;
-					console.log(err);
-					this.isLoading2 = false;
-				  });
-		}
-		if (this.idtypeCommission == 3) {
-			await this.service
-				.getAllOffreDeposeeEvalTechnique(this.idao)
-				.subscribe((data3) => {
-					// console.log("Technique :::: " + JSON.stringify(data, null, 4));
-					_this.dataSize3 = data3.length;
-					this.isLoading3 = false;
-					this.dataSourceODEvTechnique = new MatTableDataSource(data3);
-				}, (err) => {
-					_this.dataSize3 = 0;
-					console.log(err);
-					this.isLoading3 = false;
-				  });
-		}
-		if (this.idtypeCommission == 4) {
-			await this.service
-				.getAllOffreDeposeeEvalFinanciere(this.idao)
-				.subscribe((data4) => {
-					_this.dataSize4 = data4.length;
-					this.isLoading4 = false;
-					this.dataSourceODEvFinanciere = new MatTableDataSource(data4);
-				}, (err) => {
-					_this.dataSize4 = 0;
-					console.log(err);
-					this.isLoading4 = false;
-				  });
-		}
-		if (this.idtypeCommission == 5) {
-			this.service
-				.getAllOffreDeposeeEvalFinale(this.idao)
-				.subscribe((data5) => {
-					// console.log(data);
-					_this.dataSize5 = data5.length;
-					this.isLoading5 = false;
-					this.dataSourceODEvFinale = new MatTableDataSource(data5);
-				}, (err) => {
-					_this.dataSize5 = 0;
-					console.log(err);
-					this.isLoading5 = false;
-				  });
-		}
+		
+	
 	}
 }

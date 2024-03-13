@@ -1,0 +1,37 @@
+<div class="kt-portlet__body">
+	<!-- Start :: Expansion panel -->
+	<mat-accordion class="example-headers-align panel-space" multi>
+		<mat-expansion-panel [expanded]="true">
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>info</mat-icon>&nbsp;Détails du theme
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<table class="table pj" width="100%">
+				<tbody>
+					<tr>
+						<th>Libellé arabe :</th>
+						<td class="donnee_show">
+							<span>{{ theme?.libelleArab? theme?.libelleArab:'-'}}</span>
+						</td>
+						<th>Libellé Français :</th>
+						<td class="donnee_show">
+							<span>{{ theme?.libelleFrancais?theme?.libelleFrancais:'-' }}</span>
+						</td>
+				
+					</tr>
+					<tr>
+						<th>Nature :</th>
+						<td class="donnee_show">
+							<span *ngIf="checkLang=='fr'">{{ theme?.nature?.libelleFrancais?theme?.nature?.libelleFrancais:'-' }}</span>
+							<span *ngIf="checkLang=='ar'">{{ theme?.nature?.libelleArab?theme?.nature?.libelleArab:'-' }}</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</mat-expansion-panel>
+		
+
+
+	</mat-accordion>
+</div>

@@ -157,12 +157,22 @@ export class PatrimoineEditComponent implements OnInit {
 			categorieMeubles: [null],
 			statutMarche: [null],
 			modificateurUser: [window.localStorage.getItem("fullnameUser")],
+			typePropriete: [null],
+			typeProprieteLibre: [null]
 		})
 
 
 		this.service.getPatrimoineById(this.id).subscribe((data) => {
 			console.log(data)
 			this.patrimoineForm.patchValue(data[0]);
+			this.selectedTypePropriete(data[0].typePropriete);
+			if (data[0].typePropriete != 'عمليات عقارية' && data[0].typePropriete != 'تدبيرالممتلكات' && data[0].typePropriete != 'تحفيظ') {
+				this.isSelectedAutre = true;
+				this.patrimoineForm.patchValue({
+					typeProprieteLibre: data[0].typePropriete,
+					typePropriete: 'Autre'
+				});
+			}
 			this.typesEspaceVert = data[0].categorieMeubles;
 			if (data[0].dateInscription != null)
 				this.patrimoineForm.controls["dateInscription"].patchValue(
@@ -241,6 +251,17 @@ export class PatrimoineEditComponent implements OnInit {
 			}
 		);
 	}
+
+	isSelectedAutre: boolean = false;
+	selectedTypePropriete(event: any) {
+		if (event == 'Autre') {
+			this.isSelectedAutre = true;
+		}
+		else {
+			this.isSelectedAutre = false;
+		}
+	}
+
 	compareObjects(o1: any, o2: any) {
 		return o1.id == o2.id;
 	}
@@ -291,6 +312,11 @@ export class PatrimoineEditComponent implements OnInit {
 	//
 	// ==================================================================
 	onSubmit() {
+		if (this.patrimoineForm.get('typeProprieteLibre').value != null) {
+			this.patrimoineForm.get('typePropriete').reset();
+			this.patrimoineForm.get('typePropriete').setValue(this.patrimoineForm.get('typeProprieteLibre').value);
+			this.patrimoineForm.get('typeProprieteLibre').reset();
+		  }
 		this.patrimoineForm
 			.get("modificateurUser")
 			.setValue(window.localStorage.getItem("fullnameUser"));

@@ -20,6 +20,7 @@ export class CommissionDetailComponent implements OnInit {
 	//
 	// ===========================================================
 	idcommission;
+	idao
 	commission = {
 		id: 0,
 		typeCommission: { id: 0, libelle: "" },
@@ -29,13 +30,24 @@ export class CommissionDetailComponent implements OnInit {
 	// ===========================================================
 	//
 	// ===========================================================
+	ao
 	ngOnInit() {
-		this.activatedRoute.queryParams.subscribe((params) => {
-			this.idcommission = params["id"];
-		});
+		 this.activatedRoute.queryParams.subscribe((params) => {
+			this.idcommission = params["idcomm"];
+			//  this.idao= params["id"];
+			
+		}); 
+
+		this.service.data$.subscribe(res=>this.idao=res);
+		this.service.getAoById(this.idao).subscribe((res)=>{
+			this.ao=res
+		})
 		this.service.getCommissionById(this.idcommission).subscribe((data) => {
 			console.log("Commission : "+ JSON.stringify(data,null,2));
 			this.commission = data;
+			
+			this.service.sendData(this.commission.id);
+
 		});
 	}
 	// ===========================================================
@@ -54,18 +66,47 @@ export class CommissionDetailComponent implements OnInit {
 	//
 	// ===========================================================
 	ShowPE() {
+		
+		this.idao;
+		
+		this.service.sendData(this.idao);
+		this.service.sendData(this.commission.id);
+
 		this.router.navigate(
-			["/marches/commission-detail/participants-externes"],
-			{ queryParams: { id: this.commission.id } }
+			["/marches/commission-detail/participants-externes"]
+		);
+	}
+	ShowPET() {
+		
+		this.idao;
+		
+		this.service.sendData(this.idao);
+		this.service.sendData(this.commission.id);
+
+		this.router.navigate(
+			["/marches/commission-detail/participants-externes-technique"]
 		);
 	}
 	// ===========================================================
 	//
 	// ===========================================================
 	ShowPI() {
+		this.idao
+		this.service.sendData(this.commission.id);
+
+		this.service.sendData(this.idao);
 		this.router.navigate(
-			["/marches/commission-detail/participants-internes"],
-			{ queryParams: { id: this.commission.id } }
+			["/marches/commission-detail/participants-internes"]
+		);
+	}
+
+	ShowPIT() {
+		this.idao
+		this.service.sendData(this.commission.id);
+
+		this.service.sendData(this.idao);
+		this.router.navigate(
+			["/marches/commission-detail/participants-internes-tehnique"]
 		);
 	}
 		// ==================================================================

@@ -22,17 +22,31 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <mat-form-field class="example-full-width">
-                                            <input matInput class="form-control" [matDatepicker]="picker2" name="dateCommission" [(ngModel)]="commission.dateOuveture" placeholder="{{ 'PAGES.MARCHE.COMMISSIONS.DATE_DEBUT' | translate }}:">
+                                            <label>{{ 'PAGES.MARCHE.COMMISSIONS.DATE_DEBUT' | translate }}:</label>
+                                            <input matInput class="form-control" [matDatepicker]="picker2" name="dateCommission" [(ngModel)]="commission.dateOuveture" >
                                             <mat-datepicker-toggle matSuffix [for]="picker2">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker touchUi="true" #picker2></mat-datepicker>
                                         </mat-form-field>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <label>Date prochaine séance:</label>
+
+                                            <input matInput class="form-control" [matDatepicker]="picker1" name="dateProchaineSeance" [(ngModel)]="dateProchaineSeance" >
+                                            <mat-datepicker-toggle matSuffix [for]="picker1">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker touchUi="true" #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                
                             </div>
 
                             <br>
-                            <div class="kt-portlet__foot">
+                            <!-- <div class="kt-portlet__foot">
                                 <div>
                                     <br>
                                     <div class="btn-group special" role="group" aria-label="Basic example">
@@ -42,10 +56,48 @@
                                             'PAGES.MARCHE.COMMISSIONS.MEMBRE_EXTERNE' | translate }}</button>
                                         <button type="button" (click)="ShowOffreDeposee()" class="btn btn-secondary">{{
                                             'PAGES.MARCHE.COMMISSIONS.OFFRE_PRESTATAIRE' | translate }}</button>
-                                        <!-- <button type="button" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.DOCUMENTS_ATTACHER' | translate }}</button> -->
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                            <mat-accordion>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Les membres de la commission
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="kt-portlet__foot">
+                                        <div>
+                                            <br>
+                                            <div class="btn-group special" role="group" aria-label="Basic example">
+                                                <button type="button" (click)="ShowPI()" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.MEMBRE_INTERNE' | translate }}</button>
+                                                <button type="button" (click)="ShowPE()" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.MEMBRE_EXTERNE' | translate }}</button>
+                                                <button type="button" (click)="ShowOffreDeposee()" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.OFFRE_PRESTATAIRE' | translate }}</button>
+                                                <!-- <button type="button" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.DOCUMENTS_ATTACHER' | translate }}</button> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel *ngIf="commission.typeCommission.id==2 && ao.offreTechnique==true">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Les membres de la commission technique
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="kt-portlet__foot">
+                                        <div>
+                                            <br>
+                                            <div class="btn-group special" role="group" aria-label="Basic example">
+                                                <button type="button" (click)="ShowPIT()" class="btn btn-secondary">Membre interne de la commission technique</button>
+                                                <button type="button" (click)="ShowPET()" class="btn btn-secondary">Membre externe de la commission technique</button>
+                                                <!-- <button type="button" (click)="ShowOffreDeposee()" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.OFFRE_PRESTATAIRE' | translate }}</button> -->
+                                                <!-- <button type="button" class="btn btn-secondary">{{ 'PAGES.MARCHE.COMMISSIONS.DOCUMENTS_ATTACHER' | translate }}</button> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                            
                         </div>
                     </div>
                 </div>

@@ -63,7 +63,7 @@ export class ListOrganismeComponent implements OnInit {
 			this.isLoadingResults = false;
     })
 		// this.httpClient.get<any[]>(`${this.baseUrl}enterrement/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-		// 	debugger
+		// 	
 		// 	this.enterement = response.content;
 		// 	this.dataSource.data = response.content;
 		// 	this.totalRecords = response.totalElements;

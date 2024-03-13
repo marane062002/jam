@@ -161,12 +161,13 @@ export class ShowAssociationComponent implements OnInit {
 	// =================================================================
 	// Download file from server
 	// =================================================================
-	onClickPjName(e, id) {
-		//console.log("You clicked: " + e);
+	onClickPjName(a, e, id) {
 		var r = e.substring(0, e.length - 4);
 		console.log(r);
-		window.open(environment.API_ALFRESCO_URL + "/PjAssociation/" + r);
+		this.service.downoldFile(r, a);
 	}
+
+
 	// =================================================================
 	// back to list
 	// =====================================

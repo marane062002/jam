@@ -112,7 +112,7 @@ Interface
 		console.log("token", localStorage.getItem('accessToken'));
 
 		this.httpClient.get<any[]>(`${this.baseUrl}entrObstacle/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// debugger
+			// 
 			// this.obstacle = response.content;
 			this.dataSource.data = response.content;
 			this.totalRecords = response.totalElements;

@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { InterfaceStatus } from "../../parametrage-bmh/list-status/list-status.component";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder } from "@angular/forms";
 import { StatusService } from "../../parametrage-bmh/services/status.service";
 import { PrelevementService } from "../services/prelevement.service";
 import Swal from "sweetalert2";
-
+import { Location } from '@angular/common';
 @Component({
 	selector: "kt-add-prelevement",
 	templateUrl: "./add-prelevement.component.html",
@@ -14,25 +14,40 @@ import Swal from "sweetalert2";
 export class AddPrelevementComponent implements OnInit {
 	status: InterfaceStatus[] = [];
 	ajoutForm: any;
-	constructor(private router: Router, private formBuilder: FormBuilder, private statutService: StatusService, private service: PrelevementService) {}
+	id: any;
+	constructor(private location: Location, private route: ActivatedRoute,private router: Router, private formBuilder: FormBuilder, private statutService: StatusService, private service: PrelevementService) {}
 
 	ngOnInit() {
-		this.ajoutForm = this.formBuilder.group({
-			// id: [null], // Exemple de champ non modifiable
-			date: [""],
-			typeExamen: [""],
-			medecinOperant: [""],
-			status: [""],
-		});
+		this.route.params.subscribe((params) => {
+			this.id = +params['id']; 
+			// Initialize the form with the retrieved id
+			this.initializeForm();
+		  });
+
+	
 		this.statutService.getAll().subscribe((res) => {
 			this.status = res;
 			console.log(res);
 			console.log(this.status);
 		});
 	}
+	
+	initializeForm(): void {
+		this.ajoutForm = this.formBuilder.group({
+			date: [""],
+			typeExamen: [""],
+			medecinOperant: [""],
+			status: [""],
+			analyseTypes: [""],
+			obstacleDefunts: [{id:this.id}],
+		});
+	  }
 	RetourEmbalages() {
 		this.router.navigate(["/bmh1/list-prelevement"]);
 	}
+	goBack(): void {
+		this.location.back();
+	  }
 	ajouter() {
 		if (this.ajoutForm.valid) {
 			this.service.create(this.ajoutForm.value).subscribe(
@@ -44,7 +59,7 @@ export class AddPrelevementComponent implements OnInit {
 						icon: "success",
 						confirmButtonText: "OK",
 					}).then(() => {
-						this.RetourEmbalages();
+						this.goBack();
 						this.ngOnInit(); // Vous pouvez recharger les données si nécessaire ici
 					});
 				},

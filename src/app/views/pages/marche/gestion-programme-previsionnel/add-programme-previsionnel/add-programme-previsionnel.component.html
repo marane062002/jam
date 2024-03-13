@@ -11,11 +11,29 @@
 							<i class="fas fa-dolly-flatbed kt-font-inverse-brand"></i>
 						</span> -->
 						<h3 class="kt-portlet__head-title kt-font-inverse-brand">
-						Ajouter Programme prévisionnel				</h3>
+						Ajouter planning prévisionnel			</h3>
 					</div>
 				</div>
 				<div class="kt-portlet__body"> 
 					<div class="row">
+                        <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Objet du marché</label>
+                                    <input matInput  required type="text" class="form-control" name="objet" [(ngModel)]="formData.objet"  placeholder="" >
+                          
+								</mat-form-field>
+							</div>
+						</div>
+                        <div class="col-md-6">
+							<div class="form-group">
+								<mat-form-field class="example-full-width">
+									<label>Numero de référence</label>
+                                    <input matInput  required type="text" class="form-control" name="numRef" [(ngModel)]="formData.numRef"  placeholder="" >
+                               
+								</mat-form-field>
+							</div>
+						</div>
 						<div class="col-md-6">
                             <div class="form-group">
                                 <mat-form-field class="example-full-width">
@@ -28,57 +46,14 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-6" >
-                            <div class="form-group">
-                                <div class="input-group date">
-                                    <mat-form-field class="example-full-width">
-                                        <label > Date du projet :
-                                        </label>
-                                        <input required matInput class="form-control" (click)="picker1.open()" [(ngModel)]="formData.dateProjet" name="dateProjet" [matDatepicker]="picker1" />
-                                        <mat-hint>JJ/MM/AAAA</mat-hint>
-                                        <mat-datepicker-toggle matSuffix [for]="picker1">
-                                            <mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
-                                            </mat-icon>
-                                        </mat-datepicker-toggle>
-                                        <mat-datepicker touchUi="true" #picker1></mat-datepicker>
-                                    </mat-form-field>
-        
-                                </div>
-                            </div>
-                        </div>
-					
-                        <!-- <div class="col-md-6">
-							<div class="form-group">
-								<mat-form-field class="example-full-width">
-									<label>Sous Catégorie</label>
-                                    <mat-select class="form-control" name="sousTypePrestation" [(ngModel)]="formData.sousTypePrestation"  placeholder="">
-                                        <mat-option *ngFor="let item of listSousTypePrestationAo" value="{{item}}">
-                                            {{item}}</mat-option>
-                                    </mat-select>
-								</mat-form-field>
-							</div>
-						</div> -->
-                        <div class="col-md-6">
-							<div class="form-group">
-								<mat-form-field class="example-full-width">
-									<label>Objet du marché</label>
-                                    <input matInput  required type="text" class="form-control" name="objet" [(ngModel)]="formData.objet"  placeholder="" >
-                                    <!-- <mat-select class="form-control" name="typePrestAo" [(ngModel)]="formData.sousTypePrestation"  placeholder="">
-                                        <mat-option *ngFor="let item of listSousTypePrestationAo" value="{{item}}">
-                                            {{item}}</mat-option>
-                                    </mat-select> -->
-								</mat-form-field>
-							</div>
-						</div>
+                      
+                    
                         <div class="col-md-6">
 							<div class="form-group">
 								<mat-form-field class="example-full-width">
 									<label>Estimation</label>
                                     <input matInput  required type="number" class="form-control" name="estimation" [(ngModel)]="formData.estimation"  placeholder="" >
-                                    <!-- <mat-select class="form-control" name="typePrestAo" [(ngModel)]="formData.sousTypePrestation"  placeholder="">
-                                        <mat-option *ngFor="let item of listSousTypePrestationAo" value="{{item}}">
-                                            {{item}}</mat-option>
-                                    </mat-select> -->
+                               
 								</mat-form-field>
 							</div>
 						</div>
@@ -86,21 +61,7 @@
                       
                 
                       
-                        <div class="col-md-6" >
-							<div class="form-group">
-								<mat-form-field class="example-full-width">
-									<label>Période prévue pour le lancement</label>
-                                    <input required matInput   class="form-control" (click)="picker2.open()"  name="periodeLancement" [(ngModel)]="formData.periodeLancement"  [matDatepicker]="picker2" >
-                                    <mat-hint>JJ/MM/AAAA</mat-hint>
-                                    <mat-datepicker-toggle matSuffix [for]="picker2">
-                                        <mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
-                                        </mat-icon>
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker touchUi="true" #picker2></mat-datepicker>
-
-								</mat-form-field>
-							</div>
-						</div>
+                  
                    
                         <div class="col-md-6">
                             <div class="form-group">
@@ -146,13 +107,10 @@
                                     <mat-form-field class="example-full-width">
                                         <label>Date d'ouverture des plis:
                                         </label>
-                                        <input  matInput   class="form-control" (click)="picker3.open()"  name="dateOuverturePlis" [(ngModel)]="formData.dateOuverturePlis"  [matDatepicker]="picker3" >
-                                        <mat-hint>JJ/MM/AAAA</mat-hint>
-                                        <mat-datepicker-toggle matSuffix [for]="picker3">
-                                            <mat-icon matDatepickerToggleIcon><i class="fas fa-calendar-plus"></i>
-                                            </mat-icon>
-                                        </mat-datepicker-toggle>
-                                        <mat-datepicker touchUi="true" #picker3></mat-datepicker>
+                                        <input type="datetime-local" matInput   class="form-control"   name="dateOuverturePlis" [(ngModel)]="formData.dateOuverturePlis"   >
+                                        <!-- <mat-hint>JJ/MM/AAAA</mat-hint>
+                                     
+                                        <mat-datepicker touchUi="true" #picker3></mat-datepicker> -->
                                       
                                     </mat-form-field>
         
@@ -165,16 +123,19 @@
                                     <mat-form-field class="example-full-width">
                                         <label>Président de la commission
                                         </label>
-                                        <input matInput  required type="text" class="form-control" name="president" [(ngModel)]="formData.president"  placeholder="" >
+                                        <!-- <input matInput  required type="text" class="form-control" name="president" [(ngModel)]="formData.president"  placeholder="" > -->
 
-                                      
+                                        <mat-select required class="form-control" name="president" [(ngModel)]="formData.idPresident" placeholder="" >
+                                            <mat-option *ngFor="let item of President" value="{{item.id}}">
+                                                {{item.fullname}}</mat-option>
+                                        </mat-select>
                                     </mat-form-field>
         
                                 </div>
                             </div>
                         </div>
                    
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
 
                         <div class="form-group">
                             <div class="input-group date">
@@ -186,44 +147,19 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        </div>
-                        <div class="col-md-6" *ngIf="isFournitures==true">
-							<div class="form-group">
-								<mat-form-field class="example-full-width">
-									<label>Quantité :</label>
-                                    <input matInput   type="number" class="form-control" name="quantite" [(ngModel)]="formData.quantite"  placeholder="" >
-                                    <!-- <mat-select class="form-control" name="typePrestAo" [(ngModel)]="formData.sousTypePrestation"  placeholder="">
-                                        <mat-option *ngFor="let item of listSousTypePrestationAo" value="{{item}}">
-                                            {{item}}</mat-option>
-                                    </mat-select> -->
-								</mat-form-field>
-							</div>
-						</div>
-                        <div class="col-md-6" *ngIf="isTravaux==true ||  isServices==true">
+                        </div> -->
+                      
+                        <!-- <div class="col-md-6" *ngIf="isTravaux==true ||  isServices==true">
 							<div class="form-group">
 								<mat-form-field class="example-full-width">
 									<label>Lieu d'execution</label>
                                     <input matInput   type="text" class="form-control" name="lieuExecution" [(ngModel)]="formData.lieuExecution"  placeholder="" >
-                                    <!-- <mat-select class="form-control" name="typePrestAo" [(ngModel)]="formData.sousTypePrestation"  placeholder="">
-                                        <mat-option *ngFor="let item of listSousTypePrestationAo" value="{{item}}">
-                                            {{item}}</mat-option>
-                                    </mat-select> -->
+                                    
 								</mat-form-field>
 							</div>
-						</div>
+						</div> -->
 
-                        <div class="col-md-6" *ngIf="isFournitures==true">
-							<div class="form-group">
-								<mat-form-field class="example-full-width">
-									<label>Lieu de Livraison</label>
-                                    <input matInput   type="text" class="form-control" name="lieuLivraison" [(ngModel)]="formData.lieuLivraison"  placeholder="" >
-                                    <!-- <mat-select class="form-control" name="typePrestAo" [(ngModel)]="formData.sousTypePrestation"  placeholder="">
-                                        <mat-option *ngFor="let item of listSousTypePrestationAo" value="{{item}}">
-                                            {{item}}</mat-option>
-                                    </mat-select> -->
-								</mat-form-field>
-							</div>
-						</div>
+                    
                     </div>
 				</div> 
 			</div>

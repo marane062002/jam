@@ -37,7 +37,7 @@ export class DeatilsFourgonComponent implements OnInit {
         await this.httpClient.get(`${this.AlfresscoURL}/bmh-fourgon/index/${ide}`)
 		.subscribe(
             (data:any) => {
-				// debugger
+				// 
                 this.dataSource2 = new MatTableDataSource(data);
             },
             (error) => console.log(error)

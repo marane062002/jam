@@ -42,7 +42,8 @@ export class AddObstaclesComponent implements OnInit {
 	pcfileDeclar : File;
 	labelDeclar: any;
 	// formPj = { selecetedFile: {},  };
- 
+
+
     allpjs = [];
 	formPj = { selecetedFile: {}, LabelPj: "" };
     dataSource1: MatTableDataSource<any>;
@@ -96,7 +97,6 @@ export class AddObstaclesComponent implements OnInit {
 			lieu: ["", Validators.required],
 			adresseDeces: ["", Validators.required],
 			adresseResidence: ["", Validators.required],
-			autreNationalite: [""],
 			nomDeclarent: [""],
 			numDeces: [""],
 			prenomDeclarent: [""],
@@ -109,8 +109,13 @@ export class AddObstaclesComponent implements OnInit {
 			observationConst: [""],
 			numRegistre: [""],
 			causeDeces: [""],
-			// cadavre: [""],
+			constater:[""],
+			numTel:[""],
+			statusCadavre: [""],
+			numTombe: [""],
+			nomCim: [""]
 		});
+
 		this.ArrondissementService.getAll().subscribe((res) => {
 			this.arrondissement = res;
 			console.log(res);
@@ -237,21 +242,21 @@ export class AddObstaclesComponent implements OnInit {
 		this.router.navigate(["/bmh1/list-obstacles"]);
 	}
 
-	detecterChangementNationalite() {
-		if (this.ajoutForm.value.nationalite === "Autre") {
-			this.ajoutForm.value.nationalite = this.ajoutForm.value.autreNationalite;
-		} else {
-			this.ajoutForm.get("autreNationalite").clearValidators();
-		}
-		this.ajoutForm.get("autreNationalite").updateValueAndValidity();
-	}
+	// detecterChangementNationalite() {
+	// 	if (this.ajoutForm.value.nationalite === "Autre") {
+	// 		this.ajoutForm.value.nationalite = this.ajoutForm.value.autreNationalite;
+	// 	} else {
+	// 		this.ajoutForm.get("autreNationalite").clearValidators();
+	// 	}
+	// 	this.ajoutForm.get("autreNationalite").updateValueAndValidity();
+	// }
 
 	ajouter() {
-		this.detecterChangementNationalite();
+		// this.detecterChangementNationalite();
 		if (this.ajoutForm.valid) {
-		  if (this.ajoutForm.value.autreNationalite === "Autre") {
-			this.ajoutForm.value.nationalite = this.ajoutForm.value.autreNationalite;
-		  }
+		//   if (this.ajoutForm.value.autreNationalite === "Autre") {
+		// 	this.ajoutForm.value.nationalite = this.ajoutForm.value.autreNationalite;
+		//   }
 	  
 		  // Create a FormData object
 		  const formData = new FormData();
@@ -310,6 +315,18 @@ export class AddObstaclesComponent implements OnInit {
 							console.log('Constateur pièce Jointe stored successfully:', response);
 						});
 				});
+				
+
+				const historique = {
+					"nouveauStatut":this.ajoutForm.value.statusCadavre,
+					 "obstacleDefunts":{
+					  "id":res.id
+					 }
+				  }
+				  this.httpClient.post(`${this.baseUrl}historique-obstacle`, historique , { headers: this.headers })
+				  .subscribe((res)=>{
+				  console.log('stored successfully:', res);
+				  })
 
 				  Swal.fire({
 					title: "Enregistrement réussi!",

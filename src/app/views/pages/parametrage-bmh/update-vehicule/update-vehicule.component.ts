@@ -49,6 +49,7 @@ export class UpdateVehiculeComponent implements OnInit {
 					}).then(() => {
 						this.FormArtical.reset();
 						this.ngOnInit(); // Vous pouvez recharger les données si nécessaire ici
+					    this.RetourEmbalages()
 					});
 				},
 				(err) => {

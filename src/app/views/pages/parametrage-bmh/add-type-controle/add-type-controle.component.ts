@@ -39,6 +39,7 @@ export class AddTypeControleComponent implements OnInit {
         }).then(() => {
           this.FormArtical.reset();
           this.ngOnInit(); // Vous pouvez recharger les données si nécessaire ici
+          this.RetourEmbalages()
         });
       },err=>{
         console.log(err);

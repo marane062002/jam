@@ -37,17 +37,21 @@ export class ParticipantsInternesCommissionAoDetailComponent implements OnInit {
   // =================================================================
   //
   // =================================================================
+  typeCommission
   getParticipants() {
     const _this = this;
-    this.activatedRoute.queryParams.subscribe(params => {
+    /* this.activatedRoute.queryParams.subscribe(params => {
       this.idao = params['id'];
-    });
+    }); */
+    this.service.data$.subscribe(res=>this.idao=res);
+    this.service.data$.subscribe(res=>this.typeCommission=res);
+    
     this.PI = [];
-    this.service.getPIbyAo(this.idao).then(data => {
-      _this.dataSize = data.length;
+    this.service.getPIbyEtatMembre('MEMBRE_NON_TECHNIQUE',this.idao).then(data => {
+      _this.dataSize = data.totalElements;
       if(_this.dataSize > 0){
-          this.TypeCommission = data[0].commission.typeCommission.id;
-          this.pIdata = data;
+          // this.TypeCommission = data[0].commission.typeCommission.id;
+          this.pIdata = data.content;
           console.log("Part ext: " + JSON.stringify(this.pIdata, null,2))
           for (let i = 0; i < this.pIdata.length; i++) {
             this.PI.push(
@@ -95,12 +99,16 @@ export class ParticipantsInternesCommissionAoDetailComponent implements OnInit {
       role: this.pIdata[i].role.libelle,
     };
   }
+  page
 // generer une convoation
 convocation(idCommission,nomComplet) {
-  this.service.getPIbyAo(idCommission).then(data => {
-    let idAo = data[0].commission.ao.id;
-    let etape = data[0].commission.typeCommission.id;
-    this.convocationTraitement(idAo,nomComplet,etape);
+  this.service.data$.subscribe(res=>this.typeCommission=res);
+
+  this.service.getPIbyEtatMembre('MEMBRE_NON_TECHNIQUE',idCommission).then(data => {
+  // this.service.getPIbyAo(idCommission).then(data => {
+    let idAo = data.content[0].ao.id;
+    // let etape = data[0].commission.typeCommission.id;
+    this.convocationTraitement(idAo,nomComplet,this.typeCommission);
   }, (err) => {
     console.log(err);
   })
@@ -109,8 +117,8 @@ convocation(idCommission,nomComplet) {
 	// ================================================================
 	//
 	// ================================================================
-	convocationTraitement(idAo,participant,etape) {
-		this.service.convocationCommissionAoGenerator("convocationCommissionAo/", idAo, participant,etape).subscribe((res) => {
+	convocationTraitement(idAo,participant,type) {
+		this.service.convocationCommissionAoGenerator("convocationCommissionAo/", idAo, participant,type).subscribe((res) => {
 			const file = new Blob([(res as unknown) as BlobPart], {
 				type: "application/pdf",
 			});

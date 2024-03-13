@@ -629,12 +629,12 @@ export class EditAssociationComponent implements OnInit {
 			}
 		});
 	}
-	onClickPjName(e, id) {
-		//console.log("You clicked: " + e);
+	onClickPjName(a, e, id) {
 		var r = e.substring(0, e.length - 4);
 		console.log(r);
-		window.open(environment.API_ALFRESCO_URL + "/PjAssociation/" + r);
+		this.service.downoldFile(r, a);
 	}
+	
 	save(event: any): void {
 		$("#test").val(event.target.files[0].name);
 		this.formPj.selecetedFile = event.target.files;

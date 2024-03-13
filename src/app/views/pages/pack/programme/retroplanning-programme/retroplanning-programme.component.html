@@ -5,16 +5,6 @@
 				{{ "PAGES.PROGRAMME.RETROPLANNING_PROJET" | translate }}
 			</h2>
 		</div>
-		<!-- <div class="kt-portlet__head-toolbar">
-			<div class="kt-portlet__head-wrapper">
-				<div class="kt-portlet__head-actions">
-
-					<a href="javascript:; " (click)="addNew()" class="btn btn-success btn-elevate btn-icon-sm">
-						<i class="la la-plus"></i> {{ "PAGES.PROGRAMME.AJOUTER" | translate }}
-					</a>
-				</div>
-			</div>
-		</div> -->
 	</div>
 	<div class="   ">
 		<form action="" class=" row" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
@@ -23,17 +13,63 @@
 			<div class="col-md-3">
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.PROGRAMME.AXE" | translate }} :</mat-label>
-						<input type="text" class="form-control-solid form-control-lg" formControlName="axe" matInput />
+						<mat-label>{{ "PAGES.PROGRAMME.NATURE_PROJET" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg"
+							placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :" formControlName="nature"
+							[(ngModel)]="selectedOptionsNP" (selectionChange)="addItemNature($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of natures" [value]="item.id">
+								<div *ngIf="checkLang=='fr'">
+									{{ item.libelleFrancais }}
+								</div>
+								<div *ngIf="checkLang=='ar'">
+									{{ item.libelleArab }}
+								</div>
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group  fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>Thème :</mat-label>
+
+						<mat-select class="form-control-lg" multiple [(ngModel)]="selectedOptionsTheme"
+							placeholder="Thème :" formControlName="theme" (selectionChange)="ThemeChange($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
+							<mat-option *ngFor="let item of listeTheme" [value]="item.id">
+								<div *ngIf="checkLang=='fr'">
+									{{ item.libelleFrancais }}
+								</div>
+								<div *ngIf="checkLang=='ar'">
+									{{ item.libelleArab }}
+								</div>
+							</mat-option>
+						</mat-select>
 					</mat-form-field>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.PROGRAMME.NUMERO_PROJET" | translate }} :</mat-label>
-						<input type="text" class="form-control-solid form-control-lg" formControlName="numero"
-							matInput />
+						<mat-label>Sous-thème :</mat-label>
+
+						<mat-select class="form-control-lg" multiple [(ngModel)]="selectedOptionsSousTheme"
+							(selectionChange)="addItemSousTheme($event.value)" placeholder="Sous-thème :"
+							formControlName="sousTheme">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
+							<mat-option *ngFor="let item of listeSousTheme" [value]="item.id">
+								<div *ngIf="checkLang=='fr'">
+									{{ item.libelleFrancais }}
+								</div>
+								<div *ngIf="checkLang=='ar'">
+									{{ item.libelleArab }}
+								</div>
+							</mat-option>
+						</mat-select>
 					</mat-form-field>
 				</div>
 			</div>
@@ -41,36 +77,32 @@
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
 						<mat-label>{{ "PAGES.PROGRAMME.PROJET" | translate }} :</mat-label>
-						<input type="text" class="form-control-solid form-control-lg" formControlName="projet"
+						<input type="text" class="form-control-solid form-control-lg" formControlName="nameProjet"
 							matInput />
 					</mat-form-field>
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div class="form-group fv-plugins-icon-container">
-					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.PROGRAMME.EMPLACEMENT" | translate }} :</mat-label>
-						<input type="text" class="form-control-solid form-control-lg" formControlName="emplacement"
-							matInput />
-					</mat-form-field>
-				</div>
-			</div>
 
-			<div class="col-md-3">
-				<div class="form-group fv-plugins-icon-container">
+				<div class="form-group fv-plugins-icoan-container">
 					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.PROGRAMME.CONSISTANCE" | translate }} :</mat-label>
-						<input type="text" class="form-control-solid form-control-lg" formControlName="consistance"
-							matInput />
+						<mat-label>{{ 'PAGES.PROGRAMME.CONVENTION' | translate }} :</mat-label>
+
+						<mat-select class="form-control" multiple formControlName="convention"
+							[(ngModel)]="selectedOptionsConvention" (selectionChange)="ConventionChange($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
+							<mat-option *ngFor="let item of listConvention" [value]="item">
+								<span *ngIf="checkLang == 'fr'">
+									{{ item?.object }}
+								</span>
+								<span *ngIf="checkLang == 'ar'">
+									{{ item?.objectAr }}
+								</span>
+							</mat-option>
+						</mat-select>
 					</mat-form-field>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="form-group fv-plugins-icon-container">
-					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE" | translate }} :</mat-label>
-						<input type="text" class="form-control-solid form-control-lg" formControlName="mod" matInput />
-					</mat-form-field>
+
 				</div>
 			</div>
 			<div class="col-md-3">
@@ -94,9 +126,27 @@
 			<div class="col-md-3">
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
-						<mat-label>{{ "PAGES.PROGRAMME.DELAI" | translate }} :</mat-label>
-						<input type="text" class="form-control-solid form-control-lg" formControlName="delai"
-							matInput />
+						<mat-label>{{ "PAGES.PROGRAMME.MAITRE_OUVRAGE_DELEGUE" | translate }} :</mat-label>
+						<mat-select multiple class="form-control-lg"
+							placeholder="{{ 'PAGES.PROGRAMME.NATURE_PROJET' | translate }} :"
+							formControlName="maitreOuvrageDelegue" [(ngModel)]="selectedOptionsMOD"
+							(selectionChange)="addItemMaitreOuvrageDelegue($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+							<mat-option *ngFor="let item of maitreOuvrageDelegue" [value]="item">{{ item }}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>{{ "PAGES.PROGRAMME.ANNEE" | translate }} :</mat-label>
+						<input matInput class="form-control" [matDatepicker]="picker5"
+							placeholder="{{ 'PAGES.PROGRAMME.ANNEE' | translate }} :" formControlName="date" />
+						<mat-datepicker-toggle matSuffix matSuffix [for]="picker5">
+							<mat-icon matDatepickerToggleIcon><i class="far fa-calendar-alt"></i> </mat-icon>
+						</mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #picker5></mat-datepicker>
 					</mat-form-field>
 				</div>
 			</div>
@@ -120,8 +170,9 @@
 
 				<button style="background-color: #7174cc;" (click)="exportTable()" type="button" class="btn btn-export"
 					matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }} ">
-					<i style="color: #ffffff;" _ngcontent-clk-c12="" class="icon la la-file-excel-o"></i><span style="color: #ffffff;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate
-					}}</span>
+					<i style="color: #ffffff;" _ngcontent-clk-c12="" class="icon la la-file-excel-o"></i><span
+						style="color: #ffffff;">{{ 'PAGES.GENERAL.DOWNLOAD' | translate
+						}}</span>
 				</button>
 			</div>
 
@@ -130,99 +181,26 @@
 		</form>
 
 	</div><br>
-	<!-- <table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-		<ng-container matColumnDef="numero">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.NUMERO_PROJET' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.numero ? row.numero : "-"}}</td>
-		</ng-container>
-		<ng-container matColumnDef="axe">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.AXE' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.axe ? row.axe : "-"}}</td>
-		</ng-container>
-		<ng-container matColumnDef="projet">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.PROJET' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.projet ? row.projet : "-"}}</td>
-		</ng-container>
-		<ng-container matColumnDef="emplacement">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.EMPLACEMENT' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">
-				<span *ngFor="let item of row.emplacement">
-					<span>{{item ? item : "-"}}</span><br>
-				</span>
-			</td>
-		</ng-container>
-		<ng-container matColumnDef="consistance">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.CONSISTANCE' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">
-				<span *ngFor="let item of row.consistance">
-					<span>{{item ? item : "-"}}</span><br>
-				</span>
-			</td>
-		</ng-container>
-		<ng-container matColumnDef="mod">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.MAITRE_OUVRAGE' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.mod ? row.mod : "-"}}</td>
-		</ng-container>
-		<ng-container matColumnDef="dateDebut">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.DATE_DEBUT' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.dateDebut ? row.dateDebut : "-"}}</td>
-		</ng-container>
-		<ng-container matColumnDef="dateFin">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.DATE_FIN' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.dateFin ? row.dateFin : "-"}}</td>
-		</ng-container>
-		<ng-container matColumnDef="delai">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ 'PAGES.PROGRAMME.DELAI' | translate }}</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.delai ? row.delai : "-"}}</td>
-		</ng-container>
-
-
-
-		<ng-container matColumnDef="actions">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header class="action"> {{ "PAGES.PROGRAMME.ACTIONS" |
-				translate }}</th>
-			<td mat-cell *matCellDef="let row" class="actionsBtn action">
-				<button type="button" routerLink="/parametrages/add-type-fichier"
-					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" (click)="Details(row)"
-					matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
-						class="icon la la-search-plus"></i></button>
-				<button type="button" routerLink="/parametrages/add-type-fichier" (click)="update(row)"
-					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
-					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
-				<button type="button" (click)="delete(row.id)"
-					class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
-					matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button>
-			</td>
-		</ng-container>
-		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-	</table> -->
 	<table id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 		<ng-container matColumnDef="nature">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
 				Nature</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.nature ? row.nature : "-"}}</td>
+			<td mat-cell *matCellDef="let row" class="num">{{row.sousTheme?.theme[0]?.nature[0]?.libelleFrancais ?
+				row.sousTheme?.theme[0]?.nature[0]?.libelleFrancais : "-"}}</td>
 		</ng-container>
 		<ng-container matColumnDef="theme">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
 				Théme</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.theme ? row.theme : "-"}}</td>
+			<td mat-cell *matCellDef="let row" class="num">{{row.sousTheme?.theme[0]?.libelleFrancais ?
+				row.sousTheme?.theme[0]?.libelleFrancais : "-"}}</td>
 		</ng-container>
 		<ng-container matColumnDef="Soustheme">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
 				Sous théme</th>
-			<td mat-cell *matCellDef="let row" class="num">{{row.sousTheme ? row.sousTheme : "-"}}</td>
+			<td mat-cell *matCellDef="let row" class="num">{{row.sousTheme?.libelleFrancais ?
+				row.sousTheme?.libelleFrancais : "-"}}</td>
 		</ng-container>
-		
+
 		<ng-container matColumnDef="codeProjet">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
 				Code Projet</th>
@@ -230,12 +208,12 @@
 		</ng-container>
 		<ng-container matColumnDef="projet">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-			 Projet</th>
+				Projet</th>
 			<td mat-cell *matCellDef="let row" class="num">{{row.nameProjet ? row.nameProjet : "-"}}</td>
 		</ng-container>
 		<ng-container matColumnDef="numSP">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-			 Numéro Sous Projet</th>
+				Numéro Sous Projet</th>
 			<td mat-cell *matCellDef="let row" class="num">
 				<span *ngFor="let item of row.sousProjets">
 					<span>{{item.numero ? item.numero : "-"}}</span><br>
@@ -246,7 +224,7 @@
 
 		<ng-container matColumnDef="SP">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-			Sous Projet</th>
+				Sous Projet</th>
 			<td mat-cell *matCellDef="let row" class="num">
 				<span *ngFor="let item of row.sousProjets">
 					<span>{{item.object ? item.object : "-"}}</span><br>
@@ -267,10 +245,10 @@
 				convention </th>
 			<td mat-cell *matCellDef="let row" class="num">
 				<span *ngFor="let item of row.sousProjets">
-					<span *ngIf="language == 'fr'">
+					<span *ngIf="checkLang == 'fr'">
 						{{ item?.convention?.object }}
 					</span>
-					<span *ngIf="language == 'ar'">
+					<span *ngIf="checkLang == 'ar'">
 						{{ item?.convention?.objectAr }}
 					</span><br>
 				</span>
@@ -287,7 +265,7 @@
 		</ng-container>
 		<ng-container matColumnDef="cout">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header>
-				{{ "PAGES.PROGRAMME.COUT" | translate }}</th>
+				{{ "PAGES.PROGRAMME.COUTP" | translate }}</th>
 			<td mat-cell *matCellDef="let row" class="num">
 				<span *ngFor="let item of row.sousProjets">
 					<span>{{item.constibutionC ? item.constibutionC : "-"}}</span><br>
@@ -320,17 +298,10 @@
 					class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" (click)="Details(row)"
 					matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}"><i
 						class="icon la la-search-plus"></i></button>
-				<!-- <button type="button" routerLink="/parametrages/add-type-fichier" (click)="update(row)"
-					class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"
-					matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i class="icon la la-edit"></i></button>
-				<button type="button" (click)="delete(row.id)"
-					class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"
-					matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i class="icon la la-trash"></i></button> -->
 			</td>
 		</ng-container>
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-		<!-- footer data -->
 	</table>
 	<div *ngIf="dataSource.data.length == 0 && isLoading == false"
 		style="display: flex;justify-content: center;padding: 2%;color: orangered;">

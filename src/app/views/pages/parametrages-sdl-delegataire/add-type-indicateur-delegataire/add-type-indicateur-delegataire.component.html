@@ -1,0 +1,78 @@
+<div autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					Ajouter une type d'indicateur de délégataire:
+				</h2>
+			</div>
+		</div>
+	</div>
+	<form [formGroup]="typeIndicDelegataireForm">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Libellé: </label>
+					<input
+						matInput
+						type="text"
+						class="form-control"
+						formControlName="libelle"
+						placeholder=""
+					/>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label>Description : </label>
+					<input
+						matInput
+						type="text"
+						class="form-control"
+						formControlName="description"
+						placeholder=""
+					/>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+
+
+<div class="kt-portlet__heads">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="Back()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+		<button
+			*ngIf="typeIndicDelegataireForm.valid"
+			(click)="addTypeIndicDelegataire()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+			{{ "PAGES.GENERAL.SAVE" | translate }}
+		</button>
+		<button
+			*ngIf="typeIndicDelegataireForm.invalid"
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+			{{ "PAGES.GENERAL.SAVE" | translate }}
+		</button>
+	</div>
+	</div>
+	</form>
+</div>
+
+

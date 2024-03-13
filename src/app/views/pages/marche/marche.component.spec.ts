@@ -8,9 +8,9 @@ describe('MarcheComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarcheComponent ]
+      declarations: [MarcheComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

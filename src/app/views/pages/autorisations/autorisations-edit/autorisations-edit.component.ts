@@ -7,6 +7,7 @@ import { BiensService } from '../../shared/biens.service';
 import { NgForm } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 import * as $ from 'jquery';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'kt-autorisations-edit',
   templateUrl: './autorisations-edit.component.html',
@@ -20,7 +21,7 @@ export class AutorisationsEditComponent implements OnInit {
   id;
   pjs=[];
   selectedFiles={};
-  autorisation={"dateDebut":null,"dateFin":null,"statutdemandeautorisation":{"id":0,"libelle":""}
+  autorisation={"numAutorisation":0,"dateDebut":null,"dateFin":null,"statutdemandeautorisation":{"id":0,"libelle":""}
   ,"typeAutorisation":{"id":0,"typeAutorisation":""},"objet":"","id":0,
   "ppsourceautorisation":{"prenom":"","nom":"","cin":"","telephoneGsm":""},
   "pmsourceautorisation":{"rc":"","identifiantFiscal":"","numeroPatente":"","teleGsm":""},
@@ -56,7 +57,10 @@ export class AutorisationsEditComponent implements OnInit {
   typeBien;
   biens;
   typesAutorisation;
-
+  pageIndex
+  formPj = {  selecetedFile: {} };
+  temp=false
+	allpjs = [];
   ngOnInit() {
     $(function () {
 
@@ -86,10 +90,13 @@ export class AutorisationsEditComponent implements OnInit {
     
     });
     this.activatedRoute.queryParams.subscribe(params => {
+      this.pageIndex=params['pageIndex'];
+
       this.id= params['reclam']; 
      });
      this.service.getByIdautorisationpjs(this.id).subscribe(m => {
       this.pjs=m;
+      this.allpjs=m
     })
      this.service4.getTypesBien().subscribe(data => { 
       this.typeBien=data;
@@ -139,25 +146,90 @@ export class AutorisationsEditComponent implements OnInit {
   }
  
   
-  save(event: any): void {
-    this.selectedFiles = event.target.files;
+  // save(event: any): void {
+  //   this.selectedFiles = event.target.files;
     
-  }
+  // }
+  save(event: any): void {
+		$("#test").val(event.target.files[0].name);
+		this.formPj.selecetedFile = event.target.files;
+	}
+  array
+  validerPj() {
+		var champTexte:any = document.getElementById("test");
+		
+		if(champTexte.value == "" ){
+			this.temp=false
+			Swal.fire({
+				title:"	Vous devez choisir une piéce jointe",
 
+				icon:'error'
+			})
+		}else{
+			this.allpjs.push(this.formPj);
+			$("#test").val(null);
+			console.log(this.allpjs);
+			this.pjs = this.allpjs;
+			// this.array=this.dataSource1.data
+			
+			this.formPj = {  selecetedFile: {}};
+			champTexte.value = "";
+		}
+		
+	}
   onClickPjName(e,id) {
     var r=e.substring(0,e.length-4);
     window.open(environment.API_ALFRESCO_URL +'/PjAutorisations/'+r, '_blank');
   }
-      
+  pjd=[]
+  onDeletePj(id: number): void {
+    this.pjd.push(this.allpjs[id])
+		
+		this.temp=false
+		this.allpjs.splice(id, 1);
+		if (this.allpjs.length > 0) {
+			this.pjs = this.allpjs;
+		} else {
+			this.pjs = null
+			
+		}
+		
+	}   
   onSubmit() {  
     var dt=new Date(this.autorisation.dateDebut);
     this.autorisation.dateDebut=new Date(dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate()+' '+this.timeDebutAutorisation.hour+':'+this.timeDebutAutorisation.minute);
   var dt1=new Date(this.autorisation.dateFin);
   this.autorisation.dateFin=new Date(dt1.getFullYear() + "/" + (dt1.getMonth() + 1) + "/" + dt1.getDate()+' '+this.timeFinAutorisation.hour+':'+this.timeFinAutorisation.minute); 
     this.service.edit(this.autorisation).subscribe(res => {
-        this.service.nouvellepj(this.selectedFiles,res.id).subscribe(res => {
-     });
-     this.router.navigate(['/autorisations/autorisations-list']);
+      this.pjd
+      
+      if (this.allpjs.length > 0) {
+        ;
+      
+        
+      
+      
+        const pjsToUpdate = this.allpjs.filter((pj) => pj.selecetedFile !== undefined);
+
+        for (const pj of pjsToUpdate) {
+        this.service.nouvellepj(pj.selecetedFile, res.id).subscribe((data) => {
+          console.log("Updated/Added file: " + data);
+        });
+        }
+        
+      
+      }
+      if(this.pjd.length>0){
+        const pjsToDelete = this.pjd.filter((pj) => pj !== undefined);
+        for (const pj of pjsToDelete) {
+          this.service.deletePj(pj.id).subscribe((data) => {
+            console.log("Updated/Added file: " + data);
+          });
+          }
+      }
+      
+     this.router.navigate(['/autorisations/autorisations-list'], { queryParams: { pageIndex: parseInt(this.pageIndex) }});
+
      })
     }
 

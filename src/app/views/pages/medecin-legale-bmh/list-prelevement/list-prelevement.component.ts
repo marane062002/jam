@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PrelevementService } from '../services/prelevement.service';
 
 @Component({
@@ -16,19 +16,22 @@ export class ListPrelevementComponent implements OnInit {
 		"Statut",
 		"actions",
 	];
-  constructor(private router:Router,private service:PrelevementService) { }
+  id:any;
+  constructor(private route: ActivatedRoute,private router:Router,private service:PrelevementService) { }
 
 
   ngOnInit() {
     this.service.getAll().subscribe(res=>{
       this.prelevement=res;
     })
+    this.route.params.subscribe((params) => {
+			this.id = +params['id']; 
+		  });
   }
   add(){
-    this.router.navigate(["/bmh1/add-prelevement"])
+    this.router.navigate([`/bmh1/add-prelevement/${this.id}`])
   }
   Details(id:any){
-    
     return this.router.navigate(["/bmh1/details-prelevement/",id])
   }
   Modifier(id:any){

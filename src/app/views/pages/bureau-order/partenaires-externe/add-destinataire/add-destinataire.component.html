@@ -35,10 +35,10 @@
 							<div class="col-md-6" *ngIf="showExterne">
 								<div class="form-group">
 									<mat-form-field class="example-full-width">
-										<mat-select formControlName="partenaire" matNativeControl
+										<mat-select formControlName="raisonSociale" matNativeControl
 											class="form-control"
 											placeholder="{{ 'PAGES.BUREAU_ORDRE.PARTENAIRE' | translate }}">
-											<mat-option *ngFor="let origin of partenaires" [value]="origin.id">
+											<mat-option *ngFor="let origin of partenaires" [value]="origin.raisonSociale">
 												{{origin?.raisonSociale}}
 											</mat-option>
 										</mat-select>
@@ -80,7 +80,7 @@
 							<div class="col-md-4">
 								<div class="form-group">
 									<mat-form-field class="example-full-width">
-										<mat-select class="form-control" formControlName="idPersonnel"
+										<mat-select class="form-control" formControlName="idPersonne"
 											placeholder="{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}">
 											<mat-option>---{{ 'PAGES.PERSONNEL.PERSONNEL' | translate }}---
 											</mat-option>

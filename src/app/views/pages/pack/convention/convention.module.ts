@@ -40,6 +40,7 @@ import { ExecutionProjetComponent } from './detaille-convention/execution-projet
 import { NewExecutionProjetComponent } from './detaille-convention/execution-projet/new-execution-projet/new-execution-projet.component';
 import { ConsistanceConventionComponent } from './detaille-convention/consistance-convention/consistance-convention.component';
 import { NewConsistanceConventionComponent } from './detaille-convention/consistance-convention/new-consistance-convention/new-consistance-convention.component';
+import { StatistiqueConventionComponent } from './statistique-convention/statistique-convention.component';
 
 
 
@@ -79,6 +80,7 @@ import { NewConsistanceConventionComponent } from './detaille-convention/consist
 	ExecutionProjetComponent,
 	NewExecutionProjetComponent,
 	ConsistanceConventionComponent,
+	StatistiqueConventionComponent,
 	NewConsistanceConventionComponent
 
   ],
@@ -108,6 +110,10 @@ import { NewConsistanceConventionComponent } from './detaille-convention/consist
 		  path: "",
 		  component: ConventionComponent,
 		  children: [
+			{
+				path: "statistique-convention",
+				component: StatistiqueConventionComponent
+			},
 			{
 				path: "new-convention",
 				component: AddConventionComponent,

@@ -56,7 +56,7 @@ export class CommissionComponent implements OnInit {
 	];
 	displayedColumnsODEvFinale = ["NomOrganisme", "rc", "tele", "reserve"];
 	// ====================================================================
-	//
+	// 
 	// ====================================================================
 	dataSource: MatTableDataSource<Commission>;
 	dataSourceOffreDeposee: MatTableDataSource<any>;
@@ -132,7 +132,7 @@ export class CommissionComponent implements OnInit {
 	commissionDatasource: Commission[] = [];
 	PIDatasource: PI[] = [];
 	PEDatasource: PE[] = [];
-	typeCommissionAll;
+	typeCommissionAll = [];
 	participantName;
 	divisionName;
 	serviceName;
@@ -174,26 +174,29 @@ export class CommissionComponent implements OnInit {
 			completed: new FormControl(),
 		});
 		this.selectedStatus = 0;
-		this.activatedRoute.queryParams.subscribe((params) => {
-			this.idao = params["id"];
-			//console.log(this.idao);
-		});
+		// this.activatedRoute.queryParams.subscribe((params) => {
+		// 	this.idao = params["id"];
+		// 	 this.idao= params["idao"];
+
+		// }); 
+		this.service.data$.subscribe(res => this.idao = res);
+
 		this.getDivisions();
-		this.service.getAllTypeCommission().subscribe((data) => {
-			this.typeCommissionAll = data;
-		});
+
+
+
 		this.service.getAllRoleCommission().subscribe((data) => {
 			this.roleCommissionAll = data;
 		});
-		this.service.getAllOffreDeposee(this.idao).subscribe((data) => {
-			/*  for (var i = 0; i <data.length ; i++) {
-		data[i].commission={"id":1}
-	 }*/
+		// 	this.service.getAllOffreDeposee(this.idao).subscribe((data) => {
+		// 		/*  for (var i = 0; i <data.length ; i++) {
+		// 	data[i].commission={"id":1}
+		//  }*/
 
-			this.dataSourceOD = new MatTableDataSource(data);
-			
-			//console.log("dateSourceOD : " + JSON.stringify(this.dataSourceOD.data, null, 2));
-		});
+		// 		this.dataSourceOD = new MatTableDataSource(data);
+
+		// 		//console.log("dateSourceOD : " + JSON.stringify(this.dataSourceOD.data, null, 2));
+		// 	});
 		this.populate();
 	}
 	// =========================================================================
@@ -404,9 +407,9 @@ export class CommissionComponent implements OnInit {
 					for (var i = 0; i < data.length; i++) {
 						data[i].noteFinale =
 							this.service.PourcentageTechnique *
-								data[i].noteTechnique +
+							data[i].noteTechnique +
 							this.service.PourcentageFinancier *
-								data[i].noteFinanciere;
+							data[i].noteFinanciere;
 					}
 					this.ODevalFinale = data;
 					this.dataSourceODEvFinale = new MatTableDataSource(data);
@@ -461,13 +464,13 @@ export class CommissionComponent implements OnInit {
 	}
 
 	getUpdatedUrl() {
-		
-	
-			let url = "./assets/doc/feuille de présence commission.docx";
-			window.open(url, "_blank");
-		
 
-	
+
+		let url = "./assets/doc/feuille de présence commission.docx";
+		window.open(url, "_blank");
+
+
+
 
 	}
 	// ====================================================================
@@ -567,8 +570,27 @@ export class CommissionComponent implements OnInit {
 	// ====================================================================
 	//
 	// ====================================================================
+	dateOuverture
 	populate() {
 		this.service.getAoById(this.idao).subscribe((data) => {
+
+			if (data.offreTechnique == true) {
+				this.service.getAllTypeCommission().subscribe((data) => {
+					this.typeCommissionAll = data;
+				});
+			} else {
+				this.service.getAllTypeCommission().subscribe((data) => {
+					for (let i = 0; i < data.length; i++) {
+						if (data[i].id != 3) {
+							this.typeCommissionAll.push(data[i]);
+						}
+					}
+				});
+			}
+			// this.service.getAllTypeCommission().subscribe((res) => {
+			// 	// Supprimer les éléments de la liste où une certaine condition est vraie
+			// 	this.typeCommissionAll = res.filter(item => !item.condition); // Remplacez 'condition' par votre condition
+			// });
 			if (data.isferme == true) {
 				this.adjucataire = 1;
 				this.AddCommissionShow = 0;
@@ -581,13 +603,18 @@ export class CommissionComponent implements OnInit {
 			}
 		});
 		this.service.getAllCommissionByAo(this.idao).subscribe((data) => {
+			if (data.length != 0 && data[data.length - 1].dateProchaineSeance != null) {
+				this.formDataCommssion.dateOuveture = new Date(data[data.length - 1].dateProchaineSeance)
+
+			}
+
 			this.commissionDatasource = [];
 			this.commissions = data;
 			this.ds1Size = this.commissions.length;
-			 var x = this.commissions.length + 1;
+			var x = this.commissions.length + 1;
 			// this.formDataCommssion.typeCommission.id = x;
 			this.formDataCommssion.typeCommission.id
-			
+
 			// for (let i = 0; i < this.typeCommissionAll.length; i++) {
 			// 	if (this.typeCommissionAll[i].id == x) { 
 			// 		this.formDataCommssion.typeCommission.libelle =
@@ -601,7 +628,8 @@ export class CommissionComponent implements OnInit {
 			}
 			//console.log("Commission data source : " + this.commissionDatasource);
 			this.dataSource = new MatTableDataSource(this.commissionDatasource);
-			
+
+
 		});
 	}
 	// ====================================================================
@@ -618,9 +646,12 @@ export class CommissionComponent implements OnInit {
 	//
 	// ====================================================================
 	showCommission(idcomm) {
+		// this.service.data$.subscribe(res=>this.idao=res);
+
 		this.router.navigate(["/marches/commission-detail"], {
-			queryParams: { id: idcomm },
+			queryParams: { idcomm: idcomm, id: this.idao },
 		});
+
 	}
 	// ====================================================================
 	//
@@ -637,7 +668,7 @@ export class CommissionComponent implements OnInit {
 		this.dataSourceODEvFinale.data[ord].adjucataire = true;
 		this.service.getAoById(this.idao).subscribe((data) => {
 			data.isferme = true;
-			this.service.sendao(data).subscribe((d) => {});
+			this.service.sendao(data).subscribe((d) => { });
 		});
 	}
 	// ====================================================================
@@ -647,122 +678,123 @@ export class CommissionComponent implements OnInit {
 		this.dataSourceODEvFinanciere.data[this.ordre].adjucataire = true;
 		this.service.getAoById(this.idao).subscribe((data) => {
 			data.isferme = true;
-			this.service.sendao(data).subscribe((d) => {});
+			this.service.sendao(data).subscribe((d) => { });
 		});
 	}
 	// ====================================================================
 	//
 	// ====================================================================
-	onSubmit(form: NgForm) {
+	onSubmit() {
 		this.formDataCommssion.ao.id = this.idao;
-		
+
 		//console.log("Form data : " + JSON.stringify(this.formDataCommssion, null, 2));
 		this.service.sendCommission(this.formDataCommssion).subscribe((res) => {
 			this.idCommission = res.id;
+			this.ngOnInit()
 			//console.log("Commission data : " + JSON.stringify(res, null, 2));
-			if (this.ParticipantsInternes != null)
-				for (var i = 0; i < this.ParticipantsInternes.length; i++) {
-					//console.log(this.ParticipantsInternes[i]);
-					this.ParticipantsInternes[i].commission.id = res.id;
-					this.ParticipantsInternes[i].present =
-						this.dataSourcePI.data[i].present;
-					this.ParticipantsInternes[i].justif =
-						this.dataSourcePI.data[i].justif;
-				}
-			if (
-				this.service.ModePassationAo == "Mieux disant" &&
-				this.show == 5
-			) {
-				this.adjucataire = 1;
-				this.AdjucataireCalcule();
-			}
-			if (
-				this.service.ModePassationAo == "moins disant" &&
-				this.show == 4
-			) {
-				this.adjucataire = 1;
-				this.AdjucataireMoinsDisant();
-			}
-			if (this.show == 1) {
-				this.service
-					.sendOffreDeposee(this.dataSourceOD.data)
-					.subscribe((resultOD) => {
-						//console.log(resultOD);
-						this.populate();
-					});
-			}
+			// if (this.ParticipantsInternes != null)
+			// 	for (var i = 0; i < this.ParticipantsInternes.length; i++) {
+			// 		//console.log(this.ParticipantsInternes[i]);
+			// 		this.ParticipantsInternes[i].commission.id = res.id;
+			// 		this.ParticipantsInternes[i].present =
+			// 			this.dataSourcePI.data[i].present;
+			// 		this.ParticipantsInternes[i].justif =
+			// 			this.dataSourcePI.data[i].justif;
+			// 	}
+			// if (
+			// 	this.service.ModePassationAo == "Mieux disant" &&
+			// 	this.show == 5
+			// ) {
+			// 	this.adjucataire = 1;
+			// 	this.AdjucataireCalcule();
+			// }
+			// if (
+			// 	this.service.ModePassationAo == "moins disant" &&
+			// 	this.show == 4
+			// ) {
+			// 	this.adjucataire = 1;
+			// 	this.AdjucataireMoinsDisant();
+			// }
+			// if (this.show == 1) {
+			// 	this.service
+			// 		.sendOffreDeposee(this.dataSourceOD.data)
+			// 		.subscribe((resultOD) => {
+			// 			//console.log(resultOD);
+			// 			this.populate();
+			// 		});
+			// }
 
-			if (this.show == 2) {
-				this.service
-					.sendOffreDeposee(this.dataSourceODEvAdmin.data)
-					.subscribe((resultOD) => {
-						//console.log(resultOD);
-						this.populate();
-					});
-			}
+			// if (this.show == 2) {
+			// 	this.service
+			// 		.sendOffreDeposee(this.dataSourceODEvAdmin.data)
+			// 		.subscribe((resultOD) => {
+			// 			//console.log(resultOD);
+			// 			this.populate();
+			// 		});
+			// }
 
-			if (this.show == 3) {
-				this.service
-					.sendOffreDeposee(this.dataSourceODEvTechnique.data)
-					.subscribe((resultOD) => {
-						//console.log(resultOD);
-						this.populate();
-					});
-			}
+			// if (this.show == 3) {
+			// 	this.service
+			// 		.sendOffreDeposee(this.dataSourceODEvTechnique.data)
+			// 		.subscribe((resultOD) => {
+			// 			//console.log(resultOD);
+			// 			this.populate();
+			// 		});
+			// }
 
-			if (this.show == 4) {
-				this.service
-					.sendOffreDeposee(this.dataSourceODEvFinanciere.data)
-					.subscribe((resultOD) => {
-						//console.log(resultOD);
-						this.populate();
-					});
-			}
+			// if (this.show == 4) {
+			// 	this.service
+			// 		.sendOffreDeposee(this.dataSourceODEvFinanciere.data)
+			// 		.subscribe((resultOD) => {
+			// 			//console.log(resultOD);
+			// 			this.populate();
+			// 		});
+			// }
 
-			if (this.show == 5) {
-				this.service
-					.sendOffreDeposee(this.dataSourceODEvFinale.data)
-					.subscribe((resultOD) => {
-						//console.log(resultOD);
-						this.populate();
-					});
-			}
-			if (this.ParticipantsInternes != null)
-				this.service
-					.sendPICommission(this.ParticipantsInternes)
-					.subscribe((result) => {
-						this.ParticipantsInternes = [];
-						this.PIDatasource = [];
-						this.dataSourcePI = new MatTableDataSource([]);
-					});
-			//console.log("Participants externes : " + JSON.stringify(this.ParticipantsExternes, null, 2));
+			// if (this.show == 5) {
+			// 	this.service
+			// 		.sendOffreDeposee(this.dataSourceODEvFinale.data)
+			// 		.subscribe((resultOD) => {
+			// 			//console.log(resultOD);
+			// 			this.populate();
+			// 		});
+			// }
+			// if (this.ParticipantsInternes != null)
+			// 	this.service
+			// 		.sendPICommission(this.ParticipantsInternes)
+			// 		.subscribe((result) => {
+			// 			this.ParticipantsInternes = [];
+			// 			this.PIDatasource = [];
+			// 			this.dataSourcePI = new MatTableDataSource([]);
+			// 		});
+			// //console.log("Participants externes : " + JSON.stringify(this.ParticipantsExternes, null, 2));
 
 
 
-			
 
-			this.service
-				.sendPE(this.ParticipantsExternes)
-				.subscribe((resultat) => {
-					//console.log("PE resultat : // " + JSON.stringify(resultat, null, 2));
-					//console.log("id commission :: " + this.idCommission)
-					//console.log("PE 1 : // " + JSON.stringify(this.dataSourcePE.data, null, 2));
-					for (var j = 0; j < resultat.length; j++) {
-						this.dataSourcePE.data[j].commission.id =
-							this.idCommission;
-						this.dataSourcePE.data[j].personneExterne.id =
-							resultat[j].id;
-						//this.dataSourcePE.data[j].role.id = resultat[j].id;
-						//console.log("Loop : // " + JSON.stringify(this.dataSourcePE.data[j], null, 2));
-					}
-					this.service
-						.sendPECommission(this.dataSourcePE.data)
-						.subscribe((re) => {
-							//console.log("Final data PE : // " + JSON.stringify(re, null, 2));
-							this.ParticipantsExternes = [];
-							this.dataSourcePE = new MatTableDataSource([]);
-						});
-				});
+
+			// this.service
+			// 	.sendPE(this.ParticipantsExternes)
+			// 	.subscribe((resultat) => {
+			// 		//console.log("PE resultat : // " + JSON.stringify(resultat, null, 2));
+			// 		//console.log("id commission :: " + this.idCommission)
+			// 		//console.log("PE 1 : // " + JSON.stringify(this.dataSourcePE.data, null, 2));
+			// 		for (var j = 0; j < resultat.length; j++) {
+			// 			this.dataSourcePE.data[j].commission.id =
+			// 				this.idCommission;
+			// 			this.dataSourcePE.data[j].personneExterne.id =
+			// 				resultat[j].id;
+			// 			//this.dataSourcePE.data[j].role.id = resultat[j].id;
+			// 			//console.log("Loop : // " + JSON.stringify(this.dataSourcePE.data[j], null, 2));
+			// 		}
+			// 		this.service
+			// 			.sendPECommission(this.dataSourcePE.data)
+			// 			.subscribe((re) => {
+			// 				//console.log("Final data PE : // " + JSON.stringify(re, null, 2));
+			// 				this.ParticipantsExternes = [];
+			// 				this.dataSourcePE = new MatTableDataSource([]);
+			// 			});
+			// 	});
 
 
 
@@ -806,7 +838,7 @@ export class CommissionComponent implements OnInit {
 							if (
 								d[i].noteFinanciere >= offre1.noteFinanciere &&
 								d[i].noteFinanciere <
-									this.OffreAdjucataire.noteFinanciere
+								this.OffreAdjucataire.noteFinanciere
 							) {
 								offre1 = d[i];
 							}
@@ -859,7 +891,7 @@ export class CommissionComponent implements OnInit {
 							if (
 								d[i].noteFinale >= offre1.noteFinale &&
 								d[i].noteFinale <
-									this.OffreAdjucataire.noteFinale
+								this.OffreAdjucataire.noteFinale
 							) {
 								offre1 = d[i];
 							}
@@ -887,7 +919,7 @@ export class CommissionComponent implements OnInit {
 	editCommission(id) {
 		console.log("Commission : " + id);
 		this.router.navigate(["/marches/commission-edit"], {
-			queryParams: { id: id },
+			queryParams: { id: id, idao: this.idao },
 		});
 	}
 	// =================================================================
@@ -912,177 +944,23 @@ export class CommissionComponent implements OnInit {
 	}
 	// Print pv commission
 	printPVCommission(idCommission, type) {
-	//	console.log(type.substring(5, type.length))
+		//	console.log(type.substring(5, type.length))
 		console.log(type)
-	//	type = type.substring(6, type.length);
+		//	type = type.substring(6, type.length);
 
-	
-	if(type==="Etape finale"){
-	
-		this.service.pvCommissionfileGenerator(	"pvfinal/",	idCommission,this.idao).subscribe(
-			(res) => {
-				const file = new Blob([res as unknown as BlobPart], {
-					type: 'application/msword' 
-				});
-				const fileURL = URL.createObjectURL(file);
-				window.open(fileURL);
-				const readfile = URL.createObjectURL(file);
-			const link = document.createElement("a");
-				link.download = "pvfinal.docx";
-			link.href = readfile;
-			link.dispatchEvent(
-				new MouseEvent("click", {
-					bubbles: true,
-					cancelable: true,
-					view: window,
-				})
-			);
-			setTimeout(() => {
-				window.URL.revokeObjectURL(readfile);
-				link.remove();
-			}, 100);
-			},
-			(err) => {
-				console.log(err);
-			});
 
-	}
-	else if(type==="Etape administrative"){
-	
-		this.service.pvCommissionfileGenerator(	"pvAdministratif/",	idCommission,this.idao).subscribe(
-			(res) => {
-				const file = new Blob([res as unknown as BlobPart], {
-					type: 'application/msword' 
-				});
-				const fileURL = URL.createObjectURL(file);
-				window.open(fileURL);
-				const readfile = URL.createObjectURL(file);
-			const link = document.createElement("a");
-				link.download = "certificat_administratif.docx";
-			link.href = readfile;
-			link.dispatchEvent(
-				new MouseEvent("click", {
-					bubbles: true,
-					cancelable: true,
-					view: window,
-				})
-			);
-			setTimeout(() => {
-				window.URL.revokeObjectURL(readfile);
-				link.remove();
-			}, 100);
-			},
-			(err) => {
-				console.log(err);
-			});
+		if (type === "Séance finale") {
 
-	}
-		else  if(type==="Etape d'ouverture des plis"){
-	
-			this.service.pvCommissionfileGenerator(	"pvCommissionOuverturePlis/",	idCommission,this.idao).subscribe(
+			this.service.pvCommissionfileGenerator("pvfinal/", idCommission, this.idao).subscribe(
 				(res) => {
 					const file = new Blob([res as unknown as BlobPart], {
-						type: 'application/msword' 
+						type: 'application/msword'
 					});
 					const fileURL = URL.createObjectURL(file);
 					window.open(fileURL);
 					const readfile = URL.createObjectURL(file);
-				const link = document.createElement("a");
-					link.download = "ouverture des plis.docx";
-				link.href = readfile;
-				link.dispatchEvent(
-					new MouseEvent("click", {
-						bubbles: true,
-						cancelable: true,
-						view: window,
-					})
-				);
-				setTimeout(() => {
-					window.URL.revokeObjectURL(readfile);
-					link.remove();
-				}, 100);
-				},
-				(err) => {
-					console.log(err);
-				});
-
-		}	else if(type==="Etape technique"){
-	
-			this.service.pvCommissionfileGenerator(	"pvCommissionofferTechnique/",	idCommission,this.idao).subscribe(
-				(res) => {
-				const file = new Blob([res as unknown as BlobPart], {
-						type: 'application/msword' 
-					});
-					const fileURL = URL.createObjectURL(file);
-					window.open(fileURL);
-					const readfile = URL.createObjectURL(file);
-				const link = document.createElement("a");
-				link.download = "technique offre technique.docx";
-				link.href = readfile;
-				link.dispatchEvent(
-					new MouseEvent("click", {
-						bubbles: true,
-						cancelable: true,
-						view: window,
-					})
-				);
-				},
-				(err) => {
-					console.log(err);
-				});
-
-		}
-			else if(type==="Etape financière"){
-	
-			this.service.pvCommissionfileGenerator(	"pvCommissionFinance/",	idCommission,this.idao).subscribe(
-				(res) => {
-					const file = new Blob([res as unknown as BlobPart], {
-						type: 'application/msword'  
-					});
-					const fileURL = URL.createObjectURL(file);
-					window.open(fileURL);
-					const readfile = URL.createObjectURL(file);
-				const link = document.createElement("a");
-					link.download = "commission financière  marche.docx";
-				link.href = readfile;
-				link.dispatchEvent(
-					new MouseEvent("click", {
-						bubbles: true,
-						cancelable: true,
-						view: window,
-					})
-				);
-				setTimeout(() => {
-					window.URL.revokeObjectURL(readfile);
-					link.remove();
-				}, 100);
-				},
-				(err) => {
-					console.log(err);
-				});
-
-		}
-		
-	}
-		// Print pv commission
-		printLettreComplement(idCommission, type) {
-			//	console.log(type.substring(5, type.length))
-				console.log(type)
-			//	type = type.substring(6, type.length);
-		
-			
-			
-			
-				this.service.pvCommissionfileGenerator(	"LettreComplement/",	idCommission,this.idao).subscribe(
-					(res) => {
-						const file = new Blob([res as unknown as BlobPart], {
-							type: 'application/msword' 
-						});
-						const fileURL = URL.createObjectURL(file);
-						window.open(fileURL);
-						const readfile = URL.createObjectURL(file);
 					const link = document.createElement("a");
-						link.download = "pvfinal.docx";
+					link.download = "pvfinal.docx";
 					link.href = readfile;
 					link.dispatchEvent(
 						new MouseEvent("click", {
@@ -1095,14 +973,168 @@ export class CommissionComponent implements OnInit {
 						window.URL.revokeObjectURL(readfile);
 						link.remove();
 					}, 100);
-					},
-					(err) => {
-						console.log(err);
+				},
+				(err) => {
+					console.log(err);
+				});
+
+		}
+		else if (type === "Séance administrative") {
+
+			this.service.pvCommissionfileGenerator("pvAdministratif/", idCommission, this.idao).subscribe(
+				(res) => {
+					const file = new Blob([res as unknown as BlobPart], {
+						type: 'application/msword'
 					});
-		
-			
-				
-			}
+					const fileURL = URL.createObjectURL(file);
+					window.open(fileURL);
+					const readfile = URL.createObjectURL(file);
+					const link = document.createElement("a");
+					link.download = "certificat_administratif.docx";
+					link.href = readfile;
+					link.dispatchEvent(
+						new MouseEvent("click", {
+							bubbles: true,
+							cancelable: true,
+							view: window,
+						})
+					);
+					setTimeout(() => {
+						window.URL.revokeObjectURL(readfile);
+						link.remove();
+					}, 100);
+				},
+				(err) => {
+					console.log(err);
+				});
+
+		}
+		else if (type === "Séance d'ouverture des plis") {
+
+			this.service.pvCommissionfileGenerator("pvCommissionOuverturePlis/", idCommission, this.idao).subscribe(
+				(res) => {
+					const file = new Blob([res as unknown as BlobPart], {
+						type: 'application/msword'
+					});
+					const fileURL = URL.createObjectURL(file);
+					window.open(fileURL);
+					const readfile = URL.createObjectURL(file);
+					const link = document.createElement("a");
+					link.download = "ouverture des plis.docx";
+					link.href = readfile;
+					link.dispatchEvent(
+						new MouseEvent("click", {
+							bubbles: true,
+							cancelable: true,
+							view: window,
+						})
+					);
+					setTimeout(() => {
+						window.URL.revokeObjectURL(readfile);
+						link.remove();
+					}, 100);
+				},
+				(err) => {
+					console.log(err);
+				});
+
+		} else if (type === "Séance technique") {
+
+			this.service.pvCommissionfileGenerator("pvCommissionofferTechnique/", idCommission, this.idao).subscribe(
+				(res) => {
+					const file = new Blob([res as unknown as BlobPart], {
+						type: 'application/msword'
+					});
+					const fileURL = URL.createObjectURL(file);
+					window.open(fileURL);
+					const readfile = URL.createObjectURL(file);
+					const link = document.createElement("a");
+					link.download = "technique offre technique.docx";
+					link.href = readfile;
+					link.dispatchEvent(
+						new MouseEvent("click", {
+							bubbles: true,
+							cancelable: true,
+							view: window,
+						})
+					);
+				},
+				(err) => {
+					console.log(err);
+				});
+
+		}
+		else if (type === "Séance financière") {
+
+			this.service.pvCommissionfileGenerator("pvCommissionFinance/", idCommission, this.idao).subscribe(
+				(res) => {
+					const file = new Blob([res as unknown as BlobPart], {
+						type: 'application/msword'
+					});
+					const fileURL = URL.createObjectURL(file);
+					window.open(fileURL);
+					const readfile = URL.createObjectURL(file);
+					const link = document.createElement("a");
+					link.download = "commission financière  marche.docx";
+					link.href = readfile;
+					link.dispatchEvent(
+						new MouseEvent("click", {
+							bubbles: true,
+							cancelable: true,
+							view: window,
+						})
+					);
+					setTimeout(() => {
+						window.URL.revokeObjectURL(readfile);
+						link.remove();
+					}, 100);
+				},
+				(err) => {
+					console.log(err);
+				});
+
+		}
+
+	}
+	// Print pv commission
+	printLettreComplement(idCommission, type) {
+		//	console.log(type.substring(5, type.length))
+		console.log(type)
+		//	type = type.substring(6, type.length);
+
+
+
+
+		this.service.pvCommissionfileGenerator("LettreComplement/", idCommission, this.idao).subscribe(
+			(res) => {
+				const file = new Blob([res as unknown as BlobPart], {
+					type: 'application/msword'
+				});
+				const fileURL = URL.createObjectURL(file);
+				window.open(fileURL);
+				const readfile = URL.createObjectURL(file);
+				const link = document.createElement("a");
+				link.download = "pvfinal.docx";
+				link.href = readfile;
+				link.dispatchEvent(
+					new MouseEvent("click", {
+						bubbles: true,
+						cancelable: true,
+						view: window,
+					})
+				);
+				setTimeout(() => {
+					window.URL.revokeObjectURL(readfile);
+					link.remove();
+				}, 100);
+			},
+			(err) => {
+				console.log(err);
+			});
+
+
+
+	}
 }
 
 export interface Commission {

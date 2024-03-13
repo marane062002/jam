@@ -27,22 +27,42 @@
 					<table class="table">
 						<tbody>
 							<tr>
-								<th>Nom de l'établissement :</th>
-								<td class="donnee_show">{{ etablissementDetails?.nom }}</td>
+								<th>Nature de l'établissement :</th>
+								<td class="donnee_show">{{ natureEtablissement?.natureEtablissement }}</td>
 							</tr>
 							<tr>
 								<th>Type :</th>
 								<td class="donnee_show">{{ etablissementDetails?.typeControleSanitaire.libelle }}</td>
 							</tr>
 							<tr>
-								<th>Description :</th>
-								<td class="donnee_show">{{ etablissementDetails?.description }}</td>
+								<th>Remarque :</th>
+								<td class="donnee_show">{{ etablissementDetails?.remarque }}</td>
 							</tr>
 							<tr>
-								<th>Sous-type :</th>
-								<td class="donnee_show">{{ etablissementDetails?.sousType.libelle }}</td>
+								<th>Mesure prises :</th>
+								<td class="donnee_show">{{ etablissementDetails?.mesuresPrises }}</td>
 							</tr>
-							<tr>?
+							<tr *ngIf="etablissementDetails?.mesuresPrises === 'SaisieDestructions'">
+								<th>Destruction :</th>
+								<td class="donnee_show">{{ etablissementDetails?.saisisDestruction }}</td>
+							</tr>
+							<tr *ngIf="etablissementDetails?.mesuresPrises === 'SaisieDestructions'">
+								<th>Unité :</th>
+								<td class="donnee_show">{{ etablissementDetails?.valeurSaisieDestruction }}</td>
+							</tr>
+							<tr>
+								<th>Etat hygiéne :</th>
+								<td class="donnee_show">{{ etablissementDetails?.etatHygiene }}</td>
+							</tr>
+							<tr>
+								<th>Téléphone :</th>
+								<td class="donnee_show">{{ etablissementDetails?.tel }}</td>
+							</tr>
+							<tr>
+								<th>Adresse :</th>
+								<td class="donnee_show">{{ etablissementDetails?.adresse }}</td>
+							</tr>
+							<tr>
 								<th>Commune :</th>
 								<td class="donnee_show">{{ etablissementDetails?.commune.libelle }}</td>
 							</tr>
@@ -55,65 +75,95 @@
 								<td class="donnee_show">{{ etablissementDetails?.quartier.libelle }}</td>
 							</tr>
 							<tr>
-								<th>Activités :</th>
-								<td class="donnee_show">{{ etablissementDetails?.activite }}</td>
+								<th>Contreleur :</th>
+								<td class="donnee_show">{{ etablissementDetails?.controleur.prenom }} {{ etablissementDetails?.controleur.nom }}</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				<div class="col-md-6 show_port">
-					<table class="table">
-						<tbody>
-							<tr>
-								<th>Tél :</th>
-								<td class="donnee_show">{{ etablissementDetails?.tel }}</td>
-							</tr>
-							<tr>
-								<th>Fax :</th>
-								<td class="donnee_show">{{ etablissementDetails?.fax }}</td>
-							</tr>
-							<tr>
-								<th>Date de création :</th>
-								<td class="donnee_show">{{ etablissementDetails?.dateCreation }}</td>
-							</tr>
-							<tr>
-								<th>Propriétaire :</th>
-								<td class="donnee_show">{{etablissementDetails?.prenomProp}} {{ etablissementDetails?.nomProp }}</td>
-							</tr>
-							<tr>
-								<th>CIN Propriétaire :</th>
-								<td class="donnee_show">{{etablissementDetails?.cinPro}}</td>
-							</tr>
-							<tr>
-								<th>RS :</th>
-								<td class="donnee_show">{{etablissementDetails?.rs}}</td>
-							</tr>
-							<tr>
-								<th>RC :</th>
-								<td class="donnee_show">{{etablissementDetails?.rc}}</td>
-							</tr>
-							<tr>
-								<th>IF :</th>
-								<td class="donnee_show">{{etablissementDetails?.ifiscal}}</td>
-							</tr>
-							<tr>
-								<th>Adresse :</th>
-								<td class="donnee_show">{{etablissementDetails?.adresse}}</td>
-							</tr>
-						</tbody>
-					</table>
+				<div class="kt-portlet portlet-1 col-md-6">
+					<div class="kt-portlet__head kt-bg-portlet-2">
+						<div class="kt-portlet__head-label">
+							&nbsp;
+							<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+								Informations de détaillées - <b>{{etablissementDetails?.proprGerant}}</b>
+							</h2>
+						</div>
+					</div>
+					<div  class="kt-portlet__body">
+						<div  *ngIf="etablissementDetails?.proprGerant === 'GERANT'" class="row">
+							<div class="col-md-12 show_port">
+								<table *ngIf="etablissementDetails?.personne === 'PHYSIQUE'" class="table">
+									<tbody>
+										<tr>
+											<th>Nom :</th>
+											<td class="donnee_show"> {{ etablissementDetails?.nomGerant }}</td>
+										</tr>
+										<tr>
+											<th>Prénom :</th>
+											<td class="donnee_show">{{etablissementDetails?.prenomGerant}}</td>
+										</tr>
+										<tr>
+											<th>CIN :</th>
+											<td class="donnee_show">{{etablissementDetails?.cinGerant}}</td>
+										</tr>
+										<!-- <tr>
+											<th>Tél :</th>
+											<td class="donnee_show">{{etablissementDetails?.telProp}}</td>
+										</tr> -->
+									</tbody>
+								</table>
+
+								<table *ngIf="etablissementDetails?.personne === 'MORALE'" class="table">
+									<tbody>
+										<tr>
+											<th>Registre de commerce :</th>
+											<td class="donnee_show"> {{ etablissementDetails?.rc }}</td>
+										</tr>
+										<tr>
+											<th>Nom :</th>
+											<td class="donnee_show">{{etablissementDetails?.nomGerant}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div  *ngIf="etablissementDetails?.proprGerant === 'Proprietaire'" class="row">
+							<div class="col-md-12 show_port">
+								<table class="table">
+									<tbody>
+										<tr>
+											<th>Nom :</th>
+											<td class="donnee_show"> {{ etablissementDetails?.nomProp }}</td>
+										</tr>
+										<tr>
+											<th>Prénom :</th>
+											<td class="donnee_show">{{etablissementDetails?.prenomProp}}</td>
+										</tr>
+										<tr>
+											<th>CIN :</th>
+											<td class="donnee_show">{{etablissementDetails?.cinPro}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="row justify-content-center">
+<!-- <div class="row justify-content-center">
 	<div class="kt-portlet portlet-1 col-md-6">
 		<div class="kt-portlet__head kt-bg-portlet-2">
 			<div class="kt-portlet__head-label">
 				&nbsp;
 				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
-					Informations de propriétaires
+					Informations de détaillées
 				</h2>
 			</div>
 		</div>
@@ -181,7 +231,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 <div class="kt-portlet__heads">
 	<div class="kt-portlet__head-label" align="right">
 		<button

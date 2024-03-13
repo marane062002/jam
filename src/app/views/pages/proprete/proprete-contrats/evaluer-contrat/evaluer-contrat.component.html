@@ -1,0 +1,91 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Clause de contrat
+			</h2>
+		</div>
+	</div>
+</div>
+<div class="row">
+<div class="col-md-6 ">
+ 					<div class="form-group">
+					 						<div class="input-group date">
+					 							<mat-form-field class="example-full-width">
+					 								<label> Clauses: </label>
+					 								<mat-select [formControl]="objetControl" matNativeControl multiple class="form-control" [compareWith]="compareFn">
+														<mat-option *ngFor="let clause of clause" [value]="clause.id">
+														  {{ clause.clause }}
+														</mat-option>
+													  </mat-select>
+													  
+					 							</mat-form-field>
+					 						</div>
+					 					</div>
+					 				</div>
+									
+									 <form #newClauseForm="ngForm" (ngSubmit)="addNewClause(newClauseForm)" class="col-md-6">
+										<div class="row">
+											<div class="col-md-8">
+												<div class="form-group fv-plugins-icon-container">
+													<mat-form-field class="example-full-width">
+														<label>Nouveau clause: </label>
+														<input
+															[(ngModel)]="newClause"
+															matInput
+															type="text"
+															class="form-control form-control-solid form-control-lg"
+															name="address1"
+														/>
+													</mat-form-field>
+													<div class="fv-plugins-message-container"></div>
+												</div>
+											</div>
+										<div class="col-md-4 mt-5 p-4">
+										<button type="submit" class="btn btn-success"> <i class="la la-plus"></i></button>
+									</div>
+									</div>
+								</form>
+			</div>
+<!-- <div class="row">
+    <div class="col-md-12">
+        <table class="table pj">
+            <tbody>
+                
+				
+				
+               
+
+				<td colspan="2">
+					
+				</td>
+				<button type="submit" (click)="getChecked()" class="btn btn-success">Get checked</button>
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+
+
+<div class="kt-portlet__heads pt-5">
+	<div class="kt-portlet__head-label" align="right">
+		<button
+			href="javascript:; "
+			(click)="backList()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+		>
+			<i _ngcontent-dkp-c41="" class="la la-recycle"></i>
+			Retour
+		</button>
+		<button
+		   (click)="onSubmit()"
+			_ngcontent-dkp-c41=""
+			class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+			type="submit"
+		>
+			<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+			Enregistrer
+		</button>
+	</div>
+</div>

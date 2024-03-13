@@ -1,0 +1,7 @@
+/* Adjust the size of the dialog */
+::ng-deep .mat-dialog-container {
+    max-width: 600px; /* Adjust the width as needed */
+    min-width: 400px; /* Adjust the minimum width as needed */
+    width: auto;
+    padding: 24px;
+}

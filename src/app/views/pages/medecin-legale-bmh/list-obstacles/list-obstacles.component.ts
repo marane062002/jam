@@ -60,7 +60,6 @@ export class ListObstaclesComponent implements OnInit {
 
 		// this.service.getAll().subscribe((res) => {
 		// 	this.obstacle = res;
-		// 	debugger;
 		// this.totalRecords=res.length
 		// 	console.log(this.obstacle.length);
 		// }); 
@@ -87,7 +86,7 @@ export class ListObstaclesComponent implements OnInit {
 		const endIndex = startIndex + pageSize;
 
 		this.httpClient.get<any[]>(`${this.baseUrl}defunt/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// debugger
+			// 
 			this.obstacle = response.content;
 			this.dataSource.data = response.content;
 			this.totalRecords = response.totalElements;

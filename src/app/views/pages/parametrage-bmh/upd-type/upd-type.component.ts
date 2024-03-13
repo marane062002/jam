@@ -49,6 +49,7 @@ export class UpdTypeComponent implements OnInit {
     this.service.editType(this.FormArticle.value.id,this.FormArticle.value).subscribe(
       (res) => {
         console.log('Type mis à jour avec succès :', res);
+        this.RetourEmbalages()
       },
       (err) => {
         console.error('Erreur lors de la mise à jour du type :', err);

@@ -173,7 +173,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 <!-- end:: Content -->
 
@@ -306,11 +306,18 @@
                                         class="flaticon-download-1"></i></button>
 
                                 <!-- *** pdf viewer action *** -->
-                                <button type="button" (click)="openDialog(item.idAlfresco,detailscourrier.numero)"
+                                <!-- <button type="button" (click)="openDialog(item.idAlfresco,detailscourrier.numero)"
                                     class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md"
                                     matTooltip="{{ 'PAGES.ATTCHEMENTS.VISUALISER' | translate }}"><i
-                                        class="fas fa-eye"></i></button>
+                                        class="fas fa-eye"></i></button> -->
+                                        <button type="button" *ngIf="getExtension(item.name)=='pdf.svg'" (click)="openDialog(item.idAlfresco,detailscourrier.numero)"
+                                        class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md"
+                                        matTooltip="{{ 'PAGES.ATTCHEMENTS.VISUALISER' | translate }}"><i
+                                            class="fas fa-eye"></i></button>
 
+                                        <button href="javascript:;" *ngIf="getExtension(item.name)=='jpg.svg'"(click)="constration(item)" type="button" class="btn btn_table_print btn-sm btn-clean btn-icon btn-icon-md" matTooltip="{{ 'PAGES.GENERAL.DETAILS' | translate }}">
+                                                <i class="icon fa fa-eye"></i>
+                                            </button>
                                 <!-- *** end action pdf viewer *** -->
 
 

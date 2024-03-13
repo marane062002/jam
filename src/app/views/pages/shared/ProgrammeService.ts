@@ -16,7 +16,7 @@ export class ProgrammeService {
 		return this.http.post<any[]>(this.baseUrl + "new", convention, { responseType: 'text' as 'json' });
 	}
 
-	getByIdFiles(f:number): Observable<any> {
+	getByIdFiles(f: number): Observable<any> {
 		return this.http.get<Observable<any>>(this.baseUrl1 + "/Allpjs/" + f);
 	}
 
@@ -41,26 +41,27 @@ export class ProgrammeService {
 					const url = window.URL.createObjectURL(blob);
 					window.open(url);
 				}
-				if(a=='xls.svg'){
+				if (a == 'xls.svg') {
 					const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 					const url = window.URL.createObjectURL(blob);
 					window.open(url);
 				}
-				if(a=='doc.svg'){
+				if (a == 'doc.svg') {
 					const blob = new Blob([data], { type: 'application/msword' });
 					const url = window.URL.createObjectURL(blob);
 					window.open(url);
 				}
-			    if(a=='jpg.svg'){					const blob = new Blob([data], { type: 'image/jpeg' });
+				if (a == 'jpg.svg') {
+					const blob = new Blob([data], { type: 'image/jpeg' });
 					const url = window.URL.createObjectURL(blob);
 					window.open(url);
 				}
-				if(a=='csv.svg'){
+				if (a == 'csv.svg') {
 					const blob = new Blob([data], { type: 'text/csv' });
 					const url = window.URL.createObjectURL(blob);
 					window.open(url);
 				}
-				
+
 			});
 	}
 
@@ -114,26 +115,32 @@ export class ProgrammeService {
 		return this.http.get<any[]>(this.baseUrl + "byDateFin/" + year + "?page=" + page + "&size=" + size);
 	}
 
+
+	research3(year1: any, year2: any, page, size) {
+		return this.http.get<any[]>(this.baseUrl + "byDateAndDateFin/" + year1 + "/" + year2 + "?page=" + page + "&size=" + size);
+	}
+
 	allChefProjets() {
 		return this.http.get<any[]>(this.baseUrl + "chefProjets");
 	}
 
-	allNatures() {
-		return this.http.get<any[]>(this.baseUrl + "nature");
-	}
+
 
 	allChefProjetsAr() {
 		return this.http.get<any[]>(this.baseUrl + "chefProjetsAr");
 	}
 
-	allNaturesAr() {
-		return this.http.get<any[]>(this.baseUrl + "natureAr");
-	}
+
 
 	allOrientationStrategique() {
 		return this.http.get<any[]>(this.baseUrl + "orientationStrategique");
 	}
-
+	allnameProjet() {
+		return this.http.get<any[]>(this.baseUrl + "nameProjet");
+	}
+	allnameProjetAr() {
+		return this.http.get<any[]>(this.baseUrl + "nameProjetAr");
+	}
 	allObjectifStrategique() {
 		return this.http.get<any[]>(this.baseUrl + "objectifStrategique");
 	}

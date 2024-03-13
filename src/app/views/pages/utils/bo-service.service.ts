@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { Observable, forkJoin, throwError } from "rxjs";
 import { environment } from "./../../../../environments/environment";
 import * as XLSX from "xlsx";
@@ -19,6 +19,7 @@ const httpOptions = {
 const BACKEND_URL = environment.API_BUREAU_ORDRE_URL;
 const BACKEND_URL_P = environment.personnelUrl;
 const GED_URL = environment.API_ALFRESCO_URL;
+export type EntityResponseType = HttpResponse<any>;
 
 @Injectable({
 	providedIn: "root",
@@ -219,14 +220,45 @@ export class BoServiceService {
 		console.log("taille de fichier :" + v.length);
 		console.log('id file ' + id);
 		const formda: FormData = new FormData();
-		for (var i = 0; i < v.length; i++) {
-			formda.append("file", v[i]);
-		}
+			formda.append("file", v);
 
 		formda.append("id", id);
+		
 		return this.http.post<any>(this.AlfrescoURL + "/PjCourriersEntrants/multiplefile", formda, { responseType: 'blob' as 'json' });
 	}
+	uploadSejoursScan(data:any,res:any): Observable<EntityResponseType> {
+		
 
+		// const headers = new HttpHeaders().set("Access-Control-Allow-Origin", "*");
+
+		return this.http.post<any>(`${this.AlfrescoURL}/PjCourriersEntrants/base64ToFile?id=`+res, data, {
+			observe: "response",
+			reportProgress: true,
+		});
+	}
+	uploadSejoursScanCS(data:any,res:any): Observable<EntityResponseType> {
+		
+
+		// const headers = new HttpHeaders().set("Access-Control-Allow-Origin", "*");
+
+		return this.http.post<any>(`${this.AlfrescoURL}/PjCourriersSortants/base64ToFile?id=`+res, data, {
+			observe: "response",
+			reportProgress: true,
+		});
+	}
+	uploadSejours(file: File, fileName?: string, data?: any): Observable<EntityResponseType> {
+		const formData = new FormData();
+
+		formData.append("file", file);
+		formData.append("fulname", fileName);
+		formData.append("id", data.id);
+
+
+		return this.http.post<any>(`${this.AlfrescoURL}upload-sejours`, formData, {
+			observe: "response",
+			reportProgress: true,
+		});
+	}
 	// ====================================
 	// Multiple Upload file / speciale case
 	// ====================================
@@ -263,9 +295,8 @@ export class BoServiceService {
 	// ==================== pour le test
 	updloadFiles2(v, id): Observable<any> {
 		const formda: FormData = new FormData();
-		for (var i = 0; i < v.length; i++) {
-			formda.append("file", v[i]);
-		}
+			formda.append("file", v);
+		
 		formda.append("id", id);
 		return this.http.post<any>(
 			this.AlfrescoURL + "/PjCourriersSortants/multiplefile",
@@ -474,7 +505,20 @@ export class BoServiceService {
 		queryParams = queryParams.append("dateFin", dateFin);
 		return this.http.get<any[]>(this.apiURL + url + idPersonne + '?dateDebut=' + dateDebut + '&dateFin=' + dateFin);
 	}
-
+	countCourriersConvocationCloturerParPersonneBetweenTwoDates(url, idPersonne, dateDebut, dateFin): Observable<any> {
+		let queryParams = new HttpParams();
+		queryParams = queryParams.append("id_personne", idPersonne);
+		queryParams = queryParams.append("dateDebut", dateDebut);
+		queryParams = queryParams.append("dateFin", dateFin);
+		return this.http.get<any[]>(this.apiURL + url + idPersonne + '?dateDebut=' + dateDebut + '&dateFin=' + dateFin);
+	}
+	countCourriersEntrantsCloturerParPersonneBetweenTwoDates(url, idPersonne, dateDebut, dateFin): Observable<any> {
+		let queryParams = new HttpParams();
+		queryParams = queryParams.append("id_personne", idPersonne);
+		queryParams = queryParams.append("dateDebut", dateDebut);
+		queryParams = queryParams.append("dateFin", dateFin);
+		return this.http.get<any[]>(this.apiURL + url + idPersonne + '?dateDebut=' + dateDebut + '&dateFin=' + dateFin);
+	}
 
 	countCourriersParPersonneBetweenTwoDatesParTypeCourrier(url, idPersonne, dateDebut, dateFin,idType): Observable<any> {
 		let queryParams = new HttpParams();
@@ -490,7 +534,12 @@ export class BoServiceService {
 
 			return this.http.get<any[]>(`${path}`);
 	}
+	findCSByMotCle(pageable: Pageable, motCle:any,id:number){
+		let path = this.apiURL + '/courrierSortants/findBymotCle'+  '?page=' + pageable.pageNumber
+			+ '&size=' + pageable.pageSize+ '&sort=id,desc'+ `${id ? '&idPersonne=' + id : ''}`+`${motCle ? '&motCle=' + motCle : ''}` 
 
+			return this.http.get<any[]>(`${path}`);
+	}
 	downoldFile(alfresco_id, a) {
 		const options = {
 
@@ -518,7 +567,8 @@ export class BoServiceService {
 					const url = window.URL.createObjectURL(blob);
 					window.open(url);
 				}
-			    if(a=='jpg.svg'){					const blob = new Blob([data], { type: 'image/jpeg' });
+			    if(a=='jpg.svg'){	
+									const blob = new Blob([data], { type: 'image/jpeg' });
 					const url = window.URL.createObjectURL(blob);
 					window.open(url);
 				}

@@ -75,7 +75,9 @@ export class ListProgrammeComponent implements OnInit {
 		this.dataSource.paginator = this.paginator;
 		this.loadData(this.currentPage, this.pageSize);
 	}
-
+	formatDate(date: any): string {
+		return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
+	}
 	onPaginatorChange(event: PageEvent): void {
 		this.currentPage = event.pageIndex;
 		this.pageSize = event.pageSize;

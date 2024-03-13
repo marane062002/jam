@@ -14,6 +14,7 @@ import { first, delay } from "rxjs/operators";
 import { BoServiceService } from "../../../utils/bo-service.service";
 import { NotificationService } from '../../../shared/notification.service';
 import { TranslateService } from '@ngx-translate/core';
+import Swal from "sweetalert2";
 @Component({
 	selector: "kt-add-partenaires-externe",
 	templateUrl: "./add-partenaires-externe.component.html",
@@ -99,26 +100,55 @@ export class AddPartenairesExterneComponent implements OnInit {
 	// ====================================
 	//
 	//=====================================
-	onEdit(partner: any): void {
-		window.localStorage.removeItem("partnerId");
-		window.localStorage.setItem("partnerId", partner.id.toString());
-		this.router.navigate(["partenaires-externe/edit-destinataire"]);
+	onEdit(id: any): void {
+		// window.localStorage.removeItem("partnerId");
+		// window.localStorage.setItem("partnerId", partner.id.toString());
+		this.router.navigate(["partenaires-externe/edit-destinataire"],{
+			queryParams: { id: id },
+		});
 	}
 	// ====================================
 	//
 	//=====================================
+	// onDelete(id: number) {
+	// 	if (confirm(this.translate.instant("PAGES.GENERAL.MSG_DELETED"))) {
+	// 		this.service
+	// 			.deleteObject("/partenaire/delete/", id)
+	// 			.subscribe((data) => {
+	// 				console.log("getId :" + id);
+	// 				this.getData();
+	// 			});
+	// 		this.notification.warn(
+	// 			this.translate.instant("PAGES.GENERAL.MSG_DEL_CONFIRMED")
+	// 		);
+	// 	}
+	// }
+
 	onDelete(id: number) {
-		if (confirm(this.translate.instant("PAGES.GENERAL.MSG_DELETED"))) {
-			this.service
-				.deleteObject("/partenaire/delete/", id)
-				.subscribe((data) => {
-					console.log("getId :" + id);
-					this.getData();
-				});
-			this.notification.warn(
-				this.translate.instant("PAGES.GENERAL.MSG_DEL_CONFIRMED")
-			);
-		}
+		Swal.fire({
+			title: this.translate.instant("PAGES.GENERAL.MSG_DELETED"),
+			icon: 'question',
+			iconHtml: '؟',
+			showCancelButton: true,
+			showCloseButton: true,
+			confirmButtonText: 'نعم',
+			cancelButtonText: 'لا',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				this.service
+					.deleteObject("/destinataireCourriersSortant/delete/", id)
+					.subscribe((data) => {
+						Swal.fire({
+							position: 'center',
+							icon: 'success',
+							title: this.translate.instant("PAGES.GENERAL.MSG_DEL_CONFIRMED"),
+							showConfirmButton: false,
+							timer: 1500
+						})
+						this.getData();
+					});
+			}
+		})
 	}
 	// =================================================================
 	// Recuperer tous les destinataire des courriers entrants
@@ -132,8 +162,9 @@ export class AddPartenairesExterneComponent implements OnInit {
 		}
 		const _this = this;
 		//document.getElementById("destinataire").style.display = "none";
+		
 		this.service
-			.getAllObjectById("/partenaire/find/", courrierId)
+			.getAllObjectById("/destinataireCouriersSortant/find/", courrierId)
 			.pipe(delay(300))
 			.subscribe(
 				(data) => {
@@ -145,6 +176,7 @@ export class AddPartenairesExterneComponent implements OnInit {
 					}
 					this.loading = false;
 					this.dataSource = new MatTableDataSource(data);
+					
 					this.paginator._intl.itemsPerPageLabel = this.translate.instant(
 						"PAGES.GENERAL.ITEMS_PER_PAGE_LABEL"
 					);
@@ -194,6 +226,7 @@ export class AddPartenairesExterneComponent implements OnInit {
 	dispatching() {
 		console.log("statut :" + JSON.stringify(this.editForm.value, null, 2));
 		this.btnloading = true;
+		
 		this.service
 			.updateObject(
 				"/courrierSortants/dispatching/",

@@ -9,7 +9,7 @@
 							<i class="flaticon-multimedia-2"></i>
 						</span> &nbsp;
                         <h3 class="kt-portlet__head-title kt-font-inverse-brand">
-                            {{ 'PAGES.BUREAU_ORDRE.COURRIER_ENTRANT.TITRE_SHOW' | translate }}
+                            INFORMATION SUR LE COURRIER SORTANT
                         </h3>
                     </div>
                 </div>
@@ -102,14 +102,14 @@
                                 <ng-container matColumnDef="partenaire">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
                                         {{ 'PAGES.BUREAU_ORDRE.PARTENAIRE' | translate }} </th>
-                                    <td mat-cell *matCellDef="let row"> {{row?.partenaire?row.partenaire:'---'}} </td>
+                                    <td mat-cell *matCellDef="let row"> {{row?.raisonSociale?row.raisonSociale:'---'}} </td>
                                 </ng-container>
 
 
                                 <ng-container matColumnDef="actions">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                                     <td mat-cell *matCellDef="let row">
-                                        <button type="button" (click)="onEdit(row)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
+                                        <button type="button" (click)="onEdit(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit" matTooltip="{{ 'PAGES.GENERAL.EDIT' | translate }}"><i
 												class="icon la la-edit"></i></button>
                                         <button type="button" (click)="onDelete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete" matTooltip="{{ 'PAGES.GENERAL.DELETE' | translate }}"><i
 												class="icon la la-trash"></i></button>

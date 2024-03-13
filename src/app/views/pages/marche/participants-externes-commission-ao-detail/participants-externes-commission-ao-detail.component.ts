@@ -15,6 +15,7 @@ export class ParticipantsExternesCommissionAoDetailComponent implements OnInit {
   dataSize: number = 0;
   isLoading = true;
   idao;
+  typeCommission
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumnsPE = ['nom', 'organisme', 'tele', 'role', 'present', 'justif', 'actions'];
@@ -36,18 +37,21 @@ export class ParticipantsExternesCommissionAoDetailComponent implements OnInit {
   // =================================================================
   getParticipants() {
     const _this = this;
-    this.activatedRoute.queryParams.subscribe(params => {
+    /* this.activatedRoute.queryParams.subscribe(params => {
       this.idao = params['id'];
-    });
-    this.service.getPEbyAo(this.idao).then(data => {
-      this.TypeCommission = data[0].commission.typeCommission.id;
-      _this.dataSize = data.length;
-      this.isLoading = false;
-      this.dataSourcePE = new MatTableDataSource(data);
+    }); */
+    this.service.data$.subscribe(res=>this.typeCommission=res);
+
+    this.service.data$.subscribe(res=>this.idao=res);
+    this.service.getPEbyEtatMembre('MEMBRE_NON_TECHNIQUE',this.idao).then(data => {
+            // this.TypeCommission = data[0].commission.typeCommission.id;
+            _this.dataSize = data.totalElements;
+            this.isLoading = false;
+      this.dataSourcePE = new MatTableDataSource(data.content);
     }, (err) => {
       _this.dataSize = 0;
       console.log(err);
-      this.isLoading = false;
+      this.isLoading = false; 
     })
   }
   /**
@@ -59,13 +63,17 @@ export class ParticipantsExternesCommissionAoDetailComponent implements OnInit {
   // type commission : 1: overture des plis, 2:Administratif, 3: technique, 4: financier, 5: final
   // generer une convoation
   convocation(idCommission,nom,prenom) {
+    this.service.data$.subscribe(res=>this.typeCommission=res);
+
+    this.service.getPEbyEtatMembre('MEMBRE_NON_TECHNIQUE',idCommission).then(data => {
+
     console.log("id Comm :: " + this.idao + " / "+ idCommission)
-    this.service.getPEbyAo(idCommission).then(data => {
+    // this.service.getPEbyAo(idCommission).then(data => {
       let fullname = nom + " " + prenom; 
       console.log("participant :: " + fullname)
-      let idAo = data[0].commission.ao.id;
-      let etape = data[0].commission.typeCommission.id;
-      this.convocationTraitement(idAo,fullname,etape);
+      let idAo = data.content[0].ao.id;
+      // let etape = data[0].commission.typeCommission.id;
+      this.convocationTraitement(idAo,fullname,this.typeCommission);
     }, (err) => {
       console.log(err);
     })
@@ -75,8 +83,8 @@ export class ParticipantsExternesCommissionAoDetailComponent implements OnInit {
   	// ================================================================
 	//
 	// ================================================================
-	convocationTraitement(idAo,participant,etape) {
-		this.service.convocationCommissionAoGenerator("convocationCommissionAo/", idAo, participant,etape).subscribe((res) => {
+	convocationTraitement(idAo,participant,type) {
+		this.service.convocationCommissionAoGenerator("convocationCommissionAo/", idAo, participant,type).subscribe((res) => {
 			const file = new Blob([(res as unknown) as BlobPart], {
 				type: "application/pdf",
 			});

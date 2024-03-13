@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "../../../../../environments/environment";
 import { FormControl } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { InterfaceArrondissement } from "../../parametrage-bmh/list-arrondissement/list-arrondissement.component";
+import Swal from "sweetalert2";
 @Component({
 	selector: "kt-upd-etablissement",
 	templateUrl: "./upd-etablissement.component.html",
@@ -12,10 +14,10 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class UpdEtablissementComponent implements OnInit {
 	Visible: any = 0;
 	typeControl = new FormControl();
-	stypeControl = new FormControl();
 	communeControl = new FormControl();
 	quartierControl = new FormControl();
 	arrondissementControl = new FormControl();
+	controleurControl=new FormControl();
 
 	etablissementId: number;
     etablissementDetails: any;
@@ -23,29 +25,32 @@ export class UpdEtablissementComponent implements OnInit {
 		'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
-	rs: any;
+	  
+	denomination:string;
+	natureEtablissement:any;
+	remarque:string;
+	mesuresPrises:any;
+	saisisDestruction: any;
+	valeurSaisieDestruction:any;
+	etatHygiene:string;
 	rc: any;
 	nom: any;
 	prenom: any;
 	cin: any;
-	description: any;
-	activites: any;
 	tel: any;
-	fax: any;
-	nomprop: any;
-	prenomprop: any;
-	cinprop: any ;
-	telprop: any;
-	nomgerant: any;
-	prenomgerant: any;
-	cingerant: any;
-	telgerant: any;
-	idf: any;
+	nomProp: any;
+	prenomProp: any;
+	cinPro: any ;
+	nomGerant: any;
+	prenomGerant: any;
+	cinGerant: any;
 	adresse: any;
-	checkedChoisi: any;
+	personne:any;
+	proprGerant:any;
+	date=new Date();
   
 	types: any[] = [];
-	stypes: any[] = [];
+	controleur:any[]=[];
 	commune: any[] = [];
 	quartier: any[] = [];
 	arrondissement: any[] = [];
@@ -57,10 +62,10 @@ export class UpdEtablissementComponent implements OnInit {
   
 	ngOnInit(): void {
 	  this.fetchTypes();
-	  this.SousTypes();
 	  this.fetchCommune();
 	  this.fetchQuartier();
 	  this.fetchArrondissement();
+	  this.fetchControleur()
 	  this.route.params.subscribe((params) => {
 		this.etablissementId = +params['id']; 
 	  });
@@ -74,32 +79,32 @@ export class UpdEtablissementComponent implements OnInit {
 		  (response) => {
 			this.etablissementDetails = response;
 			console.log("Etablissement Details:", this.etablissementDetails);
-			this.description = this.etablissementDetails.description;
-			this.nom = this.etablissementDetails.nom;
-			this.prenom = this.etablissementDetails.prenom;
-
+			this.remarque = this.etablissementDetails.remarque;
+			this.mesuresPrises = this.etablissementDetails.mesuresPrises;
+			this.saisisDestruction = this.etablissementDetails.saisisDestruction;
+            this.natureEtablissement = this.etablissementDetails.natureEtablissement;
 			this.rc = this.etablissementDetails.rc;
-			this.rs = this.etablissementDetails.rs;
+			this.valeurSaisieDestruction = this.etablissementDetails.valeurSaisieDestruction;
 
-			this.cin = this.etablissementDetails.cin;
+			this.etatHygiene = this.etablissementDetails.etatHygiene;
 			this.tel = this.etablissementDetails.tel;
-			this.fax = this.etablissementDetails.fax;
-		    this.adresse = this.etablissementDetails.adresse;
-			this.activites = this.etablissementDetails.activite;
-			this.idf = this.etablissementDetails.ifiscal;
+			this.nomProp = this.etablissementDetails.nomProp;
+		    this.prenomProp = this.etablissementDetails.prenomProp;
+			this.cinPro = this.etablissementDetails.cinPro;
+			this.nomGerant = this.etablissementDetails.nomGerant;
 			// INFOS PROPRIETAIRE //
-			this.nomprop = this.etablissementDetails.nomProp;
-			this.prenomprop = this.etablissementDetails.prenomProp;
-			this.cinprop = this.etablissementDetails.cinPro;
-			this.telprop = this.etablissementDetails.telProp;
+			this.prenomGerant = this.etablissementDetails.prenomGerant;
+			this.cinGerant = this.etablissementDetails.cinGerant;
+			this.adresse = this.etablissementDetails.adresse;
+			this.personne = this.etablissementDetails.personne;
             // INFOS GERANT //
-			this.nomgerant = this.etablissementDetails.nomGerant;
-			this.prenomgerant = this.etablissementDetails.prenomGerant;
-			this.cingerant = this.etablissementDetails.cinGerant;
-			this.telgerant =this.etablissementDetails.telGerant;
+			this.proprGerant = this.etablissementDetails.proprGerant;
+			// this.prenomgerant = this.etablissementDetails.prenomGerant;
+			// this.cingerant = this.etablissementDetails.cinGerant;
+			// this.telgerant =this.etablissementDetails.telGerant;
 
 			this.typeControl.setValue(this.etablissementDetails.typeControleSanitaire.id);
-			this.stypeControl.setValue(this.etablissementDetails.sousType.id);
+			this.controleurControl.setValue(this.etablissementDetails.controleur.id);
 		    this.communeControl.setValue(this.etablissementDetails.commune.id);
 			this.arrondissementControl.setValue(this.etablissementDetails.arrondissement.id);
 			this.quartierControl.setValue(this.etablissementDetails.quartier.id);
@@ -144,7 +149,16 @@ export class UpdEtablissementComponent implements OnInit {
 		}
 	  );
 	}
-  
+	private fetchControleur(): void {
+		this.httpClient.get<any[]>(`${this.baseUrl}controleur`,{ headers: this.headers }).subscribe(
+		  (response) => {
+			this.controleur = response;
+		  },
+		  (error) => {
+			console.error("Error fetching controleur:", error);
+		  }
+		);
+	  }
 	private fetchArrondissement(): void {
 	  this.httpClient.get<any[]>(`${this.baseUrl}arrondissement`,{ headers: this.headers }).subscribe(
 		(response) => {
@@ -159,53 +173,85 @@ export class UpdEtablissementComponent implements OnInit {
 	private SousTypes(): void {
 	  this.httpClient.get<any[]>(`${this.baseUrl}soustype`,{ headers: this.headers }).subscribe(
 		(response) => {
-		  this.stypes = response;
+		//   this.stypes = response;
 		},
 		(error) => {
 		  console.error("Error fetching types:", error);
 		}
 	  );
 	}
+
    
 	updateEtab(): void {
 	  const data: any = {
-		  description: this.description,
-		  activite: this.activites,
-		  tel: this.tel,
-		  fax: this.fax,
-		  ifiscal: this.idf,
-		  adresse: this.adresse,
-		  personne: this.etablissementDetails.personne,
-		  nomProp: this.nomprop,
-		  prenomProp: this.prenomprop,
-		  cinPro: this.cinprop,
-		  telProp: this.telprop,
-		  nomGerant: this.nomgerant,
-		  prenomGerant: this.prenomgerant,
-		  cinGerant: this.cingerant,
-		  telGerant: this.telgerant, 
-		  typeControleSanitaire : { id: this.typeControl.value },
-		  sousType : { id: this.stypeControl.value },
-		  commune : { id: this.communeControl.value },
-		  arrondissement : { id: this.arrondissementControl.value },
-		  quartier : { id: this.quartierControl.value }
+		denomination:this.denomination,
+      natureEtablissement:this.natureEtablissement,
+      remarque:this.remarque,
+      mesuresPrises:this.mesuresPrises,
+      saisisDestruction:this.saisisDestruction,
+      valeurSaisieDestruction:this.valeurSaisieDestruction,
+      etatHygiene:this.etatHygiene,
+      personne:this.personne,
+      proprGerant:this.proprGerant,
+        tel: this.tel,
+        adresse: this.adresse,
+        nomProp: this.nomProp,
+        prenomProp: this.prenomProp,
+        cinPro: this.cinPro,
+        nomGerant: this.nomGerant,
+        prenomGerant: this.prenomGerant,
+        cinGerant: this.cinGerant,
+        date:this.date,
+		typeControleSanitaire : { id: this.typeControl.value },
+		commune : { id: this.communeControl.value },
+		arrondissement : { id: this.arrondissementControl.value },
+		quartier : { id: this.quartierControl.value },
+		controleur : { id: this.controleurControl.value }
 	  };
   
-	  if (this.etablissementDetails.personne === "MORALE") {
-		  data.rs = this.rs;
-		  data.rc = this.rc;
-	  } else if (this.etablissementDetails.personne === "PHYSIQUE") {
-		  data.nom = this.nom;
-		  data.prenom = this.prenom;
-		  data.cin = this.cin;
+	  if(this.proprGerant==="Proprietaire"){
+      
+		data.nomProp=this.nomProp;  
+		data.prenomProp=this.prenomProp;  
+		data.cinPro=this.cinPro;
+	  }else{
+		data.nomGerant=this.nomGerant;
+		data.rc=this.rc;
 	  }
+	  if (this.personne === "MORALE") {
+		data.rc = this.rc;
+		data.nom = this.nom;
+	} else if (this.personne === "PHYSIQUE") {
+		data.nom = this.nom;
+		data.prenom = this.prenom;
+		data.cin = this.cin;
+	}
   
 	 
 	  console.log(data);
 	  this.httpClient.put<any>(`${this.baseUrl}etablissements/${this.etablissementId}`, data,{ headers: this.headers }).subscribe(
 		  (response) => {
 			  console.log("Etablissement updated successfully:", response);
-			  this.router.navigate(["/etablissement/list-etablissement"]);
+			  Swal.fire({
+				title: 'Enregistrement réussi!',
+				text: 'Enregistré avec succès.',
+				icon: 'success',
+				confirmButtonText: 'OK'
+			  }).then(() => {
+				this.router.navigate(["/etablissement/list-etablissement"]);
+				this.ngOnInit(); 
+			  });
+			
+			(err) => {
+			  console.error(err);
+			  Swal.fire({
+				title: 'Erreur!',
+				text: 'Un problème est survenu lors de l\'enregistrement du Constateur.',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			  });
+			}
+			  
 		  },
 		  (error) => {
 			  console.error("Error updating etablissement:", error);

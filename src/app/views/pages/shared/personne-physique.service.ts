@@ -20,7 +20,10 @@ export class PersonnePhysiqueService {
     return await this.http.get<any>(this.baseUrl+'/index').toPromise();
   }
 
+  async findByCin(cin){
 
+    return await this.http.get<any>(this.baseUrl+'/findByCin/'+cin).toPromise();
+  }
   deletepp(id): Observable<any> {
     return this.http.delete<Observable<any>>(this.baseUrl +id);
   }

@@ -2,7 +2,7 @@ import { AutopsieService } from "../services/autopsie.service";
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatTableDataSource, MatPaginator, MatSort } from "@angular/material";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { excelData } from "../../audiences/audiences.component";
 
@@ -19,7 +19,7 @@ export class ListAutopsieComponent implements OnInit {
 	columns: any[];
 	footerData: any[][] = [];
 
-
+    id:any;
 	dataSource = new MatTableDataSource<any>();
 	isLoadingResults = true;
 	isLoading = true;
@@ -31,9 +31,12 @@ export class ListAutopsieComponent implements OnInit {
 
 
 	displayedColumns: string[] = ["ID", "MedecinOperant", "Statut", "Date", "actions"];
-	constructor( private datePipe: DatePipe,private router: Router, private service: AutopsieService) {}
+	constructor( private route: ActivatedRoute ,private datePipe: DatePipe,private router: Router, private service: AutopsieService) {}
 
 	ngOnInit() {
+		this.route.params.subscribe((params) => {
+			this.id = +params['id']; 
+		  });
 		this.getAllD();
 	}
 
@@ -54,7 +57,7 @@ export class ListAutopsieComponent implements OnInit {
 	}
 	// applyFilter(){}
 	ajouter() {
-		this.router.navigate(["/bmh1/add-autopsie"]);
+		this.router.navigate([`/bmh1/add-autopsie/${this.id}`]);
 	}
 
 	getAllD() {

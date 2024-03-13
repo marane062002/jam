@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import Swal from 'sweetalert2';
@@ -15,7 +15,7 @@ export class PartiePreneurListComponent implements OnInit {
 
 	TypeAlert: any;
 	data: excelData[] = [];
-	columns: any[];
+	columns: any[];   
 	footerData: any[][] = [];
 	// ============================================
 	// Presentation de datasource
@@ -35,6 +35,7 @@ export class PartiePreneurListComponent implements OnInit {
 	dataSource = new MatTableDataSource<any>();
 	isLoadingResults = true;
 	isLoading = true;
+	sizeData
 	// ============================================
 	// Controles pagination
 	// ============================================
@@ -59,10 +60,28 @@ export class PartiePreneurListComponent implements OnInit {
 		this.partiePreneurService.all().subscribe(res => {
 			console.log(res);
 			this.data = res;
+			this.sizeData=res.length
 			this.dataSource = new MatTableDataSource(this.data);
 		})
 
 
+
+	}
+	handlePageEvent(event: PageEvent) {
+		let pageSize = event.pageSize;
+		let pageIndex = event.pageIndex;
+		this.partiePreneurService.Page(pageIndex, pageSize).subscribe((res: any) => {
+			this.data = res.content
+			this.dataSource.data.length = res.totalElements;
+			this.dataSource = new MatTableDataSource(this.data);
+			// this.paginator._intl.itemsPerPageLabel = this.translate.instant("PAGES.GENERAL.ITEMS_PER_PAGE_LABEL");
+			// this.paginator._intl.nextPageLabel = this.translate.instant("PAGES.GENERAL.NEXT_PAGE_LABEL");
+			// this.paginator._intl.previousPageLabel = this.translate.instant("PAGES.GENERAL.PREVIOUS_PAGE_LABEL");
+			// this.paginator._intl.lastPageLabel = this.translate.instant("PAGES.GENERAL.LAST_PAGE_LABEL");
+			// this.paginator._intl.firstPageLabel = this.translate.instant("PAGES.GENERAL.FIRST_PAGE_LABEL");
+			// this.dataSource.paginator = this.paginator;
+			// this.dataSource.sort = this.sort;
+		})
 
 	}
 	RetourEmbalages(): void {

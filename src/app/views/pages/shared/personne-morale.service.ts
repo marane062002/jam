@@ -20,7 +20,10 @@ export class PersonneMoraleService {
 
     return await this.http.get<any>(this.baseUrl+'/index').toPromise();
   }
+  async findByRc(rc){
 
+    return await this.http.get<any>(this.baseUrl+'/findByRc/'+rc).toPromise();
+  }
   deletepm(id): Observable<any> {
     return this.http.delete<Observable<any>>(this.baseUrl+'/' +id);
   }   

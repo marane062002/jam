@@ -175,6 +175,12 @@ import { ShowPjCommentaireComponent } from "./show-pj-commentaire/show-pj-commen
 import { ShowProgrammePrevisionnelComponent } from "./gestion-programme-previsionnel/show-programme-previsionnel/show-programme-previsionnel.component";
 import { ContratFormConsultationComponent } from "./contrat-form-consultation/contrat-form-consultation.component";
 import { ContratEditConsultationComponent } from "./contrat-edit-consultation/contrat-edit-consultation.component";
+import { EditProgrammePrevisionnelComponent } from "./gestion-programme-previsionnel/edit-programme-previsionnel/edit-programme-previsionnel.component";
+import { MembreSeanceComponent } from "./membre-seance/membre-seance.component";
+import { MembreTechniqueSeanceComponent } from "./membre-technique-seance/membre-technique-seance.component";
+import { ParticipantsInternesCommissionTechniqueAoDetailComponent } from "./participants-internes-commission-technique-ao-detail/participants-internes-commission-technique-ao-detail.component";
+import { ParticipantsExternesCommissionTechniqueAoDetailComponent } from "./participants-externes-commission-technique-ao-detail/participants-externes-commissiontechnique-ao-detail.component";
+import { PourcentageOffreFinanciereComponent } from "./pourcentage-offre-financiere/pourcentage-offre-financiere.component";
 // import { CalendarModule } from '@syncfusion/ej2-angular-calendars';
 
 FullCalendarModule.registerPlugins([
@@ -182,10 +188,10 @@ FullCalendarModule.registerPlugins([
 	interactionPlugin,
 ]);
 @NgModule({
-	declarations: [EditLotMarcheComponent,
+	declarations: [ParticipantsExternesCommissionTechniqueAoDetailComponent, ParticipantsInternesCommissionTechniqueAoDetailComponent, EditLotMarcheComponent, EditProgrammePrevisionnelComponent, MembreSeanceComponent, MembreTechniqueSeanceComponent,
 		AddProgrammePrevisionnelComponent, ShowProgrammePrevisionnelComponent,
 		ListProgrammePrevisionnelComponent,
-		ContratDetailConsultationComponent ,
+		ContratDetailConsultationComponent,
 		ContratListConsultationComponent,
 		ContratFormConsultationComponent,
 		ContratEditConsultationComponent,
@@ -196,6 +202,7 @@ FullCalendarModule.registerPlugins([
 		CalendrierComponent,
 		CalendrierBcComponent,
 		DisponibiliteFondsComponent,
+		PourcentageOffreFinanciereComponent,
 		BonCommandeListComponent,
 		BonCommandeListAdjugeComponent,
 		AoValidationDialogComponent,
@@ -304,10 +311,10 @@ FullCalendarModule.registerPlugins([
 		AoDashboardComponent,
 		DashboardMarcheComponent,
 		AoStatutComponent,
-	    PmeDashboardComponent,
-	    DashboardDivisionMarcheComponent,
-	    BonCommandeDashboardComponent,
-	    DialogALertAOComponent,SeanceDialogComponent,ShowSeanceDialogComponent, SeanceResultatDefComponent, ShowPjCommentaireComponent
+		PmeDashboardComponent,
+		DashboardDivisionMarcheComponent,
+		BonCommandeDashboardComponent,
+		DialogALertAOComponent, SeanceDialogComponent, ShowSeanceDialogComponent, SeanceResultatDefComponent, ShowPjCommentaireComponent
 	],
 	imports: [MatStepperModule,
 		// CalendarModule ,
@@ -337,52 +344,59 @@ FullCalendarModule.registerPlugins([
 					},
 					{
 						path: "contrat-consultation-detail",
-						component: ContratDetailConsultationComponent ,
+						component: ContratDetailConsultationComponent,
 					},
 					{
-						path : "calendrier",
-						component : CalendrierComponent,
+						path: "calendrier",
+						component: CalendrierComponent,
 					},
 					{
-						path : "calendrier-bc",
-						component : CalendrierBcComponent,
+						path: "calendrier-bc",
+						component: CalendrierBcComponent,
 					},
 					{
-						path : "list-programme-previsionnel",
-						component : ListProgrammePrevisionnelComponent,
+						path: "list-programme-previsionnel",
+						component: ListProgrammePrevisionnelComponent,
 					},
 					{
-						path : "show-programme-previsionnel",
-						component : ShowProgrammePrevisionnelComponent,
-					},
-					
-					{
-						path : "add-programme-previsionnel",
-						component : AddProgrammePrevisionnelComponent,
+						path: "show-programme-previsionnel",
+						component: ShowProgrammePrevisionnelComponent,
 					},
 					{
-						path : "gestion-commission-plis",
-						component : GestionCommissionOuverturePlisComponent,
+						path: "edit-programme-previsionnel",
+						component: EditProgrammePrevisionnelComponent,
 					},
 					{
-						path : "disponibilite-des-fonds",
-						component : DisponibiliteFondsComponent,
+						path: "add-programme-previsionnel",
+						component: AddProgrammePrevisionnelComponent,
 					},
 					{
-						path : "marche-dashboard",
-						component : DashboardMarcheComponent,
+						path: "gestion-commission-plis",
+						component: GestionCommissionOuverturePlisComponent,
 					},
 					{
-						path : "dashboard",
-						component : DashboardComponent,
-					},
-				 	 {
-						path : "pme-dashboard",
-						component : PmeDashboardComponent,
+						path: "disponibilite-des-fonds",
+						component: DisponibiliteFondsComponent,
 					},
 					{
-						path : "ao-dashboard",
-						component : AoDashboardComponent,
+						path: "pourcentage-offre-financiere",
+						component: PourcentageOffreFinanciereComponent,
+					},
+					{
+						path: "marche-dashboard",
+						component: DashboardMarcheComponent,
+					},
+					{
+						path: "dashboard",
+						component: DashboardComponent,
+					},
+					{
+						path: "pme-dashboard",
+						component: PmeDashboardComponent,
+					},
+					{
+						path: "ao-dashboard",
+						component: AoDashboardComponent,
 					},
 					{
 						path: "marche-detail",
@@ -582,17 +596,54 @@ FullCalendarModule.registerPlugins([
 								path: "participants-internes",
 								component:
 									ParticipantsInternesCommissionAoDetailComponent,
+							}, {
+								path: "participants-internes-tehnique",
+								component:
+									ParticipantsInternesCommissionTechniqueAoDetailComponent,
 							},
+
+
 							{
 								path: "participants-externes",
 								component:
 									ParticipantsExternesCommissionAoDetailComponent,
+							}, {
+								path: "participants-externes-technique",
+								component:
+									ParticipantsExternesCommissionTechniqueAoDetailComponent,
 							},
 						],
 					},
 					{
 						path: "commission-edit",
 						component: CommissionEditComponent,
+						children: [
+							{
+								path: "offres-deposees",
+								component:
+									OffresDeposeseCommissionAoDetailComponent,
+							},
+							{
+								path: "participants-internes",
+								component:
+									ParticipantsInternesCommissionAoDetailComponent,
+							}, {
+								path: "participants-internes-tehnique",
+								component:
+									ParticipantsInternesCommissionTechniqueAoDetailComponent,
+							},
+
+
+							{
+								path: "participants-externes",
+								component:
+									ParticipantsExternesCommissionAoDetailComponent,
+							}, {
+								path: "participants-externes-technique",
+								component:
+									ParticipantsExternesCommissionTechniqueAoDetailComponent,
+							},
+						],
 					},
 					{
 						path: "commission-consultation-detail",
@@ -625,9 +676,18 @@ FullCalendarModule.registerPlugins([
 							ParticipantsInternesCommissionAoDetailComponent,
 					},
 					{
+						path: "participants-internes-tehnique",
+						component:
+							ParticipantsInternesCommissionTechniqueAoDetailComponent,
+					},
+					{
 						path: "participants-externes",
 						component:
 							ParticipantsExternesCommissionAoDetailComponent,
+					}, {
+						path: "participants-externes-technique",
+						component:
+							ParticipantsExternesCommissionTechniqueAoDetailComponent,
 					},
 					{
 						path: "ligneBP-form",
@@ -709,12 +769,12 @@ FullCalendarModule.registerPlugins([
 					{
 						path: "ao-consultation-add",
 						component: AoConsultationAddComponent,
-						
+
 					},
 					{
 						path: "ao-consultation-edit",
 						component: AoConsultationEditComponent,
-						
+
 					},
 					{
 						path: "ao-consultation-detail",
@@ -727,6 +787,14 @@ FullCalendarModule.registerPlugins([
 							{
 								path: "commission",
 								component: CommissionComponent,
+							},
+							{
+								path: "membre-seance",
+								component: MembreSeanceComponent,
+							},
+							{
+								path: "membre-technique-seance",
+								component: MembreTechniqueSeanceComponent,
 							},
 							{
 								path: "journal",
@@ -833,7 +901,7 @@ FullCalendarModule.registerPlugins([
 		PartialsModule,
 		MaterialsModule,
 	],
-	entryComponents: [ShowSeanceDialogComponent, SeanceResultatDefComponent, EditLotMarcheComponent,ShowPjCommentaireComponent,
+	entryComponents: [ShowSeanceDialogComponent, SeanceResultatDefComponent, EditLotMarcheComponent, ShowPjCommentaireComponent,
 		SeanceDialogComponent,
 		ModalShowCalendrierAoComponent,
 		ModalShowCalendrierBcComponent,
@@ -856,7 +924,7 @@ FullCalendarModule.registerPlugins([
 		LettreMaintienDialogComponent,
 		DialogALertAOComponent
 	],
-	exports: [TranslateModule, MaterialsModule,PrestatairesComponent],
+	exports: [TranslateModule, MaterialsModule, PrestatairesComponent],
 	providers: [
 		{
 			provide: MatPaginatorIntl,
@@ -866,4 +934,4 @@ FullCalendarModule.registerPlugins([
 		},
 	],
 })
-export class MarcheModule {}
+export class MarcheModule { }

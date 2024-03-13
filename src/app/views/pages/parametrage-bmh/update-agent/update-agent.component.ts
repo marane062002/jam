@@ -48,6 +48,7 @@ export class UpdateAgentComponent implements OnInit {
           }).then(() => {
             this.FormArticale.reset();
             this.ngOnInit(); // Vous pouvez recharger les données si nécessaire ici
+            this.RetourEmbalages()
           });
         },
         (err) => {

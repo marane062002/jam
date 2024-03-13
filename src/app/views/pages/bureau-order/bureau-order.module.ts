@@ -8,9 +8,10 @@ import { NgxPermissionsModule } from "ngx-permissions";
 import { MaterialsModule } from "../utils/materials/materials.module";
 import { PdfviewerDialogComponent } from './dialog/pdfviewer-dialog/pdfviewer-dialog.component';
 import { StatistiqueComponent } from './statistique/statistique.component';
+import { AfficheComponent } from "./courriers-entrants/affiche/affiche.component";
 
 @NgModule({
-	declarations: [PdfviewerDialogComponent],
+	declarations: [AfficheComponent,PdfviewerDialogComponent],
 	imports: [
 		PagesModule,
 		CommonModule,
@@ -20,7 +21,8 @@ import { StatistiqueComponent } from './statistique/statistique.component';
 		NgxPermissionsModule.forChild(),
 		MaterialsModule,
 	],
-	entryComponents: [PdfviewerDialogComponent],
+
+	entryComponents: [PdfviewerDialogComponent,AfficheComponent],
 	exports: [
 		PagesModule,
 		CommonModule,

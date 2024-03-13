@@ -96,6 +96,9 @@ export class PatrimoineShowComponent implements OnInit {
   dataShow2: any[];
   dataSize2 = 0;
 
+  seance;
+  magasin;
+
   displayedColumns = [
     "Nom",
     "Prenom",
@@ -115,8 +118,8 @@ export class PatrimoineShowComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
- /*  @ViewChild(MatPaginator, { static: true }) paginator2: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort2: MatSort; */
+  /*  @ViewChild(MatPaginator, { static: true }) paginator2: MatPaginator;
+   @ViewChild(MatSort, { static: true }) sort2: MatSort; */
   async ngOnInit() {
     this.getPatrimoine();
     this.idPatrimoine = parseInt(localStorage.getItem('idPatrimoine2'));
@@ -135,13 +138,6 @@ export class PatrimoineShowComponent implements OnInit {
           this.isLoading2 = false;
           this.dataSize2 = this.dataShow2.length;
           this.dataSource2 = new MatTableDataSource(this.dataShow2);
-       /*    this.paginator._intl.itemsPerPageLabel = this.translate.instant("PAGES.GENERAL.ITEMS_PER_PAGE_LABEL");
-						this.paginator._intl.nextPageLabel = this.translate.instant("PAGES.GENERAL.NEXT_PAGE_LABEL");
-						this.paginator._intl.previousPageLabel = this.translate.instant("PAGES.GENERAL.PREVIOUS_PAGE_LABEL");
-						this.paginator._intl.lastPageLabel = this.translate.instant("PAGES.GENERAL.LAST_PAGE_LABEL");
-						this.paginator._intl.firstPageLabel = this.translate.instant("PAGES.GENERAL.FIRST_PAGE_LABEL");
-						this.dataSource2.paginator = this.paginator;
-						this.dataSource2.sort = this.sort; */
 
         }, err => {
           console.log(err)
@@ -151,13 +147,6 @@ export class PatrimoineShowComponent implements OnInit {
           this.isLoading = false;
           this.dataSize = this.dataShow.length;
           this.dataSource = new MatTableDataSource(this.dataShow);
-        /*   this.paginator._intl.itemsPerPageLabel = this.translate.instant("PAGES.GENERAL.ITEMS_PER_PAGE_LABEL");
-          this.paginator._intl.nextPageLabel = this.translate.instant("PAGES.GENERAL.NEXT_PAGE_LABEL");
-          this.paginator._intl.previousPageLabel = this.translate.instant("PAGES.GENERAL.PREVIOUS_PAGE_LABEL");
-          this.paginator._intl.lastPageLabel = this.translate.instant("PAGES.GENERAL.LAST_PAGE_LABEL");
-          this.paginator._intl.firstPageLabel = this.translate.instant("PAGES.GENERAL.FIRST_PAGE_LABEL");
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort; */
 
         }, err => {
           console.log(err)
@@ -181,16 +170,11 @@ export class PatrimoineShowComponent implements OnInit {
       }, error => console.log(error));
   }
 
-  /*  onClickPj(e, id) {
-     var r = e.substring(0, e.length - 4);
-     window.open(environment.API_ALFRESCO_URL + "/Pc/" + r, "_blank");
-   } */
 
   onClickPj(a, e, id) {
     console.log("You clicked: " + e);
     var r = e.substring(0, e.length - 4);
     console.log(r);
-    //window.open(environment.API_ALFRESCO_URL + "/MarcheConvention/"+r);
     this.service.downoldFile(r, a);
   }
   async getAllPjImm(id) {
@@ -199,6 +183,7 @@ export class PatrimoineShowComponent implements OnInit {
     }, error => console.log(error));
 
   }
+
 
   async getDivisionEtService() {
     if (this.patrimoine.idDivision != 0)
@@ -338,8 +323,12 @@ export class PatrimoineShowComponent implements OnInit {
     }, error => console.log(error));
 
   }
-
+  Show: boolean = false;
   showPj(id: number) {
+    this.magasinService.findOneById(this.idMarche, id).subscribe(res => {
+      this.magasin = res;
+      this.Show = true;
+    })
     this.getAllPjImm2(id);
   }
 
@@ -362,21 +351,82 @@ export class PatrimoineShowComponent implements OnInit {
 
   }
 
+  ShowSeance: boolean = false;
   showPj2(id: number) {
+    this.seanceService.findOneById(this.idMarche, id).subscribe(res => {
+      this.seance = res;
+      this.ShowSeance = true;
+
+    })
     this.getAllPjImm3(id);
+  }
+
+  applyFilter(filterValue: string) {
+    if (filterValue != "") {
+      this.magasinService.findByIdAndNumMagasin(this.idMarche, filterValue).subscribe(res => {
+        this.dataShow = res;
+        this.isLoading = false;
+        this.dataSize = this.dataShow.length;
+        this.dataSource = new MatTableDataSource(this.dataShow);
+        this.paginator._intl.itemsPerPageLabel = this.translate.instant('PAGES.GENERAL.ITEMS_PER_PAGE_LABEL');
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+      }, err => {
+        console.log(err)
+      })
+    }
+    else {
+      this.magasinService.findById(this.idMarche).subscribe(res => {
+        this.dataShow = res;
+        this.isLoading = false;
+        this.dataSize = this.dataShow.length;
+        this.dataSource = new MatTableDataSource(this.dataShow);
+      }, err => {
+        console.log(err)
+      })
+    }
+  }
+
+  applyFilter2(filterValue: string) {
+    if (filterValue != "") {
+      this.seanceService.findByIdAndNumSeance(this.idMarche, filterValue).subscribe(res => {
+        this.dataShow = res;
+        this.isLoading = false;
+        this.dataSize = this.dataShow.length;
+        this.dataSource2 = new MatTableDataSource(this.dataShow);
+        this.paginator._intl.itemsPerPageLabel = this.translate.instant('PAGES.GENERAL.ITEMS_PER_PAGE_LABEL');
+
+        this.dataSource2.paginator = this.paginator;
+        this.dataSource2.sort = this.sort;
+
+      }, err => {
+        console.log(err)
+      })
+    } else {
+      this.seanceService.findById(this.idMarche).subscribe(res => {
+        this.dataShow2 = res;
+        this.isLoading2 = false;
+        this.dataSize2 = this.dataShow2.length;
+        this.dataSource2 = new MatTableDataSource(this.dataShow2);
+      }, err => {
+        console.log(err)
+      })
+    }
   }
 }
 
 export interface SEANCE {
-	numSeance: string;
-	superficieSeance: number;
-	localisation: string;
-	nomLocSeance: string
+  numSeance: string;
+  superficieSeance: number;
+  localisation: string;
+  nomLocSeance: string
 }
 
 export interface MAGASIN {
-	numMagasin: string;
-	superficieMag: number;
-	localisation: string;
-	nomLocataireMAG: string
+  numMagasin: string;
+  superficieMag: number;
+  localisation: string;
+  nomLocataireMAG: string
 }

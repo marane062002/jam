@@ -12,7 +12,7 @@ export class CommuneService {
   constructor(private http:HttpClient) { }
 
 
-  getAll(){
+  getAll(){debugger
     return this.http.get<InterfaceCommune[]>(`${this.baseUrl}`+'commune');
   }
   getById(id:any){

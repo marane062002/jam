@@ -1,0 +1,50 @@
+<div novalidate autocomplete="off">
+	<div class="kt-portlet portlet-3">
+		<div class="kt-portlet__head kt-bg-portlet-3">
+			<div class="kt-portlet__head-label">
+				<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+					<span *ngIf="isUpdate">Modifier arrondissement</span>
+					<span *ngIf="!isUpdate">Ajouter arrondissement</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+	<form action="" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+		<div class="row">
+			
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>Libellé français :</mat-label>
+						<input type="text" class="form-control-solid form-control-lg"
+							formControlName="libelleFrancais" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group fv-plugins-icon-container">
+					<mat-form-field class="example-full-width">
+						<mat-label>Libellé arabe :</mat-label>
+						<input  [pattern]="arabicPattern"  type="text" class="form-control-solid form-control-lg"
+							formControlName="libelleArab" matInput />
+					</mat-form-field>
+				</div>
+			</div>
+			
+		</div>
+		
+	
+		<div class="kt-portlet__heads">
+			<div class="kt-portlet__head-label text-right">
+				
+
+				<button _ngcontent-dkp-c41=""
+					class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+					<i _ngcontent-dlp-c41 class="icon la la-floppy-o"></i>
+					{{ "PAGES.PROGRAMME.SAVE" | translate }}
+				</button>
+			</div>
+		</div>
+		<div class="espace_bloc"></div>
+	</form>
+</div>

@@ -4,7 +4,7 @@ import { MorgueService } from '../services/morgue.service';
 import { environment } from "../../../../../environments/environment";
 import { data } from '../../audiences/saisir-facture/saisir-facture.component';
 import { BehaviorSubject } from 'rxjs';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, PageEvent } from '@angular/material';
 @Component({
   selector: 'kt-list-morgue',
   templateUrl: './list-morgue.component.html',
@@ -52,6 +52,11 @@ export class ListMorgueComponent implements OnInit {
 			this.isLoadingResults = false;
     })
   }
+  onPaginatorChange(event: PageEvent): void {
+		this.currentPage = event.pageIndex;
+		this.pageSize = event.pageSize;
+		this.loadData(this.currentPage, this.pageSize);
+	}
   applyFilter(filterValue: string) {
 		this.dataSource.filter = filterValue.trim().toLowerCase();
 		if (this.dataSource.paginator) {

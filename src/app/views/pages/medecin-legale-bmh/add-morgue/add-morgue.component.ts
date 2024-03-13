@@ -4,7 +4,9 @@ import { Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { MorgueService } from "../services/morgue.service";
 import { HttpClient } from "@angular/common/http";
+import * as $ from "jquery";
 import { environment } from "../../../../../environments/environment";
+import { MatTableDataSource } from "@angular/material";
 @Component({
 	selector: "kt-add-morgue",
 	templateUrl: "./add-morgue.component.html",
@@ -13,10 +15,29 @@ import { environment } from "../../../../../environments/environment";
 export class AddMorgueComponent implements OnInit {
 	ajoutForm: any;
 	pcJointeFile: File;
+
+
+	pcDeclarantFile: File;
+
+    pcfileDeclar : File;
+	labelDeclar: any;
+
+
+    allpjDeclar = []
+	formPjDeclar = { selecetedFile: {}, LabelPj: "" };
+    dataSource3: MatTableDataSource<any>;
+
+
+    displayedColumns1 = [ "label", "nomDoc", "actions"];
+
+
 	private AlfresscoURL = environment.API_ALFRESCO_URL;
 	constructor(private httpClient: HttpClient,private router: Router, private formBuilder: FormBuilder, private service: MorgueService) {}
-
+	pjDeclar: any;
 	ngOnInit() {
+		this.pjDeclar= this.formBuilder.group({
+			pcfile: [""],
+		})
 		this.ajoutForm = this.formBuilder.group({
 			// id: [null], // Exemple de champ non modifiable
 			numCasier: [""],
@@ -34,9 +55,34 @@ export class AddMorgueComponent implements OnInit {
 		//   console.log(this.vehicule);
 		// })
 	}
-	onPcJointeChange(event: any) {
-		this.pcJointeFile = event.target.files[0];
-	  }
+	onPcDeclarantChange(event: any) {
+		this.pcDeclarantFile = event.target.files[0];
+	}
+
+  saveDec(event: any): void {
+    $("#testd").val(event.target.files[0].name);
+    this.pjDeclar.get('pcfile').setValue(event.target.files[0].name);
+    this.formPjDeclar.selecetedFile = event.target.files[0];
+  }
+
+  labelDeclarant(event: any): void {
+    this.formPjDeclar.LabelPj = event.target.value;
+  }
+  validerPjDec() {
+    this.allpjDeclar.push(this.formPjDeclar);
+    $("#testd").val(null);
+    this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+    this.formPjDeclar = { selecetedFile: {}, LabelPj: this.formPjDeclar.LabelPj };
+  }
+
+  onDeletePjDec(id: number): void {
+    this.allpjDeclar.splice(id, 1);
+    if (this.allpjDeclar.length > 0) {
+      this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+    } else {
+      this.dataSource3 = null;
+    }
+  }
 	RetourEmbalages() {
 		this.router.navigate(["/bmh1/list-morgue"]);
 	}
@@ -46,16 +92,23 @@ export class AddMorgueComponent implements OnInit {
 			const pcJointe = new FormData();
 
 			formData.append("morgue",new Blob([JSON.stringify(this.ajoutForm.value)],{type:'application/json'}))
-			formData.append("pcj",this.pcJointeFile)
+			// formData.append("pcj",this.pcJointeFile)
 			this.service.create(formData).subscribe(
 				(res:any) => {
-					pcJointe.append('id',res.id)
-					pcJointe.append("file", this.pcJointeFile)
-					pcJointe.append("sousModule", "MORGUE")
-					this.httpClient.post(`${this.AlfresscoURL}/bmh-morgue/multiplefile`, pcJointe)
-						.subscribe((res)=>{
-								console.log('Piece Jointe stored successfully:', res);
-					})
+					this.allpjDeclar.forEach(formPj => {	
+        		
+						const pcjDeclarant = new FormData();
+					
+						  pcjDeclarant.append("file", formPj.selecetedFile)
+						  pcjDeclarant.append("sousModule", "MORGUE")
+						  pcjDeclarant.append("id",res.id)
+						  pcjDeclarant.append("label", formPj.LabelPj);
+					
+						  this.httpClient.post(`${this.AlfresscoURL}/bmh-morgue/multiplefile`, pcjDeclarant)
+						  .subscribe((res)=>{
+						  console.log('deces naturel pièce Jointe stored successfully:', res);
+						  })
+						});
 					console.log(res);
 					Swal.fire({
 						title: "Enregistrement réussi!",

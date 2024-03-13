@@ -40,6 +40,7 @@ export class AddTypeDeclarrationComponent implements OnInit {
           }).then(() => {
             this.FormArticle.reset();
             this.ngOnInit(); // Vous pouvez recharger les données si nécessaire ici
+            this.RetourEmbalages()
           });
         },
         (err) => {

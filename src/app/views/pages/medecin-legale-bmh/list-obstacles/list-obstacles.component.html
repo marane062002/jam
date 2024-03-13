@@ -2,7 +2,7 @@
 	<div class="kt-portlet__head">
 		<div class="kt-portlet__head-label">
 			<h2 class="kt-portlet__head-title">
-				Liste des morts non naturelles :
+				Liste des morts avec obstacles :
 			</h2>
 		</div>
 		<div class="kt-portlet__head-toolbar">
@@ -258,7 +258,7 @@
 									Je soussigne....................................................................................................................................................certifie que<br>
 									Nommé(e) : {{ info?.nom ? info.nom : '...............................................' }} {{ info?.prenom ? info.prenom : '...........................................' }} <br>
 									<i>Enregistré(e)</i> aux registres de la division de l'environnement et de l'hygiène de Marrakech <b><i>dans la catégorie des morts non naturelles</i></b> sous le Nº {{ info?.cin }} Avec les renseingnements suivants : <br>
-									Agé (e): {{ calculateAge(info?.date) !== null ? calculateAge(info?.date) + ' ANS' : '-' }} <b>ANS</b><br>
+									Agé (e): {{ calculateAge(info?.date) !== null ? calculateAge(info?.date) : '-' }} <b>ANS</b><br>
 									Date de décès: {{ info?.dateDeces ? formatDate(info.dateDeces) : "................." }} <br>
 
 									Adresse : {{ info?.adresseDeces }}<br> 

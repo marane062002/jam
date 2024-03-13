@@ -7,6 +7,14 @@
 					Ajouter un mort naturel:
 				</h2>
 			</div>
+			<div class="kt-portlet__head-toolbar">
+				<div class="kt-portlet__head-wrapper">
+					<div class="kt-portlet__head-actions">	
+						<button class="btn btn-primary" mat-button (click)="openDialog()"><i class="la la-tasks"></i> Historique</button>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
@@ -334,6 +342,157 @@
 						</div>
 					</div>
 				</div>
+
+
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N Registre</mat-label>
+								<input
+								readonly
+								[value]="info.numRegistre"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+	
+					<div class="col-md-6">
+						<div class="form-group fv-plugins-icon-container">
+							<mat-form-field class="example-full-width">
+								<mat-label>N Deces:</mat-label>
+								<input
+								readonly
+								[value]="info.numDeces"
+									type="text"
+									class="form-control-solid form-control-lg"
+									name="address1"
+									matInput
+								/>
+							</mat-form-field>
+							<div class="fv-plugins-message-container"></div>
+						</div>
+					</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Adresse de résidence</mat-label>
+									<input
+									readonly
+									[value]="info.adresseResidence"
+										type="text"
+										class="form-control-solid form-control-lg"
+										name="address1"
+										matInput
+									/>
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+	
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Statut</mat-label>
+									
+									<input
+									readonly
+									[value]="info.statusCadavre"
+										type="text"
+										class="form-control-solid form-control-lg"
+										name="address1"
+										matInput
+									/>
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row" *ngIf="info.statusCadavre === 'Traitée'">
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>Nom du cimitiére</mat-label>
+									<input
+									readonly
+									[value]="info.nomCim"
+										type="text"
+										class="form-control-solid form-control-lg"
+										name="address1"
+										matInput
+									/>
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+	
+						<div class="col-md-6">
+							<div class="form-group fv-plugins-icon-container">
+								<mat-form-field class="example-full-width">
+									<mat-label>N tombe</mat-label>
+									<input
+									readonly
+									[value]="info.numTombe"
+										type="text"
+										class="form-control-solid form-control-lg"
+										name="address1"
+										matInput
+									/>
+								</mat-form-field>
+								<div class="fv-plugins-message-container"></div>
+							</div>
+						</div>
+					</div>
+
+
+
+				<div class="kt-portlet portlet-1 col-md-12">
+					
+					<div class="kt-portlet__head kt-bg-portlet-2">
+						<div class="kt-portlet__head-label">
+							&nbsp;
+							<h2 class="kt-portlet__head-title kt-font-inverse-brand">Piéces jointes</h2>
+						</div>
+					</div>
+				
+					<div *ngIf="dataSource2" class="example-container mat-elevation-z8">
+			
+						<mat-table [dataSource]="dataSource2" matSort>
+							<!-- file name Column -->
+							<ng-container matColumnDef="nomDoc">
+								<mat-header-cell *matHeaderCellDef mat-sort-header>
+									{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+							</ng-container>
+							<ng-container matColumnDef="titre">
+								<mat-header-cell *matHeaderCellDef mat-sort-header>
+									{{ 'PAGES.INTERVENTION_RAPIDE.PJ' | translate }}</mat-header-cell>
+								<mat-cell *matCellDef="let row"> {{row.sousModule}} </mat-cell>
+							</ng-container>
+							<ng-container matColumnDef="dow">
+								<mat-header-cell *matHeaderCellDef mat-sort-header>
+									{{ 'PAGES.ATTCHEMENTS.TELECHARGER' | translate }}</mat-header-cell>
+								<mat-cell *matCellDef="let row">
+									<button type="button" (click)="onClickPj(row.idAlfresco,row.id)" [disabled]="!row.idAlfresco" [ngStyle]="{'cursor':row.idAlfresco !== null ? 'pointer' : 'not-allowed' }" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download">
+										<i class="flaticon-download-1"></i></button>
+								</mat-cell>
+							</ng-container>
+			
+							<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+							<mat-row *matRowDef="let row; columns: displayedColumns2;">
+							</mat-row>
+						</mat-table>
+					</div>
+				</div>
+
 
 				<div class="row">
 					<div class="col-md-12">

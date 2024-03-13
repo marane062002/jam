@@ -1,0 +1,325 @@
+<!-- begin:: Content -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-profile"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.ASSOCIATION.TITRE_SHOW" | translate }}
+			</h3>
+		</div>
+
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div *ngIf="history" class="col-md-12 show_port history">
+
+			</div>
+			<div *ngIf="history" class="espace_bloc"></div>
+			<div class="col-md-12 show_port">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.NOM" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.nom ? details.association.nom : "-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.PUBLIC_INTEREAT" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.interest == true ? "Oui" : "Non" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.DATE_CREATION" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.association.dateCreation != null ? (details.association.dateCreation | date :
+								"dd/MM/yyyy") : "-" }}
+							</td>
+							<th>{{ "PAGES.ASSOCIATION.VILLE" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.villeActivite ?
+								details.association.villeActivite : "-" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.TEL" | translate }} :</th>
+							<td class="donnee_show">{{ details.fax ? details.fax : "-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.EMAIL" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.email ? details.association.email : "-" }}
+							</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.ADRESSE" | translate }} :</th>
+							<td colspan="4" class="donnee_show">{{ details.association.adresseLocal ?
+								details.association.adresseLocal : "-" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.INTERVENTION_RAPIDE.ARRONDISSEMENT" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.communeActivite ?
+								details.association.communeActivite : "-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.FICHE_DEPOT.ANNEXE_ADMIN" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.annexeAdministratif ?
+								details.association.annexeAdministratif : "-" }}</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.ASSOCIATION.OBJECTIF" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.objectifs ? details.association.objectifs :
+								"-" }}</td>
+							<th>{{ "PAGES.ASSOCIATION.NUM_SEQ" | translate }} :</th>
+							<td class="donnee_show">{{ details.association.prioriter ? details.association.prioriter :
+								"-" }}</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- END DETAILS ASSOCIATION -->
+
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin Details demandes soutien financier -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-profile"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.DEMANDE.TITRE_SHOW" | translate }}
+			</h3>
+		</div>
+
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div *ngIf="history" class="col-md-12 show_port history">
+
+			</div>
+			<div *ngIf="history" class="espace_bloc"></div>
+			<div class="col-md-12 show_port">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>{{ "PAGES.DEMANDE.uniqueCode" | translate }} :</th>
+							<td class="donnee_show">{{ details.uniqueCode ? details.uniqueCode : "-" }}</td>
+							<th>{{ "PAGES.DEMANDE.submissionDate" | translate }} :</th>
+
+							<td class="donnee_show">
+								{{ details.submissionDate != null ? ( details.submissionDate | date :
+								"dd/MM/yyyy") : "-" }}
+							</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.DEMANDE.status" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.status ? details.status : "-" }}
+							</td>
+
+						</tr>
+						<!-- //nomProjet and typeProjet -->
+						<tr>
+							<th>{{ "PAGES.DEMANDE.nomProjet" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.nomProjet ? details.nomProjet : "-" }}
+							</td>
+							<th>{{ "PAGES.DEMANDE.typeProjet" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.typeProjet ? details.typeProjet : "-" }}
+							</td>
+						</tr>
+						<!-- //communeActivity and dureeProjetMois -->
+						<tr>
+							<th>{{ "PAGES.DEMANDE.communeActivity" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.communeActivity ? details.communeActivity : "-" }}
+							</td>
+							<th>{{ "PAGES.DEMANDE.dureeProjetMois" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.dureeProjetMois ? details.dureeProjetMois : "-" }}
+							</td>
+						</tr>
+						<!-- //lieuRealisation and montantTotalProjet -->
+						<tr>
+							<th>{{ "PAGES.DEMANDE.lieuRealisation" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.lieuRealisation ? details.lieuRealisation : "-" }}
+							</td>
+							<th>{{ "PAGES.DEMANDE.montantTotalProjet" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.montantTotalProjet ? details.montantTotalProjet : "-" }}
+							</td>
+						</tr>
+						<!-- //montantSupportDemande -->
+						<tr>
+							<th>{{ "PAGES.DEMANDE.montantSupportDemande" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.montantSupportDemande ? details.montantSupportDemande : "-" }}
+							</td>
+
+						</tr>
+						<!-- //partenairesProjet -->
+						<tr>
+							<th>{{ "PAGES.DEMANDE.partenairesProjet" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.partenairesProjet ? details.partenairesProjet : "-" }}
+							</td>
+						</tr>
+						<!-- montantContributionPartenaires and montantContributionAssociation -->
+						<tr>
+							<th>{{ "PAGES.DEMANDE.montantContributionPartenaires" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.montantContributionPartenaires ? details.montantContributionPartenaires : "-" }}
+							</td>
+							<th>{{ "PAGES.DEMANDE.montantContributionAssociation" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.montantContributionAssociation ? details.montantContributionAssociation : "-" }}
+							</td>
+						</tr>
+						<!-- montantSupportCommuneAnneePrecedente -->
+						<tr>
+							<th>{{ "PAGES.DEMANDE.montantSupportCommuneAnneePrecedente" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.montantSupportCommuneAnneePrecedente ? details.montantSupportCommuneAnneePrecedente : "-" }}
+							</td>
+						</tr>
+
+						<!-- <tr>
+							<th>{{ "PAGES.DEMANDE.typeActivite" | translate }} :</th>
+
+							<td class="donnee_show">
+								{{ details.typeActivite ?  details.typeActivite : "-" }}
+							</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.DEMANDE.licenseType" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.licenseType ? details.licenseType : "-" }}
+							</td>
+						
+						</tr>
+						<tr>
+							<th>{{ "PAGES.DEMANDE.dateOrganisation" | translate }} :</th>
+
+							<td class="donnee_show">
+								{{ details.dateOrganisation != null ? ( details.dateOrganisation | date :
+								"dd/MM/yyyy") : "-" }}
+							</td>
+						</tr> -->
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- END demandes soutien fincancier -->
+
+	</div>
+</div>
+<!-- end Details demandes soutien financier -->
+<!-- begin:: Content Piece jointe Requests -->
+<div *ngIf="details" class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.DEMANDE.ATTACHEMENT" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table *ngIf="filesRquests" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+							<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.DATE_DISPATCHING" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of filesRquests | async">
+							<td><img class="file_icon" style="width: 10%"
+									src="./assets/media/files/{{ FileExtension(item.name) }}"
+									matTooltip="{{ FileName(item.name) }}" /></td>
+							<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+							<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
+							<td>{{ item.fSize / 1000 }} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco, item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content Piece jointe  Request -->
+
+<!-- begin:: Content Piece jointe Response -->
+<div *ngIf="details" class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.DEMANDE.ATTACHEMENT_2" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table *ngIf="filesResponse" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+							<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.DATE_DISPATCHING" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of filesResponse | async">
+							<td><img class="file_icon" style="width: 10%"
+									src="./assets/media/files/{{ FileExtension(item.name) }}"
+									matTooltip="{{ FileName(item.name) }}" /></td>
+							<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+							<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
+							<td>{{ item.fSize / 1000 }} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco, item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content Piece jointe  response -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+			class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

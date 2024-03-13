@@ -1,13 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { environment } from "../../../../../environments/environment";
 import { TypeVaccinationService } from "../../parametrage-bmh/services/type-vaccination.service";
 import { AnimalService } from "../../parametrage-bmh/services/animal.service";
 import { TraitementEffectueService } from "../../parametrage-bmh/services/traitement-effectue.service";
 import { VStatutService } from "../../parametrage-bmh/services/v-statut.service";
-
+import { MatTableDataSource } from "@angular/material";
+import * as $ from "jquery";
 @Component({
 	selector: "kt-program-vaccination",
 	templateUrl: "./program-vaccination.component.html",
@@ -27,6 +28,16 @@ export class ProgramVaccinationComponent implements OnInit {
 	traitementEffectueControl = new FormControl();
 	description: any;
 	pieceJointe: any;
+
+
+	pcDeclarantFile: File;
+	pcfileDeclar : File;
+	labelDeclar: any;
+	allpjDeclar = []
+	formPjDeclar = { selecetedFile: {}, LabelPj: "" };
+	dataSource3: MatTableDataSource<any>;
+	displayedColumns1 = [ "label", "nomDoc", "actions"];
+	ajoutForm: FormGroup;
 
 	nom: any;
 	prenom: any;
@@ -74,12 +85,18 @@ export class ProgramVaccinationComponent implements OnInit {
 	constructor(private router: Router, 
 		private httpClient: HttpClient,
 		private animalv : AnimalService,
+		private fb : FormBuilder,
 		private servicev: TypeVaccinationService,
 		private typev: TypeVaccinationService,
 		private traitv: TraitementEffectueService,
 		private statusv: VStatutService) {}
 
 	ngOnInit(): void {
+		this.ajoutForm = this.fb.group({
+			pj: this.fb.group({
+				pcfileDeclar: [''] 
+			})
+		  });
 		this.fetchAnimal();
 		this.SousTypeVaccination();
 		this.fetchTypeDeclaration();
@@ -138,6 +155,35 @@ export class ProgramVaccinationComponent implements OnInit {
 			}
 		);
 	}
+	onPcDeclarantChange(event: any) {
+		this.pcDeclarantFile = event.target.files[0];
+	}
+
+  saveDec(event: any): void {
+    $("#testd").val(event.target.files[0].name);
+    this.ajoutForm.get('pj.pcfileDeclar').setValue(event.target.files[0].name);
+    this.formPjDeclar.selecetedFile = event.target.files[0];
+  }
+
+  labelDeclarant(event: any): void {
+    this.formPjDeclar.LabelPj = event.target.value;
+  }
+  validerPjDec() {
+    this.allpjDeclar.push(this.formPjDeclar);
+    $("#testd").val(null);
+    this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+    this.formPjDeclar = { selecetedFile: {}, LabelPj: this.formPjDeclar.LabelPj };
+    console.log(this.allpjDeclar)
+  }
+
+  onDeletePjDec(id: number): void {
+    this.allpjDeclar.splice(id, 1);
+    if (this.allpjDeclar.length > 0) {
+      this.dataSource3 = new MatTableDataSource(this.allpjDeclar);
+    } else {
+      this.dataSource3 = null;
+    }
+  }
 
 	CreateVaccination(): void {
 		const animalType = {
@@ -208,15 +254,21 @@ export class ProgramVaccinationComponent implements OnInit {
 							console.log("infos generales without piece jointe:", infosGenerales);
 							this.servicev.addVaccination(formData).subscribe(
 								(infosGenerales:any) => {
-									// debugger
-									pcj.append('id',infosGenerales.id)
-									pcj.append("file", this.pieceJointe)
-									pcj.append("sousModule", "VACCINATION")
-									// debugger
-									this.httpClient.post(`${this.AlfresscoURL}/bmh-vaccination/multiplefile`, pcj)
-										.subscribe((res)=>{
-												console.log('Piece Jointe stored successfully:', res);
-									})
+									
+									this.allpjDeclar.forEach(formPj => {	
+        
+										const pcjDeclarant = new FormData();
+									
+										  pcjDeclarant.append("file", formPj.selecetedFile)
+										  pcjDeclarant.append("sousModule", "INFOS GENERALES")
+										  pcjDeclarant.append("id",infosGenerales.id)
+										  pcjDeclarant.append("label", formPj.LabelPj);
+									
+										  this.httpClient.post(`${this.AlfresscoURL}/bmh-sortie/multiplefile`, pcjDeclarant)
+										  .subscribe((res)=>{
+										  console.log('deces naturel pièce Jointe stored successfully:', res);
+										  })
+										});
 									console.log("infosGeneral created successfully:", infosGenerales);
 									this.router.navigate(["/vaccination/list-vaccination"]);
 								},

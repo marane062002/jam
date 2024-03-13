@@ -1,0 +1,72 @@
+<div class="kt-portlet portlet-3">
+	<div class="kt-portlet__head kt-bg-portlet-3">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Modifier un point de regroupement
+			</h2>
+		</div>
+	</div>
+</div>
+
+<form [formGroup]="pointRegroupementForm" (ngSubmit)="onSubmit()">
+	<div class="col-md-12">
+		<div class="form-group fv-plugins-icon-container">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Référence </label>
+					<input matInput formControlName="ref" type="text" class="form-control form-control-solid form-control-lg" name="reference" />
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Localisation </label>
+					<input matInput formControlName="localisation" type="text" class="form-control form-control-solid form-control-lg" name="localisation" />
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Adresse </label>
+					<input matInput formControlName="adresse" type="text" class="form-control form-control-solid form-control-lg" name="adresse" />
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<label> Equipement </label>
+					<mat-select formControlName="equipement" [compareWith]="selectedValueEquipementFunction" class="form-control">
+						<mat-option *ngFor="let arr of equipement" [value]="arr">{{arr.immatriculation}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="kt-portlet__heads">
+		<div class="kt-portlet__head-label" align="right">
+			<button type="button" (click)="backList()" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+				<i class="la la-recycle"></i>
+				Retour
+			</button>
+			<button type="submit" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+				<i class="icon la la-floppy-o"></i>
+				Enregistrer
+			</button>
+		</div>
+	</div>
+		</div>
+	</div>
+</form>

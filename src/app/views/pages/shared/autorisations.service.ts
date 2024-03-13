@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { Pageable } from '../utils/pagination/pageable';
+import { Page } from '../utils/pagination/page';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,16 +20,34 @@ export class AutorisationsService {
  /* getallautorisation(): Observable<any> {
     return this.http.get<Observable<any>>(this.baseUrl + 'index');
   }*/
+	public getAllObjectByPage(path: string, pageable: Pageable)
+		: Observable<Page<any>> {
+		let url = this.baseUrl + path
+			+ '?page=' + pageable.pageNumber
+			+ '&size=' + pageable.pageSize
+			+ '&sort=id,desc'
+		return this.http.get<Page<any>>(url);
+	}
 
+  Pagination(page, size) {
+		return this.http.get<any[]>(this.baseUrl + "?page=" + page + "&size=" + size);
+	}
   async getallautorisation(){
 
     return await this.http.get<any>(this.baseUrl + 'index').toPromise();
   }
-
+  AllCin() {
+		return this.http.get<any[]>(this.baseUrl + "AllCin");
+	}
+  AllRc() {
+		return this.http.get<any[]>(this.baseUrl + "AllRc");
+	}
   getAllStatutAut(): Observable<any> {
     return this.http.get<Observable<any>>(this.baseUrl + 'AllStatutAut');
   }
-
+  research(pageable: Pageable, searchDto: any) {
+		return this.http.post<any[]>(this.baseUrl + "?page=" + pageable.pageNumber + "&size=" + pageable.pageSize, searchDto);
+	}
   deleteAutorisation(id): Observable<any> {
     return this.http.delete<Observable<any>>(this.baseUrl+'delete/'+id);
   }
@@ -64,7 +84,10 @@ export class AutorisationsService {
     }
 
   }
-
+  deletePj(id){
+    return this.http.delete<any>(this.baseUrl3 + "/" + id);
+  
+  }
   getByIdautorisationpjs(f): Observable<any> {
     return this.http.get<Observable<any>>(this.baseUrl3+'/Allpjs/'+f);
   }

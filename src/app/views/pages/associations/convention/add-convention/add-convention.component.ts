@@ -10,7 +10,7 @@ import * as $ from "jquery";
 })
 export class AddConventionComponent implements OnInit {
 	isVisible: any;
-	isSelected: boolean = false;
+	isSelected: boolean = false; 
 	formConvention:FormGroup;
 	convention_id
 	isUpdate: boolean = false;

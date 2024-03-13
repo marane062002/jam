@@ -40,6 +40,7 @@ export class ListCourriersSortantsComponent implements OnInit {
 		//"criticiteCourrier",
 		"typeCourrier",
 		"destinataire",
+		"statut",
 		// "statut",
 		"actions",
 	];
@@ -115,6 +116,7 @@ export class ListCourriersSortantsComponent implements OnInit {
 	// ============================================
 	// Recuperer tous les courriers sortants
 	// ============================================
+	isDispatching
 	private getCourriersSortants() {
 		// setTimeout(() => { this.SpinnerService.show() }, 25);
 		var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING")); // start spinner
@@ -126,6 +128,22 @@ export class ListCourriersSortantsComponent implements OnInit {
 				this.page = data;
 				this.isLoading = false;
 				this.dataSource.data = this.page.content;
+
+				for (let i = 0; i < this.dataSource.data.length; i++) {
+					this.service
+						.getAllObjectById("/destinataireCouriersSortant/find/", this.dataSource.data[i].id)
+						.pipe(delay(300))
+						.subscribe(
+							(data) => {
+								console.log('data', data);
+								this.dataSource.data.map((item, index) => {
+									statutSortant: this.dataSource.data[index] = data
+
+								})
+
+							})
+				}
+
 			},
 				(err) => {
 					// setTimeout(() => { this.SpinnerService.hide() }, 500);
@@ -273,7 +291,7 @@ export class ListCourriersSortantsComponent implements OnInit {
 	// ============================================
 	destinataireCourrierSortant(courrier: any): void {
 		window.localStorage.removeItem("csId");
-		window.localStorage.setItem("csId", courrier.id.toString());
+		window.localStorage.setItem("csId", courrier.toString());
 		this.router.navigate(["partenaires-externe/add-partenaires-externe"]);
 	}
 	// ============================================
@@ -287,6 +305,7 @@ export class ListCourriersSortantsComponent implements OnInit {
 	exportTable() {
 		this.excelService.exportAsExcelFile('المراسلات الصادرة', '', this.columns, this.data, this.footerData, 'Liste-courriers-sortants', this.translate.instant("PAGES.BUREAU_ORDRE.COURRIER_SORTANT.TITRE_INDEX"))
 	}
+
 	// ============================================================
 	//
 	// ============================================================

@@ -1,7 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-"skipLibCheck": true,
+    "skipLibCheck": true,
+    "downlevelIteration": true,
     "strict": false,
     "strictPropertyInitialization": false,
     "baseUrl": "./",

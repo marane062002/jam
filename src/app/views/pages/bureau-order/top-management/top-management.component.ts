@@ -46,8 +46,8 @@ export class TopManagementComponent implements OnInit {
 	@ViewChild("paginator2", { static: false }) paginator2: MatPaginator;
 	@ViewChild(MatSort, { static: true }) sort2: MatSort;
 
-	displayedColumns: string[] = ["nomEntite", "courriersTraites", "courriersNonTraites", "performance"];
-	displayedColumns2: string[] = ["nomComplet", "courriersTraites", "courriersNonTraites", "performance"];
+	displayedColumns: string[] = ["nomEntite", "courriersTraites", "courriersNonTraites", "courriersCloturer","performance"];
+	displayedColumns2: string[] = ["nomComplet", "courriersTraites", "courriersNonTraites",'courriersCloturer', "performance"];
 	totalCourrierEntrantNotTraited: number = 0;
 	totalCourrierConvocationNotTraited: number = 0;
 	totalCourrierSortantNotTraited: number = 0;
@@ -111,19 +111,29 @@ export class TopManagementComponent implements OnInit {
 	getDivisions() {
 		let resultECT = [];
 		let resultECNT = [];
+		let resultECC = [];
 		this.isLoading = true;
 		this.bureauOrdreService.getAllObject2("/divisions/index").then((data) => {
 			this.isLoading = false;
 			this.divisions = data;
 			for (let i = 0; i < this.divisions.length; i++) {
-				const courriersTNTParEntite = forkJoin([this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersEntrantsTraitesParEntite/", this.divisions[i].id), this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersEntrantsNonTraitesParEntite/", this.divisions[i].id), this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersConvocationTraitesParEntite/", this.divisions[i].id), this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersConvocationNonTraitesParEntite/", this.divisions[i].id)]);
+				const courriersTNTParEntite = forkJoin([
+					this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersEntrantsTraitesParEntite/", this.divisions[i].id),
+					this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersEntrantsNonTraitesParEntite/", this.divisions[i].id),
+					this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersEntrantsCloturerParEntite/", this.divisions[i].id),
+					this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersConvocationTraitesParEntite/", this.divisions[i].id),
+					  this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersConvocationNonTraitesParEntite/", this.divisions[i].id),
+					  this.bureauOrdreService.countCourriersTraitesNonTraitesParEntite("/countCourriersConvocationCloturerParEntite/", this.divisions[i].id),
+					]);
 
-				courriersTNTParEntite.subscribe(([resECT1, resECNT1, resECT2, resECNT2]) => {
+				courriersTNTParEntite.subscribe(([resECT1, resECNT1,resECC1, resECT2, resECNT2,resECC2]) => {
 					resultECT.push(resECT1 + resECT2);
 					resultECNT.push(resECNT1 + resECNT2);
+					resultECC.push(resECC1 + resECC2);
 					data.forEach((item, index) => {
 						item.paramECT = resultECT[index];
 						item.paramECNT = resultECNT[index];
+						item.paramECC = resultECC[index];
 						if (resultECNT[index] != 0 && resultECT[index] != 0) {
 							item.performanceE = parseFloat(((resultECT[index] / (resultECT[index] + resultECNT[index])) * 100).toFixed(2));
 						}
@@ -147,6 +157,7 @@ export class TopManagementComponent implements OnInit {
 		if (this.searchForm.value.typeOrigine == "Entrant") {
 			let resultPCT = [];
 			let resultPCNT = [];
+			let resultPCC = [];
 			this.bureauOrdreService.getAllObject3("/personnels/index", this.page.pageable).then((data: any) => {
 				this.page = data;
 				this.dataSource2.data = this.page.content;
@@ -154,14 +165,16 @@ export class TopManagementComponent implements OnInit {
 				this.isLoading2 = false;
 				//  this.dataSource2.data = data;
 				for (let i = 0; i < this.page.content.length; i++) {
-					const courriersTNTParPersonne = forkJoin([this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2), this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2)]);
+					const courriersTNTParPersonne = forkJoin([this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2), this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2), this.bureauOrdreService.countCourriersEntrantsCloturerParPersonneBetweenTwoDates("/countCourriersEntrantsCloturerParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2)]);
 
-					courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1]) => {
+					courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1,resPCC1]) => {
 						resultPCT.push(resPCT1);
 						resultPCNT.push(resPCNT1);
+						resultPCC.push(resPCC1);
 						data.content.forEach((item, index) => {
 							item.paramPCT = resultPCT[index];
 							item.paramPCNT = resultPCNT[index];
+							item.paramPCC = resultPCC[index];
 							if (resultPCNT[index] != 0 && resultPCT[index] != 0) {
 								item.performanceP = parseFloat(((resultPCT[index] / (resultPCT[index] + resultPCNT[index])) * 100).toFixed(2));
 							}
@@ -180,20 +193,26 @@ export class TopManagementComponent implements OnInit {
 		} else if (this.searchForm.value.typeOrigine == "Convocation") {
 			let resultPCT = [];
 			let resultPCNT = [];
+			let resultPCC = [];
 			this.bureauOrdreService.getAllObject3("/personnels/index", this.page.pageable).then((data: any) => {
 				this.page = data;
 				this.dataSource2.data = this.page.content;
 				this.sizeData = data.content.length;
 				this.isLoading2 = false;
 				for (let i = 0; i < this.page.content.length; i++) {
-					const courriersTNTParPersonne = forkJoin([this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2), this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2)]);
+					const courriersTNTParPersonne = forkJoin([
+						this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
+						 this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
+						 this.bureauOrdreService.countCourriersConvocationCloturerParPersonneBetweenTwoDates("/countCourriersConvocationCloturerParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2)]);
 
-					courriersTNTParPersonne.subscribe(([resPCT2, resPCNT2]) => {
+					courriersTNTParPersonne.subscribe(([resPCT2, resPCNT2,resPCC2]) => {
 						resultPCT.push(resPCT2);
 						resultPCNT.push(resPCNT2);
+						resultPCC.push(resPCC2);
 						data.content.forEach((item, index) => {
 							item.paramPCT = resultPCT[index];
 							item.paramPCNT = resultPCNT[index];
+							item.paramPCC = resultPCC[index];
 							if (resultPCNT[index] != 0 && resultPCT[index] != 0) {
 								item.performanceP = parseFloat(((resultPCT[index] / (resultPCT[index] + resultPCNT[index])) * 100).toFixed(2));
 							}
@@ -213,21 +232,30 @@ export class TopManagementComponent implements OnInit {
 			this.isLoading2 = true;
 			let resultPCT = [];
 			let resultPCNT = [];
+			let resultPCC = [];
 			this.bureauOrdreService.getAllObject3("/personnels/index", this.page.pageable).then((data: any) => {
 				this.page = data;
 				this.dataSource2.data = this.page.content;
 				this.sizeData = data.content.length;
 				this.isLoading2 = false;
 				for (let i = 0; i < this.dataSource2.data.length; i++) {
-					const courriersTNTParPersonne = forkJoin([this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersEntrantsTraitesParPersonne/", this.dataSource2.data[i].id), this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersEntrantsNonTraitesParPersonne/", this.dataSource2.data[i].id), this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersConvocationTraitesParPersonne/", this.dataSource2.data[i].id), this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersConvocationNonTraitesParPersonne/", this.dataSource2.data[i].id)]);
+					const courriersTNTParPersonne = forkJoin([
+						this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersEntrantsTraitesParPersonne/", this.dataSource2.data[i].id), 
+						this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersEntrantsNonTraitesParPersonne/", this.dataSource2.data[i].id), 
+						this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersEntrantsCloturerParPersonne/", this.dataSource2.data[i].id), 
+						this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersConvocationTraitesParPersonne/", this.dataSource2.data[i].id),
+						this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersConvocationNonTraitesParPersonne/", this.dataSource2.data[i].id),
+						this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonne("/countCourriersConvocationCloturerParPersonne/", this.dataSource2.data[i].id)]);
 
-					courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1, resPCT2, resPCNT2]) => {
+					courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1,resPCC1, resPCT2, resPCNT2,resPCC2]) => {
 						resultPCT.push(resPCT1 + resPCT2);
 						resultPCNT.push(resPCNT1 + resPCNT2);
+						resultPCC.push(resPCC1 + resPCC2);
 
 						data.content.forEach((item, index) => {
 							item.paramPCT = resultPCT[index];
 							item.paramPCNT = resultPCNT[index];
+							item.paramPCC = resultPCNT[index];
 							if (resultPCNT[index] != 0 && resultPCT[index] != 0) {
 								item.performanceP = parseFloat(((resultPCT[index] / (resultPCT[index] + resultPCNT[index])) * 100).toFixed(2));
 							}
@@ -522,6 +550,7 @@ export class TopManagementComponent implements OnInit {
         
 				let resultPCT = [];
 				let resultPCNT = [];
+				let resultPCC = [];
 				this.bureauOrdreService.getAllObject3("/personnels/index", this.page.pageable).then((data: any) => {
 					this.page = data;
 					this.dataSource2.data = this.page.content;
@@ -532,13 +561,17 @@ export class TopManagementComponent implements OnInit {
             if(this.searchForm.value.type!=''){
               const courriersTNTParPersonne = forkJoin([
               this.bureauOrdreService.countCourriersParPersonneBetweenTwoDatesParTypeCourrier("/countCourriersTraitesParPersonneBetweenTwoDatesParTypeCourrier/", this.page.content[i].id, date1, date2,this.searchForm.value.type), 
-              this.bureauOrdreService.countCourriersParPersonneBetweenTwoDatesParTypeCourrier("/countCourriersEntrantsNonTraitesParPersonneBetweenTwoDatesParTypeCourrier/", this.page.content[i].id, date1, date2,this.searchForm.value.type)]);
-              courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1]) => {
+              this.bureauOrdreService.countCourriersParPersonneBetweenTwoDatesParTypeCourrier("/countCourriersEntrantsNonTraitesParPersonneBetweenTwoDatesParTypeCourrier/", this.page.content[i].id, date1, date2,this.searchForm.value.type),
+			  this.bureauOrdreService.countCourriersParPersonneBetweenTwoDatesParTypeCourrier("/countCourriersCloturerParPersonneBetweenTwoDatesParTypeCourrier/", this.page.content[i].id, date1, date2,this.searchForm.value.type),
+			]);
+              courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1,resPCC1]) => {
                 resultPCT.push(resPCT1);
                 resultPCNT.push(resPCNT1);
+                resultPCC.push(resPCC1);
                 data.content.forEach((item, index) => {
                   item.paramPCT = resultPCT[index];
                   item.paramPCNT = resultPCNT[index];
+                  item.paramPCC = resultPCC[index];
                   if (resultPCNT[index] != 0 && resultPCT[index] != 0) {
                     item.performanceP = parseFloat(((resultPCT[index] / (resultPCT[index] + resultPCNT[index])) * 100).toFixed(2));
                   }
@@ -555,14 +588,18 @@ export class TopManagementComponent implements OnInit {
             }else{
               const courriersTNTParPersonne = forkJoin([
                 this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
-               this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2)]);
+               this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
+			   this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersEntrantsCloturerParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
+			]);
 
-              courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1]) => {
+              courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1,resPCC1]) => {
                 resultPCT.push(resPCT1);
                 resultPCNT.push(resPCNT1);
+                resultPCC.push(resPCC1);
                 data.content.forEach((item, index) => {
                   item.paramPCT = resultPCT[index];
                   item.paramPCNT = resultPCNT[index];
+                  item.paramPCC = resultPCC[index];
                   if (resultPCNT[index] != 0 && resultPCT[index] != 0) {
                     item.performanceP = parseFloat(((resultPCT[index] / (resultPCT[index] + resultPCNT[index])) * 100).toFixed(2));
                   }
@@ -583,17 +620,22 @@ export class TopManagementComponent implements OnInit {
 
 				let resultECT = [];
 				let resultECNT = [];
+				let resultECC = [];
 				for (let i = 0; i < this.divisions.length; i++) {
           if(this.searchForm.value.type!=''){
             const courriersTNTParEntite = forkJoin([
               this.bureauOrdreService.countCourriersTraitesParEntiteBetweenTwoDatesParTypeCourrier("/countCourriersTraitesParEntiteBetweenTwoDatesParTypeCourrier/", this.divisions[i].id, date1, date2,this.searchForm.value.type),
-               this.bureauOrdreService.countCourriersTraitesParEntiteBetweenTwoDatesParTypeCourrier("/countCourriersEntrantsNonTraitesParEntiteBetweenTwoDatesParTypeCourrier/", this.divisions[i].id, date1, date2,this.searchForm.value.type)]);
-               courriersTNTParEntite.subscribe(([resECT1, resECNT1]) => {
+               this.bureauOrdreService.countCourriersTraitesParEntiteBetweenTwoDatesParTypeCourrier("/countCourriersEntrantsNonTraitesParEntiteBetweenTwoDatesParTypeCourrier/", this.divisions[i].id, date1, date2,this.searchForm.value.type),
+               this.bureauOrdreService.countCourriersTraitesParEntiteBetweenTwoDatesParTypeCourrier("/countCourriersEntrantsCloturerParEntiteBetweenTwoDatesParTypeCourrier/", this.divisions[i].id, date1, date2,this.searchForm.value.type),
+			]);
+               courriersTNTParEntite.subscribe(([resECT1, resECNT1,resECC1]) => {
                 resultECT.push(resECT1);
                 resultECNT.push(resECNT1);
+                resultECC.push(resECC1);
                 this.divisions.forEach((item, index) => {
                   item.paramECT = resultECT[index];
                   item.paramECNT = resultECNT[index];
+                  item.paramECC = resultECC[index];
                   if (resultECNT[index] != 0 && resultECT[index] != 0) {
                     item.performanceE = parseFloat(((resultECT[index] / (resultECT[index] + resultECNT[index])) * 100).toFixed(2));
                   }
@@ -608,14 +650,18 @@ export class TopManagementComponent implements OnInit {
           }else{
             const courriersTNTParEntite = forkJoin([
               this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates("/countCourriersEntrantsTraitesParEntiteBetweenTwoDates/", this.divisions[i].id, date1, date2),
-               this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates("/countCourriersEntrantsNonTraitesParEntiteBetweenTwoDates/", this.divisions[i].id, date1, date2)]);
+               this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates("/countCourriersEntrantsNonTraitesParEntiteBetweenTwoDates/", this.divisions[i].id, date1, date2),
+               this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates("/countCourriersEntrantsCloturerParEntiteBetweenTwoDates/", this.divisions[i].id, date1, date2),
+			]);
 
-            courriersTNTParEntite.subscribe(([resECT1, resECNT1]) => {
+            courriersTNTParEntite.subscribe(([resECT1, resECNT1,resECC1]) => {
               resultECT.push(resECT1);
               resultECNT.push(resECNT1);
+              resultECC.push(resECC1);
               this.divisions.forEach((item, index) => {
                 item.paramECT = resultECT[index];
                 item.paramECNT = resultECNT[index];
+                item.paramECC = resultECC[index];
                 if (resultECNT[index] != 0 && resultECT[index] != 0) {
                   item.performanceE = parseFloat(((resultECT[index] / (resultECT[index] + resultECNT[index])) * 100).toFixed(2));
                 }
@@ -788,20 +834,27 @@ export class TopManagementComponent implements OnInit {
         this.totalCourrier=this.totalCourrierConvocation
 				let resultPCT = [];
 				let resultPCNT = [];
+				let resultPCC = [];
 				this.bureauOrdreService.getAllObject3("/personnels/index", this.page.pageable).then((data: any) => {
 					this.page = data;
 					this.dataSource2.data = this.page.content;
 					this.sizeData = data.content.length;
 					this.isLoading2 = false;
 					for (let i = 0; i < this.page.content.length; i++) {
-						const courriersTNTParPersonne = forkJoin([this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2), this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2)]);
+						const courriersTNTParPersonne = forkJoin([
+							this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
+							 this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationNonTraitesParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
+							 this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates("/countCourriersConvocationCloturerParPersonneBetweenTwoDates/", this.page.content[i].id, date1, date2),
+							]);
 
-						courriersTNTParPersonne.subscribe(([resPCT2, resPCNT2]) => {
+						courriersTNTParPersonne.subscribe(([resPCT2, resPCNT2,resPCC2]) => {
 							resultPCT.push(resPCT2);
 							resultPCNT.push(resPCNT2);
+							resultPCC.push(resPCC2);
 							data.content.forEach((item, index) => {
 								item.paramPCT = resultPCT[index];
 								item.paramPCNT = resultPCNT[index];
+								item.paramPCC = resultPCC[index];
 								if (resultPCNT[index] != 0 && resultPCT[index] != 0) {
 									item.performanceP = parseFloat(((resultPCT[index] / (resultPCT[index] + resultPCNT[index])) * 100).toFixed(2));
 								}
@@ -821,19 +874,23 @@ export class TopManagementComponent implements OnInit {
 
 
         let resultECT = [];
-			let resultECNT = [];
-			for (let i = 0; i < this.divisions.length; i++) {
+		let resultECNT = [];
+		let resultECC = [];
+		for (let i = 0; i < this.divisions.length; i++) {
 			  const courriersTNTParEntite = forkJoin([
 			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersConvocationTraitesParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
 			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersConvocationNonTraitesParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
+			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersConvocationCloturerParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
 			  ]);
 
-			  courriersTNTParEntite.subscribe(([ resECT2, resECNT2]) => {
+			  courriersTNTParEntite.subscribe(([ resECT2, resECNT2,resECC2]) => {
 			    resultECT.push(resECT2);
 			    resultECNT.push(resECNT2);
+			    resultECC.push(resECC2);
 			    this.divisions.forEach((item, index) => {
 			      item.paramECT = resultECT[index];
 			      item.paramECNT = resultECNT[index];
+			      item.paramECC = resultECC[index];
 			      if (resultECNT[index] != 0 && resultECT[index] != 0) {
 			        item.performanceE = parseFloat(((resultECT[index] / (resultECT[index] + resultECNT[index])) * 100).toFixed(2));
 			      }
@@ -1040,20 +1097,25 @@ export class TopManagementComponent implements OnInit {
 			});
 			let resultECT = [];
 			let resultECNT = [];
+			let resultECC = [];
 			for (let i = 0; i < this.divisions.length; i++) {
 			  const courriersTNTParEntite = forkJoin([
 			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersEntrantsTraitesParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
 			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersEntrantsNonTraitesParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
+			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersEntrantsCloturerParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
 			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersConvocationTraitesParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
 			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersConvocationNonTraitesParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
+			    this.bureauOrdreService.countCourriersTraitesNonTraitesParEntiteBetweenTwoDates('/countCourriersConvocationCloturerParEntiteBetweenTwoDates/', this.divisions[i].id, date1, date2),
 			  ]);
 
-			  courriersTNTParEntite.subscribe(([resECT1, resECNT1, resECT2, resECNT2]) => {
+			  courriersTNTParEntite.subscribe(([resECT1, resECNT1,resECC1, resECT2, resECNT2,resECC2]) => {
 			    resultECT.push(resECT1 + resECT2);
 			    resultECNT.push(resECNT1 + resECNT2);
+			    resultECC.push(resECC1 + resECC2);
 			    this.divisions.forEach((item, index) => {
 			      item.paramECT = resultECT[index];
 			      item.paramECNT = resultECNT[index];
+			      item.paramECC = resultECC[index];
 			      if (resultECNT[index] != 0 && resultECT[index] != 0) {
 			        item.performanceE = parseFloat(((resultECT[index] / (resultECT[index] + resultECNT[index])) * 100).toFixed(2));
 			      }
@@ -1069,6 +1131,7 @@ export class TopManagementComponent implements OnInit {
 
 			let resultPCT = [];
 			let resultPCNT = [];
+			let resultPCC = [];
 			this.bureauOrdreService.getAllObject3("/personnels/index",this.page.pageable)
 			  .then((data:any) => {
           this.page = data;
@@ -1078,16 +1141,20 @@ export class TopManagementComponent implements OnInit {
 			      const courriersTNTParPersonne = forkJoin([
 			        this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates('/countCourriersEntrantsTraitesParPersonne/', this.page.content[i].id, date1, date2),
 			        this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates('/countCourriersEntrantsNonTraitesParPersonne/', this.page.content[i].id, date1, date2),
+			        this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates('/countCourriersEntrantsCloturerParPersonne/', this.page.content[i].id, date1, date2),
 			        this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates('/countCourriersConvocationTraitesParPersonne/', this.page.content[i].id, date1, date2),
 			        this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates('/countCourriersConvocationNonTraitesParPersonne/', this.page.content[i].id, date1, date2),
+			        this.bureauOrdreService.countCourriersTraitesNonTraitesParPersonneBetweenTwoDates('/countCourriersConvocationCloturerParPersonne/', this.page.content[i].id, date1, date2),
 			      ]);
 
-			      courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1, resPCT2, resPCNT2]) => {
+			      courriersTNTParPersonne.subscribe(([resPCT1, resPCNT1,resPCC1, resPCT2, resPCNT2,resPCC2]) => {
 			        resultPCT.push(resPCT1 + resPCT2);
 			        resultPCNT.push(resPCNT1 + resPCNT2);
+			        resultPCC.push(resPCC1 + resPCC2);
 			        data.forEach((item, index) => {
 			          item.paramPCT = resultPCT[index];
 			          item.paramPCNT = resultPCNT[index];
+			          item.paramPCC = resultPCC[index];
 			          if (resultPCNT[index] != 0 && resultPCT[index] != 0) {
 			            item.performanceP = parseFloat(((resultPCT[index] / (resultPCT[index] + resultPCNT[index])) * 100).toFixed(2));
 			          }

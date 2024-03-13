@@ -43,6 +43,10 @@ export class PatrimoineService {
 			.toPromise();
 		return forkJoin([patrimoines]);
 	}
+
+	research(page, size, searchDto: any) {
+		return this.http.post<any[]>(this.baseUrl + this.patrimoineUrl + '/search' + "?page=" + page + "&size=" + size, searchDto);
+	}
 	//************Show***************  */
 	public getPatrimoineById(id: number): Observable<any> {
 		let patrimoine = this.http

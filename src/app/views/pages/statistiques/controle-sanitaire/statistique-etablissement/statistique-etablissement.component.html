@@ -1,0 +1,313 @@
+<div class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Statistiques
+			</h2>
+		</div>
+	</div>
+	<!-- end::row-content-top -->
+
+
+
+	<mat-card class="example-card mt-8 mb-5">
+		<form [formGroup]="searchForm">
+			<div class="row">
+				
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date de début</mat-label>
+							<input
+							formControlName="dated"
+								type="date"
+								class="form-control-solid form-control-lg"
+								name="address1"
+								matInput
+							/>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+
+
+				<div class="col-md-6">
+					<div class="form-group fv-plugins-icon-container">
+						<mat-form-field class="example-full-width">
+							<mat-label>Date fin</mat-label>
+							<input
+							formControlName="datef"
+								type="date"
+								class="form-control-solid form-control-lg"
+								name="address1"
+								matInput
+							/>
+						</mat-form-field>
+						<div class="fv-plugins-message-container"></div>
+					</div>
+				</div>
+	
+			</div>
+			<div class="row">
+				<div class="col-md-9"></div>
+
+				<div class="col-md-3 form-group fv-plugins-icon-container">
+					<div class="kt-portlet__head-label text-center">
+						<button (click)="filterDecesData()" _ngcontent-dkp-c41=""
+							class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+							{{'PAGES.PROGRAMME.STATISTIQUE.APPLIQUER'| translate}} </button>
+						<button (click)="reset()" _ngcontent-dkp-c41=""
+							class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+							{{'PAGES.PROGRAMME.STATISTIQUE.REINITIALISER'| translate}} </button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</mat-card>
+
+
+	<div class="kt-portlet__head kt-bg-portlet-1">
+		<div class="kt-portlet__head-label">
+			<h2 class="kt-portlet__head-title kt-font-inverse-brand">
+				Décès constatés à domicile et enregistrés au BCH
+			</h2>
+		</div>
+		<div class="kt-portlet__head-toolbar">
+			<div class="kt-portlet__head-wrapper">
+				<div class="kt-portlet__head-actions">
+					<button (click)="exportToExcelSurvenu()" matTooltip="Télécharger" href="javascript:; " class="btn btn-success">
+						<i class="la la-download"></i> 
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+<div class="row mt-5">
+       <div class="col-md-6">
+        <div style="width: 800px; height: 600px;">
+        <canvas id="canvas"></canvas>
+      </div>
+       </div>
+      <div class="col-md-6">
+      
+
+              <table class="table" id="exportData">
+                <thead>
+                  <tr>
+                    <th>Arrondissement</th>
+                    <th>EHS</th>
+                    <th>EHM</th>
+                    <th>EHNS</th>
+                    <th>Nombre total d'établissements contrôlés</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let item of statistiques">
+                    <tr>
+                      <th>{{ item.arrondissement }}</th>
+                      <td>{{ item.EHS || 0 }}</td>
+                      <td>{{ item.EHM || 0 }}</td>
+                      <td>{{ item.EHNS || 0 }}</td>
+                      <td class="text-center">{{ item.nombreTotal }}</td>
+                        </tr>
+                      </ng-container>
+                    
+                  <tr >  
+                    <td>Total</td>
+                    <td>{{ sommeEtHg[0].ehs }}</td>
+                    <td>{{ sommeEtHg[0].ehm }}</td>
+                    <td>{{ sommeEtHg[0].ehns }}</td>
+                    <td class="text-center">{{ sommeTotale }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+
+          
+
+              
+</div>
+
+              
+              
+
+
+</div>
+      
+      
+<div class="kt-portlet__head kt-bg-portlet-1">
+  <div class="kt-portlet__head-label">
+    <h2 class="kt-portlet__head-title kt-font-inverse-brand">
+      Décès constatés à domicile et enregistrés au BCH
+    </h2>
+  </div>
+  <div class="kt-portlet__head-toolbar">
+    <div class="kt-portlet__head-wrapper">
+      <div class="kt-portlet__head-actions">
+        <button (click)="exportToExcelSurvenu1()" matTooltip="Télécharger" href="javascript:; " class="btn btn-success">
+          <i class="la la-download"></i> 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+        <div class="col-md-6">
+         <div style="width: 800px; height: 600px;">
+         <canvas id="canvas1"></canvas>
+       </div>
+        </div> 
+        <div class="col-md-6">
+              
+
+
+
+                      <table class="table" id="exportData1">
+                        <thead>
+                          <tr>
+                            <th scope="col">Arrondissement</th>
+                            <th scope="col">Alimentaires</th>
+                            <th scope="col">Publics</th>
+                            <th scope="col">Touristiques</th>
+                           
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let item of stNature">
+                            <tr>
+                              <th>{{ item.arrondissement }}</th>
+                              <td>{{ item.Alimentaires || 0 }}</td>
+                              <td>{{ item.Publics || 0 }}</td>
+                              <td>{{ item.Touristiques || 0 }}</td>
+
+
+                              <!-- <ng-container *ngFor="let nature of stNature">
+                                <ng-container *ngIf="nature.arrondissement === item.arrondissement">
+                                  <td>{{ nature.Alimentaires }}</td>
+                                  <td>{{ nature.Publics }}</td>
+                                  <td>{{ nature.Touristiques}}</td>
+                                </ng-container> -->
+                              </tr>
+                              </ng-container>
+
+                              <!-- Recherchez l'élément correspondant dans stUnite -->
+                              <!-- <ng-container *ngFor="let unite of stUnite">
+                                <ng-container *ngIf="unite.arrondissement === item.arrondissement">
+                                  <td>{{ unite.Kg }}</td>
+                                  <td>{{ unite.Litre }}</td>
+                                  <td>{{ unite.Unite }}</td>
+                                </ng-container>
+                              </ng-container> -->
+                              <td>Total</td>
+                              <td>{{ sommeNature[0].alimentaires }}</td>
+                              <td>{{ sommeNature[0]. publics}}</td>
+                              <td>{{ sommeNature[0]. touristiques}}</td>
+                             
+                            
+                          </tbody>
+                        </table>
+        </div>
+ </div>
+
+
+
+ <div class="kt-portlet__head kt-bg-portlet-1">
+  <div class="kt-portlet__head-label">
+    <h2 class="kt-portlet__head-title kt-font-inverse-brand">
+      Décès constatés à domicile et enregistrés au BCH
+    </h2>
+  </div>
+  <div class="kt-portlet__head-toolbar">
+    <div class="kt-portlet__head-wrapper">
+      <div class="kt-portlet__head-actions">
+        <button (click)="exportToExcelSurvenu2()" matTooltip="Télécharger" href="javascript:; " class="btn btn-success">
+          <i class="la la-download"></i> 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <div class="row">
+        <div class="col-md-6">
+         <div style="width: 800px; height: 600px;">
+         <canvas id="canvas3"></canvas>
+       </div>
+        </div> 
+        <div class="col-md-6">
+              
+
+                      <table class="table" id="exportData2">
+                        <thead >
+                          <tr>
+                            <th style="vertical-align: middle;" rowspan="2" >Arrondissement</th>
+                            <th style="vertical-align: middle;" rowspan="2">Prelevements</th>
+                            <th style="vertical-align: middle;" rowspan="2">MiseDemeurs</th>
+                            <th style="vertical-align: middle;" rowspan="2">AvertissementOrale</th>
+                            <th style="vertical-align: middle;" rowspan="2">ArretActivite</th>
+                            <th style="vertical-align: middle;" rowspan="1" colspan="3">Saisie et destructions</th>
+                            
+                           
+                          </tr>
+                          <tr>
+                            <th >Kg</th>
+                            <th >Litre</th>
+                            <th>Unite</th>
+                          </tr>
+                            
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let item of stMesure">
+                            <tr>
+                              <th>{{ item.arrondissement }}</th>
+                              <td>{{ item.Prelevements || 0 }}</td>
+                              <td>{{ item.MiseDemeurs || 0 }}</td>
+                              <td>{{ item.AvertissementOrale || 0 }}</td>
+                              <td>{{ item.ArretActivite || 0 }}</td>
+
+                              <!-- Recherchez l'élément correspondant dans stUnite -->
+                              <ng-container *ngFor="let unite of stUnite">
+                                <ng-container *ngIf="unite.arrondissement === item.arrondissement">
+                                  <td>{{ unite.Kg || 0 }}</td>
+                                  <td>{{ unite.Litre || 0 }}</td>
+                                  <td>{{ unite.Unite || 0 }}</td>
+                                </ng-container>
+                                
+                                  <!-- <td *ngIf="unite.arrondissement !== item.arrondissement"> 0 </td> -->
+                               
+                              </ng-container>
+                            </tr>
+                          </ng-container>
+                          <tr >
+                            <td>Total</td>
+                            <td>{{ sommeMesures[0].prelevements || 0 }}</td>
+                            <td>{{ sommeMesures[0].miseDemeurs || 0 }}</td>
+                            <td>{{ sommeMesures[0].avertissementOrale || 0 }}</td>
+                            <td>{{ sommeMesures[0].arretActivite || 0 }}</td>
+                            <td>{{ sommeUnite[0].kg || 0 }}</td>
+                            <td>{{ sommeUnite[0].litre || 0 }}</td>
+                            <td>{{ sommeUnite[0].unite || 0 }}</td>
+                            <!-- Ajoutez d'autres colonnes ici pour Kg, Litre, Unite -->
+                          </tr>
+                        </tbody>
+                      </table>
+            
+                      
+        </div>
+ </div>
+ <div class="row centered-content">
+        <div class="col">
+         <div style="width: 800px; height: 600px;">
+         <canvas id="canvas4"></canvas>
+       </div>
+        </div> 
+   
+ </div>
+
+      
+      

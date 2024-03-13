@@ -1,0 +1,30 @@
+<div class="kt-portlet__body">
+	<!-- Start :: Expansion panel -->
+	<mat-accordion class="example-headers-align panel-space" multi>
+		<mat-expansion-panel [expanded]="true">
+			<mat-expansion-panel-header>
+				<mat-panel-title class="panel-title" style="color: #2a79b1">
+					<mat-icon>info</mat-icon>&nbsp;Détails du nature
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<table class="table pj" width="100%">
+				<tbody>
+					<tr>
+						<th>Libellé arabe :</th>
+						<td class="donnee_show">
+							<span>{{ nature?.libelleArab? nature?.libelleArab:'-'}}</span>
+						</td>
+						<th>Libellé Français :</th>
+						<td class="donnee_show">
+							<span>{{ nature?.libelleFrancais?nature?.libelleFrancais:'-' }}</span>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</mat-expansion-panel>
+		
+
+
+	</mat-accordion>
+</div>

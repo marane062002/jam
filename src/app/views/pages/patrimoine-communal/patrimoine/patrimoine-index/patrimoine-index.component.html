@@ -7,6 +7,9 @@
         </div>
         <div class="kt-portlet__head-toolbar">
             <div *ngxPermissionsOnly="['canCreatePatrimoine']" class="kt-portlet__head-actions">
+                <button (click)="exportTable()" type="button" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show" matTooltip="{{ 'PAGES.GENERAL.DOWNLOAD' | translate }}&nbsp;{{ 'PAGES.ASSOCIATION.TITRE_INDEX' | translate }}">
+                    <i class="flaticon2-download text-success"></i>
+                </button>
                 <a (click)="addNew()" class="btn btn-outline-success btn-bold btn-sm">
                     <i class="fas fa-plus"></i> {{ 'PAGES.GENERAL.ADD' | translate }}
                 </a>
@@ -19,7 +22,8 @@
                 <div class="example-header">
                     <i class="flaticon-search-magnifier-interface-symbol text-dark"></i>&nbsp;
                     <mat-form-field>
-                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
+                        <input matInput (keyup)="applyFilter($event.target.value)"
+                            placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}">
                     </mat-form-field>
                 </div>
                 <div class="kt-portlet__head-toolbar">
@@ -27,31 +31,100 @@
                     <p class="counter__titre">Enregistrement</p>
                 </div>
             </div>
-           
+
+            <form action="" class="row" [formGroup]="formGroup">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select (selectionChange)="selectedTypePropriete($event.value)" class="form-control"
+                                formControlName="typePropriete"
+                                placeholder="{{ 'PAGES.GENERAL.TYPE_PROPRIETE' | translate }} :">
+                                <mat-option value="عمليات عقارية">{{'عمليات عقارية'}}
+                                </mat-option>
+                                <mat-option value="تحفيظ">{{'تحفيظ'}}</mat-option>
+                                <mat-option value="تدبيرالممتلكات">{{'تدبيرالممتلكات'}} </mat-option>
+                                <mat-option value="Autre">{{'Autre'}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3" *ngIf="isSelectedAutre==true">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input class="form-control" placeholder="" matInput formControlName="typeProprieteLibre">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" class="form-control" formControlName="originPatrimoinText"
+                                placeholder="{{ 'PAGES.GENERAL.ORIGINE_PATRIMOINE' | translate }} :">
+                            <mat-icon matSuffix><i class="fas fa-keyboard"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <mat-form-field class="example-full-width">
+                            <mat-select class="form-control" formControlName="naturePAtrimoine"
+                                placeholder="{{ 'PAGES.GENERAL.nature_Patrimoine' | translate }} :">
+                                <mat-option value="publique">{{ 'PAGES.GENERAL.PUBLIQUE' | translate }}
+                                </mat-option>
+                                <mat-option value="prive">{{ 'PAGES.GENERAL.PRIVE' | translate }} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3" style="margin-top: 15px;;">
+                    <button _ngcontent-dkp-c41="" (click)="onSubmit()"
+                        class="btn btn-primary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                        <i _ngcontent-dlp-c41 class=" la la-search-plus"></i>
+                        {{ "PAGES.PROGRAMME.RECHERCHER" | translate }}
+                    </button>
+                </div>
+                <div class="col-md-3" style="margin-top: 15px;;">
+                    <button _ngcontent-dkp-c41="" (click)="clear()"
+                        class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                        <i _ngcontent-dlp-c41 class=" la la-search-plus"></i>
+                        {{ "PAGES.PROGRAMME.REINITIALISER" | translate }}
+                    </button>
+                </div>
+            </form><br>
+
             <div ngif="dataSource">
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
                     <!-- type Column -->
                     <ng-container matColumnDef="type">
-                        <th mat-header-cell class="type" *matHeaderCellDef mat-sort-header>{{ 'PAGES.GENERAL.TYPE_PATRIMOINE' | translate }}
+                        <th mat-header-cell class="type" *matHeaderCellDef mat-sort-header>{{
+                            'PAGES.GENERAL.TYPE_PATRIMOINE' | translate }}
                         </th>
-                        <td mat-cell class="type" *matCellDef="let row"> {{row.type?.libelle?row.type?.libelle:"-"}} </td>
+                        <td mat-cell class="type" *matCellDef="let row"> {{row.type?.libelle?row.type?.libelle:"-"}}
+                        </td>
                     </ng-container>
                     <!-- dateEnregistrement Column -->
                     <ng-container matColumnDef="dateEnregistrement">
-                        <th mat-header-cell class="dateEnreg" *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.DATE_ENREGISTREMENT' | translate }} </th>
-                        <td mat-cell class="dateEnreg" *matCellDef="let row"> {{(row.dateEnregistrement != null)?(row.dateEnregistrement|date:'dd/MM/yyyy'):"-"}} </td>
+                        <th mat-header-cell class="dateEnreg" *matHeaderCellDef mat-sort-header> {{
+                            'PAGES.GENERAL.DATE_ENREGISTREMENT' | translate }} </th>
+                        <td mat-cell class="dateEnreg" *matCellDef="let row"> {{(row.dateEnregistrement !=
+                            null)?(row.dateEnregistrement|date:'dd/MM/yyyy'):"-"}} </td>
                     </ng-container>
                     <!-- naturePAtrimoine Column -->
                     <ng-container matColumnDef="naturePAtrimoine">
-                        <th mat-header-cell class="nature" *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.nature_Patrimoine' | translate }}
+                        <th mat-header-cell class="nature" *matHeaderCellDef mat-sort-header> {{
+                            'PAGES.GENERAL.nature_Patrimoine' | translate }}
                         </th>
-                        <td mat-cell class="nature" *matCellDef="let row"> {{row.naturePAtrimoine?row.naturePAtrimoine:"-"}}
+                        <td mat-cell class="nature" *matCellDef="let row">
+                            {{row.naturePAtrimoine?row.naturePAtrimoine:"-"}}
                         </td>
                     </ng-container>
                     <!-- arrondissement Column -->
                     <ng-container matColumnDef="arrondissement">
-                        <th mat-header-cell class="arrondissement" *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.ARRONDISSEMENT' | translate }}
+                        <th mat-header-cell class="arrondissement" *matHeaderCellDef mat-sort-header> {{
+                            'PAGES.GENERAL.ARRONDISSEMENT' | translate }}
                         </th>
                         <td mat-cell class="arrondissement" *matCellDef="let row">
                             {{row.arrondissement?.libelle?row.arrondissement?.libelle:"-"}} </td>
@@ -64,13 +137,16 @@
                     </ng-container> -->
                     <!-- typeSpecialite Column -->
                     <ng-container matColumnDef="typeSpecialite">
-                        <th mat-header-cell class="spec" *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.Spec_Patrimoin' | translate }}
+                        <th mat-header-cell class="spec" *matHeaderCellDef mat-sort-header> {{
+                            'PAGES.GENERAL.Spec_Patrimoin' | translate }}
                         </th>
-                        <td mat-cell class="spec" *matCellDef="let row"> {{row.typeSpecialite?row.typeSpecialite:"-"}} </td>
+                        <td mat-cell class="spec" *matCellDef="let row"> {{row.typeSpecialite?row.typeSpecialite:"-"}}
+                        </td>
                     </ng-container>
                     <!-- superficie Column -->
                     <ng-container matColumnDef="superficie">
-                        <th mat-header-cell class="superf" *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.SUPERFICIE' | translate }}
+                        <th mat-header-cell class="superf" *matHeaderCellDef mat-sort-header> {{
+                            'PAGES.GENERAL.SUPERFICIE' | translate }}
                         </th>
                         <td mat-cell class="superf" *matCellDef="let row"> {{row.superficie?row.superficie:"-"}} </td>
                     </ng-container>
@@ -82,21 +158,26 @@
                     </ng-container> -->
                     <!-- dateEnreCF Column -->
                     <ng-container matColumnDef="dateEnreCF">
-                        <th mat-header-cell class="dateCf" *matHeaderCellDef mat-sort-header> {{ 'PAGES.GENERAL.DATE_INSCRIPTION_CF_LIST' | translate }}
+                        <th mat-header-cell class="dateCf" *matHeaderCellDef mat-sort-header> {{
+                            'PAGES.GENERAL.DATE_INSCRIPTION_CF_LIST' | translate }}
                         </th>
-                        <td mat-cell class="dateCf" *matCellDef="let row"> {{(row.dateEnreCF != null)?(row.dateEnreCF|date:'dd/MM/yyyy'): "-"}} </td>
+                        <td mat-cell class="dateCf" *matCellDef="let row"> {{(row.dateEnreCF !=
+                            null)?(row.dateEnreCF|date:'dd/MM/yyyy'): "-"}} </td>
                     </ng-container>
-    
+
                     <!-- Action Column -->
                     <ng-container matColumnDef="actions">
                         <th mat-header-cell class="action" *matHeaderCellDef mat-sort-header></th>
                         <td mat-cell class="action" *matCellDef="let row">
-                            <button *ngxPermissionsOnly="['canShowPatrimoine']" (click)="show(row.id)" class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i
+                            <button *ngxPermissionsOnly="['canShowPatrimoine']" (click)="show(row.id)"
+                                class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_show"><i
                                     class="icon la la-search-plus"></i></button>
-                            <button *ngxPermissionsOnly="['canUpdatePatrimoine']" (click)="update(row.id)" class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i
+                            <button *ngxPermissionsOnly="['canUpdatePatrimoine']" (click)="update(row.id)"
+                                class="btn btn-sm btn-clean btn-icon btn-warning btn-icon-md btn_table_edit"><i
                                     class="icon la la-edit"></i></button>
                             <!-- <button class="btn btn-sm btn-clean btn-icon btn-brand btn-icon-md btn_table_print"><i class="icon la la-print"></i></button> -->
-                            <button *ngxPermissionsOnly="['canDeletePatrimoine']" (click)="delete(row.id)" class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i
+                            <button *ngxPermissionsOnly="['canDeletePatrimoine']" (click)="delete(row.id)"
+                                class="btn btn-sm btn-clean btn-icon btn-danger btn-icon-md btn_table_delete"><i
                                     class="icon la la-trash"></i></button>
                         </td>
                     </ng-container>
@@ -104,8 +185,12 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
             </div>
-           
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            <div *ngIf="sizeData == 0 && isLoadingResults == false"
+                style="display: flex; justify-content: center; padding: 2%; color: orangered">
+                {{ "PAGES.GENERAL.NO_RECORDS" | translate }}
+            </div>
+            <mat-paginator [length]="sizeData" [pageSize]="5" [pageIndex]="0" [pageSizeOptions]="[5, 10, 50]"
+                [showFirstLastButtons]="true" (page)="handlePageEvent($event)"></mat-paginator>
         </div>
     </div>
 </div>

@@ -1,0 +1,49 @@
+<div class="kt-portlet portlet-3">
+    <div class="kt-portlet__head kt-bg-portlet-3">
+        <div class="kt-portlet__head-label">
+            <h2 class="kt-portlet__head-title kt-font-inverse-brand">
+                Ajouter Délégataire
+            </h2>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="delegateForm" (ngSubmit)="onSubmit()">
+    <div class="col-md-12">
+		<div class="form-group fv-plugins-icon-container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label> RC </label>
+                    <input matInput formControlName="rc" type="text" class="form-control" placeholder=""/>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label> RS </label>
+                    <input matInput formControlName="rs" type="text" class="form-control form-control-solid form-control-lg" name="rs"/>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-portlet__heads">
+        <div class="kt-portlet__head-label" align="right">
+            <button href="javascript:;" (click)="backList()" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                <i class="la la-recycle"></i>
+                Retour
+            </button>
+            <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit">
+                <i class="icon la la-floppy-o"></i>
+                Enregistrer
+            </button>
+        </div>
+    </div>
+    </div>
+    </div>
+</form>
