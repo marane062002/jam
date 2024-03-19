@@ -235,19 +235,21 @@ export class PrestatairesComponent implements OnInit {
 			);
 	}
 
-	numeroPrix
+	numeroPrix=0
 	async getPrestatairesTotal() {
 		await this.service
 			.getAllOffreDeposeeWithoutPagination(this.idao)
 			.pipe(delay(300))
 			.subscribe(
 				(res) => {
+					if(res.length!=0){
 					for (let i = 0; i < res.length; i++) {
 						if (res[i].statut.id == 1) {
 							this.summAccepte++;
 						}
 					}
 					this.numeroPrix = (this.summAccepte % res.length) + (this.ao2.estimation / 2);
+					}
 				},
 				(err) => {
 					console.log(err);
@@ -362,23 +364,27 @@ export class PrestatairesComponent implements OnInit {
 			prestataire: { id: this.valueToSend },
 			ao: { id: this.idao },
 			montantPropose: this.montantPropose,
-			statut: { 'id': null }
+			statut: null
 		};
 		let a = (this.montantPropose * 100) / this.ao2.estimation;
-		if (this.ao2.typePrestation.libelle == 'Travaux') {
-			if (a > this.p1Travaux && a < this.p2Travaux) {
-				offre.statut = { 'id': 1 };
-			} else {
-				offre.statut = { 'id': 2 };
+		if(this.ao2.typePrestation!=null){
+			
+			if (this.ao2.typePrestation.libelle == 'Travaux') {
+				if (a > this.p1Travaux && a < this.p2Travaux) {
+					offre.statut = { 'id': 1 };
+				} else {
+					offre.statut = { 'id': 2 };
+				}
+			}
+			if (this.ao2.typePrestation.libelle == 'Fournitures') {
+				if (a > this.p1Fournitures && a < this.p2Fournitures) {
+					offre.statut = { 'id': 1 };
+				} else {
+					offre.statut = { 'id': 2 };
+				}
 			}
 		}
-		if (this.ao2.typePrestation.libelle == 'Fournitures') {
-			if (a > this.p1Fournitures && a < this.p2Fournitures) {
-				offre.statut = { 'id': 1 };
-			} else {
-				offre.statut = { 'id': 2 };
-			}
-		}
+		
 		this.isPrestataire = false;
 		this.service.OffreByIdPrestataire(this.valueToSend, this.idao).subscribe(
 			(data) => {
@@ -388,7 +394,7 @@ export class PrestatairesComponent implements OnInit {
 					this.service.sendOffreDeposee([offre]).subscribe((data) => {
 						this.getPrestataires();
 						this.montantPropose = 0;
-					});
+					});this.getPrestatairesTotal();
 				}
 			},
 			(err) => {

@@ -129,8 +129,8 @@
 							<mat-form-field class="example-full-width">
 								<label> Mode de passation:
 								</label>
-								<mat-select class="form-control" name="modePassation" placeholder=""
-									(selectionChange)="selectedmodePassation($event)">
+								<mat-select class="form-control" (selectionChange)="selectedmodePassation($event.value)" name="modePassation" placeholder="" [(ngModel)]="formData.natureAo.id" [compareWith]="selectedValuenatureAo"
+									>
 									<mat-option *ngFor="let item of natureAoAll" value="{{item.id}}">
 										{{item.libelle}}</mat-option>
 								</mat-select>
@@ -500,7 +500,7 @@
 							<mat-form-field class="example-full-width">
 								<label> Liste des classes :
 								</label>
-								<mat-select class="form-control" name="classification" [(ngModel)]="formData.classification.id" [compareWith]="selectedListeClassification">
+								<mat-select class="form-control" name="classification" [value]="formData?.classification?.id" [compareWith]="selectedListeClassification" (selectionChange)="selectedListeClassifications($event.value)" >
 									<mat-option *ngFor="let item of classes" value="{{item.id}}">
 										{{item.libelle}}</mat-option>
 								</mat-select>

@@ -39,7 +39,7 @@
                         <!-- begin::Bureau d'ordre -->
                         <!-- <li ngbDropdownItem *ngxPermissionsOnly="['accessToBOModule']" class="kt-nav__item"> -->
                         <li ngbDropdownItem class="kt-nav__item">
-                            <a class="kt-nav__link active" (click)="menuHorService.clickMenu(4)" href="javascript:;">
+                            <a class="kt-nav__link active"  *ngxPermissionsOnly="['accessToBOModule']"(click)="menuHorService.clickMenu(4)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon2-mail-1"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.MODULE_BO' | translate }}</span>
                             </a>
@@ -155,7 +155,7 @@
                             </a>
                         </li>
                         <li ngbDropdownItem class="kt-nav__item">
-                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToMarcheGrosModule','accessToMondataireModule']" (click)="menuHorService.clickMenu(23)" href="javascript:;">
+                            <a class="kt-nav__link active" *ngxPermissionsOnly="['accessToMarcheGrosModule','accessToMondataireModule','accessToMarcheGrosPseeVehiculeModule']" (click)="menuHorService.clickMenu(23)" href="javascript:;">
                                 <span class="kt-nav__link-icon"><i class="flaticon-folder-1"></i></span>
                                 <span class="kt-nav__link-text">{{ 'MENU.GESTIONMARCHE' | translate }}</span>
                             </a>

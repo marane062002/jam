@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Console, log } from 'console';
 import { Vehicule } from '../../../../core/_base/layout/models/vehicule';
 import { VehiculeService } from '../Services/vehicule.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'kt-addvehicule',
@@ -73,7 +74,7 @@ export class AddvehiculeComponent implements OnInit {
     private router: Router,
     private vehiculeService: VehiculeService,
     private snackBar: MatSnackBar,
-
+    private translate: TranslateService
   ) {
 
  }
@@ -138,7 +139,7 @@ if(this.vehiculesaveform.value.refTransport!=''&& this.vehiculesaveform.value.nu
         duration: 5000 // Display the snackbar for 5 seconds
       };
 
-      this.snackBar.open('Vehicle added successfully!', 'Close', snackBarConfig);
+      this.snackBar.open(this.translate.instant('PAGES.VEHICULE.VEHICULE_ADDED_SUCCESSFULLY'), 'Close', snackBarConfig);
     },
     (error) => {
       console.log(error);
@@ -151,7 +152,7 @@ if(this.vehiculesaveform.value.refTransport!=''&& this.vehiculesaveform.value.nu
           duration: 5000 // Display the snackbar for 5 seconds
         };
 
-        this.snackBar.open(error.error.detail, 'Close', snackBarConfig);
+        this.snackBar.open(this.translate.instant('PAGES.VEHICULE.'+error.error.detail), 'Close', snackBarConfig);
       } else {
         // Configure the MatSnackBar position at the top
         const snackBarConfig: MatSnackBarConfig = {

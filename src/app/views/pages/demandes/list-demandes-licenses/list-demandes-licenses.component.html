@@ -26,26 +26,26 @@
                 <!-- EN COURS TAB -->
                 <div *ngIf="tab.content == 'ASSOCIATION'">
                     <div *ngIf="selected2.value==0">
-                        <div>ASSOCIATION</div>
+                        <!-- <div>ASSOCIATION</div> -->
                         <!-- <template *ngTemplateOutlet="demandes"></template> -->
                     </div>
                 </div>
                 <!-- Accepter TAB -->
                 <div *ngIf="tab.content == 'PMSource'">
                     <div *ngIf="selected2.value==1">
-                        <div>PMSOURCE</div>
+                        <!-- <div>PMSOURCE</div> -->
                         <!-- <template *ngTemplateOutlet="demandes"></template> -->
                     </div>
                 </div>
                 <div *ngIf="tab.content == 'PMSourcePRIV'">
                     <div *ngIf="selected2.value==2">
-                        <div>PMSourcePriv</div>
+                        <!-- <div>PMSourcePriv</div> -->
                         <!-- <template *ngTemplateOutlet="demandes"></template> -->
                     </div>
                 </div>
                 <div *ngIf="tab.content == 'PPSource'">
                     <div *ngIf="selected2.value==3">
-                        <div>personne physique</div>
+                        <!-- <div>personne physique</div> -->
                         <!-- <template *ngTemplateOutlet="demandes"></template> -->
                     </div>
                 </div>
@@ -139,6 +139,74 @@
                         matTooltip="{{ row.association.nom }}"><i class="fas fa-info-circle"></i></a>
                 </td>
             </ng-container>
+            <!-- cin personne physique  -->
+            <ng-container matColumnDef="cin">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="cin">{{ "PAGES.DEMANDE.PPCIN" |
+                    translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="cin">
+                    {{ row.ppsBean && row.ppsBean.cin ? (row.ppsBean.cin.length > 25 ? (row.ppsBean.cin | slice : 0 : 25) + "..." : row.ppsBean.cin) : "-" }}
+                    <a href="javascript:void(0);" *ngIf="row.ppsBean && row.ppsBean.cin && row.ppsBean.cin.length > 25" matTooltip="{{ row.ppsBean.cin }}"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </ng-container>
+
+            
+            <!-- nom personne physique -->
+            <ng-container matColumnDef="nomPP">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="nomPP">{{ "PAGES.DEMANDE.PPNOM" |
+                    translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="nomPP">
+                    {{ row.ppsBean && row.ppsBean.nom ? (row.ppsBean.nom.length > 25 ? (row.ppsBean.nom | slice : 0 : 25) + "..." : row.ppsBean.nom) : "-" }}
+                    <a href="javascript:void(0);" *ngIf="row.ppsBean && row.ppsBean.nom && row.ppsBean.nom.length > 25" matTooltip="{{ row.ppsBean.nom }}"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </ng-container>
+            <!-- prenom personne physique -->
+            <ng-container matColumnDef="prenomPP">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="prenomPP">{{ "PAGES.DEMANDE.PPPRENOM" |
+                    translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="prenomPP">
+                    {{ row.ppsBean && row.ppsBean.prenom ? (row.ppsBean.prenom.length > 25 ? (row.ppsBean.prenom | slice : 0 : 25) + "..." : row.ppsBean.prenom) : "-" }}
+                    <a href="javascript:void(0);" *ngIf="row.ppsBean && row.ppsBean.prenom && row.ppsBean.prenom.length > 25" matTooltip="{{ row.ppsBean.prenom }}"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </ng-container>
+
+
+            <!-- nom personne morale  pmsBean.nom -->
+            <ng-container matColumnDef="nomPM">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="nomPM">{{ "PAGES.DEMANDE.PMNOM" |
+                    translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="nomPM">
+                    {{ row.pmsBean && row.pmsBean.nom ? (row.pmsBean.nom.length > 25 ? (row.pmsBean.nom | slice : 0 : 25) + "..." : row.pmsBean.nom) : "-" }}
+                    <a href="javascript:void(0);" *ngIf="row.pmsBean && row.pmsBean.nom && row.pmsBean.nom.length > 25" matTooltip="{{ row.pmsBean.nom }}"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </ng-container>
+
+            <!-- rc personne morale pmsBean.rc -->
+            <ng-container matColumnDef="rc">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="rc">{{ "PAGES.DEMANDE.RC" |
+                    translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="rc">
+                    {{ row.pmsBean && row.pmsBean.rc ? (row.pmsBean.rc.length > 25 ? (row.pmsBean.rc | slice : 0 : 25) + "..." : row.pmsBean.rc) : "-" }}
+                    <a href="javascript:void(0);" *ngIf="row.pmsBean && row.pmsBean.rc && row.pmsBean.rc.length > 25" matTooltip="{{ row.pmsBean.rc }}"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </ng-container>
+
+            <!-- identifiantfiscal morale pmsBean.identifiantFiscal -->
+            <ng-container matColumnDef="identifiantFiscal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="identifiantFiscal">{{ "PAGES.DEMANDE.IDENTIFIANT_FISCAL" |
+                    translate }}
+                </th>
+                <td mat-cell *matCellDef="let row" class="identifiantFiscal">
+                    {{ row.pmsBean && row.pmsBean.identifiantFiscal ? (row.pmsBean.identifiantFiscal.length > 25 ? (row.pmsBean.identifiantFiscal | slice : 0 : 25) + "..." : row.pmsBean.identifiantFiscal) : "-" }}
+                    <a href="javascript:void(0);" *ngIf="row.pmsBean && row.pmsBean.identifiantFiscal && row.pmsBean.identifiantFiscal.length > 25" matTooltip="{{ row.pmsBean.identifiantFiscal }}"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </ng-container>
+
+
 
 
             <!-- action for change status as a select input Column -->

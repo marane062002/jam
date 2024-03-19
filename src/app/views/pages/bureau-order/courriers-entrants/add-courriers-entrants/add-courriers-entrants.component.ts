@@ -291,10 +291,12 @@ export class AddCourriersEntrantsComponent implements OnInit {
           pdf.addImage(this.base64Img, 'JPEG', 10, 10, 180, 180);
           pdf.save(this.base64Img);
         }
-      }
+      }	
+	
 	constration(row:any): void {
 		const dialogRef = this.dialog.open(AfficheComponent, {
-			width: "75%",
+			width: "50%",
+			height:"70%",
 			data : { Data: row.file },
 		});
 

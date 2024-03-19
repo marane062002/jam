@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Pesee } from '../../../../core/_base/layout/models/pesee';
 import { createRequestOption } from '../../gestion-parc-auto/common/request/request-util';
 import { environment } from '../../../../../environments/environment';
 import { PeseeProduit } from '../../../../core/_base/layout/models/pesee-produit';
 import { TypePesee } from '../../../../core/_base/layout/models/TypePesee';
 import { Pageable } from '../../utils/pagination/pageable';
+import { Page } from '../../utils/pagination/page';
 @Injectable({
 	providedIn: 'root'
 })
@@ -30,7 +31,16 @@ export class PeseeService {
 		return this.http.delete(`${this.baseUrl}pesee-produits/${id}`, { observe: 'response' });
 
 	}
-
+// filter & pagination
+public getAllObjectByFilterPage(path: string, filter: string, pageable: Pageable)
+: Observable<Page<any>> {
+let url = this.baseUrl + path
+	+ '?motCle=' + filter
+	+ '&page=' + pageable.pageNumber
+	+ '&size=' + pageable.pageSize
+	+ '&sort=id,desc'
+return this.http.get<Page<any>>(url);
+}
 	updatePeseeProduit(pesee: PeseeProduit): Observable<HttpResponse<PeseeProduit>> {
 		console.log('testing with headers');
 		let headers = new HttpHeaders()
@@ -49,6 +59,10 @@ export class PeseeService {
 	patchPesee(id: any): Observable<any> {
 
 		return this.http.patch<Pesee>(`${this.baseUrl}` + 'patchStatut/'+id, { observe: 'response' });
+
+	}patchPeseeRejeter(id: any): Observable<any> {
+
+		return this.http.patch<Pesee>(`${this.baseUrl}` + 'patchPeseeRejeter/'+id, { observe: 'response' });
 
 	}
 	delete(id: number) {
@@ -137,6 +151,12 @@ export class PeseeService {
 		queryParams = queryParams.append("dateDebut", dateDebut);
 		queryParams = queryParams.append("dateFin", dateFin);
 		return this.http.get<any[]>(this.baseUrl + url + '?dateDebut=' + dateDebut + '&dateFin=' + dateFin);
+	}
+	private dataSubject = new BehaviorSubject<any>(null);
+	data$ = this.dataSubject.asObservable();
+
+	sendData(data: any) {
+		this.dataSubject.next(data);
 	}
 
 }

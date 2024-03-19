@@ -131,7 +131,7 @@ export class AoConsultationEditComponent implements OnInit {
 	selectedValueTypeAo;
 	typeConsultationArchitecturale;
 	formData = { 
-		offreTechnique: '0',
+		offreTechnique: 0,
 
 		typeConsultationArchitecturale: "",
 		typeBudget: "",
@@ -174,7 +174,7 @@ export class AoConsultationEditComponent implements OnInit {
 		objet: "",
 		objetAR: "",
 		estimation: 0,
-		typeAo: { id: 1, libelle: "" },
+		typeAo: { id: 0, libelle: "" },
 		naturePrix: "",
 		loi: "",
 		PrixRevisable: "",
@@ -232,8 +232,12 @@ export class AoConsultationEditComponent implements OnInit {
 	numCA;
 	ao;
 	modePassationList;
-
+	isGestionnaire
 	ngOnInit() {
+		this.service.data$.subscribe((res)=>{
+			this.isGestionnaire=res
+			
+					})
 		this.service.getAllModePassationMarche().subscribe((res) => {
 			this.modePassationList = res;
 		});
@@ -275,6 +279,12 @@ export class AoConsultationEditComponent implements OnInit {
 		this.activatedRoute.queryParams.subscribe((params) => {
 			this.idao = params["id"];
 			this.backPage = params["page"];
+			if(params["isGestionnaire"]=='false'){
+				this.isGestionnaire=false
+			}else{
+				this.isGestionnaire==true
+			}
+			
 		});
 		this.getAllPjImm(this.idao);
 		this.service.getAllTypeMarche().subscribe((data) => {
@@ -296,9 +306,9 @@ export class AoConsultationEditComponent implements OnInit {
 					this.ao = data;
 					this.formData.is_en_attente_de_validation = data.is_en_attente_de_validation;
 					if(data.offreTechnique==false){
-						this.formData.offreTechnique='0'
+						this.formData.offreTechnique=0
 					}else{
-						this.formData.offreTechnique='1'
+						this.formData.offreTechnique=1
 					
 					}
 					this.formData.statutAoValide = data.statutAoValide;
@@ -342,13 +352,13 @@ export class AoConsultationEditComponent implements OnInit {
 							this.isVisible = true;
 							this.formData.codeOrientationStrategique = data.programme.codeOrientation;
 							this.selectedCodeOrientation(this.formData.codeOrientationStrategique);
-
+							
 							this.formData.codeProjet = data.programme.codeProjet;
 							this.projet = data.programme.nameProjet;
 							this.selectedCodeProjet(this.formData.codeProjet);
 						} else {
 							this.selectedValuePac = "0";
-
+							
 							this.isVisible = false;
 						}
 					} else {
@@ -365,16 +375,17 @@ export class AoConsultationEditComponent implements OnInit {
 					} else {
 						this.formData.typePrestation = { id: 0 };
 					}
+					
 					if (data.typeMarche != null) {
 						if (data.typeMarche.id != null) {
 							this.formData.typeMarche = data.typeMarche;
 							if (data.typeMarche.id == 7) {
 								this.typeConsultationArchitecturale = data.typeConsultationArchitecturale;
-
+								
 								this.isVisible11 = true;
 								this.onChangeTypeMarche(data.typeMarche.id);
 							}
-
+							
 							if (data.typeMarche.id == 6) {
 								this.isVisible12 = true;
 								this.onChangeTypeMarche(data.typeMarche.id);
@@ -410,6 +421,7 @@ export class AoConsultationEditComponent implements OnInit {
 					} else {
 						this.isVisible6 = false;
 					}
+					
 					if (data.existQualification == true) {
 						this.selectedValueQualification = "1";
 						this.isVisible4 = true;
@@ -418,7 +430,7 @@ export class AoConsultationEditComponent implements OnInit {
 							this.selectedValueClassification = "1";
 							this.formData.classification.id = data.classification.id;
 							this.formData.qualification.id = data.classification.qualificationAo.id;
-
+							
 							this.selectedListeQualifications(this.formData.qualification.id);
 						} else {
 							this.formData.classification = null;
@@ -691,6 +703,7 @@ export class AoConsultationEditComponent implements OnInit {
 	// 	);
 	// }
 	onChangeTypeMarche(event) {
+		this.formData.typeMarche.id=event
 		if (event == 7) {
 			this.isVisible11 = true;
 		} else {
@@ -724,36 +737,30 @@ export class AoConsultationEditComponent implements OnInit {
 		if (event.value == "Prix révisable") {
 			this.isVisible6 = true;
 		} else {
+			this.formData.formule=null
 			this.isVisible6 = false;
 		}
 	}
 	classes;
 	selectedListeQualifications(event) {
+		this.formData.qualification= { id: event },
+		event
+		
 		if (Number(event)) {
 			this.serviceClassification.findByIdQualification(event).subscribe((res) => {
 				this.classes = res;
 			});
 		} else {
+
 			this.serviceClassification.findByIdQualification(parseInt(event)).subscribe((res) => {
 				this.classes = res;
 			});
 		}
 
-		// if (event == "Laboratoires") {
-		// 	this.classes = ["ETUDES GEOTECHNIQUES", "CONTROLE DE QUALITE", "EXPERTISE DE LABORATOIRE", "RECHERCHE-DEVELOPPEMENT", "INVESTIGATIONS MARITIMES", "QUALITE DE L'EAU ET DE L’ENVIRONNEMENT"];
-		// }
-		// if (event == "EAUX ET FORETS") {
-		// 	this.classes = ["Travaux de reboisement, de régénération et d'amélioration sylvopastorale", "Travaux de conservation des eaux et des sols", "Travaux d'aménagement de pistes et chemins forestiers", "Travaux de production de plantes", "Travaux de récolte de liège"];
-		// }
-		// if (event == "AGRICULTURES") {
-		// 	this.classes = ["Ouvrages principaux d'irrigation", "Puits et forages", "Equipement de l'irrigation à la parcelle", "Travaux de séguia et de pose de canaux portés", "Assainissement, drainage agricole et aménagements fonciers", "Pose de conduites d'irrigation", "Aménagement de pistes agricoles et rurales", "Matériel hydromécanique", "Matériel de pompage pour l'irrigation", "Travaux de plantation et de réhabilitation des arbres fruitiers et arbustes"];
-		// }
-		// if (event == "HABIAT") {
-		// 	this.classes = ["Terrassements", "Travaux De Voirie", "Assainissement - Pose de conduites", "travaux d'électrification", "Assainissement, drainage agricole et aménagements fonciers", "Eau Potable", "Réseaux Téléphoniques", "Jardins - Espaces verts", "Gros-oeuvre", "Menuiserie bois - Charpente", "Menuiserie métallique, aluminium et en pvc", "Ascenseurs - Monte-charges", "Plomberie - Chauffage - Climatisation", "Electricité", "Téléphone - Sonorisation", "Peinture - Vitrerie", "Etanchéité - Isolation", "Carrelages - Revêtements", "Plâtrerie - Faux plafonds", "Construction en matériaux locaux ", "Equipement intérieur - Décoration", "Isolation frigorifique et chambres froides", "Professions artisanales", "Réhabilitation de bâtiments anciens"];
-		// }
-		// if (event == "EQUIPEMENT") {
-		// 	this.classes = ["Construction", "Travaux routiers et voirie urbaine", "Eau potable - Assainissement - Conduites", "Construction d'ouvrages d'art", "Travaux maritimes et fluviaux", "Barrages et ouvrages hydrauliques y afférents", "Fondations spéciales, Drainage, Injections", "Sondages géotechniques et forages hydrogéologiques", "Equipements hydromécaniques - Traitement d'eau potable - Automatisme", "Électricité", "Courants faibles, traitement acoustique et audio-visuel", "Menuiserie – Charpente", "Plomberie - Chauffage - Climatisation", "Etancheite - Isolation", "Revetements", "Platrerie - Faux plafonds", "Peinture", "Travaux artisanaux de batiment", "Monte-charges - Ascenseurs", "Isolation frigorifique et construction de chambres froides", "Installation de cuisines et buanderies", "Amenagement d'espaces verts et jardins", "Reseaux des fluides industriels et medicaux, de gaz et d'air comprime", "Signalisation et equipements de securite"];
-		// }
+	}
+	selectedListeClassifications(event) {
+		this.formData.classification= { id: event }
+		
 	}
 	selectedVisiteLieux(event) {
 		if (event.value == "1") {
@@ -774,7 +781,7 @@ export class AoConsultationEditComponent implements OnInit {
 	}
 	selectedmodePassation(event) {
 		this.formData.natureAo.id = event;
-
+		
 		if (event == 6) {
 			this.isVisible1 = true;
 		} else {
@@ -1146,7 +1153,7 @@ if(this.formMarche.id==0){
 			this.formData.existClassification = true;
 		} else {
 			this.isVisible9 = false;
-
+			
 			this.formData.existClassification = false;
 		}
 	}
@@ -1197,9 +1204,9 @@ if(this.formMarche.id==0){
 	}
 	selectedOffreTechnique(event){
 		if (event.value == "1") {
-			this.formData.offreTechnique ='1';
+			this.formData.offreTechnique =1;
 		} else {
-			this.formData.offreTechnique = '0';
+			this.formData.offreTechnique = 0;
 
 		}
 	}
@@ -1314,7 +1321,7 @@ if(this.formMarche.id==0){
 	}
 	selectedValuenatureAo(p1: any, p2: any) {
 		let a = Number(p1);
-
+		
 		if (a && p2) {
 			return a === p2;
 		}
@@ -1358,7 +1365,17 @@ if(this.formMarche.id==0){
 		}
 	}
 	backList() {
-		this.router.navigate(["/marches/ao-consultation-list"]);
+
+			//this.location.back();
+			if(this.isGestionnaire==false){
+				this.router.navigate(["/marches/ao-consultation-list"]);
+	
+			}
+			else{
+				this.router.navigate(["/programme/list-EtudeBesion"]);
+		
+			}
+		// this.router.navigate(["/marches/ao-consultation-list"]);
 	}
 	onChangeType($event) {
 		this.formData.typeConsultationArchitecturale = $event.value;
@@ -1624,7 +1641,7 @@ if(this.formMarche.id==0){
 			} else {
 				this.formData.agrements = null;
 			}
-
+			
 			if (this.isVisible2 == true) {
 				this.formData.existTypeAo = true;
 			} else {
@@ -1641,12 +1658,13 @@ if(this.formMarche.id==0){
 					this.formData.convention = null;
 				}
 			}
+			
 			if (this.formData.natureAo != null) {
 				if (this.formData.natureAo.id == 0) {
 					this.formData.natureAo = null;
 				}
 			}
-
+			
 			if (this.formData.typeMarche != null) {
 				if (this.formData.typeMarche.id == "") {
 					this.formData.typeMarche = null;
@@ -1687,23 +1705,25 @@ if(this.formMarche.id==0){
 				this.formData.dateVisite = "";
 				this.formData.traitementVisite = "";
 			}
-
+			
 			// if (this.bool == true) {
 			// 	this.formData.statutAo.id = 2;
 			// 	console.log(this.formData);
 			// }
 	
-
+			
 			// this.formData.programme.id = this.idProgramme;
-			// if (this.isVisible3 != 1) {
-			// 	this.formData.convention = null;
-			// }
-			// if (this.isVisible != 1) {
-			// 	this.formData.programme = null;
-			// }
+			
+			if (this.isVisible3 != true) {
+				this.formData.convention = null;
+			}
+			if (this.isVisible != 1) {
+				this.formData.programme = null;
+			}
 			// if(this.isVisible5==true){
 			// 	this.formData.existanceAgrement=true
 			// }
+			
 			this.service.updateao(this.formData).subscribe((res) => {
 				;	let historiqueAo={
 					ao:{id:res.id},
@@ -1774,8 +1794,15 @@ if(this.formMarche.id==0){
 		// 		queryParams: { id: this.idao, page: 1 },
 		// 	});
 		// } else {
+	//this.location.back();
+	if(this.isGestionnaire==false){
 		this.router.navigate(["/marches/ao-consultation-list"]);
-		// }
+		
+	}
+	else{
+		this.router.navigate(["/programme/list-EtudeBesion"]);
+
+	}		// }
 	}
 
 	// =========================================================================

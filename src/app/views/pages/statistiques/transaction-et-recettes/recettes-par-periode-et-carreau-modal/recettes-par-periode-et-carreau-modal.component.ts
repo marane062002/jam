@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding,Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { SpinnerService } from '../../../utils/spinner.service';
@@ -200,10 +200,17 @@ export class RecettesParPeriodeEtCarreauModalComponent implements OnInit {
     private spinnerService: SpinnerService,
     private peseeService: PeseeService,
     private dialogRef: MatDialogRef<RecettesParPeriodeEtCarreauModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { recettesParPeriodeCarreau: any }) {
+    @Inject(MAT_DIALOG_DATA) public data?: { recettesParPeriodeCarreau: any,language }) {
   }
   currentTime: string;
+  @HostBinding('dir') dir 
+
   ngOnInit() {
+    if(this.data.language=='fr'){
+      this.dir='ltr'
+    }else{
+      this.dir= 'rtl'; 
+    }
     this.PeriodeForm = this.data.recettesParPeriodeCarreau;
     if (this.PeriodeForm.value.transactionDebut != '' && this.PeriodeForm.value.transactionEnd != '' && this.PeriodeForm.value.timeFin != '') {
       this.apply();
@@ -19693,7 +19700,7 @@ export class RecettesParPeriodeEtCarreauModalComponent implements OnInit {
               generatePage();
             });
           } else {
-            PDF.save("Recettes réalisées au marché de gros de fruits et légumes selon une période et par carreau.pdf");
+            PDF.save(this.translate.instant("PAGES.RECETTES_PERIODE.TITRE")+".pdf");
             this.spinnerService.stop(spinnerRef);
           }
         };
@@ -19719,7 +19726,7 @@ export class RecettesParPeriodeEtCarreauModalComponent implements OnInit {
           let fileHeight = (canvas.height * fileWidth) / canvas.width;
           let position = 0;
           PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
-          PDF.save("Recettes réalisées au marché de gros de fruits et légumes selon une période et par carreau" + ".pdf");
+          PDF.save(this.translate.instant("PAGES.RECETTES_PERIODE.TITRE")+".pdf");
           this.spinnerService.stop(spinnerRef);
         });
       }, 250);

@@ -1,32 +1,33 @@
 <div class="kt-portlet">
     <div class="row">
-        <h4 id="exampleModalCenterTitle">Nombre de véhicules par genre et quantités de
-            marchandises pour chaque carreau<button mat-icon-button color="primary" (click)="Recu()">
+        <h4 id="exampleModalCenterTitle">{{ "PAGES.STATISTIQUES.TITRE" | translate }}<button mat-icon-button color="primary" (click)="Recu()">
                 <i class="fas fa-download"></i>
             </button></h4>
 
         <button mat-icon-button (click)="close()">
             <h4>×</h4>
         </button>
-    </div>
+    </div> 
     
     <table *ngIf="isAllTrue==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="genreVehicule">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre de véhicule
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nomVehicule}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantiteMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Qté marchandise (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.STATISTIQUES.QTE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.sumChiffreTransaction}}
             </td>
         </ng-container>
         <ng-container matColumnDef="nombreVehicules">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de véhicules
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.countVehicule}}
             </td>
@@ -37,13 +38,14 @@
     <table *ngIf="isNotGenreVehicule==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
         matSort style="width: 100%;">
         <ng-container matColumnDef="quantiteMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Qté marchandise (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.STATISTIQUES.QTE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.sumChiffreTransaction}}
             </td>
         </ng-container>
         <ng-container matColumnDef="nombreVehicules">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de véhicules
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.countVehicule}}
             </td>
@@ -54,14 +56,16 @@
     <table *ngIf="isNotTotalMarch==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
         matSort style="width: 100%;">
         <ng-container matColumnDef="genreVehicule">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre de véhicule
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nomVehicule}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nombreVehicules">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de véhicules
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.countVehicule}}
             </td>
@@ -72,14 +76,15 @@
     <table *ngIf="isNotNbVehicule==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
         matSort style="width: 100%;">
         <ng-container matColumnDef="genreVehicule">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre de véhicule
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nomVehicule}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantiteMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Qté marchandise (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.STATISTIQUES.QTE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.sumChiffreTransaction}}
             </td>
@@ -91,7 +96,8 @@
     <table *ngIf="isNotGenreVehiculeAndIsNotTotalMarch==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="nombreVehicules">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de véhicules
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.countVehicule}}
             </td>
@@ -102,7 +108,7 @@
     <table *ngIf="isNotGenreVehiculeAndisNotNbVehicule==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="quantiteMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Qté marchandise (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.STATISTIQUES.QTE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">{{row.sumChiffreTransaction}}
             </td>
@@ -113,7 +119,8 @@
     <table *ngIf="isNotNbVehiculeAndIsNotTotalMarch==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="genreVehicule">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre de véhicule
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nomVehicule}}</span>
@@ -130,124 +137,134 @@
 
 
 <div style="overflow: hidden; height: 0">
-    <div id="htmlData">
+    <div id="htmlData" style="padding-bottom: 3%; ">
         <div class="toprint">
-            <div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
+            <div class="row" style="width: 80%;margin: 20px auto;text-align:
+             center;">
                 <div class="col-md-3">
-                    <img style="width: 500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+                    <img alt="logo" src="./assets/media/logos/logo_comM.png">
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3">
-                    <img style="width: 200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+                    <img alt="logo" src="./assets/media/logos/logo_cum.png">
                 </div>
             </div><br><br>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <h2 class="kt-portlet__head-title"
-                        style="width: 80%;margin: 20px auto;text-align: center;font-size: 40px;">
-                        <strong>Nombre de véhicules par genres et quantités de marchandises pour chaque carreau</strong>
+                        style="width: 80%;margin: 5px auto;text-align: center; line-height: 4rem;">
+                        <strong>{{ "PAGES.STATISTIQUES.TITRE" | translate }}</strong>
                     </h2>
                 </div>
                 <div class="col-md-2"></div>
-            </div><br><br><br><br>
+            </div><br><br>
             <div class="row">
-                <table class="table" style="width: 60%;margin: 20px auto;text-align: center;">
+                <table class="table" style="width: 60%;margin:0 auto;
+                text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">N° Carreau :</th>
-                        <th class="table-bordered dashed-line">{{toPrint?.idHangar}}
-                        </th>
-                        <th style="border: none;font-size: 30px;">Date et heure :</th>
-                        <th class="table-bordered dashed-line">{{toPrint?.currentTime | date:"dd-MM-yyyy HH:mm"}}</th>
+                        <th style="border: none;">{{ "PAGES.STATISTIQUES.NUM_CARREAU" | translate }} :</th>
+                        <td  style="border: none; font-size: 14px ;">{{toPrint?.idHangar}}
+                        </td>
+                        <th style="border: none;">{{ "PAGES.STATISTIQUES.DATE_HEURE" | translate }} :</th>
+                        <td  style="border: none; font-size: 14px ;">{{toPrint?.currentTime | date:"dd-MM-yyyy HH:mm"}}</td>
                     </tr>
                 </table>
             </div><br><br>
             <div class="row">
                 <table
-                    style="background-color: #499996;width: 60%;margin: 20px auto;text-align: center;font-size: 30px;">
+                    style="background-color: #499996;width: 60%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th>Du :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateDebut |
-                            date:"dd-MM-yyyy"}}
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_DEBUT" | translate }} :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateDebut | date:"dd-MM-yyyy"}}
                         </th>
-                        <th>Au :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateFin | date:"dd-MM-yyyy"}}
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_FIN" | translate }} :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateFin |
+                            date:"dd-MM-yyyy"}}
                         </th>
                     </tr>
                 </table>
             </div><br><br><br>
             <div class="row">
                 <table *ngIf="isAllTrue==true" class="table table-bordered"
-                    style="width: 50%;margin: 20px auto;text-align: center;">
+                    style="width: 50%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Genre de véhicule</th>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Qté marchandise (Kg)</th>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Nombre de véhicules</th>
+                        <th style="background-color: #b5c5e7;">{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.STATISTIQUES.QTE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item?.nomVehicule}}</td>
-                        <td style="font-size: 30px;">{{item?.sumChiffreTransaction}}</td>
-                        <td style="font-size: 30px;">{{item?.countVehicule}}</td>
+                        <td >{{item?.nomVehicule}}</td>
+                        <td >{{item?.sumChiffreTransaction}}</td>
+                        <td>{{item?.countVehicule}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotGenreVehicule==true" class="table table-bordered"
-                    style="width: 50%;margin: 20px auto;text-align: center;">
+                    style="width: 50%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Qté marchandise (Kg)</th>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Nombre de véhicules</th>
+                        <th style="background-color: #b5c5e7;;">{{ "PAGES.STATISTIQUES.QTE" | translate }}</th>
+                        <th style="background-color: #b5c5e7">{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item?.sumChiffreTransaction}}</td>
-                        <td style="font-size: 30px;">{{item?.countVehicule}}</td>
+                        <td >{{item?.sumChiffreTransaction}}</td>
+                        <td >{{item?.countVehicule}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNbVehicule==true" class="table table-bordered"
-                    style="width: 50%;margin: 20px auto;text-align: center;">
+                    style="width: 50%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Genre de véhicule</th>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Qté marchandise (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.STATISTIQUES.QTE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item?.nomVehicule}}</td>
-                        <td style="font-size: 30px;">{{item?.sumChiffreTransaction}}</td>
+                        <td >{{item?.nomVehicule}}</td>
+                        <td>{{item?.sumChiffreTransaction}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTotalMarch==true" class="table table-bordered"
-                    style="width: 50%;margin: 20px auto;text-align: center;">
+                    style="width: 50%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Genre de véhicule</th>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Nombre de véhicules</th>
+                        <th style="background-color: #b5c5e7;">{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item?.nomVehicule}}</td>
-                        <td style="font-size: 30px;">{{item?.countVehicule}}</td>
+                        <td >{{item?.nomVehicule}}</td>
+                        <td >{{item?.countVehicule}}</td>
                     </tr>
                 </table>
 
 
                 <table *ngIf="isNotGenreVehiculeAndisNotNbVehicule==true" class="table table-bordered"
-                    style="width: 50%;margin: 20px auto;text-align: center;">
+                    style="width: 50%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Qté marchandise (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.STATISTIQUES.QTE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item?.sumChiffreTransaction}}</td>
+                        <td >{{item?.sumChiffreTransaction}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotGenreVehiculeAndIsNotTotalMarch==true" class="table table-bordered"
-                    style="width: 50%;margin: 20px auto;text-align: center;">
+                    style="width: 50%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Nombre de véhicules</th>
+                        <th style="background-color: #b5c5e7;">{{
+                        "PAGES.STATISTIQUES.NOMBRE_VEHICULE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item?.countVehicule}}</td>
+                        <td>{{item?.countVehicule}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNbVehiculeAndIsNotTotalMarch==true" class="table table-bordered"
-                    style="width: 50%;margin: 20px auto;text-align: center;">
+                    style="width: 50%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="background-color: #b5c5e7;font-size: 30px;">Genre de véhicule</th>
+                        <th style="background-color: #b5c5e7;">{{
+                        "PAGES.STATISTIQUES.GENRE_VEHICULE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item?.nomVehicule}}</td>
+                        <td >{{item?.nomVehicule}}</td>
                     </tr>
                 </table>
             </div>

@@ -21,12 +21,13 @@ export class ListPrelevementComponent implements OnInit {
 
 
   ngOnInit() {
-    this.service.getAll().subscribe(res=>{
-      this.prelevement=res;
-    })
     this.route.params.subscribe((params) => {
 			this.id = +params['id']; 
 		  });
+    this.service.getAll(this.id).subscribe(res=>{
+      this.prelevement=res;
+    })
+    
   }
   add(){
     this.router.navigate([`/bmh1/add-prelevement/${this.id}`])

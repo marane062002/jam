@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { SpinnerService } from '../../../utils/spinner.service';
@@ -75,11 +75,18 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
     private spinnerService: SpinnerService,
     private peseeService: PeseeService,
     private dialogRef: MatDialogRef<QuantiteParTypeEtPeriodeModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { quantiteParTypeProduit: any },
+    @Inject(MAT_DIALOG_DATA) public data?: { quantiteParTypeProduit: any ,language},
   ) {
   }
+  @HostBinding('dir') dir 
+
   currentTime: string;
   ngOnInit() {
+    if(this.data.language=='fr'){
+      this.dir='ltr'
+    }else{
+      this.dir= 'rtl'; 
+    }
     this.quantiteForm = this.data.quantiteParTypeProduit;
     if (this.quantiteForm.value.transactionDebut != '' && this.quantiteForm.value.transactionEnd != '' && this.quantiteForm.value.timeFin != '') {
       this.apply();
@@ -856,16 +863,16 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
   stillHavePages: boolean = false;
   Recu(): void {
     console.log(this.toPrint);
-    const itemsPerPage1 = 20;
-    const itemsPerPage = 33;
+    const itemsPerPage1 = 13;
+    const itemsPerPage = 20;
     const totalItems = this.dataPesee.data.length;
-
+    
     if (totalItems > itemsPerPage1) {
       this.toPrint1 = {
         currentTime: this.currentTime,
         dateDebut: this.dataPesee.dateDebut,
         dateFin: this.dataPesee.dateFin,
-        data: this.dataPesee.data.slice(0, 20),
+        data: this.dataPesee.data.slice(0, 13),
         quantiteTotale: this.dataPesee.quantiteTotale,
         sommeChiffreAffaires: this.dataPesee.sommeChiffreAffaires,
         partDue: this.dataPesee.partDue,
@@ -877,7 +884,7 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
       setTimeout(() => {
         const spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
         let dataIndex = 0;
-        let i = 20;
+        let i = 13;
         const generatePage = () => {
           const endIndex = Math.min(dataIndex + itemsPerPage, totalItems);
           if (dataIndex < totalItems) {
@@ -885,7 +892,7 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
               currentTime: this.currentTime,
               dateDebut: this.dataPesee.dateDebut,
               dateFin: this.dataPesee.dateFin,
-              data: this.dataPesee.data.slice(0, 20),
+              data: this.dataPesee.data.slice(i, i + itemsPerPage),
               quantiteTotale: this.dataPesee.quantiteTotale,
               sommeChiffreAffaires: this.dataPesee.sommeChiffreAffaires,
               partDue: this.dataPesee.partDue,
@@ -894,7 +901,8 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
               idHangar: this.dataPesee.idHangar
             };
             const elementId = dataIndex === 0 ? "htmlData1" : "htmlData2";
-            const canvasPromise = html2canvas(document.getElementById(elementId), {});
+            
+             const canvasPromise = html2canvas(document.getElementById(elementId), {});
             canvasPromise.then((canvas) => {
               const FILEURI = canvas.toDataURL("image/png");
               let fileWidth = PDF.internal.pageSize.getWidth();
@@ -904,11 +912,11 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
               }
               PDF.addImage(FILEURI, "PNG", 0, 0, fileWidth, fileHeight);
               dataIndex += itemsPerPage;
-              i += 33;
+              i += 20;
               generatePage();
             });
           } else {
-            PDF.save("Quantité de marchandise écoulée par type de produit selon une certaine période pour chaque carreau.pdf");
+            PDF.save(this.translate.instant("PAGES.QUANTITE_MARCHANDISE_TYPE.TITLE")+".pdf");
             this.spinnerService.stop(spinnerRef);
           }
         };
@@ -931,7 +939,7 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
       setTimeout(() => {
         var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
         let DATA: any = document.getElementById("htmlData");
-
+        
         html2canvas(DATA, {}).then((canvas) => {
           const FILEURI = canvas.toDataURL("image/png");
           let PDF = new jsPDF("p", "mm", "a4");
@@ -939,7 +947,7 @@ export class QuantiteParTypeEtPeriodeModalComponent implements OnInit {
           let fileHeight = (canvas.height * fileWidth) / canvas.width;
           let position = 0;
           PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
-          PDF.save("Quantité de marchandise écoulée par type de produit selon une certaine période pour chaque carreau" + ".pdf");
+          PDF.save(this.translate.instant("PAGES.QUANTITE_MARCHANDISE_TYPE.TITLE")+".pdf");
           this.spinnerService.stop(spinnerRef);
         });
       }, 250);

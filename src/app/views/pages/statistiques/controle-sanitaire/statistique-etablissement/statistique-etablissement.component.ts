@@ -8,9 +8,10 @@ import * as FileSaver from 'file-saver';
 
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Interface } from 'readline';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'kt-statistique-etablissement',
@@ -19,6 +20,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class StatistiqueEtablissementComponent implements OnInit {
   baseUrl=environment.API_BMH_URL
+  searchForm
+  // filterDecesData(){}
+  // reset(){}
   searchEtb:any[]=[]
   dateDebut: Date;
   dateFin: Date;
@@ -30,6 +34,7 @@ export class StatistiqueEtablissementComponent implements OnInit {
   stMesure:any[]
   stNature:any[]
   data:any
+  // searchForm: FormGroup;
   etatsHygiene: string[] = ['EHS', 'EHM', 'EHNS']; // Définissez les états d'hygiène disponibles
 colonnesAffichees: string[] = ['Arrondissement', ...this.etatsHygiene,"NBTOTAL"]; // Les colonnes affichées
 
@@ -48,10 +53,13 @@ combinedData: any[] = [];
   chart: any;// Déclaration de la variable pour stocker les statistiques
   result:any={}
   // displayedColumns: string[] = ["Arrondissement", "EHS", "EHM", "EHNS","NBTOTAL"];
-  constructor(private service: StatistiqueEtablissementService,private formBuilder: FormBuilder,private http:HttpClient) {
+  constructor(private datePipe:DatePipe,private service: StatistiqueEtablissementService,private formBuilder: FormBuilder,private http:HttpClient) {
 
    }
-
+   private headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+	});
   ngOnInit(): void {
     this.colonnesAfficheesUnite
     this.ajoutForm = this.formBuilder.group({
@@ -88,7 +96,16 @@ combinedData: any[] = [];
   }
 
   fillChartByParam2(): void {
-    this.service.getStatistiquesParArrondissement().subscribe(
+    let params = new HttpParams();
+    if (this.dateDebut) {
+      
+      params = params.set('dateDebut', this.formatDate(this.dateDebut));
+    }
+    if (this.dateFin) {
+      
+      params = params.set('dateFin', this.formatDate(this.dateFin));
+    }
+    this.http.get<any>(`${this.baseUrl}`+'statistique/arrondissements',{params ,headers: this.headers }).subscribe(
       (data: any) => {
         
         const arrondissements = Object.keys(data);
@@ -158,7 +175,16 @@ combinedData: any[] = [];
 
 
   fillChartByParam1(): void {
-    this.service.getStatistiquesParNature().subscribe(
+    let params = new HttpParams();
+    if (this.dateDebut) {
+      
+      params = params.set('dateDebut', this.formatDate(this.dateDebut));
+    }
+    if (this.dateFin) {
+      
+      params = params.set('dateFin', this.formatDate(this.dateFin));
+    }
+    this.http.get<any>(`${this.baseUrl}`+'statistique/nature',{params ,headers: this.headers }).subscribe(
       (data: any) => {
         const arrondissements = Object.keys(data);
         const typesHygiene = ['Alimentaires', 'Publics', 'Touristiques']; // Les différents types d'état d'hygiène
@@ -223,7 +249,16 @@ combinedData: any[] = [];
 
 
   fillChartByParam3(): void {
-    this.service.getStatistiquesParMesures().subscribe(
+    let params = new HttpParams();
+    if (this.dateDebut) {
+      
+      params = params.set('dateDebut', this.formatDate(this.dateDebut));
+    }
+    if (this.dateFin) {
+      
+      params = params.set('dateFin', this.formatDate(this.dateFin));
+    }
+    this.http.get<any>(`${this.baseUrl}`+'statistique/mesures',{params ,headers: this.headers }).subscribe(
       (data: any) => {
         const arrondissements = Object.keys(data);
         const typesHygiene = ['Prelevements', 'MiseDemeurs', 'AvertissementOrale','ArretActivite','SaisieDestructions']; // Les différents types d'état d'hygiène
@@ -287,14 +322,21 @@ combinedData: any[] = [];
   }
 
   fillChartByParam4(): void {
-    this.service.getStatistiquesParUnite().subscribe(
+    let params = new HttpParams();
+    if (this.dateDebut) {
+      
+      params = params.set('dateDebut', this.formatDate(this.dateDebut));
+    }
+    if (this.dateFin) {
+      
+      params = params.set('dateFin', this.formatDate(this.dateFin));
+    }
+    this.http.get<any>(`${this.baseUrl}`+'statistique/unite',{params ,headers: this.headers }).subscribe(
       (data: any) => {
         const arrondissements = Object.keys(data);
         const unite = ['Kg', 'Litre', 'Unite']; // Les différents types d'état d'hygiène
         const datasets = [];
-
-        // Parcourir les données pour chaque arrondissement
-        arrondissements.forEach(arrondissement => {
+          arrondissements.forEach(arrondissement => {
           const values = [];
 
           // Parcourir les différents types d'état d'hygiène pour chaque arrondissement
@@ -305,8 +347,6 @@ combinedData: any[] = [];
               values.push(0); // Si le type d'état d'hygiène n'existe pas, mettre 0 comme valeur
             }
           });
-
-          // Ajouter le dataset pour l'arrondissement actuel
           datasets.push({
             label: arrondissement,
             data: values,
@@ -377,14 +417,28 @@ combinedData: any[] = [];
   // }
   sommeTotale
   getArrondissement() {
-    this.service.getStatistiquesParArrondissement().subscribe(data => {
-      // Récupérer les statistiques par arrondissement
+    let params = new HttpParams();
+    if (this.dateDebut) {
+      
+      params = params.set('dateDebut', this.formatDate(this.dateDebut));
+    }
+    if (this.dateFin) {
+      params = params.set('dateFin', this.formatDate(this.dateFin));
+    }
+    this.http.get<any>(`${this.baseUrl}`+'statistique/arrondissements', {params ,headers: this.headers }).subscribe(data => {
       const statistiques = data;
       let sommeTotale = 0; 
-  
-      // Récupérer le nombre total d'établissements contrôlés par arrondissement
-      this.service.getNombreEtablissementsControlesParArrondissement().subscribe(nombreEtablissements => {
-        // Fusionner les deux ensembles de données
+      let params = new HttpParams();
+      if (this.dateDebut) {
+        params = params.set('dateDebut', this.formatDate(this.dateDebut));
+      }
+      if (this.dateFin) {
+        
+        params = params.set('dateFin', this.formatDate(this.dateFin));
+      }
+      
+      this.http.get<any[]>(`${this.baseUrl}statistique`,{params ,headers: this.headers }).subscribe((nombreEtablissements: any) => {
+        
         this.statistiques = Object.entries(statistiques).map(([arrondissement, valeurs]) => {
           // Récupérer le nombre total d'établissements contrôlés pour cet arrondissement
           const nombreTotal = nombreEtablissements[arrondissement] || 0;
@@ -400,20 +454,26 @@ combinedData: any[] = [];
     });
     console.log("stats arrondissement :", this.statistiques)
   }
-
+  formatDate(date: any): string {
+		return this.datePipe.transform(date, 'yyyy-MM-dd');
+	  }
  getArrondissementParNature(){
-    this.service.getStatistiquesParNature().subscribe(data => {
+  let params = new HttpParams();
+  if (this.dateDebut) { 
+    params = params.set('dateDebut', this.formatDate(this.dateDebut));
+  }
+  if (this.dateFin) {
+    
+    params = params.set('dateFin', this.formatDate(this.dateFin));
+  }
+  this.http.get<any>(`${this.baseUrl}`+'statistique/nature', {params ,headers: this.headers }).subscribe(data => {
       this.stNature = Object.entries(data).map(([arrondissement, valeurs]) => {
-        // Vérifier si valeurs est un objet
         if (typeof valeurs === 'object' && valeurs !== null) {
           return {
             arrondissement,
             ...valeurs,
-            
           };
         } else {
-          // Gérer le cas où valeurs n'est pas un objet
-          // Vous pouvez renvoyer un objet vide ou effectuer une autre action appropriée
           return {
             arrondissement
           };
@@ -423,7 +483,16 @@ combinedData: any[] = [];
   }
 longeur
   getArrondissementParMesure(){
-    this.service.getStatistiquesParMesures().subscribe(data => {
+    let params = new HttpParams();
+    if (this.dateDebut) {
+      
+      params = params.set('dateDebut', this.formatDate(this.dateDebut));
+    }
+    if (this.dateFin) {
+      
+      params = params.set('dateFin', this.formatDate(this.dateFin));
+    }
+    this.http.get<any>(`${this.baseUrl}`+'statistique/mesures', {params ,headers: this.headers }).subscribe(data => {
       this.stMesure = Object.entries(data).map(([arrondissement, valeurs]) => {
         console.log("mesure",data)
         this.longeur
@@ -444,14 +513,40 @@ longeur
       });
     });
   }
+  reset() {
+		this.dateFin = null
+    this.dateDebut = null
+    this.ngOnInit()
+	  }
 
+    filterDecesData() {
+      console.log("dated:", this.dateDebut)
+      console.log("datefin :", this.dateFin)
+      this.getArrondissement();
+      this.fetchData2()
+      this.fillChartByParam2()
+      this.fillChartByParam1()
+      this.fillChartByParam3()
+      this.fillChartByParam4()
+      this.getArrondissement()
+      this.getArrondissementParNature()
+      this.getArrondissementParMesure()
+      this.getArrondissementParUnite()
+      this.fetchData()
+      this.fetchData1()
+      this.fetchData2()
+      this.fetchData3()
+    }
+
+  
   filtrerParDate(): void {
+    debugger
     if (this.dateDebut && this.dateFin) {
       // Convertir les dates de type string en objets Date
-       
+       debugger
       const dateDebutObj = new Date(this.dateDebut);
       const dateFinObj = new Date(this.dateFin);
-  
+  debugger
       // Filtrer les données en fonction de l'intervalle de dates
       this.stMesure = this.stMesure.filter(item => {
 
@@ -461,13 +556,23 @@ longeur
         // Vérifier si la date de l'item est comprise entre la date de début et la date de fin
         return dateItem >= dateDebutObj && dateItem <= dateFinObj;
       });
+      console.log("st mesures : ",this.stMesure)
     }
   }
   
 
 
   getArrondissementParUnite(){
-    this.service.getStatistiquesParUnite().subscribe(data => {
+    let params = new HttpParams();
+    if (this.dateDebut) {
+      
+      params = params.set('dateDebut', this.formatDate(this.dateDebut));
+    }
+    if (this.dateFin) {
+      
+      params = params.set('dateFin', this.formatDate(this.dateFin));
+    }
+    this.http.get<any>(`${this.baseUrl}`+'statistique/unite', {params ,headers: this.headers }).subscribe(data => {
       this.stUnite = Object.entries(data).map(([arrondissement, valeurs]) => {
         console.log("unite",data)
         // Vérifier si valeurs est un objet
@@ -491,9 +596,9 @@ longeur
     // getTotatlArrondissementMesures(){
     //   for(let i=0;i<this.mesure.length;i++){
     //       this.service.getSommeMesuresParArrondissement(this.mesure[i]).subscribe(data => {
-    //     debugger
+    //     
     //     this.sommeMesures = data;
-    //     debugger
+    //     
     //     console.log("total",this.sommeMesures)
     //   });
     //   }
@@ -502,17 +607,32 @@ longeur
   
 
     fetchData() {
-      
-      this.service.getSommeMesuresParArrondissement().subscribe(data=>{
+      let params = new HttpParams();
+      if (this.dateDebut) {
         
+        params = params.set('dateDebut', this.formatDate(this.dateDebut));
+      }
+      if (this.dateFin) {
+        
+        params = params.set('dateFin', this.formatDate(this.dateFin));
+      }
+      this.http.get<any>(`${this.baseUrl}statistique/totalMesure`,{params ,headers: this.headers }).subscribe(data=>{
         this.sommeMesures=data;
         console.log(this.sommeMesures)
       })
     }
 
     fetchData1() {
-      
-      this.service.getSommeMesuresParUnite().subscribe(data=>{
+      let params = new HttpParams();
+      if (this.dateDebut) {
+        
+        params = params.set('dateDebut', this.formatDate(this.dateDebut));
+      }
+      if (this.dateFin) {
+        
+        params = params.set('dateFin', this.formatDate(this.dateFin));
+      }
+      this.http.get<any>(`${this.baseUrl}statistique/totalUnite`,{params ,headers: this.headers }).subscribe(data=>{
         
         this.sommeUnite=data;
         console.log("sommeUnite",this.sommeUnite)
@@ -520,22 +640,37 @@ longeur
     }
 
     fetchData3() {
-      this.service.getSommeMesuresParNature().subscribe(data=>{
+      let params = new HttpParams();
+      if (this.dateDebut) {
+        
+        params = params.set('dateDebut', this.formatDate(this.dateDebut));
+      }
+      if (this.dateFin) {
+        
+        params = params.set('dateFin', this.formatDate(this.dateFin));
+      }
+      this.http.get<any>(`${this.baseUrl}statistique/totalNature`, {params ,headers: this.headers }).subscribe(data=>{
         this.sommeNature=data;
       })  
       console.log("sommeUnite",this.sommeNature)
     }
   
     fetchData2() {
+      let params = new HttpParams();
+      if (this.dateDebut) {
+        
+        params = params.set('dateDebut', this.formatDate(this.dateDebut));
+      }
+      if (this.dateFin) {
+        
+        params = params.set('dateFin', this.formatDate(this.dateFin));
+      }
       
-  this.service.getSommeMesuresParEtatHg().subscribe(data => {
-    if (data !== undefined && data.length > 0) {
+      this.http.get<any[]>(`${this.baseUrl}statistique/totalEtatHg`,{params ,headers: this.headers }).subscribe(data => {
       this.sommeEtHg = data;
       console.log("sommeHg", data);
-    } else {
-      console.error("Les données retournées sont vides ou undefined.");
-    }
-  });
+    
+    });
     }
 
     exportToExcelSurvenu(){
@@ -595,29 +730,19 @@ const excelBuffer: any = XLSX.write(wb, { type: 'array' });
     }
  
     onSubmit(){
-      // this.isSearch=true
-      //   this.listConventions
-        
-   
-
       const dateDebutValue = this.ajoutForm.get('dateDebut').value;
       const dateFinValue = this.ajoutForm.get('dateFin').value;
-
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
       const dateDebutString = dateDebutValue.toLocaleDateString('fr-FR', options);
       const dateFinString = dateFinValue.toLocaleDateString('fr-FR', options);
     
-      // Debugging: Log the values to check
       console.log('Date Debut:', dateDebutString);
       console.log('Date Fin:', dateFinString);
+
         this.service.getEtablissements(dateDebutValue,dateFinValue).subscribe(
-          
           (res: any) => {
-            
               console.log(res);
-              
-                  this.stMesure = res;
-                  
+                  this.stMesure = res;                  
           })
     }
 

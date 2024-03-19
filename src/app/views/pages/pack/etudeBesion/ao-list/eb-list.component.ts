@@ -548,12 +548,20 @@ export class EbListComponent implements OnInit {
 	// ====================================================
 	//
 	//=====================================================
+	// editao(idAo) {
+	// 	this.router.navigate(["/marches/ao-edit"], {
+	// 		queryParams: { id: idAo, page: 1 },
+	// 	});
+	// }
+	isGestionnaire=true
 	editao(idAo) {
-		this.router.navigate(["/marches/ao-edit"], {
+		this.isGestionnaire=true
+
+		this.service.sendData(this.isGestionnaire)
+		this.router.navigate(["/marches/ao-consultation-edit"], {
 			queryParams: { id: idAo, page: 1 },
 		});
 	}
-
 	// ====================================================
 	//
 	//=====================================================

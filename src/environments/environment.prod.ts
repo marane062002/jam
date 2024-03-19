@@ -47,7 +47,7 @@ export const environment = {
 	SERVER_PARC_AUTO:"http://marrakech.jamaati.ma:8080/gateway/gestionParc/ParcAuto",
 	API_BMH_URL:"http://marrakech.jamaati.ma:8080/gateway/service-bmh/Bmh/",
 	API_GSM_LAN: 'http://marrakech.jamaati.ma:8080/gateway/gsmLan/GSM-LAN',
-	API_SDL_URL: 'http://marrakech.jamaati.ma:8080/gateway/service-sdl/SDL/',
+	API_SDL_URL: 'http://marrakech.jamaati.ma:8080/gateway/service-sdl/service-sdl/',
 	API_PROPRETE_URL: 'http://marrakech.jamaati.ma:8080/gateway/service-proprete/proprete/',
 
 };

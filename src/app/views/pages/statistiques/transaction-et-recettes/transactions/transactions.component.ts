@@ -4,7 +4,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpResponse } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { SpinnerService } from '../../../utils/spinner.service';
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -15,7 +15,7 @@ import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/m
 import { PeseeService } from '../../../pesee/Services/pesee.service';
 import { TransactionsModalComponent } from '../transactions-modal/transactions-modal.component';
 @Component({
-  selector: 'kt-transactions',
+  selector: 'kt-transactions', 
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
 })
@@ -123,6 +123,13 @@ export class TransactionsComponent implements OnInit {
   }
   currentTime: string;
   ngOnInit() {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			if (event.lang == "ar") {
+				this.language = "ar";
+			} else if (event.lang == "fr") {
+				this.language = "fr";
+			}
+		});
     this.transactionsForm.controls['transactionTime'].setValue(this.getCurrentDateTime());
     if(this.language=='fr'){
     this.currentTime = this.getCurrentDateTime();
@@ -162,7 +169,7 @@ export class TransactionsComponent implements OnInit {
     if (this.transactionsForm.value.timeDebut != '' && this.transactionsForm.value.timeFin != '') {
       this.dialogRef.open(TransactionsModalComponent, {
         width:'100%',
-        data: { transactions: this.transactionsForm },
+        data: { transactions: this.transactionsForm ,language:this.language},
         panelClass: 'custom-modalbox'
       });
     }

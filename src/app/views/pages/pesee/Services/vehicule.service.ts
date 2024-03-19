@@ -32,6 +32,10 @@ export class VehiculeService {
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*')
     return this.http.get<Vehicule[]>(`${this.baseUrl}vehicules`, { params: options, observe: 'response' });
+  } 
+  AllVehicule() {
+
+    return this.http.get<Vehicule[]>(`${this.baseUrl}all-vehicules`);
   }
   getMaxId(req?: any): Observable<HttpResponse<any>> {
 

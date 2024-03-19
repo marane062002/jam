@@ -110,7 +110,7 @@ export class ProgrammeService {
 	research1(year: any, page, size) {
 		return this.http.get<any[]>(this.baseUrl + "byDate/" + year + "?page=" + page + "&size=" + size);
 	}
-
+	
 	research2(year: any, page, size) {
 		return this.http.get<any[]>(this.baseUrl + "byDateFin/" + year + "?page=" + page + "&size=" + size);
 	}
@@ -118,6 +118,9 @@ export class ProgrammeService {
 
 	research3(year1: any, year2: any, page, size) {
 		return this.http.get<any[]>(this.baseUrl + "byDateAndDateFin/" + year1 + "/" + year2 + "?page=" + page + "&size=" + size);
+	}
+	researchByDateDebutAndDateFin(year1: any, year2: any) {
+		return this.http.get<any[]>(this.baseUrl + "byDateDebutAndDateFin/" + year1 + "/" + year2 );
 	}
 
 	allChefProjets() {
@@ -152,7 +155,12 @@ export class ProgrammeService {
 	allLocalisation() {
 		return this.http.get<any[]>(this.baseUrl + "localisation");
 	}
-
+	allDateDebut() {
+		return this.http.get<any[]>(this.baseUrl + "date-debut");
+	}
+	allDateFin() {
+		return this.http.get<any[]>(this.baseUrl + "date-fin");
+	}
 	allMaitreOuvrage() {
 		return this.http.get<any[]>(this.baseUrl + "maitreOuvrage");
 	}

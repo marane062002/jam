@@ -5,6 +5,7 @@ import { HangarService } from '../../../marcheGros/Service/hangar.service';
 import { Hangar } from "../../../../../core/_base/layout/models/Hangar";
 import { MatDialog} from '@angular/material';
 import { RecettesParPeriodeEtCarreauModalComponent } from '../recettes-par-periode-et-carreau-modal/recettes-par-periode-et-carreau-modal.component';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'kt-recettes-par-periode-et-carreau',
   templateUrl: './recettes-par-periode-et-carreau.component.html',
@@ -68,14 +69,20 @@ export class RecettesParPeriodeEtCarreauComponent implements OnInit {
   padZero(value: number): string {
     return value.toString().padStart(2, '0');
   }
-  constructor(
+  constructor(private translate: TranslateService,
     private dialogRef: MatDialog,
     private hangarService: HangarService,) {
   }
   currentTime: string;
   ngOnInit() {
     this.PeriodeForm.controls['transactionTime'].setValue(this.getCurrentDateTime());
-
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			if (event.lang == "ar") {
+				this.language = "ar";
+			} else if (event.lang == "fr") {
+				this.language = "fr";
+			}
+		});
     if(this.language=='fr'){
     this.currentTime = this.getCurrentDateTime();
 
@@ -116,7 +123,7 @@ export class RecettesParPeriodeEtCarreauComponent implements OnInit {
   openModal() {
     if (this.PeriodeForm.value.transactionDebut!='' && this.PeriodeForm.value.transactionEnd!='' && this.PeriodeForm.value.timeFin!='') {
       this.dialogRef.open(RecettesParPeriodeEtCarreauModalComponent, {
-        data: { recettesParPeriodeCarreau: this.PeriodeForm},
+        data: { recettesParPeriodeCarreau: this.PeriodeForm,language:this.language},
       });
     }
   }

@@ -186,10 +186,10 @@ export class AddDecesNaturelComponent implements OnInit {
                 "id":res.id
                }
             }
-            debugger
+            
             this.httpClient.post(`${this.baseUrl}historique-deces`, historique , { headers: this.headers })
             .subscribe((res)=>{
-            debugger
+            
             console.log('stored successfully:', res);
             })
           this.allpjDeclar.forEach(formPj => {	

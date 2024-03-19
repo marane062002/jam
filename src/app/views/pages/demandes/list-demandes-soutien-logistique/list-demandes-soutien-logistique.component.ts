@@ -141,13 +141,13 @@ export class ListDemandesSoutienLogistiqueComponent implements OnInit {
   setSelectedValue2(event: any) {
     if (event == 0) {
       this.typeSelected = "ASSOCIATION";
-      this.displayedColumns = ["prioriter", "uniqueCode", "submissionDate", "status", "action", "actions"];
+      this.displayedColumns = ["prioriter", "nom", "uniqueCode", "submissionDate", "status", "action", "actions"];
       this.applyFilterByStatusAndType(this.statusSelected, this.typeSelected);
       // this.applyFilterByStatus(this.statusSelected);
     }
     else if (event == 1) {
       this.typeSelected = "PMSource";
-      this.displayedColumns = ["uniqueCode", "submissionDate", "status", "action", "actions"];
+      this.displayedColumns = ["uniqueCode",  "nomPM", "rc", "identifiantFiscal","submissionDate", "status", "action", "actions"];
       this.applyFilterByStatusAndType(this.statusSelected, this.typeSelected);
       // this.applyFilterByStatus(this.statusSelected);
     }

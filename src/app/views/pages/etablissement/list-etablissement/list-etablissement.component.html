@@ -27,7 +27,131 @@
 				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
 			/>
 		</mat-form-field>
+		<!-- <div class="col-md-6 nature">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>Nature de l'etablissement:</mat-label>
+					<mat-select (selectionChange)="Nature($event.value)" [(ngModel)]="natureEtablissement" class="form-control-lg" placeholder="Convention">
+						<mat-option value="Alimentaires">Alimentaires</mat-option>
+						<mat-option value="Publics">Publics</mat-option>
+						<mat-option value="Touristiques">Touristiques</mat-option>
+					  </mat-select>
+					  
+				</mat-form-field>
+			</div>
+		</div> -->
 	</div>
+<!-- <div class="row">
+	<div class="col-md-4">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field   class="example-full-width">
+				<mat-label>Etat d'hygiene:</mat-label>
+				<mat-select (selectionChange)="Etat($event.value)" [(ngModel)]="etatHygiene" class="form-control-lg" placeholder="Convention">
+				<mat-option value="EHS">EHS </mat-option>
+				<mat-option value="EHM">EHM </mat-option>
+				<mat-option value="EHNS">EHNS </mat-option>
+			</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="col-md-4 arrondissement">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<mat-label > Arrondissement: </mat-label>
+				<mat-select (selectionChange)="Arrondissement($event.value)" [formControl]="arrondissementControl" class="form-control-lg">
+					<mat-option *ngFor="let type of arrondissement" [value]="type.id">
+					  {{ type.libelle }}
+					</mat-option>
+				  </mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<mat-label> Controleur: </mat-label>
+				<mat-select (selectionChange)="Controleur($event.value)" [formControl]="controleurControl" class="form-control-lg">
+					<mat-option *ngFor="let type of controleur" [value]="type.id">
+					  {{ type.nom}}
+					</mat-option>
+				  </mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+</div> -->
+
+
+  <mat-accordion class="example-headers-align" multi>
+	<mat-expansion-panel >
+	  <mat-expansion-panel-header class="text-white bg-primary text-center m-auro">
+		<mat-panel-title class="text-white text-center m-auro">
+		<b>
+			<i class="la la-filter"></i>
+			FILTRER PAR :
+		</b>
+		</mat-panel-title>
+		
+	  </mat-expansion-panel-header>
+  <div class="row">
+	  <div class="col-md-3 nature">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<mat-label>Nature de l'etablissement:</mat-label>
+				<mat-select (selectionChange)="Nature($event.value)" [(ngModel)]="natureEtablissement" class="form-control-lg" placeholder="Convention">
+					<mat-option value="Alimentaires">Alimentaires</mat-option>
+					<mat-option value="Publics">Publics</mat-option>
+					<mat-option value="Touristiques">Touristiques</mat-option>
+				  </mat-select>
+				  
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field   class="example-full-width">
+				<mat-label>Etat d'hygiene:</mat-label>
+				<mat-select (selectionChange)="Etat($event.value)" [(ngModel)]="etatHygiene" class="form-control-lg" placeholder="Convention">
+				<mat-option value="EHS">EHS </mat-option>
+				<mat-option value="EHM">EHM </mat-option>
+				<mat-option value="EHNS">EHNS </mat-option>
+			</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+	<div class="col-md-3 arrondissement">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<mat-label > Arrondissement: </mat-label>
+				<mat-select (selectionChange)="Arrondissement($event.value)"  class="form-control-lg">
+					<mat-option *ngFor="let type of arrondissement" [value]="type.id">
+					  {{ type.libelle }}
+					</mat-option>
+				  </mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="form-group fv-plugins-icon-container">
+			<mat-form-field class="example-full-width">
+				<mat-label> Controleur: </mat-label>
+				<mat-select (selectionChange)="Controleur($event.value)"  class="form-control-lg">
+					<mat-option *ngFor="let type of controleur" [value]="type.id">
+					  {{ type.nom}}
+					</mat-option>
+				  </mat-select>
+			</mat-form-field>
+			<div class="fv-plugins-message-container"></div>
+		</div>
+	</div>
+   </div>
+	</mat-expansion-panel>
+  
+  </mat-accordion>
+  
+
 	<table
 		id="exportData"
 		mat-table

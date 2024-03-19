@@ -121,7 +121,20 @@
 									<div class="col-md-4">
 										<div class="form-group fv-plugins-icon-container">
 											<mat-form-field class="example-full-width">
-												<mat-label>{{ "PAGES.CONVENTION.MONTANT" | translate }} :</mat-label>
+												<mat-label>{{ "PAGES.CONVENTION.DATE_BO" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.dateBO}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.DATE_DEBUT" | translate }} :</mat-label>
 												<input type="text"
 													class="form-control form-control-solid form-control-lg"
 													name="address1" value="{{details?.dateDebut}}" disabled matInput />
@@ -134,10 +147,22 @@
 									<div class="col-md-4">
 										<div class="form-group fv-plugins-icon-container">
 											<mat-form-field class="example-full-width">
-												<mat-label>{{ "PAGES.CONVENTION.ETAT_CONVENTION" | translate }} :</mat-label>
+												<mat-label>{{ "PAGES.CONVENTION.DATE_ACHEVEMENT" | translate }} :</mat-label>
 												<input type="text"
 													class="form-control form-control-solid form-control-lg"
 													name="address1" value="{{details?.dateAchevement}}" disabled matInput />
+											</mat-form-field>
+											<div class="fv-plugins-message-container"></div>
+
+											<div class="fv-plugins-message-container"></div>
+										</div>
+									</div><div class="col-md-4">
+										<div class="form-group fv-plugins-icon-container">
+											<mat-form-field class="example-full-width">
+												<mat-label>{{ "PAGES.CONVENTION.ABREVIATION" | translate }} :</mat-label>
+												<input type="text"
+													class="form-control form-control-solid form-control-lg"
+													name="address1" value="{{details?.abreviation}}" disabled matInput />
 											</mat-form-field>
 											<div class="fv-plugins-message-container"></div>
 

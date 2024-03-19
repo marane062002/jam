@@ -21,7 +21,12 @@ export class AddDelegataireComponent implements OnInit {
   ngOnInit() {
     this.delegateForm = this.formBuilder.group({
       rc: ['', Validators.required],
-      rs: ['', Validators.required]
+      rs: ['', Validators.required],
+	  idf: ['', Validators.required],
+      adresse: ['', Validators.required],
+	  tel: ['', Validators.required],
+      secteurActive: ['', Validators.required],
+	  directeurGeneral: [''],
   });
   }
   backList() {

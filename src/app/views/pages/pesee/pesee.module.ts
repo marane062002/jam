@@ -27,10 +27,12 @@ import { EditPeseeComponent } from './edit-pesee/edit-pesee.component';
 import { PeseeResolveServiceService } from './Services/pesee-resolve-service.service';
 import { AdapterTypePeseeComponent } from './adapter-type-pesee/adapter-type-pesee.component';
 import { ListePeseeMondataireComponent } from './liste-pesee-mondataire/liste-pesee-mondataire.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { AddVehiculeModalComponent } from './add-vehicule-modal/add-vehicule-modal.component';
 // import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 @NgModule({
-	declarations: [
+	declarations: [AddVehiculeModalComponent,
 		AddPeseeComponent,
 		PeseeComponent,
 		AddvehiculeComponent,
@@ -42,7 +44,11 @@ import { ListePeseeMondataireComponent } from './liste-pesee-mondataire/liste-pe
 		AdapterTypePeseeComponent,
 		ListePeseeMondataireComponent
 	],
+	entryComponents: [
+		AddVehiculeModalComponent],
 	imports: [
+		NgxPermissionsModule.forRoot(),
+
 		MatInputModule,
         MatTableModule,
         MatPaginatorModule,

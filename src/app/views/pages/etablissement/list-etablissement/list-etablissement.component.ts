@@ -8,6 +8,8 @@ import { ExcelAssociationService } from "../../utils/excel-association.service";
 import { environment } from "../../../../../environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { data } from "../../audiences/saisir-facture/saisir-facture.component";
+import { FormControl } from "@angular/forms";
+import { isNumber } from "lodash";
 @Component({
 	selector: "kt-list-etablissement",
 	templateUrl: "./list-etablissement.component.html",
@@ -27,6 +29,14 @@ export class ListEtablissementComponent implements OnInit {
 		'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
+    natureEtablissement:any;
+	etatHygiene:any;
+	arrondissement: any;
+	controleur: any;
+
+
+	arrondissementControl = new FormControl();
+	controleurControl=new FormControl();
 
 	// ============================================
 	// Presentation de datasource
@@ -61,12 +71,12 @@ export class ListEtablissementComponent implements OnInit {
 	constructor(private translate: TranslateService, private httpClient: HttpClient, private router: Router, private datePipe: DatePipe, private excelService: ExcelAssociationService) {}
 
 	ngOnInit(): void {
-		// this.headers = new HttpHeaders().set('content-type', 'application/json').set('Access-Control-Allow-Origin', '*');
 
+		this.fetchControleur();
+		this.fetchArrondissement()
 		this.columns = ["Id", "IF", "Description", "Tel", "Propriétaire", "Gérant"];
-		// this.dataSource = new MatTableDataSource(this.data);
-		// this.dataSource.paginator = this.paginator;
 		this.loadData(this.currentPage, this.pageSize);
+		
 	}
 
 
@@ -79,20 +89,89 @@ export class ListEtablissementComponent implements OnInit {
 	dataSubject = new BehaviorSubject<any[]>([]);
 	//   dataSource$: Observable<any[]> = this.dataSubject.asObservable();
 
-	loadData(page: number, pageSize: number): void {
+	Nature(selectedValue: string): void {
+		
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected Etat hygiene:', this.etatHygiene);
+		this.ngOnInit()
+	  }
+	
+	  Etat(selectedValue: string): void {
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected Etat hygiene:', this.etatHygiene);
+		this.ngOnInit()
+	  }
+	  Arrondissement(selectedValue: string): void {
+		this.arrondissement = null
+		console.log('Selected arr:', selectedValue);
+		this.arrondissement = selectedValue
+		console.log('Selected Etat hygiene:', this.etatHygiene);
+		this.ngOnInit()
+	  }
+	  Controleur(selectedValue: string): void {
+		this.controleur = null
+		console.log('Selected contr:', selectedValue);
+		this.controleur = selectedValue
+		console.log('Selected Etat hygiene:', this.etatHygiene);
+		this.ngOnInit()
+	  }
+	  loadData(page: number, pageSize: number): void {
 		const startIndex = page * pageSize;
 		const endIndex = startIndex + pageSize;
-		console.log("token", localStorage.getItem('accessToken'));
+		
+		let url = `${this.baseUrl}etablissements/paginate/${page}/${pageSize}?`;
 
-		this.httpClient.get<any[]>(`${this.baseUrl}etablissements/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// 
-			this.data = response.content;
-			this.dataSource.data = response.content;
-			this.totalRecords = response.totalElements;
-			this.isLoadingResults = false;
+		if (this.natureEtablissement) {
+			
+		  url += `nature=${this.natureEtablissement}&`; 
+		}
+		if (this.etatHygiene) {
+			url += `etatHygiene=${this.etatHygiene}&`; 
+		}
+		
+		if (this.arrondissementControl.value) {
+			
+			url += `arrondissement=${this.arrondissementControl.value}&`; 
+		}
+
+		if (this.controleurControl.value) {
+			
+			url += `controleur=${this.controleurControl.value}&`; 
+		}
+
+		if (url.endsWith('&') || url.endsWith('?')) {
+			url = url.slice(0, -1);
+		}
+
+		this.httpClient.get<any[]>(url, { headers: this.headers }).subscribe((response: any) => {
+		  this.data = response.content;
+		  this.dataSource.data = response.content;
+		  this.totalRecords = response.totalElements;
+		  this.isLoadingResults = false;
 		});
 		console.log("page:", page, "pageSize:", pageSize);
-	}
+	  }
+	  
+	  private fetchControleur(): void {
+		this.httpClient.get<any[]>(`${this.baseUrl}controleur`,{ headers: this.headers }).subscribe(
+		  (response) => {
+			this.controleur = response;
+		  },
+		  (error) => {
+			console.error("Error fetching controleur:", error);
+		  }
+		);
+	  }
+	  private fetchArrondissement(): void {
+		this.httpClient.get<any[]>(`${this.baseUrl}arrondissement`,{ headers: this.headers }).subscribe(
+		  (response) => {
+			this.arrondissement = response;
+		  },
+		  (error) => {
+			console.error("Error fetching types:", error);
+		  }
+		);
+	  }
 
 	// loadData(): void {
 	// 	this.httpClient.get<any[]>('http://localhost:9095/etablissements')

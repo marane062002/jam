@@ -241,10 +241,10 @@ export class UpdateDecesNaturelComponent implements OnInit {
 						  })
 			}
 
+            
 			this.service.update(this.FormArticle.value.id, this.FormArticle.value).subscribe(
 				(res:any) => {
 					
-
 					this.allpjDeclar.forEach(formPj => {	
         
 						const pcjDeclarant = new FormData();

@@ -8,7 +8,7 @@ import { environment } from "../../../../../environments/environment";
 	styleUrls: ["./detaille-etablissement.component.scss"],
 })
 export class DetailleEtablissementComponent implements OnInit {
-
+	natureEtablissement
 
 	etablissementId: number;
     etablissementDetails: any;

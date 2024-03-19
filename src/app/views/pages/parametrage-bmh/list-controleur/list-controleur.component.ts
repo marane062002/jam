@@ -65,7 +65,7 @@ export class ListControleurComponent implements OnInit {
   }
 
   delete(id:any){
-    debugger
+    
 	Swal.fire({
 		title: ' ',
 		text: "voulez-vous vraiment supprimer ce  entrées de stock  ?",
@@ -77,18 +77,18 @@ export class ListControleurComponent implements OnInit {
 		cancelButtonText: 'Fermer'
   
 	  }).then((result) => {
-      debugger
+      
 		 if (result.isConfirmed) {
 			this.service.delete(id).subscribe(res=>{
 			this.ngOnInit();
-      debugger
+      
 			Swal.fire({
         
 			  title: 'entrées de stock à été   supprimé avec succès !',
 			  icon: 'success',
         
 			});
-      debugger
+      
 		  },err=>{
 			console.log(err)
 		  })

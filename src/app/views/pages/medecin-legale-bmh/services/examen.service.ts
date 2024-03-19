@@ -13,8 +13,8 @@ export class ExamenService {
   constructor(private http:HttpClient) { }
 
   
-  getAll(){
-   return this.http.get<InterfaceExamen[]>(`${this.baseUrl}`+'examenn')
+  getAll(id){
+   return this.http.get<InterfaceExamen[]>(`${this.baseUrl}examenn/obstacle/${id}`)
   }
   delete(id:any){
     return this.http.delete<InterfaceExamen>(`${this.baseUrl}`+'examenn/'+`${id}`)

@@ -19,7 +19,6 @@ export class AddCircuitComponent implements OnInit {
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
 	constructor(private router: Router,private httpClient:HttpClient,private formBuilder: FormBuilder) {}
-
 	ngOnInit() {
 		this.ajoutForm = this.formBuilder.group({
 			designation: ['', Validators.required],

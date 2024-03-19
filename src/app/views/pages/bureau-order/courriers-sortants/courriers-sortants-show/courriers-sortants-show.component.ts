@@ -203,7 +203,7 @@ export class CourriersSortantsShowComponent implements OnInit {
 		console.log("You clicked: " + e);
 		var r = e.substring(0,e.length-4);
 		console.log("id file: " + r);
-		this.service.downoldFile(r,e);
+		 this.service.downoldFile(r,a);
 		// window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"+r);
 	}
 	getExtension(file){
@@ -220,7 +220,8 @@ export class CourriersSortantsShowComponent implements OnInit {
 			this.convertBlobToBase64(response);
 		  });
 		const dialogRef = this._dialog.open(AfficheComponent, {
-			width: "75%",
+			width: "50%",
+			height:"70%",
 			data : { Data: this.pdfSrc },
 		});
 

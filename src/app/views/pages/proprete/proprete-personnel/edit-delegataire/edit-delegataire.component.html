@@ -31,7 +31,59 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label> Identifiant fiscal </label>
+                    <input matInput formControlName="idf" type="text" class="form-control" placeholder=""/>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label> Adresse </label>
+                    <input matInput formControlName="adresse" type="text" class="form-control form-control-solid form-control-lg" name="rs"/>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+    </div>
 
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label> Numéro de téléphone </label>
+                    <input matInput formControlName="tel" type="text" class="form-control" placeholder=""/>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label> Secteur d'activité </label>
+                    <input matInput formControlName="secteurActive" type="text" class="form-control form-control-solid form-control-lg" name="rs"/>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <mat-form-field class="example-full-width">
+                    <label> Directeur général </label>
+                    <input matInput formControlName="directeurGeneral" type="text" class="form-control" placeholder=""/>
+                </mat-form-field>
+                <div class="fv-plugins-message-container"></div>
+            </div>
+        </div>
+    </div>
     <div class="kt-portlet__heads">
         <div class="kt-portlet__head-label" align="right">
             <button href="javascript:;" (click)="backList()" class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">

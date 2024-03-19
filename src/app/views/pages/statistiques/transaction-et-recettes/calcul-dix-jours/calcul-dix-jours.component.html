@@ -16,11 +16,11 @@
                 <input type="text" class="form-control" formControlName="transactionTime" [value]="currentTime"
                     readonly />
             </div>
-        </div>
+        </div> 
         <div class="col-md-3">
             <div class="form-group fv-plugins-icon-container">
                 <div class="input-group date">
-                    <label>{{ "PAGES.CALCUL.DATE_DEBUT_CALCUL" | translate }} :</label>
+                    <label>{{ "PAGES.CALCUL.DATE_FIN_CALCUL" | translate }} :</label>
                     <mat-form-field class="example-full-width">
                         <input matInput class="form-control" type="datetime-local" formControlName="timeDebut"
                             required />
@@ -69,9 +69,9 @@
                 </div>
                 <div class="transaction-line">
                     <label class="left-label" (click)="toggleCheckbox('partCarreau')">
-                        {{ "PAGES.CALCUL.PART_CARREAU" | translate }} :</label>
+                        {{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} :</label>
                     <mat-checkbox class="right-checkbox" formControlName="partCarreau"></mat-checkbox>
-                </div>
+                </div> 
             </div>
         </div>
         <div class="col-md-6 right-side">

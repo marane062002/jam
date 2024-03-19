@@ -6,9 +6,10 @@ import { Hangar } from "../../../../../core/_base/layout/models/Hangar";
 import { MatDialog} from '@angular/material';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalculDixJoursModalComponent } from '../calcul-dix-jours-modal/calcul-dix-jours-modal.component';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 
-
+ 
 @Component({
   selector: 'kt-calcul-dix-jours',
   templateUrl: './calcul-dix-jours.component.html',
@@ -69,14 +70,20 @@ export class CalculDixJoursComponent implements OnInit {
   padZero(value: number): string {
     return value.toString().padStart(2, '0');
   }
-  constructor(
+  constructor(private translate: TranslateService,
     private hangarService: HangarService,
     private dialogRef: MatDialog) {
   }
   currentTime: string;
   ngOnInit() {
     this.calculForm.controls['transactionTime'].setValue(this.getCurrentDateTime());
-
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			if (event.lang == "ar") {
+				this.language = "ar";
+			} else if (event.lang == "fr") {
+				this.language = "fr";
+			}
+		});
     if(this.language=='fr'){
       this.currentTime = this.getCurrentDateTime();
       setInterval(() => {
@@ -144,7 +151,7 @@ export class CalculDixJoursComponent implements OnInit {
   openModal() {
     if (this.calculForm.value.timeDebut != '' && this.calculForm.value.hangar.id != '') {
       this.dialogRef.open(CalculDixJoursModalComponent, {
-        data: { calculDixJours: this.calculForm},
+        data: { calculDixJours: this.calculForm,language:this.language},
       });
     }
   }

@@ -45,6 +45,9 @@ import { TranslateModule } from "@ngx-translate/core";
 import { MaterialsModule } from "../utils/materials/materials.module";
 import { PagesModule } from "../pages.module";
 import { PdfviewerComponent } from "./pdfviewer/pdfviewer.component";
+import { ListDemandesPubPropComponent } from './list-demandes-pub-prop/list-demandes-pub-prop.component';
+import { ShowDemandesPubPropComponent } from './show-demandes-pub-prop/show-demandes-pub-prop.component';
+import { StatusChangeDialogComponent } from './status-change-dialog/status-change-dialog.component';
 
 @NgModule({
 	declarations: [PdfviewerComponent,
@@ -58,6 +61,9 @@ import { PdfviewerComponent } from "./pdfviewer/pdfviewer.component";
 		AutorisationsTraitementComponent,
 		BiensDetailComponent,
 		BiensEditComponent,
+		ListDemandesPubPropComponent,
+		ShowDemandesPubPropComponent,
+		StatusChangeDialogComponent,
 	],
 
 	imports: [		PagesModule,
@@ -114,6 +120,16 @@ import { PdfviewerComponent } from "./pdfviewer/pdfviewer.component";
 						path: "bien-edit",
 						component: BiensEditComponent,
 					},
+					//added by saad le 13/03/2024
+					{
+						path: "list-demandes-pub-prop",
+						component: ListDemandesPubPropComponent,
+					},
+					{
+						path: "show-demandes-pub-prop/:id",
+						component: ShowDemandesPubPropComponent,
+					},
+					//end added by saad le 13/03/2024
 				],
 			},
 		]),
@@ -138,7 +154,7 @@ import { PdfviewerComponent } from "./pdfviewer/pdfviewer.component";
 		MatTooltipModule,
 		NgxPermissionsModule.forChild(),
 	],
-	entryComponents: [PdfviewerComponent],
+	entryComponents: [PdfviewerComponent, StatusChangeDialogComponent],
 
 })
 export class AutorisationsModule {}

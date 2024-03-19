@@ -18,6 +18,10 @@ export class GestionPartsService {
     return this.http.put(url, partsData);
   }
 
+  addParts(partsData: any): Observable<any> {
+    const url = `${this.baseUrl}add-parts`;
+    return this.http.post(url, partsData);
+  }
   getParts(req?: any): Observable<HttpResponse<any[]>> {
     const options = createRequestOption(req);
     let headers = new HttpHeaders()
@@ -25,5 +29,8 @@ export class GestionPartsService {
       .set('Access-Control-Allow-Origin', '*')
     return this.http.get<any[]>(`${this.baseUrl}parts`, { params: options, observe: 'response' });
   }
-
+  getPartsById(id: any): Observable<any> {
+    const url = `${this.baseUrl}parts/${id}`;
+    return this.http.get<any[]>(url);
+  }
 }

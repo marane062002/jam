@@ -359,7 +359,10 @@ export const locale = {
 			PERSONNES_MORALES: "الأشخاص المعنويين",
 			AJOUT_PERSONNES_MORALES: "إضافة شخص معنوي",
 			LISTE_PERSONNES_MORALES: "قائمة الأشخاص المعنويين",
-
+			////////
+			//begin added by saad 13/03/2024
+			DEMANDES_PUB_PROP: "طلبات الملك العمومي",
+			//end added by saad 13/03/2024
 			AUTORISATIONS: "التراخيص",
 			AJOUT_AUTORISATIONS: "إضافة ترخيص",
 			LISTE_AUTORISATIONS: "قائمة التراخيص",
@@ -747,7 +750,7 @@ export const locale = {
 				UPLOAD_FILE: "تحميل الملف",
 				ENVOYER: "إرسال",
 				UPDATE: "تم وضع الملف",
-				ATTACHEMENT: "الملفات المرفقة بواسطة الجمعية",
+				ATTACHEMENT: "الملفات المرفقة بواسطة المستخدم",
 				ATTACHEMENT_2: "الترخيص المرسل",
 				//financier
 				nomProjet: "اسم المشروع",
@@ -759,9 +762,9 @@ export const locale = {
 				montantContributionPartenaires: "مبلغ مساهمة الشركاء",
 				montantContributionAssociation: "مبلغ مساهمة الجمعية",
 				montantSupportCommuneAnneePrecedente: "مبلغ الدعم المالي المحصل من الجماعة في السنة السابقة",
-				dureeProjetMois : "مدة المشروع بالاشهر",
+				dureeProjetMois: "مدة المشروع بالاشهر",
 				montantSupportDemande: "المبلغ المطلوب من الجماعة",
-				communeActivity : "جماعة الترابية لتنفيد المشروع",
+				communeActivity: "جماعة الترابية لتنفيد المشروع",
 				//logistique
 				eventName: "اسم النشاط",
 				projectLocation: "مكان المشروع",
@@ -773,30 +776,14 @@ export const locale = {
 
 
 				TITRE_DEMANDE_LOGISTIQUE: "طلبات الدعم اللوجيستيكي",
-				TITRE_DEMANDE_FINANCIER:"طلبات الدعم المالي",
-				TITRE_DEMANDE_LICENSE:"طلبات التراخيص",
+				TITRE_DEMANDE_FINANCIER: "طلبات الدعم المالي",
+				TITRE_DEMANDE_LICENSE: "طلبات التراخيص",
 
 				ASSOCIATION: "جمعيات",
 				PERSONNE_MORALE: "شركة عامة",
 				PERSONNE_MORALE_PRIVE: "شركة خاصة",
-			
 
-				//PMSource
-				// "pmsBean": {
-				// 	"nom": "",
-				// 	"id": 2940,
-				// 	"rc": "103399",
-				// 	"identifiantFiscal": "1087082",
-				// 	"numeroPatente": "34707655",
-				// 	"adresse": "???? ??? ?????? ??????? ",
-				// 	"teleFixe": "0522862224",
-				// 	"teleGsm": "",
-				// 	"contact": "",
-				// 	"eMail": "",
-				// 	"siteWeb": "",
-				// 	"fax": "",
-				// 	"idvilleRegistreCommerce": 0
-				// },
+
 				PMSOURCE: "معلومات عن الشركة",
 				PMNOM: "اسم الشركة",
 				RC: "السجل التجاري",
@@ -811,6 +798,26 @@ export const locale = {
 				FAX: "الفاكس",
 				VILLE_REGISTRE_COMMERCE: "المدينة",
 
+				//personne physique: 
+				PHYSIQUE_TITLE: "معلومات عن الشخص الداتي",
+				PPNOM: "الاسم العائلي",
+				PPPRENOM: "الإسم الشخصي",
+				PPCIN: "رقم البطاقة الوطنية",
+				PPADRESSE: "العنوان",
+				PPTELEFIXE: "الهاتف التابت",
+				PPTELEGSM: "الهاتف المحمول",
+				PPCONTACT: "الإتصال",
+				PPEMAIL: "البريد الإلكتروني",
+				PPFAX: "الفاكس",
+				PPSOURCE: "شخص داتي",
+
+
+				//demandes public properties
+				DEMANDEPROPPUB: "طلبات تراخيص الملك العمومي",
+
+				REPRESENTANT: "اسم ممثل الشركة",
+				DESCRIPTION: "معلومات حول طبيعة الاستغلال",
+				ATTACHEMENT_PUB: "الملفات المرفقة بواسطة المستخدم" , 
 			},
 			SUBVENTION: {
 				NOM_FESTIVALE: "إسم التظاهرة",
@@ -1575,10 +1582,17 @@ export const locale = {
 				},
 			},
 			PESEE: {
-				MATR: "الرقم الوظيفي",
-				CONDUCTEUR: "السائق",
+				TYPE_VEHICULE:'نوع العربة',
+				CIN_PROPRIETAIRE:'رقم البطاقة الوطنية',
+				NOM_PROPRIETAIRE:'صاحب الورقة الرمادية',
+				PAYER:'تم الدفع',
+				REJETER:'تم الرفض',
+				EN_SAISIE:'في طور',
+				NOM:'صاحب الورقة الرمادية',
+				MATR: "رقم تسجيل البطاقة الرمادية",
+				CONDUCTEUR: "اسم صاحب السلعة",
 				N_Imm: "الرجاء إدخال رقم التسجيل",
-				NOMCONDUCTEUR: "اسم السائق",
+				NOMCONDUCTEUR: "اسم صاحب السلعة",
 				MANUELLE: "الوزن اليدوي",
 				AUTOMATIQUE: "الوزن التلقائي",
 				EDIT: "تعديل بطاقة وزن",
@@ -1586,26 +1600,34 @@ export const locale = {
 				LIST: "قائمة الأوزان",
 				HANGAR: "مربع",
 				NUM: "رقم الوصل",
-				POIDS_E: "وزن التغليف",
-				POIDS_T: "الوزن الإجمالي",
-				POIDS_V: "الوزن الصافي للعربة (تارا)",
+				POIDS_E: "وزن التلفيف(كلغ) ",
+				POIDS_T: "الوزن الإجمالي(كلغ)",
+				POIDS_V: "وزن الشاحنة فارغة(كلغ)",
 				TOTAL_P_N: "إجمالي الوزن الصافي",
-				TAXE_P: "الضريبة الواجب دفعها %7",
+				TAXE_P: "الضريبة الواجب دفعها ",
 				OPERATEUR: "مشغل الوزن",
 				DATE_P: "تاريخ الوزن",
 				LISTE_PESEE: "قائمة الأوزان",
 				MONTANT_T_M: "إجمالي كمية البضائع",
+				MONTANT_T_T_D: "مجموع رقم العاملات بالدرهم",
 				STATUT: "حالة",
+				DATE_PAIEMENT:"تاريخ الدفع",
+
 				TITRE_DETAILS: "بطاقة وزن",
 				DATE: "التاريخ و الساعة",
 				PROVENENCE: "Provenence",
 				PROPRIETAIRE: "Propriétaire du marchandise",
 				POIDS: "وزن",
-				POIDS_N: "الوزن الصافي",
+				POIDS_N: "الوزن الصافي(كلغ)",
+				TYPE_PRODUIT:" نوع البضاعة",
+				PRIX_PRODUIT:"ثمن البيع /كلغ  ",
 				NOMBRE_U: "Nombre d'unité du véhicule",
 				MARCHANDISE: "بضائع",
 				TOTAL_PAYER: "المبلغ الواجب دفعه بالدرهم ",
-				TAXE: "نسبة الضريبة",
+				TAXE: "الواجب أداؤه ",
+				DH:"بالدرهم",
+				SIGNATURE_RESPO_PESEE:"طابع و إمضاء العون المكلف بالميزان",
+				SIGNATURE_MANDATAIRE:"طابع و إمضاء وكيل المربع بعد المراقبة",
 				PRODUITS: "منتجات",
 				PENALITE: "غرامة",
 				CHFRTRANSACTION: "رقم المعاملة",
@@ -1614,19 +1636,20 @@ export const locale = {
 				NBPROD: "عدد المنتجات",
 				MONDATAIRE: "الوكيل",
 
-				TYPEPROD: "نوع المنتج",
+				TYPEPROD: "نوع البضاعة",
 				PRIX: "الثمن",
 				POIDNET: "الوزن الصافي",
 				TYPEEMBAL: "نوع التغليف",
 				QUANT: "كمية",
-				TOTAL: "مجموع",
+				TOTAL: "مجموع البيع بالدرهم رقم العاملات",
+				MONTANT_TRANSATION:"مبلغ البيع بالدرهم رقم المعاملات",
 				AJOUTENREG: "إضافة سجل",
 				CATEGORIE: "الفئة",
 				TYPE: "النوع",
 				SOUS_TYPE: "النوع الفرعي",
-				POIDS_NET: "الوزن الصافي",
-				PART_COMMUNE: "حصة الجماعة الحضرية (5.25%)",
-				PART_MANDATAIRE: "حصة الوكلاء (1.75%)",
+				POIDS_NET: "الوزن الصافي /كلغ",
+				PART_COMMUNE: "حصة الجماعة الحضرية",
+				PART_MANDATAIRE: "حصة الوكلاء ",
 				OUI: "نعم",
 				NON: "لا",
 				MESSAGE_SUCCES_SUPPR: "تم حذف الوزن بنجاح",
@@ -1637,18 +1660,23 @@ export const locale = {
 			},
 			VEHICULE: {
 				MESSAGE_SUCCES_SUPPR: "تم حذف العربة بنجاح",
+				VEHICULE_ADDED_SUCCESSFULLY: "تمت إضافة العربة بنجاح",
+				NUM_CARTE_GRISE_AND_NUM_VEHICULE_EXISTENT: "رقم البطاقة الرمادية و رقم تسجيل العربة موجودان",
+				NUM_CARTE_GRISE_EXISTE: "رقم البطاقة الرمادية موجود",
+				NUM_VEHICULE_EXISTE: "رقم تسجيل العربة موجود",
 				MESSAGE_ERROR_SUPPR: "لم يتم حذف العربة",
 				MESSAGE_ERROR: "خطأ في الحذف",
 				MESSAGE_SUPPR: "هل ترغب في حذف هذه العربة؟",
 				EDIT: "تعديل عربة",
 
 				AJOUT: "اضافة عربة",
+				Vehicule: " عربة",
 				LIST: "قائمة العربات",
 				CIN: "رقم بطاقة التعريف الوطنية",
 				CARTE_GRISE: "  رقم البطاقة رمادية",
 				REF_TRANSPORT: "مرجع العربة",
 				PERMIS: "رقم رخصة السياقة",
-				IMM: "رقم تسجيل العربة",
+				IMM: "رقم تسجيل البطاقة الرمادية",
 				NOM: "اسم المالك",
 				TARRA: "وزن العربة فارغة",
 
@@ -1659,7 +1687,7 @@ export const locale = {
 				Pick_up: "Pick-up",
 				Camion: "Camion",
 				Canter: "Canter",
-				autre: "autre",
+				autre: "آخر",
 				TEL: "رقم الهاتف",
 				MESSAGE: "رسالة",
 				PUISSANCE_FISCALE: "Puissance fiscale",
@@ -1736,6 +1764,9 @@ export const locale = {
 				MESSAGE_SUPPR: "هل ترغب في حذف هذا الصنف ؟"
 			},
 			STATISTIQUES: {
+				QTE:"كمية البضائع المباعة كلغ",
+				NUM_CARREAU: "رقم المربع",
+
 				TITRE: "عدد العربات حسب الأنواع وكميات البضائع لكل قطاع",
 				DATE_HEURE: "التاريخ والوقت",
 				DATE_DEBUT: "تاريخ البداية",
@@ -1746,13 +1777,15 @@ export const locale = {
 			},
 			CALCUL: {
 				TITRE: "حساب على مدى 10 أيام",
+				JOUR:"اليوم",
 				DATE_HEURE: "التاريخ والوقت",
 				DATE_DEBUT_CALCUL: "تاريخ بدء الحساب",
+				DATE_FIN_CALCUL: "تاريخ إنهاء الحساب",
 				NOMBRE_TRANSACTIONS: "عدد المعاملات",
 				SOMME_TRANSACTIONS: "مجموع المعاملات",
-				PART_DUE: "الجزء المستحق 7%",
-				PART_COMMUNE: "الجزء المشترك 5.25%",
-				PART_CARREAU: "الجزء المخصص للمربع 1.75%"
+				PART_DUE: "مجموع الأجزاء المستحقة",
+				PART_COMMUNE: "الجزء المشترك ",
+				PART_MANDATAIRE: "الجزء المخصص للوكيل "
 			},
 			TRANSACTIONS: {
 				TITRE: "المعاملات",
@@ -1769,6 +1802,8 @@ export const locale = {
 				TITRE: "الإيرادات اليومية المحققة في سوق الجملة للفواكه والخضروات حسب المربع"
 			},
 			RECETTES_PERIODE: {
+				RESPONSABLE: "المسؤول",
+
 				TITRE: "الإيرادات المحققة في سوق الجملة للفواكه والخضروات خلال فترة معينة وحسب المربع",
 				DATE_HEURE: "التاريخ والوقت",
 				DATE_DEBUT: "من",
@@ -1776,9 +1811,11 @@ export const locale = {
 				NUMERO_TRANSACTION: "رقم العملية",
 				DATE_TRANSACTION: "تاريخ العملية",
 				SOMME_TRANSACTION: "مبلغ العملية (DH)",
-				PART_DUE: "الجزء المستحق 7 %(DH)",
-				PART_COMMUNE: "الجزء المشترك 5.25 %(DH)",
-				PART_CARREAU: "جزء المربع 1.75 %(DH)",
+				PART_DUE: "مجموع الأجزاء المستحقة",
+				PART_COMMUNE: "الجزء المشترك ",
+				PART_CARREAU: "الجزء المخصص للوكيل ",
+				COUT_TOTAL:'إجمالي تكلفة المعاملة',
+
 				PRENOM_UTILISATEUR: "اسم المستخدم",
 			},
 			QUANTITE_MARCHANDISE_SOUS_TYPE: {
@@ -3274,6 +3311,8 @@ export const locale = {
 				SAVE: "حفظ",
 				RESPONSABLE_DISPATCHING: "المرسل إليه",
 				MOTIVE: " الاجابة",
+				//added by saad le 13/03/2024
+				TYPEDOCUMENTSENDED: "نوع المستند",
 			},
 			// ************** EX Naima ****************
 			MARCHE: {

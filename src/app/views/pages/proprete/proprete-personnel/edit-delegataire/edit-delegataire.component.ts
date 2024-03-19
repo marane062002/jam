@@ -17,10 +17,15 @@ export class EditDelegataireComponent implements OnInit {
 		'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
-  delegateForm = this.formBuilder.group({
-    rc: ['', Validators.required],
-    rs: ['', Validators.required]
-  });
+    delegateForm = this.formBuilder.group({
+		rc: ['', Validators.required],
+		rs: ['', Validators.required],
+		idf: ['', Validators.required],
+		adresse: ['', Validators.required],
+		tel: ['', Validators.required],
+		secteurActive: ['', Validators.required],
+		directeurGeneral: [''],
+	});
   constructor(private router:Router,private formBuilder:FormBuilder ,private httpClient: HttpClient,private route: ActivatedRoute) { }
   
   ngOnInit() {

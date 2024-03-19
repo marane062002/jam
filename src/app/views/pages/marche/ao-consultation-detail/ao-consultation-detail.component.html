@@ -146,7 +146,7 @@
 					</mat-panel-title>
 				</mat-expansion-panel-header>
 				<table class="table pj" width="100%">
-					<tbody>
+					<!-- <tbody>
 						<tr>
 							<th>Objet :</th>
 							<td>{{ao.objet ? ao.objet: '-'}}</td>
@@ -246,6 +246,240 @@
 						</tr>
 
 						<tr>
+							
+
+							<th>Echantillon / Prospectus</th>
+							<td>
+								<span *ngIf="ao.existEchantillon==1">Oui</span>
+								<span *ngIf="ao.existEchantillon==0">Non</span>
+							</td>
+
+							<th *ngIf="ao.existEchantillon==1">Date Echantillon :</th>
+							<td *ngIf="ao.existEchantillon==1">
+								{{ao?.dateEchantillon | date: "dd/MM/yyyy" : "-"}}
+							</td>
+						</tr>
+						<tr>
+							<th *ngIf="ao.existEchantillon==1">Adresse Echantillon :</th>
+							<td *ngIf="ao.existEchantillon==1">
+								{{ao?.adresseEchantillon ? ao?.adresseEchantillon : "-"}}
+							</td>
+						</tr>
+						<tr>
+
+
+
+							<th>Visite des lieux :</th>
+							<td>
+								<span *ngIf="ao.existanceVisite==1">Oui</span>
+								<span *ngIf="ao.existanceVisite==0">Non</span>
+							</td>
+						</tr>
+						<tr *ngIf="ao.existanceVisite==1">
+
+							<th>Date visite des lieux :</th>
+							<td>
+								{{ao?.dateVisite | date: "dd/MM/yyyy" : "-"}}
+							</td>
+							<th>Traitement visite des lieux :</th>
+							<td>
+								{{ao?.traitementVisite ? ao?.traitementVisite : "-"}}
+							</td>
+							
+						</tr>
+						<tr>
+
+							<th *ngIf="ao.existanceVisite==1">Adresse visite des lieux :</th>
+							<td *ngIf="ao.existanceVisite==1">
+								{{ao?.adresseVisite ? ao?.adresseVisite : "-"}}
+							</td>
+							<th>Offre technique :</th>
+							<td>
+								<span *ngIf="ao.offreTechnique==1">Oui</span>
+								<span *ngIf="ao.offreTechnique==0">Non</span>
+							</td>
+					
+						</tr>
+
+
+
+
+					
+
+
+						<tr *ngIf=" ao.statutAo.id==2">
+							<th>
+
+							</th>
+							<td style="color: red;font-weight: bold;" class="donnee_show">{{ ao.motif }}</td>
+						</tr>
+						<tr *ngIf="ao.dateOuverturePlis">
+							<th>
+								{{
+								"PAGES.MARCHE.AO.DATE_RECEPTION"
+								| translate
+								}}:
+							</th>
+							<td class="donnee_show">
+								{{ ao.dateReception | date: "dd/MM/yyyy" }}
+							</td>
+							<th>
+								{{
+								"PAGES.MARCHE.AO.DATE_OUVERTURE_PLIS"
+								| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">
+								{{
+								ao.dateOuverturePlis
+								| date: "dd/MM/yyyy à HH:mm"
+								}}
+							</td>
+						</tr>
+						<tr *ngIf="ao.modePassation == 'Mieux disant'">
+							<th>
+								{{
+								"PAGES.MARCHE.AO.TAUX_TECHNIQUE" | translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">% {{ ao.ptechnique }}</td>
+							<th>
+								{{
+								"PAGES.MARCHE.AO.TAUX_FINANCIERE"
+								| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show">% {{ ao.pfinancier }}</td>
+						</tr>
+						<tr *ngIf="ao.statutAo.id == 7">
+							<th style="color: crimson">
+								{{
+								"PAGES.MARCHE.AO.MOTIF_ANNULE_AO"
+								| translate
+								}}
+								:
+							</th>
+							<td class="donnee_show" colspan="4">
+								{{ ao.motifAnnulation }}
+							</td>
+						</tr>
+					</tbody> -->
+					<tbody>
+						<tr>
+							<th>Objet :</th>
+							<td>{{ao.objet ? ao.objet: '-'}}</td>
+							<th>Objet Ar :</th>
+							<td>{{ao.objetAR ? ao.objetAR:'-'}}</td>
+						</tr>
+						<tr>
+							<th>{{ 'PAGES.BESOINCONSULTATION.PROGRAMME' | translate }} :</th>
+							<td>
+								<span *ngIf="ao.programme!=null">{{ao.programme.nameProjet}}</span>
+								<span *ngIf="ao.programme==null">Non</span>
+							</td>
+							<th>{{ 'PAGES.BESOINCONSULTATION.CONVENTION' | translate }} :</th>
+							<td>
+								<span *ngIf="ao.convention!=null">{{ao.convention.object}}</span>
+								<span *ngIf="ao.convention==null">Non</span>
+							</td>
+						</tr>
+						<tr>
+							<th>Mode de passation :</th>
+							<td>{{ao?.natureAo?.libelle?ao?.natureAo?.libelle:'-' }}</td>
+							<th *ngIf="ao?.natureAo?.id==6">Autres :</th>
+							<td *ngIf="ao?.natureAo?.id==6">{{ao?.modePassation?ao?.modePassation:'-' }}</td>
+
+						</tr>
+						<tr>
+							<th>Catégorie :</th>
+							<td>
+								{{ao.typePrestation?.libelle ? ao.typePrestation?.libelle:"-"}}</td>
+							<th>Estimation HT :</th>
+							<td>
+								{{ao.estimationHT ? ao.estimationHT:"-"}}</td>
+						</tr>
+						<tr>
+							<th>Taxe TVA :</th>
+							<td>
+								{{ao.taxeTVA ? ao.taxeTVA:"-"}}</td>
+								<th>Estimation :</th>
+							<td>{{ao.estimation ? ao.estimation :'-'}}</td>
+						</tr>
+						<tr>
+							<th>Imputation budgétaire :</th>
+							<td>{{ao.budgetEstimatif ? ao.budgetEstimatif:'-'}}</td>
+					
+							<th>Caution provisoir :</th>
+							<td>{{ao.caution ?ao.caution:'-'}}</td>
+		
+						</tr>
+						<tr>
+
+							<th>Type Budget:</th>
+							<td>{{ao.typeBudget ?ao.typeBudget:'-'}}</td>
+
+
+						
+							<th>{{ "PAGES.BESOINCONSULTATION.TYPE_AO" | translate }} :</th>
+							<td>
+								<span *ngIf="ao.existTypeAo==1">
+									{{ao?.typeAo.libelle ? ao?.typeAo.libelle : "-"}}
+								</span>
+								<span *ngIf="ao.existTypeAo==0">Non</span>
+							</td>
+						</tr>
+						<tr>
+
+							<th>Type marché :</th>
+							<td>{{ao?.typeMarche?.libelle?ao?.typeMarche?.libelle:"-" }}</td>
+
+
+						
+							<th *ngIf="ao?.typeMarche?.libelle=='Consultation Architecturale'">Type Consultation Architecturale</th>
+							<td *ngIf="ao?.typeMarche?.libelle=='Consultation Architecturale'">{{ao?.typeConsultationArchitecturale?ao?.typeConsultationArchitecturale:"-" }}</td>
+
+						</tr>
+
+						<tr>
+
+							<th>Nature de prix :</th>
+							<td>{{ao.naturePrix ? ao.naturePrix:'-'}}</td>
+							<th *ngIf="ao?.naturePrix=='Prix révisable'">Formule:</th>
+							<td *ngIf="ao?.naturePrix=='Prix révisable'">{{ao.formule ? ao.formule:'-'}}</td>
+						</tr>
+						<tr>
+							<th>Qualification :</th>
+							<td>
+								<span *ngIf="ao.existQualification==1">
+									{{ao?.classification?.qualificationAo?.libelle?
+									ao?.classification?.qualificationAo?.libelle:"-"}}
+								</span>
+								<span *ngIf="ao.existQualification==0">Non</span>
+							</td>
+							<th>Classification :</th>
+							<td>
+								<span *ngIf="ao.existClassification==1">
+									{{ao?.classification?.libelle? ao?.classification?.libelle:"-"}}
+								</span>
+								<span *ngIf="ao.existClassification==0">Non</span>
+							</td>
+						</tr>
+						<tr>
+							<th>Agrément :</th>
+							<td>
+								<span *ngIf="ao.existanceAgrement==1">Oui</span>
+								<span *ngIf="ao.existanceAgrement==0">Non</span>
+							</td>
+							<th *ngIf="ao.existanceAgrement==1">Liste des agréments :</th>
+							<td *ngIf="ao.existanceAgrement==1">
+								{{ao?.agrements.agrement ? ao?.agrements.agrement : "-"}}
+							</td>
+						</tr>
+
+						<tr>
 							<!-- <th>Descriptif :</th>
 							<td>{{ao.descriptif}}</td> -->
 
@@ -289,7 +523,7 @@
 							<!-- <th>Pièce justicative du réglement :</th>
 							<td>{{ao.loi}}</td> -->
 						</tr>
-						<tr>
+						<tr >
 
 							<th *ngIf="ao.existanceVisite==1">Adresse visite des lieux :</th>
 							<td *ngIf="ao.existanceVisite==1">

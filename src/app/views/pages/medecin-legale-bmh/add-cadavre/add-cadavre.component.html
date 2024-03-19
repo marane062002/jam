@@ -109,14 +109,7 @@
 											<label class="input-group-btn">
 												<span class="btn btn-info">
 													Sélectionner un fichier
-													<input
-														type="file"
-														name="file"
-														formControlName="_file"
-														id="customFile"
-														style="display: none"
-														multiple
-													/>
+													<input (change)="statutPj($event)" type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
 												</span>
 											</label>
 											<input
@@ -246,7 +239,7 @@
 													Pièce jointe :
 													<span class="btn btn-info">
 														Sélectionner un fichier
-														<input type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
+														<input (change)="modelPj($event)" type="file" name="file" formControlName="_file" id="customFile" style="display: none" multiple />
 													</span>
 												</label>
 												<input type="text" class="form-control" readonly />

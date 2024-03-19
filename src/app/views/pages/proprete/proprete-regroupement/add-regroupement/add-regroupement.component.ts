@@ -41,9 +41,9 @@ export class AddRegroupementComponent implements OnInit {
 		]);
 	}
 	onSubmit(){
-		debugger
+		
 		if (this.pointRegroupementForm.valid) {
-			debugger
+			
 			this.httpClient.post<any[]>(`${this.baseUrl}regroupement`, this.pointRegroupementForm.value,{ headers: this.headers }).subscribe(
 					  (res:any) => {
 						console.log("nouveau res :", res);

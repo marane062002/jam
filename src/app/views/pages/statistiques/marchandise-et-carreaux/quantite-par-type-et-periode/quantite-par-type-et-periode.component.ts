@@ -5,6 +5,7 @@ import { HangarService } from '../../../marcheGros/Service/hangar.service';
 import { Hangar } from "../../../../../core/_base/layout/models/Hangar";
 import { MatDialog } from '@angular/material';
 import { QuantiteParTypeEtPeriodeModalComponent } from '../quantite-par-type-et-periode-modal/quantite-par-type-et-periode-modal.component';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'kt-quantite-par-type-et-periode',
   templateUrl: './quantite-par-type-et-periode.component.html',
@@ -47,7 +48,7 @@ export class QuantiteParTypeEtPeriodeComponent implements OnInit {
   padZero(value: number): string {
     return value.toString().padStart(2, '0');
   }
-  constructor(
+  constructor(private translate: TranslateService,
     private hangarService: HangarService,
     private dialogRef: MatDialog) {
   }
@@ -68,6 +69,13 @@ export class QuantiteParTypeEtPeriodeComponent implements OnInit {
   }
   currentTime: string;
   ngOnInit() {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			if (event.lang == "ar") {
+				this.language = "ar";
+			} else if (event.lang == "fr") {
+				this.language = "fr";
+			}
+		});
     this.quantiteForm.controls['transactionTime'].setValue(this.getCurrentDateTime());
     if(this.language=='fr'){
     this.currentTime = this.getCurrentDateTime();
@@ -109,7 +117,7 @@ export class QuantiteParTypeEtPeriodeComponent implements OnInit {
   openModal() {
     if (this.quantiteForm.value.transactionDebut != '' && this.quantiteForm.value.transactionEnd != '' && this.quantiteForm.value.timeFin != '') {
       this.dialogRef.open(QuantiteParTypeEtPeriodeModalComponent, {
-        data: { quantiteParTypeProduit: this.quantiteForm },
+        data: { quantiteParTypeProduit: this.quantiteForm ,language:this.language},
       });
     }
   }

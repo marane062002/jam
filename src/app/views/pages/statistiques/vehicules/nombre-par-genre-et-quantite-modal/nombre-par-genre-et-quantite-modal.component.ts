@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import { HangarService } from '../../../marcheGros/Service/hangar.service';
@@ -20,6 +20,7 @@ export class NombreParGenreEtQuantiteModalComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
 
   dataPesee: any;
+  @HostBinding('dir') dir // Default direction is left-to-right (LTR)
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -66,12 +67,20 @@ export class NombreParGenreEtQuantiteModalComponent implements OnInit {
     private translate: TranslateService,
     private peseeService: PeseeService,
     private dialogRef: MatDialogRef<NombreParGenreEtQuantiteModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { nombreParGenresQantites: any },) {
+    @Inject(MAT_DIALOG_DATA) public data?: { nombreParGenresQantites: any ,language},) {
   }
 
 
   currentTime: string;
   ngOnInit() {
+    this.data
+    
+    if(this.data.language=='fr'){
+      this.dir='ltr'
+    }else{
+      this.dir= 'rtl'; 
+    }
+    
     this.nombreForm = this.data.nombreParGenresQantites;
     if (this.nombreForm.value.timeDebut != '' && this.nombreForm.value.timeFin != '' && this.nombreForm.value.hangar.id != '') {
       this.apply();
@@ -247,24 +256,53 @@ export class NombreParGenreEtQuantiteModalComponent implements OnInit {
   }
 
   toPrint: any;
+  // Recu(): void {
+  //   this.toPrint = this.dataPesee;
+  //   setTimeout(() => {
+  //     var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
+  //     let DATA: any = document.getElementById("htmlData");
+
+  //     html2canvas(DATA, {}).then((canvas) => {
+  //       const FILEURI = canvas.toDataURL("image/png");
+  //       let PDF = new jsPDF("p", "mm", "a4");
+  //       let fileWidth = PDF.internal.pageSize.getWidth();
+  //       let fileHeight = (canvas.height * fileWidth) / canvas.width;
+  //       let position = 0;
+  //       PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
+  //       PDF.save(this.translate.instant("PAGES.STATISTIQUES.TITRE") + ".pdf");
+  //       this.spinnerService.stop(spinnerRef);
+  //     });
+  //   }, 250);
+  // }
   Recu(): void {
     this.toPrint = this.dataPesee;
     setTimeout(() => {
-      var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
-      let DATA: any = document.getElementById("htmlData");
+        var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
+        let DATA: any = document.getElementById("htmlData");
 
-      html2canvas(DATA, {}).then((canvas) => {
-        const FILEURI = canvas.toDataURL("image/png");
-        let PDF = new jsPDF("p", "mm", "a4");
-        let fileWidth = PDF.internal.pageSize.getWidth();
-        let fileHeight = (canvas.height * fileWidth) / canvas.width;
-        let position = 0;
-        PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
-        PDF.save("Nombre de véhicules par genres et quantités de marchandises pour chaque carreau" + ".pdf");
-        this.spinnerService.stop(spinnerRef);
-      });
+        // Set the font size of the HTML content
+        DATA.style.fontSize = "12px"; // Adjust as needed
+
+        html2canvas(DATA, { scale: 2 }) // Adjust scale as needed
+            .then((canvas) => {
+                const FILEURI = canvas.toDataURL("image/png");
+                let PDF = new jsPDF("p", "mm", "a4");
+                let fileWidth = PDF.internal.pageSize.getWidth();
+                let fileHeight = PDF.internal.pageSize.getHeight(); // Use page height
+                let position = 0;
+
+             
+
+                // Save the PDF
+                PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
+                PDF.save(this.translate.instant("PAGES.STATISTIQUES.TITRE") + ".pdf");
+                this.spinnerService.stop(spinnerRef);
+            });
     }, 250);
-  }
+}
+
+
+
 
 
   close() {

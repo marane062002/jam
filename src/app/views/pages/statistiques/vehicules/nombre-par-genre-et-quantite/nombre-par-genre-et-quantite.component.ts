@@ -5,6 +5,7 @@ import { HangarService } from '../../../marcheGros/Service/hangar.service';
 import { Hangar } from "../../../../../core/_base/layout/models/Hangar";
 import { MatDialog } from '@angular/material';
 import { NombreParGenreEtQuantiteModalComponent } from '../nombre-par-genre-et-quantite-modal/nombre-par-genre-et-quantite-modal.component';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'kt-nombre-par-genre-et-quantite',
   templateUrl: './nombre-par-genre-et-quantite.component.html',
@@ -47,7 +48,8 @@ export class NombreParGenreEtQuantiteComponent implements OnInit {
   padZero(value: number): string {
     return value.toString().padStart(2, '0');
   }
-  constructor(
+  constructor(		private translate: TranslateService,
+
     private hangarService: HangarService,
     private dialogRef: MatDialog) {
   }
@@ -70,6 +72,13 @@ export class NombreParGenreEtQuantiteComponent implements OnInit {
 
   currentTime: string;
   ngOnInit() {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+			if (event.lang == "ar") {
+				this.language = "ar";
+			} else if (event.lang == "fr") {
+				this.language = "fr";
+			}
+		});
     this.nombreForm.controls['transactionTime'].setValue(this.getCurrentDateTime());
 
     if (this.language == 'fr') {
@@ -113,7 +122,7 @@ export class NombreParGenreEtQuantiteComponent implements OnInit {
   openModal() {
     if (this.nombreForm.value.timeDebut != '' && this.nombreForm.value.timeFin != '' && this.nombreForm.value.hangar.id != '') {
       this.dialogRef.open(NombreParGenreEtQuantiteModalComponent, {
-        data: { nombreParGenresQantites: this.nombreForm },
+        data: { nombreParGenresQantites: this.nombreForm,language:this.language },
       });
     }
   }

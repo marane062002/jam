@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'; // Import the necessary modules for FormBuilder and FormGroup
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -98,11 +98,19 @@ export class TransactionsModalComponent implements OnInit {
     private spinnerService: SpinnerService,
     private peseeService: PeseeService,
     private dialogRef: MatDialogRef<TransactionsModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { transactions: any }
+    @Inject(MAT_DIALOG_DATA) public data?: { transactions: any,language }
   ) {
   }
+  @HostBinding('dir') dir 
+
   currentTime: string;
   ngOnInit() {
+    if(this.data.language=='fr'){
+      this.dir='ltr'
+    }else{
+      this.dir= 'rtl'; 
+    }
+    
     this.transactionsForm = this.data.transactions;
     if (this.transactionsForm.value.timeDebut != '' && this.transactionsForm.value.timeFin != '') {
       this.apply();
@@ -1948,7 +1956,7 @@ export class TransactionsModalComponent implements OnInit {
               generatePage();
             });
           } else {
-            PDF.save("Transactions.pdf");
+            PDF.save(this.translate.instant("MENU.STATISTIQUE.TRANSACTIONS")+".pdf");
             this.spinnerService.stop(spinnerRef);
           }
         };
@@ -1975,7 +1983,7 @@ export class TransactionsModalComponent implements OnInit {
           let fileHeight = (canvas.height * fileWidth) / canvas.width;
           let position = 0;
           PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
-          PDF.save("Transactions" + ".pdf");
+          PDF.save(this.translate.instant("MENU.STATISTIQUE.TRANSACTIONS") + ".pdf");
           this.spinnerService.stop(spinnerRef);
         });
       }, 250);

@@ -14,14 +14,15 @@ export class ListExamenComponent implements OnInit {
 	constructor(private router: Router, private service: ExamenService,private route: ActivatedRoute) {}
 
 	ngOnInit() {
-		this.service.getAll().subscribe((res) => {
+		this.route.params.subscribe((params) => {
+			this.id = +params['id']; 
+		});
+		this.service.getAll(this.id).subscribe((res) => {
 			this.examen = res;
 
 			console.log("examen:",res);
 		});
-		this.route.params.subscribe((params) => {
-			this.id = +params['id']; 
-		  });
+		
 	}
 	RetourEmbalages() {
 		this.router.navigate(["/bmh1/list-obstacle"]);

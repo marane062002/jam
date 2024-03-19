@@ -26,14 +26,14 @@ export class GestionPartsComponent implements OnInit {
       partMondataire: new FormControl("", [Validators.required]),
       partCommune: new FormControl("", [Validators.required]),
       partMontant: new FormControl("", [Validators.required]),
-      id: new FormControl("")
+      // id: new FormControl("")
     });
   }
 
   onEdit() {
     if (this.partsForm.valid && this.partsForm.value.partMontant == this.partsForm.value.partCommune + this.partsForm.value.partMondataire) {
       const partsData = this.partsForm.value;
-      this.gestionPartsService.updateParts(partsData).subscribe(
+      this.gestionPartsService.addParts(partsData).subscribe(
         response => {
           Swal.fire({
             position: "center",
@@ -69,10 +69,10 @@ export class GestionPartsComponent implements OnInit {
     this.gestionPartsService.getParts().subscribe(res => {
       console.log(res);
       this.partsForm.patchValue({
-        partMondataire: res.body[0].partMondataire,
-        partCommune: res.body[0].partCommune,
-        partMontant: res.body[0].partMontant,
-        id: res.body[0].id
+        partMondataire: res.body[res.body.length-1].partMondataire,
+        partCommune: res.body[res.body.length-1].partCommune,
+        partMontant: res.body[res.body.length-1].partMontant,
+        id: res.body[res.body.length-1].id
       })
     })
   }

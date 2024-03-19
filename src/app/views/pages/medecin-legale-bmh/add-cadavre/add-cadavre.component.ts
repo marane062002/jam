@@ -10,7 +10,8 @@ import { FourgonService } from "../services/fourgon.service";
 import { InterfaceFourgon } from "../list-fourgon/list-fourgon.component";
 import { ConducteurService } from "../../parametrage-bmh/services/conducteur.service";
 import { InterfaceConducteur } from "../../parametrage-bmh/list-conducteur/list-conducteur.component";
-
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../../../environments/environment";
 @Component({
 	selector: "kt-add-cadavre",
 	templateUrl: "./add-cadavre.component.html",
@@ -21,9 +22,10 @@ export class AddCadavreComponent implements OnInit {
 	fourgon: InterfaceFourgon[] = [];
 	info: any;
 	id: any;
+	private AlfresscoURL = environment.API_ALFRESCO_URL;
 	obstacleDefunts: InterfaceObstacle[] = [];
 	ajoutForm: any;
-	constructor(private conducteurService: ConducteurService, private serviceFourgon: FourgonService, private serviceObstacle: ObstacleService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder, private service: CadavreService, private serviceObstacleDefunts: ObstacleService) {}
+	constructor(private httpClient : HttpClient, private conducteurService: ConducteurService, private serviceFourgon: FourgonService, private serviceObstacle: ObstacleService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder, private service: CadavreService, private serviceObstacleDefunts: ObstacleService) {}
 	ngOnInit() {
 		this.route.params.subscribe((params) => {
 			this.id = params.id;
@@ -42,8 +44,10 @@ export class AddCadavreComponent implements OnInit {
 				}
 			);
 		});
+		
 		this.ajoutForm = this.formBuilder.group({
 			// id: [null], // Exemple de champ non modifiable
+			// numDeces: [""],
 			date: [""],
 			nom: [""],
 			prenom: [""],
@@ -67,6 +71,18 @@ export class AddCadavreComponent implements OnInit {
 			console.log(this.conducteur);
 		});
 	}
+
+
+	    pcjModel : File;
+		pcjStatut : File;
+		modelPj(event: any) {
+			this.pcjModel = event.target.files[0];
+		}
+		statutPj(event: any) {
+			this.pcjStatut = event.target.files[0];
+		}
+
+
 	RetourEmbalages() {
 		this.router.navigate(["/bmh1/details-obstacles/", this.id]);
 	}
@@ -80,7 +96,28 @@ export class AddCadavreComponent implements OnInit {
 	ajouter() {
 		if (this.ajoutForm.valid) {
 			this.service.create(this.ajoutForm.value).subscribe(
-				(res) => {
+				(res:any) => {
+					const pcjMd = new FormData();
+					const pcjStt = new FormData();
+
+					pcjStt.append("file", this.pcjStatut)
+					pcjStt.append("sousModule", "CADAVRE")
+					pcjStt.append("id",res.id)
+					pcjStt.append("label", "PJ");
+			  
+					this.httpClient.post(`${this.AlfresscoURL}/cadavre-bmh/multiplefile`, pcjStt)
+					.subscribe((res)=>{
+					})
+
+
+					pcjMd.append("file", this.pcjModel)
+					pcjMd.append("sousModule", "CADAVRE")
+					pcjMd.append("id",res.id)
+					pcjMd.append("label", "PJ");
+			
+				  this.httpClient.post(`${this.AlfresscoURL}/cadavre-bmh/multiplefile`, pcjMd)
+				  .subscribe((res)=>{
+				  })
 					console.log(res);
 					Swal.fire({
 						title: "Enregistrement réussi!",

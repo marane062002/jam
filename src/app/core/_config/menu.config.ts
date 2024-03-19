@@ -1092,6 +1092,7 @@ export class MenuConfig {
 		headerMarche: {
 
 			self: {},
+			
 			items: [
 				{
 					title: "Liste des pesee des mondataires",
@@ -1105,7 +1106,7 @@ export class MenuConfig {
 					alignment: "left",
 					toggle: "hover",
 					translate: "MENU.PESEE.GESTIONPESEE",
-					permission: "accessToMarcheGrosSansMondataireModule",
+					permission: 'accessToMarcheGrosPseeVehiculeModule', // Check if the user has the required permission
 
 					submenu: [
 						{
@@ -1132,7 +1133,7 @@ export class MenuConfig {
 					alignment: "left",
 					toggle: "hover",
 					translate: "MENU.VEHICULE.GESTIONVEHICULE",
-					permission: "accessToMarcheGrosSansMondataireModule",
+					permission: 'accessToMarcheGrosPseeVehiculeModule', // Check if the user has the required permission
 					submenu: [
 						{
 							title: "Ajouter vehicule",
@@ -2038,7 +2039,7 @@ export class MenuConfig {
 							icon: "flaticon2-list-3",
 							//permission: "accessToIndexAssociation",
 						},
-						
+
 					],
 				}
 			],
@@ -2197,7 +2198,29 @@ export class MenuConfig {
 							//permission: "canCreatePMSource",
 						},
 					],
-				} /* ,
+				},
+				// begin added by saad le 13/03/2024
+				{
+					title: "demandes-pub-prop",
+					root: true,
+					alignment: "left",
+					toggle: "hover",
+					translate: "MENU.DEMANDES_PUB_PROP",
+					permission: "accessToAutorisationModule",
+					submenu: [
+						{
+							title: "demandes-pub-prop",
+							translate: "MENU.DEMANDES_PUB_PROP",
+							page: "/autorisations/list-demandes-pub-prop",
+							icon: "flaticon2-list-3",
+							//permission: "accessToIndexPMSource",
+						},
+					
+					],
+				}
+				//end added by saad le 13/03/2024
+
+				/* ,
 				{
 					title: "ممتلكات الجماعة",
 					root: true,
@@ -2222,6 +2245,7 @@ export class MenuConfig {
 						},
 					],
 				}, */,
+
 			],
 		},
 		header_reservations: {
@@ -3100,14 +3124,14 @@ export class MenuConfig {
 
 							icon: "flaticon-edit-1",
 						},
-						{
-							title: "Statistiques des conventions",
-							translate: "MENU.statistiqueConvention",
-							// permission: "canCreateProgram",
-							page: "/convention/statistique-convention",
+						// {
+						// 	title: "Statistiques des conventions",
+						// 	translate: "MENU.statistiqueConvention",
+						// 	// permission: "canCreateProgram",
+						// 	page: "/convention/statistique-convention",
 
-							icon: "flaticon-edit-1",
-						},
+						// 	icon: "flaticon-edit-1",
+						// },
 					]
 				},
 				{
@@ -3289,8 +3313,8 @@ export class MenuConfig {
 					//permission: ",
 					submenu: [
 						{
-							title: "Etablissements",
-							translate: "Etablissements",
+							title: "Contrôle des établissements",
+							translate: "Contrôle des établissements",
 							page: "/etablissement/list-etablissement",
 							icon: "flaticon2-list-3",
 							//permission: "accessToIndexAssociation",
@@ -3638,7 +3662,7 @@ export class MenuConfig {
 					title: "Naissance à domicile",
 					translate: "Naissance à domicile",
 					page: "/bmh1/list-nouveauNe",
-					icon: "flaticon2-list-3",
+					// icon: "flaticon2-list-3",
 					root: true,
 					alignment: "left",
 					toggle: "hover",
@@ -3732,7 +3756,7 @@ export class MenuConfig {
 			],
 		},
 
-		headerSDL:{
+		headerSDL: {
 			self: {},
 			items: [
 				{
@@ -4021,6 +4045,10 @@ export class MenuConfig {
 			items: [],
 		},
 	};
+
+
+
+
 	public get configs(): any {
 		return this.defaults;
 	}

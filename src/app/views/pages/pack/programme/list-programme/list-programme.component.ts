@@ -137,6 +137,8 @@ export class ListProgrammeComponent implements OnInit {
 	listLieu = [];
 	listCodeOrientation = [];
 	listNature = [];
+	listTheme = [];
+	listSousTheme = [];
 	listMaitreOuvrage = [];
 	listMaitreOuvrageDelegue = [];
 	listNiveau = [];
@@ -150,6 +152,8 @@ export class ListProgrammeComponent implements OnInit {
 	objectifStrategique;
 	objectifOperationnel;
 	localisation;
+	dateDebut;
+	dateFin;
 	maitreOuvrage;
 	maitreOuvrageDelegue;
 	axe;
@@ -177,14 +181,7 @@ export class ListProgrammeComponent implements OnInit {
 
 			const id = params['id'];
 		});
-		let e = { 
-			length: this.sizeData,
-			pageIndex: this.pageIndex,
-			pageSize: 5,
-			previousPageIndex: this.pageIndex - 1,
-		};
-
-		this.handlePageEvent(e);
+		
 		this.conventionMarcheService.all().subscribe(res => {
 			this.listConvention = res;
 			for (let i = 0; i < res.length; i++) {
@@ -215,6 +212,12 @@ export class ListProgrammeComponent implements OnInit {
 			this.programeServie.allLocalisation().subscribe((res) => {
 				this.localisation = res;
 			});
+			this.programeServie.allDateDebut().subscribe((res) => {
+				this.dateDebut = res;
+			});	
+			this.programeServie.allDateFin().subscribe((res) => {
+				this.dateFin = res;
+			});
 			this.programeServie.allMaitreOuvrage().subscribe((res) => {
 				this.maitreOuvrage = res;
 			});
@@ -242,6 +245,12 @@ export class ListProgrammeComponent implements OnInit {
 			this.programeServie.allLocalisationAr().subscribe((res) => {
 				this.localisation = res;
 			});
+			this.programeServie.allDateDebut().subscribe((res) => {
+				this.dateDebut = res;
+			});
+			this.programeServie.allDateFin().subscribe((res) => {
+				this.dateFin = res;
+			});
 			this.programeServie.allMaitreOuvrage().subscribe((res) => {
 				this.maitreOuvrage = res;
 			});
@@ -255,25 +264,25 @@ export class ListProgrammeComponent implements OnInit {
 		this.formattedNumber = "0";
 		this.sommeCouts = 0;
 		this.columns = ["Id", "Nom", "Annee", "Porten", "Cant"];
-		this.dataSource = new MatTableDataSource(this.data);
-
+		// this.dataSource = new MatTableDataSource(this.data);
+		
 		this.programeServie.Pagination(this.pageIndex, 5).subscribe(
 			(res: any) => {
 				;
 				console.log(res);
-				for (let i = 0; i < res.content.length; i++) {
-					res.content[i].date = new Date(Number((res.content[i].date.split('-'))[0]), Number((res.content[i].date.split('-'))[1]) - 1, Number((res.content[i].date.split('-'))[2])); // Months are 0-based
-					res.content[i].date.setDate(res.content[i].date.getDate() + 1);
-					if (res.content[i].cout != null) {
-						res.content[i].cout = res.content[i].cout.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
-					}
-					;
-					if (res.content[i].programmePhaseBudgets.length != 0) {
-						if (res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2 != null || res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2 != undefined) {
-							res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2 = res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
-						}
-					}
-				}
+				// for (let i = 0; i < res.content.length; i++) {
+				// 	res.content[i].date = new Date(Number((res.content[i].date.split('-'))[0]), Number((res.content[i].date.split('-'))[1]) - 1, Number((res.content[i].date.split('-'))[2])); // Months are 0-based
+				// 	res.content[i].date.setDate(res.content[i].date.getDate() + 1);
+				// 	if (res.content[i].cout != null) {
+				// 		res.content[i].cout = res.content[i].cout.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+				// 	}
+				// 	;
+				// 	if (res.content[i].programmePhaseBudgets.length != 0) {
+				// 		if (res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2 != null || res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2 != undefined) {
+				// 			res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2 = res.content[i].programmePhaseBudgets[0].totalContributionCommunePh1Ph2.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+				// 		}
+				// 	}
+				// }
 				this.data = res.content;
 				this.isLoading = false;
 
@@ -291,6 +300,7 @@ export class ListProgrammeComponent implements OnInit {
 							console.log("Somme :" + this.sommeCouts);
 						}
 						this.formattedNumber = this.sommeCouts.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+						
 					},
 					(err) => {
 						console.log("Error: " + err);
@@ -312,8 +322,10 @@ export class ListProgrammeComponent implements OnInit {
 						this.sommeCouts += res[i].cout;
 						console.log("Somme :" + this.sommeCouts);
 					}
+					
 					this.formattedNumber = this.sommeCouts.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
-				},
+				
+					},
 				(err) => {
 					console.log("Error: " + err);
 				}
@@ -385,15 +397,7 @@ export class ListProgrammeComponent implements OnInit {
 		})
 	}
 
-	ThemeChange(e) {
-		this.sousThemeservice.findByTheme_Id(e).subscribe((res) => {
-			this.listeSousTheme = res
 
-		})
-	}
-	SousThemeChange(e) {
-		this.formGroup.get('sousTheme.id').setValue(e);
-	}
 	delete(id: number): void {
 		Swal.fire({
 			title: this.translate.instant("PAGES.PROGRAMME.MESSAGE_SUPPRESSION"),
@@ -459,24 +463,7 @@ export class ListProgrammeComponent implements OnInit {
 		if (this.listCodeOrientation.length != 0) {
 			this.formGroup.value.codeOrientation = `(${this.listCodeOrientation.map((item) => `'${item}'`).join(", ")})`;
 		}
-		if (this.formGroup.value.nature.length == 0) {
-			this.formGroup.value.nature = "";
-		}
-		if (this.listNature.length != 0) {
-			this.formGroup.value.nature = `(${this.listNature.map((item) => `'${item}'`).join(", ")})`;
-		}
-		if (this.formGroup.value.theme.length == 0) {
-			this.formGroup.value.theme = "";
-		}
-		if (this.listeTheme.length != 0) {
-			this.formGroup.value.theme = `(${this.listeTheme.map((item) => `'${item}'`).join(", ")})`;
-		}
-		if (this.formGroup.value.sousTheme.length == 0) {
-			this.formGroup.value.sousTheme = "";
-		}
-		if (this.listNature.length != 0) {
-			this.formGroup.value.sousTheme = `(${this.listeSousTheme.map((item) => `'${item}'`).join(", ")})`;
-		}
+
 		if (this.formGroup.value.maitreOuvrage.length == 0) {
 			this.formGroup.value.maitreOuvrage = "";
 		}
@@ -519,6 +506,60 @@ export class ListProgrammeComponent implements OnInit {
 		if (this.listEtatsAvancement.length != 0) {
 			this.formGroup.value.etatAvancement = `(${this.listEtatsAvancement.map((item) => `'${item}'`).join(", ")})`;
 		}
+		if (this.formGroup.value.convention != undefined) {
+			if (this.formGroup.value.convention.length == 0) {
+				this.formGroup.value.convention = [];
+			}
+		} else {
+			this.formGroup.value.convention = [];
+
+		}
+		if (this.listConventions != undefined) {
+			if (this.listConventions.length != 0) {
+				this.formGroup.value.convention = this.listConventions;
+			}
+		}
+
+		if (this.formGroup.value.nature != undefined) {
+			if (this.formGroup.value.nature.length == 0) {
+
+				this.formGroup.value.nature = [];
+			}
+		}
+		if (this.listNature != undefined) {
+			if (this.listNature.length != 0) {
+
+				this.formGroup.value.nature = this.listNature;
+			}
+		}
+
+		if (this.formGroup.value.theme != undefined) {
+			if (this.formGroup.value.theme.length == 0) {
+
+				this.formGroup.value.theme = [];
+			}
+		}
+		if (this.listTheme != undefined) {
+			if (this.listTheme.length != 0) {
+
+				this.formGroup.value.theme = this.listTheme;
+			}
+		}
+		
+		if (this.formGroup.value.nature != undefined) {
+			if (this.formGroup.value.nature.length == 0) {
+
+				this.formGroup.value.nature = [];
+			}
+		}
+		if (this.listNature != undefined) {
+			if (this.listNature.length != 0) {
+
+				this.formGroup.value.nature = this.listNature;
+			}
+		}
+		this.formattedNumber = "0";
+		this.sommeCouts = 0;
 		let pageSize = event.pageSize;
 		this.pageIndex = event.pageIndex;
 
@@ -583,7 +624,7 @@ export class ListProgrammeComponent implements OnInit {
 			);
 		}
 		if (this.formGroup.value.anneeDebut != "" && this.formGroup.value.anneeFin == "" && this.formGroup.value.etatAvancement == "" && this.formGroup.value.axe == "" && this.formGroup.value.nameProjet == "" && this.formGroup.value.objectifStrategique == "" && this.formGroup.value.chefProjet == "" && this.formGroup.value.lieu == "" && this.formGroup.value.objectifOperationnel == "" && this.formGroup.value.codeProjet == "" && this.formGroup.value.numProjet == "" && this.formGroup.value.codeOrientation == "" && this.formGroup.value.maitreOuvrage == "" && this.formGroup.value.maitreOuvrageDelegue == "" && this.formGroup.value.niveau == "" && this.formGroup.value.nature == "" && this.formGroup.value.theme == "" && this.formGroup.value.sousTheme == "" && this.formGroup.value.orientationStrategique == "" && this.formGroup.value.dateFin == null && this.formGroup.value.date == null) {
-
+			
 			this.programeServie.research1(this.formGroup.value.anneeDebut, this.pageIndex, pageSize).subscribe(
 				(res: any) => {
 					console.log("Res: " + JSON.stringify(res));
@@ -605,7 +646,7 @@ export class ListProgrammeComponent implements OnInit {
 		}
 
 		if (this.formGroup.value.anneeDebut == "" && this.formGroup.value.anneeFin != "" && this.formGroup.value.etatAvancement == "" && this.formGroup.value.axe == "" && this.formGroup.value.nameProjet == "" && this.formGroup.value.objectifStrategique == "" && this.formGroup.value.chefProjet == "" && this.formGroup.value.lieu == "" && this.formGroup.value.objectifOperationnel == "" && this.formGroup.value.codeProjet == "" && this.formGroup.value.numProjet == "" && this.formGroup.value.codeOrientation == "" && this.formGroup.value.maitreOuvrage == "" && this.formGroup.value.maitreOuvrageDelegue == "" && this.formGroup.value.niveau == "" && this.formGroup.value.nature == "" && this.formGroup.value.theme == "" && this.formGroup.value.sousTheme == "" && this.formGroup.value.orientationStrategique == "" && this.formGroup.value.dateFin == null && this.formGroup.value.date == null) {
-
+			
 			this.programeServie.research2(this.formGroup.value.anneeFin, this.pageIndex, pageSize).subscribe(
 				(res: any) => {
 					console.log(res);
@@ -627,7 +668,7 @@ export class ListProgrammeComponent implements OnInit {
 		}
 
 		if (this.formGroup.value.anneeDebut == "" && this.formGroup.value.anneeFin == "" && this.formGroup.value.etatAvancement == "" && this.formGroup.value.axe == "" && this.formGroup.value.nameProjet == "" && this.formGroup.value.objectifStrategique == "" && this.formGroup.value.chefProjet == "" && this.formGroup.value.lieu == "" && this.formGroup.value.objectifOperationnel == "" && this.formGroup.value.codeProjet == "" && this.formGroup.value.numProjet == "" && this.formGroup.value.codeOrientation == "" && this.formGroup.value.maitreOuvrage == "" && this.formGroup.value.maitreOuvrageDelegue == "" && this.formGroup.value.niveau == "" && this.formGroup.value.nature == "" && this.formGroup.value.theme == "" && this.formGroup.value.sousTheme == ""&& this.formGroup.value.orientationStrategique == "" && this.formGroup.value.dateFin == null && this.formGroup.value.date == null) {
-
+			
 			this.programeServie.Pagination(this.pageIndex, pageSize).subscribe(
 
 				(res: any) => {
@@ -657,7 +698,7 @@ export class ListProgrammeComponent implements OnInit {
 		}
 
 		if (this.formGroup.value.anneeDebut != "" && this.formGroup.value.anneeFin != "" && this.formGroup.value.etatAvancement == "" && this.formGroup.value.axe == "" && this.formGroup.value.nameProjet == "" && this.formGroup.value.objectifStrategique == "" && this.formGroup.value.chefProjet == "" && this.formGroup.value.lieu == "" && this.formGroup.value.objectifOperationnel == "" && this.formGroup.value.codeProjet == "" && this.formGroup.value.numProjet == "" && this.formGroup.value.codeOrientation == "" && this.formGroup.value.maitreOuvrage == "" && this.formGroup.value.maitreOuvrageDelegue == "" && this.formGroup.value.niveau == "" && this.formGroup.value.nature == "" && this.formGroup.value.theme == "" && this.formGroup.value.sousTheme == "" && this.formGroup.value.orientationStrategique == "" && this.formGroup.value.dateFin == null && this.formGroup.value.date == null) {
-
+			
 			this.programeServie.research3(this.formGroup.value.anneeDebut, this.formGroup.value.anneeFin, this.pageIndex, pageSize).subscribe(
 				(res: any) => {
 					console.log("Res: " + JSON.stringify(res));
@@ -904,14 +945,44 @@ export class ListProgrammeComponent implements OnInit {
 			this.selectedOptionsL = event;
 		}
 	}
-
+	listDateDebut=[]
+	addItemDateDebut(event: any) {
+		if (event[0] == "ALL") {
+			this.listDateDebut = this.dateDebut;
+			this.selectedOptionsDD = this.dateDebut.concat(event[0]);
+			event[0] = [];
+		} else if (event.length == this.dateDebut.length) {
+			this.listDateDebut = [];
+			this.selectedOptionsDD = [];
+		} else {
+			this.listDateDebut = event;
+			this.selectedOptionsDD = event;
+		}
+	}
+		listDateFin=[]
+	addItemDateFin(event: any) {
+		if (event[0] == "ALL") {
+			this.listDateFin = this.dateFin;
+			this.selectedOptionsDF = this.dateFin.concat(event[0]);
+			event[0] = [];
+		} else if (event.length == this.dateFin.length) {
+			this.listDateFin = [];
+			this.selectedOptionsDF = [];
+		} else {
+			this.listDateFin = event;
+			this.selectedOptionsDF = event;
+		}
+	}
 	selectedOptionsCO: string[] = [];
 	selectedOptionsN: string[] = [];
 	selectedOptionsMO: string[] = [];
 	selectedOptionsMOD: string[] = [];
 	selectedOptionsL: string[] = [];
+	selectedOptionsDD: string[] = [];
+	selectedOptionsDF: string[] = [];
 	selectedOptionsCP: string[] = [];
 	selectedOptionsNP: string[] = [];
+	selectedOptionsST: string[] = [];
 	selectedOptionsA: string[] = [];
 	selectedOptionsOP: string[] = [];
 	selectedOptionsOS: string[] = [];
@@ -1029,7 +1100,7 @@ export class ListProgrammeComponent implements OnInit {
 			this.listEtatsAvancement = event;
 			this.selectedOptionsEA = event;
 		}
-	}
+	} 
 	addItemNature(event: any) {
 		if (event.includes('ALL')) {
 			this.listNature = this.natures.id
@@ -1042,7 +1113,48 @@ export class ListProgrammeComponent implements OnInit {
 			this.selectedOptionsNP = event;
 		}
 	}
+	selectedOptionsT=[]
+	ThemeChange(e) {
+		if(e.includes('ALL')){
 
+		this.sousThemeservice.findByTheme_Id(e).subscribe((res) => {
+			this.listeSousTheme = res
+			this.listTheme=this.listeTheme.map(item => item.id)
+			this.selectedOptionsT = this.listeTheme.map(item => item.id);
+
+		})
+	}else if (e.length == this.listeTheme.length) {
+		this.listTheme = [];
+		this.sousThemeservice.findByTheme_Id(e).subscribe((res) => {
+			this.listeSousTheme = res
+			
+
+		})
+		this.selectedOptionsT = [];
+	} else {
+		this.sousThemeservice.findByTheme_Id(e).subscribe((res) => {
+			this.listeSousTheme = res
+			
+		})
+		this.listTheme = e;
+		this.selectedOptionsT = e;
+	}
+		
+	}
+	
+	SousThemeChange(event) {
+		if (event.includes('ALL')) {
+			// this.listSousTheme= this.listeSousTheme.id
+			this.selectedOptionsST = this.listeSousTheme.map(item => item.id);
+		} else if (event.length == this.listeSousTheme.length) {
+			this.listSousTheme = [];
+			this.selectedOptionsST = [];
+		} else {
+			this.listSousTheme = event;
+			this.selectedOptionsST = event;
+		}
+		// this.formGroup.get('sousTheme.id').setValue(event);
+	}
 	selectedOptionsConvention
 	listConventions
 	ConventionChange(event) {
@@ -1063,7 +1175,8 @@ export class ListProgrammeComponent implements OnInit {
 	onSubmit() {
 		this.isSearch = true
 		this.listConventions
-
+		this.selectedOptionsST
+		
 		if (this.formGroup.value.chefProjet.length == 0) {
 			this.formGroup.value.chefProjet = "";
 		}
@@ -1158,19 +1271,19 @@ export class ListProgrammeComponent implements OnInit {
 			}
 		}
 
-		if (this.formGroup.value.nature != undefined) {
-			if (this.formGroup.value.nature.length == 0) {
+		if (this.formGroup.value.theme != undefined) {
+			if (this.formGroup.value.theme.length == 0) {
 
-				this.formGroup.value.nature = [];
+				this.formGroup.value.theme = [];
 			}
 		}
-		if (this.listNature != undefined) {
-			if (this.listNature.length != 0) {
+		if (this.listTheme != undefined) {
+			if (this.listTheme.length != 0) {
 
-				this.formGroup.value.nature = this.listNature;
+				this.formGroup.value.theme = this.listTheme;
 			}
 		}
-
+		
 		if (this.formGroup.value.nature != undefined) {
 			if (this.formGroup.value.nature.length == 0) {
 
@@ -1218,7 +1331,7 @@ export class ListProgrammeComponent implements OnInit {
 						this.sommeCouts += res.content[i].cout;
 					}
 					this.formattedNumber = this.sommeCouts.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
-
+					
 				},
 				(err) => {
 					console.log(err);
@@ -1227,7 +1340,7 @@ export class ListProgrammeComponent implements OnInit {
 		}
 
 		if (this.formGroup.value.anneeDebut == "" && this.formGroup.value.anneeFin != "" && this.formGroup.value.etatAvancement == "" && this.formGroup.value.convention == "" && this.formGroup.value.axe == "" && this.formGroup.value.nameProjet == "" && this.formGroup.value.objectifStrategique == "" && this.formGroup.value.chefProjet == "" && this.formGroup.value.lieu == "" && this.formGroup.value.objectifOperationnel == "" && this.formGroup.value.codeProjet == "" && this.formGroup.value.numProjet == "" && this.formGroup.value.codeOrientation == "" && this.formGroup.value.maitreOuvrage == "" && this.formGroup.value.maitreOuvrageDelegue == "" && this.formGroup.value.niveau == "" && this.formGroup.value.nature == "" && this.formGroup.value.nature == "" && this.formGroup.value.orientationStrategique == "" && this.formGroup.value.dateFin == null && this.formGroup.value.date == null) {
-
+			
 			this.programeServie.research2(this.formGroup.value.anneeFin, this.pageIndex, 5).subscribe(
 				(res: any) => {
 					console.log(res);
@@ -1257,7 +1370,7 @@ export class ListProgrammeComponent implements OnInit {
 						this.sommeCouts += res.content[i].cout;
 					}
 					this.formattedNumber = this.sommeCouts.toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
-				},
+					},
 				(err) => {
 					console.log(err);
 				}
@@ -1265,13 +1378,13 @@ export class ListProgrammeComponent implements OnInit {
 		}
 
 		if (this.formGroup.value.convention != "" || this.formGroup.value.etatAvancement != "" || this.formGroup.value.axe != "" || this.formGroup.value.nameProjet != "" || this.formGroup.value.objectifStrategique != "" || this.formGroup.value.chefProjet != "" || this.formGroup.value.lieu != "" || this.formGroup.value.objectifOperationnel != "" || this.formGroup.value.codeProjet != "" || this.formGroup.value.numProjet != "" || this.formGroup.value.codeOrientation != "" || this.formGroup.value.maitreOuvrage != "" || this.formGroup.value.maitreOuvrageDelegue != "" || this.formGroup.value.niveau != "" || this.formGroup.value.nature != "" || this.formGroup.value.nature != "" || this.formGroup.value.orientationStrategique != "" || this.formGroup.value.dateFin != null || this.formGroup.value.date != null) {
-
+			
 			this.date1 = this.formGroup.value.anneeDebut;
 			this.date2 = this.formGroup.value.anneeFin;
 			this.formGroup.value.anneeDebut = "";
 			this.formGroup.value.anneeFin = "";
-
-			this.programeServie.research(0, 500, this.formGroup.value).subscribe(
+			
+			this.programeServie.research(this.pageIndex, 5, this.formGroup.value).subscribe(
 				(res: any) => {
 					console.log(res);
 					if (this.date1 != "") {
@@ -1338,11 +1451,11 @@ export class ListProgrammeComponent implements OnInit {
 								}
 							}
 						}
-						this.data = this.dataMultipleSearch;
-						this.isLoading = false;
-						this.sizeData = this.dataMultipleSearch.length;
-						this.dataSource = new MatTableDataSource(this.data);
-						this.dataSource.sort = this.sort;
+						// this.data = this.dataMultipleSearch;
+						// this.isLoading = false;
+						// this.sizeData = this.dataMultipleSearch.length;
+						// this.dataSource = new MatTableDataSource(this.data);
+						// this.dataSource.sort = this.sort;
 					}
 					if (this.date2 != "") {
 						for (let i = 0; i < res.content.length; i++) {
@@ -1354,11 +1467,11 @@ export class ListProgrammeComponent implements OnInit {
 								}
 							}
 						}
-						this.data = this.dataMultipleSearch;
-						this.isLoading = false;
-						this.sizeData = this.dataMultipleSearch.length;
-						this.dataSource = new MatTableDataSource(this.data);
-						this.dataSource.sort = this.sort;
+						// this.data = this.dataMultipleSearch;
+						// this.isLoading = false;
+						// this.sizeData = this.dataMultipleSearch.length;
+						// this.dataSource = new MatTableDataSource(this.data);
+						// this.dataSource.sort = this.sort;
 					}
 					for (let i = 0; i < res.content.length; i++) {
 						res.content[i].date = new Date(Number((res.content[i].date.split('-'))[0]), Number((res.content[i].date.split('-'))[1]) - 1, Number((res.content[i].date.split('-'))[2])); // Months are 0-based
@@ -1371,10 +1484,10 @@ export class ListProgrammeComponent implements OnInit {
 						this.data = res.content;
 						this.isLoading = false;
 
-						this.isLoading = false;
-						this.sizeData = res.totalElements;
-						this.dataSource = new MatTableDataSource(this.data);
-						this.dataSource.sort = this.sort;
+						// this.isLoading = false;
+						// this.sizeData = res.totalElements;
+						// this.dataSource = new MatTableDataSource(this.data);
+						// this.dataSource.sort = this.sort;
 					}
 					if (this.date1 != "") {
 						for (let i = 0; i < res.content.length; i++) {
@@ -1422,7 +1535,7 @@ export class ListProgrammeComponent implements OnInit {
 		}
 
 		if (this.formGroup.value.anneeDebut != "" && this.formGroup.value.anneeFin != "" && this.formGroup.value.etatAvancement == "" && this.formGroup.value.convention == "" && this.formGroup.value.axe == "" && this.formGroup.value.nameProjet == "" && this.formGroup.value.objectifStrategique == "" && this.formGroup.value.chefProjet == "" && this.formGroup.value.lieu == "" && this.formGroup.value.objectifOperationnel == "" && this.formGroup.value.codeProjet == "" && this.formGroup.value.numProjet == "" && this.formGroup.value.codeOrientation == "" && this.formGroup.value.maitreOuvrage == "" && this.formGroup.value.maitreOuvrageDelegue == "" && this.formGroup.value.niveau == "" && this.formGroup.value.nature == "" && this.formGroup.value.nature == "" && this.formGroup.value.orientationStrategique == "" && this.formGroup.value.dateFin == null && this.formGroup.value.date == null) {
-
+			
 			this.programeServie.research3(this.formGroup.value.anneeDebut, this.formGroup.value.anneeFin, this.pageIndex, 5).subscribe(
 				(res: any) => {
 					console.log("Res: " + JSON.stringify(res));
@@ -1447,6 +1560,7 @@ export class ListProgrammeComponent implements OnInit {
 		}
 	}
 	initForm() {
+		this.formGroup.reset()
 
 		this.dataMultipleSearch = [];
 		this.formGroup = new FormGroup({
@@ -1474,6 +1588,7 @@ export class ListProgrammeComponent implements OnInit {
 			etatAvancement: new FormControl([]),
 			tabcherches: new FormControl([]),
 		});
+		
 		this.selectedValueCherche = [];
 		this.ngOnInit();
 		this.listChefProjet = [];

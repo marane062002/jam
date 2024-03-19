@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PeseeService } from '../../../pesee/Services/pesee.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -63,10 +63,17 @@ export class QuantiteParSousTypeEtPeriodeModalComponent implements OnInit {
     private translate: TranslateService,
     private spinnerService: SpinnerService,
     private dialogRef: MatDialogRef<QuantiteParSousTypeEtPeriodeModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { quantiteParSousType: any }) {
+    @Inject(MAT_DIALOG_DATA) public data?: { quantiteParSousType: any ,language}) {
   }
   currentTime: string;
+  @HostBinding('dir') dir 
+
   ngOnInit() {
+    if(this.data.language=='fr'){
+      this.dir='ltr'
+    }else{
+      this.dir= 'rtl'; 
+    }
     this.quantiteForm = this.data.quantiteParSousType;
     if (this.quantiteForm.value.transactionDebut != '' && this.quantiteForm.value.transactionEnd != '' && this.quantiteForm.value.hangar.id != '') {
       this.apply();
@@ -291,7 +298,7 @@ export class QuantiteParSousTypeEtPeriodeModalComponent implements OnInit {
               generatePage();
             });
           } else {
-            PDF.save("Marchandise écoulée par sous-type de produit selon une certaine période pour chaque carreau.pdf");
+            PDF.save(this.translate.instant("PAGES.QUANTITE_MARCHANDISE_SOUS_TYPE.TITLE")+".pdf");
             this.spinnerService.stop(spinnerRef);
           }
         };
@@ -317,7 +324,7 @@ export class QuantiteParSousTypeEtPeriodeModalComponent implements OnInit {
           let fileHeight = (canvas.height * fileWidth) / canvas.width;
           let position = 0;
           PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
-          PDF.save("Marchandise écoulée par sous-type de produit selon une certaine période pour chaque carreau" + ".pdf");
+          PDF.save(this.translate.instant("PAGES.QUANTITE_MARCHANDISE_SOUS_TYPE.TITLE")+".pdf");
           this.spinnerService.stop(spinnerRef);
         });
       }, 250);

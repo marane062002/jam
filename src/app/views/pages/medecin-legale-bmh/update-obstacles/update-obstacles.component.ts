@@ -23,7 +23,22 @@ import { debug } from 'console';
 })
 export class UpdateObstaclesComponent implements OnInit {
   
-
+	labelDefunts
+	dataSource2
+	labelDeclar
+	dataSource3
+	labelPj
+	dataSource1
+	labelDef
+	saveDef(e){}
+	saveDec(e){}
+	save(e){}
+	validerPjDef(){}
+	validerPjDec(){}
+	validerPj(){}
+	labelDeclarant
+	label
+	ajouter(){}
 
 	arrondissement: InterfaceArrondissement[] = [];
 	commune: InterfaceCommune[] = [];

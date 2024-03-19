@@ -327,6 +327,11 @@ export const locale = {
 			PERSONNES_MORALES: "Personnes morales",
 			AJOUT_PERSONNES_MORALES: "Ajouter personne morale",
 			LISTE_PERSONNES_MORALES: "Liste des personnes morales",
+			////////
+			//begin added by saad 13/03/2024
+			DEMANDES_PUB_PROP: "Demandes de propriété publique",
+
+			//end added by saad 13/03/2024
 
 			AUTORISATIONS: "Autorisations",
 			AJOUT_AUTORISATIONS: "Nouvelle autorisation",
@@ -658,7 +663,7 @@ export const locale = {
 				UPLOAD_FILE: "importer le fichier",
 				ENVOYER: "Envoyer",
 				UPDATE: "le fichier uploader",
-				ATTACHEMENT: "Pièces jointes envoyées par l'association",
+				ATTACHEMENT: "Pièces jointes envoyées par l'utilisteur",
 				ATTACHEMENT_2: "Licenses envoyées",
 				//financier
 				nomProjet: "le nom de projet",
@@ -706,6 +711,24 @@ export const locale = {
 				ASSOCIATION: "Association",
 				PERSONNE_MORALE: "Organisme public",
 
+				//physique
+				PHYSIQUE_TITLE: "INFORMATIONS Personne physique",
+				PPNOM: "NOM",
+				PPPRENOM: "PRENOM",
+				PPCIN: "CIN",
+				PPADRESSE: "ADRESSE",
+				PPTELEFIXE: "TELE FIXE",
+				PPTELEGSM: "TELE GSM",
+				PPCONTACT: "CONTACT",
+				PPEMAIL: "EMAIL",
+				PPFAX: "FAX",
+				PPSOURCE:"personne Physique",
+
+				//demande public property
+				DEMANDEPROPPUB: "Demande de licenses propriété publique",
+				REPRESENTANT: "Représentant de la société",
+				DESCRIPTION: "Informations sur la nature de l'exploitation",
+				ATTACHEMENT_PUB: "Pièces jointes envoyéees par l'utilisateur",
 
 			},
 			SUBVENTION: {
@@ -1451,6 +1474,12 @@ export const locale = {
 			montantPropose: "Montant proposé",
 
 			PESEE: {
+				CIN_PROPRIETAIRE:'Cin',
+				NOM_PROPRIETAIRE:'Nom propriétaire du véhicule',
+				TYPE_VEHICULE:'Type vehicule',
+				PAYER:'Payer',
+				REJETER:'Rejeter',
+				EN_SAISIE:'EN_SAISIE',
 				N_Imm: "Veuillez saisir N° Imm",
 				MANUELLE: "Pesée manuelle",
 				AUTOMATIQUE: "Pesée automatique",
@@ -1464,15 +1493,21 @@ export const locale = {
 				POIDS_T: "Poids global",
 				POIDS_V: "Poids à vide du véhicule (TARE)",
 				TOTAL_P_N: "Total poids net",
-				TAXE_P: "Montant à payer 7 %",
+				TAXE_P: "Montant à payer ",
 				OPERATEUR: "Opérateur de pesage",
 				DATE_P: "Date de la pesée",
 				LISTE_PESEE: "Liste des pesées",
 				MONTANT_T_M: "Montant total de la marchandise",
+				MONTANT_T_T_D: "Montant total de la marchandise",
+
 				STATUT: "Statut",
 				TITRE_DETAILS: "Fiche de pesée",
 				DATE: "Date & heure",
 				MATR: "Matricule",
+				TYPE_PRODUIT:" Type produit",
+				PRIX_PRODUIT:"Prix produit  ",
+				MONTANT_TRANSATION:"Montant en dirhams",
+				DATE_PAIEMENT:"Date Paiement",
 				PROVENENCE: "Provenence",
 				CONDUCTEUR: "Conducteur",
 				PROPRIETAIRE: "Propriétaire du marchandise",
@@ -1481,7 +1516,11 @@ export const locale = {
 				NOMBRE_U: "Nombre d'unité du véhicule",
 				MARCHANDISE: "Marchandise",
 				TOTAL_PAYER: "Total à payer",
-				TAXE: "% Taxe",
+				TAXE: "Taxe",
+				DH:"DH",
+				SIGNATURE_RESPO_PESEE:"Signature du responsable du pesee",
+				SIGNATURE_MANDATAIRE:"Signature du mandataire",
+
 				PRODUITS: "Produits",
 				PENALITE: "Pénalité à payer",
 				CHFRTRANSACTION: "Chiffrre de transaction",
@@ -1500,8 +1539,8 @@ export const locale = {
 				TYPEEMBAL: "Type d'emballage",
 				QUANT: "Quantité",
 				AJOUTENREG: "Ajouter un enregistrement",
-				PART_COMMUNE: "Part de la commune urbaine 5.25%",
-				PART_MANDATAIRE: "Part des mandataires 1.75%",
+				PART_COMMUNE: "Part de la commune urbaine ",
+				PART_MANDATAIRE: "Part des mandataires ",
 				OUI: "Oui",
 				NON: "Non",
 				MESSAGE_SUCCES_SUPPR: "Le pesée a été supprimé avec succès",
@@ -1511,6 +1550,10 @@ export const locale = {
 			},
 			VEHICULE: {
 				MESSAGE_SUCCES_SUPPR: "Le véhicule a été supprimé avec succès",
+				VEHICULE_ADDED_SUCCESSFULLY: "Le véhicule a été ajouté avec succès",
+				NUM_CARTE_GRISE_AND_NUM_VEHICULE_EXISTENT: "Les termes N° de carte grise et N° de véhicule sont déjà existants",
+				NUM_CARTE_GRISE_EXISTE: "N° de carte grise déjà existant",
+				NUM_VEHICULE_EXISTE: "N° de véhicule déjà existant",
 				MESSAGE_ERROR: "Erreur de suppression",
 				MESSAGE_ERROR_SUPPR: "Le véhicule n'a pas été supprimé",
 				MESSAGE_SUPPR: "Voulez vous supprimer ce véhicule ?",
@@ -1538,6 +1581,7 @@ export const locale = {
 				Camion: "Camion",
 				Canter: "Canter",
 				autre: "autre",
+				Vehicule: "Vehicule",
 				TEL: "Tél",
 				MESSAGE: "Message",
 				PUISSANCE_FISCALE: "Puissance fiscale",
@@ -1606,6 +1650,8 @@ export const locale = {
 				MESSAGE_SUPPR: "Voulez vous supprimer cette catégorie ?",
 			},
 			STATISTIQUES: {
+				QTE:"Qté marchandise (Kg)",
+				NUM_CARREAU:"N° Carreau",
 				TITRE: "Nombre de véhicules par genres et quantités de marchandises pour chaque carreau",
 				DATE_HEURE: "Date et heure",
 				DATE_DEBUT: "Date début",
@@ -1615,14 +1661,16 @@ export const locale = {
 				NOMBRE_VEHICULE: "Nombre de véhicules",
 			},
 			CALCUL: {
+				JOUR:'Jour',
 				TITRE: "Calcul sur période de 10 jours",
 				DATE_HEURE: "Date et heure",
 				DATE_DEBUT_CALCUL: "Date de début de calcul",
+				DATE_FIN_CALCUL: "Date final du calcul",
 				NOMBRE_TRANSACTIONS: "Nombre de transactions",
 				SOMME_TRANSACTIONS: "Somme des transactions",
-				PART_DUE: "Part due 7%",
-				PART_COMMUNE: "Part commune 5,25%",
-				PART_CARREAU: "Part carreau 1,75%",
+				PART_DUE: "Total des parts",
+				PART_COMMUNE: "Part commune ",
+				PART_MANDATAIRE: "Part mandataire",
 			},
 			TRANSACTIONS: {
 				TITRE: "Transactions",
@@ -1639,6 +1687,8 @@ export const locale = {
 				TITRE: "Recettes journalières réalisées au marché de gros de fruits et légumes par carreau",
 			},
 			RECETTES_PERIODE: {
+				RESPONSABLE: "Responsable",
+
 				TITRE: "Recettes réalisées au marché de gros de fruits et légumes selon une période et par carreau",
 				DATE_HEURE: "Date et heure",
 				DATE_DEBUT: "Du",
@@ -1646,9 +1696,10 @@ export const locale = {
 				NUMERO_TRANSACTION: "Numéro de la transaction",
 				DATE_TRANSACTION: "Date de la transaction",
 				SOMME_TRANSACTION: "Somme de la transaction (DH)",
-				PART_DUE: "Part due 7 %(DH)",
-				PART_COMMUNE: "Part commune 5,25 %(DH)",
-				PART_CARREAU: "Part carreau 1,75 %(DH)",
+				PART_DUE: "Total des parts",
+				PART_COMMUNE: "Part commune ",
+				PART_CARREAU: "Part mandataire",
+				COUT_TOTAL:'Coût total transaction',
 				PRENOM_UTILISATEUR: "Prénom utilisateur",
 			},
 			QUANTITE_MARCHANDISE_SOUS_TYPE: {
@@ -2541,6 +2592,7 @@ export const locale = {
 				DATE_BO: "Date Bo",
 				DATE_DEBUT: "Date début",
 				DATE_ACHEVEMENT: "Date achèvement",
+				ABREVIATION: "Abréviation",
 				DUREE: "Durée (Mois)",
 				MONTANT: "Montant (DH)",
 				LISTE_CONVENTIONS: "Liste des conventions",
@@ -3119,6 +3171,8 @@ export const locale = {
 				VISUALISER: "Visualiser",
 				WAIT_MSG: "Veuillez patientez ...",
 				MOTIF: "Motif",
+				//added by saad le 13/03/2024
+				TYPEDOCUMENTSENDED: "Type de document",
 			},
 			CALENDRIER: {
 				CALENDRIER_AO: "Calendrier des ouvertures des plis des appels d'offre",

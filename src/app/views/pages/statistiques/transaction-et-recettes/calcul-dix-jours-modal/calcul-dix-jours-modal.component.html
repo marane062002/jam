@@ -1,7 +1,7 @@
 <div class="kt-portlet">
 
     <div class="row">
-        <h4 id="exampleModalCenterTitle">Calcul sur période de 10 jours<button mat-icon-button color="primary"
+        <h4 id="exampleModalCenterTitle">{{ "PAGES.CALCUL.TITRE" | translate }}<button mat-icon-button color="primary"
                 (click)="Recu()">
                 <i class="fas fa-download"></i>
             </button></h4>
@@ -10,88 +10,124 @@
             <h4>×</h4>
         </button>
     </div>
-
-    <table *ngIf="isAllTrue==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+    <table *ngIf="isAllTrue==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
+        <ng-container matColumnDef="jour">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{row.jour}}</td>
+        </ng-container>
+        <ng-container matColumnDef="nbreTransactions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{row.nbreTransactions}}</td>
+        </ng-container>
+        <ng-container matColumnDef="totalTransactions">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{row.totalTransactions}}</td>
+        </ng-container>
+        <ng-container matColumnDef="part1">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{row.part1}}</td>
+        </ng-container>
+        <ng-container matColumnDef="part2">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{row.part2}}</td>
+        </ng-container>
+        <ng-container matColumnDef="part3">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
+          <td mat-cell *matCellDef="let row">{{row.part3}}</td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let row" class="total-row">
+            <!-- Display sum values here -->
+            <span *ngIf="row.jour === 'Total:'">{{ row.nbreTransactions }}</span>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsALL"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsALL;"></tr>
+      </table>
+      
+    <!-- <table *ngIf="isAllTrue==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
             </td>
         </ng-container>
-
+       
         <tr mat-header-row *matHeaderRowDef="displayedColumnsALL"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsALL;"></tr>
-    </table>
+    </table> -->
 
     <table *ngIf="isNotNbTransactions==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -104,35 +140,35 @@
     <table *ngIf="isNotTotalTransaction==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -145,35 +181,35 @@
     <table *ngIf="isNotPart1==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -186,35 +222,35 @@
     <table *ngIf="isNotPart2==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -227,42 +263,42 @@
     <table *ngIf="isNotPart3==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -276,28 +312,28 @@
     <table *ngIf="isNotNbTransactionsAndIsNotTotalTransaction==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -310,28 +346,28 @@
     <table *ngIf="isNotNbTransactionsAndIsNotPart1==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -344,28 +380,28 @@
     <table *ngIf="isNotNbTransactionsAndIsNotPart2==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -378,28 +414,28 @@
     <table *ngIf="isNotNbTransactionsAndIsNotPart3==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
@@ -412,28 +448,28 @@
     <table *ngIf="isNotTotalTransactionAndIsNotPart1==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -446,28 +482,28 @@
     <table *ngIf="isNotTotalTransactionAndIsNotPart2==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -480,28 +516,28 @@
     <table *ngIf="isNotTotalTransactionAndIsNotPart3==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
@@ -514,28 +550,28 @@
     <table *ngIf="isNotPart1AndIsNotPart2==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -548,28 +584,28 @@
     <table *ngIf="isNotPart1AndIsNotPart3==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
@@ -582,28 +618,28 @@
     <table *ngIf="isNotPart2AndIsNotPart3==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
@@ -618,21 +654,21 @@
     <table *ngIf="isNotNbTransactionsAndIsNotTotalTransactionAndIsNotPart1==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -645,21 +681,21 @@
     <table *ngIf="isNotNbTransactionsAndIsNotTotalTransactionAndIsNotPart2==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -672,21 +708,21 @@
     <table *ngIf="isNotNbTransactionsAndIsNotTotalTransactionAndIsNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
@@ -699,21 +735,21 @@
     <table *ngIf="isNotTotalTransactionAndIsNotPart1AndIsNotPart2==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -726,21 +762,21 @@
     <table *ngIf="isNotTotalTransactionAndIsNotPart1AndIsNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
@@ -753,21 +789,21 @@
     <table *ngIf="isNotNbTransactionsAndIsNotPart1AndIsNotPart2==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -780,21 +816,21 @@
     <table *ngIf="isNotPart1AndIsNotPart2AndIAndIsNotPart3==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
@@ -807,21 +843,21 @@
     <table *ngIf="isNotTotalTransactionAndIsNotPart2AndIsNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
@@ -834,21 +870,21 @@
     <table *ngIf="isNotNbTransactionsAndIsNotPart2AndIsNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
@@ -861,21 +897,21 @@
     <table *ngIf="isNotNbTransactionsAndIsNotPart1AndIsNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
@@ -890,14 +926,14 @@
     <table *ngIf="isNotNbTransactionsisNotTotalTransactionisNotPart1isNotPart2==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part3">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part carreau 1,75 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part3}}</span>
@@ -910,14 +946,14 @@
     <table *ngIf="isNotNbTransactionsisNotTotalTransactionisNotPart1isNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part2">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part commune 5,25 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part2}}</span>
@@ -930,14 +966,14 @@
     <table *ngIf="isNotTotalTransactionisNotPart1isNotPart2isNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="nbreTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nbre des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nbreTransactions}}</span>
@@ -950,14 +986,14 @@
     <table *ngIf="isNotNbTransactionsisNotTotalTransactionisNotPart2isNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="part1">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Part dûe 7 %
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.PART_DUE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.part1}}</span>
@@ -970,14 +1006,14 @@
     <table *ngIf="isNotNbTransactionsisNotPart1isNotPart2isNotPart3==true" id="exportData" mat-table
         [dataSource]="dataSource" class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="jour">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Jour
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.JOUR" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.jour}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="totalTransactions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total des transactions
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.totalTransactions}}</span>
@@ -987,678 +1023,679 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns30"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns30;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"></mat-paginator>
+    <!-- <mat-paginator [length]="10" [pageSizeOptions]="[5,10,20,50]" [showFirstLastButtons]="true"></mat-paginator> -->
 
 </div>
 
 
 
-<div style="overflow: hidden; height: 0">
-    <div id="htmlData">
+<div   style="overflow: hidden; height: 0;">
+    <div id="htmlData" style="padding-bottom: 3%; ">
         <div class="toprint">
             <div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
                 <div class="col-md-3">
-                    <img style="width: 500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+                    <img  alt="logo" src="./assets/media/logos/logo_comM.png">
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3">
-                    <img style="width: 200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+                    <img  alt="logo" src="./assets/media/logos/logo_cum.png">
                 </div>
-            </div><br><br>
+            </div><br>
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <h2 class="kt-portlet__head-title"
-                        style="width: 80%;margin: 20px auto;text-align: center;font-size: 40px;">
-                        <strong>Calcul sur période de 10 jours</strong>
+                        style="width: 80%;margin: 0 auto;text-align: center; line-height: 4rem;">
+                        <strong>{{ "PAGES.CALCUL.TITRE" | translate }}</strong>
                     </h2>
                 </div>
                 <div class="col-md-3"></div>
-            </div><br><br><br><br>
+            </div><br>
             <div class="row">
-                <table class="table" style="width: 60%;margin: 20px auto;text-align: center;">
+                <table class="table" style="width: 60%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">N° Carreau</th>
-                        <th class="table-bordered dashed-line" style="font-size: 30px;">{{toPrint?.idHangar}}
+                        <th style="border: none">{{ "PAGES.STATISTIQUES.NUM_CARREAU" | translate }}</th>
+                        <th  style="border: none; font-size: 14px ;">{{toPrint?.idHangar}}
                         </th>
-                        <th style="border: none;font-size: 30px;">Date et heure</th>
-                        <th class="table-bordered dashed-line" style="font-size: 30px;">{{toPrint?.currentTime |
+                        <th style="border: none;">{{ "PAGES.STATISTIQUES.DATE_HEURE" | translate }}</th>
+                        <th  style="border: none; font-size: 14px ;">{{toPrint?.currentTime |
                             date:"dd-MM-yyyy HH:mm"}}</th>
+                    </tr>
+                </table>
+            </div><br>
+            <div class="row">
+                <table
+                    style="background-color: #499996;width: 60%;margin: 0 auto;text-align: center;">
+                    <tr>
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_DEBUT" | translate }} :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateFin |
+                            date:"dd-MM-yyyy"}}
+                        </th>
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_FIN" | translate }} :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateDebut}}
+                        </th>
                     </tr>
                 </table>
             </div><br><br>
             <div class="row">
-                <table
-                    style="background-color: #499996;width: 60%;margin: 20px auto;text-align: center;font-size: 30px;">
+                <table *ngIf="isAllTrue==true" class="table table-bordered "
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th>Du :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateDebut |
-                            date:"dd-MM-yyyy"}}
-                        </th>
-                        <th>Au :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateFin}}
-                        </th>
-                    </tr>
-                </table>
-            </div><br><br><br>
-            <div class="row">
-                <table *ngIf="isAllTrue==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
-                    <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td >{{item.jour}}</td>
+                        <td >{{item.nbreTransactions}}</td>
+                        <td >{{item.totalTransactions}}</td>
+                        <td >{{item.part1}}</td>
+                        <td >{{item.part2}}</td>
+                        <td >{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;" style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;" style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;" style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;" style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;" style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;" style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th >{{toPrint?.sumJour}}</th>
+                        <th >{{toPrint?.sumNbTransactions}}</th>
+                        <th >{{toPrint?.sumTotalTransactions}}</th>
+                        <th >{{toPrint?.sumPart1}}</th>
+                        <th >{{toPrint?.sumPart2}}</th>
+                        <th >{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
 
                 <table *ngIf="isNotNbTransactions==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td >{{item.jour}}</td>
+                        <td >{{item.totalTransactions}}</td>
+                        <td >{{item.part1}}</td>
+                        <td >{{item.part2}}</td>
+                        <td >{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th >{{toPrint?.sumJour}}</th>
+                        <th >{{toPrint?.sumTotalTransactions}}</th>
+                        <th >{{toPrint?.sumPart1}}</th>
+                        <th >{{toPrint?.sumPart2}}</th>
+                        <th >{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
+
                 <table *ngIf="isNotTotalTransaction==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td >{{item.jour}}</td>
+                        <td >{{item.nbreTransactions}}</td>
+                        <td >{{item.part1}}</td>
+                        <td >{{item.part2}}</td>
+                        <td >{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotPart1==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td >{{item.jour}}</td>
+                        <td >{{item.nbreTransactions}}</td>
+                        <td >{{item.totalTransactions}}</td>
+                        <td >{{item.part2}}</td>
+                        <td >{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th >{{toPrint?.sumJour}}</th>
+                        <th >{{toPrint?.sumNbTransactions}}</th>
+                        <th >{{toPrint?.sumTotalTransactions}}</th>
+                        <th >{{toPrint?.sumPart2}}</th>
+                        <th >{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotPart2==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td >{{item.jour}}</td>
+                        <td >{{item.nbreTransactions}}</td>
+                        <td >{{item.totalTransactions}}</td>
+                        <td >{{item.part1}}</td>
+                        <td >{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th >{{toPrint?.sumJour}}</th>
+                        <th >{{toPrint?.sumNbTransactions}}</th>
+                        <th >{{toPrint?.sumTotalTransactions}}</th>
+                        <th >{{toPrint?.sumPart1}}</th>
+                        <th >{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part1}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
                     <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
                     </tr>
                 </table>
 
 
 
                 <table *ngIf="isNotNbTransactionsAndIsNotTotalTransaction==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.part1}}</td>
+                        <td>{{item.part2}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotPart1==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part2}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotPart2==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td >{{item.jour}}</td>
+                        <td >{{item.totalTransactions}}</td>
+                        <td >{{item.part1}}</td>
+                        <td >{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th >{{toPrint?.sumJour}}</th>
+                        <th >{{toPrint?.sumTotalTransactions}}</th>
+                        <th >{{toPrint?.sumPart1}}</th>
+                        <th >{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part1}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotTotalTransactionAndIsNotPart1==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.part2}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotTotalTransactionAndIsNotPart2==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td >{{item.jour}}</td>
+                        <td >{{item.nbreTransactions}}</td>
+                        <td >{{item.part1}}</td>
+                        <td >{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th >{{toPrint?.sumJour}}</th>
+                        <th >{{toPrint?.sumNbTransactions}}</th>
+                        <th >{{toPrint?.sumPart1}}</th>
+                        <th >{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotTotalTransactionAndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.part1}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotPart1AndIsNotPart2==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotPart1AndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotPart2AndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part1}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                    </tr> -->
                 </table>
 
 
                 <table *ngIf="isNotNbTransactionsAndIsNotTotalTransactionAndIsNotPart1==true"
-                    class="table table-bordered" style="width: 80%;margin: 20px auto;text-align: center;">
+                    class="table table-bordered" style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.part2}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotTotalTransactionAndIsNotPart2==true"
-                    class="table table-bordered" style="width: 80%;margin: 20px auto;text-align: center;">
+                    class="table table-bordered" style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.part1}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotTotalTransactionAndIsNotPart3==true"
-                    class="table table-bordered" style="width: 80%;margin: 20px auto;text-align: center;">
+                    class="table table-bordered" style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.part1}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotTotalTransactionAndIsNotPart1AndIsNotPart2==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotTotalTransactionAndIsNotPart1AndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotPart1AndIsNotPart2==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotPart1AndIsNotPart2AndIAndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.totalTransactions}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotTotalTransactionAndIsNotPart2AndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
+                        <td>{{item.part1}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotPart2AndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part1}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsAndIsNotPart1AndIsNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.totalTransactions}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                    </tr> -->
                 </table>
 
 
                 <table *ngIf="isNotNbTransactionsisNotTotalTransactionisNotPart1isNotPart2==true"
-                    class="table table-bordered" style="width: 80%;margin: 20px auto;text-align: center;">
+                    class="table table-bordered" style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part carreau 1,75 %</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.part3}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.part3}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart3}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumPart3}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsisNotTotalTransactionisNotPart1isNotPart3==true"
-                    class="table table-bordered" style="width: 80%;margin: 20px auto;text-align: center;">
+                    class="table table-bordered" style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part commune 5,25%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.part2}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.part2}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart2}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumPart2}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotTotalTransactionisNotPart1isNotPart2isNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Nbre des transactions</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.NOMBRE_TRANSACTIONS" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.nbreTransactions}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.nbreTransactions}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumNbTransactions}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumNbTransactions}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsisNotTotalTransactionisNotPart2isNotPart3==true"
-                    class="table table-bordered" style="width: 80%;margin: 20px auto;text-align: center;">
+                    class="table table-bordered" style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Part dûe 7%</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.PART_DUE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.part1}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.part1}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumPart1}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumPart1}}</th>
+                    </tr> -->
                 </table>
                 <table *ngIf="isNotNbTransactionsisNotPart1isNotPart2isNotPart3==true" class="table table-bordered"
-                    style="width: 80%;margin: 20px auto;text-align: center;">
+                    style="width: 80%;margin: 0 auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Jour</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Total des transactions</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.JOUR" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.CALCUL.SOMME_TRANSACTIONS" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.jour}}</td>
-                        <td style="font-size: 30px;">{{item.totalTransactions}}</td>
+                        <td>{{item.jour}}</td>
+                        <td>{{item.totalTransactions}}</td>
                     </tr>
-                    <tr style="background-color: #deeaf6;">
-                        <th style="font-size: 30px;">{{toPrint?.sumJour}}</th>
-                        <th style="font-size: 30px;">{{toPrint?.sumTotalTransactions}}</th>
-                    </tr>
+                    <!-- <tr style="background-color: #deeaf6;">
+                        <th>{{toPrint?.sumJour}}</th>
+                        <th>{{toPrint?.sumTotalTransactions}}</th>
+                    </tr> -->
                 </table>
             </div>
         </div>

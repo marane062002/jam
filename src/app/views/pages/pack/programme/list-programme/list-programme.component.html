@@ -63,12 +63,12 @@
 								<mat-option style="font-size: 12px !important" [value]="'NUMERO_PROJET'">
 									{{"PAGES.PROGRAMME.NUMERO_PROJET" | translate}}
 								</mat-option>
-								<mat-option style="font-size: 12px !important" [value]="'CODE_ORIENTATION'">
+								<!-- <mat-option style="font-size: 12px !important" [value]="'CODE_ORIENTATION'">
 									{{"PAGES.PROGRAMME.CODE_ORIENTATION" | translate}}
-								</mat-option>
-								<mat-option style="font-size: 12px !important" [value]="'NUMERO_PROJET'">
+								</mat-option> -->
+								<!-- <mat-option style="font-size: 12px !important" [value]="'NUMERO_PROJET'">
 									{{"PAGES.PROGRAMME.NUMERO_PROJET" | translate}}
-								</mat-option>
+								</mat-option> -->
 								<mat-option style="font-size: 12px !important" [value]="'CODE_PROJET'">
 									{{"PAGES.PROGRAMME.CODE_PROJET" | translate}}
 								</mat-option>
@@ -234,7 +234,7 @@
 							<mat-option *ngFor="let item of natures" [value]="item.id">
 								<div *ngIf="checkLang=='fr'">
 									{{ item.libelleFrancais }}
-								</div>
+								</div> 
 								<div *ngIf="checkLang=='ar'">
 									{{ item.libelleArab }}
 								</div>
@@ -242,10 +242,15 @@
 						</mat-select>
 					</mat-form-field>
 				</div>
+			</div>
+			<div class="col-md-3" *ngIf="selectedValueCherche.includes('NATURE_PROJET')">
+
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
-						<mat-select class="form-control-lg" placeholder="Thème :" formControlName="theme"
-							(selectionChange)="ThemeChange($event.value)">
+						<mat-select class="form-control-lg" (selectionChange)="ThemeChange($event.value)"
+							placeholder="Thème :" formControlName="theme" multiple>
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
 							<mat-option *ngFor="let item of listeTheme" [value]="item.id">
 								<div *ngIf="checkLang=='fr'">
 									{{ item.libelleFrancais }}
@@ -257,10 +262,15 @@
 						</mat-select>
 					</mat-form-field>
 				</div>
+			</div>
+			<div class="col-md-3" *ngIf="selectedValueCherche.includes('NATURE_PROJET')">
+
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
-						<mat-select class="form-control-lg" placeholder="Sous-thème :" formControlName="sousTheme"
+						<mat-select multiple class="form-control-lg" placeholder="Sous-thème :" formControlName="sousTheme"
 							(selectionChange)="SousThemeChange($event.value)">
+							<mat-option value="ALL">{{ 'PAGES.ASSOCIATION.SELECT_ALL' | translate }}</mat-option>
+
 							<mat-option *ngFor="let item of listeSousTheme" [value]="item.id">
 								<div *ngIf="checkLang=='fr'">
 									{{ item.libelleFrancais }}
@@ -335,8 +345,13 @@
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
 						<mat-label>{{ "PAGES.PROGRAMME.ANNEE_DEBUT" | translate }} :</mat-label>
-						<input type="number" class="form-control-solid form-control-lg" formControlName="anneeDebut"
-							matInput />
+						<!-- <input type="number" class="form-control-solid form-control-lg" formControlName="anneeDebut"
+							matInput /> -->
+							<mat-select  class="form-control-lg"
+					 formControlName="anneeDebut"
+							[(ngModel)]="selectedOptionsDD" (selectionChange)="addItemDateDebut($event.value)">
+							<mat-option *ngFor="let item of dateDebut" [value]="item">{{item}}</mat-option>
+						</mat-select>
 					</mat-form-field>
 				</div>
 			</div>
@@ -346,8 +361,13 @@
 				<div class="form-group fv-plugins-icon-container">
 					<mat-form-field class="example-full-width">
 						<mat-label>{{ "PAGES.PROGRAMME.ANNEE_FIN" | translate }} :</mat-label>
-						<input type="number" class="form-control-solid form-control-lg" formControlName="anneeFin"
-							matInput />
+						<!-- <input type="number" class="form-control-solid form-control-lg" formControlName="anneeFin"
+							matInput /> -->
+							<mat-select  class="form-control-lg"
+					 formControlName="anneeFin"
+							[(ngModel)]="selectedOptionsDF" (selectionChange)="addItemDateFin($event.value)">
+							<mat-option *ngFor="let item of dateFin" [value]="item">{{item}}</mat-option>
+						</mat-select>
 					</mat-form-field>
 				</div>
 			</div>
@@ -506,7 +526,7 @@
 				{{ "PAGES.PROGRAMME.DATE_DEBUT" | translate }}
 			</th>
 			<td mat-cell *matCellDef="let row" class="Annee">
-				{{ row.date ? (row.date | date : "yyyy") : "-" }}
+				{{ row.dateDebut ? (row.dateDebut | date : "yyyy") : "-" }}
 			</td>
 		</ng-container>
 

@@ -13,8 +13,8 @@ export class PrelevementService {
   constructor(private http:HttpClient) { }
 
   
-  getAll(){
-   return this.http.get<InterfacePrelevemnt[]>(`${this.baseUrl}`+'prlv')
+  getAll(id){
+   return this.http.get<InterfacePrelevemnt[]>(`${this.baseUrl}prlv/obstacle/${id}`)
   }
   delete(id:any){
     return this.http.delete<InterfacePrelevemnt>(`${this.baseUrl}`+'prlv/'+`${id}`)

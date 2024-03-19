@@ -13,8 +13,8 @@ export class AutopsieService {
   constructor(private http:HttpClient) { }
 
   
-  getAll(){
-   return this.http.get<InterfaceAutopsie[]>(`${this.baseUrl}`+'autopsie')
+  getAll(id){
+   return this.http.get<InterfaceAutopsie[]>(`${this.baseUrl}autopsie/obstacle/${id}`)
   }
   delete(id:any){
     return this.http.delete<InterfaceAutopsie>(`${this.baseUrl}`+'autopsie/'+`${id}`)

@@ -535,9 +535,13 @@ export class AoConsultationListComponent implements OnInit {
 	// ====================================================
 	//
 	//=====================================================
+	isGestionnaire
 	editao(idAo) {
+		this.isGestionnaire=false
+
+		this.service.sendData(this.isGestionnaire)
 		this.router.navigate(["/marches/ao-consultation-edit"], {
-			queryParams: { id: idAo, page: 1 },
+			queryParams: { id: idAo, page: 1,isGestionnaire: this.isGestionnaire},
 		});
 	}
 	// ====================================================

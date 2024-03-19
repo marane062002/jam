@@ -1,7 +1,6 @@
 <div class="kt-portlet">
     <div class="row">
-        <h4 class="modal-title" id="exampleModalCenterTitle">Quantité de marchandise écoulée par type de produit
-            selon une certaine période pour chaque carreau<button mat-icon-button color="primary" (click)="Recu()">
+        <h4 class="modal-title" id="exampleModalCenterTitle">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.TITLE" | translate }}<button mat-icon-button color="primary" (click)="Recu()">
                 <i class="fas fa-download"></i>
             </button></h4>
 
@@ -13,28 +12,28 @@
     <table *ngIf="isAllTrue==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -49,21 +48,21 @@
     <table *ngIf="isNotNumOrdinal==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
         matSort style="width: 100%;">
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -76,21 +75,21 @@
     <table *ngIf="isNotTypeMarchandise==true" id="exportData" mat-table [dataSource]="dataSource"
         class="mat-elevation-z8" matSort style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -103,21 +102,21 @@
     <table *ngIf="isNotQuantite==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8"
         matSort style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -130,21 +129,21 @@
     <table *ngIf="isNotSomme==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
@@ -158,14 +157,14 @@
     <table *ngIf="isNotNumOrdinalisNotTypeMarchandise==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -178,14 +177,14 @@
     <table *ngIf="isNotNumOrdinalisNotQuantite==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -198,14 +197,14 @@
     <table *ngIf="isNotNumOrdinalisNotSomme==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
@@ -218,14 +217,14 @@
     <table *ngIf="isNotTypeMarchandiseisNotQuantite==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -238,14 +237,14 @@
     <table *ngIf="isNotTypeMarchandiseisNotSomme==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
@@ -258,14 +257,14 @@
     <table *ngIf="isNotQuantiteisNotSomme==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
             </td>
         </ng-container>
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
@@ -280,7 +279,7 @@
     <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotQuantite==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="somme">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Somme (DH)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.somme}}</span>
@@ -293,7 +292,7 @@
     <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotSomme==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="quantite">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantité (Kg)
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.quantite}}</span>
@@ -306,7 +305,7 @@
     <table *ngIf="isNotNumOrdinalisNotQuantiteisNotSomme==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="typeMarchandise">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de marchandise
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.typeMarchandise}}</span>
@@ -319,7 +318,7 @@
     <table *ngIf="isNotTypeMarchandiseisNotQuantiteisNotSomme==true" id="exportData" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
         style="width: 100%;">
         <ng-container matColumnDef="nOrdinal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>N° ordinal
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}
             </th>
             <td mat-cell *matCellDef="let row">
                 <span>{{row.nOrdinal}}</span>
@@ -337,222 +336,221 @@
 
 
 <div style="overflow: hidden; height: 0">
-    <div id="htmlData">
+    <div id="htmlData" style="padding-bottom: 3%; ">
         <div class="toprint">
             <div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
                 <div class="col-md-3">
-                    <img style="width: 500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+                    <img  alt="logo" src="./assets/media/logos/logo_comM.png">
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3">
-                    <img style="width: 200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+                    <img alt="logo" src="./assets/media/logos/logo_cum.png">
                 </div>
-            </div><br><br>
+            </div><br>
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <h2 class="kt-portlet__head-title"
-                        style="width: 80%;margin: 20px auto;text-align: center;font-size: 40px;">
-                        <strong>Quantité de marchandise écoulée par type de produit selon une certaine période pour
-                            chaque carreau</strong>
+                        style="width: 80%;margin: 20px auto;text-align: center;">
+                        <strong>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.TITLE" | translate }}</strong>
                     </h2>
                 </div>
                 <div class="col-md-3"></div>
-            </div><br><br><br><br>
+            </div><br>
             <div class="row">
                 <table class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">N° Carreau</th>
-                        <th class="table-bordered dashed-line">{{toPrint?.idHangar}}
+                        <th style="border: none;">{{ "PAGES.STATISTIQUES.NUM_CARREAU" | translate }}</th>
+                        <th style="border: none; font-size: 14px ;">{{toPrint?.idHangar}}
                         </th>
-                        <th style="border: none;font-size: 30px;">Date et heure</th>
-                        <th class="table-bordered dashed-line">{{toPrint?.currentTime | date:"dd-MM-yyyy HH:mm"}}</th>
+                        <th style="border: none;">{{ "PAGES.STATISTIQUES.DATE_HEURE" | translate }}</th>
+                        <th style="border: none; font-size: 14px ;">{{toPrint?.currentTime | date:"dd-MM-yyyy HH:mm"}}</th>
                     </tr>
                 </table>
-            </div><br><br>
+            </div><br>
             <div class="row">
                 <table
-                    style="background-color: #499996;width: 60%;margin: 20px auto;text-align: center;font-size: 30px;">
+                    style="background-color: #499996;width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th>Du :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateDebut |
-                            date:"dd-MM-yyyy"}}
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_DEBUT" | translate }} :</th><th>{{toPrint?.dateDebut | date:"dd-MM-yyyy"}}
                         </th>
-                        <th>Au :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint?.dateFin | date:"dd-MM-yyyy"}}
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_FIN" | translate }} :</th><th>{{toPrint?.dateFin |
+                            date:"dd-MM-yyyy"}}
                         </th>
                     </tr>
                 </table>
-            </div><br><br><br>
+            </div><br>
             <div class="row">
                 <table *ngIf="isAllTrue==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinal==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandise==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandise==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
+                        <td>{{item.typeMarchandise}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
+                        <td>{{item.nOrdinal}}</td>
                     </tr>
                 </table>
 
@@ -561,28 +559,28 @@
             <div class="row">
                 <table *ngIf="isAllTrue==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
@@ -590,172 +588,172 @@
                 <table *ngIf="isNotNumOrdinal==true" class="table"
                     style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandise==true" class="table"
                     style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantite==true" class="table"
                     style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandise==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantite==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                    <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantite==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                 </table>
@@ -764,30 +762,30 @@
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotQuantite==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint?.quantiteTotale}}</th>
                     </tr>
                 </table>
@@ -804,66 +802,64 @@
 
 
 <div style="overflow: hidden; height: 0">
-    <div id="htmlData1">
+    <div id="htmlData1" style="padding-bottom: 3%; ">
         <div class="toprint">
             <div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
                 <div class="col-md-3">
-                    <img style="width: 500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+                    <img alt="logo" src="./assets/media/logos/logo_comM.png">
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-3">
-                    <img style="width: 200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+                    <img alt="logo" src="./assets/media/logos/logo_cum.png">
                 </div>
-            </div><br><br>
+            </div><br>
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <h2 class="kt-portlet__head-title"
-                        style="width: 80%;margin: 20px auto;text-align: center;font-size: 40px;">
-                        <strong>Quantité de marchandise écoulée par type de produit selon une certaine période pour
-                            chaque carreau</strong>
+                        style="width: 80%;margin: 20px auto;text-align: center;">
+                        <strong>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.TITLE" | translate }}</strong>
                     </h2>
                 </div>
                 <div class="col-md-3"></div>
-            </div><br><br><br><br>
+            </div><br>
             <div class="row">
                 <table class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">N° Carreau</th>
-                        <th class="table-bordered dashed-line">{{toPrint1?.idHangar}}
+                        <th style="border: none;">{{ "PAGES.STATISTIQUES.NUM_CARREAU" | translate }}</th>
+                        <th style="border: none; font-size: 14px ;">{{toPrint1?.idHangar}}
                         </th>
-                        <th style="border: none;font-size: 30px;">Date et heure</th>
-                        <th class="table-bordered dashed-line">{{toPrint1?.currentTime | date:"dd-MM-yyyy HH:mm"}}</th>
+                        <th style="border: none;">{{ "PAGES.STATISTIQUES.DATE_HEURE" | translate }}</th>
+                        <th style="border: none; font-size: 14px ;">{{toPrint1?.currentTime | date:"dd-MM-yyyy HH:mm"}}</th>
                     </tr>
                 </table>
-            </div><br><br>
+            </div><br>
             <div class="row">
                 <table
-                    style="background-color: #499996;width: 60%;margin: 20px auto;text-align: center;font-size: 30px;">
+                    style="background-color: #499996;width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th>Du :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint1?.dateDebut |
-                            date:"dd-MM-yyyy"}}
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_DEBUT" | translate }} :</th><th>{{toPrint1?.dateDebut | date:"dd-MM-yyyy"}}
                         </th>
-                        <th>Au :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{toPrint1?.dateFin |
+                        <th>{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.DATE_FIN" | translate }} :</th><th>{{toPrint1?.dateFin |
                             date:"dd-MM-yyyy"}}
                         </th>
                     </tr>
                 </table>
-            </div><br><br><br>
+            </div><br>
             <div class="row">
                 <table *ngIf="isAllTrue==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
 
@@ -871,53 +867,53 @@
                 <table *ngIf="isNotNumOrdinal==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandise==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
 
@@ -925,104 +921,104 @@
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandise==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Somme (DH)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_DH" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Quantité (Kg)</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_KG" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">Type de marchandise</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.TYPE_MARCHANDISE" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
+                        <td>{{item.typeMarchandise}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="font-size: 30px;background-color: #b5c5e7;">N° ordinal</th>
+                        <th style="background-color: #b5c5e7;">{{ "PAGES.TRANSACTIONS.NUMERO_ORDINAL" | translate }}</th>
                     </tr>
                     <tr *ngFor="let item of toPrint1?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
+                        <td>{{item.nOrdinal}}</td>
                     </tr>
                 </table>
             </div>
@@ -1032,145 +1028,145 @@
 
 
 <div style="overflow: hidden; height: 0">
-    <div id="htmlData2">
+    <div id="htmlData2" style="padding-bottom: 3%; ">
         <div class="toprint">
             <div class="row">
                 <table *ngIf="isAllTrue==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinal==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandise==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandise==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                    <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.quantite}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.typeMarchandise}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
+                        <td>{{item.nOrdinal}}</td>
+                        <td>{{item.typeMarchandise}}</td>
                     </tr>
                 </table>
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotQuantite==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.somme}}</td>
+                        <td>{{item.somme}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.quantite}}</td>
+                        <td>{{item.quantite}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.typeMarchandise}}</td>
+                        <td>{{item.typeMarchandise}}</td>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantiteisNotSomme==true" class="table table-bordered"
                     style="width: 80%;margin: 20px auto;text-align: center;">
                     <tr *ngFor="let item of toPrint2?.data">
-                        <td style="font-size: 30px;">{{item.nOrdinal}}</td>
+                        <td>{{item.nOrdinal}}</td>
                     </tr>
                 </table>
             </div>
             <div class="row" *ngIf="stillHavePages== false;">
                 <table *ngIf="isAllTrue==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
@@ -1178,86 +1174,86 @@
                 <table *ngIf="isNotNumOrdinal==true" class="table"
                     style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandise==true" class="table"
                     style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotQuantite==true" class="table"
                     style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                 </table>
@@ -1265,86 +1261,86 @@
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandise==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotQuantite==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                    <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotQuantite==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotTypeMarchandiseisNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                 </table>
@@ -1354,30 +1350,30 @@
 
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotQuantite==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Somme chiffre d'affaires (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.SOMME_CHIFFRE_AFFAIRE_DH" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.sommeChiffreAffaires}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part dûe 7 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">{{toPrint2?.partDue}}
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_DUE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">{{toPrint2?.partDue}}
                         </th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part commune 5,25 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_COMMUNE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCommune}}</th>
                     </tr>
                     <tr>
-                        <th style="border: none;font-size: 30px;">Part carreau 1,75 % (DH) :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.CALCUL.PART_MANDATAIRE" | translate }} (DH) :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.partCarreau}}</th>
                     </tr>
                 </table>
                 <table *ngIf="isNotNumOrdinalisNotTypeMarchandiseisNotSomme==true" class="table" style="width: 60%;margin: 20px auto;text-align: center;">
                     <tr>
-                        <th style="border: none;font-size: 30px;">Quantité totale :</th>
-                        <th style="background-color: #deeaf6;" class="table-bordered dashed-line">
+                        <th style="border: none;">{{ "PAGES.QUANTITE_MARCHANDISE_TYPE.QUANTITE_TOTALE" | translate }} :</th>
+                        <th style="background-color: #deeaf6;">
                             {{toPrint2?.quantiteTotale}}</th>
                     </tr>
                 </table>

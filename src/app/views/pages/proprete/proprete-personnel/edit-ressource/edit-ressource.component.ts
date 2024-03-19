@@ -20,7 +20,7 @@ export class EditRessourceComponent implements OnInit {
 			fichePersonnelle: ['']
 		  });
 	}
-
+	onSubmit(){}
 	backList() {
 		this.router.navigate(["/pages/proprete-personnel/show-personnel"]);
 	}

@@ -13,7 +13,7 @@ import { FilesUtilsService } from "../../../utils/files-utils.service";
 import { SpinnerService } from "../../../utils/spinner.service";
 import { ConventionMarcheService } from "../../../shared/conventionService";
 import { environment } from "../../../../../../environments/environment";
- 
+  
 @Component({
 	selector: 'kt-detaille-convention',
 	templateUrl: './detaille-convention.component.html',

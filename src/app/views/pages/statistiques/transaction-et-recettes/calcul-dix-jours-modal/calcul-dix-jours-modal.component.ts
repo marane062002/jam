@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms'; // Import the necessary modules for FormBuilder and FormGroup
 import { HangarService } from '../../../marcheGros/Service/hangar.service';
 import { Hangar } from "../../../../../core/_base/layout/models/Hangar";
@@ -102,11 +102,18 @@ export class CalculDixJoursModalComponent implements OnInit {
     private translate: TranslateService,
     private spinnerService: SpinnerService,
     private dialogRef:MatDialogRef<CalculDixJoursModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data?: { calculDixJours: any }
+    @Inject(MAT_DIALOG_DATA) public data?: { calculDixJours: any,language }
    ) {
   }
+  @HostBinding('dir') dir 
   currentTime: string;
   ngOnInit() {
+    if(this.data.language=='fr'){
+      this.dir='ltr'
+    }else{
+      this.dir= 'rtl'; 
+    }
+    
     this.calculForm=this.data.calculDixJours;
     if (this.calculForm.value.timeDebut != '' && this.calculForm.value.hangar.id != '') {
       this.apply();
@@ -180,7 +187,7 @@ export class CalculDixJoursModalComponent implements OnInit {
         console.log(res);
         if (this.calculForm.value.transactionNumber == true && this.calculForm.value.transactionAmount == true && this.calculForm.value.partDue == true && this.calculForm.value.partCarreau == true && this.calculForm.value.partCommune == true) {
           this.isAllTrue = true;
-
+          
           this.isNotNbTransactions = false;
           this.isNotTotalTransaction = false;
           this.isNotPart1 = false;
@@ -2189,10 +2196,34 @@ export class CalculDixJoursModalComponent implements OnInit {
 
 
         this.dataPesee = resultObject;
+        
+        this.dataPesee.data.sumJour=this.dataPesee.sumJour
+        this.dataPesee.data.sumNbTransactions=this.dataPesee.sumNbTransactions
+        this.dataPesee.data.sumTotalTransactions=this.dataPesee.sumTotalTransactions
+        this.dataPesee.data.sumPart1=this.dataPesee.sumPart1
+        this.dataPesee.data.sumPart2=this.dataPesee.sumPart2
+        this.dataPesee.data.sumPart3=this.dataPesee.sumPart3
+      // After calculating sum values, construct an additional object for sums
+const sumRow = {
+  jour: "Total:", // Or any other appropriate label
+  nbreTransactions: sumNbTransactions,
+  totalTransactions: sumTotalTransactions,
+  part1: sumPart1,
+  part2: sumPart2,
+  part3: sumPart3
+};
+
+// Append the sum row to your data
+data.push(sumRow);
+
+// Now assign the data to your dataSource
+this.dataSource = new MatTableDataSource(data);
+
         this.dataSource = new MatTableDataSource(this.dataPesee.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.paginator._intl.itemsPerPageLabel = this.translate.instant('PAGES.GENERAL.ITEMS_PER_PAGE_LABEL');
+        
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
+        // this.paginator._intl.itemsPerPageLabel = this.translate.instant('PAGES.GENERAL.ITEMS_PER_PAGE_LABEL');
 
       })
     }
@@ -2232,10 +2263,10 @@ export class CalculDixJoursModalComponent implements OnInit {
         const FILEURI = canvas.toDataURL("image/png");
         let PDF = new jsPDF("p", "mm", "a4");
         let fileWidth = PDF.internal.pageSize.getWidth();
-        let fileHeight = (canvas.height * fileWidth) / canvas.width;
+        let fileHeight = PDF.internal.pageSize.getHeight(); // Use page height
         let position = 0;
         PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
-        PDF.save("Calcul sur période de 10 jours" + ".pdf");
+        PDF.save(this.translate.instant("PAGES.CALCUL.TITRE") + ".pdf");
         this.spinnerService.stop(spinnerRef);
       });
     }, 250);

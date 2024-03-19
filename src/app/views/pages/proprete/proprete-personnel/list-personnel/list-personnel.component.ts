@@ -31,7 +31,7 @@ export class ListPersonnelComponent implements OnInit {
 	// ============================================
 	// Presentation de datasource
 	// ============================================
-	displayedColumns: string[] = ["NUM","RC", "RS", "actions"];
+	displayedColumns: string[] = ["NUM","RC", "RS", "IF","ADRESSE","SECTEUR","actions"];
 	// ============================================
 	// Declarations
 	// ============================================
@@ -90,7 +90,7 @@ export class ListPersonnelComponent implements OnInit {
 		});
 	}
 	ngOnInit() {
-		this.columns = [ 'id', 'rc','rs'];
+		this.columns = [ 'id', 'rc', 'if', ,'rs','adresse','secteur'];
 		this.dataSource = new MatTableDataSource(this.data);
 		this.dataSource.paginator = this.paginator;
 		this.loadData(this.currentPage, this.pageSize);

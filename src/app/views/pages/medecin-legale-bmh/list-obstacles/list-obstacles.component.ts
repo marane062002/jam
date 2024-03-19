@@ -6,10 +6,11 @@ import { environment } from "../../../../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { MatPaginator, MatSort, MatTableDataSource, PageEvent } from "@angular/material";
 import { BehaviorSubject } from "rxjs";
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import jsPDF, { Html2CanvasOptions } from "jspdf";
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
+import { ArrondissemntService } from "../../parametrage-bmh/services/arrondissemnt.service";
 @Component({
 	selector: "kt-list-obstacles",
 	templateUrl: "./list-obstacles.component.html",
@@ -36,6 +37,13 @@ export class ListObstaclesComponent implements OnInit {
 	toPrintTraveaux: any = [];
 
 
+	
+    arrondissementControl = new FormControl();
+	arrondissement: any;
+	dateDeces: any;
+	statut: any;
+
+
 	private headers = new HttpHeaders({
 		'Content-Type': 'application/json',
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
@@ -52,6 +60,7 @@ export class ListObstaclesComponent implements OnInit {
 	@ViewChild(MatSort, { static: true }) sort: MatSort;
 
 	constructor(
+		private ArrondissementService:ArrondissemntService,
 		private router: Router,
 		private service: ObstacleService,
 		private httpClient: HttpClient,
@@ -69,8 +78,29 @@ export class ListObstaclesComponent implements OnInit {
 	ngOnInit() {
 		// this.getAllD();
 		this.loadData(this.currentPage, this.pageSize);
+		this.ArrondissementService.getAll().subscribe(res=>{
+			this.arrondissement=res
+			console.log(res);
+			console.log(this.arrondissement);
+		  })
 	}
-
+	Statut(selectedValue: string): void {
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected statut:', this.statut);
+		this.ngOnInit()
+	}
+	
+	DateDeces(selectedValue: string): void {
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected statut:', this.statut);
+		this.ngOnInit()
+	}
+	  Arrondissement(selectedValue: string): void {
+		this.arrondissement = null
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected date deces:', this.dateDeces);
+		this.ngOnInit()
+	  }
 	add() {
 		this.router.navigate(["/bmh1/add-obstacles"]);
 	}
@@ -85,19 +115,28 @@ export class ListObstaclesComponent implements OnInit {
 		const startIndex = page * pageSize;
 		const endIndex = startIndex + pageSize;
 
-		this.httpClient.get<any[]>(`${this.baseUrl}defunt/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// 
+		let url = `${this.baseUrl}defunt/paginate/${page}/${pageSize}?`;
+
+		if (this.statut) {
+		  url += `statusCadavre=${this.statut}&`; 
+		}
+		if (this.dateDeces) {
+			url += `dateDeces=${this.dateDeces}&`; 
+		}
+		if (this.arrondissementControl.value) {
+			url += `arrondissement=${this.arrondissementControl.value}&`; 
+		}
+		this.httpClient.get<any[]>(url, { headers: this.headers }).subscribe((response: any) => {
 			this.obstacle = response.content;
 			this.dataSource.data = response.content;
 			this.totalRecords = response.totalElements;
 			this.isLoadingResults = false;
 		});
-
 		console.log("page:", page, "pageSize:", pageSize);
 	}
 
 	calculateAge(dateOfBirth: any) {
-		if (!dateOfBirth || !Array.isArray(dateOfBirth)) return null; // Add null and array check
+		if (!dateOfBirth || !Array.isArray(dateOfBirth)) return null;
 
 		const birthDate = new Date(dateOfBirth[0], dateOfBirth[1] - 1, dateOfBirth[2]);
 

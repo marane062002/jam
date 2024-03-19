@@ -1,4 +1,5 @@
 import { Hangar } from "./Hangar"
+import { IGestionParts } from "./gestionParts"
 import { PeseeProduit } from "./pesee-produit"
 import { Utilisateur } from "./utilisateur"
 import { IVehicule, Vehicule } from "./vehicule"
@@ -18,6 +19,7 @@ export  class Pesee implements IPesee
     chiffreTransaction?:number
     taxe?:number
     vehicule?:IVehicule
+    gestionParts?:IGestionParts
     genre?:String
 	restePoid?:number
 	penalite:number
@@ -38,6 +40,8 @@ export  class Pesee implements IPesee
 		chiffreTransaction?:number,
 		taxe?:number,
 		vehicule?:IVehicule,
+		gestionParts?:IGestionParts,
+
 		restePoid?:number,
 		peseeProduits?:PeseeProduit[],
 		hangar?:Hangar,
@@ -59,6 +63,8 @@ export interface IPesee{
     chiffreTransaction?:number
     taxe?:number
     vehicule?:IVehicule
+	gestionParts?:IGestionParts
+
     genre?:String,
 	restePoid?:number
     peseeProduits?:PeseeProduit[]

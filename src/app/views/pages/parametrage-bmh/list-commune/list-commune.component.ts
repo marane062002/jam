@@ -26,7 +26,7 @@ export class ListCommuneComponent implements OnInit {
   ModifierStatut(id:any){
     return this.router.navigate(["/bmh/update-commune/",id])
   }
-  getAll(){debugger
+  getAll(){
     this.service.getAll().subscribe(res=>
       {
         this.commune=res;

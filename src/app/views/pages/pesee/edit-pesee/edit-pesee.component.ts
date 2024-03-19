@@ -21,6 +21,7 @@ import { PeseeProduit } from "../../../../core/_base/layout/models/pesee-produit
 import Swal from "sweetalert2";
 import { DatePipe } from "@angular/common";
 import { AuthService } from "../../../../core/auth";
+import { GestionPartsService } from "../../parametrage/Services/gestion-des-parts.service";
 
 @Component({
 	selector: "kt-edit-pesee",
@@ -33,7 +34,8 @@ export class EditPeseeComponent implements OnInit {
 	Hangar: Hangar[];
 	public dataImm: Vehicule[];
 
-	constructor(		private serviceUser: AuthService,
+	constructor(				private gestionPartsService: GestionPartsService,
+		private serviceUser: AuthService,
 		private datePipe: DatePipe, private router: Router, private peseeService: PeseeService, private translate: TranslateService, private hangarService: HangarService, private vehiculeServ: VehiculeService, private prodServ: ProduitService, private embServ: EmballageService, protected activatedRoute: ActivatedRoute) { }
 	// numBon: number = JSON.parse(localStorage.getItem("numBon")) | 0;
 	numBon: number;
@@ -134,26 +136,31 @@ export class EditPeseeComponent implements OnInit {
 
 	datePesee
 	Mondataires
+	parts
 	ngOnInit() {
+		
 		this.serviceUser.getUserByRole(34).then((res: any) => {
 			this.Mondataires=res
 			
 		})
+		
 		this.prodServ.getAllProduits().subscribe({
 			next: (res: HttpResponse<Produit[]>) => {
 				this.data = res.body;
+				this.typeProduitOptions=res.body
+				
 				console.log("les produits================>", this.data);
 			},
 			error: () => { },
 		});
 		this.PeseeForm.controls['date'].setValue(this.getCurrentDateTime());
-
+		
 		this.currentTime = this.getCurrentDateTime();
-
+		
 		setInterval(() => {
 			this.currentTime = this.getCurrentDateTime();
 		}, 60000);
-
+		
 
 		this.columns = [
 			"NumProduit",
@@ -164,7 +171,7 @@ export class EditPeseeComponent implements OnInit {
 			"Quantite",
 			"Total",
 			"action"];
-
+			
 		// this.vehiculeServ.query().subscribe({
 		// 	next: (res: HttpResponse<Vehicule[]>) => {
 		// 		for (let i = 0; i < res.body.length; i++) {
@@ -222,7 +229,12 @@ export class EditPeseeComponent implements OnInit {
 		//
 		this.activatedRoute.data.subscribe(({ pesee }) => {
 			// this.serviceUser.getUserById()
-
+			if(pesee.gestionParts!=null){
+				this.gestionPartsService.getPartsById(pesee.gestionParts.id).subscribe((res)=>{
+				this.parts=res
+				})
+			}
+			
 			pesee.vehicule.numVehicule = "\u202A";
 
 			this.RestePoid = pesee.restePoid
@@ -230,7 +242,7 @@ export class EditPeseeComponent implements OnInit {
 			this.totalPoidNet = pesee.totalPoidNet
 			this.chiffreTransaction = pesee.chiffreTransaction
 			this.poidEmballage = pesee.poidEmballageTotal
-
+			
 			this.PeseeForm.get('tarra').setValue(pesee.vehicule.tarra);
 			/* const vehiculeFormControl = this.PeseeForm.get('vehicule');
 			vehiculeFormControl.setValue(pespshow-peseeee.vehicule); */
@@ -244,15 +256,15 @@ export class EditPeseeComponent implements OnInit {
 			if (pesee.date != null && pesee.heure == null) {
 				this.datePesee = this.datePipe.transform(pesee.date, 'yyyy-MM-dd');
 			}
-			this.vehiculeServ.query().subscribe({
-				next: (res: HttpResponse<Vehicule[]>) => {
-					for (let i = 0; i < res.body.length; i++) {
-						res.body[i].numVehicule = "\u202A" +
-							res.body[i].numVehiculeNumbers + "\u202A" +
-							res.body[i].numVehiculeAlphabet + "\u202C" +
-							res.body[i].numVehiculeTwoNumbers
+			
+			this.vehiculeServ.AllVehicule().subscribe((res)=>{
+					for (let i = 0; i < res.length; i++) {
+						res[i].numVehicule = "\u202A" +
+							res[i].numVehiculeNumbers + "\u202A" +
+							res[i].numVehiculeAlphabet + "\u202C" +
+							res[i].numVehiculeTwoNumbers
 					}
-					this.dataImm = res.body;
+					this.dataImm = res;
 					
 					let vehicule = this.PeseeForm.get("vehicule");
 					
@@ -264,9 +276,7 @@ export class EditPeseeComponent implements OnInit {
 					this.getvehicule(pesee.vehicule.id);
 					this.PeseeForm.patchValue({vehicule:{id:pesee.vehicule.id}})
 
-				},
 	
-				error: () => { },
 			});
 
 			this.PeseeForm.patchValue({ ...pesee });
@@ -370,12 +380,12 @@ export class EditPeseeComponent implements OnInit {
 		console.log(this.dataSource.data);
 		this.totalPoidNet = this.dataSource.data.reduce((total, current) => total + parseInt(current.poidNetProduit), 0);
 		this.chiffreTransaction = this.dataSource.data.reduce((total, current) => total + parseInt(current.totalProduit), 0);
-		this.taxe = (this.chiffreTransaction * 7) / 100;
+		this.taxe = (this.chiffreTransaction * this.parts.partMontant) / 100;
 		this.RestePoid;
 		this.totalPoidNet;
-
+		
 		this.RestePoid = this.RestePoid + this.ancientotalPoidNet - row.poidNetProduit;
-
+		
 		if (this.RestePoid < 0) {
 			Swal.fire({
 				title: this.translate.instant("le reste doit être sup a 0"),
@@ -388,7 +398,7 @@ export class EditPeseeComponent implements OnInit {
 
 				this.totalPoidNet -= this.ancientotalPoidNet;
 				this.chiffreTransaction -= this.ancienchiffretransaction;
-				this.taxe = (this.chiffreTransaction * 7) / 100;
+				this.taxe = (this.chiffreTransaction * this.parts.partMontant) / 100;
 
 				this.RestePoid += this.ancientotalPoidNet;
 
@@ -396,6 +406,7 @@ export class EditPeseeComponent implements OnInit {
 				row.isEdit = true;
 				this.ancientotalPoidNet = 0;
 				this.ancienchiffretransaction = 0;
+				
 			});
 		} else {
 			this.RestePoid = this.RestePoid;
@@ -412,7 +423,7 @@ export class EditPeseeComponent implements OnInit {
 		this.RestePoid;
 
 		this.RestePoid = this.RestePoid + this.ancienpoidEmballageProduit - row.poidEmballageProduit;
-
+		
 		if (this.RestePoid < 0) {
 			Swal.fire({
 				title: this.translate.instant("le reste doit être sup a 0"),
@@ -437,12 +448,12 @@ export class EditPeseeComponent implements OnInit {
 	editRow(row: PeseeProduit) {
 		if (row.id === null) {
 			this.PeseeForm.value.PeseeProduitForm;
-
+			
 			this.dataSourceEdit.data.push(row);
 			row.isEdit = false;
-
+			
 			this.calculTotalPoidNet(row);
-
+			
 
 		} else {
 			;
@@ -487,7 +498,7 @@ export class EditPeseeComponent implements OnInit {
 
 
 		this.chiffreTransaction -= this.dataSource.data[index].totalProduit
-		this.taxe = (this.chiffreTransaction * 7) / 100
+		this.taxe = (this.chiffreTransaction * this.parts.partMontant) / 100
 		this.dataSource.data.splice(index, 1)
 		this.dataSource = new MatTableDataSource(this.dataSource.data);
 
@@ -504,14 +515,31 @@ export class EditPeseeComponent implements OnInit {
 				(item) => item.lib == event.option.value
 			);
 			console.log("=========>", selectedType[0]);
-			this.fieldArray[i].produit = selectedType[0];
-			this.fieldArray[i].produit.lib = selectedType[0].lib;
-			this.fieldArray[i].produit.tarif = selectedType[0].tarif;
-			this.fieldArray[i].produit.refProduit = selectedType[0].refProduit;
-			this.dataSource = new MatTableDataSource(this.fieldArray);
+			// this.fieldArray[i].produit = selectedType[0];
+			// this.fieldArray[i].produit.lib = selectedType[0].lib;
+			// this.fieldArray[i].produit.tarif = selectedType[0].tarif;
+			// this.fieldArray[i].produit.refProduit = selectedType[0].refProduit;
+			// this.dataSource = new MatTableDataSource(this.fieldArray);
 
+
+			 ;this.selecteProduct = "" + selectedType[0].lib;
+			 ;this.prix = selectedType[0].tarif;
+			 ;this.dataSource.data[i].produit = selectedType[0];
+			 ;this.dataSource.data[i].produit.lib = this.selecteProduct;
+			this.dataSource.data[i].produit.tarif = this.prix;
+			 ;this.dataSource = new MatTableDataSource(this.dataSource.data);
+			
 		}
 	}
+	typeProduitOptions: any[] = []; // This should be an array of strings representing the options for TypeProduit
+
+// Method to filter options based on user input
+filterTypeProduitOptions(value: string): void {
+    // Perform filtering on your options array based on the input value
+    // For example, if typeProduitOptions is an array of strings, you can filter like this:
+    this.typeProduitOptions = this.data.filter(option => option.lib.toLowerCase().includes(value.toLowerCase()));
+}
+
 	onSelectionChange(event: any, index: number) {
 
 		if (event.option.value != null) {
@@ -560,7 +588,7 @@ export class EditPeseeComponent implements OnInit {
 
 		this.PeseeForm.get("restePoid").setValue((this.r -= this.somme));
 
-		this.PeseeForm.get("taxe").setValue((this.p * 7) / 100 + this.PeseeForm.get("penalite").value);
+		this.PeseeForm.get("taxe").setValue((this.p * this.parts.partMontant) / 100 + this.PeseeForm.get("penalite").value);
 		if (this.PeseeProduit[index].poidNetProduit == 0) {
 			this.PeseeProduit[index].totalProduit = 0;
 			this.PeseeForm.get("totalPoidNet").setValue(this.somme);
@@ -596,7 +624,7 @@ export class EditPeseeComponent implements OnInit {
 			this.pa += +this.PeseeProduit[index].totalProduit;
 			this.r -= this.somme;
 			this.PeseeForm.get("chiffreTransaction").setValue(this.pa);
-			this.PeseeForm.get("taxe").setValue((this.pa * 7) / 100 + this.PeseeForm.get("penalite").value);
+			this.PeseeForm.get("taxe").setValue((this.pa * this.parts.partMontant) / 100 + this.PeseeForm.get("penalite").value);
 			this.PeseeForm.get("totalPoidNet").setValue(this.somme);
 			this.PeseeForm.get("restePoid").setValue(this.r);
 
@@ -688,9 +716,10 @@ export class EditPeseeComponent implements OnInit {
 			let selectedTypeV = this.dataImm.filter((item) => item.id == this.PeseeForm.get("vehicule").get("id").value);
 			this.v = selectedTypeV[0];
 		}
+		
 		this.v.tarra;
 
-
+		
 		if (event < this.PeseeForm.get("tarra").value) {
 			alert("poidGlobal doit etre > tarra==========>");
 		} else {
@@ -698,9 +727,11 @@ export class EditPeseeComponent implements OnInit {
 			let p = this.PeseeForm.get("poidEmballageTotal").value;
 			let to = this.PeseeForm.get("totalPoidNet").value;
 			this.r = event - (t + to + p);
-
+			
 			if (this.r >= 0) {
 				this.PeseeForm.get("restePoid").setValue(this.r);
+				this.RestePoid=this.r
+				
 			}
 		}
 	}
@@ -739,8 +770,11 @@ export class EditPeseeComponent implements OnInit {
 			id: this.Pesee.id,
 			genre: this.PeseeForm.get('genre').value,
 			penalite: this.Pesee.penalite,
-			createurUser:this.PeseeForm.get('createurUser').value
+			createurUser:this.PeseeForm.get('createurUser').value,
+			gestionParts: { id: this.parts.id },
+
 		};
+		let a=this.PeseeForm.get("poidGlobal").value < pesee.vehicule.tarra + this.PeseeForm.get("poidEmballageTotal").value + this.PeseeForm.get("totalPoidNet").value
 		
 		if (this.RestePoid != 0) {
 			Swal.fire({

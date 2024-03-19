@@ -42,10 +42,10 @@ export class EvaluerContratComponent implements OnInit {
 				this.clauses = response.clauses;
 				this.objetControl.setValue(this.ajoutForm.value.clauses);
 				});
-				
-		// this.addClauseControl()
-		
 	}
+	logSelectedValues() {
+		console.log(this.objetControl.value);
+	  }
 	compareFn(clause1: any, clause2: any): boolean {
 		return clause1 && clause2 ? clause1.id === clause2.id : clause1 === clause2;
 	  }
@@ -63,15 +63,7 @@ export class EvaluerContratComponent implements OnInit {
 		});
 		return this.formBuilder.array(checkboxArray);
 	  }
-	getChecked() {
-		const selectedClauses = this.ajoutForm.value.clauses;
-		console.log('Selected Clauses:', selectedClauses);
-		console.log('Selected Clauses 2:', this.objetControl.value);
-		this.ajoutForm.controls['clauses'].setValue(this.objetControl.value.map((id: number) => ({ id })));
-			// this.httpClient.put<any[]>(`${this.baseUrl}contrat/${this.id}`, this.ajoutForm ,{ headers: this.headers } ).subscribe((response: any) => {
-		    // });
-			console.log("ajout form :",this.ajoutForm.value)
-	}
+
 	addClauseControl() {
         this.clausesFormArray.push(this.ajoutForm.value.clauses);
 		console.log(this.clauses)
@@ -83,23 +75,18 @@ export class EvaluerContratComponent implements OnInit {
 			    console.log("OK!§");
 				this.ngOnInit()
 				});
-
 				this.clauses.push(this.newClause.trim());
 				this.newClause = '';
 			}
-			this.ajoutForm.controls['clauses'].setValue(this.objetControl.value.map((id: number) => ({ id })));
-			// this.httpClient.put<any[]>(`${this.baseUrl}contrat/${this.id}`, this.ajoutForm ,{ headers: this.headers } ).subscribe((response: any) => {
-		    // });
-			console.log(this.ajoutForm.value)
-		}
-		Clause(){
-			console.log(this.ajoutForm.value)
-		}
+		} 
+	
 
 		onSubmit(){
-			this.ajoutForm.controls['clauses'].setValue(this.objetControl.value.map((id: number) => ({ id })));
+			this.ajoutForm.controls['clauses'].setValue(this.objetControl.value.map((id: any) => ({ id : id.id })));
+			
 			this.httpClient.put<any[]>(`${this.baseUrl}contrat/${this.id}`, this.ajoutForm.value ,{ headers: this.headers } ).subscribe((response: any) => {
-		    	Swal.fire({
+		    	
+				Swal.fire({
 					title: 'Enregistrement réussi!',
 					text: 'Enregistré avec succès.',
 					icon: 'success',

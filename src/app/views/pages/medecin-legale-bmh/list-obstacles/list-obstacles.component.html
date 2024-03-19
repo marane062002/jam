@@ -19,7 +19,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="example-header col-md-4">
+	<div class="example-header col-md-4">
 		<i class="flaticon-search-magnifier-interface-symbol text-dark"></i
 		>&nbsp;
 		<mat-form-field>
@@ -29,7 +29,73 @@
 				placeholder="{{ 'PAGES.GENERAL.FILTER' | translate }}"
 			/>
 		</mat-form-field>
-	</div> -->
+	</div>
+
+	
+	<mat-accordion class="example-headers-align" multi>
+		<mat-expansion-panel >
+		  <mat-expansion-panel-header class="text-white bg-primary text-center m-auro">
+			<mat-panel-title class="text-white text-center m-auro">
+			<b>
+				<i class="la la-filter"></i>
+				FILTRER PAR :
+			</b>
+			</mat-panel-title>
+			
+		  </mat-expansion-panel-header>
+	  <div class="row">
+		<div class="col-md-4 mt-3">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>Statut</mat-label>
+					<mat-select
+					(selectionChange)="Statut($event.value)"
+					[(ngModel)]="statut"
+						matNativeControl
+						class="form-control-lg"
+					>
+					<mat-option  value="Traitée">Traitée</mat-option>
+					<mat-option  value="En_cours_de_traitement">En cours de traitement</mat-option>
+					<mat-option  value="Non_traitée">Non traitée</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-4 mt-3">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label > Arrondissement: </mat-label>
+					<mat-select (selectionChange)="Arrondissement($event.value)" [formControl]="arrondissementControl" class="form-control-lg">
+						<mat-option *ngFor="let type of arrondissement" [value]="type.id">
+						  {{ type.libelle }}
+						</mat-option>
+					  </mat-select>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		<div class="col-md-4 mt-3">
+			<div class="form-group fv-plugins-icon-container">
+				<mat-form-field class="example-full-width">
+					<mat-label>Date de décés</mat-label>
+					<input
+					(change)="DateDeces($event.value)"
+					[(ngModel)]="dateDeces"
+						type="date"
+						class="form-control-solid mt-1 form-control-lg"
+						name="address1"
+						matInput
+					/>
+				</mat-form-field>
+				<div class="fv-plugins-message-container"></div>
+			</div>
+		</div>
+		
+	   </div>
+		</mat-expansion-panel>
+	  
+	  </mat-accordion>
 
 	<mat-tab-group>
 		<mat-tab label="En cours de traitement"
@@ -138,7 +204,38 @@
 						Lieu de décés
 					</th>
 					<td colspan="3" mat-cell *matCellDef="let row">
-						{{ row.lieu }}
+						<button
+						*ngIf="row?.statusCadavre == 'En_cours_de_traitement'"
+						mat-raised-button
+						color="primary"
+						style="background-color: #ffa500; width: 14em"
+						matBadge="8"
+						matBadgePosition="before"
+						matBadgeColor="warn"
+					>
+						En cours de traitement
+					</button>
+						<button
+							*ngIf="row?.statusCadavre == 'Non_traitée'"
+							mat-raised-button
+							color="warn"
+							style="width: 14em"
+							matBadge="8"
+							matBadgePosition="before"
+							matBadgeColor="warn">
+							Non traitée
+						</button>
+						<button
+							*ngIf="row?.statusCadavre == 'Traitée'"
+							mat-raised-button
+							color="primary"
+							style="background-color: #65bd65; width: 14em"
+							matBadge="8"
+							matBadgePosition="before"
+							matBadgeColor="accent"
+						>
+						Traitée
+						</button>
 					</td>
 				</ng-container>
 				<ng-container matColumnDef="actions">

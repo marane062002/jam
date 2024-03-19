@@ -8,10 +8,11 @@ import { data } from "../../audiences/saisir-facture/saisir-facture.component";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { DatePipe } from "@angular/common";
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import jsPDF, { Html2CanvasOptions } from "jspdf";
 import html2canvas from 'html2canvas';
 import { saveAs } from 'file-saver';
+import { ArrondissemntService } from "../../parametrage-bmh/services/arrondissemnt.service";
 @Component({
 	selector: "kt-list-deces-naturel",
 	templateUrl: "./list-deces-naturel.component.html",
@@ -29,6 +30,13 @@ export class ListDecesNaturelComponent implements OnInit {
 	pageSize: number = 5;
 	totalRecords : any;
 	currentPage: number = 0;
+
+
+
+    arrondissementControl = new FormControl();
+	arrondissement: any;
+	dateDeces: any;
+	statut: any;
 
 
 
@@ -54,7 +62,7 @@ export class ListDecesNaturelComponent implements OnInit {
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 	@ViewChild(MatSort, { static: true }) sort: MatSort;
 	constructor(
-		
+		private ArrondissementService:ArrondissemntService,
 		private router: Router, 
 		private service: DecesNaturelsService, 
 		private httpClient: HttpClient,
@@ -65,6 +73,11 @@ export class ListDecesNaturelComponent implements OnInit {
 	ngOnInit() {
 		// this.getAllD();
 		this.loadData(this.currentPage, this.pageSize);
+		this.ArrondissementService.getAll().subscribe(res=>{
+			this.arrondissement=res
+			console.log(res);
+			console.log(this.arrondissement);
+		  })
 	}
 
 	update(id: any) {
@@ -79,8 +92,23 @@ export class ListDecesNaturelComponent implements OnInit {
 	}
 
 
-
-
+	Statut(selectedValue: string): void {
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected statut:', this.statut);
+		this.ngOnInit()
+	}
+	
+	DateDeces(selectedValue: string): void {
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected statut:', this.statut);
+		this.ngOnInit()
+	}
+	  Arrondissement(selectedValue: string): void {
+		this.arrondissement = null
+		console.log('Selected nature:', selectedValue);
+		console.log('Selected date deces:', this.dateDeces);
+		this.ngOnInit()
+	  }
 
 
 	onPaginatorChange(event: PageEvent): void {
@@ -93,8 +121,20 @@ export class ListDecesNaturelComponent implements OnInit {
 		const startIndex = page * pageSize;
 		const endIndex = startIndex + pageSize;
 
-		this.httpClient.get<any[]>(`${this.baseUrl}deces/paginate/${page}/${pageSize}`, { headers: this.headers }).subscribe((response: any) => {
-			// 
+
+		let url = `${this.baseUrl}deces/paginate/${page}/${pageSize}?`;
+
+		if (this.statut) {
+		  url += `statusCadavre=${this.statut}&`; 
+		}
+		if (this.dateDeces) {
+			url += `dateDeces=${this.dateDeces}&`; 
+		}
+		
+		if (this.arrondissementControl.value) {
+			url += `arrondissement=${this.arrondissementControl.value}&`; 
+		}
+		this.httpClient.get<any[]>(url, { headers: this.headers }).subscribe((response: any) => {
 			this.deces = response.content;
 			this.dataSource.data = response.content;
 			this.totalRecords = response.totalElements;

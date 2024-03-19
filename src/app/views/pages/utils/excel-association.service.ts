@@ -1,7 +1,7 @@
 import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
 import * as fs from "file-saver";
-import { Workbook } from "exceljs";
+import { Border, Workbook } from "exceljs";
 import * as logo from "./logo.js";
 import { ConventionMarcheService } from "../shared/conventionService.js";
 import { TranslateService } from "@ngx-translate/core";
@@ -958,6 +958,182 @@ export class ExcelAssociationService {
 			pattern: "solid",
 			fgColor: { argb: "aedde9el" },
 		};	}
+		if (selectedColumns.includes("ORIENTATIONS_STRATEGIQUES")) {
+			// Find the index of the "ORIENTATIONS_STRATEGIQUES" column in the filteredHeadersArray
+			const orientationsColumnIndex = filteredHeadersArray.indexOf("ORIENTATIONS_STRATEGIQUES");
+			const orientationsColumnLetter = String.fromCharCode(65 + orientationsColumnIndex);
+	
+			// Create a map to store unique values and their occurrences
+			const orientationsMap = new Map<string, number>();
+	
+			// Iterate through the filtered data to populate the map
+			filteredJsonData.forEach((item) => {
+				const value = item["ORIENTATIONS_STRATEGIQUES"];
+				if (orientationsMap.has(value)) {
+					orientationsMap.set(value, orientationsMap.get(value) + 1);
+				} else {
+					orientationsMap.set(value, 1);
+				}
+			});
+	
+			// Iterate through the map to merge cells for duplicate values
+			orientationsMap.forEach((occurrences, value) => {
+				if (occurrences > 1) {
+					let startIndex = 2; // Start index for merging cells
+					let endIndex = 2;   // End index for merging cells
+	
+					// Find rows with the same value and merge their cells
+					for (let i = 2; i <= worksheet.rowCount; i++) {
+						const cellValue = worksheet.getCell(`${orientationsColumnLetter}${i}`).value;
+						if (cellValue === value) {
+							endIndex = i;
+						} else {
+							if (endIndex > startIndex) {
+								worksheet.mergeCells(`${orientationsColumnLetter}${startIndex}:${orientationsColumnLetter}${endIndex}`);
+							}
+							startIndex = i + 1;
+							endIndex = i + 1;
+						}
+					}
+	
+					// Merge remaining cells if needed
+					if (endIndex > startIndex) {
+						worksheet.mergeCells(`${orientationsColumnLetter}${startIndex}:${orientationsColumnLetter}${endIndex}`);
+					}
+				}
+			});
+		}
+		worksheet.addRow([]);
+		worksheet.addRow([]);
+		worksheet.addRow([]);
+		worksheet.addRow([]);
+		worksheet.addRow([]);
+		worksheet.addRow([]);
+
+		     // Code for adding the abbreviations table at the end of the first sheet
+			 const abbreviationsData = [
+				['CM', 'Commune de Marrakech'],
+				['AMDL', 'Agence marocaine de développement de la logistique'],
+				['DRE', 'Direction régionale de l\'environnement'],
+				['FM5S', 'Fondation Mohammed V pour la solidarité'],
+				['GCTT', 'Groupement des collectivités territoriales'],
+				['INDH', 'Initiative nationale pour le développement humain'],
+				['MC', 'Ministère de la Culture'],
+				['OM', 'Al Omrane'],
+				['RADEEMA', 'Régie Autonome de Distribution d\'Eau et d\'Electricité de Marrakech'],
+				['RMS', 'Région Marrakech-Safi'],
+				['FNM', 'Fondation Nationale des Musées / المؤسسة الوطنية للمتاحف']
+			];
+			const conventionsData = [
+				['AOS', 'amélioration de l\'offre de santé'],
+				['BHNS', 'Bus à haut niveau de service'],
+				['CIP BM', 'Création d\'un Musée du patrimoine immatériel au siège de Bank Al maghreb'],
+				['CS HL', 'Création d\'un centre de santé Lhay Elhassani'],
+				['EC', 'Création d\'un centre de tri écologique (eco-centre)'],
+				['CCHM', 'Création d\'un palais des congreés et de manifestations'],
+				['HMR', 'Habitat menaçant ruine'],
+				['JEF', 'valorisation de la place jamaa el fana'],
+				['KOICA', 'Renforcement du parc de transport publics par des bus éléctriques'],
+				['AEV', 'Réutilisation des eaux usées épurées pour l\'arrosage des espaces verts'],
+				['MCRP', 'Marrakech Cité du Renouveau Permanent'],
+				['MEV', 'Mise en Valeur de la Medina de Marrakech'],
+				['MTP', 'Modernisation du transport public du nouveau réseau de la grande ville de Marrakech'],
+				['MVD', 'Marrakech Ville Durable'],
+				['OA', 'opérationnalisation des Axes'],
+				['OI', 'Améngament du Oued Issil'],
+				['PCM', 'Création d\'un palais des congreés et de manifestations'],
+				['RRA', 'Renforcement du réseau principal d\'assainissement'],
+				['RU', 'Rénovation urbaine'],
+				['RUG', 'Rénovation urbaine du quartier guenoun'],
+				['ZISG', 'Requalification de la zone industrielle Sidi Ghanem'],
+				['TNR', 'Création et équipement d’un centre de désinfection et de vaccination des chiens et chats errants'],
+				['TREMIES', 'dénivellation des intersections'],
+				['VSB', 'Programme Ville sans bidonville']
+			];
+	
+			const colors = [
+				"ffffff", 
+				"ffd966", 
+				"00b050", 
+				"ffff00", 
+				"fff2cc", 
+				"66ffff", 
+				"e2efda", 
+				"bdd7ee", 
+				"8497b0", 
+				"a6a6a6", 
+				"dbdbdb" 
+			];
+			// Define border style
+const borderStyle: Partial<Border> = {
+    style: 'thin',
+    color: { argb: '000000' } // Black color
+};
+			// Get the first column letter
+			const firstColumnLetter = 'A';
+	
+			abbreviationsData.forEach((row, index) => {
+				const newRow = worksheet.addRow(row);
+				const color = colors[index]; // Get color for this abbreviation
+				const columnRange = firstColumnLetter + newRow.number; // Get the range of cells in the first column for this abbreviation
+				worksheet.getCell(columnRange).fill = {
+					type: "pattern",
+					pattern: "solid",
+					fgColor: { argb: color }, // Assign color to the cells in the first column for this abbreviation
+				};
+				newRow.getCell(1).border = {
+					top: borderStyle,
+					left: borderStyle,
+					bottom: borderStyle,
+					right: borderStyle
+				};
+				newRow.getCell(2).border = {
+					top: borderStyle,
+					left: borderStyle,
+					bottom: borderStyle,
+					right: borderStyle
+				};
+			});
+			worksheet.addRow([]);
+
+			// Add table of conventions in column B
+			const startRow = worksheet.addRow(["", "Tableau des conventions"]); // Add an empty cell in the first column
+			startRow.font = { bold: true };
+			startRow.getCell('B').alignment = { horizontal: 'center' }; // Center align in column B
+			startRow.getCell('B').fill = {
+				type: 'pattern',
+				pattern: 'solid',
+				fgColor: { argb: 'f4b084' } 
+			};		
+			const firstColumnColor = 'cdc0ce'; 
+			const secondColumnColor = 'f2f2f2'; 
+	
+			conventionsData.forEach((row, index) => {
+				const newRow = worksheet.addRow(row);
+				 // Set fill color for the first cell in each row
+				 newRow.getCell(1).fill = {
+					type: 'pattern',
+					pattern: 'solid',
+					fgColor: { argb: firstColumnColor }
+				};
+				newRow.getCell(1).border = {
+					top: borderStyle,
+					left: borderStyle,
+					bottom: borderStyle,
+					right: borderStyle
+				};
+				newRow.getCell(2).fill = {
+					type: 'pattern',
+					pattern: 'solid',
+					fgColor: { argb: secondColumnColor }
+				};
+				newRow.getCell(2).border = {
+					top: borderStyle,
+					left: borderStyle,
+					bottom: borderStyle,
+					right: borderStyle
+				};
+			});
 		/* Save Excel File */
 		workbook.xlsx.writeBuffer().then((data: ArrayBuffer) => {
 			const blob = new Blob([data], { type: EXCEL_TYPE });
@@ -966,8 +1142,6 @@ export class ExcelAssociationService {
 			fs.saveAs(blob, excelFileName + "-" + timeSpan + EXCEL_EXTENSION);
 		});
 	}
-
-
 
 
 

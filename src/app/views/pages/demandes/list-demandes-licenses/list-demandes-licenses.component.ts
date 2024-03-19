@@ -109,7 +109,7 @@ export class ListDemandesLicensesComponent implements OnInit {
 
             },
             {
-              label: "PAGES.DEMANDE.PERSONNE_MORALE",
+              label: "PAGES.DEMANDE.PPSOURCE",
               content: "PPSource"
             },
            
@@ -182,23 +182,23 @@ export class ListDemandesLicensesComponent implements OnInit {
   setSelectedValue2(event: any) {
     if (event == 0) {
       this.typeSelected = "ASSOCIATION";
-      this.displayedColumns= ["prioriter", "uniqueCode", "submissionDate", "status", "action", "actions"];
+      this.displayedColumns= ["prioriter","nom", "uniqueCode", "submissionDate", "status", "action", "actions"];
       this.applyFilterByStatusAndType(this.statusSelected, this.typeSelected);
       // this.applyFilterByStatus(this.statusSelected);
     }
     else if (event == 1) {
       this.typeSelected = "PMSource";
-      this.displayedColumns= [ "uniqueCode", "submissionDate", "status", "action", "actions"];
+      this.displayedColumns= [ "uniqueCode", "nomPM", "rc", "identifiantFiscal", "submissionDate", "status", "action", "actions"];
       this.applyFilterByStatusAndType(this.statusSelected, this.typeSelected);
       // this.applyFilterByStatus(this.statusSelected);
     }else if(event==2){
       this.typeSelected = "PMSourcePRIV";
-      this.displayedColumns= [ "uniqueCode", "submissionDate", "status", "action", "actions"];
+      this.displayedColumns= [ "uniqueCode", "nomPM", "rc", "identifiantFiscal", "submissionDate", "status", "action", "actions"];
       this.applyFilterByStatusAndType(this.statusSelected, this.typeSelected);
     }
     else if(event==3){
       this.typeSelected = "PPSource";
-      this.displayedColumns= [ "uniqueCode", "submissionDate", "status", "action", "actions"];
+      this.displayedColumns= [ "uniqueCode", "cin", "nomPP","prenomPP","submissionDate", "status", "action", "actions"];
       this.applyFilterByStatusAndType(this.statusSelected, this.typeSelected);
     }
     console.log("type selected", this.statusSelected);

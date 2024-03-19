@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Observable, ReplaySubject, Subject } from "rxjs";
 import { map, startWith, take, takeUntil } from "rxjs/operators";
-import { MatDialog, MatSelect, MatSort, MatTable, MatTableDataSource } from "@angular/material";
+import { MatDialog, MatSelect, MatSnackBar, MatSnackBarConfig, MatSort, MatTable, MatTableDataSource } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
 import { debug, log } from "console";
 import Swal from "sweetalert2";
@@ -23,6 +23,8 @@ import { Hangar } from "../../../../core/_base/layout/models/Hangar";
 import { IPesee, Pesee } from "../../../../core/_base/layout/models/pesee";
 import { AuthService } from "../../../../core/auth";
 import { DatePipe } from "@angular/common";
+import { GestionPartsService } from "../../parametrage/Services/gestion-des-parts.service";
+import { AddVehiculeModalComponent } from "../add-vehicule-modal/add-vehicule-modal.component";
 
 @Component({
 	selector: "kt-add-pesee",
@@ -31,6 +33,7 @@ import { DatePipe } from "@angular/common";
 })
 export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 	maxId: number;
+	maxIdV: number;
 	PoidEmbTotal = 0;
 	Hangar: Hangar[];
 	Emb: Emballage[];
@@ -42,12 +45,12 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 	showButton: boolean = false;
 
 	displayedColumns: string[] = [
-		"NumProduit",
+		// "NumProduit",
 		"TypeProduit",
 		"Prix",
 		"PoidsNet",
-		"TypeEmballage",
-		"Quantite",
+		// "TypeEmballage",
+		// "Quantite",
 		"Total",
 		"actions",
 	];
@@ -85,14 +88,20 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	peseeForm :FormGroup
 	constructor(
+		public dialog: MatDialog,
+
 		private router: Router,
 		private translate: TranslateService,
 		private hangarService: HangarService,
 		private serviceUser: AuthService,
 		private vehiculeServ: VehiculeService,
+		private snackBar: MatSnackBar,
+
 		private prodServ: ProduitService,
 		private embServ: EmballageService,
-		private fb: FormBuilder, private datePipe: DatePipe,
+		private fb: FormBuilder, 
+		private gestionPartsService: GestionPartsService,
+		private datePipe: DatePipe,
 		private peseeService: PeseeService) {
 			const currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm');
 			this.peseeForm = new FormGroup({
@@ -101,6 +110,9 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 				date:new FormControl(currentDate),
 				poidGlobal: new FormControl("", [Validators.required]),
 				numGenre: new FormControl("", [Validators.required]),
+				typeVehicule: new FormControl("", [Validators.required]),
+				cinProprietaire: new FormControl("", [Validators.required]),
+				nomProprietaire: new FormControl("", [Validators.required]),
 				nomConducteur: new FormControl("", [Validators.required]),
 				poidEmballageTotal: new FormControl(0, [Validators.required]),
 				totalPoidNet: new FormControl({ value: this.totalPoidNet }, [Validators.required]),
@@ -130,18 +142,154 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 				chiffreTransaction: new FormControl(0, Validators.required),
 				restePoid: new FormControl(0, Validators.required),
 				penalite: new FormControl(0),
-				createurUser:new FormControl(window.localStorage.getItem("fullnameUser"))
+				createurUser:new FormControl(window.localStorage.getItem("fullnameUser")),
+				idCreateurUser:new FormControl(window.localStorage.getItem("idUser"))
 			});
 
 	}
+	openDialogv=false
+	openDialog(id): void {
+		this.openDialogv=true
+		this.tarraDisabled=false
+	// 	const dialogRef = this.dialog.open( AddVehiculeModalComponent,{
+	// 	 width: '800px',
+	// 	 data: {
+	// 		   id: id,
+
+	//    }
+	//    }); 
+	// 	dialogRef.afterClosed().subscribe(res => {
+	// 		this.ngOnInit()
+	// 	//    //console.log("Res: "+ JSON.stringify(res,null,2))
+	// 	//    if (res){
+	// 	// 	   this.formData = res;
+	// 	//    console.log("Ligne BP: "+ JSON.stringify(this.formData,null,2))
+	// 	// 	   //this.afterSave();
+	// 	//    }
+	//    });
+	 }
+	 vehiculesaveform = new FormGroup({
+		refTransport: new FormControl('', [Validators.required]),
+		numVehicule: new FormControl('', [ Validators.minLength(5)]),
+		numVehiculeNumbers: new FormControl('', [Validators.required, Validators.maxLength(6), Validators.pattern('^[0-9]*$')]),
+		numVehiculeAlphabet: new FormControl('', [Validators.required]),
+		numVehiculeTwoNumbers: new FormControl('', [Validators.required, Validators.maxLength(2), Validators.pattern('^[0-9]*$')]),
+	   
+		tarra: new FormControl('', [ Validators.minLength(3)]),
+		genre: new FormControl('', [ Validators.minLength(5)]),
+	
+		nomConducteur: new FormControl('', [Validators.required, Validators.minLength(5)]),
+	  
+	
+	  });
+	  series: { name: string }[] = [
+		{ name: 'أ' },
+		{ name: 'ب' },
+		{ name: 'ت' },
+		{ name: 'ث' },
+		{ name: 'ج' },
+		{ name: 'ح' },
+		{ name: 'خ' },
+		{ name: 'د' },
+		{ name: 'ذ' },
+		{ name: 'ر' },
+		{ name: 'ز' },
+		{ name: 'س' },
+		{ name: 'ش' },
+		{ name: 'ص' },
+		{ name: 'ض' },
+		{ name: 'ط' },
+		{ name: 'ظ' },
+		{ name: 'ع' },
+		{ name: 'غ' },
+		{ name: 'ف' },
+		{ name: 'ق' },
+		{ name: 'ك' },
+		{ name: 'ل' },
+		{ name: 'م' },
+		{ name: 'ن' },
+		{ name: 'ه' },
+		{ name: 'و' },
+		{ name: 'ي' },
+	  ];
+	 onSubmit() {
+		const numVehiculeNumbers = this.vehiculesaveform.get('numVehiculeNumbers').value;
+		const numVehiculeAlphabet = this.vehiculesaveform.get('numVehiculeAlphabet').value;
+		const numVehiculeTwoNumbers = this.vehiculesaveform.get('numVehiculeTwoNumbers').value;
+		const numVehicule = `${numVehiculeNumbers}${numVehiculeAlphabet}${numVehiculeTwoNumbers}`;
+		this.vehiculesaveform.get('numVehicule').setValue(numVehicule);
+	 
+		
+		this.vehiculesaveform.value.refTransport = this.maxIdV;
+	if(this.vehiculesaveform.value.refTransport!=''&& this.vehiculesaveform.value.numVehicule!=''&& this.vehiculesaveform.value.nomConducteur!='' ) {
+	  this.vehiculeServ.createVehicule(this.vehiculesaveform.value).subscribe(
+		(data) => {
+		  console.log('data==============>', data);
+		  this.openDialogv=false
+		  this.vehiculesaveform.reset();
+		//   this.peseeForm.get("vehicule").get("id").setValue(data.body.id)
+		  this.peseeForm.value.nomProprietaire.setValue(data.body.nomConducteur)
+		  // Configure the MatSnackBar position at the top
+		  const snackBarConfig: MatSnackBarConfig = {
+			verticalPosition: 'top',
+			duration: 5000 // Display the snackbar for 5 seconds
+		  };
+	
+		  this.snackBar.open(this.translate.instant('PAGES.VEHICULE.VEHICULE_ADDED_SUCCESSFULLY'), 'Close', snackBarConfig);
+		},
+		(error) => {
+		  console.log(error);
+	
+		  // Check if the error object has a 'detail' property
+		  if (error.error && error.error.detail) {
+			// Configure the MatSnackBar position at the top
+			const snackBarConfig: MatSnackBarConfig = {
+			  verticalPosition: 'top',
+			  duration: 5000 // Display the snackbar for 5 seconds
+			};
+	
+			this.snackBar.open(this.translate.instant('PAGES.VEHICULE.'+error.error.detail), 'Close', snackBarConfig);
+		  } else {
+			// Configure the MatSnackBar position at the top
+			const snackBarConfig: MatSnackBarConfig = {
+			  verticalPosition: 'top',
+			  duration: 5000 // Display the snackbar for 5 seconds
+			};
+	
+			this.snackBar.open('An error occurred: ' + error.message, 'Close', snackBarConfig);
+		  }
+		}
+	  );
+	}
+	   
+	  }
 	inputRequired: boolean;
 	inputsEmpty: boolean = true;
 	inputs: any;
 	Pesee: any
 	currentTime: string;
 	RestePoid :number
+	parts
 	ngOnInit() {
-		
+		this.vehiculeServ.getMaxId().subscribe(
+			(res) => {
+			  if (res.body === null) {
+				this.maxIdV = 1;
+	  
+			  }
+			  else {
+				this.maxIdV = res.body + 1;
+				
+			  }
+			},
+			(error: any) => {
+			  console.error('Error fetching max ID:', error);
+			}
+		  );
+		this.gestionPartsService.getParts().subscribe((res)=>{
+			this.parts=res.body[res.body.length-1]
+			
+			})
 		// this.peseeForm.controls['date'].setValue(this.getCurrentDateTime());
 
 		this.currentTime = this.getCurrentDateTime();
@@ -173,30 +321,31 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 			error: () => { },
 		});
-		this.vehiculeServ.query().subscribe({
-			next: (res: HttpResponse<Vehicule[]>) => {
-				for (let i = 0; i < res.body.length; i++) {
-					res.body[i].numVehicule = "\u202A" +
-						res.body[i].numVehiculeNumbers + "\u202A" +
-						res.body[i].numVehiculeAlphabet + "\u202C" +
-						res.body[i].numVehiculeTwoNumbers
+		this.vehiculeServ.AllVehicule().subscribe((res)=>{
+			// next: (res: HttpResponse<Vehicule[]>) => {
+				for (let i = 0; i < res.length; i++) {
+					res[i].numVehicule = "\u202A" +
+						res[i].numVehiculeNumbers + "\u202A" +
+						res[i].numVehiculeAlphabet + "\u202C" +
+						res[i].numVehiculeTwoNumbers
 				}
 
-				this.dataImm = res.body;
+				this.dataImm = res;
 				let vehicule = this.peseeForm.get("vehicule");
 
 				this.filteredBanks = vehicule.get("id").valueChanges.pipe(
 					startWith(""),
 					map((value) => this._filter(value || ""))
 				);
-			},
+				
+			// },
 
-			error: () => { },
 		});
 
 		this.prodServ.getAllProduits().subscribe({
 			next: (res: HttpResponse<Produit[]>) => {
 				this.data = res.body;
+				this.typeProduitOptions=res.body
 				console.log("les produits================>", this.data);
 			},
 			error: () => { },
@@ -242,7 +391,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 		}
 		this.totalPoidNet = this.dataSource.data.reduce((total, current) => total + parseInt(current.poidNetProduit), 0);
 		this.chiffreTransaction = this.dataSource.data.reduce((total, current) => total + parseInt(current.totalProduit), 0);
-		this.taxe = (this.chiffreTransaction * 7) / 100;
+		this.taxe = (this.chiffreTransaction * this.parts.partMontant) / 100;
 		this.RestePoid;
 		this.totalPoidNet;
 		if(this.ancientotalPoidNet!=0 || !isNaN(this.RestePoid)){
@@ -262,7 +411,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.ancienchiffretransaction = row.totalProduit;
 				this.totalPoidNet -= this.ancientotalPoidNet;
 				this.chiffreTransaction -= this.ancienchiffretransaction;
-				this.taxe = (this.chiffreTransaction * 7) / 100;
+				this.taxe = (this.chiffreTransaction * this.parts.partMontant) / 100;
 				this.RestePoid += this.ancientotalPoidNet;
 				row.isEdit = true;
 				this.ancientotalPoidNet = 0;
@@ -333,7 +482,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.dataSourceAdd.data.push(row);
 
 			row.isEdit = false;
-
+			
 			this.calculTotalPoidNet(row);
 		} else {
 			this.peseeService.updatePeseeProduit(this.peseeForm.value.PeseeProduitForm)
@@ -369,7 +518,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.totalPoidNet -= this.dataSource.data[index].poidNetProduit;
 		this.poidEmballage -= this.dataSource.data[index].poidEmballageProduit
 		this.chiffreTransaction -= this.dataSource.data[index].totalProduit
-		this.taxe = (this.chiffreTransaction * 7) / 100
+		this.taxe = (this.chiffreTransaction * this.parts.partMontant) / 100
 		this.RestePoid = this.RestePoid+ this.dataSource.data[index].poidNetProduit+this.dataSource.data[index].poidEmballageProduit;
 		this.dataSource.data.splice(index, 1)
 		this.dataSource = new MatTableDataSource(this.dataSource.data);
@@ -385,32 +534,40 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 				(item) => item.lib == event.option.value
 			);
 			console.log("=========>", selectedType[0]);
-			this.fieldArray[i].produit = selectedType[0];
-			this.fieldArray[i].produit.lib = selectedType[0].lib;
-			this.fieldArray[i].produit.tarif = selectedType[0].tarif;
-			this.fieldArray[i].produit.refProduit = selectedType[0].refProduit;
-			this.dataSource = new MatTableDataSource(this.fieldArray);
+			// this.fieldArray[i].produit = selectedType[0];
+			// this.fieldArray[i].produit.lib = selectedType[0].lib;
+			// this.fieldArray[i].produit.tarif = selectedType[0].tarif;
+			// this.fieldArray[i].produit.refProduit = selectedType[0].refProduit;
+			// this.dataSource = new MatTableDataSource(this.fieldArray);
 
+
+			 ;this.selecteProduct = "" + selectedType[0].lib;
+			 ;this.prix = selectedType[0].tarif;
+			 ;this.dataSource.data[i].produit = selectedType[0];
+			 ;this.dataSource.data[i].produit.lib = this.selecteProduct;
+			this.dataSource.data[i].produit.tarif = this.prix;
+			 ;this.dataSource = new MatTableDataSource(this.dataSource.data);
+			
 		}
 	}
 
 	onSelectionChange(event: any, index: number) {
-
+ 
 		if (event.option.value != null) {
 			let selectedType = this.data.filter(
 				(item) => item.refProduit == event.option.value
 			);
 			this.selecteProduct = "" + selectedType[0].lib;
 			this.prix = selectedType[0].tarif;
-
+			
 			this.dataSource.data[index].produit = selectedType[0];
-
+			
 			this.dataSource.data[index].produit.lib = this.selecteProduct;
 			this.dataSource.data[index].produit.tarif = this.prix;
-
+			
 			this.dataSource = new MatTableDataSource(this.dataSource.data);
 			selectedType = [];
-
+			
 		}
 	}
 
@@ -418,6 +575,17 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 		const vehicule = this.dataImm.find((vehicule) => vehicule.id === id);
 		return vehicule ? vehicule.numVehicule : '';
 	}
+
+// Inside your component class
+typeProduitOptions: any[] = []; // This should be an array of strings representing the options for TypeProduit
+
+// Method to filter options based on user input
+filterTypeProduitOptions(value: string): void {
+	this.typeProduitOptions
+    // Perform filtering on your options array based on the input value
+    // For example, if typeProduitOptions is an array of strings, you can filter like this:
+    this.typeProduitOptions = this.data.filter(option => option.lib.toLowerCase().includes(value.toLowerCase()));
+}
 
 
 	sp = 0;
@@ -458,9 +626,9 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 		}
 		this.poidEmballage = this.dataSource.data.reduce((total, current) => total + parseInt(current.poidEmballageProduit), 0);
 		this.RestePoid
-
+		
 		this.RestePoid = this.RestePoid + this.ancienpoidEmballageProduit - row.poidEmballageProduit
-
+		
 		if (this.RestePoid < 0) {
 
 			Swal.fire({
@@ -474,7 +642,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 				this.poidEmballage -= this.poidEmballage - this.ancienpoidEmballageProduit
 				row.isEdit = true
 				this.ancienpoidEmballageProduit = 0
-
+				
 			})
 		} else {
 			this.RestePoid = this.RestePoid
@@ -524,8 +692,8 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 			let pet = this.peseeForm.get("poidEmballageTotal").value;
 			this.r = event - (this.peseeForm.get("tarra").value + this.peseeForm.get("totalPoidNet").value + this.peseeForm.get("poidEmballageTotal").value);
 			this.RestePoid = event - (this.peseeForm.get("tarra").value + this.peseeForm.get("totalPoidNet").value + this.peseeForm.get("poidEmballageTotal").value);
-
-			if (this.r < 0) {
+			
+			if (event < this.peseeForm.get("tarra").value) {
 				Swal.fire({
 					title: this.translate.instant("poidGlobal doit être supérieur à tare"),
 
@@ -545,6 +713,8 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 		}
 	}
+
+	
 	testPt = 0;
 	ondeletePT(event) {
 		let pg = this.peseeForm.get("poidGlobal").value;
@@ -577,11 +747,14 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 			chiffreTransaction: this.chiffreTransaction,
 			taxe: this.taxe,
 			vehicule: { id: this.peseeForm.get("vehicule").value.id },
+			gestionParts: { id: this.parts.id },
 			restePoid: this.RestePoid,
 			penalite: this.peseeForm.get("penalite").value,
 			hangar: { id: this.peseeForm.get("hangar").value.id },
 			peseeProduits: this.dataSource.data,
-			createurUser:this.peseeForm.get('createurUser').value
+			createurUser:this.peseeForm.get('createurUser').value,
+			idCompte:parseInt(window.localStorage.getItem("idUser"))
+
 		};
 
 		if (this.RestePoid != 0) {
@@ -599,7 +772,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 			}).then((result) => { })
 		} else {
-
+			
 			let pesee: Pesee = {
 
 				numBon: this.maxId,
@@ -614,11 +787,15 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 				chiffreTransaction: this.chiffreTransaction,
 				taxe: this.taxe,
 				vehicule: { id: this.peseeForm.get("vehicule").value.id },
+				gestionParts: { id: this.parts.id },
+
 				restePoid: this.RestePoid,
 				penalite: this.peseeForm.get("penalite").value,
 				hangar: { id: this.peseeForm.get("hangar").value.id },
 				peseeProduits: this.dataSource.data,
-				createurUser:this.peseeForm.get('createurUser').value
+				createurUser:this.peseeForm.get('createurUser').value,
+				idCompte:parseInt(window.localStorage.getItem("idUser"))
+
 			};
 			this.peseeForm.get("PeseeProduitForm").patchValue({ peseeProduits: this.fieldArray });
 			console.log("affichage", pesee);
@@ -658,7 +835,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 		this.peseeForm.get("restePoid").setValue((this.r -= this.somme));
 
-		this.peseeForm.get("taxe").setValue((this.p * 7) / 100);
+		this.peseeForm.get("taxe").setValue((this.p * this.parts.partMontant) / 100);
 		if (this.fieldArray[index].poidNetProduit == 0) {
 			this.fieldArray[index].totalProduit = 0;
 			this.peseeForm.get("totalPoidNet").setValue(this.somme);
@@ -698,7 +875,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.fieldArray[j].poidNetProduit = event;
 
 			this.p += this.fieldArray[j].totalProduit;
-			this.taxe = (this.p * 7) / 100;
+			this.taxe = (this.p * this.parts.partMontant) / 100;
 			this.r -= this.somme;
 		}
 		if (this.r >= 0) {
@@ -710,7 +887,7 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.p -= this.fieldArray[index].totalProduit;
 			this.peseeForm.get("totalPoidNet").setValue(this.somme - this.fieldArray[index].poidNetProduit);
 			this.peseeForm.get("chiffreTransaction").setValue(this.p);
-			this.taxe = (this.peseeForm.get("chiffreTransaction").value * 7) / 100;
+			this.taxe = (this.peseeForm.get("chiffreTransaction").value * this.parts.partMontant) / 100;
 
 			this.somme;
 			this.r;
@@ -734,6 +911,18 @@ export class AddPeseeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 		this.dataSource = new MatTableDataSource(this.fieldArray);
 
+	}
+	typeVehicule
+	tarraDisabled=true
+	onSelectionChangeTypeVehicule(e){
+		this.typeVehicule=e
+if(this.typeVehicule=='AUTRE'){
+	this.openDialogv=true
+	this.tarraDisabled=false
+}else{
+	this.tarraDisabled=true
+}
+		
 	}
 
 	testPoidNet: number = 0;

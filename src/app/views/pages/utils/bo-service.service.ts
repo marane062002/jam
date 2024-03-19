@@ -550,32 +550,32 @@ export class BoServiceService {
 				if (a == 'pdf.svg') {
 					const blob = new Blob([data], { type: 'application/pdf' });
 					const url = window.URL.createObjectURL(blob);
-					window.open(url);
+					window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"  + alfresco_id);
 				}
 				else if (a == 'png.svg') {
 					const blob = new Blob([data], { type: 'image/png' });
 					const url = window.URL.createObjectURL(blob);
-					window.open(url);
+					window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"+alfresco_id);
 				}
 				if(a=='xls.svg'){
 					const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 					const url = window.URL.createObjectURL(blob);
-					window.open(url);
+					window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"  + alfresco_id);
 				}
 				if(a=='doc.svg'){
 					const blob = new Blob([data], { type: 'application/msword' });
 					const url = window.URL.createObjectURL(blob);
-					window.open(url);
+					window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"  + alfresco_id);
 				}
 			    if(a=='jpg.svg'){	
 									const blob = new Blob([data], { type: 'image/jpeg' });
 					const url = window.URL.createObjectURL(blob);
-					window.open(url);
+					window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"+alfresco_id);
 				}
 				if(a=='csv.svg'){
 					const blob = new Blob([data], { type: 'text/csv' });
 					const url = window.URL.createObjectURL(blob);
-					window.open(url);
+					window.open(environment.API_ALFRESCO_URL + "/PjCourriersSortants/"  + alfresco_id);
 				}
 				
 			});

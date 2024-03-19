@@ -326,8 +326,8 @@ export class AddCourriersSortantsComponent implements OnInit {
 	
 	constration(row:any): void {
 		const dialogRef = this.dialog.open(AfficheComponent, {
-			width: "75%",
-			data : { Data: row.file },
+			width: "50%",
+			height:"70%",			data : { Data: row.file },
 		});
 
 		dialogRef.afterClosed().subscribe((result) => {

@@ -13,6 +13,7 @@ import { SpinnerService } from '../../utils/spinner.service';
 import { PeseeService } from '../Services/pesee.service';
 import html2canvas from "html2canvas";
 import { AuthService } from '../../../../core/auth';
+import { GestionPartsService } from '../../parametrage/Services/gestion-des-parts.service';
 
 @Component({
   selector: 'kt-liste-pesee-mondataire',
@@ -68,6 +69,8 @@ export class ListePeseeMondataireComponent implements OnInit {
 		private router: Router,
 		protected activatedRoute: ActivatedRoute,
 		private peseeService:PeseeService,
+		private gestionPartsService: GestionPartsService,
+
 		private datePipe: DatePipe,
 		private excelService: ExcelAssociationService,
 		private spinnerService: SpinnerService
@@ -76,6 +79,7 @@ export class ListePeseeMondataireComponent implements OnInit {
 	}
   idUser
   idHangar
+  parts
 	ngOnInit() {
     this.idUser=localStorage.getItem("idUser")
     this.authService.getUserById(this.idUser).then((res)=>{
@@ -235,9 +239,61 @@ export class ListePeseeMondataireComponent implements OnInit {
 		});
 
 	}
+	Rejeter(id:any){
+		
+		Swal.fire({
 
+			title:'Voulez vous rejeter ce pesé?',
+			icon: "question",
+			iconHtml: "?",
+			showCancelButton: true,
+			showCloseButton: true,
+			confirmButtonText: this.translate.instant('PAGES.PESEE.OUI'),
+			cancelButtonText: this.translate.instant('PAGES.PESEE.NON'),
+		}).then((result) => {
+
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+				this.peseeService.patchPeseeRejeter(id).subscribe((res)=>{
+					console.log("res ==> ",res.body)
+					Swal.fire({
+					  position: "center",
+					  icon: "success",
+					  title:'pesé rejeter',
+					  showConfirmButton: false,
+					  timer: 2500,
+		  
+					});
+					location.reload()
+				},error => {
+					console.log("error ===> ",error)
+					Swal.fire({
+					  position: "center",
+					  icon: "error",
+					  title:'error',
+					  showConfirmButton: false,
+					  timer: 2500,
+					});
+				})
+      
+
+			}
+      else{
+        Swal.fire({
+					position: "center",
+					icon: "error",
+					title:this.translate.instant('PAGES.PESEE.MESSAGE_ERROR_SUPPR'),
+					showConfirmButton: false,
+					timer: 2500,
+				});
+      }
+		});
+
+	}
+	isMondataire
 	Details(id) {
-
+		this.isMondataire=true
+		this.peseeService.sendData(this.isMondataire)
 		this.router.navigate(["pesee/show-pesee/"+id]);
 	}
 	toPrint: any;
@@ -320,33 +376,135 @@ export class ListePeseeMondataireComponent implements OnInit {
 	// }
 	chiffreTransaction: any;
 
-	Recu(data: any): void {
+	// Recu(data: any): void {
+	// 	this.toPrint = data;
+
 		
+	// 	// this.authService.getUserById(this.idUser).then((res)=>{
+			
+	// 		// this.toPrint.mondataire=res.fullname
+	// 		if(data.gestionParts!=null){
+	// 			this.gestionPartsService.getPartsById(data.gestionParts.id).subscribe((res)=>{
+	// 			this.parts=res
+	// 			if (data.chiffreTransaction != null) {
+	// 				this.chiffreTransaction = (data.chiffreTransaction).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
+	// 				data.partCommune = (data.chiffreTransaction *  this.parts.partCommune/100).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
+	// 				data.partMondataire = (data.chiffreTransaction *  this.parts.partMondataire/100).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
+	// 				data.taxe = (data.chiffreTransaction * this.parts.partMontant/100).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
+	// 			}
+	// 			})
+	// 		}
+			
+			
+
+	// 		setTimeout(() => {
+	// 			var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
+	// 			let DATA: any = document.getElementById('htmlData');
+	
+	// 			html2canvas(DATA, {}).then((canvas) => {
+	// 				const FILEURI = canvas.toDataURL("image/png");
+	// 				let PDF = new jsPDF("p", "mm", "a5");
+	// 				let fileWidth = PDF.internal.pageSize.getWidth();
+	// 				let fileHeight = (canvas.height * fileWidth) / canvas.width;
+	// 				let position = 0;
+	// 				PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
+	// 				PDF.save("Reçu N° " + this.toPrint.numBon + ".pdf");
+	// 				this.spinnerService.stop(spinnerRef);
+	// 			});
+	// 		}, 250);
+	// 					// })
+	
+	// }
+	toPrint2
+toPrint1
+dataOrigin=[];
+temp=true
+	Recu(data:any): void {const itemsPerPage1 = 5;
+		this.dataOrigin.push(data.peseeProduits);
+		
+		const itemsPerPage = 2;
+		const totalItems = data.peseeProduits.length;
+		data.peseeProduits=data.peseeProduits.slice(0,5);
 		this.toPrint = data;
-		this.authService.getUserById(this.toPrint.idCompte).then((res)=>{
-			if (data.chiffreTransaction != null) {
-				this.chiffreTransaction = (data.chiffreTransaction).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
-				data.partCommune = (data.chiffreTransaction * 0.0525).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
-				data.partMondataire = (data.chiffreTransaction * 0.0175).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
-				data.taxe = (data.chiffreTransaction * 0.07).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });;
-			}
-			this.toPrint.mondataire=res.fullname
-			setTimeout(() => {
-				var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
-				let DATA: any = document.getElementById("htmlData");
+		console.log(this.toPrint);
+		
+		
+		if (data.gestionParts != null) {
+			this.gestionPartsService.getPartsById(data.gestionParts.id).subscribe((res) => {
+				this.parts = res;
 	
-				html2canvas(DATA, {}).then((canvas) => {
-					const FILEURI = canvas.toDataURL("image/png");
-					let PDF = new jsPDF("p", "mm", "a4");
-					let fileWidth = PDF.internal.pageSize.getWidth();
-					let fileHeight = (canvas.height * fileWidth) / canvas.width;
-					let position = 0;
-					PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
-					PDF.save("Reçu N° " + this.toPrint.numBon + ".pdf");
-					this.spinnerService.stop(spinnerRef);
+				if (data.chiffreTransaction != null) {
+					this.chiffreTransaction = (data.chiffreTransaction).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+					data.partCommune = (data.chiffreTransaction * this.parts.partCommune / 100).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+					data.partMondataire = (data.chiffreTransaction * this.parts.partMondataire / 100).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+					data.taxe = (data.chiffreTransaction * this.parts.partMontant / 100).toLocaleString("fr", { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true });
+				}
+			});
+		
+	
+		if (totalItems > itemsPerPage1) {
+			this.temp=true
+		  const PDF = new jsPDF("p", "mm", "a5");
+		  setTimeout(() => {
+			const spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
+			let dataIndex = 0;
+			let i = 5;
+			this.dataOrigin
+			
+			const generatePage = () => {
+			  const endIndex = Math.min(dataIndex + itemsPerPage, totalItems);
+			  if (dataIndex < totalItems) {
+				this.dataOrigin;
+				this.toPrint2 = {
+				  data: this.dataOrigin[0].slice(i, i + itemsPerPage),
+				};
+				this.dataOrigin
+			
+				const elementId = dataIndex === 0 ? "htmlData" : "htmlData2";
+				const canvasPromise = html2canvas(document.getElementById(elementId), {});
+				this.dataOrigin
+				
+				canvasPromise.then((canvas) => {
+				  const FILEURI = canvas.toDataURL("image/png");
+				  let fileWidth = PDF.internal.pageSize.getWidth();
+				  let fileHeight = (canvas.height * fileWidth) / canvas.width;
+				  if (dataIndex > 0) {
+					PDF.addPage();
+				  }
+				  PDF.addImage(FILEURI, "PNG", 0, 0, fileWidth, fileHeight);
+				  dataIndex += itemsPerPage1;
+				  i += 2;
+				  generatePage();
 				});
-			}, 250);
-						})
+			  } else {
+				PDF.save("Reçu N° " + this.toPrint.numBon + ".pdf");
+				this.spinnerService.stop(spinnerRef);
+			  }
+			};
+			generatePage();
+		  }, 250);
+		}
+		else {
+			this.temp=false
+
+			this.dataOrigin
+			
+		  this.toPrint = data
+		  setTimeout(() => {
+			var spinnerRef = this.spinnerService.start(this.translate.instant("PAGES.GENERAL.LOADING"));
+			let DATA: any = document.getElementById("htmlData");
 	
-	}
+			html2canvas(DATA, {}).then((canvas) => {
+			  const FILEURI = canvas.toDataURL("image/png");
+			  let PDF = new jsPDF("p", "mm", "a5");
+			  let fileWidth = PDF.internal.pageSize.getWidth();
+			  let fileHeight = (canvas.height * fileWidth) / canvas.width;
+			  let position = 0;
+			  PDF.addImage(FILEURI, "PNG", 0, position, fileWidth, fileHeight);
+			  PDF.save("Reçu N° " + this.toPrint.numBon + ".pdf");
+			  this.spinnerService.stop(spinnerRef);
+			});
+		  }, 250);
+		}}
+	  }
 }

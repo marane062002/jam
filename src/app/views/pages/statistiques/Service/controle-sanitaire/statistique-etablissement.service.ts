@@ -14,8 +14,8 @@ export class StatistiqueEtablissementService {
   constructor(private http: HttpClient) { }
 
   // Récupérer le nombre d'établissements contrôlés par arrondissement
-  getNombreEtablissementsControlesParArrondissement(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}`+'statistique');
+  getNombreEtablissementsControlesParArrondissement(params): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}`+'statistique', { params });
   }
 
   // Récupérer les statistiques par arrondissement (état d'hygiène)

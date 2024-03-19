@@ -289,6 +289,8 @@ export class AoConsultationDetailComponent implements OnInit {
 		typeAO: "",
 		typePrestation: { id: "", libelle: "" },
 		estimation: "",
+		estimationHT: "",
+		taxeTVA: "",
 		objetAR: "",
 		naturePrix: "",
 		qualification: "",

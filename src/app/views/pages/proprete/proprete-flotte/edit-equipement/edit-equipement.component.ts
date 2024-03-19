@@ -19,7 +19,6 @@ export class EditEquipementComponent implements OnInit {
 		'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
 	});
 	constructor(private httpClient:HttpClient,private route:ActivatedRoute,private router: Router, private formBuilder: FormBuilder) {}
-
 	ngOnInit() {
 		this.id = this.route.snapshot.params["id"];
 		this.ajoutForm = this.formBuilder.group({

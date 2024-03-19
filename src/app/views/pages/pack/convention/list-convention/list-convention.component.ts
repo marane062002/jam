@@ -123,18 +123,7 @@ export class ListConventionComponent implements OnInit {
 	handlePageEvent(event: PageEvent) {
 		let pageSize = event.pageSize;
 		let pageIndex = event.pageIndex;
-		// this.conventionMarcheService.Page(pageIndex, pageSize).subscribe((res: any) => {
-		// 	this.data = res.content
-		// 	this.dataSource.data.length = res.totalElements;
-		// 	this.dataSource = new MatTableDataSource(this.data);
-		// 	// this.paginator._intl.itemsPerPageLabel = this.translate.instant("PAGES.GENERAL.ITEMS_PER_PAGE_LABEL");
-		// 	// this.paginator._intl.nextPageLabel = this.translate.instant("PAGES.GENERAL.NEXT_PAGE_LABEL");
-		// 	// this.paginator._intl.previousPageLabel = this.translate.instant("PAGES.GENERAL.PREVIOUS_PAGE_LABEL");
-		// 	// this.paginator._intl.lastPageLabel = this.translate.instant("PAGES.GENERAL.LAST_PAGE_LABEL");
-		// 	// this.paginator._intl.firstPageLabel = this.translate.instant("PAGES.GENERAL.FIRST_PAGE_LABEL");
-		// 	// this.dataSource.paginator = this.paginator;
-		// 	// this.dataSource.sort = this.sort;
-		// })
+		
 		if(this.formGroup.value.etatConvention.length==0){
 			this.formGroup.value.etatConvention=''
 		}else{
@@ -142,11 +131,28 @@ export class ListConventionComponent implements OnInit {
 				this.formGroup.value.etatConvention = `(${this.listEtatsConvention.map((item) => `'${item}'`).join(", ")})`;
 			}
 		}
+		this.formGroup.value
 		
-		this.conventionMarcheService.research(pageIndex,pageSize,this.formGroup.value).subscribe((res:any)=>{
+		if(this.formGroup.value.date!=null || this.formGroup.value.etatConvention!=""|| this.formGroup.value.maxMontant!=0 || this.formGroup.value.minMontant!=0|| this.formGroup.value.partiePreneurs.length!=0){
+					this.conventionMarcheService.research(pageIndex,pageSize,this.formGroup.value).subscribe((res:any)=>{
 			(this.dataSource.data = res.content)
 		
 		})
+		}else{
+			this.conventionMarcheService.Page(pageIndex, pageSize).subscribe((res: any) => {
+			this.data = res.content
+			this.dataSource.data.length = res.totalElements;
+			this.dataSource = new MatTableDataSource(this.data);
+			// this.paginator._intl.itemsPerPageLabel = this.translate.instant("PAGES.GENERAL.ITEMS_PER_PAGE_LABEL");
+			// this.paginator._intl.nextPageLabel = this.translate.instant("PAGES.GENERAL.NEXT_PAGE_LABEL");
+			// this.paginator._intl.previousPageLabel = this.translate.instant("PAGES.GENERAL.PREVIOUS_PAGE_LABEL");
+			// this.paginator._intl.lastPageLabel = this.translate.instant("PAGES.GENERAL.LAST_PAGE_LABEL");
+			// this.paginator._intl.firstPageLabel = this.translate.instant("PAGES.GENERAL.FIRST_PAGE_LABEL");
+			// this.dataSource.paginator = this.paginator;
+			// this.dataSource.sort = this.sort;
+		})
+		}
+
 	}
 	formGroup:FormGroup;
   formatDate(){

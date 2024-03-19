@@ -11,6 +11,9 @@ export const environment = {
 	reclamationUrl: "http://localhost:9101/Reclamation/",
 	reservationUrl: "http://localhost:9101/Reservation/",
 	autorisationUrl: "http://localhost:9101/Autorisation/Autorisation/",
+	//added by saad 
+	autorisationUrl2: "http://localhost:9101/Autorisation/",
+	
 	bienReservationUrl: "http://localhost:9101/BiensReservation/",
 	espaceReservationUrl: "http://localhost:9101/EspacesReservation/",
 	bienUrl: "http://localhost:9101/Autorisation/Biens/",

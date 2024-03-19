@@ -1,0 +1,364 @@
+<!-- begin:: Content -->
+<div class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2" *ngIf="details">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-profile"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.DEMANDE.DEMANDEPROPPUB" | translate }}
+			</h3>
+		</div>
+
+	</div>
+	<div class="kt-portlet__body">
+
+
+		<!-- BEGIN DETAILS PMS -->
+		<div *ngIf="details.pmsBean" class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-2">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-profile"></i>
+					</span>
+					&nbsp;
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.DEMANDE.PMSOURCE" | translate }}
+					</h3>
+				</div>
+
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PMNOM" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.nom ? details.pmsBean.nom : "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.RC" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.rc ? details.pmsBean.rc : "-" }}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.IDENTIFIANT_FISCAL" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.identifiantFiscal ?
+										details.pmsBean.identifiantFiscal :
+										"-" }}</td>
+									<th>{{ "PAGES.DEMANDE.NUMERO_PATENTE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.numeroPatente ?
+										details.pmsBean.numeroPatente :
+										"-" }}
+									</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.ADRESSE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.adresse ? details.pmsBean.adresse : "-"
+										}}</td>
+									<th>{{ "PAGES.DEMANDE.TELE_FIXE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.teleFixe ? details.pmsBean.teleFixe : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.TELE_GSM" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.teleGsm ? details.pmsBean.teleGsm : "-"
+										}}</td>
+									<th>{{ "PAGES.DEMANDE.CONTACT" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.contact ? details.pmsBean.contact : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.EMAIL" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.email ? details.pmsBean.email
+										: "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.SITE_WEB" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.siteWeb ? details.pmsBean.siteWeb : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.FAX" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.fax ? details.pmsBean.fax : "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.VILLE_REGISTRE_COMMERCE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.idvilleRegistreCommerce ?
+										details.pmsBean.idvilleRegistreCommerce : "-" }}</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END DETAILS PMS -->
+		<!-- BEGIN DETAILS PPS -->
+		<div *ngIf="details.ppsBean" class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-2">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-profile"></i>
+					</span>
+					&nbsp;
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.DEMANDE.PPSOURCE" | translate }}
+					</h3>
+				</div>
+
+			</div>
+
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPNOM" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.nom ? details.ppsBean.nom : "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.PPPRENOM" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.prenom ? details.ppsBean.prenom : "-" }}
+									</td>
+								</tr>
+
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPCIN" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.cin ? details.ppsBean.cin : "-" }}</td>
+								</tr>
+
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPADRESSE" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.adresse ? details.ppsBean.adresse : "-"
+										}}</td>
+									<th>{{ "PAGES.DEMANDE.PPTELEFIXE" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.telephoneFixe ?
+										details.ppsBean.telephoneFixe : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPTELEGSM" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.telephoneGsm ?
+										details.ppsBean.telephoneGsm : "-"
+										}}
+									</td>
+
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPEMAIL" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.email ? details.ppsBean.email
+										: "-" }}</td>
+
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPFAX" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.fax ? details.ppsBean.fax : "-" }}
+
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END DETAILS PPS -->
+	</div>
+</div>
+<!-- end:: Content -->
+
+<!-- begin Details demandes licenses -->
+<div *ngIf="details" class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-profile"></i>
+			</span>
+			&nbsp;
+			<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+				{{ "PAGES.DEMANDE.TITRE_SHOW" | translate }}
+			</h3>
+		</div>
+
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div *ngIf="history" class="col-md-12 show_port history">
+
+			</div>
+			<div *ngIf="history" class="espace_bloc"></div>
+			<div class="col-md-12 show_port">
+				<table class="table pj" width="100%">
+					<tbody>
+						<tr>
+							<th>{{ "PAGES.DEMANDE.uniqueCode" | translate }} :</th>
+							<td class="donnee_show">{{ details.uniqueCode ? details.uniqueCode : "-" }}</td>
+							<th>{{ "PAGES.DEMANDE.submissionDate" | translate }} :</th>
+
+							<td class="donnee_show">
+								{{ details.submissionDate != null ? ( details.submissionDate | date :
+								"dd/MM/yyyy") : "-" }}
+							</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.DEMANDE.status" | translate }} :</th>
+							<td class="donnee_show">
+								{{ details.status ? details.status : "-" }}
+							</td>
+
+						</tr>
+
+
+						<tr *ngIf="details.representant">
+							<th>{{ "PAGES.DEMANDE.REPRESENTANT" | translate }} :</th>
+
+							<td class="donnee_show">
+								{{ details.representant != null ? ( details.representant ) : "-" }}
+							</td>
+						</tr>
+						<tr>
+							<th>{{ "PAGES.DEMANDE.DESCRIPTION" | translate }} :</th>
+
+							<td class="donnee_show">
+								{{ details.description != null ? ( details.description ) : "-" }}
+							</td>
+						</tr>
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- END demandes licenses -->
+
+	</div>
+</div>
+<!-- end Details demandes licenses -->
+<!-- begin:: Content Piece jointe Requests -->
+<div *ngIf="details" class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.DEMANDE.ATTACHEMENT_PUB" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table *ngIf="filesRquests" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPEDOCUMENTSENDED" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+							<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.DATE_DISPATCHING" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of filesRquests | async">
+							<td>
+								<div *ngIf="item.typePJ2 === 'CIN'">
+
+
+									<div *ngIf="details.representant; else noRepresentant">
+										نسخة من بطاقة التعريف الوطنية أو بطاقة الإقامة مصادق عليها بالنسبة للأجانب
+										لمسير الشركة
+									</div>
+
+									<ng-template #noRepresentant>
+										نسخة من بطاقة التعريف الوطنية او بطاقة الإقامة مصادق عليها بالنسبة للأجانب
+									</ng-template>
+
+								</div>
+								<div *ngIf="item.typePJ2 === 'document1'">طلب استغلال مصادق عليه.</div>
+								<div *ngIf="item.typePJ2 === 'document2'">نسخة الملكية لا تتجاوز 3 أشهر أو عقد
+									الكراء مرفق بشهادة الملكية آخر وصل كراء</div>
+								<div *ngIf="item.typePJ2 === 'document3'">نسخة من الرخصة الاقتصادية</div>
+								<div *ngIf="item.typePJ2 === 'document4'"> نسخة من القانون الأساسي للشركة</div>
+							</td>
+							<td><img class="file_icon" style="width: 10%"
+									src="./assets/media/files/{{ FileExtension(item.name) }}"
+									matTooltip="{{ FileName(item.name) }}" /></td>
+							<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+							<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
+							<td>{{ item.fSize / 1000 }} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco, item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content Piece jointe  Request -->
+
+<!-- begin:: Content Piece jointe Response -->
+<div *ngIf="details" class="kt-portlet">
+	<div class="kt-portlet__head kt-bg-portlet-5">
+		<div class="kt-portlet__head-label">
+			<span class="kt-portlet__head-icon">
+				<i class="flaticon-attachment"></i>
+			</span>
+			<h3 class="kt-portlet__head-title">
+				{{ "PAGES.DEMANDE.ATTACHEMENT_2" | translate }}
+			</h3>
+		</div>
+	</div>
+	<div class="kt-portlet__body">
+		<div class="row">
+			<div class="col-md-12 show_port">
+				<table *ngIf="filesResponse" class="table pj" width="100%">
+					<thead>
+						<tr>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TYPE" | translate }}</td>
+							<td class="title_td" width="25%">{{ "PAGES.ATTCHEMENTS.FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.DATE_DISPATCHING" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TAILLE_FICHIER" | translate }}</td>
+							<td class="title_td">{{ "PAGES.ATTCHEMENTS.TELECHARGER" | translate }}</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of filesResponse | async">
+							<td><img class="file_icon" style="width: 10%"
+									src="./assets/media/files/{{ FileExtension(item.name) }}"
+									matTooltip="{{ FileName(item.name) }}" /></td>
+							<td>{{ FileName(item.name) | slice : 0 : 20 }}</td>
+							<td>{{ item.dateFile | date : "dd/MM/yyyy HH:mm" }}</td>
+							<td>{{ item.fSize / 1000 }} ko</td>
+							<td>
+								<button type="button" (click)="onClickPjName(item.idAlfresco, item.id)"
+									class="btn btn-sm btn-clean btn-icon btn-success btn-icon-md btn_table_download"
+									matTooltip="{{ FileName(item.name) }}"><i class="flaticon-download-1"></i></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end:: Content Piece jointe  response -->
+
+<!--Action Section :: begin-->
+<div class="kt-portlet__head">
+	<div class="kt-portlet__head-label" align="right">
+		<button _ngcontent-dkp-c41="" matTooltip="{{ 'PAGES.GENERAL.EXIT' | translate }}"
+			class="btn btn-info btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="reset"
+			(click)="back()">
+			<i _ngcontent-dkp-c41="" class="icon la la-list"></i>
+			{{ "PAGES.GENERAL.EXIT" | translate }}
+		</button>
+	</div>
+	<div class="espace_bloc"></div>
+</div>
+<!--Action Section :: end-->

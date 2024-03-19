@@ -28,7 +28,7 @@ export class ShowDemandesLicensesComponent implements OnInit {
 	demandeDataSource = new MatTableDataSource<any>();
 
 	// ============================================
-	// Datasource mandat
+	// Datasource 
 	// ============================================
 	details: any;
 	dataSource = new MatTableDataSource<any>();

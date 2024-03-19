@@ -12,7 +12,7 @@ import * as $ from "jquery";
 	styleUrls: ["./view-carte.component.scss"],
 })
 export class ViewCarteComponent implements OnInit {
-
+	dataSource2
 	data: any[] = [];
     employe: any[] = [];
 	employeur: any [] = [];

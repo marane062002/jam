@@ -1,6 +1,6 @@
 <!-- begin:: Content -->
-<div *ngIf="details" class="kt-portlet portlet-1">
-	<div class="kt-portlet__head kt-bg-portlet-2">
+<div  class="kt-portlet portlet-1">
+	<div class="kt-portlet__head kt-bg-portlet-2" *ngIf="details.association">
 		<div class="kt-portlet__head-label">
 			<span class="kt-portlet__head-icon">
 				<i class="flaticon-profile"></i>
@@ -13,7 +13,7 @@
 
 	</div>
 	<div class="kt-portlet__body">
-		<div class="row">
+		<div class="row" *ngIf="details.association">
 			<div *ngIf="history" class="col-md-12 show_port history">
 
 			</div>
@@ -72,6 +72,154 @@
 		</div>
 		<!-- END DETAILS ASSOCIATION -->
 
+		<!-- BEGIN DETAILS PMS -->
+		<div *ngIf="details.pmsBean" class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-2">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-profile"></i>
+					</span>
+					&nbsp;
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.DEMANDE.PMSOURCE" | translate }}
+					</h3>
+				</div>
+
+			</div>
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PMNOM" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.nom ? details.pmsBean.nom : "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.RC" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.rc ? details.pmsBean.rc : "-" }}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.IDENTIFIANT_FISCAL" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.identifiantFiscal ?
+										details.pmsBean.identifiantFiscal :
+										"-" }}</td>
+									<th>{{ "PAGES.DEMANDE.NUMERO_PATENTE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.numeroPatente ?
+										details.pmsBean.numeroPatente :
+										"-" }}
+									</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.ADRESSE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.adresse ? details.pmsBean.adresse : "-"
+										}}</td>
+									<th>{{ "PAGES.DEMANDE.TELE_FIXE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.teleFixe ? details.pmsBean.teleFixe : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.TELE_GSM" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.teleGsm ? details.pmsBean.teleGsm : "-"
+										}}</td>
+									<th>{{ "PAGES.DEMANDE.CONTACT" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.contact ? details.pmsBean.contact : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.EMAIL" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.email ? details.pmsBean.email
+										: "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.SITE_WEB" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.siteWeb ? details.pmsBean.siteWeb : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.FAX" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.fax ? details.pmsBean.fax : "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.VILLE_REGISTRE_COMMERCE" | translate }} :</th>
+									<td class="donnee_show">{{ details.pmsBean.idvilleRegistreCommerce ?
+										details.pmsBean.idvilleRegistreCommerce : "-" }}</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END DETAILS PMS -->
+		<!-- BEGIN DETAILS PPS -->
+		<div *ngIf="details.ppsBean" class="kt-portlet portlet-1">
+			<div class="kt-portlet__head kt-bg-portlet-2">
+				<div class="kt-portlet__head-label">
+					<span class="kt-portlet__head-icon">
+						<i class="flaticon-profile"></i>
+					</span>
+					&nbsp;
+					<h3 class="kt-portlet__head-title kt-font-inverse-brand">
+						{{ "PAGES.DEMANDE.PPSOURCE" | translate }}
+					</h3>
+				</div>
+
+			</div>
+
+			<div class="kt-portlet__body">
+				<div class="row">
+					<div class="col-md-12 show_port">
+						<table class="table pj" width="100%">
+							<tbody>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPNOM" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.nom ? details.ppsBean.nom : "-" }}</td>
+									<th>{{ "PAGES.DEMANDE.PPPRENOM" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.prenom ? details.ppsBean.prenom : "-" }}
+									</td>
+								</tr>
+							
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPCIN" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.cin ? details.ppsBean.cin : "-" }}</td>
+								</tr>
+
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPADRESSE" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.adresse ? details.ppsBean.adresse : "-"
+										}}</td>
+									<th>{{ "PAGES.DEMANDE.PPTELEFIXE" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.telephoneFixe ?
+										details.ppsBean.telephoneFixe : "-"
+										}}</td>
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPTELEGSM" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.telephoneGsm ?
+										details.ppsBean.telephoneGsm : "-"
+										}}
+									</td>
+
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPEMAIL" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.email ? details.ppsBean.email
+										: "-" }}</td>
+
+								</tr>
+								<tr>
+									<th>{{ "PAGES.DEMANDE.PPFAX" | translate }} :</th>
+									<td class="donnee_show">{{ details.ppsBean.fax ? details.ppsBean.fax : "-" }}
+
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END DETAILS PPS -->
 	</div>
 </div>
 <!-- end:: Content -->
@@ -114,31 +262,31 @@
 							<td class="donnee_show">
 								{{ details.status ? details.status : "-" }}
 							</td>
-							
+
 						</tr>
 						<tr>
 							<th>{{ "PAGES.DEMANDE.typeActivite" | translate }} :</th>
 
 							<td class="donnee_show">
-								{{ details.typeActivite ?  details.typeActivite : "-" }}
+								{{ details.type_activite ? details.type_activite : "-" }}
 							</td>
 						</tr>
 						<tr>
 							<th>{{ "PAGES.DEMANDE.licenseType" | translate }} :</th>
 							<td class="donnee_show">
-								{{ details.licenseType ? details.licenseType : "-" }}
+								{{ details.license_type ? details.license_type : "-" }}
 							</td>
-						
+
 						</tr>
 						<tr>
 							<th>{{ "PAGES.DEMANDE.dateOrganisation" | translate }} :</th>
 
 							<td class="donnee_show">
-								{{ details.dateOrganisation != null ? ( details.dateOrganisation | date :
+								{{ details.date_organisation != null ? ( details.date_organisation | date :
 								"dd/MM/yyyy") : "-" }}
 							</td>
 						</tr>
-						
+
 
 					</tbody>
 				</table>

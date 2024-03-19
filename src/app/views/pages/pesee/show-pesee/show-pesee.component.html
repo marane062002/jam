@@ -24,45 +24,7 @@
 				<div class="col-md-12 show_port">
 					<table class="table">
 						<tbody>
-							<!-- <tr *ngIf="language=='ar'" style="text-align: right;">
-								<th>{{ "PAGES.PESEE.NUM" | translate }} :</th>
-								<td class="donnee_show">
-									<input style="border: 0px solid #ffffff;" class="backs2" [value]="showPesee.numBon"
-										disabled />
-								</td>
-							</tr>
-							<tr *ngIf="language=='ar'" style="text-align: right;">
-								<th>{{ "PAGES.PESEE.DATE" | translate }} :</th>
-								<td class="donnee_show">
-									<input style="border: 0px solid #ffffff;" class="backs2" [value]="showPesee.date"
-										disabled />
-								</td>
-							</tr>
-
-							<tr *ngIf="language=='ar'" style="text-align: right;">
-								<th>{{ "PAGES.PESEE.MATR" | translate }} :</th>
-								<td class="donnee_show">
-									<input [value]="formatNumVehicule(showPesee.vehicule)" disabled />
-								</td>
-							</tr>
-							<tr *ngIf="language=='ar'" style="text-align: right;">
-								<th>
-									{{ "PAGES.PESEE.CONDUCTEUR" | translate }} :
-								</th>
-								<td class="donnee_show">
-									<input [value]="showPesee.vehicule.nomConducteur" disabled />
-								</td>
-							</tr>
-							<tr *ngIf="language=='ar'" style="text-align: right;">
-								<th>
-									{{ "PAGES.PESEE.HANGAR" | translate }} :
-								</th>
-								<td class="donnee_show">
-									<input [value]="showPesee.hangar.lib" disabled />
-								</td>
-							</tr> -->
-
-
+							
 							<tr  style="text-align: left;">
 								<th>{{ "PAGES.PESEE.NUM" | translate }} :</th>
 								<td class="donnee_show">
@@ -79,7 +41,7 @@
 							</tr>
 
 							<tr  style="text-align: left;">
-								<th>{{ "PAGES.PESEE.MATR" | translate }} :</th>
+								<th>{{ "PAGES.VEHICULE.IMM" | translate }} :</th>
 								<td class="donnee_show">
 									<input [value]="formatNumVehicule(showPesee.vehicule)" disabled />
 								</td>
@@ -89,7 +51,7 @@
 									{{ "PAGES.PESEE.CONDUCTEUR" | translate }} :
 								</th>
 								<td class="donnee_show">
-									<input [value]="showPesee.vehicule.nomConducteur" disabled />
+									<input [value]="showPesee.nomConducteur" disabled />
 								</td>
 							</tr>
 							<tr  style="text-align: left;">
@@ -100,14 +62,7 @@
 									<input [value]="showPesee.hangar.lib" disabled />
 								</td>
 							</tr>
-							<tr  style="text-align: left;">
-								<th>
-									Mondataire :
-								</th>
-								<td class="donnee_show">
-									<input [value]="mondataire" disabled />
-								</td>
-							</tr>
+						
 						</tbody>
 					</table>
 				</div>
@@ -345,7 +300,7 @@
 							</tr>
 							<tr *ngIf="language=='fr'" style="text-align: left;">
 								<th style="color: #5e5d5d;">
-									{{ "PAGES.PESEE.TAXE_P" | translate }} :
+									{{ "PAGES.PESEE.TAXE_P" | translate }} {{parts.partMontant}} %:
 								</th>
 								<td class="donnee_show">
 									<input style="border: 0px solid #ffffff;font-weight: bold;color: #000;"
@@ -374,7 +329,7 @@
 							</tr>
 							<tr *ngIf="language=='ar'" style="text-align: right;">
 								<th style="color: #5e5d5d;">
-									{{ "PAGES.PESEE.TAXE_P" | translate }} :
+									{{ "PAGES.PESEE.TAXE_P" | translate }}  {{parts.partMontant}} %::
 								</th>
 								<td class="donnee_show">
 									<input style="border: 0px solid #ffffff;font-weight: bold;color: #000;"
@@ -393,7 +348,7 @@
 							<tr *ngIf="language=='fr'" style="text-align: left;">
 								<th class="thshow"
 									style="border: 0px solid #ffffff;margin: 0 !important;padding: 5px !important;">
-									{{ "PAGES.PESEE.PART_COMMUNE" | translate }} :</th>
+									{{ "PAGES.PESEE.PART_COMMUNE" | translate }}  {{parts.partCommune}} %:</th>
 								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
 									<input style="border: 0px solid #ffffff;width: 180px;font-weight: bold;color: #000;"
 										class="backs5" [value]="showPesee.partCommune" disabled />
@@ -401,7 +356,7 @@
 							</tr>
 							<tr *ngIf="language=='fr'" style="text-align: left;">
 								<th style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
-									{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} : :</th>
+									{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} {{parts.partMondataire}} % :</th>
 								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
 									<input style="width: 180px;font-weight: bold;color: #000;"
 										[value]="showPesee.partMondataire" disabled />
@@ -415,7 +370,7 @@
 							<tr *ngIf="language=='ar'" style="text-align: right;">
 								<th class="thshow"
 									style="border: 0px solid #ffffff;margin: 0 !important;padding: 5px !important;">
-									{{ "PAGES.PESEE.PART_COMMUNE" | translate }} :</th>
+									{{ "PAGES.PESEE.PART_COMMUNE" | translate }} {{parts.partCommune}} %:</th>
 								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
 									<input style="border: 0px solid #ffffff;width: 180px;font-weight: bold;color: #000;"
 										class="backs5" [value]="showPesee.partCommune" disabled />
@@ -423,7 +378,7 @@
 							</tr>
 							<tr *ngIf="language=='ar'" style="text-align: right;">
 								<th style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
-									{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} : :</th>
+									{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} {{parts.partMondataire}} %  :</th>
 								<td style="border: 0px solid #ffffff;padding: 5px !important;margin: 0 !important;">
 									<input style="width: 180px;font-weight: bold;color: #000;"
 										[value]="showPesee.partMondataire" disabled />
@@ -523,20 +478,24 @@
 	<div class="espace_bloc"></div>
 </div>
 <div style="overflow: hidden; height: 0">
-	<div id="htmlData">
+	<div id="htmlData" style="padding-bottom: 15px;">
 		<div class="toprint">
 			<div class="row" style="width: 80%;margin: 20px auto;text-align: center;">
 				<div class="col-md-3">
-					<img style="width:500px;" alt="logo" src="./assets/media/logos/logo_comM.png">
+					<img  alt="logo" src="./assets/media/logos/logo_comM.png">
 				</div>
 				<div class="col-md-6"></div>
 				<div class="col-md-3">
-					<img style="width:200px;" alt="logo" src="./assets/media/logos/logo_cum.png">
+					<img  alt="logo" src="./assets/media/logos/logo_cum.png">
 				</div>
 			</div><br><br>
 			<div class="row">
 				<table class="table"
 					style="width: 70%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr *ngIf="toPrint?.datePaiement!=null">	
+						<th style="border: none;"  colspan="2">{{ "PAGES.PESEE.DATE_PAIEMENT" | translate }}</th>
+						<th class="table-bordered dashed-line"  colspan="2">{{toPrint?.datePaiement}}  {{toPrint?.heurePaiement}}</th></tr>
+				
 					<tr>
 						<th style="border: none;"> {{ "PAGES.PESEE.HANGAR" | translate }}</th>
 						<th class="table-bordered dashed-line">{{toPrint?.hangar.numHangar}}
@@ -556,18 +515,19 @@
 			</div><br>
 			<div class="row">
 				<table class="table table-bordered dashed-line" style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tbody>
 					<tr>
 						<th colspan="2">{{ "PAGES.PESEE.MATR" | translate }}</th>
 						<th colspan="2">{{toPrint?.vehicule.numVehicule}}</th>
 					</tr>
 					<tr>
-						<th colspan="2">{{ "PAGES.PESEE.CONDUCTEUR" | translate }}</th>
+						<th colspan="2">{{ 'PAGES.PESEE.NOM' | translate }}</th>
 						<th colspan="2">{{toPrint?.vehicule.nomConducteur}}</th>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<th colspan="2">{{ "PAGES.PESEE.MONDATAIRE" | translate }}</th>
 						<th colspan="2">{{toPrint?.mondataire}}</th>
-					</tr>
+					</tr> -->
 					<tr>
 						<th>{{ "PAGES.PESEE.POIDS_T" | translate }}</th>
 						<th>{{ "PAGES.PESEE.POIDS_V" | translate }}</th>
@@ -580,47 +540,114 @@
 						<td>{{toPrint?.poidEmballageTotal}}</td>
 						<td>{{toPrint?.totalPoidNet}}</td>
 					</tr>
+				</tbody>
 				</table>
 			</div><br>
 			<div class="row">
 				<table class="table table-bordered"
 					style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
 					<tr>
-						<th>{{ "PAGES.PESEE.NUMPROD" | translate }}</th>
-						<th>{{ "PAGES.PESEE.CATEGORIE" | translate }}</th>
+						<th rowspan="2">{{ "PAGES.PESEE.NUMPROD" | translate }}</th>
+						<th colspan="3">{{ 'PAGES.PESEE.TYPE_PRODUIT' | translate }}</th>
+						
+						<th rowspan="2">{{ "PAGES.PESEE.PRIX_PRODUIT" | translate }}</th>
+						<th rowspan="2">{{ "PAGES.PESEE.POIDS_NET" | translate }}</th>
+						<th rowspan="2">{{ "PAGES.PESEE.MONTANT_TRANSATION" | translate }}</th>
+					</tr>
+					<tr>
 						<th>{{ "PAGES.PESEE.TYPE" | translate }}</th>
 						<th>{{ "PAGES.PESEE.SOUS_TYPE" | translate }}</th>
-						<th>{{ "PAGES.PESEE.PRIX" | translate }}</th>
-						<th>{{ "PAGES.PESEE.POIDS_NET" | translate }}</th>
-						<th>{{ "PAGES.PESEE.TOTAL" | translate }}</th>
+
+						<th>{{ "PAGES.PESEE.CATEGORIE" | translate }}</th>
 					</tr>
 					<tr *ngFor="let item of toPrint?.peseeProduits">
 						<td>{{item.produit.refProduit}}</td>
-						<td>{{item.produit.typeProduit.categorieProduit.nomCategori}}</td>
 						<td>{{item.produit.typeProduit.nomArticleProduit}}</td>
 						<td>{{item.produit.description}}</td>
+
+						<td>{{item.produit.typeProduit.categorieProduit.nomCategori}}</td>
+						<td>{{item.produit.tarif}}</td>
+						<td>{{item.poidNetProduit}}</td>
+						<td>{{item.totalProduit}}</td>
+					</tr>
+					 <tr *ngIf="temp==false">
+						<th colspan="2">{{ "PAGES.PESEE.NBPROD" | translate }}</th>
+						<th>{{toPrint?.peseeProduits.length}}</th>
+						<th colspan="3">{{ "PAGES.PESEE.MONTANT_T_T_D" | translate }}</th>
+						<th>{{toPrint?.chiffreTransaction}}</th>
+					</tr> 
+					<tr *ngIf="temp==false">
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.TAXE" | translate }} {{toPrint?.gestionParts?.partMontant}} % {{ "PAGES.PESEE.DH" | translate }}:</th>
+						<th>{{toPrint?.taxe}}</th>
+					</tr>
+					<tr *ngIf="temp==false">
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_COMMUNE" | translate }} {{toPrint?.gestionParts?.partCommune}} %:</th>
+						<th>{{toPrint?.partCommune}}</th>
+					</tr>
+
+					<tr *ngIf="temp==false">
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }}{{toPrint?.gestionParts?.partMondataire}} %:</th>
+						<th>{{toPrint?.partMondataire}}</th>
+					</tr>
+				</table>
+			
+			</div>
+			   <div style="display: flex; justify-content: space-between;" *ngIf="temp==false">
+				<div style="font-size: 25px; display: flex; justify-content: start;">{{ "PAGES.PESEE.SIGNATURE_RESPO_PESEE" | translate }}</div>
+				<div style="font-size: 25px;display: flex; justify-content: end; ">{{ "PAGES.PESEE.SIGNATURE_MANDATAIRE" | translate }}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div style="overflow: hidden; height: 0">
+	<div id="htmlData2">
+		<div class="toprint">
+			<div class="row">
+				<table class="table table-bordered"
+					style="width: 80%;margin: 20px auto;text-align: center;font-size: 30px;">
+					<tr *ngFor="let item of toPrint2?.data">
+						<td>{{item.produit.refProduit}}</td>
+						<td>{{item.produit.typeProduit.nomArticleProduit}}</td>
+						<td>{{item.produit.description}}</td>
+
+						<td>{{item.produit.typeProduit.categorieProduit.nomCategori}}</td>
 						<td>{{item.produit.tarif}}</td>
 						<td>{{item.poidNetProduit}}</td>
 						<td>{{item.totalProduit}}</td>
 					</tr>
 					<tr>
 						<th colspan="2">{{ "PAGES.PESEE.NBPROD" | translate }}</th>
-						<th>{{toPrint?.peseeProduits.length}}</th>
-						<th colspan="3">{{ "PAGES.PESEE.MONTANT_T_M" | translate }}</th>
+						<th>{{dataOrigin[0]?.length}}</th>
+						<th colspan="3">{{ "PAGES.PESEE.MONTANT_T_T_D" | translate }}</th>
 						<th>{{toPrint?.chiffreTransaction}}</th>
 					</tr> 
 					<tr>
 						<th colspan="3"></th>
-						<th colspan="3">{{ "PAGES.PESEE.PART_COMMUNE" | translate }} :</th>
+						<th colspan="3">{{ "PAGES.PESEE.TAXE" | translate }} {{toPrint?.gestionParts?.partMontant}} % {{ "PAGES.PESEE.DH" | translate }}:</th>
+						<th>{{toPrint?.taxe}}</th>
+					</tr>
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_COMMUNE" | translate }} {{toPrint?.gestionParts?.partCommune}} %:</th>
 						<th>{{toPrint?.partCommune}}</th>
 					</tr>
 
 					<tr>
 						<th colspan="3"></th>
-						<th colspan="3">{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }} :</th>
+						<th colspan="3">{{ "PAGES.PESEE.PART_MANDATAIRE" | translate }}{{toPrint?.gestionParts?.partMondataire}} %:</th>
 						<th>{{toPrint?.partMondataire}}</th>
 					</tr>
 				</table>
+			
+			</div>
+			   <div style="display: flex; justify-content: space-between;">
+				<div style="font-size: 20px; display: flex; justify-content: start;">{{ "PAGES.PESEE.SIGNATURE_RESPO_PESEE" | translate }}</div>
+				<div style="font-size: 20px;display: flex; justify-content: end; ">{{ "PAGES.PESEE.SIGNATURE_MANDATAIRE" | translate }}</div>
 			</div>
 		</div>
 	</div>

@@ -61,7 +61,7 @@ export class ListAutopsieComponent implements OnInit {
 	}
 
 	getAllD() {
-		this.service.getAll().subscribe(
+		this.service.getAll(this.id).subscribe(
 			(res) => {
 				this.autopsie = res;
 				// Format each date in the array
